@@ -1,0 +1,168 @@
+name: LLM Governance Verification
+
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+
+jobs:
+  verify-governance:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify required governance files exist
+        run: |
+          set -euo pipefail
+
+          REQUIRED_FILES=(
+            "6. Internal_Strategy/LLM_Usage_Policy.md"
+            "6. Internal_Strategy/LLM_System_Prompt_Template.md"
+            "6. Internal_Strategy/LLM_Workflow_Integration_Plan.md"
+            "6. Internal_Strategy/Governance_Traceability_Summary.md"
+            "Internal_Tools/README.md"
+            "Internal_Tools/precommit_llm_safety_hook.sh"
+            ".github/workflows/llm_safety_check.yml"
+            "MASTER_INDEX.md"
+            "PROJECT_HANDSHAKE.md"
+            "PROJECT_ACTIVITY_LOG.md"
+          )
+
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Missing required governance file: $file"
+              exit 1
+            fi
+            echo "Found: $file"
+          done
+
+      - name: Verify policy contains mandatory sections
+        run: |
+          set -euo pipefail
+
+          POLICY="6. Internal_Strategy/LLM_Usage_Policy.md"
+
+          grep -q "Allowed Use Cases" "$POLICY" || { echo "Policy missing 'Allowed Use Cases'"; exit 1; }
+          grep -q "Prohibited Use Cases" "$POLICY" || { echo "Policy missing 'Prohibited Use Cases'"; exit 1; }
+          grep -q "Data Handling Requirements" "$POLICY" || { echo "Policy missing 'Data Handling Requirements'"; exit 1; }
+          grep -q "Prompting Requirements" "$POLICY" || { echo "Policy missing 'Prompting Requirements'"; exit 1; }
+          grep -q "must.*begin.*NorthStar Defensive Security System Prompt" "$POLICY" || { echo "Policy missing mandatory system-prompt requirement"; exit 1; }
+          grep -q "Violations" "$POLICY" || { echo "Policy missing 'Violations' section"; exit 1; }
+          grep -q "Tooling Enforcement Reference" "$POLICY" || { echo "Policy missing tooling enforcement reference"; exit 1; }
+
+          echo "Policy structure validated"
+
+      - name: Verify system prompt template structure
+        run: |
+          set -euo pipefail
+
+          TEMPLATE="6. Internal_Strategy/LLM_System_Prompt_Template.md"
+
+          grep -q "SYSTEM PROMPT" "$TEMPLATE" || { echo "Missing SYSTEM PROMPT header"; exit 1; }
+          grep -q "Defensive focus only" "$TEMPLATE" || { echo "Missing defensive framing"; exit 1; }
+          grep -q "Synthetic data only" "$TEMPLATE" || { echo "Missing synthetic data requirement"; exit 1; }
+          grep -q "Use With" "$TEMPLATE" || { echo "Missing Use With section"; exit 1; }
+          grep -q "LLM_Workflow_Integration_Plan.md" "$TEMPLATE" || { echo "Missing workflow-plan reference"; exit 1; }
+          grep -q "Drop-in Surfaces" "$TEMPLATE" || { echo "Missing Drop-in Surfaces section"; exit 1; }
+
+          echo "System prompt template validated"
+
+      - name: Verify workflow integration plan structure
+        run: |
+          set -euo pipefail
+
+          PLAN="6. Internal_Strategy/LLM_Workflow_Integration_Plan.md"
+
+          grep -q "IMPLEMENTED" "$PLAN" || { echo "Missing IMPLEMENTED status markers"; exit 1; }
+          grep -q "PLANNED" "$PLAN" || { echo "Missing PLANNED status markers"; exit 1; }
+          grep -q "A. Local pre-commit hook" "$PLAN" || { echo "Missing local pre-commit vector"; exit 1; }
+          grep -q "B. CI safety scan" "$PLAN" || { echo "Missing CI safety scan vector"; exit 1; }
+          grep -q "Synchronization Rule" "$PLAN" || { echo "Missing A/B Synchronization Rule"; exit 1; }
+          grep -q "Pattern Extension Policy" "$PLAN" || { echo "Missing Pattern Extension Policy"; exit 1; }
+
+          echo "Workflow integration plan validated"
+
+      - name: Verify pre-commit and CI patterns are synchronized
+        run: |
+          set -euo pipefail
+
+          PRECOMMIT="Internal_Tools/precommit_llm_safety_hook.sh"
+          CIWF=".github/workflows/llm_safety_check.yml"
+
+          extract_patterns() {
+            awk '
+              /UNSAFE_PATTERNS=\(/ { in_array=1; next }
+              in_array && /^\)/ { in_array=0; next }
+              in_array && /"/ {
+                line=$0
+                sub(/^[[:space:]]*"/, "", line)
+                sub(/"[[:space:]]*$/, "", line)
+                print line
+              }
+            ' "$1" | sort
+          }
+
+          PRE_PATTERNS="$(extract_patterns "$PRECOMMIT")"
+          CI_PATTERNS="$(extract_patterns "$CIWF")"
+
+          if [ "$PRE_PATTERNS" != "$CI_PATTERNS" ]; then
+            echo "Pattern mismatch between pre-commit and CI workflow"
+            echo "Pre-commit patterns:"
+            echo "$PRE_PATTERNS"
+            echo "CI patterns:"
+            echo "$CI_PATTERNS"
+            exit 1
+          fi
+
+          echo "Pre-commit and CI patterns synchronized"
+
+      - name: Verify traceability summary
+        run: |
+          set -euo pipefail
+
+          SUMMARY="6. Internal_Strategy/Governance_Traceability_Summary.md"
+
+          grep -q "Traceability Matrix" "$SUMMARY" || { echo "Traceability summary missing matrix"; exit 1; }
+          grep -q "Policy Section 5" "$SUMMARY" || { echo "Traceability summary missing policy Section 5 claim"; exit 1; }
+          grep -q "PROJECT_HANDSHAKE.md" "$SUMMARY" || { echo "Traceability summary missing handshake evidence"; exit 1; }
+          grep -q "PROJECT_ACTIVITY_LOG.md" "$SUMMARY" || { echo "Traceability summary missing activity-log evidence"; exit 1; }
+          grep -q "Verified" "$SUMMARY" || { echo "Traceability summary missing verification statuses"; exit 1; }
+
+          echo "Traceability summary validated"
+
+      - name: Verify MASTER_INDEX governance references
+        run: |
+          set -euo pipefail
+
+          INDEX="MASTER_INDEX.md"
+
+          grep -q "LLM_Governance" "$INDEX" || { echo "MASTER_INDEX missing LLM_Governance section"; exit 1; }
+          grep -q "LLM_Usage_Policy" "$INDEX" || { echo "MASTER_INDEX missing policy reference"; exit 1; }
+          grep -q "LLM_System_Prompt_Template" "$INDEX" || { echo "MASTER_INDEX missing system prompt reference"; exit 1; }
+          grep -q "LLM_Workflow_Integration_Plan" "$INDEX" || { echo "MASTER_INDEX missing workflow plan reference"; exit 1; }
+          grep -q "Governance_Traceability_Summary" "$INDEX" || { echo "MASTER_INDEX missing traceability summary reference"; exit 1; }
+
+          echo "MASTER_INDEX governance references validated"
+
+      - name: Verify handshake and activity log entries
+        run: |
+          set -euo pipefail
+
+          HANDSHAKE="PROJECT_HANDSHAKE.md"
+          ACTIVITY="PROJECT_ACTIVITY_LOG.md"
+
+          grep -q "143. LLM governance package closed out" "$HANDSHAKE" || { echo "Handshake missing item 143"; exit 1; }
+          grep -q "144. Governance traceability summary generated" "$HANDSHAKE" || { echo "Handshake missing item 144"; exit 1; }
+          grep -q "6. Internal_Strategy/LLM_Usage_Policy.md" "$HANDSHAKE" || { echo "Handshake missing LLM policy required-file reference"; exit 1; }
+          grep -q "6. Internal_Strategy/Governance_Traceability_Summary.md" "$HANDSHAKE" || { echo "Handshake missing traceability summary required-file reference"; exit 1; }
+
+          grep -q "LLM Governance Package Closed Out" "$ACTIVITY" || { echo "Activity log missing governance package closeout entry"; exit 1; }
+          grep -q "Governance Traceability Summary Generated" "$ACTIVITY" || { echo "Activity log missing traceability summary entry"; exit 1; }
+
+          echo "Handshake and activity log validated"
+
+      - name: Final result
+        run: echo "LLM Governance Verification Passed"

@@ -1,0 +1,17 @@
+From: billing@maple-office-supplies.example
+To: accounts.payable@yourcompany.ca
+Date: 2026-05-21 09:15 UTC
+Subject: Reminder: Invoice MOS-1048 due May 30
+
+Hello,
+
+This is a friendly reminder that invoice MOS-1048 for April office supplies is
+due on May 30. The original invoice was sent on May 1 to this same email
+address. No banking information has changed.
+
+If you need another copy of the invoice, reply to this email and I can resend
+the PDF.
+
+Thanks,
+Sarah Lee
+Maple Office Supplies

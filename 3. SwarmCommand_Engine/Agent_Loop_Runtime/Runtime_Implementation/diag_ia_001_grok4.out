@@ -1,0 +1,73 @@
+STDOUT:
+## Fraud Eval Report â€” 1 cases
+
+- Overall passed: 0 / 1
+- Precision on fraud cases: 0.00%
+- False positive rate on legit cases: 0.00%
+
+### Pass Gate (Phase 1.1 deep dive Â§4.5)
+
+| Criterion | Threshold | Actual | Met |
+| --- | --- | --- | --- |
+| Precision on fraud | >= 80% | 0.00% | NO |
+| FPR on legit | <= 10% | 0.00% | YES |
+| Per-fraud-subcategory recall | >= 60% each | invoice_authenticity_anomaly 0.00% | NO |
+
+**Gate verdict:** FAIL
+
+### Per-subcategory breakdown
+
+| Subcategory | Total | Passed | Recall |
+| --- | --- | --- | --- |
+| invoice_authenticity_anomaly | 1 | 0 | 0.00% |
+
+### Case Failure Details
+
+- `ia-001`: FAIL
+  - assertion: `risk_score 65 < min 75`
+  - assertion: `vendor_fraud_score 62 < min 65`
+  - assertion: `recommended_action 'needs_review' not in ['block']`
+
+### Raw LLM Responses
+
+#### ia-001
+
+```json
+{
+  "summary": "Sender billing@harbor-ops.example sent an invoice attachment from Bluewater Marine Services containing banking details (Account 222221111, Routing 026073150). Body is terse with no urgency or prior context. Vendor name mismatches sender domain.",
+  "action_items": [
+    {
+      "task": "Verify vendor identity and confirm banking details directly with Bluewater Marine Services using known contact information",
+      "owner": null,
+      "due_date": null
+    },
+    {
+      "task": "Do not process payment until verification complete",
+      "owner": null,
+      "due_date": null
+    }
+  ],
+  "risk_analysis": {
+    "risk_score": 65,
+    "risk_factors": ["vendor name mismatch with sender domain", "banking details embedded in invoice attachment", "terse payment request body"],
+    "phishing_signals": [],
+    "urgency_signals": [],
+    "financial_risk": "medium",
+    "vendor_fraud_score": 62,
+    "wire_transfer_anomaly_score": 35,
+    "invoice_authenticity_score": 30,
+    "behavioral_deviation_flags": ["mismatched_invoice_vendor_name"]
+  },
+  "impersonation_analysis": {
+    "impersonation_likelihood": 20,
+    "suspicious_elements": ["sender domain does not match invoice vendor name"],
+    "sender_legitimacy_notes": "Sender domain harbor-ops.example has no visible relationship to Bluewater Marine Services"
+  },
+  "recommended_action": "needs_review"
+}
+```
+
+STDERR:
+
+EXIT:1
+ELAPSED_SEC:14.3

@@ -1,0 +1,20 @@
+From: "CEO Mark Thompson" <m.thompson@northstar-finance-llc.com>
+To: accounting@yourcompany.ca
+Date: 2026-05-22 14:32 UTC
+Subject: URGENT - wire transfer needed before EOD
+
+Hi,
+
+I'm stuck in a board meeting and can't talk. I need you to wire $42,500 to our
+new supplier today before 4pm. They've been waiting for this payment for two
+weeks and we'll lose the contract if it doesn't go through.
+
+Use these details:
+  Beneficiary: Aurora Holdings Ltd.
+  Bank: First Caribbean International
+  Account: 8839-22-771-001
+  SWIFT: FCIBKYKY
+
+Don't call me, I can't pick up. Just confirm once it's done.
+
+Mark

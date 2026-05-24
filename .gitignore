@@ -1,0 +1,60 @@
+.env
+.env.*
+!.env.example
+
+# Independent audit outputs (Grok / Gemini / etc.) — local by default.
+# Commit selectively when an audit is worth preserving in the repo.
+audit_outputs/
+
+# Python build / cache artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS junk
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Office lock / temp files
+~$*
+*.tmp
+
+# Tenant-local runtime state created by detectors (vendor baselines, etc.)
+# These are per-deployment SQLite stores, not source. Re-created at runtime.
+# Note: the SOURCE package "core/production_state/" must remain tracked —
+# the leading slash here anchors the ignore to a runtime-data folder created
+# at the repo root, not to the package nested under core/.
+/production_state/
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.db
+*.db-journal

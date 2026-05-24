@@ -1,0 +1,20 @@
+STDOUT:
+........................................................................ [ 21%]
+........................................................................ [ 43%]
+........................................................................ [ 65%]
+........................................................................ [ 87%]
+........................................                                 [100%]
+328 passed in 6.00s
+
+STDERR:
+Exception ignored in atexit callback <function cleanup_numbered_dir at 0x0000025B353A7320>:
+Traceback (most recent call last):
+  File "C:\Users\mattn\AppData\Roaming\Python\Python314\site-packages\_pytest\pathlib.py", line 374, in cleanup_numbered_dir
+    cleanup_dead_symlinks(root)
+  File "C:\Users\mattn\AppData\Roaming\Python\Python314\site-packages\_pytest\pathlib.py", line 360, in cleanup_dead_symlinks
+    left_dir.unlink()
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1042, in unlink
+    os.unlink(self)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\mattn\\AppData\\Local\\Temp\\pytest-of-mattn\\pytest-current'
+
+EXIT:0

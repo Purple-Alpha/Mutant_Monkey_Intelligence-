@@ -1,0 +1,19 @@
+## Fraud Eval Report ù 40 cases
+
+- Overall passed: 1 / 40
+- Precision on fraud cases: 100.00%
+- False positive rate on legit cases: 0.00%
+
+| Subcategory | Total | Passed | Recall |
+| --- | --- | --- | --- |
+| executive_impersonation | 5 | 0 | 0.00% |
+| header_inconsistency | 1 | 0 | 0.00% |
+| invoice_authenticity_anomaly | 3 | 0 | 0.00% |
+| legit_calendar | 3 | 0 | 0.00% |
+| legit_hr | 2 | 0 | 0.00% |
+| legit_internal | 5 | 0 | 0.00% |
+| legit_newsletter | 2 | 0 | 0.00% |
+| legit_vendor_invoice | 8 | 0 | 0.00% |
+| lookalike_sender | 2 | 0 | 0.00% |
+| vendor_invoice_fraud | 5 | 0 | 0.00% |
+| wire_transfer_pressure | 4 | 1 | 25.00% |

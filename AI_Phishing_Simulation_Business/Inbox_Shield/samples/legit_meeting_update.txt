@@ -1,0 +1,13 @@
+From: operations@yourcompany.ca
+To: team@yourcompany.ca
+Date: 2026-05-22 16:10 UTC
+Subject: Monday standup moved to 10:30
+
+Hi team,
+
+Monday's standup is moved from 9:30 to 10:30 because the client onboarding call
+was shifted into the earlier slot. Same meeting link as usual. No action needed
+unless you have a conflict.
+
+Thanks,
+Priya

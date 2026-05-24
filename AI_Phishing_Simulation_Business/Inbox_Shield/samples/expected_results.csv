@@ -1,0 +1,6 @@
+sample,risk_min,allowed_actions,is_fraud
+ceo_wire_fraud.txt,80,block,true
+legit_invoice_reminder.txt,0,safe|needs_review,false
+legit_meeting_update.txt,0,safe,false
+password_reset_phish.txt,80,block|needs_review,true
+vendor_bank_change_fraud.txt,75,block|needs_review,true

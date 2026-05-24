@@ -1,0 +1,15 @@
+TOTAL_CASES=40
+vf-002 | flags=('first_time_sender_with_financial_ask',) | min_vfs=60 | min_rs=65
+vf-003 | flags=('new_banking_instructions',) | min_vfs=65 | min_rs=70
+vf-004 | flags=() | min_vfs=60 | min_rs=65
+vf-005 | flags=('unusual_dollar_amount', 'urgency_paired_with_finance') | min_vfs=70 | min_rs=75
+ei-002 | flags=('out_of_band_pressure', 'urgency_paired_with_finance', 'first_time_sender_with_financial_ask') | min_vfs=15 | min_rs=80
+wt-001 | flags=('new_banking_instructions', 'urgency_paired_with_finance') | min_vfs=30 | min_rs=85
+wt-003 | flags=('urgency_paired_with_finance',) | min_vfs=25 | min_rs=70
+wt-004 | flags=() | min_vfs=None | min_rs=45
+ia-001 | flags=('mismatched_invoice_vendor_name',) | min_vfs=65 | min_rs=75
+ia-002 | flags=('urgency_paired_with_finance',) | min_vfs=45 | min_rs=60
+ia-003 | flags=('unusual_unicode_obfuscation',) | min_vfs=50 | min_rs=70
+ls-001 | flags=('lookalike_sender_domain', 'unusual_unicode_obfuscation') | min_vfs=60 | min_rs=70
+ls-002 | flags=('lookalike_sender_domain',) | min_vfs=60 | min_rs=75
+hi-001 | flags=('reply_to_diverges_from_from', 'unusual_unicode_obfuscation') | min_vfs=50 | min_rs=75

@@ -1,0 +1,64 @@
+name: LLM Safety Check
+
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+
+jobs:
+  llm-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run LLM safety scan
+        run: |
+          set -euo pipefail
+
+          mapfile -d '' FILES < <(
+            git ls-files -z -- '*.md' '*.prompt' '*.txt' '*.jsonl' '*.yaml' '*.yml'
+          )
+
+          if [ "${#FILES[@]}" -eq 0 ]; then
+            echo "No LLM-related files to scan."
+            exit 0
+          fi
+
+          # Same pattern list as pre-commit; keep in sync.
+          # Tuned to avoid blocking legitimate defensive fraud/ransomware-prevention docs.
+          UNSAFE_PATTERNS=(
+            "reverse shell"
+            "keylogger"
+            "botnet"
+            "ddos attack"
+            "ransomware payload"
+            "ransomware builder"
+            "exploit this server"
+            "how do I hack"
+          )
+
+          FAIL=0
+
+          for file in "${FILES[@]}"; do
+            # Skip internal strategy/policy files
+            if [[ "$file" == 6.\ Internal_Strategy/LLM_* ]] || [[ "$file" == Internal_Strategy/LLM_* ]]; then
+              continue
+            fi
+
+            for pattern in "${UNSAFE_PATTERNS[@]}"; do
+              if grep -qi -- "$pattern" "$file"; then
+                echo "LLM safety check: found unsafe pattern in $file: \"$pattern\""
+                FAIL=1
+              fi
+            done
+          done
+
+          if [ "$FAIL" -ne 0 ]; then
+            echo
+            echo "LLM safety check failed. Please rephrase content into defensive/test-scenario framing or move it into policy docs."
+            exit 1
+          fi
+
+          echo "LLM safety check passed."

@@ -1,0 +1,125 @@
+!function(){var SERVER_SIDE_CONFIG={"privacy":{"disableTextCapture":false,"enableSecureCookies":true},"compressCookies":false,"salesforceAura":false,"supportedDomains":[],"replaySettings":{},"integrations":[{"name":"vwo","fn":function integration(dependencyContainer) {
+  const SOURCE_NAME = 'vwo';
+  var _vis_counter = 0;
+  try {
+    if (!_vis_counter) {
+      var _vis_data = {};
+      var _vis_combination, _vis_id;
+      for (var idx = 0; idx < _vwo_exp_ids.length; idx++) {
+        _vis_id = _vwo_exp_ids[idx];
+        if (_vwo_exp[_vis_id].ready) {
+          _vis_combination = _vis_opt_readCookie('_vis_opt_exp_' + _vis_id + '_combi');
+          if (typeof _vwo_exp[_vis_id].combination_chosen != 'undefined') {
+            _vis_combination = _vwo_exp[_vis_id].combination_chosen;
+          }
+          if (
+            _vis_combination &&
+            typeof _vwo_exp[_vis_id].comb_n[_vis_combination] != 'undefined'
+          ) {
+            _vis_data['VWO: ' + _vwo_exp[_vis_id].name] =
+              _vwo_exp[_vis_id].comb_n[_vis_combination];
+            _vis_counter++;
+          }
+        }
+      }
+    }
+    // Use the _vis_data object created above to fetch the data,
+    // key of the object is the Test ID and the value is Variation Name
+    if (_vis_counter) {
+      heap.addPageviewProperties(_vis_data);
+    }
+  } catch (err) {
+    // eslint-disable-next-line no-empty
+  } finally {
+    dependencyContainer.markAdapterAsResolved(SOURCE_NAME);
+  }
+},"config":{"isBlocking":true,"blockDurationInMs":5000}},{"name":"optimizely","fn":function integration(dependencyContainer) {
+  const SOURCE_NAME = 'optimizely';
+  try {
+    var activeExperiments,
+      campaignName,
+      data,
+      experimentId,
+      idx,
+      name,
+      optimizely,
+      props,
+      redirectExperiment,
+      state,
+      value,
+      variations;
+    if (window.optimizely) {
+      optimizely = window.optimizely;
+      // Create an object to store experiment names and variations
+      props = {};
+      // Add Optimizely X experiments first.
+      if (typeof optimizely.get === 'function') {
+        data = optimizely.get('data');
+        state = optimizely.get('state');
+        redirectExperiment = state.getRedirectInfo();
+        activeExperiments = state.getActiveExperimentIds();
+        variations = state.getVariationMap();
+        if (redirectExperiment && redirectExperiment.experimentId) {
+          activeExperiments.push(redirectExperiment.experimentId);
+          if (redirectExperiment.referrer) {
+            dependencyContainer.setReferrer(redirectExperiment.referrer);
+          }
+        }
+        for (idx = 0; idx < activeExperiments.length; idx++) {
+          experimentId = activeExperiments[idx];
+          campaignName = '';
+          if (data.experiments[experimentId] && data.experiments[experimentId].campaignName) {
+            campaignName = data.experiments[experimentId].campaignName + ' ';
+          }
+          // If no experiment or variation name is present, use the ID.
+          name =
+            'Optimizely: ' +
+            campaignName +
+            ((data.experiments[experimentId] && data.experiments[experimentId].name) ||
+              experimentId);
+          value =
+            (variations[experimentId] && variations[experimentId].name) ||
+            variations[experimentId].id;
+          // Don't set the property if the user is a 'holdback'.
+          if (
+            !(
+              state.getExperimentStates()[experimentId] &&
+              state.getExperimentStates()[experimentId].isInExperimentHoldback
+            )
+          ) {
+            props[name] = value;
+          }
+        }
+      }
+      // It is possible to bundle Classic with X, if this is the case, we should get the old experiments too.
+      if (optimizely.data && optimizely.data.state) {
+        data = optimizely.data;
+        state = data.state;
+        redirectExperiment = state.redirectExperiment;
+        activeExperiments = state.activeExperiments;
+        variations = state.variationNamesMap;
+        if (redirectExperiment && redirectExperiment.experimentId) {
+          activeExperiments.push(redirectExperiment.experimentId);
+          if (redirectExperiment.referrer) {
+            dependencyContainer.setReferrer(redirectExperiment.referrer);
+          }
+        }
+        for (idx = 0; idx < activeExperiments.length; idx++) {
+          experimentId = activeExperiments[idx];
+          name =
+            'Optimizely: ' +
+            ((data.experiments[experimentId] && data.experiments[experimentId].name) ||
+              experimentId);
+          value = variations[experimentId];
+          props[name] = value;
+        }
+      }
+
+      heap.addPageviewProperties(props);
+    }
+    // eslint-disable-next-line no-empty
+  } catch (e) {
+  } finally {
+    dependencyContainer.markAdapterAsResolved(SOURCE_NAME);
+  }
+},"config":{"isBlocking":true,"blockDurationInMs":5000}}],"snapshots":{"click":{".company_info a":{"j":{},"f":{},"t":{"Listing's Name":"h3.company_info a[href*=\"/profile/\"]","Listing's Rating":"span.rating","Listing's Min Project Price":"div.list-item.block_tag.custom_popover span","Listing's Hourly Price":"div.list-item.custom_popover[data-content*=hourly] span","Listing's Employee Count":"div.list-item.custom_popover[data-content*=Employees] span","Listing's Location":"span.locality","Listing's Service Focus %":"div.directory-graph.directory-main-bar span"}},"p.sponsorship-option__overview--description a":{"j":{},"f":{},"t":{"Company Size":"button.sponsorship-title__chosen-select span"}},"button.shortlist-button.bookmark-button":{"j":{},"f":{},"t":{"Listing's Name":"h3.company_info a[href*=\"/profile/\"]","Listing's Rating":"span.rating","Listing's Min Project Price":"div.list-item.block_tag.custom_popover span","Listing's Hourly Price":"div.list-item.custom_popover[data-content*=hourly] span","Listing's Employee Count":"div.list-item.custom_popover[data-content*=Employees] span","Listing's Location":"span.locality","Listing's Service Focus %":"div.directory-graph.directory-main-bar span"}},"li.website-contact":{"j":{},"f":{},"t":{"Listing's Name":"h3.company_info a[href*=\"/profile/\"]","Listing's Rating":"span.rating","Listing's Min Project Price":"div.list-item.block_tag.custom_popover span","Listing's Hourly Price":"div.list-item.custom_popover[data-content*=hourly] span","Listing's Employee Count":"div.list-item.custom_popover[data-content*=Employees] span","Listing's Location":"span.locality","Listing's Service Focus %":"div.directory-graph.directory-main-bar span"}},".company_logotype img":{"j":{},"f":{},"t":{"Listing's Name":"h3.company_info a[href*=\"/profile/\"]","Listing's Rating":"span.rating","Listing's Min Project Price":"div.list-item.block_tag.custom_popover span","Listing's Hourly Price":"div.list-item.custom_popover[data-content*=hourly] span","Listing's Employee Count":"div.list-item.custom_popover[data-content*=Employees] span","Listing's Location":"span.locality","Listing's Service Focus %":"div.directory-graph.directory-main-bar span"}}},"pageview":{"/*":{"j":{},"f":{},"s":{"PPC":".ppc_container"}},"/session/":{"j":{},"f":{},"s":{"Shortlisted Count":".bookmark_wrap"}},"/your-project/requirements":{"j":{},"f":{},"s":{"Shortlisted Count":".bookmark_wrap span"}}}},"sdk":{"version":"5.3.12","isExperimentalVersion":false,"domain":"https://cdn.us.heap-api.com","plugins":[]},"ingestServer":"https://c.us.heap-api.com","appServer":"https://heapanalytics.com"};function t(e){var n;return-1===e.indexOf('core')&&e.push('core'),e.sort(function(e,n){return e<n?-1:n<e?1:0}).join('-')}function i(){var e=t(SERVER_SIDE_CONFIG.sdk.plugins||[]),n=heap&&heap.clientConfig&&heap.clientConfig.sdk||{},i=n.domain||SERVER_SIDE_CONFIG.sdk.domain,o=encodeURIComponent(n.version||SERVER_SIDE_CONFIG.sdk.version),r;return i+'/v5/'+(n.version||!SERVER_SIDE_CONFIG.sdk.isExperimentalVersion?'heapjs-static':'heapjs-experimental')+'/'+o+'/'+e+'/heap.js'}function e(){var e=i(),n=document.createElement('script');n.type='text/javascript',n.src=e,n.async=!0;var e=document.getElementsByTagName('script')[0];e.parentNode.insertBefore(n,e)}window.heap.serverConfig=SERVER_SIDE_CONFIG,window.heap.init(window.heap.envId,window.heap.clientConfig,window.heap.serverConfig),e()}();

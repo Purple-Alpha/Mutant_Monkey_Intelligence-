@@ -1,0 +1,10 @@
+{
+  "active_version": "acme-demo-policy-v1",
+  "parameters": {
+    "attachment_risk_floor_lift": 0,
+    "confidence_boost": 0.2,
+    "fraud_risk_floor_lift": 5,
+    "url_obfuscation_floor_lift": 5,
+    "vendor_invoice_recall_floor": "phase_1_5"
+  }
+}

@@ -1,0 +1,63 @@
+STDOUT:
+## Fraud Eval Report â€” 1 cases
+
+- Overall passed: 0 / 1
+- Precision on fraud cases: 0.00%
+- False positive rate on legit cases: 0.00%
+
+### Pass Gate (Phase 1.1 deep dive Â§4.5)
+
+| Criterion | Threshold | Actual | Met |
+| --- | --- | --- | --- |
+| Precision on fraud | >= 80% | 0.00% | NO |
+| FPR on legit | <= 10% | 0.00% | YES |
+| Per-fraud-subcategory recall | >= 60% each | lookalike_sender 0.00% | NO |
+
+**Gate verdict:** FAIL
+
+### Per-subcategory breakdown
+
+| Subcategory | Total | Passed | Recall |
+| --- | --- | --- | --- |
+| lookalike_sender | 1 | 0 | 0.00% |
+
+### Case Failure Details
+
+- `ls-001`: FAIL
+  - assertion: `risk_score 22 < min 65`
+  - assertion: `vendor_fraud_score 18 < min 55`
+  - assertion: `recommended_action 'safe' not in ['needs_review', 'block']`
+  - assertion: `behavioral_deviation_flags missing required ['lookalike_sender_domain']`
+
+### Raw LLM Responses
+
+#### ls-001
+
+```json
+{
+  "summary": "Empty-body email with invoice PDF attachment from coastal-marine.ca to acme-manufacturing.ca.",
+  "action_items": [],
+  "risk_analysis": {
+    "risk_score": 22,
+    "risk_factors": ["unusual character in attachment filename"],
+    "phishing_signals": [],
+    "urgency_signals": [],
+    "financial_risk": "low",
+    "vendor_fraud_score": 18,
+    "wire_transfer_anomaly_score": 5,
+    "invoice_authenticity_score": null,
+    "behavioral_deviation_flags": ["unusual_unicode_obfuscation"]
+  },
+  "impersonation_analysis": {
+    "impersonation_likelihood": 10,
+    "suspicious_elements": ["unicode anomaly in filename"],
+    "sender_legitimacy_notes": "Sender domain unrelated to known vendor; no impersonation cues in content."
+  },
+  "recommended_action": "safe"
+}
+```
+
+STDERR:
+
+EXIT:1
+ELAPSED_SEC:17.0

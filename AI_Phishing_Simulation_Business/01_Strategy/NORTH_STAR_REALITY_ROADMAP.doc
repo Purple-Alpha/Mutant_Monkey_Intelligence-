@@ -1,0 +1,186 @@
+# North Star Reality Roadmap
+
+Last updated: 2026-05-20
+
+## Executive Decision
+
+The clearest business direction is to make AI phishing simulation and human-layer security the main commercial North Star.
+
+This should not start as a 60-agent autonomous cybersecurity platform. That version is a long-term product vision. The realistic first business is a managed, service-led cybersecurity awareness offer for Canadian SMBs, supported by the existing Swarm/NorthStar machinery where useful.
+
+## Current Build Reality
+
+### What Exists
+
+- A broad SwarmCommandCenter workspace with multiple developed lanes: SCC micro-business websites, NorthStar pursuit desk, ARIES/3D, lead mining, sales collateral, and runtime scripts.
+- A canonical NorthStar product direction: seller-side AI pursuit desk for IT/cyber public-sector tenders.
+- A reviewed NorthStar opening slate with 3 active Bid items, 4 Hold items, and 3 No-bid items.
+- A cybersecurity-awareness capability profile:
+  - `docs/northstar/opening/capability_profiles/AI_PHISHING_SIMULATION_TRAINING.md`
+  - `docs/northstar/opening/capability_profiles/AI_PHISHING_PROPOSAL_SKELETON.md`
+  - `docs/northstar/opening/capability_profiles/NS_A82F71BC_CYBER_AWARENESS_MAPPING.md`
+- A clean folder for this standalone business:
+  - `AI_Phishing_Simulation_Business/`
+
+### What Is Not Ready Yet
+
+- The Swarm is not currently running as a living autonomous production system.
+- The latest `swarm_status.py --summary` shows:
+  - no active agent mailboxes
+  - no evidence ledger entries
+  - no pending approvals
+- NorthStar has useful packet and pursuit machinery, but it is not a production SaaS.
+- The 60-agent phishing-defense platform is a future architecture, not a near-term sellable product.
+- There is not yet a client-ready phishing simulation operating system, client portal, dashboard, or automated training workflow inside this new business folder.
+
+## Practical Distance From Revenue
+
+### Service-Led AI Phishing Business
+
+Estimated distance: 2-4 weeks to first sellable pilot if kept simple.
+
+Required:
+- service menu
+- pricing sheet
+- discovery questionnaire
+- authorization/scope template
+- simulation policy boundaries
+- sample report
+- cold outreach
+- simple landing page or brochure
+- manual delivery workflow using approved third-party simulation/training tools
+
+### Productized Managed Service
+
+Estimated distance: 60-90 days.
+
+Required:
+- repeatable campaign workflow
+- client onboarding checklist
+- risk scorecard template
+- quarterly briefing deck
+- incident-response tabletop package
+- compliance/safety review
+- lightweight dashboard/reporting process
+
+### 60-Agent Autonomous Platform
+
+Estimated distance: 12-18+ months, and only after service revenue proves demand.
+
+Required:
+- secure ingestion
+- phishing classification
+- multi-channel detection
+- policy governance
+- integrations
+- audit logging
+- customer data controls
+- compliance posture
+- real engineering team or dedicated build runway
+
+## What To Close Or Pause
+
+Pause these as primary focus:
+
+- ARIES/3D commercial lane
+- broad agentic bidding platform expansion
+- UK/EU/AU procurement expansion
+- autonomous wallet/bidding claims
+- micro-business website cold-call lane, except as emergency cash flow
+- generic "60-agent platform" architecture work
+- extra websites, logos, speculative decks, or new venture branches
+
+Keep only these as support lanes:
+
+- NorthStar pursuit desk as an intelligence and proposal-support lab
+- SCC micro-business assets only if immediate cash is needed
+- Existing website/sales collateral only when it directly supports this phishing-security offer
+
+## Recommended North Star
+
+Positioning:
+
+Affordable AI-powered human-risk security for Canadian SMBs.
+
+Plain-English promise:
+
+We help small and mid-sized businesses train their people against AI-powered phishing, impersonation, fake invoices, SMS scams, and deepfake-style social engineering before a real attack causes damage.
+
+## First Offer To Sell
+
+### AI Phishing Essentials
+
+Best for: 5-50 employees.
+
+Price: CAD $199-$399/month.
+
+Includes:
+- one authorized phishing simulation per month
+- short follow-up training
+- monthly human-risk report
+- completion evidence for leadership/insurance
+- basic incident-reporting checklist
+
+### Add-Ons
+
+- incident-response tabletop: CAD $750-$2,500
+- quarterly AI threat briefing: CAD $199-$499
+- AI usage/security policy: CAD $500-$1,500
+- custom executive/finance phishing campaign: CAD $300-$1,000
+
+## 90-Day Roadmap
+
+### Days 1-7: Close The Noise
+
+- Declare this folder the active business workspace.
+- Move all active planning into `AI_Phishing_Simulation_Business/`.
+- Create the client-ready service brochure.
+- Create a one-page offer sheet.
+- Create the discovery questionnaire.
+- Create the authorization and simulation-scope template.
+- Pick the first tool stack for manual delivery.
+
+### Days 8-21: Build Sellable Assets
+
+- Build website/services page copy.
+- Build 4-email cold outreach sequence.
+- Build LinkedIn outreach scripts.
+- Build sample monthly report.
+- Build sample phishing campaign examples using safe, authorized, non-credential-harvesting language.
+- Build quarterly threat briefing deck template.
+- Build tabletop exercise facilitator guide.
+
+### Days 22-45: Get First Proof
+
+- Contact 50-100 local/regional SMBs.
+- Target insurance brokers, MSPs, accountants, law firms, real estate offices, clinics, and construction companies.
+- Offer a free 20-minute AI phishing risk briefing.
+- Close 1-3 paid pilots.
+- Deliver manually.
+- Capture testimonials, objections, and repeatable delivery steps.
+
+### Days 46-90: Productize
+
+- Turn delivery into checklists.
+- Create client onboarding workflow.
+- Create reusable report templates.
+- Create a simple dashboard/reporting sheet.
+- Standardize pricing.
+- Build monthly renewal workflow.
+- Decide whether to build software only after customer evidence exists.
+
+## Clear Direction
+
+The purpose is not to build everything.
+
+The purpose is to create a focused, revenue-capable security business that can later become software.
+
+For the next 90 days, success means:
+
+- one clear offer
+- one clear buyer
+- one outreach motion
+- one repeatable delivery process
+- first paying clients
+
+Everything else is parked unless it directly helps that.

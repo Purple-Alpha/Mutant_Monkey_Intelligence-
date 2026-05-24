@@ -1,0 +1,19 @@
+From: Karen Miller <payments@northline-suppliers.example>
+To: accounts.payable@yourcompany.ca
+Date: 2026-05-22 11:08 UTC
+Subject: Updated banking details for today's payment
+
+Hi,
+
+We recently changed banks and need today's outstanding invoice paid to the new
+account below. Please update your records and send payment by 2pm so we can
+release the shipment.
+
+Beneficiary: Northline Suppliers Ltd.
+Bank: Global Trust Bank
+Account: 7441-883-2019
+SWIFT: GTBKUS33
+
+Please confirm once the payment has been sent.
+
+Karen

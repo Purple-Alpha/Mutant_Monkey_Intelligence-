@@ -1,0 +1,66 @@
+STDOUT:
+## Fraud Eval Report â€” 1 cases
+
+- Overall passed: 0 / 1
+- Precision on fraud cases: 0.00%
+- False positive rate on legit cases: 0.00%
+
+### Pass Gate (Phase 1.1 deep dive Â§4.5)
+
+| Criterion | Threshold | Actual | Met |
+| --- | --- | --- | --- |
+| Precision on fraud | >= 80% | 0.00% | NO |
+| FPR on legit | <= 10% | 0.00% | YES |
+| Per-fraud-subcategory recall | >= 60% each | lookalike_sender 0.00% | NO |
+
+**Gate verdict:** FAIL
+
+### Per-subcategory breakdown
+
+| Subcategory | Total | Passed | Recall |
+| --- | --- | --- | --- |
+| lookalike_sender | 1 | 0 | 0.00% |
+
+### Case Failure Details
+
+- `ls-002`: FAIL
+  - assertion: `risk_score 72 < min 75`
+
+### Raw LLM Responses
+
+#### ls-002
+
+```json
+{
+  "summary": "Invoice email from lookalike punycode sender domain billing@xn--acmevendor-9db.example claiming to be Acme Vendor with attached PDF invoice for $9,850.",
+  "action_items": [
+    {
+      "task": "Verify sender domain legitimacy and invoice authenticity before processing payment",
+      "owner": null,
+      "due_date": null
+    }
+  ],
+  "risk_analysis": {
+    "risk_score": 72,
+    "risk_factors": ["lookalike sender domain", "invoice attachment from anomalous domain"],
+    "phishing_signals": ["punycode domain in sender address"],
+    "urgency_signals": [],
+    "financial_risk": "medium",
+    "vendor_fraud_score": 68,
+    "wire_transfer_anomaly_score": 10,
+    "invoice_authenticity_score": 35,
+    "behavioral_deviation_flags": ["lookalike_sender_domain"]
+  },
+  "impersonation_analysis": {
+    "impersonation_likelihood": 85,
+    "suspicious_elements": ["punycode sender domain mimicking Acme Vendor"],
+    "sender_legitimacy_notes": "Domain uses xn-- prefix indicating potential homoglyph or IDN spoofing of legitimate vendor domain"
+  },
+  "recommended_action": "block"
+}
+```
+
+STDERR:
+
+EXIT:1
+ELAPSED_SEC:14.8

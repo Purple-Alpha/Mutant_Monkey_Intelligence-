@@ -1,0 +1,45 @@
+# Idea Parking Lot
+
+Purpose: capture new product, agent, SaaS, marketplace, nonprofit, or platform
+ideas without letting them interrupt the 30-day revenue push.
+
+## Rule
+
+Ideas are allowed. New builds are not.
+
+For the next 30 days, any new idea goes here as a one-line entry. No folder, no
+spec, no code, no research session, no domain buying, no new stack.
+
+## Current Primary Focus
+
+```text
+NorthStar Inbox Shield cashflow path:
+use the working LangGraph / Grok / eval-harness demo to win one small paid
+freelance contract within 30 days.
+```
+
+## Active Exceptions
+
+Only these are allowed during the 30-day window:
+
+1. Paid client work.
+2. Inbox Shield proposal/demo support.
+3. Tiny fixes needed to keep the demo proof passing.
+4. Scheduled review of this file.
+
+## Monthly Review Rule
+
+Review this file once per month. An idea can move out only if:
+
+- It still feels useful after 30 days.
+- It supports NorthStar, Social Architect, or SwarmCommand directly.
+- It has a clear customer/funding path.
+- It does not create a new build before revenue.
+
+## Parking Lot
+
+| Date | Idea | Notes | Status |
+|---|---|---|---|
+| 2026-05-22 | AI market-pusher / project-to-buyer lead miner | Agent that finds companies likely to need a finished project and routes outreach. Overlaps with original agentic bidding idea. Parked until revenue path is proven. | parked |
+| 2026-05-22 | Iron Grid sponsor-token layer | Utility-only fan sponsorship tokens, not betting/payouts. Needs legal/payment review before any launch. | parked |
+| 2026-05-22 | Social Architect BC youth-resource ecosystem | Mission project connected to Freedom's Door; long-term priority funded by future revenue. No new build during 30-day cashflow push. | parked |

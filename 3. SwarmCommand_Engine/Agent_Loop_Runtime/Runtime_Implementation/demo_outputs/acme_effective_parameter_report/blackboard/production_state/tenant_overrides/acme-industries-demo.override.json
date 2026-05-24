@@ -1,0 +1,13 @@
+{
+  "approved_by": "msp_owner_dave",
+  "created_at": "2026-05-23T15:15:00+00:00",
+  "expires_at": "2026-06-22T15:30:00+00:00",
+  "parameters": {
+    "fraud_risk_floor_lift": 10,
+    "url_obfuscation_floor_lift": 8
+  },
+  "reason": "Finance-heavy MSP pilot: raise invoice fraud and URL obfuscation review thresholds for the first 30 days.",
+  "requested_by": "msp_operator_jane",
+  "status": "active",
+  "tenant_id": "acme-industries-demo"
+}
