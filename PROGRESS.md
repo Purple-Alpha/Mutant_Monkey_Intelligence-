@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **745 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **761 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,16 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 32. Vendor Baseline audit-note polish — ✅ DONE 2026-05-24
+- Closed the three non-blocking follow-ups from the original Vendor Baseline Store Grok approve-with-notes report:
+  - **Out-of-range `ttl_days` direct API tests:** 5 parametrized cases (0, 29, 366, 10_000, -1) call `ingest_signal(..., ttl_days=...)` directly and assert `GovernanceError` plus no per-tenant database file is created. Pre-existing coverage only exercised the tenant-override path.
+  - **Non-int `ttl_days` rejection:** 5 parametrized cases (`True`, `False`, `1.5`, `"90"`, `None`) confirm the `_validate_ttl_days` type guard fires before any write.
+  - **Schema CHECK probes:** added direct SQL inserts that exercise the `length(signal_hash) = 64`, non-empty `vendor_domain`, and `datetime(...)` CHECK constraints, each raising `sqlite3.IntegrityError`.
+  - **Cross-tenant row inspection:** new tests open each per-tenant SQLite file with raw `sqlite3.connect` and assert that tenant B's writes never leak into tenant A's file, and that the same raw signal value under two tenants hashes to disjoint rows.
+- Verification:
+  - Focused vendor baseline suite: **52 passed, 1 skipped** (+13 from 39).
+  - Full runtime suite: **761 passed, 1 skipped** (+16 from 745, zero regressions).
 
 ### 31. Document Metadata Fingerprinting v1 implementation — ✅ DONE 2026-05-24
 - Landed `core/scoring/document_metadata_detector.py` against `4. Product_Roadmap/Document_Metadata_Fingerprinting_Deep_Dive.md` (§11 signed 2026-05-24).

@@ -469,3 +469,248 @@ def test_path_traversal_hardening_rejects_bad_tenant_ids(tmp_path, tenant_id):
     with pytest.raises(GovernanceError):
         tenant_database_path(tenant_id)
 
+
+# ---------------------------------------------------------------------------
+# Audit-note polish (Grok approve-with-notes follow-ups)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("ttl_days", [0, 29, 366, 10_000, -1])
+def test_ingest_signal_rejects_out_of_range_ttl_days_directly(tmp_path, ttl_days):
+    """Direct API rejects out-of-range ttl_days without going through tenant override."""
+
+    with pytest.raises(GovernanceError):
+        ingest_signal(
+            tenant_id=TENANT,
+            vendor_domain="vendor.example",
+            signal_type="routing_number",
+            raw_value="123456789",
+            now=_now(),
+            ttl_days=ttl_days,
+        )
+    assert not tenant_database_path(TENANT).exists()
+
+
+@pytest.mark.parametrize("ttl_days", [True, False, 1.5, "90", None])
+def test_ingest_signal_rejects_non_int_ttl_days(tmp_path, ttl_days):
+    """ttl_days must be an int (booleans, floats, strings, and None are rejected)."""
+
+    with pytest.raises(GovernanceError):
+        ingest_signal(
+            tenant_id=TENANT,
+            vendor_domain="vendor.example",
+            signal_type="routing_number",
+            raw_value="123456789",
+            now=_now(),
+            ttl_days=ttl_days,
+        )
+    assert not tenant_database_path(TENANT).exists()
+
+
+def test_schema_check_rejects_short_signal_hash(tmp_path):
+    """Schema CHECK enforces 64-char hex signal_hash; shorter inserts raise IntegrityError."""
+
+    ingest_signal(
+        tenant_id=TENANT,
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="123456789",
+        now=_now(),
+    )
+    path = tenant_database_path(TENANT)
+    with sqlite3.connect(path) as conn:
+        with pytest.raises(sqlite3.IntegrityError):
+            conn.execute(
+                """
+                INSERT INTO vendor_baseline_signals
+                    (vendor_domain, signal_type, signal_hash, first_seen_at, last_seen_at, expires_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    "vendor.example",
+                    "routing_number",
+                    "a" * 63,
+                    _now().isoformat(),
+                    _now().isoformat(),
+                    (_now() + timedelta(days=1)).isoformat(),
+                ),
+            )
+
+
+def test_schema_check_rejects_long_signal_hash(tmp_path):
+    """Schema CHECK rejects signal_hash longer than 64 chars."""
+
+    ingest_signal(
+        tenant_id=TENANT,
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="123456789",
+        now=_now(),
+    )
+    path = tenant_database_path(TENANT)
+    with sqlite3.connect(path) as conn:
+        with pytest.raises(sqlite3.IntegrityError):
+            conn.execute(
+                """
+                INSERT INTO vendor_baseline_signals
+                    (vendor_domain, signal_type, signal_hash, first_seen_at, last_seen_at, expires_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    "vendor.example",
+                    "routing_number",
+                    "a" * 65,
+                    _now().isoformat(),
+                    _now().isoformat(),
+                    (_now() + timedelta(days=1)).isoformat(),
+                ),
+            )
+
+
+def test_schema_check_rejects_empty_vendor_domain(tmp_path):
+    """Schema CHECK enforces non-empty vendor_domain."""
+
+    ingest_signal(
+        tenant_id=TENANT,
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="123456789",
+        now=_now(),
+    )
+    path = tenant_database_path(TENANT)
+    with sqlite3.connect(path) as conn:
+        with pytest.raises(sqlite3.IntegrityError):
+            conn.execute(
+                """
+                INSERT INTO vendor_baseline_signals
+                    (vendor_domain, signal_type, signal_hash, first_seen_at, last_seen_at, expires_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    "",
+                    "routing_number",
+                    "a" * 64,
+                    _now().isoformat(),
+                    _now().isoformat(),
+                    (_now() + timedelta(days=1)).isoformat(),
+                ),
+            )
+
+
+def test_schema_check_rejects_non_iso_timestamps(tmp_path):
+    """Schema CHECK rejects timestamp columns that are not parseable by SQLite's datetime()."""
+
+    ingest_signal(
+        tenant_id=TENANT,
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="123456789",
+        now=_now(),
+    )
+    path = tenant_database_path(TENANT)
+    with sqlite3.connect(path) as conn:
+        with pytest.raises(sqlite3.IntegrityError):
+            conn.execute(
+                """
+                INSERT INTO vendor_baseline_signals
+                    (vendor_domain, signal_type, signal_hash, first_seen_at, last_seen_at, expires_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    "vendor.example",
+                    "routing_number",
+                    "a" * 64,
+                    "not-a-timestamp",
+                    "not-a-timestamp",
+                    "not-a-timestamp",
+                ),
+            )
+
+
+def test_cross_tenant_rows_never_appear_in_other_tenant_db(tmp_path):
+    """Tenant B's writes never produce a row in tenant A's per-tenant SQLite file."""
+
+    ingest_signal(
+        tenant_id="tenant_a",
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="111111118",
+        now=_now(),
+    )
+    ingest_signal(
+        tenant_id="tenant_b",
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="222222226",
+        now=_now(),
+    )
+
+    path_a = tenant_database_path("tenant_a")
+    path_b = tenant_database_path("tenant_b")
+    assert path_a != path_b
+    assert path_a.exists()
+    assert path_b.exists()
+
+    with sqlite3.connect(path_a) as conn_a:
+        a_count = conn_a.execute(
+            "SELECT COUNT(*) FROM vendor_baseline_signals"
+        ).fetchone()[0]
+        a_hashes = {
+            row[0]
+            for row in conn_a.execute("SELECT signal_hash FROM vendor_baseline_signals")
+        }
+    with sqlite3.connect(path_b) as conn_b:
+        b_count = conn_b.execute(
+            "SELECT COUNT(*) FROM vendor_baseline_signals"
+        ).fetchone()[0]
+        b_hashes = {
+            row[0]
+            for row in conn_b.execute("SELECT signal_hash FROM vendor_baseline_signals")
+        }
+
+    assert a_count == 1
+    assert b_count == 1
+    assert a_hashes.isdisjoint(b_hashes)
+
+
+def test_same_value_under_two_tenants_produces_disjoint_db_rows(tmp_path):
+    """The same raw signal under tenants A and B hashes differently and writes only one row to each DB."""
+
+    ingest_signal(
+        tenant_id="tenant_a",
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="123456789",
+        now=_now(),
+    )
+    ingest_signal(
+        tenant_id="tenant_b",
+        vendor_domain="vendor.example",
+        signal_type="routing_number",
+        raw_value="123456789",
+        now=_now(),
+    )
+
+    path_a = tenant_database_path("tenant_a")
+    path_b = tenant_database_path("tenant_b")
+    with sqlite3.connect(path_a) as conn_a:
+        a_rows = list(
+            conn_a.execute(
+                "SELECT vendor_domain, signal_type, signal_hash "
+                "FROM vendor_baseline_signals"
+            )
+        )
+    with sqlite3.connect(path_b) as conn_b:
+        b_rows = list(
+            conn_b.execute(
+                "SELECT vendor_domain, signal_type, signal_hash "
+                "FROM vendor_baseline_signals"
+            )
+        )
+
+    assert len(a_rows) == 1
+    assert len(b_rows) == 1
+    assert a_rows[0][2] != b_rows[0][2]
+    assert a_rows[0][0] == b_rows[0][0] == "vendor.example"
+    assert a_rows[0][1] == b_rows[0][1] == "routing_number"
+

@@ -40,13 +40,16 @@ Month 1 through Month 6 core roadmap foundations are complete. Vendor Baseline S
 - **Operator authorization (2026-05-24):** Matt authorized `audit_tools/pre_ship_audit.py` as the single pre-ship review gate for material commits, replacing separate ceremony commands (`lock §11`, `start build`, `commit it`, `push it`) wherever practical. The gate may read pending diffs, relevant project trackers, and signed specs, then returns `VERDICT: SHIP | FIX_FIRST | STOP`. `STOP` and `FIX_FIRST` block commits unless Matt explicitly overrides with a written reason recorded here and in `PROJECT_ACTIVITY_LOG.md`. The Independent Decision Auditor (`decision_audit_runner.py`) and Independent Grok code-auditor (`grok_audit_runner.py`) remain available for deep-dive packet-style audits when the operator asks for them; the pre-ship gate is the always-on light-weight check before commit/push. This authorization is the §spec-equivalent record for the tool so independent auditors do not treat it as off-plan scope expansion.
 
 Current immediate next action:
-- **Document Metadata Fingerprinting v1** is the active lane (metadata-only; no PDF byte parsing in runtime). Spec: `4. Product_Roadmap/Document_Metadata_Fingerprinting_Deep_Dive.md`. Runtime: `core/scoring/document_metadata_detector.py` compares upstream `EmailAttachmentMeta.pdf_metadata` Producer/Creator strings against Vendor Baseline Store `pdf_producer_fingerprint` signals, then overlays lift-only floors in the scoring agent (LOW skips, MEDIUM runs floor 75, HIGH adds +10 cap 95). Before commit, run `python audit_tools/pre_ship_audit.py`; `SHIP` commits/pushes, `FIX_FIRST` fixes/reruns, `STOP` blocks unless Matt explicitly overrides with a written reason.
+- **Document Metadata Fingerprinting v1 LANDED** 2026-05-24 (commit `045b032`); runtime baseline now **745 passed, 1 skipped** before this lane, **761 passed** after the polish tests.
+- **2026-05-24 operator selection (Matt):** all three remaining parallel candidates are now active and will be landed sequentially in this order:
+  1. **Vendor Baseline audit-note polish** (tests-only follow-up to the original Vendor Baseline Store Grok `approve_with_notes` report).
+  2. **Adversarial prompt-injection detector** (small deterministic body scanner protecting the LLM scoring path; pure-function overlay; no PDF parsing, no network).
+  3. **Two-channel confirmation enforcement** (workflow/audit layer that consumes Financial State Ledger / Document Metadata findings and records whether a human verified the payment-change through a known-safe channel).
+- Each lane runs the same flow: ship code -> focused tests -> full runtime suite -> Grok audit target -> `python audit_tools/pre_ship_audit.py` -> commit/push only on `VERDICT: SHIP`.
 
 Parallel clean candidates (do not start without explicit selection):
 
-1. **Vendor Baseline audit-note polish** — non-blocking follow-up tests from Grok's approve-with-notes report (explicit out-of-range `ttl_days`, wider schema CHECK probes, cross-tenant row inspection).
-2. **Adversarial prompt-injection detector** — small deterministic body scanner protecting the LLM scoring path.
-3. **Two-channel confirmation enforcement** — workflow/audit layer for payment-change verification after FSL + document-metadata signals fire.
+1. (None — all previously listed candidates were selected by Matt on 2026-05-24 and are now active per the order above.)
 
 (SMB tier matrix LANDED in completed item 168; autonomous trigger scanner LANDED in completed item 169; Phase 1.5 full rerun diagnostic filed in completed item 170; vendor-invoice recall remediation LANDED in completed item 171.)
 

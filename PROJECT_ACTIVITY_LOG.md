@@ -26,6 +26,22 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Vendor Baseline Audit-Note Polish Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Tests-only follow-up
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_vendor_baseline_store.py` (UPDATED - 13 new polish tests)
+
+**Reason:**
+Closed the three non-blocking notes from the original Vendor Baseline Store Grok `approve_with_notes` report: explicit out-of-range and non-int `ttl_days` on the direct `ingest_signal` API, four wider schema CHECK probes (short/long hash, empty vendor domain, non-ISO timestamps), and two cross-tenant row-inspection tests proving tenant B's writes never appear in tenant A's per-tenant SQLite file. No runtime code change.
+
+**Next Step:**
+Run pre-ship audit and commit; then move to adversarial prompt-injection detector.
+
+---
+
 ## 2026-05-24 - Document Metadata Fingerprinting v1 Implementation Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 
