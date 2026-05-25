@@ -206,6 +206,33 @@
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
 
+### 29. Independent Decision Auditor workflow implementation — ✅ DONE 2026-05-24
+- Landed `audit_tools/decision_audit_runner.py` against the §11-signed `4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md` contract.
+- Runtime boundary:
+  - Tool remains local governance tooling under `audit_tools/`, outside product runtime.
+  - No `core/` module imports the runner, and the runner does not write Blackboard, production state, operator state, Git, GitHub, or trackers.
+- Packet / report workflow:
+  - Added `decision_audit_inputs/TEMPLATE.md` with the locked six-section Markdown packet contract.
+  - Added first self-audit packet: `decision_audit_inputs/20260524_1741_decision_auditor_next.md`.
+  - Reports write only under `audit_outputs/decision_audits/`, which stays covered by the existing `audit_outputs/` gitignore rule.
+- Secret and data-minimization controls:
+  - `load_xai_key()` reads only `XAI_API_KEY` and optional `XAI_MODEL`; missing model falls back to `grok-4`.
+  - Packet validation fails before any network call when required sections are missing, known secret markers appear (`XAI_API_KEY`, `BEGIN PRIVATE KEY`, `gho_`, `YOUR_GITHUB_PAT_HERE`), or obvious raw routing/account strings appear.
+  - xAI HTTP errors are redacted and do not echo authorization headers or API keys.
+- Verdict handling:
+  - `extract_verdict()` accepts only the closed enum: `proceed`, `proceed_with_notes`, `revise_before_proceeding`, `defer`, `operator_decision_required`.
+  - `proceed` / `proceed_with_notes` return success.
+  - `revise_before_proceeding`, `defer`, and `operator_decision_required` return a blocking non-zero exit unless `--report-only` is used.
+  - `--report-only` writes the report and clearly prints the blocking verdict while returning zero.
+- Verification:
+  - Focused Decision Auditor gate tests: **30 passed**.
+  - Full runtime suite from `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`: **688 passed, 1 skipped**.
+  - Root-level full-suite attempt failed during collection because `core` was not on `PYTHONPATH` from the repo root; rerunning from the runtime directory passed cleanly.
+- Required self-audit:
+  - Ran `python audit_tools\decision_audit_runner.py decision_audit_inputs\20260524_1741_decision_auditor_next.md`.
+  - Report: `audit_outputs/decision_audits/20260524_1741_decision_auditor_next_decision_audit_20260525T004700Z.md`.
+  - Verdict: **`proceed`**. Grok found no material missing alternatives, no spec override, and no scope expansion; it judged the lane the smallest protective action before the next major build-lane decision.
+
 ### 28. Tiered Detection Intensity implementation — ✅ DONE 2026-05-24
 - Landed `core/operator_state/security_profile.py` against the §11-signed `4. Product_Roadmap/Tiered_Detection_Intensity_Deep_Dive.md` contract.
 - Runtime behavior:
@@ -338,6 +365,8 @@
 
 | Date | Task | Test delta | Files |
 |------|------|-----------:|-------|
+| 2026-05-24 | Independent Decision Auditor implementation | +30 → **688** | `audit_tools/decision_audit_runner.py`, `decision_audit_inputs/TEMPLATE.md`, `decision_audit_inputs/20260524_1741_decision_auditor_next.md`, `tests/test_decision_audit_runner.py`, `4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `MASTER_INDEX.md`, `PROJECT_ACTIVITY_LOG.md`, `think_sheet.md` |
+| 2026-05-24 | Tiered Detection Intensity implementation | +37 → **658** | `core/operator_state/security_profile.py`, `core/operator_state/audit.py`, `core/blackboard/models.py`, `core/scoring/email_risk_scoring_agent.py`, `core/drafting/daily_digest_agent.py`, `tests/test_security_profile.py`, `tests/test_daily_digest_agent.py`, `audit_tools/grok_audit_runner.py`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `MASTER_INDEX.md`, `PROJECT_ACTIVITY_LOG.md`, `think_sheet.md` |
 | 2026-05-24 | Financial State Ledger / Delta Tripwire implementation | +29 → **621** | `core/scoring/financial_state_ledger.py`, `core/scoring/email_risk_scoring_agent.py`, `tests/test_financial_state_ledger.py`, `audit_tools/grok_audit_runner.py`, `tests/test_vendor_baseline_store.py`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `MASTER_INDEX.md`, `PROJECT_ACTIVITY_LOG.md`, `think_sheet.md` |
 | 2026-05-24 | Financial State Ledger / Delta Tripwire SPEC-FIRST LOCKDOWN (§11 SIGNED) | 0 | `4. Product_Roadmap/Financial_State_Ledger_Delta_Tripwire_Deep_Dive.md`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `MASTER_INDEX.md`, `PROJECT_ACTIVITY_LOG.md`, `think_sheet.md` |
 | 2026-05-24 | Vendor Baseline Store Grok audit cycle + cleanup | +5 → **592** | `audit_tools/grok_audit_runner.py`, `.gitignore`, `core/production_state/vendor_baseline/`, `tests/test_vendor_baseline_store.py`, `tests/test_vendor_baseline_isolation_boundary.py`, `think_sheet.md` |
@@ -347,7 +376,7 @@
 | 2026-05-24 | Visible deliberation + tiered detection stress tests | 0 | `think_sheet.md`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `PROJECT_ACTIVITY_LOG.md` |
 | 2026-05-24 | Visible deliberation + tiered detection intensity captured | 0 | `think_sheet.md`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `PROJECT_ACTIVITY_LOG.md` |
 | 2026-05-23 | Late-night think-sheet capture + outreach/research framing | 0 | `think_sheet.md`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `MASTER_INDEX.md`, `PROJECT_ACTIVITY_LOG.md` |
-| 2026-05-23 | Vendor Baseline Store spec-first lockdown + §11 signature | 0 | `4. Product_Roadmap/Vendor_Baseline_Store_Deep_Dive.md`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `think_sheet.md` |
+| 2026-05-23 | Vendor Baseline Store spec-first lockdown + §11Matt Nichol| 0 | `4. Product_Roadmap/Vendor_Baseline_Store_Deep_Dive.md`, `PROGRESS.md`, `PROJECT_HANDSHAKE.md`, `think_sheet.md` |
 | 2026-05-23 | Ghost-thread continuity detector | +21 → **555** | `core/scoring/ghost_thread_detector.py`, `core/scoring/email_risk_scoring_agent.py` (overlay wiring), `tests/test_ghost_thread_detector.py` |
 | 2026-05-23 | From / Reply-To / Return-Path divergence detector | +24 → **534** | `core/scoring/header_divergence_detector.py`, `core/scoring/email_risk_scoring_agent.py` (overlay wiring), `tests/test_header_divergence_detector.py` |
 | 2026-05-23 | Lift-only invariant property test for `recommended_risk_floor` | +11 → **510** | `tests/test_recommended_risk_floor_lift_only_invariant.py` |

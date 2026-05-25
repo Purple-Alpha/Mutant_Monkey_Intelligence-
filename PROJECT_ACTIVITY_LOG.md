@@ -26,6 +26,117 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Independent Decision Auditor Implementation Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Implemented
+
+**Files Changed:**
+- `audit_tools/decision_audit_runner.py` (CREATED - local xAI/Grok decision-audit runner)
+- `decision_audit_inputs/TEMPLATE.md` (CREATED - locked six-section packet template)
+- `decision_audit_inputs/20260524_1741_decision_auditor_next.md` (CREATED - first self-audit packet for the "Decision Auditor next" build-order decision)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_decision_audit_runner.py` (CREATED - 30 gate tests mapped to the signed §7 closure contract)
+- `4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md` (UPDATED - status changed from signed/queued to implementation landed; verification and self-audit result captured)
+- `PROGRESS.md` (UPDATED - Task 29 moved to DONE with receipt)
+- `PROJECT_HANDSHAKE.md` (UPDATED - current state and next-step queue refreshed)
+- `MASTER_INDEX.md` (UPDATED - audit tool + roadmap entries refreshed)
+- `think_sheet.md` (UPDATED - Independent decision-auditor lane marked landed)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+Matt issued the explicit `start build` signal after §11 lockdown. The implementation follows the signed spec boundary: the tool lives under `audit_tools/`, accepts one operator-reviewed Markdown packet, validates the locked six required packet sections, blocks known secret markers and obvious raw financial account/routing strings before any network call, calls xAI using only `XAI_API_KEY` plus optional `XAI_MODEL`, writes reports only under `audit_outputs/decision_audits/`, parses the closed verdict enum, and fails closed on `revise_before_proceeding`, `defer`, and `operator_decision_required` unless `--report-only` is explicitly passed.
+
+**Verification:**
+- Focused Decision Auditor gate: `python -m pytest "3. SwarmCommand_Engine\Agent_Loop_Runtime\Runtime_Implementation\tests\test_decision_audit_runner.py" -q` -> **30 passed**.
+- Full runtime suite from `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`: `python -m pytest tests` -> **688 passed, 1 skipped**.
+- Root-level full-suite attempt failed during collection because `core` was not on `PYTHONPATH` from the repo root; the correct runtime-cwd invocation passed cleanly.
+- Required self-audit packet run: `python audit_tools\decision_audit_runner.py decision_audit_inputs\20260524_1741_decision_auditor_next.md` -> report `audit_outputs/decision_audits/20260524_1741_decision_auditor_next_decision_audit_20260525T004700Z.md`, verdict **`proceed`**.
+
+**Independent Decision Auditor Result:**
+Grok judged the self-audit packet clear, aligned to current project state, and within the signed scope. It found no material missing alternatives, no spec override, and no scope expansion. Its verdict paragraph: the packet follows the signed spec, respects all stated constraints, and adds the intended pre-commit challenge layer with no scope expansion; the smallest protective action is to proceed with the build.
+
+**Next Step:**
+Commit and push this implementation when Matt explicitly asks. Recommended next build-lane candidates remain DKIM/SPF/DMARC ingestion spec-first lockdown, Document Metadata Fingerprinting spec-first lockdown, or Vendor Baseline audit-note polish; future major lane selections should now use the Decision Auditor before lock/build.
+
+---
+
+## 2026-05-24 - Independent Decision Auditor §11 LOCKDOWN SIGNED
+**Actor:** Matt Nichol (operator) + Claude Opus 4.7
+
+**Action:** Locked
+
+**Files Changed:**
+- `4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md` (UPDATED — §11 Lockdown Signature filled by Matt Nichol; status line now reads "§11 SIGNED 2026-05-24 by Matt Nichol. Implementation queued, pending explicit `start build` signal in chat.")
+- `PROGRESS.md` (UPDATED — Task 29 flipped from ⏳ PENDING §11 to ✅ §11 SIGNED)
+- `PROJECT_HANDSHAKE.md` (UPDATED — current next step reflects §11 SIGNED state, awaiting `start build`)
+- `MASTER_INDEX.md` (UPDATED — Decision Auditor entry retitled "§11 SIGNED")
+- `think_sheet.md` (UPDATED — Independent decision-auditor row notes §11 signed; awaits `start build`)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+Matt issued the §11 lock for the Independent Decision Auditor lane after reviewing §2 architectural decisions (D1-D16), §3 packet contract, §4 prompt and verdict contract, §5 trigger rules, §6 CLI contract, and §7 20-test closure gate. Locking §11 freezes the spec contract end-to-end so the next implementation receipt must cite this file by section number, and any deviation from a §2 locked decision now requires a formal spec revision instead of in-flight drift.
+
+**Locked highlights:**
+- Tool lives under `audit_tools/decision_audit_runner.py`; no `core/` module imports it.
+- Decision packets in `decision_audit_inputs/` use a locked six-section Markdown contract.
+- Reports land under `audit_outputs/decision_audits/`, gitignored by the existing rule.
+- `.env` handling matches the code-audit runner: `XAI_API_KEY` and optional `XAI_MODEL` only; never printed or persisted.
+- Default model = `grok-4`; auditor prompt is a locked constant.
+- Closed verdict enum: `proceed`, `proceed_with_notes`, `revise_before_proceeding`, `defer`, `operator_decision_required`.
+- Fail-closed gate: `revise_before_proceeding`, `defer`, `operator_decision_required` block implementation until Matt explicitly resolves the audit.
+- Proceed verdicts still require Matt's normal explicit command (`lock §11`, `start build`, commit, push); the auditor never acts for the operator.
+- Required audit triggers cover next build-lane selection, new §11 specs that open new subsystems/state surfaces, Guardrail 8-12 changes, data-egress/external-API decisions, new tenant/operator/production state surfaces, gold-plating vs necessary-quality disputes, roadmap reversals, runtime-affecting pricing/package decisions, and explicit anti-drift requests.
+- Data-minimization boundary blocks `.env`, secrets, raw client emails, raw financial strings, GitHub tokens, and private audit outputs from decision packets; packet validation fails fast on secret markers before any network call.
+- Operator authority preserved end-to-end. Matt can override any verdict; overrides must be written into the packet/result receipt with the reason.
+- Tracker integration: decision-audit reports for build-order decisions are cited in `PROJECT_ACTIVITY_LOG.md` and `PROJECT_HANDSHAKE.md` when they affect current direction.
+- §7 20-test gate is the closure contract. Implementation receipt cannot claim closure until one self-audit packet has been run against the "Decision Auditor next" build-order choice.
+
+**Verification:**
+- Doc-only change; no runtime tests required.
+- §11 block in `Independent_Decision_Auditor_Deep_Dive.md` now reads `LOCKED BY: Matt Nichol (operator)` / `LOCK DATE: 2026-05-24` plus a captured comment block enumerating the locked decisions.
+- Runtime baseline holds at **658 passed, 1 skipped** (unchanged from Tiered Detection Intensity post-implementation baseline).
+
+**Next Step:**
+Hold for Matt's explicit `start build` signal. No implementation work begins on `audit_tools/decision_audit_runner.py`, its tests, the `decision_audit_inputs/TEMPLATE.md` template, or the first self-audit packet until that signal is issued. When given, build proceeds against the locked §3 packet contract, §4 prompt/verdict contract, §5 trigger rules, §6 CLI contract, and §7 20-test gate.
+
+---
+
+## 2026-05-24 - Independent Decision Auditor Spec-First Draft
+**Actor:** GPT-5.5
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md` (CREATED — spec-first contract, pending §11 signature)
+- `PROGRESS.md` (UPDATED — Task 29)
+- `PROJECT_HANDSHAKE.md` (UPDATED — next step now points to Decision Auditor §11 review)
+- `MASTER_INDEX.md` (UPDATED — spec indexed)
+- `think_sheet.md` (UPDATED — Decision Auditor row notes draft spec pending §11)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+After the Tiered Detection Intensity lane closed cleanly (658 passed, 1 skipped; Grok verdict approve), Matt selected the next governance layer: an Independent Decision Auditor to challenge major build-order, spec-lock, and "gold-plating vs necessary quality" recommendations before they become committed direction. This preserves trust while adding a formal anti-drift check around the highest-leverage decisions.
+
+**Draft highlights:**
+- Runner target: `audit_tools/decision_audit_runner.py`.
+- Decision packet folder: `decision_audit_inputs/`.
+- Report folder: `audit_outputs/decision_audits/` (local/gitignored by existing `audit_outputs/` rule).
+- Closed verdict enum: `proceed`, `proceed_with_notes`, `revise_before_proceeding`, `defer`, `operator_decision_required`.
+- Fail-closed rule: revise/defer/operator-required verdicts block implementation until Matt explicitly resolves the audit.
+- Required audit triggers include next build-lane selection, new §11 spec locks for new subsystems/state surfaces, Guardrail 8-12 changes, data-egress decisions, persistent-state surfaces, and explicit Matt anti-drift requests.
+- Data-minimization boundary blocks `.env`, API keys, raw client emails, raw financial strings, GitHub tokens, and private audit outputs from decision packets.
+- §7 20-test gate drafted; implementation cannot claim closure until a self-audit packet has been run against the "Decision Auditor next" build-order choice.
+
+**Verification:**
+- Doc-only draft; no runtime tests required.
+- §11 signature block intentionally left blank. No implementation may start until Matt locks the spec and gives the explicit `start build` signal.
+- Runtime baseline remains **658 passed, 1 skipped**.
+
+**Next Step:**
+Matt reviews the Decision Auditor draft, especially §2 locked decisions, §5 trigger rules, §6 CLI contract, and §7 gate tests. If accepted, fill §11 Lockdown Signature, then wait for explicit `start build` before coding.
+
+---
+
 ## 2026-05-24 - Tiered Detection Intensity Implementation Landed
 **Actor:** Claude Opus 4.7
 
