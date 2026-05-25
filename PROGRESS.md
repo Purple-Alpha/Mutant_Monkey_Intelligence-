@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **587 tests passing** (exit code 0).
+**Runtime baseline (last verified):** **658 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,52 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 28. Tiered Detection Intensity implementation — ✅ DONE 2026-05-24
+- Landed `core/operator_state/security_profile.py` against the §11-signed `4. Product_Roadmap/Tiered_Detection_Intensity_Deep_Dive.md` contract.
+- Runtime behavior:
+  - Implements closed `SecurityProfile`, `DetectorIdentity`, `ForcedEscalationTrigger`, and `SalesPlan` literals.
+  - Defaults absent tenant profile state to `medium`.
+  - Stores per-tenant operator-controlled profile files at `blackboard_root/operator_state/security_profiles/<tenant>.json`.
+  - Resolves effective profile with a pure lift-only resolver: forced escalation can only raise to `high`; add-on detectors can only enable.
+  - Locks the v1 detector registry to the five current scoring slots: LLM primary, ransomware precursor overlay, header divergence, ghost thread, and Financial State Ledger.
+  - Locks sales-plan defaults: `essentials -> low`, `plus -> medium`, `enterprise -> high`.
+  - Appends `PROFILE_CHANGE` rows to the existing operator audit log on every profile write while preserving kill-switch audit rows.
+  - Extends `EmailAnalysisPayload` additively with `tenant_default_profile`, `effective_profile`, and `forced_escalation_triggers`.
+  - Wires `run_email_risk_scoring_cycle` and `score_one_email_payload` so profile metadata is attached only when the deterministic overlay path is enabled; `enable_ransomware_precursor_overlay=False` remains byte-identical and does not resolve profiles.
+  - Preserves kill-switch precedence: production loop checks the kill switch before any profile read.
+- Added `tests/test_security_profile.py` — **36 passed**, covering §7 gate areas: closed enums, rank ordering, default MEDIUM, exhaustive detector registry, LOW/MEDIUM/HIGH enabled sets, add-on lift/no-disable invariant, all four forced triggers, stable multi-trigger output, 48-case lift-only sweep, tenant isolation, profile-change audit row, forced-escalation payload visibility, sales mapping, kill-switch precedence, overlay-off backward compatibility, absent-field schema compatibility, cost monotonicity, cost ceiling under escalation, no raw-value leakage, tenant-id validation, strict disk-load rejection including malformed JSON -> `GovernanceError`, no direct Blackboard write, state confinement, operator-audit profile rows, and Grok audit target wiring.
+- Extended daily digest surfaces so `DailyDigestEmailEntry`, `DailyDigestRiskEntry`, and the digest LLM aggregate carry `tenant_default_profile`, `effective_profile`, and `forced_escalation_triggers` for client-visible `Profile`, `Tenant default`, and `Escalated by` rows.
+- Updated `audit_tools/grok_audit_runner.py` with a `tiered_detection_intensity` audit target including the signed spec, profile module, operator audit schema, scoring-agent integration, blackboard schema, test file, and tracker receipt anchors.
+- Verification:
+  - `python -m pytest tests/test_security_profile.py -q` -> **36 passed**.
+  - `python -m pytest tests/test_security_profile.py tests/test_daily_digest_agent.py tests/test_operator_kill_switch.py tests/test_email_risk_scoring_agent.py -q` -> **100 passed** after first Grok audit remediation.
+  - `python -m pytest tests/test_security_profile.py tests/test_operator_kill_switch.py tests/test_email_risk_scoring_agent.py tests/test_header_divergence_detector.py tests/test_ghost_thread_detector.py tests/test_financial_state_ledger.py tests/test_recommended_risk_floor_lift_only_invariant.py -q` -> **167 passed** before remediation; covered affected scoring/operator surfaces.
+  - `python -m pytest -q` -> **658 passed, 1 skipped** (+37 from 621, zero known runtime regressions).
+- Independent Grok audit:
+  - First run `audit_outputs/tiered_detection_intensity_grok_audit_20260525T001526Z.md` returned **approve with notes**.
+  - Remediated concrete findings: daily-digest profile visibility and malformed profile JSON wrapping.
+  - Second run `audit_outputs/tiered_detection_intensity_grok_audit_20260525T001951Z.md` returned **approve**.
+  - Grok found **no spec divergence**, **no coverage gaps**, and **no security / boundary risks** after remediation.
+
+### 27. Tiered Detection Intensity (Low / Medium / High) SPEC-FIRST LOCKDOWN — ✅ §11 SIGNED 2026-05-24
+- `4. Product_Roadmap/Tiered_Detection_Intensity_Deep_Dive.md` — §11 Lockdown Signature filled by Matt (operator) on 2026-05-24.
+- Spec scope locked:
+  - Pure types + resolver live in `core/operator_state/security_profile.py`; per-tenant state at `blackboard_root/operator_state/security_profiles/<tenant>.json` (Guardrail 12 separation; Guardrail 11 surfaces unchanged).
+  - Three-tier closed enum: `low` / `medium` / `high`, with integer ranks `LOW=0 < MEDIUM=1 < HIGH=2`.
+  - Default tenant posture when no state file exists = `MEDIUM`. A `LOW` tenant must be explicitly written by the operator.
+  - Closed `DetectorIdentity` enum (v1) matches the five detector slots already wired into `_overlay_ransomware_precursor`: `llm_primary`, `ransomware_precursor_overlay`, `header_divergence`, `ghost_thread`, `financial_state_ledger`.
+  - LOW set = LLM primary + precursor overlay + header divergence + ghost thread. MEDIUM adds FSL. HIGH is reserved in v1 (no HIGH-only detector ships before its own §11 spec).
+  - Closed `ForcedEscalationTrigger` enum (v1, four triggers): `llm_high_risk_score` (≥80), `header_divergence_strong` (≥80), `ghost_thread_detected` (>0), `manual_operator_escalation`. Five additional triggers (financial_state_delta, high_value_invoice, prior_vendor_fraud_flag, fresh_baseline_vendor, combined_bec_signals) are explicit v2 deferrals listed in §10.
+  - Lift-only invariant: forced escalation can ONLY raise the effective tier; add-on detectors can ONLY enable, never disable. Pinned by §7 gate tests #9, #15, #24.
+  - Sales-plan default mapping locked (Option C): `essentials → low`, `plus → medium`, `enterprise → high`.
+  - Audit emission: every profile write appends one `OperatorAuditEntry` with action `PROFILE_CHANGE`; every forced escalation is recorded on the analysis payload. Operator audit log remains the single source of truth.
+  - Kill switch (Guardrail 12) stays the outermost gate at every loop entry; profile resolution runs strictly AFTER the kill-switch check, never as a substitute for it.
+  - Backward compat: `enable_ransomware_precursor_overlay=False` must still produce byte-identical output to existing Month 1 / 2 / 3 fixtures and the grok-4 PASS gate. New analysis fields are additive + optional.
+- §7 30-test gate locked as closure contract; partial implementations do NOT close §4. Cost-monotonicity (#23) and cost-ceiling-under-escalation (#24) lock the call-count shape so future detector additions cannot silently regress the cost contract.
+- Grok independent-audit `tiered_detection_intensity` target must be wired into `audit_tools/grok_audit_runner.py` **before** implementation can be claimed closed (§7 test #30).
+- Implementation work is **not started** and does not begin until Matt issues the explicit `start build` signal.
+- Doc-only change; runtime baseline holds at **621 passed, 1 skipped**.
 
 ### 26. Financial State Ledger / Delta Tripwire implementation — ✅ DONE 2026-05-24
 - Landed `core/scoring/financial_state_ledger.py` against the §11-signed `4. Product_Roadmap/Financial_State_Ledger_Delta_Tripwire_Deep_Dive.md` contract.

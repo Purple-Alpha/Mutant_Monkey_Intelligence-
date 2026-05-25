@@ -22,7 +22,7 @@ from core.blackboard import GovernanceError
 
 from .state import KillSwitchScope, _VALID_SCOPES
 
-OperatorAuditAction = Literal["engage", "disengage"]
+OperatorAuditAction = Literal["engage", "disengage", "PROFILE_CHANGE"]
 
 
 @dataclass(frozen=True)
@@ -35,6 +35,10 @@ class OperatorAuditEntry:
     operator: str
     reason: str
     at: datetime
+    tenant_id: str | None = None
+    security_profile: str | None = None
+    previous_security_profile: str | None = None
+    addon_detectors: tuple[str, ...] = ()
 
 
 def operator_audit_log_path(blackboard_root: Path) -> Path:
@@ -59,6 +63,14 @@ def append_operator_audit_entry(path: Path, entry: OperatorAuditEntry) -> None:
         "reason": entry.reason,
         "at": entry.at.isoformat(),
     }
+    if entry.tenant_id is not None:
+        payload["tenant_id"] = entry.tenant_id
+    if entry.security_profile is not None:
+        payload["security_profile"] = entry.security_profile
+    if entry.previous_security_profile is not None:
+        payload["previous_security_profile"] = entry.previous_security_profile
+    if entry.addon_detectors:
+        payload["addon_detectors"] = list(entry.addon_detectors)
     with path.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(payload, sort_keys=True) + "\n")
 
@@ -97,7 +109,7 @@ def _parse_audit_line(line: str, *, line_number: int) -> OperatorAuditEntry:
         )
 
     action = raw.get("action")
-    if action not in ("engage", "disengage"):
+    if action not in ("engage", "disengage", "PROFILE_CHANGE"):
         raise GovernanceError(
             f"operator audit log line {line_number}: invalid action {action!r}"
         )
@@ -142,6 +154,34 @@ def _parse_audit_line(line: str, *, line_number: int) -> OperatorAuditEntry:
     if at.tzinfo is None:
         at = at.replace(tzinfo=timezone.utc)
 
+    tenant_id = raw.get("tenant_id")
+    if tenant_id is not None and not isinstance(tenant_id, str):
+        raise GovernanceError(
+            f"operator audit log line {line_number}: tenant_id must be a string or null"
+        )
+    security_profile = raw.get("security_profile")
+    if security_profile is not None and not isinstance(security_profile, str):
+        raise GovernanceError(
+            f"operator audit log line {line_number}: "
+            "security_profile must be a string or null"
+        )
+    previous_security_profile = raw.get("previous_security_profile")
+    if previous_security_profile is not None and not isinstance(
+        previous_security_profile, str
+    ):
+        raise GovernanceError(
+            f"operator audit log line {line_number}: "
+            "previous_security_profile must be a string or null"
+        )
+    addon_detectors_raw = raw.get("addon_detectors", [])
+    if not isinstance(addon_detectors_raw, list) or not all(
+        isinstance(item, str) for item in addon_detectors_raw
+    ):
+        raise GovernanceError(
+            f"operator audit log line {line_number}: "
+            "addon_detectors must be a list of strings"
+        )
+
     return OperatorAuditEntry(
         action=action,  # type: ignore[arg-type]
         scope=scope,  # type: ignore[arg-type]
@@ -149,4 +189,8 @@ def _parse_audit_line(line: str, *, line_number: int) -> OperatorAuditEntry:
         operator=operator,
         reason=reason,
         at=at,
+        tenant_id=tenant_id,
+        security_profile=security_profile,
+        previous_security_profile=previous_security_profile,
+        addon_detectors=tuple(addon_detectors_raw),
     )

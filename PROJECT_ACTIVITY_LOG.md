@@ -26,6 +26,81 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Tiered Detection Intensity Implementation Landed
+**Actor:** Claude Opus 4.7
+
+**Action:** Created / Updated / Verified
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/operator_state/security_profile.py` (CREATED — Tiered Detection Intensity profile state, resolver, per-tenant load/save, sales-plan mapping)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/operator_state/__init__.py` (UPDATED — exports Tiered Detection Intensity public API)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/operator_state/audit.py` (UPDATED — operator audit rows now support `PROFILE_CHANGE` while preserving kill-switch `engage` / `disengage`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py` (UPDATED — additive profile metadata fields on `EmailAnalysisPayload`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/email_risk_scoring_agent.py` (UPDATED — resolves tenant profile after kill-switch check, attaches effective profile / forced-trigger metadata, preserves overlay-off backward compatibility)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_security_profile.py` (CREATED — §7 gate coverage)
+- `audit_tools/grok_audit_runner.py` (UPDATED — `tiered_detection_intensity` audit target)
+- `4. Product_Roadmap/Tiered_Detection_Intensity_Deep_Dive.md` (UPDATED — implementation landed status)
+- `PROGRESS.md` (UPDATED — Task 28 implementation receipt)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+Matt issued the explicit `start build` signal after signing §11 for Tiered Detection Intensity. The implementation follows the locked v1 scope: tenant-scoped Low / Medium / High profile resolution, default MEDIUM, lift-only forced escalation, audit-logged operator profile changes, sales-plan mapping, scoring-agent profile metadata, and no HIGH-only deliberation primitives in v1.
+
+**Verification:**
+- `python -m pytest tests/test_security_profile.py -q` -> **36 passed**.
+- `python -m pytest tests/test_security_profile.py tests/test_daily_digest_agent.py tests/test_operator_kill_switch.py tests/test_email_risk_scoring_agent.py -q` -> **100 passed** after first Grok audit remediation.
+- `python -m pytest tests/test_security_profile.py tests/test_operator_kill_switch.py tests/test_email_risk_scoring_agent.py tests/test_header_divergence_detector.py tests/test_ghost_thread_detector.py tests/test_financial_state_ledger.py tests/test_recommended_risk_floor_lift_only_invariant.py -q` -> **167 passed** before remediation; covered affected scoring/operator surfaces.
+- `python -m pytest -q` -> **658 passed, 1 skipped**.
+- New runtime baseline: **658 passed, 1 skipped** (+37 from 621, zero known regressions).
+- First independent Grok audit `audit_outputs/tiered_detection_intensity_grok_audit_20260525T001526Z.md` returned **approve with notes**. Concrete findings remediated: malformed profile JSON now raises `GovernanceError`, and daily digest entries / aggregate carry `Profile`, `Tenant default`, and `Escalated by` profile metadata.
+- Second independent Grok audit `audit_outputs/tiered_detection_intensity_grok_audit_20260525T001951Z.md` returned **approve**. Report states no spec divergence, no coverage gaps, and no security / boundary risks.
+
+**Next Step:**
+Tiered Detection Intensity is implemented, tested, and independently approved. Next clean build options: Independent decision-auditor workflow spec, DKIM / SPF / DMARC ingestion spec-first lockdown, Document Metadata Fingerprinting spec-first lockdown, or Vendor Baseline audit-note polish.
+
+---
+
+## 2026-05-24 - Tiered Detection Intensity §11 LOCKDOWN SIGNED
+**Actor:** Matt (operator) + Claude Opus 4.7
+
+**Action:** Created / Locked
+
+**Files Changed:**
+- `4. Product_Roadmap/Tiered_Detection_Intensity_Deep_Dive.md` (CREATED — spec-first contract drafted in this session, then §11 Lockdown Signature filled by Matt; status line reads "§11 SIGNED 2026-05-24 by Matt. Implementation queued, pending explicit `start build` signal in chat.")
+- `PROGRESS.md` (UPDATED — Task 27 added as ✅ §11 SIGNED)
+- `PROJECT_HANDSHAKE.md` (UPDATED — current target and next step reflect the §11-signed Tiered Detection Intensity spec)
+- `MASTER_INDEX.md` (UPDATED — Tiered Detection Intensity spec indexed as §11 SIGNED)
+- `think_sheet.md` (UPDATED — Tiered Detection Intensity row notes §11 signed; awaits `start build`)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+After the Financial State Ledger build closed clean (621 passed, 1 skipped; Grok verdict `approve`), Matt selected the next build lane: the Low / Medium / High Security Profile system that has been promoted in `think_sheet.md` since 2026-05-24 and explicitly tagged "spec-first treatment before implementation." This spec freezes the contract end-to-end so the next implementation receipt must cite this file by section number, and any deviation from a §2 locked decision now requires a formal spec revision instead of in-flight drift.
+
+**Locked highlights (D1-D15):**
+- Pure types + resolver live in `core/operator_state/security_profile.py`; per-tenant state at `blackboard_root/operator_state/security_profiles/<tenant>.json` (Guardrail 12 separation; Guardrail 11 surfaces unchanged).
+- Three-tier closed enum: `low` / `medium` / `high`. Integer ranks `LOW=0 < MEDIUM=1 < HIGH=2`.
+- Default tenant posture when no state file exists = `MEDIUM`. A `LOW` tenant must be explicitly written by the operator (audit-logged).
+- Closed `DetectorIdentity` enum (v1) covers the five detector slots already wired into `_overlay_ransomware_precursor`: `llm_primary`, `ransomware_precursor_overlay`, `header_divergence`, `ghost_thread`, `financial_state_ledger`.
+- LOW set = LLM primary + precursor overlay + header divergence + ghost thread. MEDIUM adds FSL. HIGH is reserved in v1; no HIGH-only detector ships before its own §11 spec.
+- Closed `ForcedEscalationTrigger` enum (v1, four triggers): `llm_high_risk_score` (≥80), `header_divergence_strong` (≥80), `ghost_thread_detected` (>0), `manual_operator_escalation`. Five additional triggers (financial_state_delta, high_value_invoice, prior_vendor_fraud_flag, fresh_baseline_vendor, combined_bec_signals) are explicit v2 deferrals.
+- Lift-only invariant: forced escalation can ONLY raise the effective tier; add-on detectors can ONLY enable, never disable. Pinned by §7 gate tests #9, #15, #24.
+- Sales-plan default mapping locked (Option C): `essentials → low`, `plus → medium`, `enterprise → high`.
+- Audit emission: every profile write appends one `OperatorAuditEntry` with action `PROFILE_CHANGE`; every forced escalation is recorded on the analysis payload. Operator audit log remains the single source of truth.
+- Kill switch (Guardrail 12) stays the outermost gate at every loop entry; profile resolution runs strictly AFTER the kill-switch check, never as a substitute for it.
+- Backward compat: `enable_ransomware_precursor_overlay=False` must produce byte-identical output to existing Month 1 / 2 / 3 fixtures and the grok-4 PASS gate. New analysis fields are additive + optional.
+- §7 30-test gate is the closure contract. Partial implementations do NOT close §4. Cost-monotonicity (#23) and cost-ceiling-under-escalation (#24) lock the call-count shape so future detector additions cannot silently regress the cost contract.
+- Grok independent-audit `tiered_detection_intensity` target must be wired into `audit_tools/grok_audit_runner.py` BEFORE the build is claimed closed (§7 test #30).
+
+**Verification:**
+- Doc-only change; no runtime tests required.
+- §11 block in `Tiered_Detection_Intensity_Deep_Dive.md` now reads `LOCKED BY: Matt (operator)` / `LOCK DATE: 2026-05-24` plus a captured comment block enumerating the locked decisions.
+- Runtime baseline holds at **621 passed, 1 skipped** (unchanged from FSL post-implementation baseline).
+
+**Next Step:**
+Hold for Matt's explicit `start build` signal. No implementation work begins on `core/operator_state/security_profile.py`, its tests, or the scoring-agent integration until that signal is issued. When given, build proceeds against the locked §4 API and §7 gate tests, with a post-build Grok audit pass through the new `tiered_detection_intensity` target in `audit_tools/grok_audit_runner.py`.
+
+---
+
 ## 2026-05-24 - Financial State Ledger Implementation Landed
 **Actor:** GPT-5.5
 

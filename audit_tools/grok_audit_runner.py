@@ -28,6 +28,7 @@ Supported targets:
 
 - `vendor_baseline` (default)
 - `financial_state_ledger`
+- `tiered_detection_intensity`
 """
 
 from __future__ import annotations
@@ -239,9 +240,76 @@ FINANCIAL_STATE_LEDGER_PACKAGE = AuditPackage(
 )
 
 
+TIERED_DETECTION_INTENSITY_PACKAGE = AuditPackage(
+    name="tiered_detection_intensity",
+    files=(
+        AuditFile(
+            label="1. SIGNED SPECIFICATION",
+            relative_path="4. Product_Roadmap/Tiered_Detection_Intensity_Deep_Dive.md",
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: core/operator_state/security_profile.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/operator_state/security_profile.py"
+            ),
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: core/operator_state/audit.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/operator_state/audit.py"
+            ),
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: core/scoring/email_risk_scoring_agent.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/email_risk_scoring_agent.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCHEMA FILE: core/blackboard/models.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/blackboard/models.py"
+            ),
+        ),
+        AuditFile(
+            label="3. TEST FILE: tests/test_security_profile.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_security_profile.py"
+            ),
+        ),
+    ),
+    receipt_label="4. IMPLEMENTER RECEIPT",
+    receipt_files=(
+        AuditFile(label="PROGRESS.md (Task 28 only)", relative_path="PROGRESS.md"),
+        AuditFile(
+            label="PROJECT_ACTIVITY_LOG.md (Tiered Detection implementation entry only)",
+            relative_path="PROJECT_ACTIVITY_LOG.md",
+        ),
+    ),
+    receipt_anchors=(
+        (
+            "PROGRESS.md",
+            "### 28. Tiered Detection Intensity implementation",
+            "### 27.",
+        ),
+        (
+            "PROJECT_ACTIVITY_LOG.md",
+            "## 2026-05-24 - Tiered Detection Intensity Implementation Landed",
+            "## 2026-05-24 - Tiered Detection Intensity §11 LOCKDOWN SIGNED",
+        ),
+    ),
+)
+
+
 AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "vendor_baseline": VENDOR_BASELINE_PACKAGE,
     "financial_state_ledger": FINANCIAL_STATE_LEDGER_PACKAGE,
+    "tiered_detection_intensity": TIERED_DETECTION_INTENSITY_PACKAGE,
 }
 
 

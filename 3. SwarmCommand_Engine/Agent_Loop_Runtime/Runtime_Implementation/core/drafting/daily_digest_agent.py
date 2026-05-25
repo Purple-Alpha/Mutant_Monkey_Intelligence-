@@ -67,9 +67,10 @@ The digest must make that specialization obvious:
 You will receive one JSON document with exactly these sections:
 - digest_date: ISO date for the digest.
 - important_emails: ranked list of email summaries with source ids, sender,
-  subject, risk_score, and action_items.
+  subject, risk_score, security profile fields, escalation triggers, and
+  action_items.
 - top_risks: highest-risk emails with source ids, sender, subject,
-  risk_score, and reason.
+  risk_score, reason, security profile fields, and escalation triggers.
 - tasks: deduplicated action items with owner, due_date, parent email, risk
   score, and source ids.
 
@@ -82,7 +83,8 @@ Required structure:
 2. Add "## Executive Readout" with 2-4 bullets. Lead with fraud and
    ransomware-prevention risk, not generic email importance.
 3. Add "## Highest-Risk Emails" when top_risks is non-empty. For each item,
-   include subject, sender, risk_score, reason, and the immediate review
+   include subject, sender, risk_score, reason, Profile, Tenant default when
+   different from Profile, Escalated by when present, and the immediate review
    action. Emphasize vendor fraud, executive impersonation, wire-transfer
    pressure, suspicious invoices, attachment risk, obfuscated URLs,
    credential harvesting, and MFA-fatigue lures when those signals are present
@@ -91,7 +93,10 @@ Required structure:
    when present. Do not duplicate equivalent tasks.
 5. Add "## Other Notable Emails" for important_emails that are not already
    covered under Highest-Risk Emails, keeping each item to one line.
-6. End with "## Operator Guidance" containing 1-3 practical next steps.
+6. Include profile lines exactly as "Profile: <effective_profile>",
+   "Tenant default: <tenant_default_profile>" when different, and
+   "Escalated by: <forced_escalation_triggers>" when present.
+7. End with "## Operator Guidance" containing 1-3 practical next steps.
 
 Hard rules:
 - Use only facts present in the JSON. Do not invent senders, links,
@@ -346,6 +351,11 @@ def _rank_important_emails(
             summary=item.analysis.summary,
             action_items=list(item.analysis.action_items),
             risk_score=item.analysis.risk_analysis.risk_score,
+            tenant_default_profile=item.analysis.tenant_default_profile,
+            effective_profile=item.analysis.effective_profile,
+            forced_escalation_triggers=list(
+                item.analysis.forced_escalation_triggers
+            ),
         )
         for item in ranked[:_TOP_IMPORTANT_EMAILS]
     ]
@@ -371,6 +381,11 @@ def _rank_top_risks(enriched: list[_EnrichedAnalysis]) -> list[DailyDigestRiskEn
                 item.analysis.risk_analysis.risk_factors[0]
                 if item.analysis.risk_analysis.risk_factors
                 else None
+            ),
+            tenant_default_profile=item.analysis.tenant_default_profile,
+            effective_profile=item.analysis.effective_profile,
+            forced_escalation_triggers=list(
+                item.analysis.forced_escalation_triggers
             ),
         )
         for item in eligible[:_TOP_RISKS]

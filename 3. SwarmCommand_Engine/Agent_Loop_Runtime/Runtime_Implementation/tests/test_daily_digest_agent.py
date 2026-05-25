@@ -77,6 +77,9 @@ def _seed_analysis(
     recommended_action: str = "needs_review",
     produced_at: datetime | None = None,
     summary: str | None = "summary",
+    tenant_default_profile: str | None = None,
+    effective_profile: str | None = None,
+    forced_escalation_triggers: list[str] | None = None,
 ) -> UUID:
     payload = EmailAnalysisPayload(
         source_email_record_id=source_email_record_id,
@@ -97,6 +100,9 @@ def _seed_analysis(
             suspicious_elements=[],
         ),
         recommended_action=recommended_action,
+        tenant_default_profile=tenant_default_profile,
+        effective_profile=effective_profile,
+        forced_escalation_triggers=forced_escalation_triggers or [],
     )
     result = submit_email_analysis(
         context,
@@ -166,6 +172,61 @@ def test_digest_passes_locked_specialization_prompt_to_llm(tmp_path):
     assert "Fraud starts in the inbox." in captured["system_prompt"]
     assert "Ransomware starts with a click." in captured["system_prompt"]
     assert "vendor impersonation and wire-transfer pressure" in captured["user_prompt"]
+
+
+def test_digest_carries_security_profile_and_escalation_fields(tmp_path):
+    context = _context(tmp_path)
+    now = datetime(2026, 5, 20, 12, 0, tzinfo=timezone.utc)
+    inbound_id = _seed_inbound(
+        context,
+        sender="risk@example.com",
+        subject="Escalated invoice",
+    )
+    _seed_analysis(
+        context,
+        source_email_record_id=inbound_id,
+        risk_score=88,
+        risk_factors=["forced high scrutiny"],
+        produced_at=now - timedelta(minutes=30),
+        tenant_default_profile="low",
+        effective_profile="high",
+        forced_escalation_triggers=["llm_high_risk_score"],
+    )
+
+    captured: dict[str, str] = {}
+
+    def _client(system_prompt: str, user_prompt: str) -> str:
+        captured["system_prompt"] = system_prompt
+        captured["user_prompt"] = user_prompt
+        return "# Daily Inbox Shield Digest — 2026-05-20"
+
+    run_daily_digest_cycle(
+        context,
+        config=DailyDigestConfig(
+            llm_client=_client,
+            production_tenant_id=TENANT,
+            now_provider=_fixed_now(now),
+        ),
+    )
+
+    digest_records = [
+        r for r in _production_records(context) if r.record_type == RecordType.DAILY_DIGEST
+    ]
+    payload = DailyDigestPayload.model_validate(digest_records[0].payload)
+    assert payload.important_emails[0].tenant_default_profile == "low"
+    assert payload.important_emails[0].effective_profile == "high"
+    assert payload.important_emails[0].forced_escalation_triggers == [
+        "llm_high_risk_score"
+    ]
+    assert payload.top_risks[0].tenant_default_profile == "low"
+    assert payload.top_risks[0].effective_profile == "high"
+    assert payload.top_risks[0].forced_escalation_triggers == [
+        "llm_high_risk_score"
+    ]
+    assert "Profile: <effective_profile>" in captured["system_prompt"]
+    assert '"effective_profile": "high"' in captured["user_prompt"]
+    assert '"tenant_default_profile": "low"' in captured["user_prompt"]
+    assert '"llm_high_risk_score"' in captured["user_prompt"]
 
 
 def _production_records(context: RouteContext):

@@ -565,6 +565,16 @@ class EmailAnalysisPayload(StrictModel):
     ransomware_precursor_analysis: EmailAnalysisRansomwarePrecursorAnalysis | None = (
         None
     )
+    tenant_default_profile: Literal["low", "medium", "high"] | None = None
+    effective_profile: Literal["low", "medium", "high"] | None = None
+    forced_escalation_triggers: list[
+        Literal[
+            "llm_high_risk_score",
+            "header_divergence_strong",
+            "ghost_thread_detected",
+            "manual_operator_escalation",
+        ]
+    ] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def cap_summary_length(self) -> EmailAnalysisPayload:
@@ -601,6 +611,16 @@ class DailyDigestEmailEntry(StrictModel):
     summary: str | None = None
     action_items: list[EmailAnalysisActionItem] = Field(default_factory=list)
     risk_score: int = Field(ge=0, le=100)
+    tenant_default_profile: Literal["low", "medium", "high"] | None = None
+    effective_profile: Literal["low", "medium", "high"] | None = None
+    forced_escalation_triggers: list[
+        Literal[
+            "llm_high_risk_score",
+            "header_divergence_strong",
+            "ghost_thread_detected",
+            "manual_operator_escalation",
+        ]
+    ] = Field(default_factory=list)
 
 
 class DailyDigestRiskEntry(StrictModel):
@@ -612,6 +632,16 @@ class DailyDigestRiskEntry(StrictModel):
     sender: str | None = None
     risk_score: int = Field(ge=0, le=100)
     reason: str | None = None
+    tenant_default_profile: Literal["low", "medium", "high"] | None = None
+    effective_profile: Literal["low", "medium", "high"] | None = None
+    forced_escalation_triggers: list[
+        Literal[
+            "llm_high_risk_score",
+            "header_divergence_strong",
+            "ghost_thread_detected",
+            "manual_operator_escalation",
+        ]
+    ] = Field(default_factory=list)
 
 
 class DailyDigestTaskEntry(StrictModel):

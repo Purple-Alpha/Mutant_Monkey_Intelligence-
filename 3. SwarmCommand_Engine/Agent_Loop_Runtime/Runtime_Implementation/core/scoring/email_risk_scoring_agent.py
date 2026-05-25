@@ -51,6 +51,13 @@ from core.blackboard import (
     read_records,
 )
 from core.operator_state import KillSwitchEngaged, is_kill_switch_engaged
+from core.operator_state.security_profile import (
+    ForcedEscalationEvidence,
+    ProfileResolution,
+    SecurityProfile,
+    load_tenant_profile_state,
+    resolve_profile_for_email,
+)
 from core.orchestrator import (
     RouteContext,
     RouteResult,
@@ -261,6 +268,7 @@ class EmailRiskScoringConfig:
     fraud_risk_floor_lift: int = 0
     attachment_risk_floor_lift: int = 0
     url_obfuscation_floor_lift: int = 0
+    default_profile_when_unset: SecurityProfile = "medium"
 
 
 @dataclass(frozen=True)
@@ -409,9 +417,16 @@ def run_email_risk_scoring_cycle(
             continue
 
         if config.enable_ransomware_precursor_overlay:
+            profile_resolution = _resolve_profile_for_inbound(
+                context.blackboard_root,
+                config=config,
+                inbound_payload=inbound_payload,
+                analysis_payload=analysis_payload,
+            )
             analysis_payload = _overlay_ransomware_precursor(
                 analysis_payload,
                 inbound_payload,
+                profile_resolution=profile_resolution,
                 fraud_risk_floor_lift=config.fraud_risk_floor_lift,
                 attachment_risk_floor_lift=config.attachment_risk_floor_lift,
                 url_obfuscation_floor_lift=config.url_obfuscation_floor_lift,
@@ -501,6 +516,51 @@ def _build_user_prompt(source_record_id: UUID, payload: EmailInboundPayload) -> 
     return json.dumps(user_block, sort_keys=True, ensure_ascii=False)
 
 
+def _resolve_profile_for_inbound(
+    blackboard_root,
+    *,
+    config: EmailRiskScoringConfig,
+    inbound_payload: EmailInboundPayload,
+    analysis_payload: EmailAnalysisPayload,
+) -> ProfileResolution:
+    """Resolve Tiered Detection Intensity for one inbound email.
+
+    The production kill switch has already been checked by the caller. This
+    helper is side-effect-free: it reads tenant profile state, evaluates
+    always-on detector evidence, and returns the pure profile resolution.
+    """
+
+    try:
+        tenant_state = load_tenant_profile_state(
+            blackboard_root, config.production_tenant_id
+        )
+    except FileNotFoundError:  # pragma: no cover - defensive; loader defaults absent
+        tenant_state = None
+
+    tenant_default = (
+        tenant_state.profile if tenant_state is not None else config.default_profile_when_unset
+    )
+    addon_detectors = tenant_state.addon_detectors if tenant_state is not None else ()
+    header_divergence = score_header_divergence(
+        sender=inbound_payload.sender,
+        headers=inbound_payload.headers,
+    )
+    ghost_thread = score_ghost_thread(
+        subject=inbound_payload.subject,
+        headers=inbound_payload.headers,
+    )
+    return resolve_profile_for_email(
+        tenant_default=tenant_default,
+        addon_detectors=addon_detectors,
+        evidence=ForcedEscalationEvidence(
+            llm_risk_score=analysis_payload.risk_analysis.risk_score,
+            header_divergence_score=header_divergence.score,
+            ghost_thread_score=ghost_thread.score,
+            manual_escalation_requested=False,
+        ),
+    )
+
+
 @dataclass(frozen=True)
 class _SchemaValidationError:
     reason: str
@@ -552,6 +612,7 @@ def _overlay_ransomware_precursor(
     analysis_payload: EmailAnalysisPayload,
     inbound_payload: EmailInboundPayload,
     *,
+    profile_resolution: ProfileResolution | None = None,
     financial_state_ledger_assessment: FinancialStateLedgerAssessment | None = None,
     fraud_risk_floor_lift: int = 0,
     attachment_risk_floor_lift: int = 0,
@@ -600,28 +661,49 @@ def _overlay_ransomware_precursor(
     multi-signal evidence.
     """
 
-    overlay = build_precursor_overlay(
-        inbound_payload,
-        attachment_floor_lift=attachment_risk_floor_lift,
-        url_obfuscation_floor_lift=url_obfuscation_floor_lift,
+    enabled_detectors = (
+        set(profile_resolution.enabled_detectors) if profile_resolution is not None else None
     )
-    header_divergence = score_header_divergence(
-        sender=inbound_payload.sender,
-        headers=inbound_payload.headers,
+    overlay = (
+        build_precursor_overlay(
+            inbound_payload,
+            attachment_floor_lift=attachment_risk_floor_lift,
+            url_obfuscation_floor_lift=url_obfuscation_floor_lift,
+        )
+        if enabled_detectors is None
+        or "ransomware_precursor_overlay" in enabled_detectors
+        else build_precursor_overlay(inbound_payload)
     )
-    ghost_thread = score_ghost_thread(
-        subject=inbound_payload.subject,
-        headers=inbound_payload.headers,
+    header_divergence = (
+        score_header_divergence(
+            sender=inbound_payload.sender,
+            headers=inbound_payload.headers,
+        )
+        if enabled_detectors is None or "header_divergence" in enabled_detectors
+        else None
+    )
+    ghost_thread = (
+        score_ghost_thread(
+            subject=inbound_payload.subject,
+            headers=inbound_payload.headers,
+        )
+        if enabled_detectors is None or "ghost_thread" in enabled_detectors
+        else None
+    )
+    fsl_floor = (
+        financial_state_ledger_assessment.recommended_risk_floor
+        if financial_state_ledger_assessment is not None
+        and (
+            enabled_detectors is None
+            or "financial_state_ledger" in enabled_detectors
+        )
+        else 0
     )
     floor_after_precursor = max(
         overlay.recommended_risk_floor,
-        header_divergence.score,
-        ghost_thread.score,
-        (
-            financial_state_ledger_assessment.recommended_risk_floor
-            if financial_state_ledger_assessment is not None
-            else 0
-        ),
+        header_divergence.score if header_divergence is not None else 0,
+        ghost_thread.score if ghost_thread is not None else 0,
+        fsl_floor,
     )
     base_risk_score = max(
         analysis_payload.risk_analysis.risk_score, floor_after_precursor
@@ -639,12 +721,21 @@ def _overlay_ransomware_precursor(
     updated_risk_analysis = analysis_payload.risk_analysis.model_copy(
         update={"risk_score": final_risk_score}
     )
-    return analysis_payload.model_copy(
-        update={
-            "risk_analysis": updated_risk_analysis,
-            "ransomware_precursor_analysis": overlay.block,
-        }
-    )
+    update = {
+        "risk_analysis": updated_risk_analysis,
+        "ransomware_precursor_analysis": overlay.block,
+    }
+    if profile_resolution is not None:
+        update.update(
+            {
+                "tenant_default_profile": profile_resolution.tenant_default,
+                "effective_profile": profile_resolution.effective_profile,
+                "forced_escalation_triggers": list(
+                    profile_resolution.forced_escalation_triggers
+                ),
+            }
+        )
+    return analysis_payload.model_copy(update=update)
 
 
 def _clamp_fraud_lift(value: int) -> int:
@@ -830,8 +921,26 @@ def score_one_email_payload(
         )
 
     if helper_config.enable_ransomware_precursor_overlay:
+        profile_resolution = resolve_profile_for_email(
+            tenant_default=helper_config.default_profile_when_unset,
+            addon_detectors=(),
+            evidence=ForcedEscalationEvidence(
+                llm_risk_score=analysis_payload.risk_analysis.risk_score,
+                header_divergence_score=score_header_divergence(
+                    sender=inbound_payload.sender,
+                    headers=inbound_payload.headers,
+                ).score,
+                ghost_thread_score=score_ghost_thread(
+                    subject=inbound_payload.subject,
+                    headers=inbound_payload.headers,
+                ).score,
+                manual_escalation_requested=False,
+            ),
+        )
         analysis_payload = _overlay_ransomware_precursor(
-            analysis_payload, inbound_payload
+            analysis_payload,
+            inbound_payload,
+            profile_resolution=profile_resolution,
         )
 
     return analysis_payload
