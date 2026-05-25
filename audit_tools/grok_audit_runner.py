@@ -447,6 +447,67 @@ EMAIL_AUTHENTICATION_PACKAGE = AuditPackage(
 )
 
 
+DOCUMENT_METADATA_FINGERPRINTING_PACKAGE = AuditPackage(
+    name="document_metadata_fingerprinting",
+    files=(
+        AuditFile(
+            label="1. SIGNED SPECIFICATION",
+            relative_path=(
+                "4. Product_Roadmap/Document_Metadata_Fingerprinting_Deep_Dive.md"
+            ),
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: core/scoring/document_metadata_detector.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/document_metadata_detector.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCHEMA: core/blackboard/models.py (PdfAttachmentMetadata slice)",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/blackboard/models.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCORING INTEGRATION: core/scoring/email_risk_scoring_agent.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/email_risk_scoring_agent.py"
+            ),
+        ),
+        AuditFile(
+            label="3. TEST FILE: tests/test_document_metadata_detector.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_document_metadata_detector.py"
+            ),
+        ),
+    ),
+    receipt_label="4. IMPLEMENTER RECEIPT",
+    receipt_files=(
+        AuditFile(
+            label="PROJECT_HANDSHAKE.md (Document Metadata v1 direction note)",
+            relative_path="PROJECT_HANDSHAKE.md",
+        ),
+        AuditFile(label="PROGRESS.md (latest task entry)", relative_path="PROGRESS.md"),
+    ),
+    receipt_anchors=(
+        (
+            "PROJECT_HANDSHAKE.md",
+            "Document Metadata Fingerprinting v1",
+            "Parallel clean candidates",
+        ),
+        (
+            "PROGRESS.md",
+            "### 31. Document Metadata Fingerprinting v1",
+            "### 30.",
+        ),
+    ),
+)
+
+
 AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "vendor_baseline": VENDOR_BASELINE_PACKAGE,
     "financial_state_ledger": FINANCIAL_STATE_LEDGER_PACKAGE,
@@ -454,6 +515,7 @@ AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "independent_decision_auditor": INDEPENDENT_DECISION_AUDITOR_PACKAGE,
     "pre_ship_audit": PRE_SHIP_AUDIT_PACKAGE,
     "email_authentication": EMAIL_AUTHENTICATION_PACKAGE,
+    "document_metadata_fingerprinting": DOCUMENT_METADATA_FINGERPRINTING_PACKAGE,
 }
 
 

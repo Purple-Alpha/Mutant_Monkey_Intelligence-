@@ -47,6 +47,7 @@ from core.blackboard import (
     EmailAnalysisPayload,
     EmailInboundPayload,
     Environment,
+    GovernanceError,
     RecordType,
     read_records,
 )
@@ -67,6 +68,11 @@ from core.orchestrator import (
 )
 from core.orchestrator.routes import blackboard_path
 from core.precursor import build_precursor_overlay
+from core.scoring.document_metadata_detector import (
+    DocumentMetadataAssessment,
+    assess_document_metadata_fingerprint,
+    vendor_domain_from_sender,
+)
 from core.scoring.email_authentication_detector import score_email_authentication
 from core.scoring.financial_state_ledger import FinancialStateLedgerAssessment
 from core.scoring.ghost_thread_detector import score_ghost_thread
@@ -424,10 +430,21 @@ def run_email_risk_scoring_cycle(
                 inbound_payload=inbound_payload,
                 analysis_payload=analysis_payload,
             )
+            document_metadata_assessment: DocumentMetadataAssessment | None = None
+            try:
+                document_metadata_assessment = assess_document_metadata_fingerprint(
+                    tenant_id=config.production_tenant_id,
+                    vendor_domain=vendor_domain_from_sender(inbound_payload.sender),
+                    email=inbound_payload,
+                    now=inbound_payload.received_at,
+                )
+            except GovernanceError:
+                document_metadata_assessment = None
             analysis_payload = _overlay_ransomware_precursor(
                 analysis_payload,
                 inbound_payload,
                 profile_resolution=profile_resolution,
+                document_metadata_assessment=document_metadata_assessment,
                 fraud_risk_floor_lift=config.fraud_risk_floor_lift,
                 attachment_risk_floor_lift=config.attachment_risk_floor_lift,
                 url_obfuscation_floor_lift=config.url_obfuscation_floor_lift,
@@ -615,6 +632,7 @@ def _overlay_ransomware_precursor(
     *,
     profile_resolution: ProfileResolution | None = None,
     financial_state_ledger_assessment: FinancialStateLedgerAssessment | None = None,
+    document_metadata_assessment: DocumentMetadataAssessment | None = None,
     fraud_risk_floor_lift: int = 0,
     attachment_risk_floor_lift: int = 0,
     url_obfuscation_floor_lift: int = 0,
@@ -634,7 +652,9 @@ def _overlay_ransomware_precursor(
        effective security profile is MEDIUM or HIGH.
     5. Financial State Ledger / Delta Tripwire risk floor when a caller has
        already performed the required stateful vendor-baseline assessment.
-    6. Phase 1.4 floor lifts driven by signed policy state.
+    6. Document Metadata Fingerprinting when the effective security profile
+       is MEDIUM or HIGH and upstream PDF metadata is present.
+    7. Phase 1.4 floor lifts driven by signed policy state.
 
     Pure transform: returns a new ``EmailAnalysisPayload`` with the
     ``ransomware_precursor_analysis`` block populated and
@@ -718,12 +738,25 @@ def _overlay_ransomware_precursor(
         )
         else 0
     )
+    document_metadata_floor = (
+        _document_metadata_floor_for_profile(
+            document_metadata_assessment.recommended_risk_floor,
+            profile_resolution.effective_profile if profile_resolution is not None else "high",
+        )
+        if document_metadata_assessment is not None
+        and (
+            profile_resolution is None
+            or profile_resolution.effective_profile != "low"
+        )
+        else 0
+    )
     floor_after_precursor = max(
         overlay.recommended_risk_floor,
         header_divergence.score if header_divergence is not None else 0,
         ghost_thread.score if ghost_thread is not None else 0,
         email_authentication_floor,
         fsl_floor,
+        document_metadata_floor,
     )
     base_risk_score = max(
         analysis_payload.risk_analysis.risk_score, floor_after_precursor
@@ -752,6 +785,27 @@ def _overlay_ransomware_precursor(
             [
                 f"email_authentication:{indicator}"
                 for indicator in email_authentication.indicators
+            ],
+        )
+    if (
+        document_metadata_assessment is not None
+        and document_metadata_floor > 0
+        and document_metadata_assessment.indicators
+    ):
+        risk_update["risk_factors"] = _append_unique(
+            risk_update.get("risk_factors", analysis_payload.risk_analysis.risk_factors),
+            [
+                f"document_metadata:{indicator}"
+                for indicator in document_metadata_assessment.indicators
+            ],
+        )
+        risk_update["phishing_signals"] = _append_unique(
+            risk_update.get(
+                "phishing_signals", analysis_payload.risk_analysis.phishing_signals
+            ),
+            [
+                f"document_metadata:{indicator}"
+                for indicator in document_metadata_assessment.indicators
             ],
         )
 
@@ -792,6 +846,14 @@ def _append_unique(existing: list[str], additions: list[str]) -> list[str]:
 
 
 def _email_authentication_floor_for_profile(score: int, profile: SecurityProfile) -> int:
+    if score <= 0:
+        return 0
+    if profile == "high":
+        return min(95, score + 10)
+    return score
+
+
+def _document_metadata_floor_for_profile(score: int, profile: SecurityProfile) -> int:
     if score <= 0:
         return 0
     if profile == "high":

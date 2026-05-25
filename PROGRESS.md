@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **658 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **745 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,20 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 31. Document Metadata Fingerprinting v1 implementation — ✅ DONE 2026-05-24
+- Landed `core/scoring/document_metadata_detector.py` against `4. Product_Roadmap/Document_Metadata_Fingerprinting_Deep_Dive.md` (§11 signed 2026-05-24).
+- Schema:
+  - Added `PdfAttachmentMetadata` and optional `EmailAttachmentMeta.pdf_metadata` (bounded Producer/Creator strings, max 512 chars each).
+- Runtime behavior:
+  - `assess_document_metadata_fingerprint()` extracts qualifying PDF/invoice attachment metadata only (no PDF bytes, no OCR, no network).
+  - Uses Vendor Baseline Store `pdf_producer_fingerprint` with check-then-ingest ordering.
+  - `new` / `expired` fingerprints recommend risk floor **75** and action `needs_review`; `known` emits no lift.
+  - Wired into `email_risk_scoring_agent.py` production scoring cycle and `_overlay_ransomware_precursor` with profile gating (LOW skips, MEDIUM floor 75, HIGH +10 cap 95).
+  - No Tiered Detection `DetectorIdentity` enum expansion in v1.
+- Verification:
+  - Focused suite: **23 passed** in `tests/test_document_metadata_detector.py`.
+  - Full runtime suite: **745 passed, 1 skipped** (+23 from 722, zero regressions).
 
 ### 30. Catch-up Grok audits on new governance + detector tools — ✅ DONE 2026-05-24
 - Wired three new audit targets into `audit_tools/grok_audit_runner.py`:

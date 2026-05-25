@@ -26,6 +26,28 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Document Metadata Fingerprinting v1 Implementation Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Implemented
+
+**Files Changed:**
+- `4. Product_Roadmap/Document_Metadata_Fingerprinting_Deep_Dive.md` (CREATED - §11-signed v1 spec)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py` (UPDATED - `PdfAttachmentMetadata`, `EmailAttachmentMeta.pdf_metadata`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/document_metadata_detector.py` (CREATED)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/email_risk_scoring_agent.py` (UPDATED - production cycle + overlay integration)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/__init__.py` (UPDATED - exports)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_document_metadata_detector.py` (CREATED - 23 gate tests)
+- `audit_tools/grok_audit_runner.py` (UPDATED - `document_metadata_fingerprinting` audit target)
+
+**Reason:**
+Matt approved Document Metadata Fingerprinting v1 as the next BEC detector after DKIM/SPF/DMARC and Financial State Ledger. v1 is metadata-only: upstream extractors populate bounded PDF Producer/Creator fields on attachment records; the runtime compares normalized fingerprints against per-tenant Vendor Baseline Store memory and lifts risk only on `new` / `expired` tooling fingerprints.
+
+**Next Step:**
+Run `python audit_tools/grok_audit_runner.py document_metadata_fingerprinting`, then `python audit_tools/pre_ship_audit.py`; commit/push on SHIP.
+
+---
+
 ## 2026-05-24 - Catch-Up Grok Audits on New Governance + Detector Tools
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

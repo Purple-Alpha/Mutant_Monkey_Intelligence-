@@ -402,6 +402,17 @@ MutationKind: TypeAlias = Literal[
 _PHASE_1_3_RESERVED_TLDS: tuple[str, ...] = (".example", ".test", ".invalid")
 
 
+class PdfAttachmentMetadata(StrictModel):
+    """Bounded PDF document metadata from an upstream safe extractor.
+
+    v1 Document Metadata Fingerprinting consumes only these fields. The
+    runtime does not parse PDF bytes in this lane.
+    """
+
+    producer: str | None = Field(default=None, max_length=512)
+    creator: str | None = Field(default=None, max_length=512)
+
+
 class EmailAttachmentMeta(StrictModel):
     """Per-attachment metadata captured by the email ingest stub.
 
@@ -416,6 +427,10 @@ class EmailAttachmentMeta(StrictModel):
     is opt-in: the ingest stub leaves this ``None`` and a downstream
     inspector populates it.
 
+    ``pdf_metadata`` is populated by an upstream PDF metadata extractor
+    (outside product runtime in v1). Document Metadata Fingerprinting reads
+    Producer/Creator only; no raw PDF bytes are stored on the blackboard.
+
     ``attachment_class`` is the coarse classification used by Inbox Shield
     scoring and the daily digest to drive Fraud + Ransomware reasoning
     (vendor invoice fraud, credential lures, executable payloads, etc.).
@@ -428,6 +443,7 @@ class EmailAttachmentMeta(StrictModel):
     content_ref: str | None = None
     sha256: str | None = None
     extracted_text: str | None = None
+    pdf_metadata: PdfAttachmentMetadata | None = None
     attachment_class: AttachmentClass = "unknown"
 
     @model_validator(mode="after")
