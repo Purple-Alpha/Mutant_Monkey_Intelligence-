@@ -129,6 +129,14 @@ def build_default_registry() -> dict[str, AgentRegistryEntry]:
             allowed_write_types={RecordType.VENDOR_BASELINE_AUDIT},
             can_access_production_data=True,
         ),
+        AgentRegistryEntry(
+            agent_id="two_channel_confirmation_001",
+            display_name="NorthStar Two-Channel Confirmation Workflow",
+            role=AgentRole.WORKFLOW,
+            allowed_environments={Environment.PRODUCTION},
+            allowed_write_types={RecordType.TWO_CHANNEL_CONFIRMATION},
+            can_access_production_data=True,
+        ),
         # ---- Phase 1.3 Sandbox Training Pit (Month 4) ------------------
         # The four fraud-specialized Red profiles. All four are
         # sandbox-only and the only record type they are allowed to write

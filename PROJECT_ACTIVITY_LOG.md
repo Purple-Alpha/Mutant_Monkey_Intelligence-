@@ -26,6 +26,32 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Two-Channel Confirmation Enforcement v1 Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Lane 3 of 3 in the 2026-05-24 three-lane authorization.
+
+**Files Changed:**
+- `4. Product_Roadmap/Two_Channel_Confirmation_Enforcement_Deep_Dive.md` (NEW - signed §11)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/workflows/__init__.py` (NEW)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/workflows/two_channel_confirmation.py` (NEW)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py` (UPDATED - new RecordType + payload)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/__init__.py` (UPDATED - re-export)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/routes.py` (UPDATED - submit_two_channel_confirmation)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/__init__.py` (UPDATED - re-export)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/registry.py` (UPDATED - new workflow agent)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_two_channel_confirmation.py` (NEW - 39 tests)
+- `audit_tools/grok_audit_runner.py` (UPDATED - `two_channel_confirmation` audit target)
+- `PROJECT_HANDSHAKE.md`, `PROGRESS.md`, `MASTER_INDEX.md` (updates)
+
+**Reason:**
+Closes the workflow gap behind the BEC detectors. When Financial State Ledger or Document Metadata Fingerprinting raise `needs_review`, the runtime can now create an append-only `pending` audit event in the Blackboard, then the operator records a `confirmed` / `rejected` / `unable_to_verify` outcome with a closed-enum channel_kind. Lift-only (no scoring effect), append-only (no edits, no second outcome), per-tenant isolated, kill-switch-gated, and data-minimized (no raw finding content in payload).
+
+**Next Step:**
+Grok audit + pre-ship gate + commit/push. Three-lane authorization complete.
+
+---
+
 ## 2026-05-24 - Adversarial Prompt-Injection Detector v1 Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

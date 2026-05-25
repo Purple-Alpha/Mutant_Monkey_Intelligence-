@@ -44,7 +44,7 @@ Current immediate next action:
 - **2026-05-24 operator selection (Matt):** all three remaining parallel candidates are now active and will be landed sequentially in this order:
   1. **Vendor Baseline audit-note polish** — ✅ LANDED 2026-05-24 (commit `139dfae`).
   2. **Adversarial prompt-injection detector** — ✅ LANDED 2026-05-24 (pure-function detector + Tiered Detection overlay + 23 focused tests; full suite 784 passed).
-  3. **Two-channel confirmation enforcement** — IN PROGRESS (workflow/audit layer that consumes Financial State Ledger / Document Metadata findings and records whether a human verified the payment-change through a known-safe channel).
+  3. **Two-channel confirmation enforcement** — ✅ LANDED 2026-05-24 (workflow/audit layer; new `RecordType.TWO_CHANNEL_CONFIRMATION`; `core/workflows/two_channel_confirmation.py`; 39 focused tests; full suite 828 passed; lift-only audit trail only - the scoring agent does not import this module, by static test).
 - Each lane runs the same flow: ship code -> focused tests -> full runtime suite -> Grok audit target -> `python audit_tools/pre_ship_audit.py` -> commit/push only on `VERDICT: SHIP`.
 
 Parallel clean candidates (do not start without explicit selection):

@@ -36,6 +36,7 @@ class RecordType(str, Enum):
     DAILY_DIGEST = "daily_digest"
     EFFECTIVE_PARAMETERS_REPORT = "effective_parameters_report"
     VENDOR_BASELINE_AUDIT = "vendor_baseline_audit"
+    TWO_CHANNEL_CONFIRMATION = "two_channel_confirmation"
 
 
 class AuditStatus(str, Enum):
@@ -139,6 +140,45 @@ class VendorBaselineAuditPayload(StrictModel):
     signal_hash: str | None = None
     rows_affected: int = Field(default=0, ge=0)
     reason: str
+
+
+TwoChannelEventType = Literal["pending", "outcome"]
+TwoChannelOutcomeStatus = Literal[
+    "confirmed", "rejected", "unable_to_verify", "expired"
+]
+TwoChannelChannelKind = Literal[
+    "previously_known_phone",
+    "previously_known_in_person",
+    "previously_known_video_call",
+    "previously_known_internal_system",
+    "other_documented",
+]
+
+
+class TwoChannelConfirmationPayload(StrictModel):
+    """Append-only two-channel confirmation event.
+
+    Two values of ``event_type``:
+    - ``pending``: written when a detector raises a finding that requires
+      out-of-band verification.
+    - ``outcome``: written exactly once per ``finding_id`` after the operator
+      records the result of the verification attempt.
+    """
+
+    event_type: TwoChannelEventType
+    finding_id: str = Field(min_length=1, max_length=128)
+    tenant_id: str = Field(min_length=1, max_length=128)
+    detector: str = Field(min_length=1, max_length=128)
+    recommended_action: Literal["needs_review"]
+    risk_floor: int = Field(ge=0, le=100)
+    requested_at: datetime | None = None
+    requested_by: str | None = Field(default=None, max_length=128)
+    outcome_at: datetime | None = None
+    outcome_by: str | None = Field(default=None, max_length=128)
+    outcome_status: TwoChannelOutcomeStatus | None = None
+    channel_kind: TwoChannelChannelKind | None = None
+    channel_description: str | None = Field(default=None, max_length=256)
+    reason: str | None = Field(default=None, max_length=512)
 
 
 class WeaknessReportPayload(StrictModel):
@@ -804,6 +844,7 @@ PayloadModel: TypeAlias = (
     | DailyDigestPayload
     | EffectiveParametersReportPayload
     | VendorBaselineAuditPayload
+    | TwoChannelConfirmationPayload
 )
 
 
@@ -824,6 +865,7 @@ PAYLOAD_MODELS: dict[RecordType, type[BaseModel]] = {
     RecordType.DAILY_DIGEST: DailyDigestPayload,
     RecordType.EFFECTIVE_PARAMETERS_REPORT: EffectiveParametersReportPayload,
     RecordType.VENDOR_BASELINE_AUDIT: VendorBaselineAuditPayload,
+    RecordType.TWO_CHANNEL_CONFIRMATION: TwoChannelConfirmationPayload,
 }
 
 

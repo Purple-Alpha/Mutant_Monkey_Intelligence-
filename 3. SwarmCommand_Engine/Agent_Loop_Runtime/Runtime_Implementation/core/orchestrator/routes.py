@@ -34,6 +34,7 @@ from core.blackboard import (
     RiskScorePayload,
     SyntheticAttackCasePayload,
     SyntheticEmailAttackCasePayload,
+    TwoChannelConfirmationPayload,
     VendorBaselineAuditPayload,
     WeaknessReportPayload,
     WorkflowTriggerPayload,
@@ -446,6 +447,27 @@ def submit_vendor_baseline_audit(
         tenant_id=tenant_id,
         environment=Environment.PRODUCTION,
         record_type=RecordType.VENDOR_BASELINE_AUDIT,
+        source_agent=source_agent,
+        workflow_id=workflow_id,
+        parent_record_id=parent_record_id,
+        payload=payload.model_dump(mode="json"),
+    )
+    return _write_record(context, record)
+
+
+def submit_two_channel_confirmation(
+    context: RouteContext,
+    *,
+    tenant_id: str,
+    source_agent: str,
+    payload: TwoChannelConfirmationPayload,
+    workflow_id: str | None = None,
+    parent_record_id: UUID | None = None,
+) -> RouteResult:
+    record = BlackboardRecord(
+        tenant_id=tenant_id,
+        environment=Environment.PRODUCTION,
+        record_type=RecordType.TWO_CHANNEL_CONFIRMATION,
         source_agent=source_agent,
         workflow_id=workflow_id,
         parent_record_id=parent_record_id,

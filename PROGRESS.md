@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **789 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **829 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,23 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 34. Two-Channel Confirmation Enforcement v1 — ✅ DONE 2026-05-24
+- **Spec:** signed `4. Product_Roadmap/Two_Channel_Confirmation_Enforcement_Deep_Dive.md` (§11 Matt Nichol 2026-05-24).
+- **New `RecordType.TWO_CHANNEL_CONFIRMATION`** with `TwoChannelConfirmationPayload(StrictModel)` carrying closed enums for `event_type` (`pending` | `outcome`), `outcome_status` (`confirmed` | `rejected` | `unable_to_verify` | `expired`), and `channel_kind` (`previously_known_phone` | `previously_known_in_person` | `previously_known_video_call` | `previously_known_internal_system` | `other_documented`).
+- **New `core/workflows/` package** with `two_channel_confirmation.py`:
+  - `record_confirmation_request(...)` writes a single `pending` event; rejects duplicate finding_ids, invalid `[A-Za-z0-9_-:.]+` finding_ids (incl. `.`, `..`, leading/trailing dot), out-of-range `risk_floor` (must be `[1, 100]`), and non-int / boolean risk floors; honors the production kill switch; requires timezone-aware datetimes.
+  - `record_confirmation_outcome(...)` writes exactly one `outcome` event per finding_id; rejects outcomes without a prior `pending`, a second outcome (no whitewashing), `confirmed` without a `channel_kind`, `other_documented` without a non-empty `reason`, `outcome_at < requested_at`, bad statuses, and overlong description/reason; honors the production kill switch.
+  - `list_pending_confirmations(...)` enumerates unresolved findings sorted by `requested_at` for the daily digest, scoped per-tenant.
+  - `summarize_confirmation_status(...)` returns the most informative record (outcome > pending > None) for one finding_id.
+- **Orchestrator wiring:** new `submit_two_channel_confirmation` route + registry entry `two_channel_confirmation_001` (production-only, workflow role, only allowed to write `TWO_CHANNEL_CONFIRMATION`).
+- **Lift-only invariant:** the scoring agent does NOT import this workflow; a `confirmed` outcome does not change `recommended_risk_floor`. Verified by a static test (`test_scoring_agent_does_not_import_two_channel_confirmation`).
+- **Data minimization:** payload carries no raw email content, vendor address, account numbers, or finding raw values; operator labels are length-bounded.
+- **Audit target:** `audit_tools/grok_audit_runner.py two_channel_confirmation` audits spec + workflow + schema + orchestrator + registry + tests.
+- **Verification:**
+  - Focused tests: **40 passed** (`tests/test_two_channel_confirmation.py`) covering API surface, schema registration, all GovernanceError paths (duplicate, invalid id, out-of-range floor including explicit `risk_floor=0`, naive datetime, missing pending, double outcome, missing channel_kind, missing reason, time-order violation, bad status), kill switch on both entry points, closed status enum, pending listing (filter, sort, tenant isolation, risk_floor preserved), summarize (None/pending/outcome), lift-only invariant, no-raw-content guarantee, and audit-target registration.
+  - Full runtime suite: **829 passed, 1 skipped** (+40, zero regressions).
+  - Polish after first Grok audit (`approve_with_notes`): tightened `ConfirmationRecord.recommended_action` to `Literal["needs_review"]`, documented the `.` / `..` / leading/trailing-dot finding_id guards in §2 D6 of the spec, added explicit `risk_floor=0` rejection test, and added `list_pending_confirmations` `risk_floor` preservation test.
 
 ### 33. Adversarial Prompt-Injection Detector v1 — ✅ DONE 2026-05-24
 - **Spec:** signed `4. Product_Roadmap/Adversarial_Prompt_Injection_Detector_Deep_Dive.md` (§11 Matt Nichol 2026-05-24).
