@@ -206,6 +206,24 @@
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
 
+### 40. Vendor Baseline signal-type enum revision spec draft — ✅ DONE 2026-05-24
+- Drafted `4. Product_Roadmap/Vendor_Baseline_Signal_Type_Enum_Revision_Deep_Dive.md` as a pending-signature addendum to the signed Vendor Baseline Store contract.
+- Scope is spec-only. No runtime implementation is authorized until Matt fills in §11 and explicitly starts the build.
+- Proposed additive signal types:
+  - `sender_origin_provider`
+  - `sender_origin_asn`
+  - `sender_origin_country`
+  - `vendor_callback_phone_number`
+- The draft preserves the original Vendor Baseline Store posture:
+  - hash-only storage,
+  - per-tenant isolation,
+  - no raw `Received:` header storage,
+  - no raw phone-number storage,
+  - no runtime DNS / GeoIP / ASN / phone reputation lookup,
+  - no sender-provenance or TOAD scoring activated by the enum expansion.
+- Draft locks an implementation gate covering exact enum widening, normalization rules, SQLite CHECK widening, idempotent table-rebuild migration, hash-only / audit-minimized behavior, kill-switch continuity, no detector activation, Grok audit target wiring, and full-suite verification.
+- No runtime impact; full runtime baseline remains **881 passed, 1 skipped** from the preceding Option C verification.
+
 ### 39. Sender-provenance Option C foundation — ✅ DONE 2026-05-24
 - Matt explicitly chose **Option C** before the cheaper-proof run: build only the prerequisites that make future sender-provenance / geo-velocity work possible, without implementing the detector.
 - Runtime scope:

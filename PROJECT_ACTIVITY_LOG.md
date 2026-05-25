@@ -26,6 +26,32 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Vendor Baseline Signal-Type Enum Revision Draft
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Drafted the spec-only addendum for widening the Vendor Baseline Store closed signal enum.
+
+**Files Changed:**
+- `4. Product_Roadmap/Vendor_Baseline_Signal_Type_Enum_Revision_Deep_Dive.md` (NEW - pending-signature enum revision addendum)
+- `PROJECT_HANDSHAKE.md`, `PROGRESS.md`, `MASTER_INDEX.md`, `PROJECT_ACTIVITY_LOG.md` (tracker updates)
+
+**Reason:**
+Matt selected Task 3 after committing the Option C Received-chain foundation. Sender-provenance / geo-velocity and Callback Phishing / TOAD phone baselining both need future Vendor Baseline Store signal types before implementation, but the shipped store correctly enforces a seven-value closed enum. This draft creates the spec-first path to widen the enum without silently changing runtime behavior.
+
+**Boundaries:**
+- Spec-only.
+- §11 signature pending.
+- No runtime implementation.
+- No sender-provenance detector.
+- No callback/TOAD detector.
+- No Vendor Baseline Store schema/code changes yet.
+- No DNS / GeoIP / ASN / phone reputation lookup.
+
+**Next Step:**
+If Matt wants this to proceed, fill in §11 and then explicitly start the implementation lane. Otherwise, leave it as a draft and use tomorrow's raw-header proof protocol first.
+
+---
+
 ## 2026-05-24 - Sender-Provenance Option C Foundation
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 
