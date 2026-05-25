@@ -206,6 +206,19 @@
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
 
+### 30. Catch-up Grok audits on new governance + detector tools — ✅ DONE 2026-05-24
+- Wired three new audit targets into `audit_tools/grok_audit_runner.py`:
+  - `independent_decision_auditor` (spec `4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md` + runner + template + tests + Task 29 receipt).
+  - `pre_ship_audit` (operator-authorization paragraph in `PROJECT_HANDSHAKE.md` as the design contract, plus `audit_tools/pre_ship_audit.py` and its test file).
+  - `email_authentication` (current-direction handshake note as the design contract, plus the detector, the scoring overlay, the package init, and the test file).
+- Reports:
+  - `audit_outputs/independent_decision_auditor_grok_audit_20260525T015404Z.md` - verdict **approve**, no divergence, no coverage gaps, no security risks.
+  - `audit_outputs/pre_ship_audit_grok_audit_20260525T015431Z.md` - verdict **approve**, faithful realization of the authorized pre-ship gate.
+  - `audit_outputs/email_authentication_grok_audit_20260525T015457Z.md` - verdict **approve**, header-only detector with the lift-only invariant and correct profile gating.
+- Verification:
+  - No code changes triggered; this lane was a focused code-level audit only.
+  - All three audits clean, so no remediation cycle was required.
+
 ### 29. Independent Decision Auditor workflow implementation — ✅ DONE 2026-05-24
 - Landed `audit_tools/decision_audit_runner.py` against the §11-signed `4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md` contract.
 - Runtime boundary:

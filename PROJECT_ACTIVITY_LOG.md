@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Catch-Up Grok Audits on New Governance + Detector Tools
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Audited
+
+**Files Changed:**
+- `audit_tools/grok_audit_runner.py` (UPDATED - registered three new audit targets: `independent_decision_auditor`, `pre_ship_audit`, `email_authentication`)
+- `audit_outputs/independent_decision_auditor_grok_audit_20260525T015404Z.md` (CREATED - clean approve)
+- `audit_outputs/pre_ship_audit_grok_audit_20260525T015431Z.md` (CREATED - clean approve)
+- `audit_outputs/email_authentication_grok_audit_20260525T015457Z.md` (CREATED - clean approve)
+
+**Reason:**
+Matt asked for a focused catch-up code-level audit on three tools that handle secrets, external APIs, or the new scoring overlay, since the pre-ship gate is forward-looking and does not retroactively deep-dive prior work. The three targets were wired into `grok_audit_runner.py` using the same `AuditPackage` pattern as `vendor_baseline`, `financial_state_ledger`, and `tiered_detection_intensity`. For `pre_ship_audit` and `email_authentication` (which intentionally have no separate signed spec), the operator authorization paragraph and current-direction note in `PROJECT_HANDSHAKE.md` were passed as the §-equivalent design contract. Each audit returned `Verdict: approve` with no spec divergence, no coverage gaps, and no security or boundary risks.
+
+**Next Step:**
+Run `audit_tools/pre_ship_audit.py` against the tracker + runner changes themselves, then commit/push if SHIP.
+
+---
+
 ## 2026-05-24 - Independent Decision Auditor Implementation Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

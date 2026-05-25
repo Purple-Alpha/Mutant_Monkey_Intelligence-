@@ -306,10 +306,154 @@ TIERED_DETECTION_INTENSITY_PACKAGE = AuditPackage(
 )
 
 
+INDEPENDENT_DECISION_AUDITOR_PACKAGE = AuditPackage(
+    name="independent_decision_auditor",
+    files=(
+        AuditFile(
+            label="1. SIGNED SPECIFICATION",
+            relative_path="4. Product_Roadmap/Independent_Decision_Auditor_Deep_Dive.md",
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: audit_tools/decision_audit_runner.py",
+            relative_path="audit_tools/decision_audit_runner.py",
+        ),
+        AuditFile(
+            label="2. PACKET TEMPLATE: decision_audit_inputs/TEMPLATE.md",
+            relative_path="decision_audit_inputs/TEMPLATE.md",
+        ),
+        AuditFile(
+            label="3. TEST FILE: tests/test_decision_audit_runner.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_decision_audit_runner.py"
+            ),
+        ),
+    ),
+    receipt_label="4. IMPLEMENTER RECEIPT",
+    receipt_files=(
+        AuditFile(label="PROGRESS.md (Task 29 only)", relative_path="PROGRESS.md"),
+        AuditFile(
+            label="PROJECT_ACTIVITY_LOG.md (Decision Auditor implementation entry only)",
+            relative_path="PROJECT_ACTIVITY_LOG.md",
+        ),
+    ),
+    receipt_anchors=(
+        (
+            "PROGRESS.md",
+            "### 29. Independent Decision Auditor workflow implementation",
+            "### 28.",
+        ),
+        (
+            "PROJECT_ACTIVITY_LOG.md",
+            "## 2026-05-24 - Independent Decision Auditor Implementation Landed",
+            "## 2026-05-24 - Independent Decision Auditor §11 LOCKDOWN SIGNED",
+        ),
+    ),
+)
+
+
+PRE_SHIP_AUDIT_PACKAGE = AuditPackage(
+    name="pre_ship_audit",
+    files=(
+        AuditFile(
+            label=(
+                "1. DESIGN CONTRACT (operator authorization in PROJECT_HANDSHAKE.md; "
+                "no separate signed spec by design - the tool is the gate that replaces ceremony)"
+            ),
+            relative_path="PROJECT_HANDSHAKE.md",
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: audit_tools/pre_ship_audit.py",
+            relative_path="audit_tools/pre_ship_audit.py",
+        ),
+        AuditFile(
+            label="3. TEST FILE: tests/test_pre_ship_audit.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_pre_ship_audit.py"
+            ),
+        ),
+    ),
+    receipt_label="4. IMPLEMENTER RECEIPT",
+    receipt_files=(
+        AuditFile(
+            label="MASTER_INDEX.md (pre_ship_audit entry only)",
+            relative_path="MASTER_INDEX.md",
+        ),
+    ),
+    receipt_anchors=(
+        (
+            "MASTER_INDEX.md",
+            "- audit_tools/pre_ship_audit.py - all-seeing pre-commit gatekeeper.",
+            "## Active Business Project Folders",
+        ),
+    ),
+)
+
+
+EMAIL_AUTHENTICATION_PACKAGE = AuditPackage(
+    name="email_authentication",
+    files=(
+        AuditFile(
+            label=(
+                "1. DESIGN CONTRACT (current-direction note in PROJECT_HANDSHAKE.md "
+                "authorizing SPF/DKIM/DMARC ingestion; no separate signed spec for this v1 lane)"
+            ),
+            relative_path="PROJECT_HANDSHAKE.md",
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: core/scoring/email_authentication_detector.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/email_authentication_detector.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCORING INTEGRATION: core/scoring/email_risk_scoring_agent.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/email_risk_scoring_agent.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCORING PACKAGE INIT: core/scoring/__init__.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/__init__.py"
+            ),
+        ),
+        AuditFile(
+            label="3. TEST FILE: tests/test_email_authentication_detector.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_email_authentication_detector.py"
+            ),
+        ),
+    ),
+    receipt_label="4. IMPLEMENTER RECEIPT",
+    receipt_files=(
+        AuditFile(
+            label="MASTER_INDEX.md (email_authentication_detector entry only)",
+            relative_path="MASTER_INDEX.md",
+        ),
+    ),
+    receipt_anchors=(
+        (
+            "MASTER_INDEX.md",
+            "- Runtime_Implementation/core/scoring/email_authentication_detector.py",
+            "- Runtime_Implementation/core/scoring/financial_state_ledger.py",
+        ),
+    ),
+)
+
+
 AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "vendor_baseline": VENDOR_BASELINE_PACKAGE,
     "financial_state_ledger": FINANCIAL_STATE_LEDGER_PACKAGE,
     "tiered_detection_intensity": TIERED_DETECTION_INTENSITY_PACKAGE,
+    "independent_decision_auditor": INDEPENDENT_DECISION_AUDITOR_PACKAGE,
+    "pre_ship_audit": PRE_SHIP_AUDIT_PACKAGE,
+    "email_authentication": EMAIL_AUTHENTICATION_PACKAGE,
 }
 
 
