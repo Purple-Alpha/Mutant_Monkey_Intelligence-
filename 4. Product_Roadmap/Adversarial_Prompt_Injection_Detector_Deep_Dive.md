@@ -160,7 +160,20 @@ Final detector score is `max(marker_floor, non_marker_score(N))`, capped at `90`
 - `recommend(ed)?_action\s*=\s*safe`
 
 ### Family E — hidden_text
-- Any zero-width character (U+200B, U+200C, U+200D, U+FEFF) appearing within or directly adjacent to finance / instruction keywords (`wire`, `invoice`, `account`, `ACH`, `ABA`, `payment`, `system`, `instruction`).
+
+The detection model is intentionally **not** a fixed character-radius window (which is bypassable by placing a zero-width character just outside the window). Instead, the detector:
+
+1. Strips every zero-width character (U+200B, U+200C, U+200D, U+FEFF) from each text source and records, for each stripped character, the index in the cleaned text where it had been inserted.
+2. Searches the cleaned (lowercased) text for any keyword from the closed set `{wire, invoice, account, ach, aba, payment, system, instruction}` (case-insensitive; substring match permitted so that a keyword split by zero-width characters is detected after stripping).
+3. Flags `hidden_text` if any recorded zero-width-character index falls inside the cleaned-text match span `[span_start, span_end]`, at the position one character before `span_start`, or at the position one character after `span_end`.
+
+This catches the real attacker patterns:
+
+- **Split keyword:** `wi\u200bre`, `wi\u200br\u200be`, `pa\u200byment`.
+- **Adjacent to start/end:** `\u200bwire`, `wire\u200b`.
+- **One whitespace-separator away on either side:** `wire \u200btransfer`, `\u200b wire`.
+
+Stray zero-width characters far from any keyword (legitimate Unicode artifacts such as emoji zero-width joiners or BOM markers in unrelated text) do **not** trigger this family. This is intentional — a zero-width character 30 characters away from any finance keyword is noise, not an attack signal, and flagging it would create false positives on legitimate emoji-bearing email.
 
 ---
 

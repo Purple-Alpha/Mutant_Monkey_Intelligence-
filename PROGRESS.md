@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **829 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **845 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,24 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 35. Prompt-Injection hidden-text bypass fix — ✅ DONE 2026-05-24
+- Closed the radius=12 bypass Grok flagged in its Lane-2 approve-with-notes report (an attacker could place a zero-width character just outside the 12-character window of a finance keyword and evade detection).
+- **Detection model rewrite (`core/scoring/prompt_injection_detector.py:_hidden_text_match`)**: replaced the fixed character-radius window with a strip-and-span model:
+  1. Strip every zero-width character (U+200B, U+200C, U+200D, U+FEFF) from each text source and record, for each stripped char, the index in the cleaned text where it had been inserted.
+  2. Search the cleaned (lowercased) text for any finance/instruction keyword (`wire`, `invoice`, `account`, `ach`, `aba`, `payment`, `system`, `instruction`).
+  3. Flag `hidden_text` if any recorded zero-width-character index falls inside the cleaned-text match span `[span_start, span_end]`, or one character outside either boundary.
+- **What is now caught** (was bypassable before):
+  - Keyword split by one or more zero-width chars: `wi\u200bre`, `wi\u200br\u200be`, `pa\u200byment`, `ac\u200bcount`, `sys\u200btem`, etc.
+  - Zero-width char directly before or after the keyword: `\u200bwire`, `wire\u200b`.
+  - Zero-width char one whitespace-character away from the keyword: `wire \u200btransfer`.
+- **What is intentionally NOT flagged** (false-positive guardrail):
+  - Stray zero-width char far from any finance keyword (emoji ZWJ in unrelated text, BOM markers, etc.).
+  - Zero-width char separated from the nearest keyword by more than one character.
+- **Spec update**: §5 Family E in `Adversarial_Prompt_Injection_Detector_Deep_Dive.md` rewritten to describe the new detection model and explicitly enumerate the catch list and the anti-false-positive guardrail. No new architectural decisions were added; D1–D14 remain locked.
+- **Verification:**
+  - Focused tests: **44 passed** (+16, `tests/test_prompt_injection_detector.py`) — 8 split-inside-keyword cases (one per keyword + ACH spaces), adjacent-before, adjacent-after, single-whitespace boundary, stray-far-from-keyword anti-test, emoji-ZWJ anti-test, multi-char-separator anti-test, the exact Grok-flagged radius bypass pinned in a dedicated test, and multi-ZW-inside-keyword.
+  - Full runtime suite: **845 passed, 1 skipped** (+16, zero regressions).
 
 ### 34. Two-Channel Confirmation Enforcement v1 — ✅ DONE 2026-05-24
 - **Spec:** signed `4. Product_Roadmap/Two_Channel_Confirmation_Enforcement_Deep_Dive.md` (§11 Matt Nichol 2026-05-24).

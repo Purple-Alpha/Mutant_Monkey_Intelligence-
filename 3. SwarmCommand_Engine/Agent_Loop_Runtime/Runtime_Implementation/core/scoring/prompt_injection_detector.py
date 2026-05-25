@@ -135,21 +135,61 @@ def _family_matches(family: PromptInjectionFamily, texts: Iterable[str]) -> bool
 
 
 def _hidden_text_match(texts: Iterable[str]) -> bool:
-    radius = 12
+    """Detect zero-width characters placed inside or directly adjacent to a
+    finance / instruction keyword.
+
+    The detection model intentionally avoids a fixed character-radius window
+    (which was bypassable by placing a zero-width character just outside the
+    window). Instead, for each text source we:
+
+    1. Strip all zero-width characters and record, for each stripped char,
+       its index in the cleaned text (the position where it would have been
+       inserted into the cleaned stream).
+    2. Search the cleaned text for any keyword from ``_HIDDEN_TEXT_KEYWORDS``.
+    3. Flag if any zero-width character index falls inside the cleaned-text
+       match span ``[span_start, span_end]`` or one character outside either
+       boundary (``span_start - 1`` or ``span_end + 1``).
+
+    This catches the real attacker patterns:
+      * Keyword split by a zero-width char (``wi\u200bre``).
+      * Zero-width char directly before or after the keyword
+        (``\u200bwire``, ``wire\u200b``).
+      * Multiple zero-width chars inside a single keyword
+        (``wi\u200br\u200be``).
+      * A zero-width char immediately across a single whitespace boundary
+        from a keyword (``wire \u200btransfer``).
+
+    Stray zero-width characters far from any keyword (legitimate Unicode
+    artifacts such as emoji zero-width joiners or BOM markers in unrelated
+    text) do not trigger this family, which keeps false-positive risk low.
+    """
+
     keywords = _HIDDEN_TEXT_KEYWORDS
     for text in texts:
         if not any(ch in text for ch in _ZERO_WIDTH_CHARS):
             continue
-        lowered = text.lower()
-        for index, char in enumerate(text):
-            if char not in _ZERO_WIDTH_CHARS:
-                continue
-            window = lowered[max(0, index - radius) : index + radius + 1]
-            cleaned = window
-            for zw in _ZERO_WIDTH_CHARS:
-                cleaned = cleaned.replace(zw, "")
-            if any(keyword in cleaned for keyword in keywords):
-                return True
+        cleaned_chars: list[str] = []
+        zw_positions: list[int] = []
+        for char in text:
+            if char in _ZERO_WIDTH_CHARS:
+                zw_positions.append(len(cleaned_chars))
+            else:
+                cleaned_chars.append(char)
+        if not zw_positions:
+            continue
+        cleaned_lower = "".join(cleaned_chars).lower()
+        for keyword in keywords:
+            start = 0
+            while True:
+                idx = cleaned_lower.find(keyword, start)
+                if idx == -1:
+                    break
+                span_start = idx
+                span_end = idx + len(keyword)
+                for zw_pos in zw_positions:
+                    if span_start - 1 <= zw_pos <= span_end + 1:
+                        return True
+                start = idx + 1
     return False
 
 

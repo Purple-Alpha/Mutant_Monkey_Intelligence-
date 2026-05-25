@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Prompt-Injection Hidden-Text Bypass Fix Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Closed the radius=12 bypass Grok flagged in the Adversarial Prompt-Injection Detector v1 approve-with-notes audit.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/prompt_injection_detector.py` (UPDATED - `_hidden_text_match` rewritten)
+- `4. Product_Roadmap/Adversarial_Prompt_Injection_Detector_Deep_Dive.md` (UPDATED - §5 Family E rewritten to describe the strip-and-span model)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_prompt_injection_detector.py` (UPDATED - 16 new bypass / boundary tests)
+- `PROJECT_HANDSHAKE.md`, `PROGRESS.md` (updates)
+
+**Reason:**
+The previous `_hidden_text_match` used a fixed 12-character radius around each zero-width character and looked for finance/instruction keywords inside that window. Grok pointed out the attacker could place a zero-width character just outside the window and evade detection. The new strip-and-span model is principled and bypass-resistant: strip all zero-width characters, record their cleaned-text positions, search the cleaned text for any finance/instruction keyword, and flag if any recorded ZW position falls inside the keyword span or one character outside either boundary. This catches split-keyword bypasses (`wi\u200bre`, `pa\u200byment`) and adjacent placements (`\u200bwire`, `wire\u200b`), while keeping stray-ZW-far-from-keyword traffic (emoji joiners, BOM markers in unrelated text) clean.
+
+**Next Step:**
+Re-run Grok audit on `prompt_injection` target to confirm the C-section note is closed, pre-ship gate, commit/push.
+
+---
+
 ## 2026-05-24 - Two-Channel Confirmation Enforcement v1 Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

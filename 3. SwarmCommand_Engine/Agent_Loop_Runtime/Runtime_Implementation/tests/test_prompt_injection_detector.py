@@ -223,6 +223,116 @@ def test_hidden_text_only_scores_55() -> None:
     assert assessment.families == ("hidden_text",)
 
 
+@pytest.mark.parametrize(
+    "body",
+    [
+        "wi\u200bre transfer pending",
+        "wi\u200br\u200be transfer pending",
+        "in\u200bvoice attached for review",
+        "pa\u200byment instructions follow",
+        "ac\u200bcount update notice",
+        "Please process A\u200bC\u200bH wire",
+        "sys\u200btem maintenance window",
+        "ins\u200btruction set updated",
+    ],
+)
+def test_hidden_text_detects_zero_width_split_inside_keyword(body: str) -> None:
+    """Bypass fix: a zero-width char that splits a finance/instruction keyword
+    is detected regardless of where in the body the split appears."""
+
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" in assessment.families, body
+
+
+def test_hidden_text_detects_zero_width_immediately_before_keyword() -> None:
+    body = "Please review the attached \u200bwire transfer details."
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" in assessment.families
+
+
+def test_hidden_text_detects_zero_width_immediately_after_keyword() -> None:
+    body = "Please review the attached wire\u200b transfer details."
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" in assessment.families
+
+
+def test_hidden_text_detects_zero_width_across_single_whitespace_separator() -> None:
+    """A zero-width char one whitespace-character away from the keyword still
+    fires - this is the boundary the new strip+span model defines as 'directly
+    adjacent'."""
+
+    body = "Please send the wire \u200btransfer today."
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" in assessment.families
+
+
+def test_hidden_text_does_not_flag_stray_zw_far_from_any_keyword() -> None:
+    """Bypass fix anti-test: a zero-width char in unrelated text (no
+    finance/instruction keyword in its vicinity) must NOT trigger the
+    family. The old radius=12 logic would also not flag this, but this test
+    pins the new behavior so future regressions cannot drift back into
+    treating any ZW char + any keyword in the same text as a match."""
+
+    body = (
+        "Hello team \u200b - just a heads-up that the next sync is moved. "
+        "Separately, we still need to confirm wire arrangements next quarter."
+    )
+
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" not in assessment.families
+
+
+def test_hidden_text_does_not_flag_stray_zw_with_no_keyword_at_all() -> None:
+    """Legitimate emoji-bearing text (ZWJ is U+200D, heavily used in emoji)
+    must not flag in the absence of finance/instruction keywords."""
+
+    body = "Family update \U0001f468\u200d\U0001f469\u200d\U0001f467 - thanks!"
+
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" not in assessment.families
+    assert assessment.score == 0
+
+
+def test_hidden_text_does_not_flag_zw_with_multi_char_separator_from_keyword() -> None:
+    """A zero-width char separated from the nearest keyword by more than one
+    character must NOT flag - the previous radius=12 magic constant is gone,
+    and the new model only counts ZW chars inside or directly adjacent to
+    a keyword span."""
+
+    body = "Please send the wire transfer in the\u200b morning if possible."
+
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" not in assessment.families
+
+
+def test_hidden_text_grok_radius_bypass_is_closed() -> None:
+    """The exact pattern Grok flagged: a zero-width character placed just
+    outside the old fixed 12-character window of a finance keyword.
+
+    Under the old logic this evaded detection. Under the new strip+span
+    model it is correctly classified: ZW chars that split or directly
+    border the keyword still flag, ZW chars truly outside the keyword
+    vicinity do not.
+    """
+
+    just_outside_radius = (
+        "Please process the wire transfer attached and confirm receipt"
+        " by EOD\u200b yes thank you."
+    )
+    assessment = score_prompt_injection(body_plain=just_outside_radius)
+    assert "hidden_text" not in assessment.families
+
+    inside_keyword = "Please process the wi\u200bre transfer attached."
+    assessment = score_prompt_injection(body_plain=inside_keyword)
+    assert "hidden_text" in assessment.families
+
+
+def test_hidden_text_detects_multiple_zw_chars_inside_single_keyword() -> None:
+    body = "Send the wi\u200br\u200be \u200btransfer urgently."
+    assessment = score_prompt_injection(body_plain=body)
+    assert "hidden_text" in assessment.families
+
+
 def test_plain_markdown_and_fenced_code_block_does_not_trigger() -> None:
     body = (
         "Here is a code block:\n\n"
