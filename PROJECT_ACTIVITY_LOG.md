@@ -26,6 +26,59 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Sender-Provenance Option C Foundation
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Implemented the foundation-only prerequisite path for future sender-provenance / geo-velocity work.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py` (UPDATED - additive `EmailInboundPayload.received_headers: list[str]`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/ingest/email_ingest_agent.py` (UPDATED - `received_headers` default plus legacy single-`Received` fallback)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/received_chain_parser.py` (NEW - pure Received-chain parser)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/__init__.py` (UPDATED - parser exports)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_received_chain_parser.py` (NEW - 11 focused tests)
+- `PROJECT_HANDSHAKE.md`, `PROGRESS.md`, `MASTER_INDEX.md`, `PROJECT_ACTIVITY_LOG.md` (tracker updates)
+
+**Reason:**
+Matt explicitly selected Option C: build prerequisites first, without implementing geo-velocity scoring. The stress-test gate still blocks a full sender-provenance detector until real-mailbox header proof is positive. This change safely addresses the known schema gap: duplicate `Received:` headers cannot be represented by the legacy `headers: dict[str, str]` surface.
+
+**Boundaries:**
+- No sender-provenance detector.
+- No risk scoring / overlay.
+- No Vendor Baseline Store signal enum changes.
+- No DNS, GeoIP, ASN lookup, or network call.
+- No baseline writes.
+- Parser dataclasses do not emit raw `Received:` header strings.
+
+**Verification:**
+- Focused suite: **45 passed** (`test_received_chain_parser.py`, `test_header_divergence_detector.py`, `test_email_authentication_detector.py`).
+- Full runtime suite: **881 passed, 1 skipped**.
+
+**Next Step:**
+Run pre-ship audit. If it ships, keep the working tree ready for an explicit commit request. Detector implementation remains blocked until the raw-header cheaper proof passes and a signed spec exists.
+
+---
+
+## 2026-05-24 - Sender-Provenance Cheaper-Proof Protocol
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Created the pre-build proof protocol for the Sender-provenance / Geo-velocity detector candidate.
+
+**Files Changed:**
+- `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Protocol.md` (NEW - raw-header cheaper-proof protocol)
+- `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Proof_Worksheet.csv` (NEW - sample classification worksheet with two example rows)
+- `PROGRESS.md` (UPDATED - Task 38 receipt)
+- `MASTER_INDEX.md` (UPDATED - protocol indexed under project control files)
+- `PROJECT_HANDSHAKE.md` (UPDATED - cleared stale Grok-note cleanup immediate-next-action and recorded the 8:15-9:15 p.m. time-box)
+
+**Reason:**
+Matt asked for a hard push until 9:15 p.m. and then a stop / tomorrow prep. The strongest unshipped promoted technical lane visible in `think_sheet.md` was Sender-provenance / Geo-velocity, but its stress-test decision explicitly says it must not enter implementation until a cheaper proof on real mailbox headers returns a positive signal. This protocol defines that proof and prevents premature detector code.
+
+**Next Step:**
+Tomorrow, find one mailbox source that can safely provide raw headers only (no bodies, no attachments), then classify 30-100 vendor-like samples using the protocol labels and `Sender_Provenance_GeoVelocity_Proof_Worksheet.csv`. Only if the result shows stable high-value vendor origin metadata should the detector graduate into a signed spec-first runtime lane.
+
+---
+
 ## 2026-05-24 - Prompt-Injection Unicode + Cross-Source Bypass Closure Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

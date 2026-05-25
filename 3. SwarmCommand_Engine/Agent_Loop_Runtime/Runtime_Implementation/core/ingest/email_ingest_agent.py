@@ -164,6 +164,10 @@ def normalize_raw_email(
       validation (the blackboard stores metadata only) and forwarded to
       ``attachment_inspector`` when one is provided.
     - ``headers`` defaults to an empty dict when omitted.
+    - ``received_headers`` defaults to an empty list. Connectors that can
+      preserve repeated ``Received:`` fields should pass them in source order
+      through this field; if omitted, a single ``Received`` value in
+      ``headers`` is copied into the list as a backwards-compatible fallback.
 
     All other fields pass through to ``EmailInboundPayload`` and are
     validated by its strict pydantic schema (``extra="forbid"``). Unknown
@@ -187,8 +191,28 @@ def normalize_raw_email(
         fields.setdefault("attachments", [])
 
     fields.setdefault("headers", {})
+    fields.setdefault("received_headers", _received_headers_from_headers(fields["headers"]))
 
     return EmailInboundPayload.model_validate(fields)
+
+
+def _received_headers_from_headers(headers: Any) -> list[str]:
+    """Best-effort fallback for legacy connector-shaped header dictionaries.
+
+    RFC 5322 allows repeated ``Received:`` fields, but the historical
+    ``EmailInboundPayload.headers`` shape is a ``dict[str, str]`` and therefore
+    cannot preserve duplicates. New connectors should pass the additive
+    ``received_headers`` list directly. This fallback only preserves one
+    already-collapsed value when present; it never tries to split or interpret
+    a connector-specific concatenation format.
+    """
+
+    if not isinstance(headers, Mapping):
+        return []
+    for key, value in headers.items():
+        if key.lower() == "received" and isinstance(value, str) and value.strip():
+            return [value]
+    return []
 
 
 def sha256_attachment_inspector(

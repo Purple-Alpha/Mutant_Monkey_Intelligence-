@@ -516,6 +516,7 @@ class EmailInboundPayload(StrictModel):
     body_plain: str
     body_html: str | None = None
     headers: dict[str, str] = Field(default_factory=dict)
+    received_headers: list[str] = Field(default_factory=list)
     attachments: list[EmailAttachmentMeta] = Field(default_factory=list)
 
 

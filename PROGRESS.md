@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **870 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **881 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,41 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 39. Sender-provenance Option C foundation — ✅ DONE 2026-05-24
+- Matt explicitly chose **Option C** before the cheaper-proof run: build only the prerequisites that make future sender-provenance / geo-velocity work possible, without implementing the detector.
+- Runtime scope:
+  - Added additive `EmailInboundPayload.received_headers: list[str]` in `core/blackboard/models.py` so connectors can preserve repeated `Received:` headers without collapsing them into `headers: dict[str, str]`.
+  - Updated `normalize_raw_email(...)` in `core/ingest/email_ingest_agent.py` so `received_headers` defaults to `[]`; if omitted, a single legacy `headers["Received"]` string is copied into the list as a backwards-compatible fallback. A connector-provided `received_headers` list wins over that collapsed fallback.
+  - Added pure parser module `core/scoring/received_chain_parser.py` with `ReceivedHop`, `ReceivedChain`, and `parse_received_chain(...)`.
+- Boundaries preserved:
+  - no sender-provenance score,
+  - no risk overlay,
+  - no Vendor Baseline Store enum/schema changes,
+  - no DNS / GeoIP / ASN lookup,
+  - no baseline writes,
+  - no raw `Received:` header strings emitted by parser dataclasses.
+- Added `tests/test_received_chain_parser.py` — **11 passed** — covering default empty list, connector order preservation, single-`Received` fallback, connector list precedence, non-string rejection, empty parse, from/by/IP extraction, IPv6, bare IPv4, IP dedupe, malformed IP suppression, and no raw-header emission.
+- Verification:
+  - Focused suite: `tests/test_received_chain_parser.py tests/test_header_divergence_detector.py tests/test_email_authentication_detector.py` -> **45 passed**.
+  - Full runtime suite: **881 passed, 1 skipped** (+11 from 870, zero regressions).
+
+### 38. Sender-provenance / geo-velocity cheaper-proof protocol — ✅ DONE 2026-05-24
+- Created `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Protocol.md` as the pre-build proof protocol for the promoted sender-provenance / geo-velocity detector idea.
+- Created `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Proof_Worksheet.csv` as the sample classification worksheet for the proof run, including one `cloud_normalized` example and one `stable_high_value` example.
+- Reason: `think_sheet.md` explicitly says this detector stays out of `PROGRESS.md` until a cheaper proof on real mailbox headers shows enough per-vendor origin stability. The protocol prevents premature implementation by defining exactly what evidence is needed first.
+- Protocol scope:
+  - raw headers only; no bodies or attachments,
+  - 30-100 vendor-like email samples preferred,
+  - at least 10 distinct sender domains,
+  - classify each sender as `stable_high_value`, `stable_low_value`, `cloud_normalized`, `noisy_legitimate`, `insufficient_history`, or `not_vendor`,
+  - graduate to spec-first runtime work only if a meaningful subset of business-critical vendors has stable enough origin metadata to baseline.
+- Guardrails recorded:
+  - no runtime detector code yet,
+  - no live DNS / GeoIP / ASN lookup in runtime,
+  - Vendor Baseline Store signal enum extension would require a signed spec revision,
+  - no raw `Received` header strings should be emitted in future analysis output.
+- No runtime impact; no tests required for doc-only proof protocol.
 
 ### 37. Prompt-Injection Unicode normalization + cross-source bypass closure — ✅ DONE 2026-05-24
 - Closes the remaining two Grok approve-with-notes items on the prompt-injection detector:

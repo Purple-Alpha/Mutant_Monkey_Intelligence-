@@ -22,6 +22,11 @@ from .prompt_injection_detector import (
     PromptInjectionFamily,
     score_prompt_injection,
 )
+from .received_chain_parser import (
+    ReceivedChain,
+    ReceivedHop,
+    parse_received_chain,
+)
 
 __all__ = [
     "DocumentMetadataAssessment",
@@ -30,6 +35,8 @@ __all__ = [
     "EmailAuthenticationAssessment",
     "PromptInjectionAssessment",
     "PromptInjectionFamily",
+    "ReceivedChain",
+    "ReceivedHop",
     "score_prompt_injection",
     "NORTHSTAR_INBOX_SHIELD_SYSTEM_PROMPT",
     "EmailRiskScoringConfig",
@@ -38,4 +45,5 @@ __all__ = [
     "EmailRiskScoringSuccess",
     "run_email_risk_scoring_cycle",
     "score_email_authentication",
+    "parse_received_chain",
 ]
