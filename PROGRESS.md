@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **845 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **852 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,19 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 36. Two-Channel Confirmation TZ edge-case pinning — ✅ DONE 2026-05-24
+- Tests-only follow-up to the Grok approve-with-notes report on Two-Channel Confirmation v1.
+- Added 7 timezone-edge-case tests in `tests/test_two_channel_confirmation.py` that pin the existing UTC-comparison invariant under the specific Grok-flagged scenarios:
+  - **Same UTC instant, different named TZ** (`outcome_at` 05:00 PDT vs `requested_at` 12:00 UTC) → accepted.
+  - **Wall-clock-later but UTC-earlier** (`outcome_at` 20:00 JST = 11:00 UTC vs 12:00 UTC requested) → rejected.
+  - **Wall-clock-earlier but UTC-later** (`outcome_at` 08:00 EST = 13:00 UTC vs 12:00 UTC requested) → accepted.
+  - **Exact UTC equality** → accepted (only strictly-less-than triggers the rule).
+  - **1-microsecond-earlier UTC instant** expressed in Nepal time (UTC+5:45) → rejected (pins sub-second ordering precision).
+  - **DST boundary crossing** (US fall-back, PDT → PST, later UTC instant) → accepted.
+  - **Naive datetime with a value that would be far in the future** → rejected (policy is "aware or reject", not "try to interpret").
+- The runtime code in `core/workflows/two_channel_confirmation.py` was already correct (both `_require_aware_datetime` and `_parse_payload_datetime` convert to UTC via `astimezone(timezone.utc)` before comparison). These tests prevent future drift from that invariant.
+- Full runtime suite: **852 passed, 1 skipped** (+7, zero regressions).
 
 ### 35. Prompt-Injection hidden-text bypass fix — ✅ DONE 2026-05-24
 - Closed the radius=12 bypass Grok flagged in its Lane-2 approve-with-notes report (an attacker could place a zero-width character just outside the 12-character window of a finance keyword and evade detection).

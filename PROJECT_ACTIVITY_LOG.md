@@ -26,6 +26,23 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Two-Channel Confirmation TZ Edge-Case Pinning Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Tests-only follow-up to the Grok approve-with-notes audit on Two-Channel Confirmation v1.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_two_channel_confirmation.py` (UPDATED - 7 TZ edge-case tests)
+- `PROGRESS.md`, `PROJECT_ACTIVITY_LOG.md` (updates)
+
+**Reason:**
+The Grok audit flagged a theoretical TZ-handling concern in the `outcome_at < requested_at` comparison. The runtime code was already correct (both timestamps are converted to UTC via `astimezone(timezone.utc)` before comparison), but no test pinned that behavior. These tests prove the invariant holds under the specific Grok-flagged scenarios so future drift from UTC-instant comparison would fail immediately.
+
+**Next Step:**
+Re-run Grok audit on `two_channel_confirmation` to confirm the C-section note is closed, pre-ship gate, commit/push, then move to the Prompt-Injection Unicode normalization + cross-source hardening.
+
+---
+
 ## 2026-05-24 - Prompt-Injection Hidden-Text Bypass Fix Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

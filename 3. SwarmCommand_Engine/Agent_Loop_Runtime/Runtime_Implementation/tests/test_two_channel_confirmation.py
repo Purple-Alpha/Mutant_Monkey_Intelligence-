@@ -292,6 +292,158 @@ def test_outcome_at_before_requested_at_rejected() -> None:
         )
 
 
+# ---------------------------------------------------------------------------
+# Timezone-edge-case pinning (Grok approve-with-notes follow-up)
+#
+# `_require_aware_datetime` and `_parse_payload_datetime` both convert to UTC
+# before the `outcome_at < requested_at` comparison runs. The following tests
+# pin that invariant against the specific TZ-handling concerns Grok flagged:
+# different timezones representing the same UTC instant, wall-clock-later but
+# UTC-earlier timestamps, equality, and sub-second ordering across zones.
+# ---------------------------------------------------------------------------
+
+
+_PDT = timezone(timedelta(hours=-7))
+_EST = timezone(timedelta(hours=-5))
+_JST = timezone(timedelta(hours=+9))
+_NEPAL = timezone(timedelta(hours=+5, minutes=45))
+
+
+def test_outcome_at_in_different_timezone_same_utc_instant_accepted() -> None:
+    """outcome_at in a different named timezone but representing the same
+    UTC instant as requested_at is accepted (the comparison is on UTC
+    instants, not wall-clock times)."""
+
+    pending = _request(
+        finding_id="fsl:tz:same-instant",
+        requested_at=datetime(2026, 5, 24, 12, 0, tzinfo=timezone.utc),
+    )
+    record_confirmation_outcome(
+        tenant_id=TENANT,
+        finding_id=pending.finding_id,
+        outcome_status="confirmed",
+        outcome_by="operator_b",
+        outcome_at=datetime(2026, 5, 24, 5, 0, tzinfo=_PDT),
+        channel_kind="previously_known_phone",
+    )
+
+
+def test_outcome_at_wall_clock_later_but_utc_earlier_rejected() -> None:
+    """outcome_at whose wall-clock LOOKS later (20:00 JST) but whose UTC
+    instant is EARLIER (11:00 UTC) than the recorded requested_at
+    (12:00 UTC) must still be rejected by the < requested_at rule."""
+
+    pending = _request(
+        finding_id="fsl:tz:wall-later-utc-earlier",
+        requested_at=datetime(2026, 5, 24, 12, 0, tzinfo=timezone.utc),
+    )
+    with pytest.raises(GovernanceError):
+        record_confirmation_outcome(
+            tenant_id=TENANT,
+            finding_id=pending.finding_id,
+            outcome_status="confirmed",
+            outcome_by="operator_b",
+            outcome_at=datetime(2026, 5, 24, 20, 0, tzinfo=_JST),
+            channel_kind="previously_known_phone",
+        )
+
+
+def test_outcome_at_wall_clock_earlier_but_utc_later_accepted() -> None:
+    """outcome_at whose wall-clock LOOKS earlier (08:00 EST) but whose UTC
+    instant is LATER (13:00 UTC) than the recorded requested_at
+    (12:00 UTC) is accepted, because the comparison is on UTC instants."""
+
+    pending = _request(
+        finding_id="fsl:tz:wall-earlier-utc-later",
+        requested_at=datetime(2026, 5, 24, 12, 0, tzinfo=timezone.utc),
+    )
+    record_confirmation_outcome(
+        tenant_id=TENANT,
+        finding_id=pending.finding_id,
+        outcome_status="confirmed",
+        outcome_by="operator_b",
+        outcome_at=datetime(2026, 5, 24, 8, 0, tzinfo=_EST),
+        channel_kind="previously_known_phone",
+    )
+
+
+def test_outcome_at_equal_to_requested_at_in_utc_accepted() -> None:
+    """Equality is accepted: only strictly-less-than triggers the rule."""
+
+    pending = _request(
+        finding_id="fsl:tz:equal",
+        requested_at=datetime(2026, 5, 24, 12, 0, tzinfo=timezone.utc),
+    )
+    record_confirmation_outcome(
+        tenant_id=TENANT,
+        finding_id=pending.finding_id,
+        outcome_status="confirmed",
+        outcome_by="operator_b",
+        outcome_at=datetime(2026, 5, 24, 12, 0, tzinfo=timezone.utc),
+        channel_kind="previously_known_phone",
+    )
+
+
+def test_outcome_at_microsecond_earlier_in_utc_rejected_even_in_other_zone() -> None:
+    """A 1-microsecond-earlier UTC instant expressed in any timezone is still
+    rejected. Pins ordering precision below seconds."""
+
+    pending = _request(
+        finding_id="fsl:tz:microsecond",
+        requested_at=datetime(2026, 5, 24, 12, 0, 0, 500_000, tzinfo=timezone.utc),
+    )
+    with pytest.raises(GovernanceError):
+        record_confirmation_outcome(
+            tenant_id=TENANT,
+            finding_id=pending.finding_id,
+            outcome_status="confirmed",
+            outcome_by="operator_b",
+            outcome_at=datetime(2026, 5, 24, 12, 0, 0, 499_999, tzinfo=_NEPAL),
+            channel_kind="previously_known_phone",
+        )
+
+
+def test_outcome_at_dst_aware_zone_handled_via_utc_instant() -> None:
+    """Even across a DST boundary the comparison runs on UTC instants. The
+    requested_at is recorded just before US DST ends on 2026-11-01 02:00
+    local; the outcome_at is recorded in EST (UTC-5, post-DST) but its UTC
+    instant is later, so it must be accepted."""
+
+    pre_dst_pdt = timezone(timedelta(hours=-7))
+    post_dst_pst = timezone(timedelta(hours=-8))
+    pending = _request(
+        finding_id="fsl:tz:dst-boundary",
+        requested_at=datetime(2026, 11, 1, 1, 30, tzinfo=pre_dst_pdt),
+    )
+    record_confirmation_outcome(
+        tenant_id=TENANT,
+        finding_id=pending.finding_id,
+        outcome_status="confirmed",
+        outcome_by="operator_b",
+        outcome_at=datetime(2026, 11, 1, 2, 30, tzinfo=post_dst_pst),
+        channel_kind="previously_known_phone",
+    )
+
+
+def test_outcome_at_naive_datetime_rejected_even_when_value_would_be_later() -> None:
+    """A naive datetime (no tzinfo) is rejected regardless of its numeric
+    value - the policy is `aware or reject`, not `try to interpret`."""
+
+    pending = _request(
+        finding_id="fsl:tz:naive",
+        requested_at=datetime(2026, 5, 24, 12, 0, tzinfo=timezone.utc),
+    )
+    with pytest.raises(GovernanceError):
+        record_confirmation_outcome(
+            tenant_id=TENANT,
+            finding_id=pending.finding_id,
+            outcome_status="confirmed",
+            outcome_by="operator_b",
+            outcome_at=datetime(2030, 1, 1, 0, 0),
+            channel_kind="previously_known_phone",
+        )
+
+
 def test_outcome_kill_switch_blocks(tmp_path) -> None:
     pending = _request()
     engage_kill_switch(
