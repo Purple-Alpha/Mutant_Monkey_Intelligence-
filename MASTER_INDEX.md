@@ -212,6 +212,7 @@ Located in `Delivery_Engine/Phishing_Simulations/Campaign_Examples`.
 - Runtime_Implementation/core/operator_state/audit.py
 - Runtime_Implementation/core/ingest/email_ingest_agent.py
 - Runtime_Implementation/core/scoring/email_risk_scoring_agent.py - NorthStar Inbox Shield scoring agent and locked prompt; includes Phase 1.5 vendor-invoice recall floor after the 2026-05-22 rerun failed vendor_invoice_fraud recall.
+- Runtime_Implementation/core/scoring/email_authentication_detector.py - pure SPF/DKIM/DMARC ingestion detector for gateway `Authentication-Results` headers; no DNS, no crypto, no network. Produces lift-only auth-failure signals consumed by the scoring overlay for MEDIUM/HIGH profiles while LOW skips the check.
 - Runtime_Implementation/core/scoring/financial_state_ledger.py - Financial State Ledger / Delta Tripwire detector; extracts labelled payment-destination signals, checks Vendor Baseline Store before ingesting, returns redacted/hash-only frozen dataclass assessment, and recommends risk floor 85 + out-of-band verification on `new` / `expired` signals.
 - Runtime_Implementation/core/scoring/eval/__init__.py
 - Runtime_Implementation/core/scoring/eval/dataset.py

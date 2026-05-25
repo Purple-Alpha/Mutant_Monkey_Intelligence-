@@ -67,6 +67,7 @@ from core.orchestrator import (
 )
 from core.orchestrator.routes import blackboard_path
 from core.precursor import build_precursor_overlay
+from core.scoring.email_authentication_detector import score_email_authentication
 from core.scoring.financial_state_ledger import FinancialStateLedgerAssessment
 from core.scoring.ghost_thread_detector import score_ghost_thread
 from core.scoring.header_divergence_detector import score_header_divergence
@@ -629,9 +630,11 @@ def _overlay_ransomware_precursor(
        identity does not line up — a strong BEC indicator).
     3. Ghost-thread detection (``Re:`` / ``Fwd:`` subject with no
        ``In-Reply-To`` / ``References`` headers — fake thread continuity).
-    4. Financial State Ledger / Delta Tripwire risk floor when a caller has
+    4. Email authentication header ingestion (SPF/DKIM/DMARC) when the
+       effective security profile is MEDIUM or HIGH.
+    5. Financial State Ledger / Delta Tripwire risk floor when a caller has
        already performed the required stateful vendor-baseline assessment.
-    5. Phase 1.4 floor lifts driven by signed policy state.
+    6. Phase 1.4 floor lifts driven by signed policy state.
 
     Pure transform: returns a new ``EmailAnalysisPayload`` with the
     ``ransomware_precursor_analysis`` block populated and
@@ -690,6 +693,22 @@ def _overlay_ransomware_precursor(
         if enabled_detectors is None or "ghost_thread" in enabled_detectors
         else None
     )
+    email_authentication = (
+        score_email_authentication(
+            sender=inbound_payload.sender,
+            headers=inbound_payload.headers,
+        )
+        if profile_resolution is None or profile_resolution.effective_profile != "low"
+        else None
+    )
+    email_authentication_floor = (
+        _email_authentication_floor_for_profile(
+            email_authentication.score,
+            profile_resolution.effective_profile if profile_resolution is not None else "high",
+        )
+        if email_authentication is not None
+        else 0
+    )
     fsl_floor = (
         financial_state_ledger_assessment.recommended_risk_floor
         if financial_state_ledger_assessment is not None
@@ -703,6 +722,7 @@ def _overlay_ransomware_precursor(
         overlay.recommended_risk_floor,
         header_divergence.score if header_divergence is not None else 0,
         ghost_thread.score if ghost_thread is not None else 0,
+        email_authentication_floor,
         fsl_floor,
     )
     base_risk_score = max(
@@ -718,9 +738,24 @@ def _overlay_ransomware_precursor(
     else:
         final_risk_score = base_risk_score
 
-    updated_risk_analysis = analysis_payload.risk_analysis.model_copy(
-        update={"risk_score": final_risk_score}
-    )
+    risk_update: dict[str, object] = {"risk_score": final_risk_score}
+    if email_authentication is not None and email_authentication.indicators:
+        risk_update["risk_factors"] = _append_unique(
+            analysis_payload.risk_analysis.risk_factors,
+            [
+                f"email_authentication:{indicator}"
+                for indicator in email_authentication.indicators
+            ],
+        )
+        risk_update["phishing_signals"] = _append_unique(
+            analysis_payload.risk_analysis.phishing_signals,
+            [
+                f"email_authentication:{indicator}"
+                for indicator in email_authentication.indicators
+            ],
+        )
+
+    updated_risk_analysis = analysis_payload.risk_analysis.model_copy(update=risk_update)
     update = {
         "risk_analysis": updated_risk_analysis,
         "ransomware_precursor_analysis": overlay.block,
@@ -744,6 +779,24 @@ def _clamp_fraud_lift(value: int) -> int:
     if value >= 25:
         return 25
     return value
+
+
+def _append_unique(existing: list[str], additions: list[str]) -> list[str]:
+    merged = list(existing)
+    seen = set(merged)
+    for value in additions:
+        if value not in seen:
+            merged.append(value)
+            seen.add(value)
+    return merged
+
+
+def _email_authentication_floor_for_profile(score: int, profile: SecurityProfile) -> int:
+    if score <= 0:
+        return 0
+    if profile == "high":
+        return min(95, score + 10)
+    return score
 
 
 def _write_marker(
