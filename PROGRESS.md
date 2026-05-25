@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **852 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **870 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,20 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 37. Prompt-Injection Unicode normalization + cross-source bypass closure — ✅ DONE 2026-05-24
+- Closes the remaining two Grok approve-with-notes items on the prompt-injection detector:
+  - **Unicode whitespace / combining / zero-width / format-character bypass** in Families A-D.
+  - **Marker-split-across-attachments bypass.**
+- Added two new locked decisions to the spec (`4. Product_Roadmap/Adversarial_Prompt_Injection_Detector_Deep_Dive.md`):
+  - **D15 - Pre-regex normalization.** `_normalize_for_regex` runs **NFKD** (NOT NFKC — NFKC silently recomposes accents and defeats the strip step), strips Unicode general category `Mn` (combining marks), strips category `Cf` (format / zero-width chars, including `\u200b`, `\u200c`, `\u200d`, `\u00ad` soft hyphen), and folds any remaining whitespace to ASCII space. Family E continues to scan the **raw** text so zero-width chars near finance/instruction keywords still trigger `hidden_text`.
+  - **D16 - Cross-source boundary scanning.** For every adjacent pair of sources, build **two** synthetic views from the last 256 chars of source `i` and the first 256 of source `i+1` - one with no separator (catches `[SYSTEM` + `_INSTRUCTION]`), one with a single ASCII space (catches `ignore previous` + `instructions`). Both views are normalized per D15 and scanned for Families A-D.
+- Spec §5 expanded with a new dedicated "Pre-Regex Normalization" subsection; §6 gained 10 new gate tests (24-33).
+- Added 18 new tests in `tests/test_prompt_injection_detector.py`:
+  - Unicode-bypass closures: zero-width in marker, combining acute in `ignore`, precomposed `í`, full-width Roman, NBSP, ideographic space, zero-width prefix on Family C, soft hyphen in Family D, Family E preserved despite normalization, legitimate accented Spanish text does NOT false-positive.
+  - Cross-source closures: marker split body→attachment, imperative split between two attachments, marker split with zero-width chars at the boundary, unrelated sources do NOT false-positive, 800-char-distant tokens do NOT fuse through the 256-char overlap window.
+  - White-box helper tests: `_normalize_for_regex` strip / fold contract, NFKD decompose pin, `_build_boundary_pair_views` shape and bound.
+- Runtime baseline: **870 passed, 1 skipped** (+18, zero regressions).
 
 ### 36. Two-Channel Confirmation TZ edge-case pinning — ✅ DONE 2026-05-24
 - Tests-only follow-up to the Grok approve-with-notes report on Two-Channel Confirmation v1.

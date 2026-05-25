@@ -9,6 +9,7 @@ substrings into Blackboard or audit records.
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
 from typing import Iterable, Literal, Sequence
 
@@ -32,6 +33,7 @@ _HIDDEN_TEXT_KEYWORDS = (
     "instruction",
 )
 _MAX_SCAN_CHARS = 200_000
+_BOUNDARY_PAIR_OVERLAP_CHARS = 256
 
 _FAMILY_PATTERNS: dict[PromptInjectionFamily, tuple[re.Pattern[str], ...]] = {
     "instruction_marker": (
@@ -104,16 +106,19 @@ def score_prompt_injection(
     returned.
     """
 
-    text_sources: list[str] = [(body_plain or "")[:_MAX_SCAN_CHARS]]
-    text_sources.extend(
+    raw_sources: list[str] = [(body_plain or "")[:_MAX_SCAN_CHARS]]
+    raw_sources.extend(
         text[:_MAX_SCAN_CHARS] for text in attachments_text if text
     )
-    families: list[PromptInjectionFamily] = []
+    normalized_sources = tuple(_normalize_for_regex(src) for src in raw_sources)
+    boundary_pair_views = _build_boundary_pair_views(raw_sources)
+    regex_views = normalized_sources + boundary_pair_views
 
+    families: list[PromptInjectionFamily] = []
     for family in ("instruction_marker", "override_imperative", "role_impersonation", "output_control"):
-        if _family_matches(family, text_sources):
+        if _family_matches(family, regex_views):
             families.append(family)
-    if _hidden_text_match(text_sources):
+    if _hidden_text_match(raw_sources):
         families.append("hidden_text")
 
     score = _score_families(families)
@@ -132,6 +137,85 @@ def _family_matches(family: PromptInjectionFamily, texts: Iterable[str]) -> bool
             if pattern.search(text):
                 return True
     return False
+
+
+def _normalize_for_regex(text: str) -> str:
+    r"""Fold Unicode variants so families A-D regexes cannot be evaded by
+    invisible / decorative characters inserted between tokens.
+
+    Behavior:
+      1. ``unicodedata.normalize("NFKD", text)`` decomposes compatibility
+         variants AND decomposes precomposed accented characters into
+         ``base + combining mark`` so the combining marks become
+         standalone ``Mn`` characters and can be stripped in step 2.
+         (Using NFKC instead would silently recompose the accent into a
+         single ``Ll`` character and defeat the strip step below.)
+      2. Combining marks (Unicode general category ``Mn``) are stripped so
+         an attacker cannot hide ``ignore`` as ``i\u0301gnore`` or
+         ``i\u0303gnore``.
+      3. Format / zero-width characters (Unicode general category ``Cf``)
+         are stripped so an attacker cannot hide ``ignore`` as
+         ``i\u200bgnore`` or ``SYSTEM\u200b_INSTRUCTION`` or
+         ``ignore\u00ad previous`` (soft hyphen).
+      4. Any remaining whitespace character (per ``str.isspace``) is folded
+         to ASCII space so ``\u00a0`` / ``\u2003`` / ``\u3000`` etc. cannot
+         break ``\s+`` matches under exotic Unicode whitespace.
+
+    The original text is preserved by the caller and passed unchanged to
+    ``_hidden_text_match`` so Family E's zero-width detection continues to
+    operate on raw bytes.
+    """
+
+    normalized = unicodedata.normalize("NFKD", text)
+    chars: list[str] = []
+    for ch in normalized:
+        category = unicodedata.category(ch)
+        if category == "Mn" or category == "Cf":
+            continue
+        if ch.isspace():
+            chars.append(" ")
+        else:
+            chars.append(ch)
+    return "".join(chars)
+
+
+def _build_boundary_pair_views(raw_sources: Sequence[str]) -> tuple[str, ...]:
+    r"""Build normalized scan views for every adjacent pair of sources.
+
+    Markers and imperatives are short (<= ~50 chars). An attacker can split
+    one across two attachments (``[SYSTEM`` in attachment 1, ``_INSTRUCTION]``
+    in attachment 2, or ``ignore previous`` + ``instructions``) to bypass
+    per-source scanning.
+
+    For every pair ``(source_i, source_{i+1})`` this builds **two** synthetic
+    views from the last ``_BOUNDARY_PAIR_OVERLAP_CHARS`` of source_i and the
+    first ``_BOUNDARY_PAIR_OVERLAP_CHARS`` of source_{i+1}:
+
+      * **No-separator view** catches mid-token splits such as
+        ``[SYSTEM`` + ``_INSTRUCTION]`` where the regex token must remain
+        contiguous.
+      * **Single-space-separator view** catches token-boundary splits such
+        as ``ignore previous`` + ``instructions`` where the regex expects
+        ``\s+`` between the joined tokens.
+
+    Each view is normalized via ``_normalize_for_regex`` so the same
+    Unicode-bypass closures (D15) apply at boundaries too. The overlap
+    window is bounded, so total cost is at most
+    ``2 * (len(raw_sources) - 1)`` views of at most
+    ``2 * _BOUNDARY_PAIR_OVERLAP_CHARS + 1`` characters each.
+    """
+
+    if len(raw_sources) < 2:
+        return ()
+    views: list[str] = []
+    for i in range(len(raw_sources) - 1):
+        left_tail = raw_sources[i][-_BOUNDARY_PAIR_OVERLAP_CHARS:]
+        right_head = raw_sources[i + 1][:_BOUNDARY_PAIR_OVERLAP_CHARS]
+        if not left_tail or not right_head:
+            continue
+        views.append(_normalize_for_regex(left_tail + right_head))
+        views.append(_normalize_for_regex(left_tail + " " + right_head))
+    return tuple(views)
 
 
 def _hidden_text_match(texts: Iterable[str]) -> bool:

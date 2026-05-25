@@ -26,6 +26,31 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Prompt-Injection Unicode + Cross-Source Bypass Closure Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Closed the final two Grok approve-with-notes items on the Adversarial Prompt-Injection Detector — the Unicode-bypass surface in Families A-D and the cross-attachment marker-split bypass.
+
+**Files Changed:**
+- `4. Product_Roadmap/Adversarial_Prompt_Injection_Detector_Deep_Dive.md` (UPDATED - D15 + D16 added to §2; new §5 Pre-Regex Normalization section; §6 gained gate tests 24-33; §11 signature line updated to record locked decisions D1-D16)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/prompt_injection_detector.py` (UPDATED - added `unicodedata` import, `_BOUNDARY_PAIR_OVERLAP_CHARS` constant, `_normalize_for_regex` helper, `_build_boundary_pair_views` helper, and rewired `score_prompt_injection` to scan normalized per-source views PLUS boundary-pair views for Families A-D while passing raw text to Family E)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_prompt_injection_detector.py` (UPDATED - 18 new bypass / boundary / white-box tests)
+- `PROJECT_HANDSHAKE.md`, `PROGRESS.md`, `PROJECT_ACTIVITY_LOG.md` (updates)
+
+**Reason:**
+Grok flagged two open notes on the prompt-injection detector: (a) `\s+` between tokens in Families B-D could be evaded by Unicode whitespace, combining marks, or zero-width / format characters inserted between tokens; and (b) markers split across two attachment sources would not be caught by per-source scanning. Both are now closed.
+
+Key design choices:
+- **NFKD, not NFKC.** NFKC silently recomposes `i + combining-acute` into `í` (category `Ll`, not `Mn`), which would defeat the strip-combining-marks step. NFKD decomposes first so the combining mark becomes a standalone `Mn` char that the strip step removes. Tested explicitly via `test_normalize_for_regex_helper_decomposes_precomposed_accented_char`.
+- **Two boundary-pair views per adjacent pair, not one.** A no-separator view catches mid-token splits (`[SYSTEM` + `_INSTRUCTION]`) where the regex token must stay contiguous. A single-ASCII-space-separator view catches token-boundary splits (`ignore previous` + `instructions`) where the regex expects `\s+` between joined tokens. Cost is bounded at `2 * (n - 1)` views of `<=513` chars each.
+- **Family E (`hidden_text`) continues to use raw text.** Normalization for Families A-D strips zero-width chars, which would defeat Family E's intentional detection of ZW chars near finance / instruction keywords. The caller passes the raw text to `_hidden_text_match` and the normalized views to `_family_matches`. Tested via `test_normalize_does_not_prevent_family_e_hidden_text_detection`.
+- **False-positive guardrails verified.** Legitimate Spanish text with accents (`Jose\u0301`, `Mari\u0301a`) does not trigger any family. Unrelated adjacent attachments with no shared injection pattern do not trigger. Tokens placed >256 chars from a source boundary cannot fuse through the overlap window.
+
+**Next Step:**
+Run Grok re-audit on the `prompt_injection` package, then pre-ship audit, commit / push. Three originally-flagged Grok notes are then all closed (hidden-text radius, Unicode bypass, cross-source split).
+
+---
+
 ## 2026-05-24 - Two-Channel Confirmation TZ Edge-Case Pinning Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

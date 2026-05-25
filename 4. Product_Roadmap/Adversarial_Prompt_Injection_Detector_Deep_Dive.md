@@ -64,6 +64,8 @@ The detector is intentionally narrow. It does **not** decide whether the email i
 | D12 | Data minimization | Returned indicators include family tag only, never raw matched substrings | Findings must not echo attacker text into Blackboard. |
 | D13 | Kill switch | Detector is pure with no I/O, no need to re-check kill switch (caller is already past production kill switch) | Same posture as email authentication. |
 | D14 | Audit boundary | No Blackboard writes from detector; scoring agent records indicators in `EmailAnalysisRiskAnalysis` | Same boundary as email authentication. |
+| D15 | Pre-regex normalization | Before scanning for Families A-D, each text source is normalized via `_normalize_for_regex`: **NFKD** decomposition (so precomposed accented characters expose their combining marks), strip combining marks (category `Mn`), strip format/zero-width chars (category `Cf`), fold any remaining Unicode whitespace to ASCII space. Family E (hidden_text) continues to receive the **raw** text so zero-width chars remain detectable. | Closes the regex-bypass surface where an attacker hides marker tokens behind invisible / decorative Unicode chars (`SYSTEM\u200b_INSTRUCTION`, `i\u0301gnore previous`, `ígnore previous`, `ｉｇｎｏｒｅ previous instructions`, etc.) while keeping Family E's intentional reliance on raw zero-width characters intact. NFKC was rejected because it silently recomposes the accent and defeats the `Mn` strip. |
+| D16 | Cross-source boundary scanning | For every adjacent pair of text sources, **two** additional synthetic views are built from the last `_BOUNDARY_PAIR_OVERLAP_CHARS = 256` characters of source `i` and the first 256 characters of source `i + 1`: one joined with **no separator** (catches mid-token splits like `[SYSTEM` + `_INSTRUCTION]`) and one joined with a **single ASCII space** (catches token-boundary splits like `ignore previous` + `instructions` where `\s+` is required). Both views are normalized per D15 and scanned for Families A-D. | Defends against the cross-attachment marker-split bypass. Overlap window is bounded so total cost is at most `2 * (len(sources) - 1)` views of at most `513` characters each. |
 
 ---
 
@@ -125,7 +127,18 @@ Final detector score is `max(marker_floor, non_marker_score(N))`, capped at `90`
 
 ---
 
-## §5 Pattern Catalog (locked)
+## §5 Pre-Regex Normalization (locked, see D15)
+
+Before scanning for Families A-D, each text source (and each cross-source boundary-pair view per D16) is normalized through `_normalize_for_regex`:
+
+1. `unicodedata.normalize("NFKD", text)` folds compatibility variants **and** decomposes precomposed accented characters into `base + combining mark`. Full-width Roman letters (`ｉｇｎｏｒｅ`) collapse to ASCII, fraction-slash sequences fold, and `í` (U+00ED) decomposes to `i` + `\u0301` so the combining acute becomes a standalone `Mn` character that step 2 can strip. NFKC was rejected because it would silently recompose `i + \u0301` back into `í` (category `Ll`, not `Mn`) and defeat the strip step.
+2. Every character with Unicode general category `Mn` (non-spacing combining mark) is stripped. This prevents `i\u0301gnore previous` (combining acute on `i`) from evading `\bignore\b`.
+3. Every character with Unicode general category `Cf` (format / zero-width) is stripped. This prevents `SYSTEM\u200b_INSTRUCTION`, `\u200bignore previous instructions`, `i\u200cgnore`, and `\u00ad` (soft hyphen) bypasses for Families A-D. **Family E (hidden_text) intentionally continues to operate on the raw text** so the presence of those zero-width chars near finance/instruction keywords still triggers `hidden_text` (see §6.E).
+4. Every remaining whitespace character (per `str.isspace`) is folded to a single ASCII space. Python's `re` `\s` already matches most Unicode whitespace, but folding makes the behavior explicit and consistent across exotic spaces (U+00A0, U+2003, U+202F, U+3000, etc.).
+
+The original text is preserved by the caller; only the regex-scan view is normalized.
+
+## §5.B Pattern Catalog (locked)
 
 ### Family A — instruction_marker (any case-insensitive match)
 - `[SYSTEM_INSTRUCTION]`
@@ -204,6 +217,16 @@ Implementation must pass all of these before §3 closure.
 21. Overlay applies +10 / cap 95 on HIGH profile.
 22. `grok_audit_runner.py` exposes `prompt_injection` audit target.
 23. Input length bound: scanner ignores body / attachment text beyond `_MAX_SCAN_CHARS` per source so attacker-controlled bulk does not produce pathological regex behavior.
+24. Unicode-bypass: `SYSTEM\u200b_INSTRUCTION` (zero-width char inside a Family A marker) is detected (D15 normalization).
+25. Unicode-bypass: `i\u0301gnore previous instructions` (combining mark inside a Family B token) is detected (D15 normalization).
+26. Unicode-bypass: `ｉｇｎｏｒｅ previous instructions` (full-width Roman letters) is detected via D15 NFKD compatibility folding.
+27. Unicode-bypass: `ignore\u00a0previous\u00a0instructions` (non-breaking spaces between tokens) is detected.
+28. Unicode-bypass: `ignore\u3000previous\u3000instructions` (ideographic spaces between tokens) is detected.
+29. Unicode-bypass: `\u200bact as a system` (zero-width prefix on a Family C token) is detected (D15 normalization), independently of Family E.
+30. Cross-source: `[SYSTEM` in body + `_INSTRUCTION]` at the start of attachment 1 is detected via the D16 boundary-pair view.
+31. Cross-source: `ignore previous` at the end of attachment 1 + `instructions` at the start of attachment 2 is detected.
+32. Cross-source false-positive guardrail: unrelated source contents that do not contain a closed pattern even when concatenated still produce score 0.
+33. Family E preservation: Unicode normalization for Families A-D does NOT prevent Family E from firing on raw zero-width characters near finance/instruction keywords (`wi\u200bre transfer`).
 
 ---
 
@@ -223,6 +246,6 @@ Implementation must pass all of these before §3 closure.
 
 **Signed by:** Matt Nichol  
 **Date:** 2026-05-24  
-**Decisions locked:** D1–D14 above; v1 deterministic body scanner only; five closed pattern families; score cap 90 pre-overlay; LOW skip / MEDIUM run / HIGH +10 cap 95; no new `DetectorIdentity`; no Blackboard writes from detector.
+**Decisions locked:** D1–D16 above; v1 deterministic body scanner only; five closed pattern families; score cap 90 pre-overlay; LOW skip / MEDIUM run / HIGH +10 cap 95; no new `DetectorIdentity`; no Blackboard writes from detector; pre-regex NFKC + strip Mn/Cf + whitespace-fold normalization; cross-source boundary-pair scanning with 256-char overlap.
 
 Implementation may proceed against this contract.
