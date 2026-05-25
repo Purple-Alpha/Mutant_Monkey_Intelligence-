@@ -508,6 +508,67 @@ DOCUMENT_METADATA_FINGERPRINTING_PACKAGE = AuditPackage(
 )
 
 
+PROMPT_INJECTION_PACKAGE = AuditPackage(
+    name="prompt_injection",
+    files=(
+        AuditFile(
+            label="1. SIGNED SPECIFICATION",
+            relative_path=(
+                "4. Product_Roadmap/Adversarial_Prompt_Injection_Detector_Deep_Dive.md"
+            ),
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: core/scoring/prompt_injection_detector.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/prompt_injection_detector.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCORING INTEGRATION: core/scoring/email_risk_scoring_agent.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/email_risk_scoring_agent.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCORING PACKAGE INIT: core/scoring/__init__.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/__init__.py"
+            ),
+        ),
+        AuditFile(
+            label="3. TEST FILE: tests/test_prompt_injection_detector.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_prompt_injection_detector.py"
+            ),
+        ),
+    ),
+    receipt_label="4. IMPLEMENTER RECEIPT",
+    receipt_files=(
+        AuditFile(
+            label="PROJECT_HANDSHAKE.md (three-lane authorization)",
+            relative_path="PROJECT_HANDSHAKE.md",
+        ),
+        AuditFile(label="PROGRESS.md (latest task entry)", relative_path="PROGRESS.md"),
+    ),
+    receipt_anchors=(
+        (
+            "PROJECT_HANDSHAKE.md",
+            "Adversarial prompt-injection detector",
+            "Parallel clean candidates",
+        ),
+        (
+            "PROGRESS.md",
+            "### 33. Adversarial Prompt-Injection Detector v1",
+            "### 32.",
+        ),
+    ),
+)
+
+
 AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "vendor_baseline": VENDOR_BASELINE_PACKAGE,
     "financial_state_ledger": FINANCIAL_STATE_LEDGER_PACKAGE,
@@ -516,6 +577,7 @@ AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "pre_ship_audit": PRE_SHIP_AUDIT_PACKAGE,
     "email_authentication": EMAIL_AUTHENTICATION_PACKAGE,
     "document_metadata_fingerprinting": DOCUMENT_METADATA_FINGERPRINTING_PACKAGE,
+    "prompt_injection": PROMPT_INJECTION_PACKAGE,
 }
 
 

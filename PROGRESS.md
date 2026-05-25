@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **761 passed, 1 skipped** (exit code 0).
+**Runtime baseline (last verified):** **789 passed, 1 skipped** (exit code 0).
 
 ---
 
@@ -205,6 +205,23 @@
   - Focused Vendor Baseline suite passed by exit-code verification.
   - Affected override/report + Vendor Baseline suite passed by exit-code verification.
   - Expected runtime baseline after added tests: **592 passed, 1 skipped** (+5 from 587, zero known regressions).
+
+### 33. Adversarial Prompt-Injection Detector v1 — ✅ DONE 2026-05-24
+- **Spec:** signed `4. Product_Roadmap/Adversarial_Prompt_Injection_Detector_Deep_Dive.md` (§11 Matt Nichol 2026-05-24).
+- **Runtime:** new pure-function detector `core/scoring/prompt_injection_detector.py` scans `EmailInboundPayload.body_plain` plus each `EmailAttachmentMeta.extracted_text` against five closed families:
+  - `instruction_marker` (`[SYSTEM_INSTRUCTION]`, `<|im_start|>system`, `### Instruction:`, `BEGIN/END PROMPT`, `### system`, `### assistant`).
+  - `override_imperative` (`ignore previous instructions`, `disregard the above`, etc.).
+  - `role_impersonation` (`you are now`, `act as`, `pretend you are`, `from now on, behave...`).
+  - `output_control` (`only output JSON`, `respond with exactly`, `set risk_score to`, `mark this email as safe`, `recommended_action = safe`).
+  - `hidden_text` (zero-width chars adjacent to finance/instruction keywords).
+- **Scoring (corrected after first Grok audit `reject_with_required_fixes`):** `score = min(max(marker_floor, non_marker_score(N)), 90)` where `marker_floor = 75` if any `instruction_marker` hit else `0`, and `non_marker_score` is the closed table `{0:0, 1:55, 2:70, 3:80, 4+:90}` over the count `N` of non-marker families. `hidden_text` counts toward `N`. Spec §4 was rewritten to remove an internal inconsistency between gate test 8 (2-families = 70) and gate test 10 (3-families = 80) that the old `70 + 5*(n-2)` formula could not satisfy.
+- **Input length bound:** new `_MAX_SCAN_CHARS = 200_000` constant prevents pathological regex behavior on attacker-controlled bulk input; each text source (body + every attachment) is truncated before scanning.
+- **Overlay integration:** `_overlay_ransomware_precursor` now applies the detector after Document Metadata Fingerprinting with the same Tiered Detection rules - LOW skips, MEDIUM applies floor, HIGH adds +10 (cap 95). Indicators (`prompt_injection:<family>`) are appended to `risk_factors`/`phishing_signals` only when the floor actually applied (preserves the LOW-skip property).
+- **Data minimization:** indicators are family tags only; raw matched substrings never leave the detector.
+- **Audit target:** `audit_tools/grok_audit_runner.py prompt_injection` audits spec + detector + scoring integration + tests.
+- **Verification:**
+  - Focused tests: **28 passed** (`tests/test_prompt_injection_detector.py`) covering API surface, all five families, the closed N-count table (1/2/3/4-cap), marker-dominates-1 vs marker-coexists-with-3, `hidden_text` counting toward N, attachment family aggregation, attachment dedupe, input length bound, lift-only invariant, profile gating (LOW/MEDIUM/HIGH), no-leak guarantee, code-block/Markdown false-positive guardrail, and audit-target registration.
+  - Full runtime suite: **789 passed, 1 skipped** (+28, zero regressions).
 
 ### 32. Vendor Baseline audit-note polish — ✅ DONE 2026-05-24
 - Closed the three non-blocking follow-ups from the original Vendor Baseline Store Grok approve-with-notes report:

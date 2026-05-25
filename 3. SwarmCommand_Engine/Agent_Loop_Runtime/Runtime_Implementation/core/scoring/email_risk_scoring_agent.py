@@ -77,6 +77,7 @@ from core.scoring.email_authentication_detector import score_email_authenticatio
 from core.scoring.financial_state_ledger import FinancialStateLedgerAssessment
 from core.scoring.ghost_thread_detector import score_ghost_thread
 from core.scoring.header_divergence_detector import score_header_divergence
+from core.scoring.prompt_injection_detector import score_prompt_injection
 
 EMAIL_ANALYSIS_COMPLETE_WORKFLOW_ID = "email_analysis_complete"
 
@@ -654,7 +655,9 @@ def _overlay_ransomware_precursor(
        already performed the required stateful vendor-baseline assessment.
     6. Document Metadata Fingerprinting when the effective security profile
        is MEDIUM or HIGH and upstream PDF metadata is present.
-    7. Phase 1.4 floor lifts driven by signed policy state.
+    7. Adversarial prompt-injection detection on body + extracted attachment
+       text when the effective security profile is MEDIUM or HIGH.
+    8. Phase 1.4 floor lifts driven by signed policy state.
 
     Pure transform: returns a new ``EmailAnalysisPayload`` with the
     ``ransomware_precursor_analysis`` block populated and
@@ -750,6 +753,26 @@ def _overlay_ransomware_precursor(
         )
         else 0
     )
+    prompt_injection = (
+        score_prompt_injection(
+            body_plain=inbound_payload.body_plain or "",
+            attachments_text=tuple(
+                attachment.extracted_text
+                for attachment in inbound_payload.attachments
+                if attachment.extracted_text is not None
+            ),
+        )
+        if profile_resolution is None or profile_resolution.effective_profile != "low"
+        else None
+    )
+    prompt_injection_floor = (
+        _prompt_injection_floor_for_profile(
+            prompt_injection.score,
+            profile_resolution.effective_profile if profile_resolution is not None else "high",
+        )
+        if prompt_injection is not None
+        else 0
+    )
     floor_after_precursor = max(
         overlay.recommended_risk_floor,
         header_divergence.score if header_divergence is not None else 0,
@@ -757,6 +780,7 @@ def _overlay_ransomware_precursor(
         email_authentication_floor,
         fsl_floor,
         document_metadata_floor,
+        prompt_injection_floor,
     )
     base_risk_score = max(
         analysis_payload.risk_analysis.risk_score, floor_after_precursor
@@ -808,6 +832,21 @@ def _overlay_ransomware_precursor(
                 for indicator in document_metadata_assessment.indicators
             ],
         )
+    if (
+        prompt_injection is not None
+        and prompt_injection_floor > 0
+        and prompt_injection.indicators
+    ):
+        risk_update["risk_factors"] = _append_unique(
+            risk_update.get("risk_factors", analysis_payload.risk_analysis.risk_factors),
+            list(prompt_injection.indicators),
+        )
+        risk_update["phishing_signals"] = _append_unique(
+            risk_update.get(
+                "phishing_signals", analysis_payload.risk_analysis.phishing_signals
+            ),
+            list(prompt_injection.indicators),
+        )
 
     updated_risk_analysis = analysis_payload.risk_analysis.model_copy(update=risk_update)
     update = {
@@ -854,6 +893,14 @@ def _email_authentication_floor_for_profile(score: int, profile: SecurityProfile
 
 
 def _document_metadata_floor_for_profile(score: int, profile: SecurityProfile) -> int:
+    if score <= 0:
+        return 0
+    if profile == "high":
+        return min(95, score + 10)
+    return score
+
+
+def _prompt_injection_floor_for_profile(score: int, profile: SecurityProfile) -> int:
     if score <= 0:
         return 0
     if profile == "high":

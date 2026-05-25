@@ -17,12 +17,20 @@ from .email_authentication_detector import (
     EmailAuthenticationAssessment,
     score_email_authentication,
 )
+from .prompt_injection_detector import (
+    PromptInjectionAssessment,
+    PromptInjectionFamily,
+    score_prompt_injection,
+)
 
 __all__ = [
     "DocumentMetadataAssessment",
     "assess_document_metadata_fingerprint",
     "vendor_domain_from_sender",
     "EmailAuthenticationAssessment",
+    "PromptInjectionAssessment",
+    "PromptInjectionFamily",
+    "score_prompt_injection",
     "NORTHSTAR_INBOX_SHIELD_SYSTEM_PROMPT",
     "EmailRiskScoringConfig",
     "EmailRiskScoringFailure",

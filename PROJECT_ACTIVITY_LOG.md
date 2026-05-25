@@ -26,6 +26,28 @@ What should happen next.
 
 ---
 
+## 2026-05-24 - Adversarial Prompt-Injection Detector v1 Landed
+**Actor:** GPT-5.5 + Matt Nichol (operator)
+
+**Action:** Lane 2 of 3 in the 2026-05-24 three-lane authorization.
+
+**Files Changed:**
+- `4. Product_Roadmap/Adversarial_Prompt_Injection_Detector_Deep_Dive.md` (NEW - signed §11)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/prompt_injection_detector.py` (NEW)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/email_risk_scoring_agent.py` (UPDATED - new overlay step)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/__init__.py` (UPDATED - re-export)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_prompt_injection_detector.py` (NEW - 23 tests)
+- `audit_tools/grok_audit_runner.py` (UPDATED - `prompt_injection` audit target)
+- `PROJECT_HANDSHAKE.md`, `PROGRESS.md`, `MASTER_INDEX.md` (updates)
+
+**Reason:**
+Hardens the LLM scoring path. Pure-function deterministic body + attachment scanner that surfaces evidence the inbound email is targeting the scoring LLM itself, lifting risk via the lift-only `_overlay_ransomware_precursor` step and respecting Tiered Detection Intensity. No network, no PDF parsing, no Blackboard writes from the detector. Indicators are family tags only - raw matched substrings never leave the detector.
+
+**Next Step:**
+Grok audit + pre-ship gate + commit/push, then move to Lane 3 (Two-channel confirmation enforcement).
+
+---
+
 ## 2026-05-24 - Vendor Baseline Audit-Note Polish Landed
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 

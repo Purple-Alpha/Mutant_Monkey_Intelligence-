@@ -42,9 +42,9 @@ Month 1 through Month 6 core roadmap foundations are complete. Vendor Baseline S
 Current immediate next action:
 - **Document Metadata Fingerprinting v1 LANDED** 2026-05-24 (commit `045b032`); runtime baseline now **745 passed, 1 skipped** before this lane, **761 passed** after the polish tests.
 - **2026-05-24 operator selection (Matt):** all three remaining parallel candidates are now active and will be landed sequentially in this order:
-  1. **Vendor Baseline audit-note polish** (tests-only follow-up to the original Vendor Baseline Store Grok `approve_with_notes` report).
-  2. **Adversarial prompt-injection detector** (small deterministic body scanner protecting the LLM scoring path; pure-function overlay; no PDF parsing, no network).
-  3. **Two-channel confirmation enforcement** (workflow/audit layer that consumes Financial State Ledger / Document Metadata findings and records whether a human verified the payment-change through a known-safe channel).
+  1. **Vendor Baseline audit-note polish** — ✅ LANDED 2026-05-24 (commit `139dfae`).
+  2. **Adversarial prompt-injection detector** — ✅ LANDED 2026-05-24 (pure-function detector + Tiered Detection overlay + 23 focused tests; full suite 784 passed).
+  3. **Two-channel confirmation enforcement** — IN PROGRESS (workflow/audit layer that consumes Financial State Ledger / Document Metadata findings and records whether a human verified the payment-change through a known-safe channel).
 - Each lane runs the same flow: ship code -> focused tests -> full runtime suite -> Grok audit target -> `python audit_tools/pre_ship_audit.py` -> commit/push only on `VERDICT: SHIP`.
 
 Parallel clean candidates (do not start without explicit selection):
