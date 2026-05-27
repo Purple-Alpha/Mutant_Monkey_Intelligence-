@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 Q1/Q2 resolved by operator on 2026-05-26 (pending §13 lock as D1-D2e); remaining §12 open questions still require operator resolution before §13 sign-off.
+**Status:** DRAFT (pre-§11). §12 Q1/Q2/Q3 resolved by operator on 2026-05-26 (pending §13 lock as D1-D2e and D3-D3a); remaining §12 open questions still require operator resolution before §13 sign-off.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
@@ -193,7 +193,7 @@ Each carrier asks slightly different questions. The package needs per-carrier cu
 
 ## §6 Evidence Record Schema
 
-The package is a directory of structured evidence records plus a generated human-readable surface (Markdown / PDF / web). The structured records are the source of truth; the human-readable surface is a render.
+The package is a directory of structured evidence records plus a generated human-readable surface. The structured records are the source of truth; the human-readable surface is a render. Delivery surfaces for v1 are defined in §6.2.
 
 ```yaml
 evidence_id: "evd-2026-05-26-001"             # stable identifier; opaque to clients
@@ -259,6 +259,26 @@ Operational commitments introduced by this policy:
 - The implementation spec must include a monthly internal verification path for 30-day categories so on-demand package generation does not fail unexpectedly on stale operational-state records.
 - The implementation spec must include stale-evidence pre-warning behavior before a threshold breach. The alert channel and exact offset are implementation details; the v1 invariant is that stale evidence should not first become visible only at final package generation.
 - The implementation spec must track Grok API availability / cost as an operational dependency for quarterly, on-demand, and annual package-generation audits.
+
+### §6.2 Delivery surfaces (operator-resolved Q3)
+
+The package ships in **two delivery surfaces** for v1:
+
+- **PDF artifact (buyer-facing).** The PDF is the surface the MSP hands to the SMB and the SMB attaches to the underwriting application. It survives the worst-case yes/no-box underwriter read while preserving readability for the deep technical read. It carries the §2 boundary statement, the rendered evidence claims, and the package manifest summary.
+- **Markdown bundle (audit / engineering companion).** The Markdown bundle ships alongside the PDF and contains the rendered Markdown explanation, the structured evidence records (the source of truth per §6), a README explaining who reads what, the package manifest, and the traceability material that lets a deep-reading underwriter or LLM-assisted reviewer follow each claim back to a `source_artifact_path`.
+
+Deferred to v1.1+ pending cheaper-proof MSP demand evidence (Q10):
+
+- **Branded landing page** — adds a hosted runtime surface that must enforce Guardrail 11 tenant isolation at the web layer; not bought against unproven demand.
+- **Evidence vault with signed URL and audit log** — adds vault infrastructure, underwriter authentication, and an additional audit log surface; not bought against unproven demand.
+
+A v1.1 reopening of either deferred surface requires concrete MSP-or-underwriter demand evidence captured during cheaper-proof discovery, plus a follow-up spec entry that re-evaluates the Guardrail 11 surface area cost.
+
+Operational commitments introduced by this policy:
+
+- **HC6 — Toolchain pinning.** The implementation spec must pin the PDF render toolchain (engine, version, fonts, template assets) and fold the toolchain identity and version into the package manifest. Silent toolchain mutation across versions is a determinism failure mode and must be prevented by the manifest.
+- **HC7 — Bundle format.** The implementation spec must specify the Markdown bundle archive format (deterministic zipped package), the file layout (rendered Markdown, structured records directory, README, manifest, content hashes), and the integrity model (per-file content hash plus a top-level package hash). Loose-directory delivery is not v1 acceptable.
+- **HC8 — Minimal branding rules.** The implementation spec must define minimal branding rules so the PDF reads as credible without overclaim or scope drift. Branding must not introduce forbidden-language phrases (§9), must not surface repo-internal identifiers (§9 redaction), and must not expand or soften the §2 boundary statement into marketing copy.
 
 ### Cross-record invariants
 
@@ -506,7 +526,7 @@ These resolve into locked decisions (D1–Dn) at §11 sign-off. Until then they 
 
 ### Q3. Delivery mechanism
 
-PDF? Branded landing page? Evidence vault (signed URL with audit log)? Markdown bundle? Operator-side concerns: cost of each, MSP reading habits, underwriter reading habits, version control.
+**Resolved 2026-05-26 by operator (pending §13 lock as D3-D3a).** v1 ships two delivery surfaces only: PDF artifact (buyer-facing) and Markdown bundle (audit / engineering companion). Branded landing page and evidence vault with signed URL are deferred to v1.1+ pending cheaper-proof MSP demand evidence (Q10). Operational commitments acknowledged by operator: HC6 toolchain pinning, HC7 bundle format specification, HC8 minimal branding rules — all to be encoded in the implementation spec. Full surface and commitment definitions are in §6.2.
 
 ### Q4. Per-carrier variants vs single carrier-agnostic format
 
