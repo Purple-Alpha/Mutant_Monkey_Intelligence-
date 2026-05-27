@@ -597,6 +597,111 @@ class EmailAnalysisRansomwarePrecursorAnalysis(StrictModel):
     precursor_indicators: list[PrecursorIndicator] = Field(default_factory=list)
 
 
+_CLIENT_FACING_RUBRIC_AXIS_ORDER: tuple[str, ...] = (
+    "sender_identity",
+    "conversation_continuity",
+    "vendor_payment_history",
+    "document_integrity",
+    "origin_timing",
+)
+
+
+class EmailRiskAxisBreakdown(StrictModel):
+    """One row of the client-facing 5-axis rubric.
+
+    Locked per ``4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md``
+    §5 (§11 SIGNED 2026-05-25). Axis names are versioned product vocabulary
+    (D3); changes require a spec revision and a ``rubric_version`` bump.
+    """
+
+    axis_name: Literal[
+        "sender_identity",
+        "conversation_continuity",
+        "vendor_payment_history",
+        "document_integrity",
+        "origin_timing",
+    ]
+    score: int = Field(ge=0, le=2)
+    why_this_score: str = Field(min_length=1, max_length=160)
+    evidence_tags: tuple[str, ...] = ()
+
+
+class ClientFacingRubricPayload(StrictModel):
+    """Client-facing 5-axis explanation layer projected from internal scoring.
+
+    Locked per ``4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md``
+    §11 SIGNED 2026-05-25 (D1–D17, §3 axis definitions, §4 consistency
+    contract, §5 schema). The payload is a deterministic projection of the
+    internal ``EmailAnalysisRiskAnalysis`` and overlay state, never a second
+    detector stack (D1).
+
+    Schema invariants (validator-enforced):
+
+    - Exactly five axes when ``rubric_status`` is ``"available"`` (D2).
+      D12 failure posture uses ``rubric_status="unavailable"`` with zero
+      axes so the analysis can still emit without pretending the rubric
+      projected successfully.
+    - Axes appear in the fixed order defined in §3 (D14). The
+      ``"Order is fixed for stability, not priority."`` disclaimer is a
+      rendering-contract concern (§6) and is not stored on the payload.
+    - When ``rubric_consistency_override`` is ``False``, ``axis_total``
+      equals the sum of axis scores (D10 equal-weighting).
+    - When ``rubric_consistency_override`` is ``True``, a
+      ``rubric_consistency_reason`` string is required so the §4.2 guard
+      fires explicitly (D6).
+    """
+
+    rubric_version: Literal["v1"] = "v1"
+    rubric_status: Literal["available", "unavailable"] = "available"
+    axis_total: int = Field(ge=0, le=10)
+    axes: tuple[EmailRiskAxisBreakdown, ...]
+    rubric_consistency_override: bool = False
+    rubric_consistency_reason: str | None = Field(default=None, max_length=220)
+
+    @model_validator(mode="after")
+    def enforce_axis_contract(self) -> ClientFacingRubricPayload:
+        if self.rubric_status == "unavailable":
+            if self.axes:
+                raise ValueError(
+                    "unavailable client_facing_rubric must not include axis rows"
+                )
+            if self.axis_total != 0:
+                raise ValueError(
+                    "unavailable client_facing_rubric must use axis_total=0"
+                )
+            if not self.rubric_consistency_reason:
+                raise ValueError(
+                    "unavailable client_facing_rubric requires an explicit reason"
+                )
+            return self
+
+        if len(self.axes) != 5:
+            raise ValueError(
+                "client_facing_rubric must contain exactly 5 axes "
+                f"(got {len(self.axes)})"
+            )
+        actual_names = tuple(axis.axis_name for axis in self.axes)
+        if actual_names != _CLIENT_FACING_RUBRIC_AXIS_ORDER:
+            raise ValueError(
+                "client_facing_rubric axes must appear in the fixed order "
+                f"{_CLIENT_FACING_RUBRIC_AXIS_ORDER}; got {actual_names}"
+            )
+        if not self.rubric_consistency_override:
+            expected_total = sum(axis.score for axis in self.axes)
+            if self.axis_total != expected_total:
+                raise ValueError(
+                    f"axis_total ({self.axis_total}) must equal sum of axis "
+                    f"scores ({expected_total}) when "
+                    "rubric_consistency_override is False"
+                )
+        if self.rubric_consistency_override and not self.rubric_consistency_reason:
+            raise ValueError(
+                "rubric_consistency_reason is required when "
+                "rubric_consistency_override is True"
+            )
+        return self
+
+
 class EmailAnalysisPayload(StrictModel):
     """Structured output of the NorthStar Inbox Shield scoring agent.
 
@@ -632,6 +737,7 @@ class EmailAnalysisPayload(StrictModel):
             "manual_operator_escalation",
         ]
     ] = Field(default_factory=list)
+    client_facing_rubric: ClientFacingRubricPayload | None = None
 
     @model_validator(mode="after")
     def cap_summary_length(self) -> EmailAnalysisPayload:
@@ -668,6 +774,8 @@ class DailyDigestEmailEntry(StrictModel):
     summary: str | None = None
     action_items: list[EmailAnalysisActionItem] = Field(default_factory=list)
     risk_score: int = Field(ge=0, le=100)
+    recommended_action: RecommendedEmailAction | None = None
+    client_facing_rubric: ClientFacingRubricPayload | None = None
     tenant_default_profile: Literal["low", "medium", "high"] | None = None
     effective_profile: Literal["low", "medium", "high"] | None = None
     forced_escalation_triggers: list[
@@ -688,6 +796,8 @@ class DailyDigestRiskEntry(StrictModel):
     subject: str | None = None
     sender: str | None = None
     risk_score: int = Field(ge=0, le=100)
+    recommended_action: RecommendedEmailAction | None = None
+    client_facing_rubric: ClientFacingRubricPayload | None = None
     reason: str | None = None
     tenant_default_profile: Literal["low", "medium", "high"] | None = None
     effective_profile: Literal["low", "medium", "high"] | None = None

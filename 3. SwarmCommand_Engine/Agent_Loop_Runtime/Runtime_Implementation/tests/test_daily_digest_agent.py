@@ -80,6 +80,7 @@ def _seed_analysis(
     tenant_default_profile: str | None = None,
     effective_profile: str | None = None,
     forced_escalation_triggers: list[str] | None = None,
+    client_facing_rubric=None,
 ) -> UUID:
     payload = EmailAnalysisPayload(
         source_email_record_id=source_email_record_id,
@@ -103,6 +104,7 @@ def _seed_analysis(
         tenant_default_profile=tenant_default_profile,
         effective_profile=effective_profile,
         forced_escalation_triggers=forced_escalation_triggers or [],
+        client_facing_rubric=client_facing_rubric,
     )
     result = submit_email_analysis(
         context,
@@ -559,6 +561,113 @@ def test_digest_stores_llm_markdown(tmp_path):
     payload = DailyDigestPayload.model_validate(digests[0].payload)
     assert payload.digest_markdown == "# Today's Digest\n\n- something"
     assert payload.digest_date == now.date()
+
+
+def test_digest_renders_client_facing_rubric_on_production_path(tmp_path):
+    """§8.12 production-renderer gate test.
+
+    Drives ``run_daily_digest_cycle`` against a real (non-demo) production
+    blackboard with a rubric-bearing ``EmailAnalysisPayload`` and asserts
+    the persisted ``DAILY_DIGEST.digest_markdown`` carries the §6 rendering
+    contract end-to-end: prominent ``recommended_action`` label,
+    ``Rubric: <axis_total>/10`` total, all five fixed-order axis rows with
+    ``why_this_score``, and the exact disclaimer line. Uses the
+    deterministic demo digest renderer so the assertion is on actual
+    rendered output, not on a captured prompt.
+    """
+    from core.blackboard import (
+        ClientFacingRubricPayload,
+        EmailRiskAxisBreakdown,
+    )
+    from scripts.inbox_shield_daily_digest_demo import demo_digest_llm_client
+
+    context = _context(tmp_path)
+    now = datetime(2026, 5, 20, 12, 0, tzinfo=timezone.utc)
+    inbound_id = _seed_inbound(
+        context, sender="billing@vendor.example", subject="Urgent invoice"
+    )
+
+    rubric = ClientFacingRubricPayload(
+        rubric_version="v1",
+        rubric_status="available",
+        axis_total=7,
+        axes=(
+            EmailRiskAxisBreakdown(
+                axis_name="sender_identity",
+                score=2,
+                why_this_score="Header chain shows strong divergence from claimed sender domain.",
+                evidence_tags=("header_divergence_strong",),
+            ),
+            EmailRiskAxisBreakdown(
+                axis_name="conversation_continuity",
+                score=0,
+                why_this_score="No continuity anomaly pattern.",
+                evidence_tags=(),
+            ),
+            EmailRiskAxisBreakdown(
+                axis_name="vendor_payment_history",
+                score=2,
+                why_this_score="New banking instructions requested; verify via known channel before action.",
+                evidence_tags=("new_banking_instructions",),
+            ),
+            EmailRiskAxisBreakdown(
+                axis_name="document_integrity",
+                score=2,
+                why_this_score="Attachment risk overlay 85/100 indicates strong document-integrity concern.",
+                evidence_tags=("attachment_risk_high",),
+            ),
+            EmailRiskAxisBreakdown(
+                axis_name="origin_timing",
+                score=1,
+                why_this_score="Out-of-band pressure noted in analysis evidence.",
+                evidence_tags=("out_of_band_pressure",),
+            ),
+        ),
+        rubric_consistency_override=False,
+        rubric_consistency_reason=None,
+    )
+
+    _seed_analysis(
+        context,
+        source_email_record_id=inbound_id,
+        risk_score=86,
+        risk_factors=["spoofed_sender_domain"],
+        recommended_action="block",
+        produced_at=now - timedelta(hours=1),
+        client_facing_rubric=rubric,
+    )
+
+    run_daily_digest_cycle(
+        context,
+        config=DailyDigestConfig(
+            llm_client=demo_digest_llm_client,
+            production_tenant_id=TENANT,
+            now_provider=_fixed_now(now),
+        ),
+    )
+
+    digests = [
+        r for r in _production_records(context) if r.record_type == RecordType.DAILY_DIGEST
+    ]
+    assert len(digests) == 1
+    payload = DailyDigestPayload.model_validate(digests[0].payload)
+    rendered = payload.digest_markdown
+
+    # §6 most-prominent element: recommended_action.
+    assert "Action: `block`" in rendered
+
+    # §6 navigation aid + per-axis breakdown contract.
+    assert "Rubric: 7/10" in rendered
+    assert "Order is fixed for stability, not priority." in rendered
+
+    # All five axes render in the fixed order with their why_this_score.
+    for axis in rubric.axes:
+        line = f"{axis.axis_name}: {axis.score}/2 - {axis.why_this_score}"
+        assert line in rendered, f"missing rendered axis row: {line}"
+
+    # Spec §11.1 amendment: override marker must NOT appear when the
+    # override is False, even though we are on the production path.
+    assert "Score normalized to match high-risk internal evidence." not in rendered
 
 
 # ---------------------------------------------------------------------------

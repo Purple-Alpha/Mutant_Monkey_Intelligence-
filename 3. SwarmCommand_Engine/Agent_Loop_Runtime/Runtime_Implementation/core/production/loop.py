@@ -414,6 +414,15 @@ def run_production_cycle(
                 fraud_risk_floor_lift=fraud_lift,
                 attachment_risk_floor_lift=attachment_lift,
                 url_obfuscation_floor_lift=url_lift,
+                # Preserve the operator-supplied client-facing rubric flag
+                # through the production-loop rebuild path. Without this,
+                # activation set on the incoming EmailRiskScoringConfig
+                # silently reverts to the dataclass default (False) any time
+                # tenant_id or the Phase 1.4 lifts force a rebuild —
+                # i.e. on every real production cycle.
+                enable_client_facing_rubric=(
+                    scoring_config.enable_client_facing_rubric
+                ),
             )
         email_risk_scoring_result = run_email_risk_scoring_cycle(
             context,

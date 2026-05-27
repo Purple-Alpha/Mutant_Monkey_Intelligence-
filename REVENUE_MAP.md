@@ -4,8 +4,6 @@
 
 **Operating principle:** **Selling is discovery, not pitching.** You don't sell NorthStar yet. You learn what people need so NorthStar can become something they'll pay for. This removes ~80% of the fear that "I don't know how to sell."
 
-**Communication rule (2026-05-23):** Every proposal, DM, email, or letter to a human is **written by Matt in his own words**. AI proofreads for typos / facts / tone — AI does **not** write, structure, or rewrite. Full scope, workflow, and disclosure pattern in `6. Internal_Strategy/Positioning/Human_Written_Communication_Policy.md`. This is the single biggest differentiator from every other AI-era outreach in the MSP inbox.
-
 **Update rule:** Weekly review every Friday. Add what you learned. Adjust tactics, not strategy.
 
 **Last reviewed:** 2026-05-23
@@ -315,7 +313,6 @@ These are the failure modes of solo technical founders. Avoid them.
 6. **Don't try to compete with CrowdStrike on signature counts.** Wrong axis. (See `VISION.md`.)
 7. **Don't pay for premium platforms (Upwork Plus, LinkedIn Premium, paid threat feeds) yet.** None of them earn you revenue at this stage.
 8. **Don't start a second product.** Park ideas in `think_sheet.md`. Period.
-9. **Don't let AI write your outreach for you.** Per `6. Internal_Strategy/Positioning/Human_Written_Communication_Policy.md` — AI proofreads, AI never authors. AI-written outreach is the #1 way to look identical to the 20 spam DMs an MSP got this morning.
 
 ---
 

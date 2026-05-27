@@ -39,6 +39,7 @@ def _seed_inbound(
     *,
     subject: str = "Outstanding invoice",
     sender: str = "vendor@example.com",
+    tenant_id: str = TENANT,
 ) -> UUID:
     payload = EmailInboundPayload(
         received_at=datetime(2026, 5, 20, 10, 0, tzinfo=timezone.utc),
@@ -50,7 +51,7 @@ def _seed_inbound(
     )
     result = submit_email_inbound(
         context,
-        tenant_id=TENANT,
+        tenant_id=tenant_id,
         environment=Environment.PRODUCTION,
         source_agent="orchestrator_001",
         payload=payload,
@@ -818,3 +819,316 @@ def test_scoring_agent_persists_unicode_obfuscation_flag_for_coastal_marine_case
         parsed.risk_analysis.behavioral_deviation_flags
     )
     assert parsed.risk_analysis.vendor_fraud_score == 72
+
+
+# --- Client-facing 5-axis rubric wiring (§11 SIGNED 2026-05-25) -----------
+
+
+def test_client_facing_rubric_is_unattached_by_default(tmp_path):
+    """Default ``EmailRiskScoringConfig.enable_client_facing_rubric=False``
+    leaves ``EmailAnalysisPayload.client_facing_rubric`` at ``None`` so the
+    activation gate (spec §9 step 5) holds: no client-facing surface ships
+    until an operator explicitly flips the flag.
+    """
+    context = _context(tmp_path)
+    _seed_inbound(context)
+
+    run_email_risk_scoring_cycle(
+        context,
+        config=EmailRiskScoringConfig(
+            llm_client=_canned_client(_valid_analysis_json()),
+            production_tenant_id=TENANT,
+        ),
+    )
+
+    analyses = [
+        r
+        for r in _production_records(context)
+        if r.record_type == RecordType.EMAIL_ANALYSIS
+    ]
+    assert len(analyses) == 1
+    parsed = EmailAnalysisPayload.model_validate(analyses[0].payload)
+    assert parsed.client_facing_rubric is None
+
+
+def test_client_facing_rubric_attaches_when_flag_enabled(tmp_path):
+    """When ``enable_client_facing_rubric=True``, the production cycle writes
+    an ``EmailAnalysisPayload`` whose ``client_facing_rubric`` is populated
+    with exactly five axes in the spec §3 / D14 fixed order, and the existing
+    ``recommended_action`` and ``risk_score`` fields are unchanged (D5 / §8.14
+    kill-switch invariant).
+    """
+    context = _context(tmp_path)
+    _seed_inbound(context)
+
+    run_email_risk_scoring_cycle(
+        context,
+        config=EmailRiskScoringConfig(
+            llm_client=_canned_client(_valid_analysis_json()),
+            production_tenant_id=TENANT,
+            enable_client_facing_rubric=True,
+        ),
+    )
+
+    analyses = [
+        r
+        for r in _production_records(context)
+        if r.record_type == RecordType.EMAIL_ANALYSIS
+    ]
+    assert len(analyses) == 1
+    parsed = EmailAnalysisPayload.model_validate(analyses[0].payload)
+
+    rubric = parsed.client_facing_rubric
+    assert rubric is not None
+    assert rubric.rubric_version == "v1"
+    assert len(rubric.axes) == 5
+    assert tuple(a.axis_name for a in rubric.axes) == (
+        "sender_identity",
+        "conversation_continuity",
+        "vendor_payment_history",
+        "document_integrity",
+        "origin_timing",
+    )
+    assert 0 <= rubric.axis_total <= 10
+
+    # Lift-only invariant: the rubric attach must not move the internal
+    # scoring numbers or the recommended action.
+    assert parsed.risk_analysis.risk_score == 72
+    assert parsed.recommended_action == "needs_review"
+
+
+def test_client_facing_rubric_projection_failure_marks_unavailable_and_audits(
+    tmp_path, monkeypatch
+):
+    """D12 failure posture: projection failures must not silently look like
+    the flag was disabled. Internal analysis still emits, the rubric payload
+    is marked unavailable, and the normal audit marker records the failure.
+    """
+    context = _context(tmp_path)
+    _seed_inbound(context)
+
+    def _boom(_payload):
+        raise RuntimeError("synthetic projection failure")
+
+    monkeypatch.setattr(
+        "core.scoring.email_risk_scoring_agent.project_client_facing_rubric",
+        _boom,
+    )
+
+    result = run_email_risk_scoring_cycle(
+        context,
+        config=EmailRiskScoringConfig(
+            llm_client=_canned_client(_valid_analysis_json()),
+            production_tenant_id=TENANT,
+            enable_client_facing_rubric=True,
+        ),
+    )
+
+    assert result.analyzed == 1
+    records = _production_records(context)
+    analyses = [
+        r for r in records if r.record_type == RecordType.EMAIL_ANALYSIS
+    ]
+    assert len(analyses) == 1
+    parsed = EmailAnalysisPayload.model_validate(analyses[0].payload)
+
+    rubric = parsed.client_facing_rubric
+    assert rubric is not None
+    assert rubric.rubric_status == "unavailable"
+    assert rubric.axis_total == 0
+    assert rubric.axes == ()
+    assert rubric.rubric_consistency_override is True
+    assert rubric.rubric_consistency_reason is not None
+    assert "projection unavailable" in rubric.rubric_consistency_reason
+    assert len(rubric.rubric_consistency_reason) <= 220
+
+    markers = [
+        r
+        for r in records
+        if r.record_type == RecordType.AUDIT_VERDICT
+        and r.workflow_id == EMAIL_ANALYSIS_COMPLETE_WORKFLOW_ID
+    ]
+    assert len(markers) == 1
+    assert any(
+        "client_facing_rubric=unavailable" in finding
+        for finding in markers[0].payload["findings"]
+    )
+
+
+def test_client_facing_rubric_isolation_across_two_tenants(tmp_path):
+    """§8.13 gate test (Tenant isolation: no cross-tenant rubric evidence leak).
+
+    Drives two distinct production scoring cycles for ``tenant_a`` and
+    ``tenant_b`` on the same blackboard root, both with
+    ``enable_client_facing_rubric=True``. Asserts each tenant's blackboard
+    contains exactly its own ``EMAIL_ANALYSIS`` record with its own rubric,
+    and asserts the other tenant's inbound id never appears in either
+    tenant's record stream. This is the integration-level proof for §8.13;
+    structural mapper purity is covered separately in
+    ``test_mapper_is_pure_no_payload_mutation``.
+    """
+    context = _context(tmp_path)
+    tenant_a = "tenant_a"
+    tenant_b = "tenant_b"
+
+    inbound_a = _seed_inbound(
+        context,
+        subject="ACME wire request",
+        sender="billing-a@vendor-a.example",
+        tenant_id=tenant_a,
+    )
+    inbound_b = _seed_inbound(
+        context,
+        subject="Beta credentials reset",
+        sender="security-b@idp-b.example",
+        tenant_id=tenant_b,
+    )
+
+    # Distinct canned responses so we can prove each tenant's rubric came
+    # from its own inbound's analysis, not crossed over.
+    response_a = _valid_analysis_json(
+        risk_analysis={
+            "risk_score": 81,
+            "risk_factors": ["spoofed_sender_domain_a"],
+            "phishing_signals": [],
+            "urgency_signals": ["please_reply_today"],
+            "financial_risk": "high",
+            "vendor_fraud_score": 70,
+            "wire_transfer_anomaly_score": 65,
+            "invoice_authenticity_score": None,
+            "behavioral_deviation_flags": ["new_banking_instructions"],
+        },
+        recommended_action="block",
+    )
+    response_b = _valid_analysis_json(
+        risk_analysis={
+            "risk_score": 33,
+            "risk_factors": ["credential_reset_pattern_b"],
+            "phishing_signals": [],
+            "urgency_signals": [],
+            "financial_risk": "medium",
+            "vendor_fraud_score": 20,
+            "wire_transfer_anomaly_score": 15,
+            "invoice_authenticity_score": None,
+            "behavioral_deviation_flags": [],
+        },
+        impersonation_analysis={
+            "impersonation_likelihood": 25,
+            "suspicious_elements": [],
+            "sender_legitimacy_notes": "moderate signal only",
+        },
+        recommended_action="needs_review",
+    )
+
+    run_email_risk_scoring_cycle(
+        context,
+        config=EmailRiskScoringConfig(
+            llm_client=_canned_client(response_a),
+            production_tenant_id=tenant_a,
+            enable_client_facing_rubric=True,
+        ),
+    )
+    run_email_risk_scoring_cycle(
+        context,
+        config=EmailRiskScoringConfig(
+            llm_client=_canned_client(response_b),
+            production_tenant_id=tenant_b,
+            enable_client_facing_rubric=True,
+        ),
+    )
+
+    records_a = _production_records(context, tenant=tenant_a)
+    records_b = _production_records(context, tenant=tenant_b)
+
+    analyses_a = [r for r in records_a if r.record_type == RecordType.EMAIL_ANALYSIS]
+    analyses_b = [r for r in records_b if r.record_type == RecordType.EMAIL_ANALYSIS]
+    assert len(analyses_a) == 1
+    assert len(analyses_b) == 1
+
+    parsed_a = EmailAnalysisPayload.model_validate(analyses_a[0].payload)
+    parsed_b = EmailAnalysisPayload.model_validate(analyses_b[0].payload)
+
+    # Each tenant's analysis points at its own inbound id only.
+    assert parsed_a.source_email_record_id == inbound_a
+    assert parsed_b.source_email_record_id == inbound_b
+
+    # Each tenant carries its own distinct internal scoring numbers, proving
+    # we are looking at independent analyses, not a shared object.
+    assert parsed_a.risk_analysis.risk_score == 81
+    assert parsed_b.risk_analysis.risk_score == 33
+    assert parsed_a.recommended_action == "block"
+    assert parsed_b.recommended_action == "needs_review"
+
+    # Rubric is attached for both, but each rubric must reflect its own
+    # tenant's evidence — not the other tenant's.
+    assert parsed_a.client_facing_rubric is not None
+    assert parsed_b.client_facing_rubric is not None
+    assert parsed_a.client_facing_rubric.rubric_status == "available"
+    assert parsed_b.client_facing_rubric.rubric_status == "available"
+
+    # tenant_a is high-risk (band 75-100, axis_total 7-10).
+    assert 7 <= parsed_a.client_facing_rubric.axis_total <= 10
+    # tenant_b is moderate-low (band 25-49, axis_total 2-5).
+    assert 2 <= parsed_b.client_facing_rubric.axis_total <= 5
+
+    # Hard isolation assertions: no record on tenant_a's blackboard
+    # references tenant_b's inbound id (or vice versa) in any of the
+    # cross-record fields the rubric path could touch.
+    serialized_a = json.dumps([r.payload for r in records_a])
+    serialized_b = json.dumps([r.payload for r in records_b])
+    assert str(inbound_b) not in serialized_a, (
+        "tenant_a's blackboard leaked tenant_b's inbound id"
+    )
+    assert str(inbound_a) not in serialized_b, (
+        "tenant_b's blackboard leaked tenant_a's inbound id"
+    )
+    # And no record on either side carries the *other* tenant's tenant_id
+    # field at the record level.
+    assert all(r.tenant_id == tenant_a for r in records_a)
+    assert all(r.tenant_id == tenant_b for r in records_b)
+
+
+def test_production_loop_preserves_client_facing_rubric_flag_through_rebuild(tmp_path):
+    """Activation regression: ``ProductionLoopConfig`` rebuilds the
+    ``EmailRiskScoringConfig`` whenever the cycle tenant or any of the
+    Phase 1.4 lifts force one. Without explicit preservation, the
+    operator-supplied ``enable_client_facing_rubric=True`` would silently
+    revert to the dataclass default (False) on every real production cycle.
+    This test forces the rebuild branch via a mismatched tenant id and
+    asserts the persisted analysis record carries the rubric.
+    """
+    context = _context(tmp_path)
+    _seed_inbound(context)
+
+    custom = EmailRiskScoringConfig(
+        llm_client=_canned_client(_valid_analysis_json()),
+        production_tenant_id="wrong_tenant_overridden",
+        enable_client_facing_rubric=True,
+    )
+
+    from core.production import ProductionLoopConfig, ProductionSignal, run_production_cycle
+
+    result = run_production_cycle(
+        context,
+        tenant_id=TENANT,
+        signal=ProductionSignal(source="mailbox", event_kind="email_received"),
+        config=ProductionLoopConfig(
+            run_email_risk_scoring_at_end_of_cycle=True,
+            email_risk_scoring_config=custom,
+        ),
+    )
+
+    assert result.email_risk_scoring is not None
+    assert result.email_risk_scoring.analyzed == 1
+
+    analyses = [
+        r
+        for r in _production_records(context)
+        if r.record_type == RecordType.EMAIL_ANALYSIS
+    ]
+    assert len(analyses) == 1
+    parsed = EmailAnalysisPayload.model_validate(analyses[0].payload)
+    assert parsed.client_facing_rubric is not None, (
+        "production-loop rebuild dropped the enable_client_facing_rubric flag"
+    )
+    assert len(parsed.client_facing_rubric.axes) == 5

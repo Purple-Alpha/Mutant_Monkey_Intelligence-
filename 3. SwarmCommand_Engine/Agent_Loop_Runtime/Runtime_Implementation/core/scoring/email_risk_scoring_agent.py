@@ -43,6 +43,7 @@ from core.blackboard import (
     AuditStatus,
     AuditVerdictPayload,
     BlackboardRecord,
+    ClientFacingRubricPayload,
     EmailAnalysisFailurePayload,
     EmailAnalysisPayload,
     EmailInboundPayload,
@@ -51,6 +52,7 @@ from core.blackboard import (
     RecordType,
     read_records,
 )
+from core.scoring.client_facing_rubric import project_client_facing_rubric
 from core.operator_state import KillSwitchEngaged, is_kill_switch_engaged
 from core.operator_state.security_profile import (
     ForcedEscalationEvidence,
@@ -277,6 +279,15 @@ class EmailRiskScoringConfig:
     attachment_risk_floor_lift: int = 0
     url_obfuscation_floor_lift: int = 0
     default_profile_when_unset: SecurityProfile = "medium"
+    # ----- Client-Facing 5-Axis Rubric (§11 SIGNED 2026-05-25) -----
+    # Default OFF per spec §9 step 5: "Activation: feature-flag off by
+    # default until operator confirms report quality on a bounded fixture
+    # set." When enabled, the post-overlay payload picks up a
+    # ``client_facing_rubric`` projection per
+    # ``Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`` §3/§4/§5.
+    # When disabled, ``EmailAnalysisPayload.client_facing_rubric`` stays
+    # ``None`` and existing report renderers see no change.
+    enable_client_facing_rubric: bool = False
 
 
 @dataclass(frozen=True)
@@ -451,6 +462,9 @@ def run_email_risk_scoring_cycle(
                 url_obfuscation_floor_lift=config.url_obfuscation_floor_lift,
             )
 
+        if config.enable_client_facing_rubric:
+            analysis_payload = _attach_client_facing_rubric(analysis_payload)
+
         analysis_record = submit_email_analysis(
             context,
             tenant_id=config.production_tenant_id,
@@ -467,6 +481,7 @@ def run_email_risk_scoring_cycle(
                 f"analysis_record_id={analysis_record.record.record_id}",
                 f"recommended_action={analysis_payload.recommended_action}",
                 f"risk_score={analysis_payload.risk_analysis.risk_score}",
+                _client_facing_rubric_marker(analysis_payload),
             ],
             requires_human_review=analysis_payload.recommended_action == "block",
         )
@@ -866,6 +881,55 @@ def _overlay_ransomware_precursor(
     return analysis_payload.model_copy(update=update)
 
 
+def _attach_client_facing_rubric(
+    analysis_payload: EmailAnalysisPayload,
+) -> EmailAnalysisPayload:
+    """Attach the §11-signed client-facing 5-axis rubric to ``analysis_payload``.
+
+    Pure transform: returns a new ``EmailAnalysisPayload`` with
+    ``client_facing_rubric`` populated by
+    :func:`core.scoring.client_facing_rubric.project_client_facing_rubric`.
+    The original payload is not mutated.
+
+    Failure posture per ``Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md``
+    D12 ("On rubric-projection failure, do not fail-open: internal analysis
+    still emits; rubric marks ``unavailable`` with explicit audit marker."):
+    if the projection raises for any reason, this helper returns a copy with
+    a bounded unavailable sentinel. The production cycle writes the explicit
+    audit marker in the normal analysis-complete marker findings.
+    """
+
+    try:
+        rubric = project_client_facing_rubric(analysis_payload)
+    except Exception as exc:
+        rubric = _client_facing_rubric_unavailable(exc)
+    return analysis_payload.model_copy(update={"client_facing_rubric": rubric})
+
+
+def _client_facing_rubric_unavailable(exc: Exception) -> ClientFacingRubricPayload:
+    """Build the D12 unavailable sentinel without leaking exception detail."""
+    reason = (
+        "Client-facing rubric projection unavailable; internal analysis emitted "
+        f"without client-facing axis projection ({type(exc).__name__})."
+    )
+    return ClientFacingRubricPayload(
+        rubric_status="unavailable",
+        axis_total=0,
+        axes=(),
+        rubric_consistency_override=True,
+        rubric_consistency_reason=reason,
+    )
+
+
+def _client_facing_rubric_marker(analysis_payload: EmailAnalysisPayload) -> str:
+    rubric = analysis_payload.client_facing_rubric
+    if rubric is None:
+        return "client_facing_rubric=disabled"
+    if rubric.rubric_status == "unavailable":
+        return "client_facing_rubric=unavailable; projection_failed=true"
+    return "client_facing_rubric=available"
+
+
 def _clamp_fraud_lift(value: int) -> int:
     if value <= 0:
         return 0
@@ -1007,6 +1071,7 @@ def score_one_email_payload(
     *,
     llm_client: LLMClient,
     enable_ransomware_precursor_overlay: bool = True,
+    enable_client_facing_rubric: bool = False,
     max_action_items: int = NORTHSTAR_MAX_ACTION_ITEMS,
     source_email_record_id: UUID | None = None,
 ) -> EmailAnalysisPayload | EmailRiskScoringInMemoryFailure:
@@ -1049,6 +1114,7 @@ def score_one_email_payload(
         llm_client=llm_client,
         max_action_items=max_action_items,
         enable_ransomware_precursor_overlay=enable_ransomware_precursor_overlay,
+        enable_client_facing_rubric=enable_client_facing_rubric,
     )
 
     user_prompt = _build_user_prompt(source_email_record_id, inbound_payload)
@@ -1104,5 +1170,8 @@ def score_one_email_payload(
             inbound_payload,
             profile_resolution=profile_resolution,
         )
+
+    if helper_config.enable_client_facing_rubric:
+        analysis_payload = _attach_client_facing_rubric(analysis_payload)
 
     return analysis_payload

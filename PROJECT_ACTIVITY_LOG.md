@@ -26,6 +26,529 @@ What should happen next.
 
 ---
 
+## 2026-05-25 - Callback Phishing / TOAD Body-Language Detector — Part 1 Spec-First Deep Dive (DRAFT)
+**Actor:** Matt + GPT-5.5
+
+**Action:** With the rubric lane closed (Tasks 52-57), the build queue determined the next item without operator selection. Drafted the §11-target spec for the Part 1 body-language slice of the Callback Phishing / TOAD detection layer. No detector code yet — spec is at the same "DRAFT, pre-§11, §10 open" stage the rubric started at on 2026-05-25 morning.
+
+**Files Changed:**
+- `4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md` (CREATED - eleven-section spec draft following the project's locked spec pattern; D1-D10 + §5 schema + §4.1 risk-floor band table + 14-test §8 closure gate + 5 open §10 sub-questions)
+- `MASTER_INDEX.md` (UPDATED - new index entry for the spec draft; rubric entry updated to reflect the 905/1 runtime baseline and §11.1 amendment)
+- `think_sheet.md` (UPDATED - existing 2026-05-23 Callback Phishing row points at the spec draft and notes pre-§11 status)
+- `PROGRESS.md` (UPDATED - Task 58 receipt with explicit framework-rule trail showing why Callback Phishing won the queue priority and why each other candidate was ruled out by the framework, not by my judgment)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Matt explicitly named the bias loop earlier in this session: closing one lane and asking him "what next" is exactly the menu pattern the framework is supposed to remove. The framework already names the queue (`PROJECT_HANDSHAKE.md` build queue ordering A → B → C → D, B-tier explicitly listing the three deepening detectors) and already records every candidate's score, ST status, and gating conditions in `think_sheet.md`. Given that, the next item is determined: highest-score, ST=Y, unblocked, on-tier item.
+
+**Verification:**
+- Doc-only change; runtime suite holds at **905 passed, 1 skipped**.
+- Spec follows the same eleven-section structural pattern as the four most recent §11-signed specs (Vendor Baseline Store, Financial State Ledger, Tiered Detection Intensity, Client-Facing 5-Axis Rubric).
+- §10 is explicitly UNRESOLVED — the spec cannot be signed until the standard 7-axis stress-test discipline is run on Q1-Q5 (mirrors how the rubric handled §10 on 2026-05-25 morning).
+
+**Next Step:**
+The framework's next move is the standard 7-axis stress-test discipline on the five §10 sub-questions (Q1 phrase-category list, Q2 score shape, Q3 rubric `origin_timing` mapping, Q4 `body_html` inclusion, Q5 `phone_number_assessment` slot vs omit). Stress-test answers go in `think_sheet.md`, verdicts move into §2 of the spec as new D-decisions, and §10 converts to Resolved before §11 signature can be filled in. This is the same lane that produced the rubric's D13-D17 lock on 2026-05-25 morning.
+
+**Operator-only items still pending (unrelated to this entry, recorded so they aren't lost):**
+- §9 step 5 clause 2 of the rubric: operator confirmation on `1. Business_Operations/Client_Documents/Generated/Inbox_Shield_Daily_Digest_Demo.md` (yes / no / change requests).
+- Cyber Insurance Evidence Package cheaper-proof: 1-3 MSP discovery calls.
+- Sender-Provenance Proof Run 2: business-mailbox corpus.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric — Post-Remediation Grok Notes Closed
+**Actor:** Matt + GPT-5.5 + Grok 4
+
+**Action:** Matt re-ran the post-D12 Grok audit (`approve with notes`) and called out that we have a framework that determines priority, so my next-step ordering was decided by existing rules — signed-spec discipline first, tenant-isolation non-negotiable rule next, then the named §8 gate-test rows. Executed accordingly: spec §11.1 amendment, two new gate tests, one new integration test, all framework-driven.
+
+**Files Changed:**
+- `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (UPDATED - §5 / §6 amendments + new §11.1 amendment block + D18 + D19 + re-signature line)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_email_risk_scoring_agent.py` (UPDATED - added `test_client_facing_rubric_isolation_across_two_tenants`; `_seed_inbound` now accepts `tenant_id`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_client_facing_rubric.py` (UPDATED - added `test_consistency_guard_trims_to_band_ceiling_with_label` for the §4.2 symmetric trim case)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_daily_digest_agent.py` (UPDATED - added `test_digest_renders_client_facing_rubric_on_production_path` plus `client_facing_rubric` plumbing in `_seed_analysis`)
+- `audit_tools/grok_audit_runner.py` (UPDATED - audit package and receipt anchors point at Task 57)
+- `PROGRESS.md` (UPDATED - Task 57 receipt; runtime baseline bumped to 905 passed, 1 skipped)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Matt named the bias loop directly: "approve with notes" is not "approve" and the gates are only useful if they drive corrective action. He also called out that I keep offering menus when the framework already decides priority. Stopped the menu pattern. Executed the audit-driven sequence in the order the framework forces.
+
+**Verification:**
+- Focused suites: **76 passed** (+3 net new — cross-tenant integration, symmetric trim, production renderer).
+- Full suite: **905 passed, 1 skipped** (+3 net new from 902).
+- §11.1 amendment is in place and re-signed; §8.13 / §4.2 / §8.12 gates all have direct named tests now.
+
+**Next Step:**
+Only §9 step 5 clause 2 remains: operator confirmation on the bounded fixture set. Matt reads `1. Business_Operations/Client_Documents/Generated/Inbox_Shield_Daily_Digest_Demo.md` and either signs-off or lists change requests. That gate is operator-only by spec.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric — Grok Activation Notes Remediated
+**Actor:** Matt + GPT-5.5 + Grok 4
+
+**Action:** Matt ran the expanded `client_facing_rubric` Grok audit after the activation pass. Grok returned `approve with notes`, with one material required fix: D12 failure posture was incomplete because rubric projection failures silently left `client_facing_rubric=None` and emitted no explicit unavailable marker or audit trail. Remediated the D12 path immediately.
+
+**Files Changed:**
+- `audit_outputs/client_facing_rubric_grok_audit_20260526T035658Z.md` (CREATED - Grok activation audit report; verdict `approve with notes`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py` (UPDATED - added `rubric_status` and validator support for D12 unavailable sentinel)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/email_risk_scoring_agent.py` (UPDATED - projection exceptions now create unavailable sentinel and audit-marker findings record available/disabled/unavailable status)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/drafting/daily_digest_agent.py` (UPDATED - prompt instructs renderer not to invent axis rows when rubric is unavailable)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/scripts/inbox_shield_daily_digest_demo.py` (UPDATED - deterministic demo renderer handles unavailable rubric explicitly)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_email_risk_scoring_agent.py` (UPDATED - added D12 regression test for unavailable sentinel + audit marker)
+- `1. Business_Operations/Client_Documents/Generated/Inbox_Shield_Daily_Digest_Demo.md` (REGENERATED - post-schema-change deterministic demo artifact)
+- `PROGRESS.md` (UPDATED - Task 56 receipt; runtime baseline bumped to 902 passed, 1 skipped)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Activation audit was not a clean approve; it was `approve with notes`. The material note was valid and narrow: failure posture had to distinguish "rubric disabled" from "projection crashed" and leave an audit trail. The fix preserves the internal analysis path while making unavailable projection explicit.
+
+**Verification:**
+- Focused suites: **73 passed**.
+- Full suite: **902 passed, 1 skipped**.
+- D12 regression confirms: production scoring still writes `EMAIL_ANALYSIS`, `client_facing_rubric.rubric_status == "unavailable"`, `axes == ()`, reason length is within 220 chars, and the `EMAIL_ANALYSIS_COMPLETE` audit marker includes `client_facing_rubric=unavailable`.
+
+**Next Step:**
+Optional: re-run `python audit_tools/grok_audit_runner.py client_facing_rubric` once more if a clean post-remediation Grok receipt is desired. Remaining Grok notes are future hardening items, not the material D12 activation blocker.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric — Activation Pass Landed
+**Actor:** Matt + GPT-5.5
+
+**Action:** Implemented spec §9 step 5 (activation) for the §11 SIGNED `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`. Activation is targeted at the production/report path only — the dataclass default remains OFF so test fixtures and ad-hoc callers do not pick up the rubric "globally by accident." During the activation pass, caught and fixed a Pass-1 wiring bug that the previous Grok audit packet did not cover: the production-loop rebuild branch was silently dropping `enable_client_facing_rubric` and reverting it to the default `False` on every real production cycle. Regenerated the deterministic Inbox Shield demo artifact so the rubric is visible end-to-end in a rendered report.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/production/loop.py` (UPDATED - rebuild branch now preserves `enable_client_facing_rubric`; inline comment explains why preservation matters)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_email_risk_scoring_agent.py` (UPDATED - added `test_production_loop_preserves_client_facing_rubric_flag_through_rebuild` regression test that forces the rebuild branch via mismatched tenant id and asserts the persisted analysis carries the rubric)
+- `1. Business_Operations/Client_Documents/Generated/Inbox_Shield_Daily_Digest_Demo.md` (REGENERATED - rubric now visible end-to-end for every entry; D14 disclaimer + D16 action prominence + §4.2 override marker all rendering correctly; D7 PII safety upheld)
+- `audit_tools/grok_audit_runner.py` (UPDATED - added `core/production/loop.py` to the `client_facing_rubric` audit package and added this Activation Pass entry to `receipt_anchors`)
+- `PROGRESS.md` (UPDATED - Task 55 activation pass receipt; runtime baseline bumped to 901 passed, 1 skipped)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Operator asked for an activation pass that flips the rubric on for the production/report path without flipping it on globally by accident. Activation discipline kept at the caller boundary by leaving the dataclass default OFF. The production-loop rebuild bug was an honest Pass-1 gap — Grok approved Pass 1 and Pass 1 + Pass 2 because `core/production/loop.py` was not in the audit packet. Calling it out explicitly so the next Grok audit covers it.
+
+**Verification:**
+- Full suite: **901 passed, 1 skipped** (+1 net new from Pass 2's 900; the 1 skipped is the pre-existing unrelated skip).
+- Demo report read-through confirmed: action label most prominent on every entry; `Rubric: X/10` total visible; all five axes render in fixed order with `<axis_name>: <score>/2 - <why>`; the exact `Order is fixed for stability, not priority.` disclaimer renders on every rubric block; the §4.2 override guard fires correctly and adds `Score normalized to match high-risk internal evidence.` on the two `block` emails (risk_score 91/86 lifted axis_total from 5 → band-floor 7 in band 75-100); zero PII (no email addresses, account numbers, raw `Received:` strings, or routing numbers) anywhere in any `why_this_score`.
+
+**Next Step:**
+Re-run `python audit_tools/grok_audit_runner.py client_facing_rubric` from the workspace root so Grok audits the activation path including the production-loop rebuild fix. Continue keeping activation OFF at the dataclass default; only the production-loop rebuild path and explicit operator/demo callers turn it on.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric — Pass 1 + Pass 2 Grok Audit Approved
+**Actor:** Matt + GPT-5.5 + Grok 4
+
+**Action:** Ran the existing independent Grok audit runner against the expanded `client_facing_rubric` audit package after Pass 2 renderer implementation. Grok returned `approve`.
+
+**Files Changed:**
+- `audit_tools/grok_audit_runner.py` (UPDATED - expanded `client_facing_rubric` package to include Pass 2 renderer files and receipt anchors)
+- `audit_outputs/client_facing_rubric_grok_audit_20260526T034634Z.md` (CREATED - Grok audit report; local audit output)
+- `PROGRESS.md` (UPDATED - Task 54 audit receipt)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Operator explicitly required the work to be run through Grok because trust in generated files had dropped. This audit covers both the approved Pass 1 implementation and the newly added Pass 2 report renderer.
+
+**Verification:**
+- Pre-audit full suite: 900 passed, 1 skipped.
+- Grok audit verdict: approve.
+- Grok findings: no spec divergence, no coverage gaps, no material security/boundary risks.
+
+**Next Step:**
+Activation remains a separate operator decision. `enable_client_facing_rubric` still defaults OFF until Matt explicitly approves turning the feature on beyond the isolated demo lane.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric — Implementation Pass 2 Renderer Landed
+**Actor:** Matt + GPT-5.5
+
+**Action:** Implemented Pass 2 of the §11 SIGNED `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` by adding report-renderer support for the approved 5-axis rubric in the daily digest lane. The implementation replaces the Pass-1 skipped §8.12 renderer test with a real passing test and keeps the production activation flag OFF by default.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py` (UPDATED - added optional `recommended_action` and `client_facing_rubric` fields to daily-digest email/risk entries)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/drafting/daily_digest_agent.py` (UPDATED - digest aggregate now carries rubric/action; prompt requires §6 rendering contract)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/scripts/inbox_shield_daily_digest_demo.py` (UPDATED - deterministic demo renderer shows action, `/10` total, all five `/2` axes, fixed-order disclaimer, and override marker when present; demo scoring enables rubric only inside the isolated demo)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_client_facing_rubric.py` (UPDATED - §8.12 renderer test now executes and passes)
+- `PROGRESS.md` (UPDATED - Task 53 receipt entry)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Operator asked to keep going so something could be completed tonight after Grok approved Pass 1. This completes spec §9 step 3 while preserving the §9 step 5 activation discipline: the core scoring flag remains default OFF until audit and operator approval.
+
+**Verification:**
+- Focused suites (rubric + digest demo + blackboard models): 30 passed.
+- Full repo: 900 passed, 1 skipped.
+
+**Next Step:**
+Run `python audit_tools/grok_audit_runner.py client_facing_rubric` again after updating the audit package so Grok audits the Pass 2 renderer files as well as Pass 1. Activation remains blocked until Grok verdict and operator approval.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric — Implementation Pass 1 Landed
+**Actor:** Matt + Claude Opus 4.7
+
+**Action:** Implemented Pass 1 of the §11 SIGNED `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (deterministic mapper + payload extension + unit tests + production-path wiring), with the activation flag (`enable_client_facing_rubric`) held OFF by default per spec §9 step 5 so no client-facing surface ships before independent audit and operator approval.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py` (UPDATED — added `EmailRiskAxisBreakdown` + `ClientFacingRubricPayload`; added `client_facing_rubric` field on `EmailAnalysisPayload`; validator enforces D2/D6/D10/D14)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/__init__.py` (UPDATED — exported the two new types)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/client_facing_rubric.py` (NEW — deterministic mapper implementing §3 axis definitions and §4 consistency contract)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/__init__.py` (UPDATED — exported `project_client_facing_rubric`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/email_risk_scoring_agent.py` (UPDATED — added `enable_client_facing_rubric` config field defaulting OFF; added `_attach_client_facing_rubric` helper with D12 failure-posture; wired both `run_email_risk_scoring_cycle` and `score_one_email_payload`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_client_facing_rubric.py` (NEW — all 14 §8 gate tests, plus length-cap test and explicit consistency-guard label test; §8.12 renderer test marked `pytest.skip` per spec §9 Pass-2 deferral)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_email_risk_scoring_agent.py` (UPDATED — +2 wiring tests covering default-off and flag-on production-cycle paths)
+- `PROGRESS.md` (UPDATED — Task 52 receipt entry)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Operator commanded Pass 1 build after the 2026-05-25 §11 signature on the rubric spec. Pass 1 deliberately covers spec §9 step 2 only ("deterministic mapper + payload extension + unit tests"). The `enable_client_facing_rubric` flag defaults to `False` per spec §9 step 5 so the activation gate is intact — the rubric is wired but produces no client-facing surface until an operator explicitly flips the flag after audit and renderer (Pass 2) ship.
+
+**Verification:**
+- Focused suites (rubric + agent + blackboard models): 52 passed, 1 skipped.
+- Full repo: 899 passed, 2 skipped (up from 881 baseline; +18 net new tests; zero regressions).
+
+**Next Step:**
+Independent Grok audit via `python audit_tools/grok_audit_runner.py client_facing_rubric`. Pass 2 (report renderer in `daily_digest_agent.py` + fixture tests for explanation clarity) only after Grok verdict and operator approval. Activation flag remains OFF until Pass 2 ships and operator signs off.
+
+---
+
+## 2026-05-25 - Cyber Insurance Evidence Package — Formal Gate Fired; Promoted with Cheaper-Proof-First Guidance
+**Actor:** Matt + Claude Opus 4.7
+
+**Action:** Operator selected Candidate 3 from Frontier Intake Review #1 (Cyber Insurance Evidence Package) on the basis of highest earnings potential. Ran the project's standard idea-level gate — 5-axis Foundation-Fit scoring + 7-question stress test — and recorded a verdict.
+
+**Files Changed:**
+- `think_sheet.md` (UPDATED - new candidate row + new "Cyber Insurance Evidence Package (2026-05-25)" stress-test section)
+- `PROGRESS.md` (UPDATED - Task 51 added; Last Updated stack updated)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+
+**Idea (scope boundary explicit):**
+Buyer-ready bundle that packages existing NorthStar artifacts (Inbox Shield monthly report, append-only Blackboard logs, Decision Auditor reviews, signed §11 specs as architecture documentation, deterministic detector evidence chains, lift-only invariant test results, Two-Channel Confirmation enforcement records, cross-tenant isolation evidence, kill-switch evidence) into a quarterly or annual deliverable specifically structured to answer 2026 cyber-insurance underwriting questions for the email-security control surface. **Carrier-agnostic format. Explicit scope = "email-fraud + inbox-layer MDR controls" only.** Does NOT cover MFA / EDR / backups / IR plans / patch management (those are MSP responsibilities, not NorthStar's). MSP delivers the package to their SMB client; SMB submits with their underwriting application.
+
+**Verdict:**
+- **5-axis score:** `2·2·2·2·2 = 10/10` → promote band.
+  - Strategic Fit 2: directly advances the locked auditability + evidence-depth wedge.
+  - Revenue Path 2: direct paid deliverable possible within 90 days (bundle into Essentials/Plus/Enterprise tiers OR sell as quarterly add-on).
+  - Foundation Fit 2: additive, doesn't compromise determinism / tenant isolation / kill switch / lift-only invariants.
+  - Provability 2: client-facing artifact is the entire purpose.
+  - Anti-Drift 2: same audience, same product, same wedge as Stage A.
+- **7-question stress test surfaced four failure modes with mitigations:** decoration risk (underwriters check yes/no boxes only); email-narrow risk (package looks insufficient on its own); per-carrier fragmentation (8 variants out of date by month 6); vocabulary leak (cyber-insurance language drift into NorthStar's voice).
+- **Verdict: promote with cheaper-proof-first guidance.**
+
+**Cheaper proof (gate before spec drafting):**
+Run 1-3 local MSP discovery calls (Carpathia IT, NetDNA, EC Managed IT, IT Works MSP BC, SFY IT, Good IT — captured 2026-05-25 in `THREAT_INTEL_LOG.md`) using EXISTING drafted artifacts (`Inbox_Shield_Sample_Monthly_Report.md`, `Acme_Effective_Parameter_Report_Demo.md`, `Inbox_Shield_Daily_Digest_Demo.md`) framed as "cyber-insurance evidence bundle for email-fraud controls." Binary go/no-go: if 1+ of 3 MSPs says "yes / tell me more," framing earns a spec-first deep dive. If 0/3 say yes, framing doesn't work — reshape or drop.
+
+**Two-for-one observation:**
+The cheaper-proof MSP discovery activity is the existing REVENUE_MAP Lane 3 work (currently at 0/7 milestones because nobody has been called yet). Running this proof advances both the candidate gate AND the Lane 3 bottleneck simultaneously.
+
+**Boundaries:**
+- Doc-only.
+- No spec drafted.
+- No package generation logic written.
+- No detector / runtime / schema / prompt change.
+- "AGI" / "AGI-adjacent" framing remains barred from the package.
+- Cyber-insurance vocabulary ("attestation," "control efficacy," "regulatory mapping") gets a translation pass to plain English before any client-facing surface ships.
+
+**Next Step:**
+Operator's choice. Three options: (a) run the cheaper-proof discovery calls now (likely separate session — MSPs answer phones during business hours, not 8 PM Monday); (b) defer the cheaper proof to a fresh day with discovery scripts already drafted in `1. Business_Operations/LinkedIn_Outreach_Scripts.md`; (c) keep the candidate in the formal queue and pick up a different surfaced candidate first. Spec drafting cannot start until cheaper-proof validation completes.
+
+---
+
+## 2026-05-25 - Frontier Intake Review #1 — Cheaper-Proof Complete; Monthly Cadence Committed
+**Actor:** Matt + Claude Opus 4.7
+
+**Action:** Operator chose to execute the Trend-Chasing Layer / Frontier Intake cheaper-proof the same evening rather than defer. Real searches against the locked starter source list were performed (no fabrication; same discipline as the morning's header-collection lesson). Created the durable `Frontier_Intake_Log.md` artifact, captured findings, applied the cadence rule, recorded the verdict.
+
+**Files Changed:**
+- `Frontier_Intake_Log.md` (NEW - top-level, sibling to `THREAT_INTEL_LOG.md`; full review record + source citations + sniff-test classifications)
+- `MASTER_INDEX.md` (UPDATED - added entry pointing at the new log)
+- `think_sheet.md` (UPDATED - Trend-Chasing row updated with cheaper-proof outcome + monthly-cadence commitment)
+- `PROGRESS.md` (UPDATED - Task 50 added; Last Updated stack updated)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+
+**Source list reviewed:**
+CISA phishing guidance + 2026 advisories; FBI IC3 PSA260521 (Kali365, May 2026); CSA AI Safety Initiative research note on OAuth Consent Phishing (May 2026); Abnormal AI 2026 Attack Landscape Report (~800,000 email attacks observed H2 2025); Proofpoint AI-Driven Attacks 2026 briefing (cited via SecurityElites breakdown); Cybertechnology Insights 2026 AI-deepfake-BEC research; OWASP Top 10 for LLM Applications v2025 (current April 2026); Microsoft Agent Framework FIDES (May 2026 release); Nuronus + Data Centre Solutions 2026 MSP cyber insurance guides; GetCybr NIS2 + NIST CSF 2.0 guides; Bronston Legal MSP compliance summary; Abnormal Attune 1.0 + Detection 360 Insights (March 2026); Abnormal Auto-Forwarding Mail Protection blog; IronScales 2026 threat intelligence.
+
+**Verdict:**
+- **Confirmations of existing direction (8 items, NOT candidates):** AI-deepfake BEC + Two-Channel Confirmation v1; multi-persona BEC + Component A as right next analyst-layer step; lateral BEC concentration at enterprise (~25% vs. 0.24% at SMB) **structurally strengthens NorthStar's SMB wedge**; multi-channel BEC matches today's Component B verdict; Microsoft FIDES confirms NorthStar's deterministic / labeled / human-approval architecture is on-trend; OWASP LLM01/02/06/07 covered; cyber-insurance evidence-not-checkboxes shift + NIS2 + NIST CSF 2.0 confirm wedge alignment; Abnormal Detection 360 Insights confirms explainability is a competitive axis where deterministic explainability remains differentiable.
+- **Candidates surfaced — 5 items (recorded in `Frontier_Intake_Log.md`, NOT auto-added to `think_sheet.md`):** Department-Level Internal Impersonation Detector; OWASP LLM10 Unbounded Consumption Coverage; Cyber Insurance Evidence Package; Auto-Forwarding Inspection; Device-Code / OAuth-Consent Phishing Detector.
+- **Cadence verdict:** 5 candidates → **4+ → monthly cadence committed.** Refinement flag: this is the first intake ever; recommend re-evaluating cadence at the third intake (~2026-08) in case the count reflects accumulated backlog rather than steady-state pace.
+
+**Strategic findings:**
+- The 2026 frontier is converging on auditability + deterministic explainability + evidence depth + human-approval-on-sensitive-action — exactly NorthStar's locked differentiation standards. **NorthStar is on-trend, not behind.**
+- Lateral-BEC market intelligence: Abnormal's enterprise moat is structurally irrelevant at SMB scale. Worth recording in `THREAT_INTEL_LOG.md` at next refresh.
+- Vocabulary boundary held without being tested. None of the source feeds used "AGI" / "AGI-adjacent" framing in the email-security space.
+
+**Boundaries:**
+- Doc-only.
+- No runtime change.
+- No spec drafted.
+- No new lane started.
+- No detectors implemented.
+- Surfaced candidates wait for the operator's selection of which (if any) to formally gate next.
+
+**Next Step:**
+Operator chooses. Three options recorded in `Frontier_Intake_Log.md` § Next step: (1) pick one candidate and run the full 5-axis + 7-question gate against it; (2) defer all five and let them sit until the next monthly intake or external pressure; (3) mark a subset for prioritized gating across upcoming sessions. The intake itself is complete.
+
+---
+
+## 2026-05-25 - Trend-Chasing Layer / Frontier Intake — Process-Only v1 Gated and Live-Parked
+**Actor:** Matt + Claude Opus 4.7
+
+**Action:** Captured the operator's recurring concern about NorthStar staying current with emerging AI / agent / threat patterns as its own scored idea in `think_sheet.md`, rather than letting it ride inside another bundle. Ran the project's standard 5-axis rubric + 7-question stress test against a deliberately narrow v1 scoping (operator-driven, process-only, no runtime, no new agent). Verdict recorded; cheaper proof and cadence rule recorded.
+
+**Files Changed:**
+- `think_sheet.md` (UPDATED - new candidate row + new "Trend-Chasing Layer / Frontier Intake — process-only v1 (2026-05-25)" stress-test section)
+- `PROGRESS.md` (UPDATED - Task 49 added; Last Updated stack updated)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+
+**Reason:**
+The underlying concern — fast-moving AI / agent / threat landscape, NorthStar's wedge needs to remain sharp as the field evolves — is real and recurring. Discipline says: don't decide intuitively, run the gates. v1 scoping was kept deliberately narrow as the cheaper-proof shape; more ambitious shapings (runtime intake agent that watches feeds autonomously; marketable public "frontier watch" transparency surface) are explicitly separate ideas that earn their own rows only if v1 evidence warrants them.
+
+**Verdict:**
+- **5-axis score:** `1·1·1·0·2 = 5/10` → **revisit / live park** band.
+- **Cheaper proof:** run the intake **once now** (one-shot exercise) using a starter source list (CISA advisories, abuse.ch, KuppingerCole / Mordor reports, 3-5 AI-research feeds Matt selects, plus MSP-channel news already cited in `THREAT_INTEL_LOG.md`).
+- **Cadence rule:** 0-1 surfaced candidates → defer the recurring discipline indefinitely (ad-hoc reviews suffice); 2-3 → commit to a quarterly cadence; 4+ → commit to a monthly cadence.
+- **Primary risk identified:** research-paper-driven roadmap drift away from customer-driven roadmap. Mitigation relies on the existing 5-axis rubric's Strategic Fit + Revenue Path axes — frontier candidates that fail those axes drop out naturally; the discipline only fails if the rubric is bypassed.
+
+**Boundaries:**
+- Doc-only.
+- No runtime change.
+- No new lane started.
+- No `Frontier_Intake_Log.md` artifact created yet (creation deferred until Matt chooses to run the cheaper proof).
+- Vocabulary boundary extended from the AGI-Adjacent decomposition: "AGI" / "AGI-adjacent" framing from source feeds does not enter NorthStar's product, outreach, spec, or bible voice.
+
+**Next Step:**
+Matt's choice. Three honest options: (a) run the cheaper-proof intake now (1-2 hours, decides the cadence question); (b) defer the cheaper proof to a fresh day; (c) leave the idea live-parked indefinitely and rely on ad-hoc landscape awareness (no harm, since nothing depends on it). All three are defensible. The idea is captured durably; nothing is lost by waiting.
+
+---
+
+## 2026-05-25 - AGI-Adjacent Layer — Bundle-Level Gate + Component Decomposition
+**Actor:** Matt + Claude Opus 4.7
+
+**Action:** Ran the project's standard idea-level gate against an operator-surfaced research-paste proposal first as a bundle, then — at Matt's explicit request — broke the bundle into six discrete components and ran the gate against each one independently.
+
+**Files Changed:**
+- `think_sheet.md` (UPDATED - bundle row + six component candidate rows; bundle stress test + new "AGI-Adjacent Layer — component decomposition (2026-05-25)" section with six per-component stress tests + verdict summary table; vocabulary boundary recorded)
+- `PROGRESS.md` (UPDATED - Task 48 expanded with bundle + component verdicts; Last Updated stack)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+
+**Reason:**
+First pass tested the bundle as written, which produced a 3/10 score and a `drop / reshape` verdict. Matt asked that the gate then be applied component-by-component so the real signal could be surfaced cleanly. Component-level discipline is more honest than bundle rejection.
+
+**Component verdicts (decomposition):**
+- **A. NorthStar Analyst Reasoning Layer (cross-detector synthesis, email-only):** score 9/10 → **promote**. Real Stage A → Stage B explainability bridge. Build only after the §11-signed 5-axis rubric ships and produces evidence about MSP appetite. Spec-first; needs its own deep-dive when Matt selects it. Autonomy-toggle / "callable, not always on" semantics belong inside this spec when drafted.
+- **B. Cross-Domain Expansion (logs / endpoints / payments):** 2/10 → drop for Stage A. Re-evaluate at Stage A → Stage B transition.
+- **C. Auto-Tuning Detector Ring:** 0/10 → drop. Stage C, possibly never.
+- **D. Operator-Approved Drift Tuning Surface:** 5/10 → revisit. Live-park until first paid pilot generates real tenant traffic.
+- **E. Threat-Family Hypothesis Engine:** 4/10 → live park. Revisit at Stage A → Stage B transition.
+- **F. "AGI-Style Behavior Principles" Bible Section:** 0/10 → drop. Walks back the 2026-05-25 bibles deferral without firing any trigger condition.
+
+**Boundaries:**
+- Doc-only.
+- No runtime change.
+- No bible change.
+- No new lane authorized today (Component A is a promoted candidate, not a started lane).
+- No spec drafted.
+- "AGI" / "AGI-adjacent" framing stays inside `think_sheet.md` as internal stress-test rationale only. Does not enter product surfaces, outreach scripts, deep-dive specs, the NorthStar Bible, or client-facing artifacts.
+
+**Next Step:**
+Component A becomes the natural successor to the §11-signed 5-axis rubric in the explainability lane. Its spec drafting is gated on (i) rubric shipping and (ii) MSP discovery feedback validating the per-email rubric is useful. Operator's underlying concern about staying current with emerging AI / agent / threat patterns remains separate and is redirected to the still-uncaptured Trend-Chasing Layer / Frontier Intake idea, which earns its own scored row + stress test when Matt scopes it.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric §11 Signature Complete
+**Actor:** Matt + GPT-5.5
+
+**Action:** Recorded Matt's completed §11 signature for the Client-Facing 5-Axis Email Scoring Rubric spec and cleaned the signed-spec consistency items that followed from D13-D17.
+
+**Files Changed:**
+- `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (UPDATED - status changed to signed; schema/rendering/rollout consistency aligned to D1-D17)
+- `MASTER_INDEX.md` (UPDATED - spec marked §11 signed)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+- `PROGRESS.md` (UPDATED - task receipt and Last Updated)
+- `PROJECT_HANDSHAKE.md` (UPDATED - active lane state)
+
+**Reason:**
+Matt completed the §11 signature block after the main spec and §10 sub-question stress test were resolved. The spec is now locked on D1-D17 and may serve as the implementation contract when Matt explicitly starts the build.
+
+**Boundaries:**
+- Spec-only / tracker-only.
+- No runtime code changed.
+- Implementation is not automatically started by the signature; it still requires Matt's explicit start-build instruction.
+- Normal implementation flow still applies: focused tests, full suite where appropriate, pre-ship gate, then commit only if authorized.
+
+**Next Step:**
+When Matt says to start the build, implement the signed v1 exactly against D1-D17 and §8 gate tests.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Email Scoring Rubric Spec Draft
+**Actor:** Matt + Claude Opus 4.7
+
+**Action:** Created the spec-first deep-dive draft for the next B-tier build lane (`Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`).
+
+**Files Changed:**
+- `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (NEW - draft spec contract; later signed in the 2026-05-25 §11 signature entry above)
+- `MASTER_INDEX.md` (UPDATED - indexed new deep dive)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+- `PROGRESS.md` (UPDATED - task receipt)
+- `PROJECT_HANDSHAKE.md` (UPDATED - active lane marker)
+
+**Reason:**
+Matt selected “5-axis Email Scoring Rubric spec” as the immediate next build move. This lane strengthens explainability/evidence depth in Stage A without widening detector scope, matching the 2026-05-25 A→B→C→D queue order.
+
+**Boundaries:**
+- Spec-first only; no runtime implementation authorized.
+- Pre-§11 signature state.
+- No schema/runtime/prompt changes yet.
+- No new detector families or enrichment dependencies.
+
+**Next Step:**
+Matt reviews §10 open questions and signs §11 if approved; implementation starts only after signature.
+
+---
+
+## 2026-05-25 - Client-Facing 5-Axis Rubric §10 Sub-Question Stress Test
+**Actor:** Matt + Claude Opus 4.7
+
+**Action:** Applied the standard 7-axis stress-test discipline to all five §10 sub-questions in the rubric spec draft, recorded the full analysis in `think_sheet.md`, and locked the resulting verdicts as D13–D17 in §2 of the spec. §10 converted from "open questions" to "resolved 2026-05-25."
+
+**Files Changed:**
+- `think_sheet.md` (UPDATED - new "Sub-question stress test — Client-facing 5-axis Email Scoring Rubric §10 (2026-05-25)" section, "Last reviewed" bumped to 2026-05-25)
+- `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (UPDATED - §2 D13–D17 added with verdicts, §10 converted to resolved table, §11 decision-list extended)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+- `PROGRESS.md` (UPDATED - task receipt)
+
+**Reason:**
+Matt pushed back on §10 being answered from intuition: the project gates ideas before promotion via stress test, and the same discipline should apply to sub-decisions that bake into a §11 lockdown. The five §10 questions (axis weighting, axis order, `why_this_score` length, `axis_total` visibility, v1 surface) are exactly the kind of parameters that lock once §11 signs, so they earned the same 7-axis treatment as a top-level idea.
+
+**Verdicts locked:**
+- D13: equal axis weights for v1; weight revision deferred to v2 gated on real per-axis FP/FN data.
+- D14: fixed axis order for v1, with "order is fixed for stability, not priority" line in rendering contract.
+- D15: 160-char `why_this_score` cap for v1; documented upgrade path to 220 if v1 production shows ≥ 5% useful truncation.
+- D16: `axis_total` visible in v1, with `recommended_action` rendered most prominently and per-axis breakdown as the primary reasoning surface.
+- D17: report-only / monthly digest surface in v1; per-email operator view deferred to v1.1, gated on MSP discovery feedback.
+
+**Boundaries:**
+- Doc-only / spec-only.
+- This stress-test step preceded the later §11 signature entry above.
+- No runtime / schema / prompt change.
+- Stress test extends discipline; does not introduce new scope.
+
+**Next Step:**
+Matt either signs §11 with D1–D17 as locked, or pushes back on specific verdicts before signing. No implementation begins before §11 signature.
+
+---
+
+## 2026-05-25 - Canadian + North American Email Fraud Market Intelligence (Data Mine)
+**Actor:** Matt + GPT-5.5
+
+**Action:** Recorded a multi-source data-mine entry in `THREAT_INTEL_LOG.md` capturing today's research on Canadian fraud loss scale, the North American competitive email-security landscape, and the Okanagan tech sector / local MSP target list. Consolidates the strategic ground that today's build-queue and positioning decisions stand on.
+
+**Files Changed:**
+- `THREAT_INTEL_LOG.md` (UPDATED - new dated entry, "Last reviewed" bumped to 2026-05-25)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+- `PROGRESS.md` (UPDATED - task receipt)
+
+**Reason:**
+The day's research session produced real, sourced figures (CAFC, Canadian Centre for Cyber Security, Payments Canada, KuppingerCole, Mordor Intelligence, Accelerate Okanagan / KPMG, Central Okanagan EDC, vendor pricing benchmarks) and a real local MSP target list. Without recording this, the strategic decisions taken in the same session — Stage A scope narrowed to email fraud / inbox-layer MDR for SMBs via MSPs, differentiation locked on auditability + explainability + per-tenant tuning + reversibility + evidence depth, build-queue re-ordering A→B→C→D — would be left floating in chat.
+
+**Boundaries:**
+- Documentation only.
+- No runtime change.
+- No policy update yet.
+- No customer-facing claim made from these figures (the entry is internal record).
+- Sourcing is multi-source convergence; single-source claims are flagged in-line.
+
+**Next Step:**
+The MSP-facing one-page pitch (Milestone AD5) and any future positioning documents draw from this entry. The local MSP target list is the candidate pool for discovery DMs.
+
+---
+
+## 2026-05-25 - Bibles Spark — Deferral Decision + Today's Working Notes
+**Actor:** Matt + GPT-5.5
+
+**Action:** Updated `4. Product_Roadmap/_SPARK_Bibles_Concept_Capture.md` (previously untracked since 2026-05-24 23:19 capture) with today's deferral decision and the working notes that survived from the long bibles discussion.
+
+**Files Changed:**
+- `4. Product_Roadmap/_SPARK_Bibles_Concept_Capture.md` (UPDATED - 2026-05-25 deferral section appended)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this receipt)
+- `PROGRESS.md` (UPDATED - task receipt)
+
+**Reason:**
+The session went deep on both bibles, produced Matt's structural breakthrough (Shield as outward identity / reference, Agent as inward experimental constitution / system-prompt anchor; Layer 1 moral principles + Layer 2 operational commands), and produced concrete candidate fragments for both layers. Matt then explicitly chose to **hold off on writing either bible** until a NorthStar revolution moment fires. Without recording the breakthrough alongside the deferral, the next session would either re-do the same ground or revert to a generic software-documentation template.
+
+**Boundaries:**
+- File status remains SPARK ONLY. Pre-spec. Unsigned. Not §11. Not a roadmap commitment.
+- No bible drafted.
+- No values committed publicly.
+- Layer 1 / Layer 2 candidate fragments are recorded as Matt's working claims, not endorsed or signed.
+- Trigger conditions for un-deferring are explicit (revolution moment, real MSP commitments, swarm scale, or signed-spec-driven append).
+
+**Next Step:**
+Do not draft the bibles. Append to this file when new constitutional fragments arise. Reopen the question only when one of the named trigger conditions actually fires.
+
+---
+
+## 2026-05-25 - Sender-Provenance Proof Run 1 Hold Verdict
+**Actor:** Matt + GPT-5.5
+
+**Action:** Recorded the first sender-provenance / geo-velocity proof outcome as a `needs_more_samples` hold for the personal-Gmail training corpus (corrected from an earlier in-session `fail_hold_in_think_sheet` once it was clear the corpus, not the idea, failed the test).
+
+**Files Changed:**
+- `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Proof_Worksheet.csv` (UPDATED by Matt - 12 training samples entered)
+- `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Protocol.md` (UPDATED - Outcome Log filled for Proof Run 1, verdict corrected)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - activity receipt, verdict corrected)
+- `PROGRESS.md` (UPDATED - proof verdict receipt, verdict corrected)
+- `PROJECT_HANDSHAKE.md` (UPDATED - current gate state, verdict corrected)
+
+**Reason:**
+Matt completed a partial training run against an operator-owned personal Gmail corpus. The data did not support a `pass_to_spec` outcome: the corpus was dominated by shared cloud / ESP routing (Google, Amazon SES, Stripe / payment-provider mail, marketing mail), with only one plausible stable high-value business relay. However, the protocol asks whether enough **business-critical vendors** have stable origin metadata to baseline. A personal Gmail account is not the right corpus to answer that question. The result is therefore corpus-mismatch hold, not idea-fail.
+
+**Boundaries:**
+- `needs_more_samples` recorded for this corpus.
+- No sender-provenance detector implementation.
+- No Vendor Baseline Store enum implementation.
+- No runtime DNS / GeoIP / ASN lookup.
+- No baseline expansion.
+- Revisit only with a real business mailbox containing vendor invoice / payment traffic, run as a fresh proof using the existing protocol and runbook.
+
+**Next Step:**
+Keep the detector out of the build queue. The personal-Gmail run is preserved as evidence that the manual collection workflow itself is operable. If a real business mailbox becomes available later, run a new proof rather than reusing this dataset as evidence either way.
+
+---
+
+## 2026-05-25 - Sender-Provenance Cheaper-Proof Runbook
+**Actor:** GPT-5.5
+
+**Action:** Created an operator runbook for executing the sender-provenance / geo-velocity cheaper proof.
+
+**Files Changed:**
+- `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Runbook.md` (NEW - step-by-step raw-header proof workflow)
+- `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Protocol.md` (UPDATED - linked the runbook from tomorrow's first action)
+- `MASTER_INDEX.md` (UPDATED - indexed the runbook)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - activity receipt)
+- `PROGRESS.md` (UPDATED - task receipt)
+
+**Reason:**
+The sender-provenance detector and Vendor Baseline enum revision remain blocked behind the cheaper-proof gate. The existing protocol defined the decision criteria, but Matt needed a practical collection workflow for choosing a safe mailbox, selecting samples, recording only header facts, classifying per sender, and recording a pass / needs-more-samples / fail decision without drifting into runtime implementation.
+
+**Boundaries:**
+- Doc-only.
+- No detector implementation.
+- No Vendor Baseline Store enum or schema change.
+- No runtime DNS / GeoIP / ASN lookup.
+- No raw bodies or attachments.
+- No raw `Received` strings in the worksheet notes.
+
+**Next Step:**
+Run the 30-sample manual proof using the worksheet, then update the protocol outcome log. A positive proof can only graduate the idea to a spec-first deep dive; it does not authorize code.
+
+---
+
 ## 2026-05-24 - Vendor Baseline Signal-Type Enum Revision Draft
 **Actor:** GPT-5.5 + Matt Nichol (operator)
 
@@ -954,39 +1477,6 @@ Matt chose Option A: turn the Effective Parameter Report from a synthesized samp
 
 **Next Step:**
 Use `1. Business_Operations/Client_Documents/Generated/Acme_Effective_Parameter_Report_Demo.md` as the concrete attachment behind Proof Point 3 whenever an MSP asks, "show me what the report actually looks like."
-
----
-
-## 2026-05-23 - Human-Written / AI-Proofread Communication Policy Landed
-**Actor:** Codex (capturing Matt's 2026-05-23 decision in writing so it doesn't drift)
-
-**Action:** Created
-
-**Files Changed:**
-- `6. Internal_Strategy/Positioning/Human_Written_Communication_Policy.md` (CREATED — operating rule + four-part rationale + allowed vs. forbidden AI actions + honest test + disclosure pattern + 5-step workflow + scope table by communication type + ban on "AI-drafted starting points" with substitute pattern)
-- `REVENUE_MAP.md` (UPDATED — Communication rule paragraph added to Operating Principle section; "What Not To Do" expanded with item #9 against AI-written outreach)
-- `PROGRESS.md` (UPDATED — Task 9 closed; completed-history row added; Last Updated bumped)
-- `PROJECT_HANDSHAKE.md` (UPDATED — Completed item 174 added; Last Updated bumped; note that one-pager and DM templates are deferred per Matt)
-- `MASTER_INDEX.md` (UPDATED — new entry under 6.3 Positioning)
-- `PROJECT_ACTIVITY_LOG.md` (this entry)
-
-**Reason:**
-Matt named a deliberate positioning instinct: in an MSP inbox saturated with AI-generated cold outreach, the single biggest differentiator he can offer is **outreach written by a real human in his own words.** This is not a stylistic preference; it is a brand-consistency rule that operationalizes the auditable-AI thesis from `VISION.md` and protects NorthStar against the contradiction of pitching "human-led, AI-augmented" via AI-generated DMs. Captured immediately in writing so the rule survives future context summarizations and so any future contractor, VA, or AI assistant working on outreach follows it.
-
-**Implementation Notes:**
-- Policy is explicit about both the boundary (AI may proofread for typos / facts / vague phrasings / tone; AI may not author, structure, or rewrite) and the workflow (Matt drafts → policy-scoped proofread prompt → AI returns categorized comments → Matt accepts/rejects per sentence → Matt sends).
-- Includes the honest disclosure test: after proofreading, the answer to "did an AI write this?" must remain "I wrote it. AI checked it the same way spellcheck would. Every sentence is mine."
-- Explicit ban on "AI-drafted starting points that humans rewrite heavily" because the underlying structure leaks through and reads as AI to any frequent reader of AI text.
-- Scope table draws the right lines: applies to all human-to-human outreach (DMs, emails, proposals, contracts, replies, LinkedIn posts); does NOT apply to runtime-generated reports, internal working docs like `PROGRESS.md`, code/specs, or working AI co-author sessions.
-- Cross-linked from `REVENUE_MAP.md` so the rule bites where it matters most (Lane 3 MSP discovery outreach).
-- Doc-only change. No schema, runtime, dataset, harness, eval, tenant override, scoring, or test changes. Runtime baseline holds at 472 tests passing.
-
-**Verification:**
-- Cross-reference integrity confirmed: `REVENUE_MAP.md`, `VISION.md`, `Fraud_Detection_Product_Sheet.md`, `LLM_Usage_Policy.md`, and `positioning-statement.md` paths all exist as cited.
-
-**Next Step:**
-- Matt-side: when sending the first MSP discovery DM next week, draft entirely in his own words first, then optionally paste to AI with the policy-scoped proofread prompt. The MSP one-pager and DM templates that were on yesterday's priority list are deferred per Matt's request ("when I have more time") — but per this policy, when they are written, Matt writes them, not AI.
-- Codex-side: stand ready to proofread per the policy when Matt sends drafts. Hold off on generating any first-draft outreach copy.
 
 ---
 

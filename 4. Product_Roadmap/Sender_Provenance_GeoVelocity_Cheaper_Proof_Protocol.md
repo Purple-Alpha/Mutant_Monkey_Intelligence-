@@ -143,6 +143,8 @@ Do not proceed to implementation if:
 
 Find one mailbox source that can provide raw headers safely.
 
+Use `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Runbook.md` for the step-by-step collection workflow.
+
 Ask for:
 
 - 30 to 100 exported raw headers from recent vendor / invoice / payment-related emails.
@@ -167,13 +169,13 @@ Use this section after the proof run.
 
 ### Proof Run 1
 
-- Date:
-- Source mailbox:
-- Sample count:
-- Distinct sender domains:
-- `stable_high_value` count:
-- `cloud_normalized` count:
-- `noisy_legitimate` count:
-- `insufficient_history` count:
-- Decision:
-- Notes:
+- Date: 2026-05-25
+- Source mailbox: operator-owned personal Gmail training corpus
+- Sample count: 12 entered samples (`spg-003` through `spg-014`)
+- Distinct sender domains: 9 entered sender pseudonyms (8 after consolidating duplicate Perplexity naming)
+- `stable_high_value` count: 1
+- `cloud_normalized` count: 9
+- `noisy_legitimate` count: 0
+- `insufficient_history` count: 0
+- Decision: `needs_more_samples`
+- Notes: This was a partial training run, not a full 30-sample business-mailbox proof. The corpus was an operator-owned **personal** Gmail account dominated by Google / Amazon SES / Stripe / ESP-normalized senders. Of 12 entered rows only one showed a plausible stable high-value business relay. That outcome **does not disprove** the sender-provenance idea — it only shows that a personal-mail corpus is the wrong corpus to test it against. The verdict is therefore `needs_more_samples`, not `fail_hold_in_think_sheet`. No sender-provenance detector code, no signal-type enum implementation, no runtime GeoIP / ASN lookup, and no Vendor Baseline expansion is authorized **until** a real business mailbox with vendor invoice / payment traffic is sampled per this protocol. The training run is preserved as evidence that the manual collection workflow is operable.

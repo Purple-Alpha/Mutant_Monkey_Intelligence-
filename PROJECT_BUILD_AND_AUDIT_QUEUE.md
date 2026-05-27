@@ -1,0 +1,179 @@
+# NorthStar — Project Build and Audit Queue
+
+**Status:** Operational queue artifact. Not a signed spec. Operator-maintained.
+**Authority:** Matt is the operator. This file lists what comes next; it does not authorize anything by itself. Spec-first discipline still applies — items below that say "draft" or "sign" are gated by the relevant deep-dive's §11.
+**Out of scope for this file:** scoring, implementation guidance, progress markers, completion claims. This file lives forward of the line; it does not record what shipped.
+
+> **Default operating rule.**
+> 1. Matt's current instruction overrides everything.
+> 2. If no override, follow this queue in order.
+> 3. Every "ready / done / sign / ship" claim requires audit evidence.
+
+> **For the next assistant (handoff reading list).**
+> Before doing work on this project, read in this order:
+> 1. `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (this file) — for ordering, default rule, and named next action.
+> 2. `PROJECT_HANDSHAKE.md` — for current single active focus and runtime-build state.
+> 3. `VISION.md` — for the seven non-negotiables that override all queue items.
+> 4. `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — DRAFT pre-§11; closing it is Build List item 1.
+> 5. `audit_tools/complete_gate.py` — the gate that enforces the audit-evidence rule above.
+>
+> Then continue from **Build List item 1** unless the operator overrides. Do not pre-decide §10 / §12 open questions on any spec without operator direction.
+
+---
+
+## §1 Purpose
+
+One page. One source of truth for "what's the next move?" Two ordered lists:
+
+1. **Build List** — what Cursor should build or draft next, in order.
+2. **Audit List** — what Grok or `audit_tools/complete_gate.py` must audit before anything can be called ready / done / signed.
+
+This file replaces the implicit recommendation pattern (suggestions buried in chat turns) with an explicit operator-readable queue. The next-action section names the single thing that should happen *now*.
+
+This file is not a contract. The contracts are the signed §11 specs. This file is a workflow aid.
+
+---
+
+## §2 Build List
+
+In execution order. Each item runs only when its predecessors are complete or explicitly skipped by the operator.
+
+1. **Close `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` to signable v1.**
+   Resolve the minimum open questions:
+   - Q1 calendar rhythm
+   - Q3 source-addition threshold
+   - Q7 done-declaration JSON location / shape
+   - Q8 vendor-source weighting
+   - Q11 gate constant / comment sync rule
+   Other §10 questions (Q2, Q5, Q6, Q9) may stay open past §11 if they aren't blocking the sign-off contract. Q4 and Q10 are already resolved-pending-§11.
+
+2. **Sync enforcement references after §11 signature on the Compliance/Trend spec.**
+   Once that spec is signed:
+   - Update `audit_tools/complete_gate.py` comments / source-of-truth references to cite this spec as canonical for the compliance-claim boundary, forbidden-language list, and vocabulary-translation list.
+   - Confirm constant values still match the §5.5 canonical list. (Values are unchanged by §5.5 lockdown — only the cited authority changes.)
+   - Update tests if comment or source-reference expectations exist.
+
+3. **Update `Frontier_Intake_Log.md` intake protocol.**
+   Replace the "5-axis rubric sniff test" language with the new authority model:
+   - Matt decides.
+   - Intake classifies signals; it does not gate them.
+   - `think_sheet.md` is a staging artifact, not authority.
+   - No candidate auto-promotes from intake.
+   This work is already pre-authorized by `Compliance_and_Trend_Watch_Process.md` §1.1 once that spec is signed; until then, §1.1 is the controlling statement and the log edit can land in parallel.
+
+4. **Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1.**
+   Resolve its §12 minimum decisions:
+   - cadence / stale threshold
+   - delivery mechanism
+   - per-carrier stance (variants vs. carrier-agnostic)
+   - v1 artifact set
+   - cheaper-proof go bar
+   Other §12 questions may stay open past §11 if they aren't blocking the sign-off contract.
+
+5. **Run cheaper-proof MSP discovery.**
+   Use the Cyber Insurance Evidence Package framing to test whether MSPs actually want this evidence package before any implementation. The "cheaper-proof go bar" set by Build item 4 is the decision criterion.
+
+6. **Only after cheaper-proof go: draft implementation spec.**
+   Not code yet. Define generation workflow, artifact schema, redaction gates, and output surfaces. Spec-first discipline. §11 again.
+
+7. **14-day Operating Doctrine Trial.**
+   Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–6, not after them — it evaluates whether the doctrine governing how items 1–6 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
+
+---
+
+## §3 Audit List
+
+What must run cleanly before anything in §2 can be called done. Every "ready / done / signed" wording is gated by the relevant Audit item.
+
+1. **Before signing the Compliance / Trend spec.**
+   Grok audit packet should include:
+   - `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md`
+   - `Frontier_Intake_Log.md`
+   - `VISION.md`
+   - `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` §9
+   - touched / read file manifest
+   Grok prompt: identify deviations only — no scoring, no approval. Negative-feedback posture.
+
+2. **After updating `audit_tools/complete_gate.py` constants or comments.**
+   Run `complete_gate.py` itself, because `audit_tools/` is in gate scope from v1.1 onward.
+   Any change in this directory triggers a self-audit; that's the contract.
+
+3. **Before signing the Cyber Insurance spec.**
+   Grok audit packet should include:
+   - `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md`
+   - `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md`
+   - `VISION.md`
+   - source artifact map (the §4 evidence-source list in the cyber-insurance spec)
+   - touched / read file manifest
+
+4. **Before any tracker update that says "done."**
+   Audit must verify:
+   - fresh Grok output exists for the work being marked done
+   - packet hash matches current touched files (no stale audit reuse)
+   - no blocking deviations open
+   - operator wording is Matt-authored (not AI-paraphrased completion claims)
+   The `complete_gate.py` gate handles items 1–3 automatically when invoked; item 4 is operator-side discipline.
+
+5. **Before any implementation.**
+   Audit must verify:
+   - cheaper-proof gate was satisfied or explicitly overridden by Matt with a recorded reason
+   - the relevant spec is §11-signed
+   - implementation scope matches the signed spec — no scope creep, no quiet additions
+   - no claims surfaced anywhere in the implementation that fall outside the email-fraud / inbox-layer MDR boundary
+
+6. **After the 14-day Operating Doctrine Trial.**
+   Review (operator-led; Grok audit optional per the trial spec §10):
+   - Queue accuracy — did `PROJECT_BUILD_AND_AUDIT_QUEUE.md` match what actually happened during the trial window
+   - Whether gates helped or slowed — count gate firings, blocking findings, operator overrides, and any unjustified blocks
+   - Whether Grok caught drift — list specific findings that altered work vs. findings ignored as noise
+   - Whether Matt had to micromanage less — operator self-report against the prior comparable period
+   - Whether build moved closer to revenue or signed specs — count §11 signatures landed, MSP discovery conversations logged, revenue-lane progress
+   The trial spec §10 governs the audit packet and prompt for the optional retrospective Grok audit. Output of this audit informs (but does not decide) the §7 D1/D2/D3/D4 decision; the operator decides.
+
+---
+
+## §4 Next Action
+
+**Build List item 1.** Compliance / Trend spec close-out to signable v1.
+
+Concretely: operator (Matt) answers — or directs Cursor to draft proposed resolutions for — the five minimum open questions on `Compliance_and_Trend_Watch_Process.md`:
+
+- Q1 calendar rhythm
+- Q3 source-addition threshold
+- Q7 done-declaration JSON location / shape
+- Q8 vendor-source weighting
+- Q11 gate constant / comment sync rule
+
+Once those five are answered, the spec gets a small drafting pass to encode them as proposed-locks (the same pattern used for Q4 and Q10 in the prior revision), then Audit List item 1 runs, then §11.
+
+Nothing in Build items 2–6 starts until item 1 closes.
+
+---
+
+## §5 Maintenance Rules
+
+- **Owner.** Matt. Edits land via operator instruction or Cursor revision pass; no autonomous edits.
+- **Canonical roles.** Queue is canonical for ordering. `PROJECT_HANDSHAKE.md` is canonical for current active focus. Matt's current instruction overrides both.
+- **When to update.** Whenever (a) a Build or Audit item completes, (b) operator reorders or removes an item, (c) a new item is added by operator direction, or (d) a §11 signature changes what's blocking or unblocked. Updates are *removals and additions of queue items*, not historical log entries.
+- **No history layer.** This file does not record what shipped. `PROJECT_ACTIVITY_LOG.md` and `PROGRESS.md` carry historical state. This file is forward-only.
+- **No scoring.** Items are ordered by operator decision, not by rubric.
+- **No progress marker.** Marking an item complete is done by removing it from the list, not by checkbox or status tag. A removed item is a completed-or-skipped item; the audit log records which.
+- **Drift signal.** If this file goes stale (no edit in 14+ days while project work continues), that's an operator-discipline signal, not a tracker failure. The file is only useful if it's kept current.
+
+---
+
+## §6 Cross-references
+
+- `PROJECT_HANDSHAKE.md` — current active build target (one item) and resume point. This file is the multi-item queue; `PROJECT_HANDSHAKE.md` is the single active focus.
+- `PROGRESS.md` — historical task-tracker. This file is forward-only.
+- `VISION.md` — seven non-negotiables that govern every item below.
+- `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — DRAFT pre-§11. Build List item 1 closes this.
+- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` — DRAFT pre-§11. Build List item 4 closes this.
+- `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` — DRAFT pre-§11. Build List item 7 activates this. Audit List item 6 follows the trial.
+- `Frontier_Intake_Log.md` — Build List item 3 targets the intake-protocol step in this file.
+- `audit_tools/complete_gate.py` — enforces Audit List items 1–3 automatically when invoked at commit / ship / sign-off boundaries.
+- `MASTER_INDEX.md` — navigation. This file is indexed there under "Project Control Files."
+
+---
+
+**End of operational queue. No item below is authorized to start outside its listed order without an operator decision.**

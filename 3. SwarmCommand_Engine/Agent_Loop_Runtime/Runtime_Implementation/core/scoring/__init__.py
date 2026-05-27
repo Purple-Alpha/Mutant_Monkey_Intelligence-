@@ -1,5 +1,6 @@
 """NorthStar scoring layer agents (LLM-backed, pluggable client)."""
 
+from .client_facing_rubric import project_client_facing_rubric
 from .email_risk_scoring_agent import (
     NORTHSTAR_INBOX_SHIELD_SYSTEM_PROMPT,
     EmailRiskScoringConfig,
@@ -46,4 +47,5 @@ __all__ = [
     "run_email_risk_scoring_cycle",
     "score_email_authentication",
     "parse_received_chain",
+    "project_client_facing_rubric",
 ]

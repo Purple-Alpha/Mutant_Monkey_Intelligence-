@@ -117,6 +117,7 @@ def generate_daily_digest_demo(
         config=EmailRiskScoringConfig(
             llm_client=demo_scoring_llm_client,
             production_tenant_id=tenant_id,
+            enable_client_facing_rubric=True,
         ),
     )
     if scoring_result.failed:
@@ -450,16 +451,37 @@ def demo_digest_llm_client(system_prompt: str, user_prompt: str) -> str:
 
     for item in top_risks:
         reason = item.get("reason") or "review recommended"
+        recommended_action = item.get("recommended_action") or "needs_review"
         lines.extend(
             [
                 (
                     f"- **{item.get('subject') or '(no subject)'}** from "
                     f"`{item.get('sender') or 'unknown sender'}` - "
-                    f"risk `{item['risk_score']}` - {reason}. "
+                    f"Action: `{recommended_action}` - risk `{item['risk_score']}` - {reason}. "
                     "Immediate action: verify through a known channel before acting."
                 )
             ]
         )
+        rubric = item.get("client_facing_rubric")
+        if rubric:
+            if rubric.get("rubric_status") == "unavailable":
+                lines.append(
+                    "  - Rubric: unavailable - internal analysis emitted; "
+                    "client-facing axis projection unavailable."
+                )
+            else:
+                lines.append(f"  - Rubric: {rubric['axis_total']}/10")
+                lines.append("  - Order is fixed for stability, not priority.")
+                for axis in rubric["axes"]:
+                    lines.append(
+                        "  - "
+                        f"{axis['axis_name']}: {axis['score']}/2 - "
+                        f"{axis['why_this_score']}"
+                    )
+                if rubric.get("rubric_consistency_override"):
+                    lines.append(
+                        "  - Score normalized to match high-risk internal evidence."
+                    )
 
     if tasks:
         lines.extend(["", "## Action Queue"])
@@ -478,13 +500,30 @@ def demo_digest_llm_client(system_prompt: str, user_prompt: str) -> str:
     if other:
         lines.extend(["", "## Other Notable Emails"])
         for item in other:
+            recommended_action = item.get("recommended_action") or "safe"
             lines.append(
                 (
                     f"- **{item.get('subject') or '(no subject)'}** from "
                     f"`{item.get('sender') or 'unknown sender'}` - "
-                    f"risk `{item['risk_score']}`."
+                    f"Action: `{recommended_action}` - risk `{item['risk_score']}`."
                 )
             )
+            rubric = item.get("client_facing_rubric")
+            if rubric:
+                if rubric.get("rubric_status") == "unavailable":
+                    lines.append(
+                        "  - Rubric: unavailable - internal analysis emitted; "
+                        "client-facing axis projection unavailable."
+                    )
+                else:
+                    lines.append(f"  - Rubric: {rubric['axis_total']}/10")
+                    lines.append("  - Order is fixed for stability, not priority.")
+                    for axis in rubric["axes"]:
+                        lines.append(
+                            "  - "
+                            f"{axis['axis_name']}: {axis['score']}/2 - "
+                            f"{axis['why_this_score']}"
+                        )
 
     lines.extend(
         [

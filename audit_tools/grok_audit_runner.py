@@ -647,6 +647,163 @@ TWO_CHANNEL_CONFIRMATION_PACKAGE = AuditPackage(
 )
 
 
+CLIENT_FACING_RUBRIC_PACKAGE = AuditPackage(
+    name="client_facing_rubric",
+    files=(
+        AuditFile(
+            label="1. SIGNED SPECIFICATION",
+            relative_path=(
+                "4. Product_Roadmap/"
+                "Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md"
+            ),
+        ),
+        AuditFile(
+            label="2. SCHEMA FILE: core/blackboard/models.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/blackboard/models.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCHEMA PACKAGE INIT: core/blackboard/__init__.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/blackboard/__init__.py"
+            ),
+        ),
+        AuditFile(
+            label="2. IMPLEMENTATION FILE: core/scoring/client_facing_rubric.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/client_facing_rubric.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCORING PACKAGE INIT: core/scoring/__init__.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/__init__.py"
+            ),
+        ),
+        AuditFile(
+            label="2. SCORING INTEGRATION: core/scoring/email_risk_scoring_agent.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/scoring/email_risk_scoring_agent.py"
+            ),
+        ),
+        AuditFile(
+            label=(
+                "2. PRODUCTION-LOOP ACTIVATION PATH: core/production/loop.py "
+                "(rebuild branch must preserve enable_client_facing_rubric)"
+            ),
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/production/loop.py"
+            ),
+        ),
+        AuditFile(
+            label="2. REPORT RENDERER: core/drafting/daily_digest_agent.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/drafting/daily_digest_agent.py"
+            ),
+        ),
+        AuditFile(
+            label="2. DEMO RENDERER: scripts/inbox_shield_daily_digest_demo.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "scripts/inbox_shield_daily_digest_demo.py"
+            ),
+        ),
+        AuditFile(
+            label="3. TEST FILE: tests/test_client_facing_rubric.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_client_facing_rubric.py"
+            ),
+        ),
+        AuditFile(
+            label="3. WIRING TESTS: tests/test_email_risk_scoring_agent.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_email_risk_scoring_agent.py"
+            ),
+        ),
+        AuditFile(
+            label="3. DIGEST DEMO TESTS: tests/test_inbox_shield_daily_digest_demo.py",
+            relative_path=(
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "tests/test_inbox_shield_daily_digest_demo.py"
+            ),
+        ),
+    ),
+    receipt_label="4. IMPLEMENTER RECEIPT",
+    receipt_files=(
+        AuditFile(label="PROGRESS.md (Tasks 52-57 only)", relative_path="PROGRESS.md"),
+        AuditFile(
+            label=(
+                "PROJECT_ACTIVITY_LOG.md "
+                "(Pass 1-2 + activation + D12 + post-remediation entries only)"
+            ),
+            relative_path="PROJECT_ACTIVITY_LOG.md",
+        ),
+    ),
+    receipt_anchors=(
+        (
+            "PROGRESS.md",
+            "### 57. Client-Facing 5-Axis Rubric — Post-remediation Grok notes closed",
+            "### 56.",
+        ),
+        (
+            "PROGRESS.md",
+            "### 56. Client-Facing 5-Axis Rubric — Grok activation audit notes remediated",
+            "### 55.",
+        ),
+        (
+            "PROGRESS.md",
+            "### 55. Client-Facing 5-Axis Rubric — Activation Pass",
+            "### 54.",
+        ),
+        (
+            "PROGRESS.md",
+            "### 53. Client-Facing 5-Axis Rubric — Implementation Pass 2 renderer",
+            "### 52.",
+        ),
+        (
+            "PROGRESS.md",
+            "### 52. Client-Facing 5-Axis Rubric — Implementation Pass 1",
+            "### 51.",
+        ),
+        (
+            "PROJECT_ACTIVITY_LOG.md",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Post-Remediation Grok Notes Closed",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Grok Activation Notes Remediated",
+        ),
+        (
+            "PROJECT_ACTIVITY_LOG.md",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Grok Activation Notes Remediated",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Activation Pass Landed",
+        ),
+        (
+            "PROJECT_ACTIVITY_LOG.md",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Activation Pass Landed",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Pass 1 + Pass 2 Grok Audit Approved",
+        ),
+        (
+            "PROJECT_ACTIVITY_LOG.md",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Implementation Pass 2 Renderer Landed",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Implementation Pass 1 Landed",
+        ),
+        (
+            "PROJECT_ACTIVITY_LOG.md",
+            "## 2026-05-25 - Client-Facing 5-Axis Rubric — Implementation Pass 1 Landed",
+            "## 2026-05-25 - Cyber Insurance Evidence Package — Formal Gate Fired",
+        ),
+    ),
+)
+
+
 AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "vendor_baseline": VENDOR_BASELINE_PACKAGE,
     "financial_state_ledger": FINANCIAL_STATE_LEDGER_PACKAGE,
@@ -657,6 +814,7 @@ AUDIT_PACKAGES: dict[str, AuditPackage] = {
     "document_metadata_fingerprinting": DOCUMENT_METADATA_FINGERPRINTING_PACKAGE,
     "prompt_injection": PROMPT_INJECTION_PACKAGE,
     "two_channel_confirmation": TWO_CHANNEL_CONFIRMATION_PACKAGE,
+    "client_facing_rubric": CLIENT_FACING_RUBRIC_PACKAGE,
 }
 
 

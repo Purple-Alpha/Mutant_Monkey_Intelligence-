@@ -1,3 +1,31 @@
 sample_id,pseudonymized_sender_domain,sender_category,received_date_bucket,from_domain,reply_to_domain,return_path_domain,dkim_domain,auth_result_summary,received_header_count,top_observed_relay_provider,observed_country_class,observed_asn_or_provider_class,classification_label,would_new_origin_matter,explainable_one_sentence,notes
-spg-001,vendor-a.example,invoice_vendor,2026-05-week-4,vendor-a.example,,mailer.vendor-a.example,vendor-a.example,dkim=pass spf=pass dmarc=pass,3,microsoft_365,cloud_normalized,microsoft_cloud,cloud_normalized,no,no,"M365 relay only; likely weak per-vendor origin signal"
-spg-002,vendor-b.example,subcontractor,2026-05-week-4,vendor-b.example,ap.vendor-b.example,vendor-b.example,vendor-b.example,dkim=pass spf=pass dmarc=pass,4,fixed_business_relay,canada,business_isp_or_static_provider,stable_high_value,yes,yes,"Candidate: financially relevant sender with stable-looking origin metadata"
+spg-001,vendor-a.example,invoice_vendor,2026-05-week-4,vendor-a.example,,mailer.vendor-a.example,vendor-a.example,dkim=pass spf=pass dmarc=pass,3,microsoft_365,cloud_normalized,microsoft_cloud,cloud_normalized,no,no,M365 relay only; likely weak per-vendor origin signal
+spg-002,vendor-b.example,subcontractor,2026-05-week-4,vendor-b.example,ap.vendor-b.example,vendor-b.example,vendor-b.example,dkim=pass spf=pass dmarc=pass,4,fixed_business_relay,canada,business_isp_or_static_provider,stable_high_value,yes,yes,Candidate: financially relevant sender with stable-looking origin metadata
+spg-003 ,vendor-ibm-ns1 ,software_vendor ,2026-05-week-2 ,email.ibm.com ,ibm.com ,b1.email.ibm.com ,email.ibm.com ,dkim=pass spf=pass dmarc=pass ,3,salesforce_marketing ,global_cloud ,esp_shared_pool ,not_vendor ,no ,yes ,IBM marketing/trial welcome email; ESP-routed; not invoice traffic. 
+spg-004 ,vendor-web-hosting-canada ,invoice_vendor ,2026-05-week-4 ,whc.ca ,noreply@whc.ca ,noreply@whc.ca ,whc.ca ,dkim=pass spf=fail dmarc=pass ,6,fixed_business_relay ,canada ,business_isp_or_static_provider ,stable_high_value ,yes ,yes ,Hosting service invoice; business relay origin; stable vendor billing pattern. 
+spg-005 ,vendor-zynga-game ,personal_entertainment ,2026-02-week-4 ,googleplay-noreply@google.com ,google.com ,mail-sor-f69.google.com ,google.com ,dkim=pass spf=pass dmarc=pass ,1,in_app_purchase ,mobile_gaming ,google_play_billing ,is_vendor,yes,no,Google Play receipt for CSR 2 in-app purchase; $7.04 CAD total. 
+spg-006 ,vendor-zynga-game ,personal_entertainment ,2026-03-week-1 ,googleplay-noreply@google.com ,google.com ,mail-sor-f69.google.com ,google.com ,"dkim=pass spf=pass dmarc=pass
+",1,in_app_purchase ,mobile_gaming ,google_play_billing ,"is_vendor
+",yes ,"no
+",Google Play receipt for CSR 2 in-app purchase; $4.47 CAD total. 
+"spg-007
+",vendor-disney-plus ,personal_entertainment 2026-05-week-4 ,,disneyplus@trx.mail2.disneyplus.com ,disneyplus.com ,us-west-2.amazonses.com ,disneyplus.com ,dkim=pass spf=pass dmarc=pass ,1,failed_payment ,subscription_management ,visa_2641 ,is_vendor ,yes ,no ,"Disney+ payment failure notice; $3.35 CAD balance issue.
+"
+spg-008 ,vendor-perplexity-ai ,professional_software ,2026-04-week-4 ,team@mail.perplexity.ai ,perplexity.ai ,e229-168.smtp-out.amazonses.com ,perplexity.ai ,dkim=pass spf=pass dmarc=pass ,1,credit_purchase ,ai_tool_credits ,1500_credits ,is_vendor ,yes,no,"Perplexity AI purchase confirmation; 1,500 credits for $15.00 USD. "
+spg-009 ,vendor-manus-ai ,professional_software ,2026-05-week-4 ,trial-ending+acct_1R15XBHkfKp4fCS9@stripe.com ,manus.im ,b238-223.smtp-out.us-west-2.amazonses.com ,stripe.com ,dkim=pass spf=pass dmarc=pass ,1,trial_ending_notice ,subscription_management ,mastercard_0425 ,"is_vendor
+",yes,no,Manus AI trial expiration notice; $448.00 CAD annual renewal on 2026-05-29. 
+spg-010 ,vendor-google-play ,digital_subscription ,2026-05-week-4 ,googleplay-noreply@google.com ,google.com ,mail-sor-f69.google.com ,google.com ,dkim=pass spf=pass dmarc=pass ,1,payment_failure_notice ,subscription_management ,n/a ,"is_vendor
+",yes,no,Just For Today subscription suspended; insufficient balance. Amount Due: $2.56 CAD. 
+spg-011 ,vendor-perplexity ,digital_subscription ,2026-04-24,team@mail.perplexity.ai ,perplexity.ai ,mail-sor-f69.google.com ,mail.perplexity.ai ,"dkim=pass spf=pass dmarc=pass
+",1000,credit_purchase_success ,api_resource_procurement ,10.00 CAD ,is_vendor ,yes,no,"Procurement of 1,000 credits for model usage; balance updated to 1,014 credits. "
+spg-012 ,vendor-perplexity ,digital_subscription ,2026-04-22,team@mail.perplexity.ai ,perplexity.ai ,g169-107.smtp-out.amazonses.com ,"mail.perplexity.ai
+",dkim=pass spf=pass dmarc=pass ,2000,credit_purchase_success ,"api_resource_procurement
+",20.00 USD ,is_vendor ,yes,no,"Procurement of 2,000 credits for model usage; balance updated to 2,000 credits. "
+spg-013 ,vendor-google-play ,subscription_failed_payment ,2026-03-24,googleplay-noreply@google.com ,google.com ,mail-sor-f69.google.com ,google.com ,dkim=pass spf=pass dmarc=pass ,1,"payment_declined
+",subscription_management ,43.67 USD ,is_vendor ,yes,no,"Subscription renewal payment for Airbrush declined on Mastercard-0425; action required by April 7, 2026.
+"
+spg-014 ,vendor-riversol ,,"2026-04-09
+",info@riversol.com ,"riversol.com
+",o1692.e.riversol.com ,riversol.com ,dkim=pass spf=pass dmarc=pass ,1,sales_promotion ,customer_outreach ,N/A ,"is_vendor
+",yes,no,"Final call for Spring Spend & Save promotion; offers $15 off $70+, $25 off $110+, or $40 off $150+ orders. "
+spg-015 ,,,,,,,,,,,,,,,,
