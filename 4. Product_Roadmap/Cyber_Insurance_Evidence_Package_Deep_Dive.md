@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 open questions still require operator resolution before §13 sign-off.
+**Status:** DRAFT (pre-§11). §12 Q1/Q2 resolved by operator on 2026-05-26 (pending §13 lock as D1-D2e); remaining §12 open questions still require operator resolution before §13 sign-off.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
@@ -139,7 +139,7 @@ The package implies controls or coverage NorthStar does not provide. Examples: "
 
 The package references artifacts that no longer exist, were renamed, or describe a system state that has since changed. Examples: a sample monthly report quoting a test count from three months ago when the suite is now 50 tests larger; a signed-spec reference to a spec that was superseded.
 
-**Mitigation:** §6 evidence records include `last_verified_at` and `content_hash`. Package generation refreshes these. A `last_verified_at` older than a configurable threshold (open question §12) triggers a stale warning. Broken `source_artifact_path` is a hard fail.
+**Mitigation:** §6 evidence records include `last_verified_at`, `content_hash`, and signed provenance where applicable. Package generation applies the freshness policy in §6.1: mutable operational authority and tenant-scoped enforcement evidence has a 30-day threshold; reproducible / slower-decay evidence has a 90-day threshold; structurally signed immutable evidence is freshness-exempt only when its `signed_by.signature_value` resolves to a valid signed artifact. A stale record makes the `stale_evidence` gate fail for package completion. A broken `source_artifact_path` is always a hard fail.
 
 ### iii. Missing provenance
 
@@ -187,7 +187,7 @@ Underwriting questions cover MFA, EDR, backups, IR plans, etc. Most are not Nort
 
 Each carrier asks slightly different questions. The package needs per-carrier customization that NorthStar cannot scale. (think_sheet failure mode iii.)
 
-**Mitigation:** Single carrier-agnostic format with an explicit "see your carrier's specific questions for additional details" disclaimer. NorthStar refuses to maintain per-carrier variants. Cross-reference §12 open question on cadence/format.
+**Mitigation:** Single carrier-agnostic format with an explicit "see your carrier's specific questions for additional details" disclaimer. NorthStar refuses to maintain per-carrier variants. Cross-reference §12 Q4 on per-carrier variants vs. single carrier-agnostic format.
 
 ---
 
@@ -230,12 +230,43 @@ signed_by:                                     # null if not applicable
 
 Adding categories is a v1.1 spec change.
 
+### §6.1 Freshness policy (operator-resolved Q1/Q2)
+
+The package cadence is hybrid:
+
+- **Quarterly snapshot.** Each tenant gets a scheduled quarterly evidence-package snapshot so the MSP has a current baseline package available without waiting for a renewal event.
+- **On-demand regeneration.** A package may be regenerated at any time for insurance renewal, MSP sales support, underwriter follow-up, incident response, or operator-directed need. Concurrent on-demand requests for the same tenant are queued behind the active generation job; they do not run in parallel against the same tenant evidence set.
+- **Annual full review.** Each tenant receives one comprehensive review per insurance-renewal anniversary. This review re-evaluates claim-category assignment, structural exemption eligibility, evidence lineage, and references to superseded specifications. Quarterly and on-demand regenerations use the prior category / exemption assignments unless the operator explicitly triggers a full review early.
+
+Freshness requirements correspond to the expected rate of materially relevant state change associated with the evidence class:
+
+| Evidence class | Default threshold | Rule |
+|---|---:|---|
+| `policy_change_control` | 30 days | Mutable operational authority; stale records can misrepresent who approved or changed tenant policy. |
+| `tenant_isolation` | 30 days | Tenant-scoped enforcement state; stale records can misrepresent isolation guarantees. |
+| `kill_switch` | 30 days | Operator-authority evidence; stale records can misrepresent current emergency-control posture. |
+| `detection_evidence` | 90 days | Reproducible detector evidence; refreshes on package generation or scheduled verification. |
+| `scoring_explanation` | 90 days | Reproducible scoring / explanation evidence; slower-decay than mutable tenant state. |
+| `test_evidence` | 90 days | Regression and lift-only invariant evidence; refreshed on test/gate runs. |
+| `independent_audit` | 90 days | Grok / Decision Auditor evidence tied to a packet and timestamp. |
+| `operational_artifact` | 90 days | Daily digest / monthly report artifacts and evidence-package precedents. |
+| `architecture_documentation` | Exempt when structurally signed | Signed §11 specs are durable records when the `signed_by` reference resolves. |
+
+Structural exemption overrides category default: any evidence record with non-null `signed_by` whose `signature_value` resolves to a valid signed artifact is freshness-exempt regardless of `claim_category`. If the signed artifact is later superseded, the record remains freshness-exempt as a historical signed artifact, but the rendered package must annotate it as `superseded by <new spec>` and the annual full review must verify that the package is not relying on the superseded artifact as current architecture.
+
+Operational commitments introduced by this policy:
+
+- The implementation spec must include a monthly internal verification path for 30-day categories so on-demand package generation does not fail unexpectedly on stale operational-state records.
+- The implementation spec must include stale-evidence pre-warning behavior before a threshold breach. The alert channel and exact offset are implementation details; the v1 invariant is that stale evidence should not first become visible only at final package generation.
+- The implementation spec must track Grok API availability / cost as an operational dependency for quarterly, on-demand, and annual package-generation audits.
+
 ### Cross-record invariants
 
 - Every `evidence_id` is unique within a package.
 - Every `source_artifact_path` resolves to an existing file at package-generation time.
-- Every `result: pass` has a fresh `last_verified_at` within the cadence window (open question §12).
+- Every `result: pass` has a fresh `last_verified_at` under the §6.1 freshness policy, unless it is structurally exempt through a valid `signed_by` reference.
 - Every `signed_by` value, when present, traces to an existing signed artifact.
+- Every rendered package annotates structurally signed records that reference superseded artifacts as `superseded by <new spec>`.
 - Every record either has a `tenant_id` or is explicitly marked cross-tenant in `scope_limitations`.
 
 ---
@@ -262,7 +293,7 @@ output_path: "audit_outputs/evidence_gate_<gate_id>.json"
 |---|---|
 | `claim_validation` | Every claim has at least one supporting evidence record |
 | `broken_link` | Every `source_artifact_path` exists on disk |
-| `stale_evidence` | No `last_verified_at` exceeds cadence threshold (§12) |
+| `stale_evidence` | No non-exempt `last_verified_at` exceeds the §6.1 threshold for its `claim_category`; structurally signed exemptions must resolve and superseded signed artifacts must be annotated |
 | `forbidden_language` | No `guaranteed`, `bulletproof`, `fully secure`, `compliant` (absolute use), `SOC 2`, `ISO 27001` as a NorthStar claim — see §9 forbidden-language list |
 | `scope_boundary` | Boundary statement present, unedited, prominent |
 | `redaction` | No secrets, no raw credentials, no raw email bodies, no cross-tenant identifiers |
@@ -306,7 +337,7 @@ A Drift Incident Report auto-generates on:
 - Detection of forbidden language anywhere in the rendered package (`blocking`)
 - Detection of cross-tenant identifier in a tenant-scoped record (`blocking`)
 - Detection of a vocabulary-leak phrase outside the package's own scope (`warning` — see §5 iv)
-- A `last_verified_at` exceeding the stale threshold but under hard-fail threshold (`warning`)
+- A `last_verified_at` approaching the §6.1 threshold under the implementation-defined pre-warning rule (`warning`)
 - Any operator-invoked Hard Stop during generation (`blocking`)
 
 ---
@@ -409,6 +440,8 @@ This rule is non-negotiable. It is the specific lesson from the 2026-05-23 weeke
 - Every package generation triggers a Grok audit before completion.
 - A package is not "done" without a fresh Grok audit output dated after generation finished.
 - This is a hard rule. The §11 done criteria enforce it.
+- Under the hybrid cadence in §6.1, this means every quarterly snapshot, every on-demand regeneration, and every annual full review gets its own fresh Grok audit. Cached or prior audits do not satisfy a new package-generation event unless the packet hash, generated evidence set, and rendered package are identical.
+- Annual full reviews are anchored to the tenant's insurance-renewal anniversary. They re-evaluate category assignment, structural exemption eligibility, lineage, and superseded-spec references before the package can reach done state.
 
 ---
 
@@ -419,7 +452,7 @@ A package reaches "done" if and only if **all** of the following are true:
 1. **Boundary statement present.** The §2 scope boundary statement appears in the rendered package, unedited.
 2. **Every claim has evidence.** Every claim in the rendered package corresponds to at least one structured evidence record with a non-null `source_artifact_path`.
 3. **Every source path resolves.** Every `source_artifact_path` exists on disk at package-generation time.
-4. **No stale evidence.** No `last_verified_at` exceeds the operator-defined cadence threshold (§12 open question).
+4. **No stale evidence.** No non-exempt `last_verified_at` exceeds the §6.1 threshold for its `claim_category`; every structural exemption resolves to a valid signed artifact; every superseded signed artifact is annotated in the rendered package.
 5. **No forbidden language.** The `forbidden_language` gate (§7) passes.
 6. **Redaction sweep passes.** The `redaction` gate (§7) passes — no secrets, no raw bodies, no cross-tenant identifiers.
 7. **Vocabulary translation applied.** The `vocabulary_translation` gate (§7) passes.
@@ -459,15 +492,17 @@ These resolve into locked decisions (D1–Dn) at §11 sign-off. Until then they 
 
 ### Q1. Cadence
 
-Quarterly? Annual? On-demand? Or a hybrid (e.g. quarterly snapshot, annual full review, on-demand renewals)? Different cadences imply different stale-evidence thresholds (Q2) and different MSP delivery shapes (Q3).
+**Resolved 2026-05-26 by operator (pending §13 lock as D1).** Cadence is hybrid: quarterly snapshot, on-demand regeneration, and annual full review anchored to the tenant's insurance-renewal anniversary. Quarterly and on-demand regenerations use prior category / exemption assignments; annual full review re-evaluates category assignment, structural exemption eligibility, evidence lineage, and superseded-spec references.
 
 ### Q2. Stale-evidence threshold
 
-How fresh must `last_verified_at` be for a record to count as non-stale? Proposals to weigh:
+**Resolved 2026-05-26 by operator (pending §13 lock as D2-D2e).** Threshold model is per-category default with structural exemption override:
 
-- 30 days: tight; matches monthly report cadence
-- 90 days: matches likely quarterly package cadence
-- Per-claim-category: e.g. `test_evidence` can be 90 days, `policy_change_control` must be ≤ 30 days, `signed_by` artifacts never go stale because the signature is the record
+- 30-day default: `policy_change_control`, `tenant_isolation`, `kill_switch`.
+- 90-day default: `detection_evidence`, `scoring_explanation`, `test_evidence`, `independent_audit`, `operational_artifact`.
+- Structural exemption: any record with non-null `signed_by` whose `signature_value` resolves to a valid signed artifact is freshness-exempt regardless of category.
+- Supersession handling: a superseded signed artifact remains freshness-exempt as historical signed evidence, but the rendered package must annotate it as `superseded by <new spec>` and cannot rely on it as current architecture after the annual full review.
+- Operational commitments acknowledged by operator: monthly internal verification path for 30-day categories, annual full review as a new spec requirement, stale-evidence pre-warning behavior, queued on-demand concurrency for the same tenant, and Grok API availability/cost as an operational dependency.
 
 ### Q3. Delivery mechanism
 
