@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 Q1/Q2/Q3 resolved by operator on 2026-05-26 (pending §13 lock as D1-D2e and D3-D3a); remaining §12 open questions still require operator resolution before §13 sign-off.
+**Status:** DRAFT (pre-§11). §12 Q1/Q2/Q3/Q4 resolved by operator on 2026-05-26 (pending §13 lock as D1-D2e, D3-D3a, and D4); remaining §12 open questions still require operator resolution before §13 sign-off.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
@@ -530,7 +530,7 @@ These resolve into locked decisions (D1–Dn) at §11 sign-off. Until then they 
 
 ### Q4. Per-carrier variants vs single carrier-agnostic format
 
-The think_sheet stress test verdict was single carrier-agnostic with a "see your carrier's specific questions" disclaimer. This question is open here only to lock that verdict explicitly at §11.
+**Resolved 2026-05-26 by operator (pending §13 lock as D4).** D4: single carrier-agnostic format only — no per-carrier variants in v1, v1.1, or any later scope. This is product policy, not a deferred backlog item; reopening it requires a new signed spec, not a one-off exception. D4 is locked as a structural constraint only. Q6 (vocabulary-translation list) and Q8 (forbidden-language list) remain independent filters under §9; they are not bundled with D4 under a unified governance frame. Renderer ordering between §7 gates is an implementation-spec detail, not §6 / §9 doctrine.
 
 ### Q5. Pricing model
 
