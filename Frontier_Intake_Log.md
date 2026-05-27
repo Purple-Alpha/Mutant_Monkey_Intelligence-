@@ -2,7 +2,20 @@
 NorthStar + SwarmCommand Venture
 
 ## Purpose
-Operator-driven log capturing emerging AI / agent / threat patterns observed during periodic intake reviews. Each review identifies candidates that may warrant full gate evaluation in `think_sheet.md`. Cadence is determined by the cheaper-proof outcome (Review #1) and may be adjusted as evidence accumulates.
+Operator-driven log capturing emerging AI / agent / threat patterns observed during periodic intake reviews. Each review records candidates that the operator may pick up one at a time for staging in `think_sheet.md`. Cadence is determined by the cheaper-proof outcome (Review #1) and may be adjusted as evidence accumulates.
+
+## Supersession (2026-05-26)
+
+The §11-signed `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` (signed 2026-05-26 by Matt Nichol; sharp Grok audit clean) supersedes all prior rubric-authority language in this Log. Under the superseding doctrine:
+
+- **Intake classifies signals.** The intake step records each finding as a Confirmation, Candidate, or Noise based on operator-defined scope criteria. The 5-axis rubric is not the classifier and does not gate this step.
+- **`think_sheet.md` is staging-only.** It is a staging surface for operator-driven stress-testing of a candidate, not a gate. A row in `think_sheet.md` does not by itself constitute promotion of a candidate to roadmap or implementation.
+- **No candidate auto-promotes.** A finding recorded here as a Candidate stays a Candidate until Matt picks it up one at a time. There is no automatic pipeline Log → `think_sheet.md` → roadmap → implementation. Each transition is an operator decision, recorded.
+- **Matt decides.** The operator is the only authority on whether a candidate moves forward, gets deferred, or is dropped. The rubric, the gate, Grok, and Cursor are inputs, never deciders.
+
+Review #1 below was conducted on 2026-05-25 under the prior wording (which framed the Candidate test as "would plausibly survive the 5-axis rubric sniff test"). It is preserved as a historical record of that intake. Reviews from 2026-05-26 forward operate under the four bullets above and the updated Intake protocol §`Intake protocol` below; any phrasing in Review #1 that conflicts with this Supersession is overridden by this block.
+
+Cross-reference: `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §1.1 *Supersession of prior rubric-sniff language*.
 
 ## Cadence rule (locked 2026-05-25)
 - 0-1 candidates surfaced per review → defer recurring discipline; ad-hoc reviews suffice
@@ -14,13 +27,13 @@ Operator-driven log capturing emerging AI / agent / threat patterns observed dur
 
 ## Intake protocol
 1. Survey the starter source list across four categories: threat, AI/agent, MSP/buyer, competitor.
-2. For each finding, classify as one of:
-   - **Confirmation** — reinforces NorthStar's existing direction; record but do not surface as a candidate.
-   - **Candidate** — would plausibly survive the 5-axis rubric's Strategic Fit ≥ 1 + Revenue Path ≥ 1 sniff test; surface for formal gating in `think_sheet.md`.
-   - **Noise** — irrelevant or already covered; do not record.
+2. For each finding, classify as one of (operator-defined scope criteria, **not** rubric scores; per the Supersession block above):
+   - **Confirmation** — reinforces NorthStar's existing direction; record as a durable signal but do not surface as a candidate.
+   - **Candidate** — sits inside the locked Stage A scope (email-fraud / inbox-layer MDR for MSPs and SMBs) AND plausibly warrants operator attention before being closed out. Surface for operator pick-up; do not pre-score, pre-rank, or pass-fail against the 5-axis rubric at this step.
+   - **Noise** — irrelevant, out of Stage A scope, or already covered by a landed detector or signed spec; do not record.
 3. Record citations for every candidate and every confirmation.
 4. Count candidates → apply cadence rule above.
-5. Update trackers; **do not** auto-add surfaced candidates to `think_sheet.md` — formal gating happens only when the operator picks them up one at a time. The intake is discovery; gating is a separate step.
+5. Update trackers; **do not** auto-add surfaced candidates to `think_sheet.md`. Operator-directed stress-testing in `think_sheet.md` happens only when Matt picks up a specific candidate, one at a time. The intake is discovery; `think_sheet.md` is staging; promotion to roadmap or implementation is an explicit operator decision recorded separately. None of these steps grants the rubric, the gate, Grok, or Cursor authority over what becomes a NorthStar feature.
 
 ---
 
