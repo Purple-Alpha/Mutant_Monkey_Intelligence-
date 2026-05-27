@@ -157,7 +157,7 @@ The override list is exhaustive for trial-relevant overrides. It does not list o
 
 The trial does not change Grok's role. Grok continues to operate as the negative-feedback completion auditor per R5 and per `audit_tools/complete_gate.py` v1.1.
 
-Two trial-specific Grok audit hooks:
+Three trial-specific Grok audit hooks:
 
 1. **No mid-trial doctrine audit.** Grok is not asked "is the doctrine working" at any point during the trial. That would replace operator judgment with an external judgment, which defeats the trial's purpose (R1 says Matt decides). Grok's mid-trial scope stays exactly as it is in the gate today.
 2. **Optional end-of-trial retrospective audit.** After the operator drafts the §7 retrospective entry, the operator may elect to run a Grok audit with this exact prompt:
@@ -166,7 +166,15 @@ Two trial-specific Grok audit hooks:
 
    The audit packet for the retrospective audit contains: this artifact, the §7 retrospective entry, and every item in §6 Evidence To Review. The audit output is appended to the retrospective record but does not override the operator's §7 decision. The operator may, on reviewing the audit, amend the retrospective entry; the original draft is preserved in `PROJECT_ACTIVITY_LOG.md` so the amendment is itself auditable.
 
-The retrospective audit is *optional*. Operator may skip it. Skipping is recorded.
+   The retrospective audit is *optional*. Operator may skip it. Skipping is recorded.
+
+3. **Audit-the-auditor cadence.** Grok itself is on trial through F5 ("rubber-stamp behavior"). The cadence below produces evidence for that signal instead of leaving it to feel:
+
+   - **Weekly adversarial seeding.** Once per 7 calendar days during the trial, take a recent gate-audited packet, plant one known boundary violation (e.g. add the phrase `SOC 2 attested` outside the `Compliance_and_Trend_Watch_Process.md` §5.3 carve-outs, or break an internal cross-reference between sections), re-run the gate against the seeded packet, and confirm Grok flags the seeded item as Blocking. If Grok misses the seeded violation, that is a rubber-stamp signal: log a drift incident with `finding_type: rubber_stamp_signal`, surface the failure in the next §7 retrospective input, and either harden the gate prompt or feed the case forward to the retrospective for a doctrine-level decision. Seeded packets are throwaway — the seeded file is reverted after the test run, and the test itself is not a real completion claim.
+   - **Cross-audit (operator-elected).** When operator judgment calls for it — typically on §11 sign-off audits — run the same packet through a second model and compare. Disagreements with Grok are signal, not noise, and are recorded in the trial-window evidence trail per §6. Cross-audit is operator-driven; it does not auto-fire and does not gate completion.
+   - **Cadence is operator-driven, not gate-enforced.** A skipped weekly seeding is recorded in `PROJECT_ACTIVITY_LOG.md` as `audit-the-auditor skipped, week N — reason: <text>` so the §7 retrospective can count skipped weeks as evidence. The cadence itself is on trial — if it generates more drag than signal during the 14 days, the retrospective decision in §7 may drop or alter it.
+
+   This hook is the named mechanism that produces the "missed deviation the operator catches manually" event referenced in §5 F5 detection. F5 stays scored as written; this hook just gives it a deliberate detection path instead of relying solely on accidental discovery.
 
 ---
 
