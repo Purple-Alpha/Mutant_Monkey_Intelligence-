@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 Q1/Q2/Q3/Q4 resolved by operator on 2026-05-26 (pending §13 lock as D1-D2e, D3-D3a, and D4); remaining §12 open questions still require operator resolution before §13 sign-off.
+**Status:** DRAFT (pre-§11). §12 Q1/Q2/Q3/Q4/Q5 resolved by operator on 2026-05-26 / 2026-05-27 (pending §13 lock as D1-D2e, D3-D3a, D4, and D5); remaining §12 open questions still require operator resolution before §13 sign-off.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
@@ -280,6 +280,27 @@ Operational commitments introduced by this policy:
 - **HC7 — Bundle format.** The implementation spec must specify the Markdown bundle archive format (deterministic zipped package), the file layout (rendered Markdown, structured records directory, README, manifest, content hashes), and the integrity model (per-file content hash plus a top-level package hash). Loose-directory delivery is not v1 acceptable.
 - **HC8 — Minimal branding rules.** The implementation spec must define minimal branding rules so the PDF reads as credible without overclaim or scope drift. Branding must not introduce forbidden-language phrases (§9), must not surface repo-internal identifiers (§9 redaction), and must not expand or soften the §2 boundary statement into marketing copy.
 
+### §6.3 Pricing scope (operator-resolved Q5)
+
+The Cyber Insurance Evidence Package is **not priced by NorthStar in v1**. Package generation is treated as a feature of the underlying Inbox Shield runtime, not as a metered commercial line item. The MSP — as the contractual relationship per §3 — decides independently whether to bundle the package into their own client retainers, surcharge for it, absorb it, or omit it from their offering.
+
+Package identifier issuance is technical, not commercial:
+
+- `package_id` is constructed from `tenant_id + generation_timestamp` and is opaque to clients.
+- `package_version` carries the spec version (`v1`) and any future spec revisions; it does not encode commercial state.
+- No pricing field is added to the package schema, the `done_declaration.json`, or any structured evidence record in v1.
+
+The package schema is forward-compatible to a future pricing field (HC12) without breaking v1 packages or their `done_declaration.json` files. Reopening pricing remains an explicit v1.1 spec decision, gated on cheaper-proof discovery evidence (Q10).
+
+Operational commitments introduced by this scope:
+
+- **HC10 — Free-work-perception risk.** The implementation spec must include plain-English boundary text distinguishing what NorthStar provides (the package generation surface) from what the MSP separately charges their SMB clients for (if anything). The boundary text protects MSPs from positioning the package as a NorthStar-priced deliverable they did not actually pay for, and protects NorthStar from MSP perception that valuable work is being given away for free.
+- **HC11 — Anniversary cost monitoring.** The implementation spec must include a cost-monitoring path for Grok API spend during annual full reviews (§6.1), since insurance-renewal anniversaries cluster annual reviews into specific calendar windows. Without this monitoring, NorthStar absorbs concentrated cost spikes silently.
+- **HC12 — Schema forward-compatibility.** The implementation spec must keep the package schema, `done_declaration.json`, and structured evidence records open to a v1.1 pricing field addition without breaking v1 packages already generated. No pricing field exists in v1.
+- **HC13 — MSP retainer wording.** NorthStar must provide a single one-line plain-English package summary that MSPs can paste into their own client retainers or contracts. The summary stays inside the §2 boundary statement and the §9 forbidden-language list. It is provided as a render-time artifact in the Markdown bundle (per §6.2), not as a separate marketing document.
+
+Q10 dependency (locked here): when Q10 (cheaper-proof go bar) is resolved, the discovery-call script must include a pricing-signal sub-question — e.g. *"If this package were a separate line item, what would you pay for it?"* — so any v1.1 pricing reopen rests on real MSP data rather than guess.
+
 ### Cross-record invariants
 
 - Every `evidence_id` is unique within a package.
@@ -534,7 +555,7 @@ These resolve into locked decisions (D1–Dn) at §11 sign-off. Until then they 
 
 ### Q5. Pricing model
 
-Per-package? Bundled in MSP retainer? Per-tenant-per-month surcharge? Out of NorthStar product scope strictly — but the answer shapes how the package's `package_id` and `package_version` are issued and tracked.
+**Resolved 2026-05-27 by operator (pending §13 lock as D5).** D5: not priced by NorthStar in v1. Package generation is a feature of the underlying Inbox Shield runtime; the MSP independently decides whether to bundle, surcharge, absorb, or omit the package in their own client offerings. `package_id` and `package_version` are tied to `tenant_id + generation_timestamp` only; no pricing field exists in the package schema, `done_declaration.json`, or any structured evidence record in v1. Schema is forward-compatible to a v1.1 pricing field. Operational commitments acknowledged by operator: HC10 free-work-perception risk, HC11 anniversary cost monitoring, HC12 schema forward-compatibility, HC13 MSP retainer wording. Q10 dependency locked: cheaper-proof discovery must include a pricing-signal sub-question. Full scope and commitment definitions are in §6.3.
 
 ### Q6. Translation list scope
 
