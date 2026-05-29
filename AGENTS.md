@@ -69,6 +69,7 @@ If you're unsure whether an action counts as a proxy decision, it does. Ask.
 - The 2026-05-23 Pass-1 wiring bug is the canonical failure mode: a touched file was outside the audit packet, so Grok approved a defect it never saw. The gate's manifest mechanism prevents this. **Do not skip the manifest.**
 - A **worker manifest** at `audit_outputs/pending/<task_id>.manifest.json` is what causes Grok to report "comprehensive" evidence quality instead of "partial." This has been confirmed across at least three audit runs. Always write a manifest before running the gate on substantive work.
 - The 200KB packet cap is real. If the gate refuses with `audit_packet_too_large`, trim the manifest's `files_read` list before splitting the commit; reads cost packet bytes but modifications are mandatory.
+- **Reaction-timing tests must be timestamped and documented.** Any test that measures NorthStar reaction timing (detection latency, verification-request latency, verification-outcome latency, case-closure latency, or related Stage A/B timing) must leave a durable record with `test_id`, `run_started_at`, `run_finished_at`, scenario, expected result, actual result, verdict (`pass`, `partial`, `fail`, or `blocked`), timing fields, evidence artifact paths or record IDs, and notes. Positive and negative results are both project evidence. A reaction-timing test does not count unless it has a timestamped record and verdict.
 
 ---
 

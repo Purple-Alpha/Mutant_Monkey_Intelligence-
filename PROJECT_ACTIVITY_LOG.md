@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-05-28 - Reaction Timing Test Documentation Rule Added
+**Actor:** Matt + Codex
+
+**Action:** Added a standing project rule requiring every NorthStar reaction-timing test to leave a timestamped durable record with a verdict before it counts as evidence.
+
+**Files Changed:**
+- `AGENTS.md` (UPDATED — added reaction-timing timestamp/documentation rule under Audit gate discipline)
+- `PROGRESS.md` (UPDATED — logged the standing rule as completed doctrine update)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Matt identified reaction timing as a Stage A/B bridge metric and required positive, negative, partial, and blocked test results to be documented so NorthStar can review timing evidence later without relying on memory.
+
+**Next Step:**
+When the first reaction-timing test is designed, create or choose the durable log surface before running the test.
+
+---
+
 ## 2026-05-28 - Frontier Intake Queue Item Removed as Already-Satisfied
 **Actor:** Matt + Cursor (GPT-5.5)
 

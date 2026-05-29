@@ -10,6 +10,14 @@
 
 ## Active Task List
 
+### Standing rule - Reaction timing test documentation — ✅ DONE 2026-05-28
+- Added the project rule that every NorthStar reaction-timing test must be timestamped and documented before it counts as evidence.
+- Scope includes detection latency, verification-request latency, verification-outcome latency, case-closure latency, and related Stage A/B timing checks.
+- Minimum durable record: `test_id`, `run_started_at`, `run_finished_at`, scenario, expected result, actual result, verdict (`pass`, `partial`, `fail`, or `blocked`), timing fields, evidence artifact paths or record IDs, and notes.
+- Negative, partial, and blocked results are preserved as evidence, not discarded.
+- Source of rule: operator instruction during the 2026-05-28 reaction-timing discussion.
+- Verification: doctrine-only update in `AGENTS.md`; no runtime tests required.
+
 ### 1. SMB tier matrix in `Product_Sheets/Fraud_Detection_Product_Sheet.md` — ✅ DONE 2026-05-22
 - Added **Essentials / Plus / Enterprise** matrix in `4. Product_Roadmap/Product_Sheets/Fraud_Detection_Product_Sheet.md`.
 - Tier vocabulary matches `Autonomous_Orchestration/agent-enablement-map-per-tier.md` and `trigger-routing-table-per-tier.md`.
