@@ -26,6 +26,31 @@ What should happen next.
 
 ---
 
+## 2026-05-28 - Reaction Timing Test Log Created
+**Actor:** Matt + Cursor (Opus)
+
+**Action:** Created `REACTION_TIMING_TEST_LOG.md` as the durable schema + first-run empty template for the reaction-timing test documentation rule added to `AGENTS.md` section 5 on 2026-05-28. Added a `MASTER_INDEX.md` entry under Project Control Files. No reaction-timing tests have been run yet; the ledger is the prerequisite surface before the first test.
+
+**Files Changed:**
+- `REACTION_TIMING_TEST_LOG.md` (NEW — purpose, scope, authority, closed verdict enum, timing field semantics, record schema, boundary statement, first-run empty template, empty Records section, cross-references)
+- `MASTER_INDEX.md` (UPDATED — added Project Control Files entry below `PROJECT_ACTIVITY_LOG.md`)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+The 2026-05-28 reaction-timing test documentation rule requires every timing test to leave a timestamped durable record with a verdict before it counts as evidence. The rule did not yet have a target surface to write into. Operator authorized creating the ledger before any test is run.
+
+**Verification:**
+- Boundary statement names the ledger as internal evidence: not a service-level agreement, not a client-facing performance claim, not an underwriter-facing or carrier-facing claim, not a forecast of future production timing.
+- Closed verdict enum matches `AGENTS.md` section 5: `pass`, `partial`, `fail`, `blocked`.
+- `null` with reason discipline is named explicitly to prevent fake-clean data; omission is not allowed.
+- Time-to-verification-request and time-to-verification-outcome semantics cite the section 11 signed `Two_Channel_Confirmation_Enforcement_Deep_Dive.md` `pending` / `outcome` event contract.
+- Cyber Insurance Evidence Package referenced as a future consumer governed by its own section 11 contract; not a current consumer.
+
+**Next Step:**
+Operator selects the first Stage A scenario when ready. The ledger first-run template is filled at that time and a new record is appended under `## Records`.
+
+---
+
 ## 2026-05-28 - Reaction Timing Test Documentation Rule Added
 **Actor:** Matt + Codex
 

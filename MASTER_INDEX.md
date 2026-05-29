@@ -19,6 +19,7 @@ The 60-agent platform is the long-term product vision.
 - PROJECT_BUILD_AND_AUDIT_QUEUE.md - one-page operator-readable queue artifact. Forward-only Build List + Audit List + named Next Action. Canonical for *ordering* across multiple items; PROJECT_HANDSHAKE.md remains canonical for the current single active focus; Matt's current instruction overrides both. No scoring, no progress markers, no completion claims.
 - PROJECT_GUARDRAILS.md - the rules for keeping the project traceable and safe.
 - PROJECT_ACTIVITY_LOG.md - the always-on update log for file and folder changes.
+- REACTION_TIMING_TEST_LOG.md - durable timestamped ledger for every NorthStar reaction-timing test. Required by the `AGENTS.md` section 5 reaction-timing test documentation rule (added 2026-05-28). Captures Stage A time-to-detection, time-to-verification-request, time-to-verification-outcome, and time-to-case-closure with a closed verdict enum (`pass`, `partial`, `fail`, `blocked`) and explicit `null`-with-reason discipline. Internal evidence ledger only; not a service-level agreement, client-facing performance claim, or buyer-facing certification.
 - PROJECT_AUDIT_REPORT_2026-05-20.md - latest runtime audit report after policy pipeline verification.
 - PROGRESS.md - always-current weekly task tracker. Updated whenever a task closes.
 - VISION.md - long-arc product thesis (Stage A Analyze + Recommend → Stage B Auto-Defend Obvious / Escalate Ambiguous → Stage C Self-Evolving Defense Swarm) + seven non-negotiables + what we will / won't keep up on.
