@@ -1,6 +1,6 @@
 # Client-Facing 5-Axis Email Scoring Rubric — Spec-First Deep Dive
 
-**Status:** §11 SIGNED 2026-05-25 by Matt Nichol; implementation not yet started.  
+**Status:** §11 SIGNED 2026-05-25 by Matt Nichol; implementation landed (Pass 1 + Pass 2 + Activation + post-Grok remediation); 905/905 pytest green, 1 skipped; §11.1 amendment 2026-05-25 (`rubric_status` / D12 audit-marker contract).  
 **Date:** 2026-05-25  
 **Owner:** Matt Nichol  
 **Source-of-truth links:** `think_sheet.md` (promote row + 2026-05-24 idea-level stress test + 2026-05-25 §10 sub-question stress test), `PROJECT_HANDSHAKE.md` (2026-05-25 Stage A scope + A→B→C→D ordering), `THREAT_INTEL_LOG.md` (2026-05-25 strategic rationale), `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/email_risk_scoring_agent.py` (internal 0-100 scoring path), `4. Product_Roadmap/Product_Sheets/Fraud_Detection_Product_Sheet.md`.

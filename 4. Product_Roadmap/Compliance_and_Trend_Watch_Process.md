@@ -455,11 +455,11 @@ The JSON sidecar is an audit artifact, not a progress tracker. It is generated o
 
 ## §10 Open Questions for Matt
 
-These resolve into locked decisions at §11 sign-off. Until then, the spec is pre-§11.
+Seven §10 questions resolved 2026-05-26 are locked at §11 sign-off as D1–D7 (see §11 table). Four questions remain open for v1.x / retrospective handling and do not block the signed contract.
 
-### Resolved 2026-05-26 by operator (pending §11 lock as D-n)
+### Resolved 2026-05-26 by operator (locked at §11 as D1–D7)
 
-Seven §10 questions were resolved in the 2026-05-26 revision passes. They remain in this section as numbered placeholders for traceability; the resolutions are reflected in the spec body above and become D-numbered locked decisions when Matt signs §11.
+Seven §10 questions were resolved in the 2026-05-26 revision passes. They remain in this section as numbered placeholders for traceability; the resolutions are reflected in the spec body above and are locked as D1–D7 in §11.
 
 - **Q1 — Calendar-rhythm specifics (§3).** Resolved: first-Monday monthly trigger; BC-holiday shift to next non-holiday weekday; 7-day operator deferral window; compact no-signal cycle allowed with source/mode record; no more than two consecutive no-signal cycles; quarterly deep review cannot be replaced by a no-signal cycle. Full statement inline in §3 Calendar rhythm. (Becomes Dn at §11.)
 - **Q3 — Source-list additions (§2.7).** Resolved: Matt may operator-add or remove sources with logged reason; Cursor/assistant may only propose evidence-backed source changes; category-boundary, sentinel-rule, or compliance-boundary changes require spec amendment and §11 re-signature. Full statement inline in §2.7. (Becomes Dn at §11.)
@@ -542,4 +542,4 @@ Signing does **not**:
 
 ---
 
-**End of draft. Pre-§11. No runtime code, automation, or progress-tracker changes are authorized by this document.**
+**End of signed spec. §11 SIGNED 2026-05-26 by Matt Nichol. Sharp Grok sign-off audit: `audit_outputs/compliance_trend_watch_signoff_sharp_20260527T004134Z.md` (0 Blocking / 0 Warning). No runtime code, automation, or progress-tracker changes are authorized by this document beyond the process and boundary contracts it defines.**
