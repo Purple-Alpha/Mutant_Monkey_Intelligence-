@@ -26,6 +26,32 @@ What should happen next.
 
 ---
 
+## 2026-05-28 - Build Queue Item 1 Closed as Already-Satisfied
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Closed the renumbered Build List item 1 ("Sync enforcement references after §11 signature on the Compliance/Trend spec") as already-satisfied. Removed it from `PROJECT_BUILD_AND_AUDIT_QUEUE.md` along with its paired Audit List item 1 ("after updating `audit_tools/complete_gate.py` constants or comments"). Renumbered Build List 1–5 and Audit List 1–4. Updated §4 Next Action to point at the Frontier_Intake_Log intake-protocol update, and updated §6 cross-references for the renumbered items.
+
+**Files Changed:**
+- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (UPDATED — removed satisfied Build item 1 (compliance-reference sync) and paired Audit item 1 (audit-tools self-audit); renumbered Build 1–5 and Audit 1–4; rewrote §4 Next Action for the Frontier_Intake_Log update; updated §6 cross-references — Cyber Insurance closes via Build 2, doctrine trial activates via Build 5 / Audit 4, Frontier_Intake_Log targeted by Build 1; recorded that the `complete_gate.py` reference alignment was authored in the original 2026-05-26 sign-off commit `470714d` so no separate reference-sync edit is outstanding)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+The work the removed Build item described — citing `Compliance_and_Trend_Watch_Process.md` §5.1 / §5.5 as canonical for the forbidden-language and vocabulary-translation lists inside `audit_tools/complete_gate.py` — was already in the working tree on disk at the start of this turn. The source-of-truth comment blocks at lines 130–142 and 168–175 of `complete_gate.py` already name "§11 SIGNED 2026-05-26, decisions D6 / D7" and cite Compliance/Trend §5.1 / §5.5 as canonical, with Cyber Insurance §9 named only as the buyer-surface application. `git log -- audit_tools/complete_gate.py` shows two commits, both pre-dating this session: `470714d` (the governance overhaul that landed the §11 sign-off) and `3c1e156` (the evidence-requirement harden). `git diff main HEAD -- audit_tools/complete_gate.py` is empty. The `FORBIDDEN_LANGUAGE_LIST` enforcement set is unchanged (D7 pins values until §5.1 / §5.5 themselves change). The `VOCABULARY_TRANSLATION_LIST` 5/5 entries byte-match the §5.5 v1 canonical mapping. No test in `tests/test_complete_gate.py` pins forbidden-language or vocabulary source-of-truth strings (the lines-935 / 966 pins reference `Cyber_Insurance_Evidence_Package_Deep_Dive.md` for `SCOPE_BOUNDARY_SPEC_PATH` only — a separate artifact, correctly cited). The Build queue text was paperwork drift from the same family as the 2026-05-28 Unit B cleanup — the work was described as pending after it had already shipped at the §11 sign-off boundary.
+
+**Verification:**
+- `git log -- audit_tools/complete_gate.py` confirms only `470714d` and `3c1e156`; no separate post-sign-off reference-sync commit was ever made because the canonical citation was authored into the gate at the same sign-off commit.
+- `git diff main HEAD -- audit_tools/complete_gate.py` empty — file unchanged on the safety branch vs. main.
+- `audit_tools/complete_gate.py` lines 130–142 (forbidden-language block) and 168–175 (vocabulary block) read against `Compliance_and_Trend_Watch_Process.md` §5.1 / §5.5 — citations match.
+- `VOCABULARY_TRANSLATION_LIST` vs. spec §5.5 v1 canonical mapping — 5/5 byte-match.
+- Trigger scan: `python -m scripts.project_trigger_scan --baseline-tests 946` — clean (`scan_clean`, 0 drift findings, baseline 946/946).
+- `audit_tools/complete_gate.py` itself was not modified this turn; the v1.1 self-audit rule (which triggers on changes inside `audit_tools/`) therefore does not fire.
+- Gate run on the two-file queue/log packet: `audit_outputs/build_queue_item_1_closure_20260528_20260529T005259Z.md` — clean (0 blocking / 0 warnings). Packet-SHA256 `43e56b7726a481ee6ba32aa1cd18115152a4aaac89dfd1daa5e231bc4444ebdb`; packet size 182,054 bytes (under the 200,000-byte cap); touched files: 4 (the two modified docs + the manifest + `audit_tools/complete_gate.py` as files_read). Grok evidence-quality paragraph rated the review *comprehensive*, naming the §5.5 / D7 cross-check against the on-disk `FORBIDDEN_LANGUAGE_LIST` and `VOCABULARY_TRANSLATION_LIST` constants.
+
+**Next Step:**
+Build List item 1 is now the `Frontier_Intake_Log.md` intake-protocol update (replace "5-axis rubric sniff test" language with the post-D6 authority model — Matt decides; intake classifies, does not gate). Pre-authorized by `Compliance_and_Trend_Watch_Process.md` §1.1. Separate from the queue order, Matt's operator-focus call is still open: Cyber Insurance §12 close-out (Build item 2) vs. Callback Phishing / TOAD §10 stress-test (pre-§11, not yet on the queue).
+
+---
+
 ## 2026-05-28 - Build Queue Drift Cleanup
 **Actor:** Matt + Cursor (Claude)
 
