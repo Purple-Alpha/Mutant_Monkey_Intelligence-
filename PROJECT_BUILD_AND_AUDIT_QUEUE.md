@@ -14,7 +14,7 @@
 > 1. `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (this file) — for ordering, default rule, and named next action.
 > 2. `PROJECT_HANDSHAKE.md` — for current single active focus and runtime-build state.
 > 3. `VISION.md` — for the seven non-negotiables that override all queue items.
-> 4. `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — DRAFT pre-§11; closing it is Build List item 1.
+> 4. `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — §11 SIGNED 2026-05-26; canonical compliance-claim boundary (§5).
 > 5. `audit_tools/complete_gate.py` — the gate that enforces the audit-evidence rule above.
 >
 > Then continue from **Build List item 1** unless the operator overrides. Do not pre-decide §10 / §12 open questions on any spec without operator direction.
@@ -38,30 +38,21 @@ This file is not a contract. The contracts are the signed §11 specs. This file 
 
 In execution order. Each item runs only when its predecessors are complete or explicitly skipped by the operator.
 
-1. **Close `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` to signable v1.**
-   Resolve the minimum open questions:
-   - Q1 calendar rhythm
-   - Q3 source-addition threshold
-   - Q7 done-declaration JSON location / shape
-   - Q8 vendor-source weighting
-   - Q11 gate constant / comment sync rule
-   Other §10 questions (Q2, Q5, Q6, Q9) may stay open past §11 if they aren't blocking the sign-off contract. Q4 and Q10 are already resolved-pending-§11.
-
-2. **Sync enforcement references after §11 signature on the Compliance/Trend spec.**
-   Once that spec is signed:
-   - Update `audit_tools/complete_gate.py` comments / source-of-truth references to cite this spec as canonical for the compliance-claim boundary, forbidden-language list, and vocabulary-translation list.
+1. **Sync enforcement references after §11 signature on the Compliance/Trend spec.**
+   - Update `audit_tools/complete_gate.py` comments / source-of-truth references to cite `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` as canonical for the compliance-claim boundary, forbidden-language list, and vocabulary-translation list.
    - Confirm constant values still match the §5.5 canonical list. (Values are unchanged by §5.5 lockdown — only the cited authority changes.)
    - Update tests if comment or source-reference expectations exist.
+   - Run Audit List item 1 (`complete_gate.py` self-audit) before calling this item done.
 
-3. **Update `Frontier_Intake_Log.md` intake protocol.**
+2. **Update `Frontier_Intake_Log.md` intake protocol.**
    Replace the "5-axis rubric sniff test" language with the new authority model:
    - Matt decides.
    - Intake classifies signals; it does not gate them.
    - `think_sheet.md` is a staging artifact, not authority.
    - No candidate auto-promotes from intake.
-   This work is already pre-authorized by `Compliance_and_Trend_Watch_Process.md` §1.1 once that spec is signed; until then, §1.1 is the controlling statement and the log edit can land in parallel.
+   Pre-authorized by `Compliance_and_Trend_Watch_Process.md` §1.1 (§11 signed 2026-05-26).
 
-4. **Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1.**
+3. **Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1.**
    Resolve its §12 minimum decisions:
    - cadence / stale threshold
    - delivery mechanism
@@ -70,14 +61,16 @@ In execution order. Each item runs only when its predecessors are complete or ex
    - cheaper-proof go bar
    Other §12 questions may stay open past §11 if they aren't blocking the sign-off contract.
 
-5. **Run cheaper-proof MSP discovery.**
-   Use the Cyber Insurance Evidence Package framing to test whether MSPs actually want this evidence package before any implementation. The "cheaper-proof go bar" set by Build item 4 is the decision criterion.
+4. **Run cheaper-proof MSP discovery.**
+   Use the Cyber Insurance Evidence Package framing to test whether MSPs actually want this evidence package before any implementation. The "cheaper-proof go bar" set by Build item 3 is the decision criterion.
 
-6. **Only after cheaper-proof go: draft implementation spec.**
+5. **Only after cheaper-proof go: draft implementation spec.**
    Not code yet. Define generation workflow, artifact schema, redaction gates, and output surfaces. Spec-first discipline. §11 again.
 
-7. **14-day Operating Doctrine Trial.**
-   Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–6, not after them — it evaluates whether the doctrine governing how items 1–6 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
+6. **14-day Operating Doctrine Trial.**
+   Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–5, not after them — it evaluates whether the doctrine governing how items 1–5 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
+
+**Operator focus call (not queue-ordered):** Matt selects the active spec lane when two items compete for attention — currently **Cyber Insurance §12 close-out** (Build item 3) vs **Callback Phishing / TOAD §10 stress-test** (pre-§11, not yet on this queue). Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
 
 ---
 
@@ -85,20 +78,11 @@ In execution order. Each item runs only when its predecessors are complete or ex
 
 What must run cleanly before anything in §2 can be called done. Every "ready / done / signed" wording is gated by the relevant Audit item.
 
-1. **Before signing the Compliance / Trend spec.**
-   Grok audit packet should include:
-   - `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md`
-   - `Frontier_Intake_Log.md`
-   - `VISION.md`
-   - `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` §9
-   - touched / read file manifest
-   Grok prompt: identify deviations only — no scoring, no approval. Negative-feedback posture.
-
-2. **After updating `audit_tools/complete_gate.py` constants or comments.**
+1. **After updating `audit_tools/complete_gate.py` constants or comments.**
    Run `complete_gate.py` itself, because `audit_tools/` is in gate scope from v1.1 onward.
    Any change in this directory triggers a self-audit; that's the contract.
 
-3. **Before signing the Cyber Insurance spec.**
+2. **Before signing the Cyber Insurance spec.**
    Grok audit packet should include:
    - `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md`
    - `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md`
@@ -106,22 +90,22 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
    - source artifact map (the §4 evidence-source list in the cyber-insurance spec)
    - touched / read file manifest
 
-4. **Before any tracker update that says "done."**
+3. **Before any tracker update that says "done."**
    Audit must verify:
    - fresh Grok output exists for the work being marked done
    - packet hash matches current touched files (no stale audit reuse)
    - no blocking deviations open
    - operator wording is Matt-authored (not AI-paraphrased completion claims)
-   The `complete_gate.py` gate handles items 1–3 automatically when invoked; item 4 is operator-side discipline.
+   The `complete_gate.py` gate handles items 1–2 automatically when invoked; item 3 is operator-side discipline.
 
-5. **Before any implementation.**
+4. **Before any implementation.**
    Audit must verify:
    - cheaper-proof gate was satisfied or explicitly overridden by Matt with a recorded reason
    - the relevant spec is §11-signed
    - implementation scope matches the signed spec — no scope creep, no quiet additions
    - no claims surfaced anywhere in the implementation that fall outside the email-fraud / inbox-layer MDR boundary
 
-6. **After the 14-day Operating Doctrine Trial.**
+5. **After the 14-day Operating Doctrine Trial.**
    Review (operator-led; Grok audit optional per the trial spec §10):
    - Queue accuracy — did `PROJECT_BUILD_AND_AUDIT_QUEUE.md` match what actually happened during the trial window
    - Whether gates helped or slowed — count gate firings, blocking findings, operator overrides, and any unjustified blocks
@@ -134,19 +118,16 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 ## §4 Next Action
 
-**Build List item 1.** Compliance / Trend spec close-out to signable v1.
+**Build List item 1.** Sync `audit_tools/complete_gate.py` enforcement references to cite `Compliance_and_Trend_Watch_Process.md` §5 as canonical for the compliance-claim boundary, forbidden-language list, and vocabulary-translation list.
 
-Concretely: operator (Matt) answers — or directs Cursor to draft proposed resolutions for — the five minimum open questions on `Compliance_and_Trend_Watch_Process.md`:
+Concretely:
+- Update comment / source-of-truth strings in `complete_gate.py` (and any tests that pin those strings).
+- Confirm `FORBIDDEN_LANGUAGE_LIST` and `VOCABULARY_TRANSLATION_LIST` constant values still match §5.5 (values unchanged — authority citation only).
+- Run Audit List item 1 (`complete_gate.py` with worker manifest) before calling this item done.
 
-- Q1 calendar rhythm
-- Q3 source-addition threshold
-- Q7 done-declaration JSON location / shape
-- Q8 vendor-source weighting
-- Q11 gate constant / comment sync rule
+**Parallel operator focus (Matt's call, not queue-gated):** Cyber Insurance Evidence Package §12 close-out **or** Callback Phishing / TOAD §10 stress-test — see Build List operator-focus note.
 
-Once those five are answered, the spec gets a small drafting pass to encode them as proposed-locks (the same pattern used for Q4 and Q10 in the prior revision), then Audit List item 1 runs, then §11.
-
-Nothing in Build items 2–6 starts until item 1 closes.
+Nothing in Build items 2–5 starts until item 1 closes unless Matt explicitly overrides.
 
 ---
 
@@ -167,11 +148,11 @@ Nothing in Build items 2–6 starts until item 1 closes.
 - `PROJECT_HANDSHAKE.md` — current active build target (one item) and resume point. This file is the multi-item queue; `PROJECT_HANDSHAKE.md` is the single active focus.
 - `PROGRESS.md` — historical task-tracker. This file is forward-only.
 - `VISION.md` — seven non-negotiables that govern every item below.
-- `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — DRAFT pre-§11. Build List item 1 closes this.
-- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` — DRAFT pre-§11. Build List item 4 closes this.
-- `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` — DRAFT pre-§11. Build List item 7 activates this. Audit List item 6 follows the trial.
-- `Frontier_Intake_Log.md` — Build List item 3 targets the intake-protocol step in this file.
-- `audit_tools/complete_gate.py` — enforces Audit List items 1–3 automatically when invoked at commit / ship / sign-off boundaries.
+- `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — §11 SIGNED 2026-05-26. Canonical compliance-claim boundary (§5).
+- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` — DRAFT pre-§11. Build List item 3 closes this.
+- `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` — DRAFT pre-§11. Build List item 6 activates this. Audit List item 5 follows the trial.
+- `Frontier_Intake_Log.md` — Build List item 2 targets the intake-protocol step in this file.
+- `audit_tools/complete_gate.py` — enforces Audit List items 1–2 automatically when invoked at commit / ship / sign-off boundaries.
 - `MASTER_INDEX.md` — navigation. This file is indexed there under "Project Control Files."
 
 ---

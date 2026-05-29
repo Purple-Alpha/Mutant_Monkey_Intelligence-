@@ -26,6 +26,29 @@ What should happen next.
 
 ---
 
+## 2026-05-28 - Build Queue Drift Cleanup
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Corrected stale queue text discovered when friction-ranking Build List item 1 against `Compliance_and_Trend_Watch_Process.md` §10. That spec was already §11 SIGNED 2026-05-26 (D1–D7 locked); the queue still listed "close Compliance/Trend to signable v1" as item 1.
+
+**Files Changed:**
+- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (UPDATED — removed completed Compliance close-out item; renumbered Build List 1–6; removed completed pre-sign Compliance audit item; updated handoff read list, §4 Next Action, §6 cross-refs; added operator-focus note for Cyber Insurance vs Callback/TOAD)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Queue-gate analysis was running against a completed sign-off. Stale queue text would have sent the next assistant to re-close an already-signed spec. The signed-spec status text alignment was split into Unit A and locally committed as `532ca86`; this Unit B entry covers only queue/log cleanup.
+
+**Verification:**
+- Trigger scan: `python -m scripts.project_trigger_scan --baseline-tests 946` — **clean** (`scan_clean`, 0 drift findings, baseline 946/946).
+- Unit A gate: `audit_outputs/queue_drift_cleanup_unit_a_20260528_20260529T000039Z.md` — **clean** (0 blocking / 0 warnings); committed locally as `532ca86`.
+- Unit B gate: `audit_outputs/pending/queue_drift_cleanup_unit_b_20260528.manifest.json` is the active split packet for this queue/log cleanup.
+- Doc-only pass; no Unit B commit authorized by this entry until its split gate passes.
+
+**Next Step:**
+- Run Unit B `complete_gate.py` on the split queue/log packet. If clean, Matt decides whether to authorize a local Unit B commit.
+
+---
+
 ## 2026-05-25 - Callback Phishing / TOAD Body-Language Detector — Part 1 Spec-First Deep Dive (DRAFT)
 **Actor:** Matt + GPT-5.5
 
