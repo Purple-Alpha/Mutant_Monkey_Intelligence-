@@ -38,15 +38,7 @@ This file is not a contract. The contracts are the signed §11 specs. This file 
 
 In execution order. Each item runs only when its predecessors are complete or explicitly skipped by the operator.
 
-1. **Update `Frontier_Intake_Log.md` intake protocol.**
-   Replace the "5-axis rubric sniff test" language with the new authority model:
-   - Matt decides.
-   - Intake classifies signals; it does not gate them.
-   - `think_sheet.md` is a staging artifact, not authority.
-   - No candidate auto-promotes from intake.
-   Pre-authorized by `Compliance_and_Trend_Watch_Process.md` §1.1 (§11 signed 2026-05-26).
-
-2. **Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1.**
+1. **Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1.**
    Resolve its §12 minimum decisions:
    - cadence / stale threshold
    - delivery mechanism
@@ -55,16 +47,16 @@ In execution order. Each item runs only when its predecessors are complete or ex
    - cheaper-proof go bar
    Other §12 questions may stay open past §11 if they aren't blocking the sign-off contract.
 
-3. **Run cheaper-proof MSP discovery.**
-   Use the Cyber Insurance Evidence Package framing to test whether MSPs actually want this evidence package before any implementation. The "cheaper-proof go bar" set by Build item 2 is the decision criterion.
+2. **Run cheaper-proof MSP discovery.**
+   Use the Cyber Insurance Evidence Package framing to test whether MSPs actually want this evidence package before any implementation. The "cheaper-proof go bar" set by Build item 1 is the decision criterion.
 
-4. **Only after cheaper-proof go: draft implementation spec.**
+3. **Only after cheaper-proof go: draft implementation spec.**
    Not code yet. Define generation workflow, artifact schema, redaction gates, and output surfaces. Spec-first discipline. §11 again.
 
-5. **14-day Operating Doctrine Trial.**
-   Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–4, not after them — it evaluates whether the doctrine governing how items 1–4 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
+4. **14-day Operating Doctrine Trial.**
+   Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–3, not after them — it evaluates whether the doctrine governing how items 1–3 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
 
-**Operator focus call (not queue-ordered):** Matt selects the active spec lane when two items compete for attention — currently **Cyber Insurance §12 close-out** (Build item 2) vs **Callback Phishing / TOAD §10 stress-test** (pre-§11, not yet on this queue). Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
+**Operator focus call (not queue-ordered):** Matt selects the active spec lane when two items compete for attention — currently **Cyber Insurance §12 close-out** (Build item 1) vs **Callback Phishing / TOAD §10 stress-test** (pre-§11, not yet on this queue). Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
 
 ---
 
@@ -108,11 +100,11 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 ## §4 Next Action
 
-**Build List item 1.** Update `Frontier_Intake_Log.md` intake protocol to replace the "5-axis rubric sniff test" language with the post-D6 authority model (Matt decides; intake classifies, does not gate; `think_sheet.md` is a staging artifact, not authority; no candidate auto-promotes from intake). Pre-authorized by `Compliance_and_Trend_Watch_Process.md` §1.1 (§11 signed 2026-05-26).
+**Build List item 1.** Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1 by resolving the minimum §12 decisions needed for the v1 contract. Keep the closure scoped to signable v1, not global roadmap optimization.
 
 **Parallel operator focus (Matt's call, not queue-gated):** Cyber Insurance Evidence Package §12 close-out **or** Callback Phishing / TOAD §10 stress-test — see Build List operator-focus note.
 
-Nothing in Build items 2–4 starts until item 1 closes unless Matt explicitly overrides.
+Nothing in Build items 2–3 starts until item 1 closes unless Matt explicitly overrides.
 
 ---
 
@@ -134,9 +126,9 @@ Nothing in Build items 2–4 starts until item 1 closes unless Matt explicitly o
 - `PROGRESS.md` — historical task-tracker. This file is forward-only.
 - `VISION.md` — seven non-negotiables that govern every item below.
 - `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — §11 SIGNED 2026-05-26. Canonical compliance-claim boundary (§5).
-- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` — DRAFT pre-§11. Build List item 2 closes this.
-- `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` — DRAFT pre-§11. Build List item 5 activates this. Audit List item 4 follows the trial.
-- `Frontier_Intake_Log.md` — Build List item 1 targets the intake-protocol step in this file.
+- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` — DRAFT pre-§11. Build List item 1 closes this.
+- `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` — DRAFT pre-§11. Build List item 4 activates this. Audit List item 4 follows the trial.
+- `Frontier_Intake_Log.md` — intake protocol already carries the post-D6 authority model from `Compliance_and_Trend_Watch_Process.md` §1.1; the queue no longer carries a separate Frontier update item.
 - `audit_tools/complete_gate.py` — enforces Audit List item 1 automatically when invoked at commit / ship / sign-off boundaries; also self-audits on any future change inside `audit_tools/` (v1.1 scope contract). Comment / source-of-truth alignment to `Compliance_and_Trend_Watch_Process.md` §5.1 / §5.5 was authored in the original 2026-05-26 sign-off commit (`470714d`); no separate reference-sync edit is outstanding.
 - `MASTER_INDEX.md` — navigation. This file is indexed there under "Project Control Files."
 

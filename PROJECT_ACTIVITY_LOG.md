@@ -26,6 +26,30 @@ What should happen next.
 
 ---
 
+## 2026-05-28 - Frontier Intake Queue Item Removed as Already-Satisfied
+**Actor:** Matt + Cursor (GPT-5.5)
+
+**Action:** Removed the Build List item that targeted `Frontier_Intake_Log.md` intake-protocol authority cleanup. The active protocol text already carries the post-D6 authority model from `Compliance_and_Trend_Watch_Process.md` §1.1: intake classifies signals, the rubric does not gate intake, `think_sheet.md` is staging-only, no candidate auto-promotes, and Matt decides. Renumbered the remaining Build List items and updated §4 Next Action to Cyber Insurance Evidence Package §12 close-out.
+
+**Files Changed:**
+- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (UPDATED — removed the already-satisfied Frontier intake-protocol item; renumbered remaining Build List items 1–4; updated §4 Next Action; updated §6 cross-references)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Reading `Frontier_Intake_Log.md` showed the requested authority-model update already exists in the active Supersession block and Intake protocol. The remaining "sniff test" wording is preserved only inside Review #1's historical record and explicitly superseded by the 2026-05-26 block. Keeping the item in the forward queue would send the next assistant to redo already-satisfied paperwork.
+
+**Verification:**
+- `Frontier_Intake_Log.md` lines 7–18 contain the active Supersession block that names the Compliance/Trend spec and overrides prior rubric-authority language.
+- `Frontier_Intake_Log.md` lines 28–36 contain the updated Intake protocol: operator-defined criteria, no rubric pre-score / pre-rank / pass-fail, no auto-add to `think_sheet.md`, and no rubric / gate / Grok / Cursor authority over feature promotion.
+- `rg` confirms remaining "sniff test" wording is historical Review #1 text at line 105, not active protocol text.
+- Gate run: `audit_outputs/frontier_intake_queue_closure_20260528_20260529T025024Z.md` — clean (0 blocking / 0 warnings).
+- Trigger scan: `python -m scripts.project_trigger_scan --baseline-tests 946` — clean (`scan_clean`, 0 drift findings, baseline 946/946).
+
+**Next Step:**
+Run `audit_tools/complete_gate.py` on the two-file queue/log packet before any completion claim or local commit request.
+
+---
+
 ## 2026-05-28 - Build Queue Item 1 Closed as Already-Satisfied
 **Actor:** Matt + Cursor (Claude)
 
