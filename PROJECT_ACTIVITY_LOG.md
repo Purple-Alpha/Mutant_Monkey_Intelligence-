@@ -5507,3 +5507,87 @@ With Q10 fully resolved at `2fbe3fd` (per-MSP definition + 2-of-3 count threshol
 
 **Next Step:**
 Step 3 of the operator-set build order: run the §14 test plan. Build the fictional fixture at the §14.5 path, exercise the runtime invocation sequence from `Runtime_Implementation` as the working directory, capture the five output artifacts, evaluate the seven §14.4 conditions, and record the run-level pass / fail in `PROJECT_ACTIVITY_LOG.md` (plus an `rxt-` record in `REACTION_TIMING_TEST_LOG.md` if timing is measured). On a clean run, the run satisfies §11 criterion 15; the remaining gate before §13 sign-off is precondition 3 (Q10 count threshold met in actual cheaper-proof MSP discovery), which is operator discovery work, not engineering work.
+
+## 2026-05-30 - Cyber Insurance §14 Stage A Test Plan Run
+**Actor:** Codex (Matt-authorized §14 execution)
+
+**Action:** Created / Updated / Ran
+
+**Files Changed:**
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/fixtures/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001.json
+- MASTER_INDEX.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Local Run Artifacts (ignored by git unless force-added later):**
+- audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/detection.json
+- audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/verification.json
+- audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/evidence.json
+- audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/audit_trail.json
+- audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/outcome_documentation.md
+- audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/run_summary.json
+
+**Reason:**
+The §14 v1 fictional Stage A evidence-package test plan had been defined and committed. The next build step was to run it, not just document it. This run created the §14.5 fixture at its stable path, exercised the runtime invocation sequence from `Runtime_Implementation`, captured the five §14.5 output artifacts, and evaluated the seven §14.4 pass/fail conditions.
+
+**Fixture Created:**
+- `fixture_id`: `stage_a_vendor_payment_redirect_001`
+- `case_id`: `cybins-v1-testplan-vendor-payment-redirect-001`
+- `tenant_id`: `bluefin-marine-supplies-demo`
+- Scenario: fictional vendor payment-change review with SPF/DKIM/DMARC pass and content-side payment-change + urgency cues.
+- Body, tenant, sender, recipient, vendor, invoice metadata, and confirmation lifecycle are synthetic. No real customer or real attack content is used.
+
+**Runtime Invocation:**
+From `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation` as working directory, a temporary inline Python runner called:
+
+1. `ingest_email`
+2. `run_email_risk_scoring_cycle`
+3. `record_confirmation_request`
+4. `record_confirmation_outcome`
+5. `run_daily_digest_cycle`
+
+No runtime code was modified. The scoring and digest LLM clients were deterministic fakes; no external LLM call was made.
+
+**Runtime Result:**
+
+```json
+{
+  "case_id": "cybins-v1-testplan-vendor-payment-redirect-001",
+  "tenant_id": "bluefin-marine-supplies-demo",
+  "pass": true,
+  "runtime_counts": {
+    "email_inbound": 1,
+    "email_analysis": 1,
+    "two_channel_confirmation": 2,
+    "daily_digest": 1
+  },
+  "scoring_result": {
+    "analyzed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "risk_score": 78,
+    "recommended_action": "needs_review"
+  }
+}
+```
+
+**§14.4 Pass / Fail Conditions Evaluated:**
+
+| Condition | Result |
+|---|---|
+| 1. All five records exist with resolving `source_artifact_path` values | pass |
+| 2. Every stage-specific pass condition holds | pass |
+| 3. §7 gate surrogates pass (`claim_validation`, `broken_link`, `stale_evidence`, `forbidden_language`, `scope_boundary`, `redaction`, `vocabulary_translation`, `audit_packet_coverage`, `signed_provenance`) | pass |
+| 4. §2 boundary statement appears unedited | pass |
+| 5. No forbidden-language phrase or §9 operator avoid-list term appears as a NorthStar claim | pass |
+| 6. No raw email body, secret material, cross-tenant identifier, or non-fixture tenant-private identifier appears in records | pass |
+| 7. Outcome heading is rendered verbatim: *"Vendor invoice review — payment change reviewed before action."* | pass |
+
+**Notes / Constraints:**
+- This run satisfies the engineering side of §11 criterion 15 for the §14 fictional Stage A case: the test plan was executed end to end and produced a pass.
+- This run does **not** satisfy §13 precondition 3. The Q10 2-of-3 relevant-MSP cheaper-proof threshold still requires actual MSP discovery work.
+- Timing was not measured and is not part of §14 v1 pass/fail criteria, so no `REACTION_TIMING_TEST_LOG.md` entry was added.
+- The first runner attempt failed before artifact production because the deterministic scoring fake asserted on a prompt field the real scoring agent does not expose directly; the second attempt completed the runtime sequence but failed while serializing datetimes for the run-summary check; the final datetime-safe runner passed. No runtime code was changed during these attempts.
+- `audit_outputs/` is gitignored by default. The run artifacts exist locally and are named in this entry; they are not tracked unless deliberately force-added in a later operator-approved step.
+
+**Next Step:**
+Run `complete_gate.py` on the §14 execution packet. If clean, operator can decide whether to commit the tracked fixture / index / activity-log evidence locally. The remaining non-engineering blocker before §13 sign-off is still Q10 precondition 3: 2 of 3 relevant MSP conversations must meet the D10 definition in actual cheaper-proof discovery.

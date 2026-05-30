@@ -1,0 +1,58 @@
+{
+  "fixture_id": "stage_a_vendor_payment_redirect_001",
+  "case_id": "cybins-v1-testplan-vendor-payment-redirect-001",
+  "description": "Fictional Stage A vendor payment-change review case for Cyber Insurance Evidence Package Deep Dive §14. Body content, tenant, sender, recipient, vendor, invoice metadata, and confirmation lifecycle are synthetic. Authentication-Results values intentionally pass SPF/DKIM/DMARC so the run demonstrates the boundary that auth pass does not mean safe.",
+  "tenant_id": "bluefin-marine-supplies-demo",
+  "received_at": "2026-05-30T22:00:00+00:00",
+  "sender": "accounts@billing.harborline-marine-services.example",
+  "recipient": "ap@bluefin-marine-supplies-demo.example",
+  "subject": "Harborline invoice 8841 - updated remittance details",
+  "body_plain": "Hello Bluefin AP team, Harborline Marine Services has updated its banking details for invoice 8841. Please update the remittance account on file before the end of the week and wire payment using the instructions in the attached invoice. Please confirm once the payment change has been reviewed.",
+  "headers": {
+    "From": "accounts@billing.harborline-marine-services.example",
+    "To": "ap@bluefin-marine-supplies-demo.example",
+    "Subject": "Harborline invoice 8841 - updated remittance details",
+    "Authentication-Results": "mx.example; spf=pass smtp.mailfrom=billing.harborline-marine-services.example; dkim=pass header.d=harborline-marine-services.example; dmarc=pass header.from=harborline-marine-services.example"
+  },
+  "received_headers": [],
+  "attachments": [
+    {
+      "filename": "harborline_invoice_8841_updated_remittance.pdf",
+      "content_type": "application/pdf",
+      "size_bytes": 184320,
+      "attachment_class": "invoice",
+      "extracted_text": "Invoice 8841. Harborline Marine Services. Updated remittance instructions. Please use the new account ending 4288 for this invoice. Prior account details should not be used for this payment.",
+      "sha256": "50eea3d49bb3471b8d4352a6d4cfdd2d7e11b5318fc1b4d90e2195432f8f0941"
+    }
+  ],
+  "expected_stage_a_chain": [
+    "email_inbound",
+    "email_analysis",
+    "two_channel_confirmation_pending",
+    "two_channel_confirmation_outcome",
+    "daily_digest_case_closure",
+    "cyber_insurance_v1_detection_record",
+    "cyber_insurance_v1_verification_record",
+    "cyber_insurance_v1_evidence_record",
+    "cyber_insurance_v1_audit_trail_record",
+    "cyber_insurance_v1_outcome_documentation"
+  ],
+  "expected_result": "Runtime call sequence produces one inbound record, one high-risk analysis, one two-channel confirmation request, one confirmed two-channel confirmation outcome with business outcome payment_change_reviewed_before_action, one daily digest record, and five Cyber Insurance §14 output artifacts whose source_artifact_path values resolve on disk.",
+  "tenant_override": {
+    "parameter": "content_risk_review_threshold",
+    "default_value": 70,
+    "tenant_value": 60,
+    "requested_by": "bluefin_ap_manager",
+    "approved_by": "bluefin_security_lead",
+    "reason": "Fictional tighter review threshold used to exercise the §14 audit-trail override path."
+  },
+  "limitations": {
+    "scope": "fictional Stage A test-plan fixture only",
+    "tenant": "fictional tenant; not tied to a real customer",
+    "vendor": "fictional vendor on IANA-reserved .example TLD",
+    "content_construction": "synthetic body and attachment text, not copied from a real attack",
+    "auth_posture": "SPF/DKIM/DMARC pass values are fictional and are used only to exercise auth-pass-vs-content-risk reasoning",
+    "latency": "not a production latency measurement",
+    "underwriter_relevance": "not a measure of underwriter usefulness"
+  }
+}
