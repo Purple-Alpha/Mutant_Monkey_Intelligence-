@@ -5457,3 +5457,53 @@ The §12/§13 edit pass committed at `0b4304a` left Q10 as a partial resolution 
 
 **Next Step:**
 Run `complete_gate.py` on the Q10 count-threshold edit-pass packet. After a clean gate and operator inspection, the next build item per the operator-set order is the v1 fictional Stage A evidence-package test plan covering Detection → Verification → Evidence → Audit Trail → Outcome Documentation against the §12.Q7 five-record set. No staging or commits performed by this entry.
+
+## 2026-05-30 - Cyber Insurance §14 v1 Test Plan Drafted
+**Actor:** Codex (Matt-authorized, single-section build edit)
+
+**Action:** Updated
+
+**Files Changed:**
+- 4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+With Q10 fully resolved at `2fbe3fd` (per-MSP definition + 2-of-3 count threshold), the next build item per the operator-set order was the v1 fictional Stage A evidence-package test plan §13 precondition 2 and §11 criterion 15 both reference. This edit drafts that test plan as §14 of the deep dive so the spec is internally consistent and §13 precondition 2 is satisfied at the *defined* layer.
+
+**Operator-authorized choices encoded:**
+
+- **Location.** Inside `Cyber_Insurance_Evidence_Package_Deep_Dive.md` as new §14, between §13 and Cross-references. The implementation spec inherits §14 verbatim when it gets written.
+- **Case shape.** Vendor payment-redirect at a fictional SMB. Case ID `cybins-v1-testplan-vendor-payment-redirect-001`. Synthetic body content, fictional sender on `.example` TLD, SPF / DKIM / DMARC pass auth posture — same "auth pass does not mean safe" pattern the rxt-2026-05-30-001 lab test established.
+- **Fresh tenant.** `bluefin-marine-supplies-demo` (marine equipment supply SMB), not the `acme-industries-demo` example tenant from §11's done-declaration block. The fresh tenant avoids implying the §11 example tenant is canonical.
+- **Outcome wording (operator-authored, verbatim).** *"Vendor invoice review — payment change reviewed before action."* Locked in §14.3.5 and §14.4 condition 7. Paraphrases — including outcome-claim rewrites such as "redirect prevented" or "loss avoided" — are explicitly named as drift incidents in §14.3.5 inside an allowed §9 bad-claim-example context.
+
+**What §14 contains:**
+
+- **§14.1 Purpose and scope** — what the plan covers, what it does not. Excludes real attack content, real customer data, cross-tenant interaction, latency claims, and real underwriter feedback.
+- **§14.2 Fictional case** — case ID, tenant, sender, recipient, auth posture, content shape, confirmation lifecycle. Body text lives in the fixture (§14.5), not in this section.
+- **§14.3 Per-stage records and expected outputs** — five sub-sections (§14.3.1 – §14.3.5) defining the record contract and stage-specific pass conditions for Detection, Verification, Evidence, Audit Trail, and Outcome Documentation. Numerical values (internal score, axis scores) are deterministic at run time and captured into the output artifacts, not pre-locked in §14, so rubric refinements do not force a §14 re-sign.
+- **§14.4 End-to-end pass / fail criteria** — seven conditions; pass is binary (no four-of-five pass).
+- **§14.5 Run surface** — fixture path, tenant config, runtime invocation sequence (`ingest_email` → `run_email_risk_scoring_cycle` → `record_confirmation_request` → `record_confirmation_outcome` → `run_daily_digest_cycle`), output artifact paths under `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/`, pass / fail logging surfaces. Runner pattern mirrors rxt-2026-05-30-001 (inline runner created outside the repo at run time so the durable repository evidence stays the fixture + records + activity-log entry).
+- **§14.6 What §14 does not authorize** — explicit non-authorizations: no implementation work outside the test-plan run, no real-customer data substitution, no drift in the outcome wording, no §11 re-sign without operator authorization.
+
+**Consistency edits alongside §14 (same file, same edit pass):**
+
+- **Top metadata Status line** — reflects §14's presence: precondition 1 ✓ (Q1-Q11 resolved), precondition 2 ✓ (v1 test plan defined and runnable from the spec alone, satisfied by §14 2026-05-30), precondition 3 ✗ (Q10 count threshold met in actual cheaper-proof MSP discovery, still open). §11 criterion 15 (execution) also still open.
+- **§11 criterion 15** — points to §14 explicitly: "The v1 test plan defined in §14 (and inherited verbatim by the future implementation spec) has rendered..." instead of the prior forward-looking "implementation spec's v1 test plan" wording.
+- **§13 precondition 2** — flipped from gating-only to "satisfied 2026-05-30 by §14." Authority-drift-closing language preserved by noting that execution is covered separately by §11 criterion 15.
+
+**Boundaries respected:**
+
+- Spec + this activity log only.
+- AGENTS.md, VISION.md, Compliance_and_Trend_Watch_Process.md, audit_tools/, runtime code, REACTION_TIMING_TEST_LOG.md, and all tests/fixtures content not touched.
+- No new claims about NorthStar capabilities. The protected sentence is referenced via its operator-authored shape only.
+- No new doctrine, no new decision tools, no new sub-questions.
+- §13 was not signed. With §14 in place, §13 still has precondition 3 (Q10 count threshold met in actual discovery) open, and §11 criterion 15 (execution) open. Both block sign-off.
+- Consequence Matrix not invoked; this is execution of a clean operator-set choice, not new path-setting.
+- No fixture created. The fixture path is named in §14.5 as a stable contract; the fixture itself is built when the test plan is run (step 3).
+- No runtime code modified.
+
+**Forbidden-language sanity check.** §14.3.5 names outcome-claim drift examples ("redirect prevented," "fraud blocked," "loss avoided," "saved money," "stopped fraud") in an allowed §9 bad-claim-example context, matching the same pattern §5 and §138 already use elsewhere in the spec. The §7 `forbidden_language` gate's "as a NorthStar claim" constraint is preserved — §14 names these as forbidden paraphrases, not as NorthStar claims.
+
+**Next Step:**
+Step 3 of the operator-set build order: run the §14 test plan. Build the fictional fixture at the §14.5 path, exercise the runtime invocation sequence from `Runtime_Implementation` as the working directory, capture the five output artifacts, evaluate the seven §14.4 conditions, and record the run-level pass / fail in `PROJECT_ACTIVITY_LOG.md` (plus an `rxt-` record in `REACTION_TIMING_TEST_LOG.md` if timing is measured). On a clean run, the run satisfies §11 criterion 15; the remaining gate before §13 sign-off is precondition 3 (Q10 count threshold met in actual cheaper-proof MSP discovery), which is operator discovery work, not engineering work.

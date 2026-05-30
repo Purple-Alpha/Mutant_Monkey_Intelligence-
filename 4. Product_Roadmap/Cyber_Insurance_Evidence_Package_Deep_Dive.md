@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 Q1-Q11 resolved by operator on 2026-05-26 through 2026-05-30 (pending §13 lock as D1-D2e, D3-D3a, D4, D5, D6, D7, D8, D9, D10, D11). §13 preconditions remain open until the v1 test plan in §11 criterion 15 is defined and the operator-set Q10 count threshold (2 of 3 relevant MSP conversations meeting the D10 per-MSP definition) has been met in actual cheaper-proof MSP discovery.
+**Status:** DRAFT (pre-§11). §12 Q1-Q11 resolved by operator on 2026-05-26 through 2026-05-30 (pending §13 lock as D1-D2e, D3-D3a, D4, D5, D6, D7, D8, D9, D10, D11). §13 sign-off state at this revision: precondition 1 (all §12 questions resolved) satisfied; precondition 2 (v1 test plan defined and runnable from the spec alone) satisfied by §14 added 2026-05-30; precondition 3 (operator-set Q10 count threshold — 2 of 3 relevant MSP conversations meeting the D10 per-MSP definition — met in actual cheaper-proof MSP discovery) remains open. §11 criterion 15 (v1 test plan **executed** end to end) also remains open until the §14 plan has been run and the run-level pass / fail recorded in the project's normal test-evidence surfaces.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
@@ -533,7 +533,7 @@ A package reaches "done" if and only if **all** of the following are true:
 12. **Grok findings resolved.** Every Grok-identified deviation is either resolved or explicitly accepted by Matt with `operator_resolution_note` in the corresponding Drift Incident Report.
 13. **No blocking drift incidents open.** All `blocking` Drift Incident Reports are resolved or accepted.
 14. **Operator signature.** Matt has reviewed the rendered package and signed off in his own words. The signature is part of the package — a `signed_by_operator` evidence record with timestamp, scope acknowledgment, and Matt's own wording. AI-authored sign-off text is forbidden (cross-reference: deleted `Human_Written_Communication_Policy.md`, Authorship Rule discussion 2026-05-25/26).
-15. **v1 test plan executed.** The implementation spec's v1 test plan has rendered at least one fictional Stage A evidence case end to end across all five Evidence-and-Outcome-Reporting stages — Detection → Verification → Evidence → Audit Trail → Outcome Documentation — against the five-record set from §12.Q7. The test-plan run produces a captured artifact set and is logged through the project's normal test-evidence surfaces (e.g. `REACTION_TIMING_TEST_LOG.md` when timing is in scope; activity-log entry plus tracked test-input artifact otherwise). This criterion fails closed: a package cannot be done if the v1 test plan has never been run end to end.
+15. **v1 test plan executed.** The v1 test plan defined in §14 (and inherited verbatim by the future implementation spec) has rendered at least one fictional Stage A evidence case end to end across all five Evidence-and-Outcome-Reporting stages — Detection → Verification → Evidence → Audit Trail → Outcome Documentation — against the five-record set from §12.Q7. The test-plan run produces the captured artifact set §14.5 names and is logged through the project's normal test-evidence surfaces (e.g. `REACTION_TIMING_TEST_LOG.md` when timing is in scope; activity-log entry plus tracked test-input artifact otherwise). This criterion fails closed: a package cannot be done if the §14 test plan has never been run end to end.
 
 ### Machine-readable done declaration
 
@@ -652,7 +652,7 @@ This section is empty until Matt signs.
 §13 cannot be signed until all three of the following hold. These are gating preconditions, not done criteria — they govern whether the sign-off step can begin, not whether a generated package is done.
 
 1. **All §12 questions resolved.** Q1 through Q11 are each marked "Resolved YYYY-MM-DD by operator (pending §13 lock as DN)" in §12 with the operator-authored resolution text intact. At sign-off, every Q maps to a DN in the locked-decisions table below.
-2. **v1 test plan defined.** The implementation spec for this package defines a v1 test plan that renders at least one fictional Stage A evidence case end to end across the five Evidence-and-Outcome-Reporting stages (Detection → Verification → Evidence → Audit Trail → Outcome Documentation) against the §12.Q7 five-record set. The test plan must be runnable from the spec alone, not from operator memory. A signed-but-test-plan-less package is the failure mode this precondition exists to prevent.
+2. **v1 test plan defined and runnable from the spec alone.** Satisfied 2026-05-30 by §14 of this deep dive. §14 names the fictional Stage A case, the fixture path, the per-stage expected outputs, the end-to-end pass / fail criteria, and the runtime invocation sequence — all of which the implementation spec inherits verbatim when it gets written. A signed-but-test-plan-less package is the failure mode this precondition exists to prevent; §14's presence in the spec closes that failure mode at the *defined* layer. The *executed* layer is covered separately by §11 criterion 15.
 3. **Q10 count threshold met.** The operator-set Q10 count threshold — **2 of 3 relevant MSP conversations** meeting the D10 per-MSP definition — has been met in actual cheaper-proof discovery work, with the two named anchors per MSP captured verbatim in the cheaper-proof runbook / worksheet. Implementation-spec authoring is not authorized by D10 threshold-set alone; the threshold must be **met** by real discovery, not asserted. This precondition closes the authority-drift risk that a single MSP yes (or zero MSP yeses) could be treated as having cleared the cheaper-proof bar.
 
 The §11 Done Criteria criterion 15 enforces the same five-stage end-to-end rendering at package-done time. The §13 precondition 2 above enforces it earlier — at sign-off — so the spec cannot lock without the test plan that criterion 15 later checks against.
@@ -684,6 +684,221 @@ Signing does **not**:
 - Permit any AI-side scoping of the audit packet.
 - Override any of the seven non-negotiables in `VISION.md`.
 - Lock prompting determinism pins, contrast-pair sources, or render-toolchain versions — those live at HC7 / implementation spec so prompt-tuning refinements do not force a §11 re-sign.
+
+---
+
+## §14 v1 Test Plan — Fictional Stage A End-to-End Case
+
+§14 defines the v1 test plan §11 criterion 15 requires and §13 precondition 2 makes a sign-off gate. The test plan is **runnable from this section alone** — no operator memory required. The implementation spec inherits §14 verbatim when it gets written.
+
+§14 is the contract for the test plan, not the test results. Running the plan and recording pass / fail is the next build step, performed against this section and logged through the project's normal test-evidence surfaces.
+
+### §14.1 Purpose and scope
+
+The test plan exercises one fictional Stage A evidence case end to end across all five Evidence-and-Outcome-Reporting stages (Detection → Verification → Evidence → Audit Trail → Outcome Documentation) against the §12.Q7 v1 record set:
+
+1. Detection — Lift-only invariant test results.
+2. Verification — Scoring explanations (internal 0–100 + client-facing 5-axis rubric).
+3. Evidence — Effective parameter report, per-tenant.
+4. Audit Trail — Signed policy state + tenant override audit.
+5. Outcome Documentation — Inbox Shield sample monthly report.
+
+What the test plan covers:
+
+- The full case path from email ingest to rendered monthly-report section.
+- One confirmation request and one confirmation outcome.
+- Production of all five records with a `source_artifact_path` per §6.
+- All §7 gates applied against the rendered Outcome Documentation section.
+
+What the test plan does **not** cover:
+
+- Real attack content (the fixture is synthetic).
+- Real customer data (the tenant is fictional).
+- Cross-tenant interaction (the case is single-tenant).
+- Latency / timing claims (timing is captured if measured but is not part of v1 pass / fail criteria).
+- Real underwriter feedback (the rendered section is reviewed against §7 gates, not against a live underwriter).
+
+### §14.2 Fictional case
+
+**Case ID.** `cybins-v1-testplan-vendor-payment-redirect-001`.
+
+**Tenant.** `bluefin-marine-supplies-demo` — a fictional SMB in the marine equipment supply line. The tenant is fictional and not tied to any real customer; the tenant ID is fresh to v1 and does not reuse the `acme-industries-demo` example tenant from §11's done-declaration block, so the example tenant is not implied to be canonical.
+
+**Sender.** `accounts@billing.harborline-marine-services.example` — a fictional vendor name on the IANA-reserved `.example` TLD. The vendor is plausible-sounding for a marine supply SMB but is fictional and not tied to any real business.
+
+**Recipient.** `ap@bluefin-marine-supplies-demo.example` — fictional accounts-payable mailbox on the same reserved TLD.
+
+**Auth posture.** SPF pass, DKIM pass, DMARC pass — the email passes authentication. This is the deliberate "auth pass does not mean safe" pattern the rxt-2026-05-30-001 lab test established and that this package is designed to demonstrate at the buyer-facing surface.
+
+**Content shape.** A fictional vendor invoice asking the recipient to update the vendor's bank account on file and to wire payment to the new account against an attached invoice. The body carries:
+
+- Payment-change request language ("we have updated our banking details").
+- Urgency markers ("please update before the end of the week").
+- A new fictional account number (synthetic, not a real bank account).
+
+The body text is synthetic and is not lifted from any real attack. The full body lives in the fixture (§14.5), not in this section.
+
+**Confirmation lifecycle.** The runtime records:
+
+- One `record_confirmation_request` — a confirmation request raised against the new banking detail change.
+- One `record_confirmation_outcome` — outcome `payment_change_reviewed_before_action`, mirroring the operator-authored outcome heading §14.3.5 renders.
+
+The case is intentionally single-tenant, single-vendor, single-invoice. Multi-tenant, multi-vendor, and multi-invoice cases are out of scope for v1; v1.1 may add them after the §14 plan has cleared §11 criterion 15 at least once.
+
+### §14.3 Per-stage records and expected outputs
+
+Each of the five records below must exist with a non-null `source_artifact_path` (§6 / §11 criterion 2) and must satisfy the stage-specific shape requirements. Exact numerical values are deterministic at run time and captured into the output artifacts; §14 locks the *shape* of each record so that pass / fail can be evaluated against the section without pre-locked numbers that would force a §14 re-sign on every rubric refinement.
+
+#### §14.3.1 Detection — Lift-only invariant test results
+
+**Record content.**
+
+- Named lift-only invariant: `payment_change_body_pattern_v1`.
+- `result`: `pass` — the invariant performed correctly, meaning the runtime produced *additive* risk above baseline (which is what the invariant tests). This is **not** a claim that the runtime caught the attack.
+- A deterministic pattern ID identifying the body-content pattern that triggered the invariant.
+- `claim_category`: `detection_evidence` per §6.1.
+
+**Pass condition for the stage.**
+
+- The record exists.
+- The lift-only invariant reports `pass`.
+- The record traces to a `source_artifact_path` that exists on disk.
+- No raw email body appears in the record (§9 redaction).
+
+#### §14.3.2 Verification — Scoring explanations
+
+**Record content.**
+
+- One scoring explanation block for this case.
+- Internal 0–100 score, deterministic at run time, captured as an integer.
+- Client-facing 5-axis rubric values per `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`: Sender, Content, Intent, Context, Urgency. Each axis is a deterministic integer at run time.
+- Plain-English reasoning text that names the auth-pass-vs-content-risk pattern without using any forbidden phrase from §9 or any term from the §9 operator avoid-list.
+
+**Pass condition for the stage.**
+
+- The record exists.
+- Both the internal score and all five axis values are present.
+- The reasoning text passes the `forbidden_language` and `vocabulary_translation` gates (§7).
+- Content axis and Intent axis values both reflect high content risk (each ≥ 70 / 100); the Sender axis value reflects the auth-pass posture (lower than Content / Intent but non-zero); the Urgency axis value reflects the urgent-payment markers (≥ 50 / 100). Exact values are captured at run time, not pre-locked in §14.
+
+#### §14.3.3 Evidence — Effective parameter report, per-tenant
+
+**Record content.**
+
+- Per-tenant effective parameter report for `bluefin-marine-supplies-demo` at run time.
+- For each detector that fired during the case, the report lists:
+  - Detector name.
+  - Effective parameter values used during this case.
+  - Whether each value is the runtime default or a tenant override.
+- A `policy_hash` reference identifying the signed policy state under which the report was produced.
+
+**Pass condition for the stage.**
+
+- The record exists.
+- Every detector that fired in §14.3.1 has at least one entry in the report.
+- Every entry names its source as either `default` or `tenant_override`.
+- The `policy_hash` resolves to an existing signed-policy artifact on disk.
+
+#### §14.3.4 Audit Trail — Signed policy state + tenant override audit
+
+**Record content.**
+
+- The signed policy state hash referenced by §14.3.3.
+- A tenant override audit entry for `bluefin-marine-supplies-demo` capturing one fictional override the case exercises: a tenant-specific content-risk threshold tighter than the runtime default, used to demonstrate the override path.
+- The override entry includes `requested_by` and `approved_by` fields with a fictional separation (different fictional identifiers); the case is single-tenant, but the audit-trail surface requires the separation to be visible.
+
+**Pass condition for the stage.**
+
+- The record exists.
+- The `policy_hash` matches the value referenced by §14.3.3.
+- The override entry has both `requested_by` and `approved_by`, with the two fields holding different values.
+- The override traces to a `signed_by` reference resolvable on disk.
+
+#### §14.3.5 Outcome Documentation — Inbox Shield sample monthly report
+
+**Record content.**
+
+- A rendered Markdown section for `bluefin-marine-supplies-demo`'s monthly report covering the run period.
+- The section lists exactly one case for the period — case ID `cybins-v1-testplan-vendor-payment-redirect-001` — under the operator-authored outcome heading:
+
+  > *"Vendor invoice review — payment change reviewed before action."*
+
+- The section includes the §2 boundary statement, unedited.
+- The section references each of §14.3.1 – §14.3.4 by `source_artifact_path` so a reader can trace every claim in the rendered section back to a structured record.
+
+**Pass condition for the stage.**
+
+- The record exists.
+- The outcome heading is rendered with the exact operator-authored wording above. Paraphrases such as "redirect prevented," "fraud blocked," "loss avoided," "saved money," "stopped fraud," and similar outcome-claim rewrites are drift incidents and fail this stage.
+- The §2 boundary statement appears unedited.
+- Every `source_artifact_path` reference in the section resolves on disk (`broken_link` gate, §7).
+- No forbidden-language phrase or §9 operator avoid-list term appears in the rendered section as a NorthStar claim.
+
+### §14.4 End-to-end pass / fail criteria
+
+A v1 test-plan run **passes** when **all** of the following hold:
+
+1. All five records (§14.3.1 – §14.3.5) exist with non-null `source_artifact_path` values that resolve on disk.
+2. Every stage-specific pass condition in §14.3.1 – §14.3.5 holds.
+3. The §7 gates `claim_validation`, `broken_link`, `stale_evidence`, `forbidden_language`, `scope_boundary`, `redaction`, `vocabulary_translation`, `audit_packet_coverage`, and `signed_provenance` all pass against the rendered §14.3.5 section.
+4. The §2 boundary statement appears in the rendered section, unedited.
+5. No forbidden-language phrase and no §9 operator avoid-list term appears as a NorthStar claim anywhere across the five records or the rendered section.
+6. No raw email body, no secret material, no cross-tenant identifier, and no tenant-private identifier other than the fictional `bluefin-marine-supplies-demo` appears in any record (§9 redaction).
+7. The outcome heading in §14.3.5 is rendered verbatim: *"Vendor invoice review — payment change reviewed before action."*
+
+A run **fails** if any of the seven conditions does not hold. Each failure produces a Drift Incident Report per §8 with the affected `evidence_id`(s) and `affected_files` populated; the run-level outcome is recorded as a fail in the test-evidence log §14.5 names.
+
+The run-level pass / fail is a single boolean; partial passes are not recognized. A run that produces four good records and one missing record is a **fail**, not a four-of-five pass.
+
+### §14.5 Run surface
+
+The test plan is runnable from §14 alone. The following names are stable contracts; substitute paths are not §14-conformant.
+
+**Fixture path.**
+
+```
+3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/fixtures/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001.json
+```
+
+The fixture contains the synthetic email payload, the fictional `Authentication-Results` headers (SPF / DKIM / DMARC pass), the fictional sender / recipient / tenant identifiers from §14.2, and the synthetic body content. The fixture is created when the test plan is first run (the next build step); §14 names the path so the fixture has a stable, spec-named home.
+
+**Tenant config.** `bluefin-marine-supplies-demo` is registered with one fictional tenant override (the tighter content-risk threshold §14.3.4 names). Tenant registration happens in the test-plan run, not in §14.
+
+**Runtime invocation sequence.** From `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation` as the working directory, an inline runner imports the runtime modules and calls, in order:
+
+1. `ingest_email` against the fixture payload → produces the `EmailInboundPayload`.
+2. `run_email_risk_scoring_cycle` against the inbound payload → produces the `EmailAnalysisPayload` and the scoring explanation.
+3. `record_confirmation_request` → produces the confirmation request record for the new banking detail change.
+4. `record_confirmation_outcome` with outcome `payment_change_reviewed_before_action` → produces the confirmation outcome record.
+5. `run_daily_digest_cycle` → produces the digest output that feeds the monthly-report section §14.3.5 renders.
+
+No runtime code is modified by the test-plan run. The inline runner is created outside the repo at run time (mirroring rxt-2026-05-30-001) so the durable repository evidence stays the fixture, the records, and the activity-log entry.
+
+**Output artifacts.**
+
+| Stage | Output artifact (relative to repo root) |
+|---|---|
+| §14.3.1 | `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/detection.json` |
+| §14.3.2 | `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/verification.json` |
+| §14.3.3 | `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/evidence.json` |
+| §14.3.4 | `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/audit_trail.json` |
+| §14.3.5 | `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/outcome_documentation.md` |
+
+The five output paths form the `source_artifact_path` values §6 requires.
+
+**Pass / fail logging.** The run produces:
+
+- One entry in `PROJECT_ACTIVITY_LOG.md` describing the run, the pass / fail outcome, the run timestamp, and the seven §14.4 conditions evaluated.
+- If timing was measured, one `rxt-` record in `REACTION_TIMING_TEST_LOG.md` mirroring the rxt-2026-05-30-001 shape.
+
+Both surfaces are part of the project's existing test-evidence surfaces; §14 does not introduce a new test-evidence surface.
+
+### §14.6 What §14 does not authorize
+
+- Implementation work outside the test-plan run. §14 satisfies §13 precondition 2 ("v1 test plan defined and runnable from the spec alone"); it does **not** satisfy §13 precondition 3 (operator-set Q10 count threshold met in actual cheaper-proof MSP discovery) and does **not** satisfy §11 sign-off. Implementation-spec authoring still requires §13 sign-off, which itself still requires precondition 3.
+- Real-customer data substitution. The tenant `bluefin-marine-supplies-demo`, the vendor `harborline-marine-services.example`, the recipient mailbox, and the body content are all fictional; substituting real customer data for any of these voids the test plan and is a §9 redaction failure.
+- Drift in the outcome wording. The outcome heading "Vendor invoice review — payment change reviewed before action" is operator-authored. Paraphrases, expansions, or any phrasing that asserts NorthStar prevented, blocked, or stopped the attack are drift incidents at run time.
+- A §11 re-sign without operator authorization. §14 may be tightened in future revisions; any tightening that would force §13 to re-sign requires explicit operator authorization, not an implicit edit.
 
 ---
 
