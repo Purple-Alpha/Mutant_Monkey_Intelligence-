@@ -1,0 +1,36 @@
+{
+  "fixture_id": "stage_a_vendor_payment_change",
+  "description": "Fictional vendor-payment-change email for Stage A reaction-timing tests.",
+  "tenant_id": "reaction-timing-demo",
+  "received_at": "2026-05-29T18:58:00+00:00",
+  "sender": "billing@vendor-pay.example",
+  "recipient": "finance@reaction-timing-demo.example",
+  "subject": "Urgent invoice with updated ACH instructions",
+  "body_plain": "Please process invoice 1048 today. We changed banks, so use the new ACH instructions in the attached PDF and disregard the old remit-to details.",
+  "headers": {
+    "From": "billing@vendor-pay.example",
+    "To": "finance@reaction-timing-demo.example",
+    "Subject": "Urgent invoice with updated ACH instructions"
+  },
+  "received_headers": [
+    "from mail.vendor-pay.example by mx.reaction-timing-demo.example with ESMTPS id fixture-stage-a"
+  ],
+  "attachments": [
+    {
+      "filename": "invoice_1048_remit_update.pdf",
+      "content_type": "application/pdf",
+      "size_bytes": 184000,
+      "attachment_class": "invoice",
+      "extracted_text": "Invoice 1048. New ACH routing instructions. Previous remit-to instructions are no longer valid. Please process before close of business.",
+      "sha256": "b6beef8de31d3fd5d0d724ac2c0d30e0f74dd5b61bd1e5b2b43c5d09b6f8ec1d"
+    }
+  ],
+  "expected_stage_a_chain": [
+    "email_inbound",
+    "email_analysis",
+    "two_channel_confirmation_pending",
+    "two_channel_confirmation_outcome",
+    "daily_digest_case_closure"
+  ],
+  "expected_result": "Fixture-driven run produces one inbound record, one high-risk analysis, a two-channel pending event, a confirmed two-channel outcome, one daily digest case-closure artifact, and all four reaction-timing fields."
+}

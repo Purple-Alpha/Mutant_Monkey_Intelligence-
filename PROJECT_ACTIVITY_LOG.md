@@ -26,6 +26,125 @@ What should happen next.
 
 ---
 
+## 2026-05-29 - Future Research Note: Workspace Signals And VPN Services
+**Actor:** Matt + Codex
+
+**Action:** Reviewed / Noted
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this note)
+
+**Reason:**
+Matt flagged that the Google Workspace audit-log surfaces seen during domain setup may be useful future material for NorthStar software research. Matt also raised VPN services as a possible related area to discuss once the current domain / email setup work is out of the weeds.
+
+**Next Step:**
+Revisit later as a research discussion only. No Google Workspace integration, VPN service lane, product claim, detector, or implementation work is authorized by this note.
+
+---
+
+## 2026-05-29 - Google Workspace Audit Log Surface Noted
+**Actor:** Matt + Codex
+
+**Action:** Reviewed / Noted
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this note)
+
+**Reason:**
+Matt surfaced the Google Workspace user activity / audit-log categories available during the new domain setup flow. Visible categories included emails classified as spam, external emails received, files shared externally, external content copied, files downloaded, files printed, files deleted, suspicious sign-ins, failed sign-ins, password leaks, and audit-log families such as Admin, Calendar, Chat, Chrome, Chrome Sync, Classroom, Cloud Search, Contacts, Data Studio, and Device log events.
+
+**Next Step:**
+Treat this as setup context only. No NorthStar implementation, evidence-package claim, or Google Workspace integration is authorized from this note by itself.
+
+---
+
+## 2026-05-29 - Fixture-Backed Reaction Timing Test Recorded
+**Actor:** Matt + Codex
+
+**Action:** Added a tracked fictional Stage A vendor-payment-change fixture and ran a fixture-backed reaction-timing test to prove the scenario is repeatable without inline-only input.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/fixtures/reaction_timing/stage_a_vendor_payment_change.json` (NEW — fictional vendor-payment-change email fixture for Stage A reaction-timing tests)
+- `REACTION_TIMING_TEST_LOG.md` (UPDATED — appended `rxt-2026-05-29-003` under `## Records` with verdict, timing fields, Blackboard record IDs, evidence artifact paths, and notes)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+The first Stage A reaction-timing test passed, but its input email was constructed inline. Matt asked to turn the uncovered limitations into tests. This pass targets the repeatability gap: a future runner can now load the same fictional input from a repository fixture.
+
+**Verification:**
+- Test verdict recorded in the ledger: `pass`.
+- Fixture-backed run produced one inbound record, one analysis record, two two-channel confirmation records, one daily digest record, and one `send_daily_digest` workflow trigger.
+- A first fixture-backed attempt failed before ledger capture because the runner used an invalid two-channel `channel_kind`; the corrected run used `previously_known_phone`, and the mistake is preserved in the ledger notes.
+- Fictional/demo data only; no real client data, real mailbox, external sending, production action, live LLM call, or runtime code edit.
+
+**Next Step:**
+Run the completion gate on the fixture/log packet before any completion claim or commit request.
+
+---
+
+## 2026-05-30 - Lab Mailbox Baseline Captured
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Recorded the first NorthStar lab mailbox baseline so future raw-header capture, reaction-timing tests, sender-provenance proof work, and Microsoft mailbox workflow testing have a documented input source on file.
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Lab mailbox baseline:**
+- Mailbox: `security-test@northstarsecurityshield.onmicrosoft.com`
+- Provider: Microsoft 365
+- Test date: 2026-05-30
+- Send to Gmail: success
+- Gmail reply back: success
+- SPF / DKIM / DMARC: pass
+- Delivery: Gmail spam on first send
+- Status: lab-only, not final brand sender
+
+**Allowed use (operator rule):**
+- Raw-header capture (e.g. sender-provenance proof worksheet runs)
+- Reaction-timing tests — the `AGENTS.md` section 5 durable-record requirement and the `REACTION_TIMING_TEST_LOG.md` schema still apply
+- Sender-provenance / geo-velocity cheaper-proof collection
+- Microsoft mailbox workflow testing
+
+**Forbidden use (operator rule):**
+- No client-facing outreach, evidence-package surface, demo artifact, MSP discovery material, or branding artifact uses this mailbox
+- Operator flagged the `onmicrosoft.com` address as not suitable for client surfaces; the first send to Gmail also landed in the spam folder
+- Lab-only until a clean custom domain is attached to Microsoft 365 and the same test sequence is repeated
+
+**Reason:**
+Operator instruction during the 2026-05-30 session: stop wrestling email setup and convert the working lab mailbox into documented project evidence so future tests can cite a known input source instead of relying on memory.
+
+**Verification:**
+- Mailbox status, provider, send / reply results, authentication checks, delivery outcome, and lab-only boundary were operator-reported and recorded verbatim above; no Cursor-side claim is made beyond what the operator stated.
+- This entry is internal infrastructure documentation. It is not a buyer-facing claim and is not an evidence record under any signed §11 spec.
+
+**Next Step:**
+Operator decides the next NorthStar test that will use this mailbox as the lab input source — scenario, file scope, and verdict-recording surface are explicit operator calls. Branding follow-up (attach clean custom domain to Microsoft 365 and repeat baseline test) remains deferred.
+
+---
+
+## 2026-05-29 - Stage A Reaction Timing Test Recorded
+**Actor:** Matt + Cursor (GPT-5.5)
+
+**Action:** Ran one bounded Stage A reaction-timing test on a fictional vendor-payment-change email case and recorded the timestamped result in `REACTION_TIMING_TEST_LOG.md`.
+
+**Files Changed:**
+- `REACTION_TIMING_TEST_LOG.md` (UPDATED — appended `rxt-2026-05-29-001` under `## Records` with verdict, timing fields, Blackboard record IDs, evidence artifact path, and notes)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Matt authorized a one-hour bounded Stage A system test to determine whether NorthStar can take one fictional high-risk email case through Detection -> Verification -> Evidence -> Audit Trail -> Outcome Documentation and document positive, partial, failed, or blocked evidence without hiding negative results.
+
+**Verification:**
+- Test verdict recorded in the ledger: `pass`.
+- Fictional/demo data only; no real client data, real mailbox, external sending, production action, live LLM call, or runtime code edit.
+- Completion gate requested after this ledger/log update per operator instruction.
+
+**Next Step:**
+Review the final test report and gate result, then decide whether any follow-up should be authorized. Do not stage, commit, push, or mark this as accepted without Matt's explicit authorization.
+
+---
+
 ## 2026-05-28 - Reaction Timing Test Log Created
 **Actor:** Matt + Cursor (Opus)
 
