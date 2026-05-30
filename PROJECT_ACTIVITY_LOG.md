@@ -26,6 +26,36 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Microsoft Lab Mailbox Header Test Recorded
+**Actor:** Matt + Codex
+
+**Action:** Recorded one mailbox-based header/authentication test for the Microsoft 365 lab mailbox.
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Scenario:**
+Microsoft 365 lab mailbox sent one test email from `security-test@northstarsecurityshield.onmicrosoft.com` to `matt.nichol6996@gmail.com`; Gmail received it and Matt copied the raw-header authentication section from Gmail's "Show original" view.
+
+**Observed Results:**
+- Send path: Microsoft 365 / Outlook outbound protection -> Gmail.
+- Reply path: Gmail reply back to Microsoft mailbox succeeded before this entry.
+- SPF: pass (`smtp.mailfrom=security-test@northstarsecurityshield.onmicrosoft.com`).
+- DKIM: pass (`header.d=northstarsecurityshield.onmicrosoft.com`).
+- DMARC: pass (`header.from=northstarsecurityshield.onmicrosoft.com`).
+- ARC: pass.
+- Gmail delivery placement: spam on first external send.
+- Microsoft outbound spam classification in header: `SCL:1`, `SFV:NSPM`.
+- Lab mailbox status: usable for lab raw-header capture and mailbox workflow tests; not suitable for client-facing sender identity.
+
+**Boundary:**
+This entry records derived authentication and delivery facts only. It does not store the full raw header, does not create a sender-provenance proof sample, does not authorize a Microsoft 365 integration, and does not support any client-facing claim.
+
+**Next Step:**
+Use this as the baseline for future mailbox-based tests. If the next test measures reaction timing, record it in `REACTION_TIMING_TEST_LOG.md`; if it studies sender-provenance, use the existing sender-provenance proof protocol and worksheet instead of this activity-log entry.
+
+---
+
 ## 2026-05-29 - Future Research Note: Workspace Signals And VPN Services
 **Actor:** Matt + Codex
 
