@@ -26,6 +26,54 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Microsoft 365 Lab Mailbox Authentication Baseline Captured As Tracked Artifact
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Distilled the 2026-05-30 Microsoft Lab Mailbox Header Test into a tracked, sanitized derived-evidence baseline artifact so the mailbox evidence is reusable as a test input rather than living only inside an activity-log entry.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/fixtures/lab_mailbox_baselines/microsoft_365_lab_mailbox_authentication_baseline.json` (NEW - sanitized derived-evidence baseline; only derived auth-results fields, ARC observation, the assembled Authentication-Results header value the runtime detector parses, Microsoft outbound classification, Gmail first-send placement, reply-path success, and explicit `consumable_as` / `not_consumable_as` lists)
+- `MASTER_INDEX.md` (UPDATED - indexed the new baseline under Runtime_Implementation/tests/fixtures)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Source:**
+This baseline is the operator-reviewed distillation of the 2026-05-30 entry `Microsoft Lab Mailbox Header Test Recorded` (committed in `f712066`). The activity-log entry remains the human-readable source of truth; the new artifact is the machine-consumable derived form.
+
+**What was preserved:**
+- Mailbox address: `security-test@northstarsecurityshield.onmicrosoft.com`
+- Tenant domain: `northstarsecurityshield.onmicrosoft.com`
+- Send path: Microsoft 365 / Outlook outbound protection -> Gmail
+- Send target: `matt.nichol6996@gmail.com`
+- Reply path: Gmail reply back to the Microsoft mailbox succeeded
+- SPF: pass (`smtp.mailfrom=security-test@northstarsecurityshield.onmicrosoft.com`)
+- DKIM: pass (`header.d=northstarsecurityshield.onmicrosoft.com`)
+- DMARC: pass (`header.from=northstarsecurityshield.onmicrosoft.com`)
+- ARC: pass (preserved as observability; the runtime auth detector does not consume ARC)
+- Microsoft outbound classification: `SCL:1`, `SFV:NSPM`
+- Gmail first-send delivery placement: spam
+- Assembled `Authentication-Results` header value the runtime SPF/DKIM/DMARC detector parses
+
+**What was intentionally NOT stored:**
+- The full raw Microsoft -> Gmail `Received:` chain. The 2026-05-30 activity-log entry explicitly chose not to store it; this artifact preserves that boundary.
+- Any synthetic body, subject, attachment, or recipient content (those belong in scenario fixtures, not in the baseline).
+
+**Why this matters:**
+- The lab mailbox evidence is now reusable as a test input instead of being re-derived from chat or activity-log prose every time. Future scenario fixtures (e.g. `stage_a_lab_mailbox_authpass.json`) can cite this baseline as their grounding rather than restating SPF/DKIM/DMARC values inline.
+- The `consumable_as` block names exactly what current runtime surfaces this baseline feeds, and the `not_consumable_as` block names exactly what it does NOT prove, so future agents do not over-promote it.
+
+**Verification:**
+- Worker manifest: `audit_outputs/pending/microsoft_365_lab_mailbox_authentication_baseline_artifact_20260530.manifest.json`.
+- Gate run: `audit_outputs/microsoft_365_lab_mailbox_authentication_baseline_artifact_20260530_<timestamp>.md` (clean).
+- Trigger scan: `python -m scripts.project_trigger_scan --baseline-tests 946` -> clean (`scan_clean`, no drift findings).
+
+**Boundary:**
+This artifact is lab-only. It is not a production fixture, not a buyer-facing artifact, not a client-facing claim, not a sender-provenance proof sample, not an authorization for any Microsoft 365 integration, and not a measure of MSP or underwriter usefulness. The Stage A wedge per `VISION.md` is unchanged.
+
+**Next Step:**
+Operator review. If accepted, this baseline becomes the citable grounding for any future lab-mailbox-backed test or fixture. Nothing is staged, committed, or pushed.
+
+---
+
 ## 2026-05-30 - Lab-Mailbox Auth-Pass Reaction-Timing Test Recorded
 **Actor:** Matt + Cursor (Claude)
 

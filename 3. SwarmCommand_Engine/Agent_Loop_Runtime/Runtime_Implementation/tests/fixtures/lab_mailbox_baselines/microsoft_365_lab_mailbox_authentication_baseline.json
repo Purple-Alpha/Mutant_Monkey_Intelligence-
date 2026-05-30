@@ -1,0 +1,65 @@
+{
+  "baseline_id": "microsoft_365_lab_mailbox_authentication_baseline_20260530",
+  "purpose": "Sanitized derived-evidence baseline distilled from one Microsoft 365 -> Gmail authentication test on 2026-05-30. Reusable as an input artifact for future lab-mailbox-backed reaction-timing tests, mailbox-authentication tests, and sender-provenance scaffolding work. Source of truth for the derived auth values consumed by tests/fixtures/reaction_timing/stage_a_lab_mailbox_authpass.json.",
+  "lab_only": true,
+  "mailbox": {
+    "provider": "Microsoft 365",
+    "address": "security-test@northstarsecurityshield.onmicrosoft.com",
+    "tenant_domain": "northstarsecurityshield.onmicrosoft.com",
+    "status": "lab-only; not a final brand sender; not client-facing"
+  },
+  "test_event": {
+    "captured_on": "2026-05-30",
+    "send_path": "Microsoft 365 / Outlook outbound protection -> Gmail",
+    "send_target": "matt.nichol6996@gmail.com",
+    "reply_path_status": "Gmail reply back to the Microsoft mailbox succeeded",
+    "source_log_entry_title": "Microsoft Lab Mailbox Header Test Recorded",
+    "source_log_entry_date": "2026-05-30",
+    "source_log_entry_commit": "f712066"
+  },
+  "authentication_results": {
+    "spf": {
+      "result": "pass",
+      "smtp_mailfrom": "security-test@northstarsecurityshield.onmicrosoft.com"
+    },
+    "dkim": {
+      "result": "pass",
+      "header_d": "northstarsecurityshield.onmicrosoft.com"
+    },
+    "dmarc": {
+      "result": "pass",
+      "header_from": "northstarsecurityshield.onmicrosoft.com"
+    },
+    "arc": {
+      "result": "pass",
+      "consumed_by_runtime_detector": false,
+      "note": "core/scoring/email_authentication_detector.py parses only spf/dkim/dmarc; arc is preserved here for observability and future use only"
+    }
+  },
+  "consumable_authentication_results_header_value": "mx.google.com; spf=pass smtp.mailfrom=security-test@northstarsecurityshield.onmicrosoft.com; dkim=pass header.d=northstarsecurityshield.onmicrosoft.com; dmarc=pass header.from=northstarsecurityshield.onmicrosoft.com",
+  "microsoft_outbound_classification": {
+    "spam_confidence_level": 1,
+    "spam_filter_verdict": "NSPM",
+    "note": "Outbound classification observed on the Microsoft side. Not part of the inbound Authentication-Results surface the runtime scoring detector parses; recorded here as observability only."
+  },
+  "gmail_delivery_placement": {
+    "first_send": "spam",
+    "note": "First external send from the lab mailbox landed in Gmail's spam folder. No current Stage A detector path consumes delivery-placement signals; recorded for observability only."
+  },
+  "raw_header_completeness": "NOT stored. Only the derived fields above and the assembled Authentication-Results header value are preserved, per the 2026-05-30 PROJECT_ACTIVITY_LOG boundary that explicitly chose not to store the full raw header. The full raw Microsoft -> Gmail Received: chain remains outside the repo by operator instruction.",
+  "consumable_as": [
+    "Authentication-Results header value for the runtime SPF/DKIM/DMARC scoring detector (core/scoring/email_authentication_detector.py); see tests/fixtures/reaction_timing/stage_a_lab_mailbox_authpass.json for one consumer (REACTION_TIMING_TEST_LOG record rxt-2026-05-30-001).",
+    "Real lab-mailbox sender identifier (mailbox.address) for future fixtures that need an authenticated sender backed by lab observation rather than an .example placeholder.",
+    "Stable derived-evidence reference for activity-log entries and PROJECT_HANDSHAKE state that need to point at a tracked baseline instead of restating SPF/DKIM/DMARC details inline each time."
+  ],
+  "not_consumable_as": [
+    "Raw Received: chain input for the sender-provenance / geo-velocity detector or its cheaper-proof corpus (raw chain is intentionally not stored).",
+    "Real production traffic sample of any kind.",
+    "MSP usability evidence.",
+    "Underwriter usefulness evidence.",
+    "Client-facing brand-sender identity sample.",
+    "Production latency reference.",
+    "Authorization for a Microsoft 365 integration or any cross-domain product surface."
+  ],
+  "boundary_statement": "Lab-only evidence baseline. Not a production fixture, not a buyer-facing artifact, not a client-facing claim, not a sender-provenance proof sample, not an authorization for a Microsoft 365 integration, and not a measure of MSP or underwriter usefulness. The Stage A wedge per VISION.md is unchanged by the existence of this file."
+}
