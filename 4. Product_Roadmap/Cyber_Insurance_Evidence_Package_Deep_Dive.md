@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 Q1-Q11 resolved by operator on 2026-05-26 through 2026-05-30 (pending §13 lock as D1-D2e, D3-D3a, D4, D5, D6, D7, D8, D9, D10, D11), with **Q10 a partial resolution**: D10 covers the per-MSP "yes" definition; the count-threshold sub-question (how many MSPs saying yes is required to unlock implementation-spec authoring) remains operator-open and is gated by §13 sign-off preconditions. §13 preconditions also remain open until the v1 test plan in §11 criterion 15 is defined.
+**Status:** DRAFT (pre-§11). §12 Q1-Q11 resolved by operator on 2026-05-26 through 2026-05-30 (pending §13 lock as D1-D2e, D3-D3a, D4, D5, D6, D7, D8, D9, D10, D11). §13 preconditions remain open until the v1 test plan in §11 criterion 15 is defined and the operator-set Q10 count threshold (2 of 3 relevant MSP conversations meeting the D10 per-MSP definition) has been met in actual cheaper-proof MSP discovery.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
@@ -617,13 +617,25 @@ Cross-reference: the Direction lock (top of spec) requires the five-stage mappin
 
 ### Q10. Cheaper-proof gating — what counts as go?
 
-**Resolved 2026-05-30 by operator (pending §13 lock as D10) — partial: per-MSP definition only.** D10 resolves only the per-MSP definition of "yes":
+**Resolved 2026-05-30 by operator (pending §13 lock as D10).** D10 resolves both sub-questions of Q10 — the per-MSP definition of "yes" and the count threshold required to consider cheaper-proof validated.
+
+**Per-MSP "yes" definition.**
 
 - A single MSP's "yes" requires two named anchors: a **named SMB** plus a **named upcoming insurance / underwriting conversation** for that SMB.
 - Verbal confirmation is acceptable for discovery logging; written follow-up strengthens the signal but is not required to satisfy the per-MSP definition.
 - Discovery scripts must capture the two named anchors verbatim and log them through the existing project surfaces (cheaper-proof runbook + worksheet).
 
-**Still operator-open under Q10 — count threshold.** How many MSPs saying yes (by the D10 per-MSP definition above) is required for cheaper-proof to be considered "validated" enough to unlock implementation-spec authoring per §13 — the original Q10 question (*"1 of 3? 2 of 3? a different bar?"*) — remains an operator call. No threshold count is pre-committed here. Implementation-spec authoring is not authorized by D10 alone; it additionally requires the count threshold to be operator-set and met. The count-threshold decision is also gated by §13 sign-off preconditions (see §13).
+**Count threshold (operator-set 2026-05-30).**
+
+- **2 of 3 relevant MSP conversations** must meet the per-MSP "yes" definition above to consider cheaper-proof validated for the purpose of unlocking implementation-spec authoring.
+- "Relevant" means the MSP could plausibly answer the cheaper-proof framing for an SMB cyber-insurance evidence package — not any three conversations.
+- Verbal confirmation counts for cheaper-proof logging.
+- Written follow-up strengthens the evidence but is **not** required as a gate. Adding a written-follow-up requirement before the framing is known to land would raise friction prematurely; written follow-up stays "evidence strength," not "evidence gate."
+- Operator rationale recorded in-line: 1-of-3 overfits to one friendly signal; 3-of-3 risks stalling the lane; 2-of-3 is the clean middle showing the framing is not a one-off while staying fast enough for Stage A.
+
+Reopening the threshold (to 1-of-3, 3-of-3, written-follow-up required, or any other revision) is a v1.1 question pending live discovery feedback; it follows the Frontier Intake → `think_sheet.md` → spec-first §11 revision pattern.
+
+Implementation-spec authoring is not authorized by D10 threshold-set alone; the §13 sign-off precondition (see §13) additionally requires the 2-of-3 threshold to be **met** in actual cheaper-proof discovery work, not merely asserted.
 
 ### Q11. Vendor-name redaction policy
 
@@ -639,9 +651,9 @@ This section is empty until Matt signs.
 
 §13 cannot be signed until all three of the following hold. These are gating preconditions, not done criteria — they govern whether the sign-off step can begin, not whether a generated package is done.
 
-1. **All §12 questions resolved.** Q1 through Q11 are each marked "Resolved YYYY-MM-DD by operator (pending §13 lock as DN)" in §12 with the operator-authored resolution text intact. At sign-off, every Q maps to a DN in the locked-decisions table below. Q10 is currently a **partial resolution** — D10 covers the per-MSP "yes" definition only; the count-threshold sub-question is still operator-open and is gated by precondition 3 below.
+1. **All §12 questions resolved.** Q1 through Q11 are each marked "Resolved YYYY-MM-DD by operator (pending §13 lock as DN)" in §12 with the operator-authored resolution text intact. At sign-off, every Q maps to a DN in the locked-decisions table below.
 2. **v1 test plan defined.** The implementation spec for this package defines a v1 test plan that renders at least one fictional Stage A evidence case end to end across the five Evidence-and-Outcome-Reporting stages (Detection → Verification → Evidence → Audit Trail → Outcome Documentation) against the §12.Q7 five-record set. The test plan must be runnable from the spec alone, not from operator memory. A signed-but-test-plan-less package is the failure mode this precondition exists to prevent.
-3. **Q10 count threshold set by operator.** The operator has explicitly set a count threshold for the Q10 cheaper-proof gate — how many MSPs saying yes (by the D10 per-MSP definition) is required for cheaper-proof to be considered "validated" enough to unlock implementation-spec authoring. The threshold is operator-authored; AI-drafted threshold counts are not acceptable. Implementation-spec authoring is not authorized by D10 alone; the count threshold must be operator-set and met before §13 sign-off can authorize the next stage. This precondition exists to close the authority-drift risk that a single MSP yes could be treated as having cleared the cheaper-proof bar.
+3. **Q10 count threshold met.** The operator-set Q10 count threshold — **2 of 3 relevant MSP conversations** meeting the D10 per-MSP definition — has been met in actual cheaper-proof discovery work, with the two named anchors per MSP captured verbatim in the cheaper-proof runbook / worksheet. Implementation-spec authoring is not authorized by D10 threshold-set alone; the threshold must be **met** by real discovery, not asserted. This precondition closes the authority-drift risk that a single MSP yes (or zero MSP yeses) could be treated as having cleared the cheaper-proof bar.
 
 The §11 Done Criteria criterion 15 enforces the same five-stage end-to-end rendering at package-done time. The §13 precondition 2 above enforces it earlier — at sign-off — so the spec cannot lock without the test plan that criterion 15 later checks against.
 

@@ -5422,3 +5422,38 @@ Operator decisions from the Cyber Insurance §12 walkthrough (2026-05-26 through
 
 **Next Step:**
 Run `complete_gate.py` on the §12/§13 edit-pass packet (manifest at `audit_outputs/pending/cyber_insurance_evidence_package_section_12_13_edit_pass_20260530.manifest.json`). Operator review of the encoded resolutions, then decide whether to (a) hold for §13 sign-off later, (b) stage and commit the edit pass locally, or (c) request wording tightening on the flagged open items above. No staging or commits performed by this entry.
+
+## 2026-05-30 - Cyber Insurance §12.Q10 Count Threshold Set By Operator
+**Actor:** Codex (Matt-authorized, single-decision edit pass)
+
+**Action:** Updated
+
+**Files Changed:**
+- 4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+The §12/§13 edit pass committed at `0b4304a` left Q10 as a partial resolution (D10 covered the per-MSP "yes" definition only; the count-threshold sub-question was operator-open and gated by §13 precondition 3, which explicitly forbade AI-drafted threshold counts). The operator authored the threshold this turn. This edit pass encodes the operator-authored threshold into the spec and re-pivots §13 precondition 3 from "must be set" to "must be met."
+
+**Operator-authored threshold (verbatim shape):**
+> 2 of 3 relevant MSP conversations must meet the D10 definition: a named SMB plus a named upcoming insurance / underwriting conversation. Verbal confirmation counts for cheaper-proof logging. Written follow-up strengthens the evidence but is not required.
+
+**Operator rationale (preserved in the spec):**
+1-of-3 overfits to one friendly signal; 3-of-3 risks stalling the lane; 2-of-3 is the clean middle showing the framing is not a one-off while staying fast enough for Stage A. Written follow-up is held as evidence strength, not as a gate, because requiring written-follow-up before the framing is known to land would raise friction prematurely.
+
+**Changes (exactly four locations):**
+- **§12.Q10 body** — promoted from partial to full D10. The per-MSP "yes" definition is preserved; a new "Count threshold (operator-set 2026-05-30)" block records the 2-of-3 rule, the "relevant" qualifier ("MSP could plausibly answer the cheaper-proof framing — not any three conversations"), the verbal-counts / written-not-required position, and the operator rationale. A closing line reiterates that implementation-spec authoring still requires the threshold to be **met** in actual discovery, not merely set.
+- **§13 precondition 3** — reworded from "Q10 count threshold set by operator" to "Q10 count threshold met." The precondition now reads: the operator-set 2-of-3 threshold has been met in actual cheaper-proof discovery work with the two named anchors per MSP captured verbatim in the cheaper-proof runbook / worksheet. Authority-drift-closing language preserved: "Implementation-spec authoring is not authorized by D10 threshold-set alone; the threshold must be met by real discovery, not asserted."
+- **Top metadata Status line** — dropped the "Q10 a partial resolution" caveat. New wording: "§13 preconditions remain open until the v1 test plan in §11 criterion 15 is defined **and** the operator-set Q10 count threshold (2 of 3 relevant MSP conversations meeting the D10 per-MSP definition) has been met in actual cheaper-proof MSP discovery."
+- **PROJECT_ACTIVITY_LOG.md** — this entry.
+
+**Boundaries respected:**
+- No edits outside the spec + this log.
+- No new doctrine introduced. The threshold is the operator's words; the spec encoding mirrors them.
+- AGENTS.md, VISION.md, Compliance_and_Trend_Watch_Process.md, audit_tools/, runtime code, and REACTION_TIMING_TEST_LOG.md were not touched.
+- §11 criterion 15 (the v1 test plan condition) was not touched — that is the next item in the operator-set build order.
+- §13 was not signed. With D10 now full, §13 still has precondition 2 (v1 test plan defined) and precondition 3 (threshold met in actual discovery) open — both block sign-off.
+- Consequence Matrix not invoked; this is execution of a clean operator-set decision, not new path-setting.
+
+**Next Step:**
+Run `complete_gate.py` on the Q10 count-threshold edit-pass packet. After a clean gate and operator inspection, the next build item per the operator-set order is the v1 fictional Stage A evidence-package test plan covering Detection → Verification → Evidence → Audit Trail → Outcome Documentation against the §12.Q7 five-record set. No staging or commits performed by this entry.
