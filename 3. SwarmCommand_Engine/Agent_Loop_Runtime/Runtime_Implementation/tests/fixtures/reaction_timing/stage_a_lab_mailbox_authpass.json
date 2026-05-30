@@ -1,0 +1,62 @@
+{
+  "fixture_id": "stage_a_lab_mailbox_authpass",
+  "description": "Fictional vendor-payment-change Stage A scenario whose sender identifier and Authentication-Results header values are grounded in the real Microsoft 365 lab mailbox baseline observed on 2026-05-30 (PROJECT_ACTIVITY_LOG entry 'Microsoft Lab Mailbox Header Test Recorded', commit f712066). Body content, recipient, subject, and attachment metadata are synthetic. With SPF/DKIM/DMARC all pass, the runtime auth detector (core/scoring/email_authentication_detector.py) is expected to contribute zero indicators; high-risk verdict must therefore come from content-side scoring signals only.",
+  "tenant_id": "reaction-timing-demo",
+  "received_at": "2026-05-30T17:30:00+00:00",
+  "sender": "security-test@northstarsecurityshield.onmicrosoft.com",
+  "recipient": "finance@reaction-timing-demo.example",
+  "subject": "Urgent invoice with updated wire instructions",
+  "body_plain": "Please process invoice 1102 today. We are switching banks effective immediately. Use the new wire instructions in the attached PDF and disregard the routing details on file. Please send a confirmation back as soon as the wire has been initiated.",
+  "headers": {
+    "From": "security-test@northstarsecurityshield.onmicrosoft.com",
+    "To": "finance@reaction-timing-demo.example",
+    "Subject": "Urgent invoice with updated wire instructions",
+    "Authentication-Results": "mx.google.com; spf=pass smtp.mailfrom=security-test@northstarsecurityshield.onmicrosoft.com; dkim=pass header.d=northstarsecurityshield.onmicrosoft.com; dmarc=pass header.from=northstarsecurityshield.onmicrosoft.com"
+  },
+  "received_headers": [],
+  "attachments": [
+    {
+      "filename": "invoice_1102_updated_wire.pdf",
+      "content_type": "application/pdf",
+      "size_bytes": 192000,
+      "attachment_class": "invoice",
+      "extracted_text": "Invoice 1102. Updated wire instructions. Effective immediately, please use the new bank routing. Previous wire instructions are no longer valid. Confirmation requested same day.",
+      "sha256": "0fe0f9a93b1bda6b3a4afd1c1c3df3b9d7bfb43c5e7c4a8d2b9c5e0a47f1ed52"
+    }
+  ],
+  "expected_stage_a_chain": [
+    "email_inbound",
+    "email_analysis",
+    "two_channel_confirmation_pending",
+    "two_channel_confirmation_outcome",
+    "daily_digest_case_closure"
+  ],
+  "expected_result": "Fixture-driven run produces one inbound record, one high-risk analysis with the auth-results detector contributing zero indicators (spf=pass, dkim=pass, dmarc=pass), a two-channel pending event, a confirmed two-channel outcome, one daily digest case-closure artifact, and all four reaction-timing fields.",
+  "limitations": {
+    "scope": "lab-only fixture, not a production fixture",
+    "tenant_domain": "onmicrosoft.com tenant default; not a final brand sender",
+    "delivery_observation": "first Gmail delivery from the lab mailbox landed in spam during the 2026-05-30 baseline; this fixture does not exercise Gmail-side placement",
+    "latency": "fixture-fixed received_at; not a measure of production latency",
+    "msp_usability": "not a measure of MSP usability of any artifact",
+    "underwriter_relevance": "not a measure of underwriter usefulness of any artifact",
+    "raw_header_completeness": "full raw Microsoft -> Gmail header chain is not stored in the repo; only the Authentication-Results values published in the 2026-05-30 entry are encoded here; received_headers is intentionally empty",
+    "content_construction": "subject, body, attachment metadata, and the recipient address are synthetic; only the sender identifier and Authentication-Results values are grounded in lab observation",
+    "scenario_framing": "this fixture positions the real lab mailbox as the authenticated sender of a content-suspicious email; it does not assert the lab mailbox is compromised or claim the lab mailbox is a phishing source; it is a fixture only"
+  },
+  "evidence_grounding": {
+    "lab_test_log_entry_date": "2026-05-30",
+    "lab_test_log_entry_title": "Microsoft Lab Mailbox Header Test Recorded",
+    "lab_test_log_entry_commit": "f712066",
+    "lab_observed_facts_used": [
+      "sender identifier: security-test@northstarsecurityshield.onmicrosoft.com",
+      "spf=pass smtp.mailfrom=security-test@northstarsecurityshield.onmicrosoft.com",
+      "dkim=pass header.d=northstarsecurityshield.onmicrosoft.com",
+      "dmarc=pass header.from=northstarsecurityshield.onmicrosoft.com"
+    ],
+    "lab_observed_facts_intentionally_unused": [
+      "arc=pass (not consumed by core/scoring/email_authentication_detector.py; recorded in the lab test log for completeness only)",
+      "Microsoft outbound SCL:1 / SFV:NSPM (outbound classification; not part of the inbound Authentication-Results surface this detector parses)",
+      "Gmail first-send spam placement (delivery-placement signal; no current Stage A detector path consumes it)"
+    ]
+  }
+}

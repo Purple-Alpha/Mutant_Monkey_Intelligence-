@@ -215,6 +215,58 @@ notes: |
   No real client data, real mailbox, external sending, production action, runtime code edit, or live LLM call was used.
 ```
 
+```yaml
+test_id: "rxt-2026-05-30-001"
+scenario_name: "Lab-mailbox auth-pass vendor-payment-change Stage A evidence case"
+stage_scope: "Stage A"
+run_started_at: "2026-05-30T18:11:14.503069+00:00"
+run_finished_at: "2026-05-30T18:11:14.554254+00:00"
+operator_or_runner: "Cursor inline test runner"
+environment: "demo"
+input_artifact_path: "3. SwarmCommand_Engine\\Agent_Loop_Runtime\\Runtime_Implementation\\tests\\fixtures\\reaction_timing\\stage_a_lab_mailbox_authpass.json"
+expected_result: "Fixture-driven run produces one inbound record, one high-risk analysis with the auth-results detector contributing zero indicators (spf=pass, dkim=pass, dmarc=pass), a two-channel pending event, a confirmed two-channel outcome, one daily digest case-closure artifact, and all four reaction-timing fields."
+actual_result: "Fixture-backed run produced one inbound record, one analysis record, one pending two-channel record, one confirmed two-channel outcome record, one daily digest record, and one send_daily_digest workflow trigger. Auth detector parsed the lab-observed Authentication-Results header as spf=pass / dkim=pass / dmarc=pass, contributed zero indicators, and produced auth score 0. Analysis risk_score=91, vendor_fraud_score=92, recommended_action=block, behavioral_deviation_flags=[new_banking_instructions, mismatched_invoice_vendor_name, urgency_paired_with_finance]."
+verdict: "pass"
+blocking_reason: null
+
+time_to_detection_ms: 2474513
+time_to_verification_request_ms: 0
+time_to_verification_outcome_ms: 13
+time_to_case_closure_ms: 2474544
+
+human_in_loop: false
+human_segment_ms: null
+
+email_inbound_record_id: "54dd8bd4-e726-4731-ba95-52ab0e1a4cac"
+email_analysis_record_id: "41a92076-af7f-4009-8a04-0a9c67d14fbd"
+two_channel_request_record_id: "43d6cf0e-f3f0-42ca-902d-149ade751978"
+two_channel_outcome_record_id: "2e8616d0-034f-420b-a3d3-8b0fab67f297"
+case_closure_artifact_or_record_id: "a6e95754-3f8a-4701-a217-8b4a7f83e085"
+
+evidence_artifact_paths:
+  - "3. SwarmCommand_Engine\\Agent_Loop_Runtime\\Runtime_Implementation\\tests\\fixtures\\reaction_timing\\stage_a_lab_mailbox_authpass.json"
+  - "C:\\Users\\mattn\\AppData\\Local\\Temp\\northstar_reaction_timing\\rxt-2026-05-30-001\\case_closure_digest.md"
+
+notes: |
+  Authorized follow-up test for the gap surfaced by rxt-2026-05-29-001 and rxt-2026-05-29-003: both prior runs left `headers["Authentication-Results"]` empty, so the runtime auth detector (`core/scoring/email_authentication_detector.py`) executed against missing input and contributed zero by default rather than by explicit pass. This run is the smallest meaningful upgrade: it encodes the real Microsoft 365 lab mailbox Authentication-Results values published in the 2026-05-30 `Microsoft Lab Mailbox Header Test Recorded` entry (commit `f712066`) into a tracked fixture and proves the auth detector handles the real-format header by recognizing spf=pass, dkim=pass, dmarc=pass and contributing zero indicators, while content-side scoring independently produces the high-risk verdict. The detector's "authentication pass does not mean safe" boundary (`email_authentication_detector.py` line 9-12) is exercised end to end here.
+  Limitations preserved (mirrored from the fixture `limitations` block):
+  - lab mailbox only; not a production fixture.
+  - `onmicrosoft.com` tenant domain; not a final brand sender.
+  - The lab baseline observed Gmail first-send spam placement; this fixture does not exercise Gmail-side placement.
+  - Timing is fixture-fixed via `received_at`; not a measure of production latency.
+  - Not a measure of MSP usability.
+  - Not a measure of underwriter usefulness.
+  - The full raw Microsoft -> Gmail header chain is not stored in the repo; only the Authentication-Results values published in the 2026-05-30 activity-log entry are encoded; `received_headers` is intentionally empty.
+  - Body, subject, attachment metadata, and recipient address are synthetic; only the sender identifier and Authentication-Results values are grounded in lab observation.
+  - The fixture positions the real lab mailbox as the authenticated sender of a content-suspicious email; it does not assert the lab mailbox is compromised.
+  time_to_detection_ms uses EmailInboundPayload.received_at to EmailAnalysisPayload.produced_at.
+  time_to_verification_request_ms uses EmailAnalysisPayload.produced_at to the two-channel pending requested_at; the runner reuses analysis_produced_at as requested_at, so this value is 0.
+  time_to_verification_outcome_ms uses pending requested_at to outcome outcome_at.
+  time_to_case_closure_ms uses EmailInboundPayload.received_at to the DailyDigest Blackboard record created_at.
+  time_to_detection_ms and time_to_case_closure_ms are large (~41 minutes) because they measure from the fixture's fixed received_at value (`2026-05-30T17:30:00+00:00`) rather than from the wall-clock run start, the same dynamic noted in `rxt-2026-05-29-003`. The timing is valid for this fixture but is not production latency and does not bound any client-facing or underwriter-facing claim.
+  No real client data, real mailbox traffic, external send, production action, runtime code edit, or live LLM call was used. The runner script was written outside the repo under the rxt-2026-05-30-001 temp directory and is not a tracked artifact; the durable repository evidence is this ledger entry plus the fixture path above plus the Blackboard record IDs.
+```
+
 ## Cross-references
 
 - `AGENTS.md` section 5 — source of the reaction-timing test documentation rule.

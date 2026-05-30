@@ -26,6 +26,94 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Lab-Mailbox Auth-Pass Reaction-Timing Test Recorded
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Created a new fictional reaction-timing fixture grounded in the 2026-05-30 Microsoft 365 lab mailbox `Authentication-Results` baseline, ran a fixture-backed Stage A reaction-timing test against it with no runtime code edits, and recorded the result in `REACTION_TIMING_TEST_LOG.md` as `rxt-2026-05-30-001`.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/fixtures/reaction_timing/stage_a_lab_mailbox_authpass.json` (NEW - lab-mailbox auth-pass fixture; real sender identifier and `Authentication-Results` values, synthetic body / subject / attachment / recipient)
+- `REACTION_TIMING_TEST_LOG.md` (UPDATED - appended `rxt-2026-05-30-001` under `## Records` with verdict, timing fields, Blackboard record IDs, evidence artifact paths, and notes)
+- `MASTER_INDEX.md` (UPDATED - indexed the new fixture under Runtime_Implementation/tests/fixtures, matching the prior reaction-timing fixture's index entry)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+The first two reaction-timing tests (`rxt-2026-05-29-001` inline-only, `rxt-2026-05-29-003` fixture-backed but auth-results empty) both ran with `headers["Authentication-Results"]` absent, so the runtime auth detector executed against missing input and contributed zero by default rather than by explicit pass. This test is the smallest meaningful upgrade: it encodes the real Microsoft 365 lab-mailbox `Authentication-Results` values published in the 2026-05-30 `Microsoft Lab Mailbox Header Test Recorded` entry (commit `f712066`) into a tracked fixture and exercises `core/scoring/email_authentication_detector.py` against a real-format header.
+
+**Verification:**
+- Test verdict recorded in `REACTION_TIMING_TEST_LOG.md` Records: `pass`.
+- Auth detector parsed lab-observed values cleanly: `spf=pass`, `dkim=pass`, `dmarc=pass`, score `0`, indicators `[]`.
+- Content-side scoring still produced `risk_score=91`, `vendor_fraud_score=92`, `recommended_action=block`, `behavioral_deviation_flags=[new_banking_instructions, mismatched_invoice_vendor_name, urgency_paired_with_finance]`.
+- The "authentication pass does not mean safe" detector boundary (`email_authentication_detector.py` lines 9-12) was exercised end to end.
+- Fixture-backed run produced one inbound record, one analysis record, one pending two-channel record, one confirmed two-channel outcome record, one daily digest record, and one `send_daily_digest` workflow trigger.
+- Fictional / demo data only; no real client data, no real mailbox traffic, no external send, no production action, no runtime code edit, no live LLM call.
+- The one-shot inline runner was written outside the repo under `C:\Users\mattn\AppData\Local\Temp\northstar_reaction_timing\rxt-2026-05-30-001\runner.py` and is not a tracked artifact; the durable repository evidence is the fixture, the ledger record, and the Blackboard record IDs.
+
+**Limitations preserved (mirrored from the fixture and the ledger entry):**
+- Lab mailbox only; not a production fixture.
+- `onmicrosoft.com` tenant default domain; not a final brand sender.
+- The 2026-05-30 baseline observed Gmail first-send spam placement; this fixture does not exercise Gmail-side placement.
+- Timing values are fixture-fixed via `received_at`; not production latency.
+- Not a measure of MSP usability.
+- Not a measure of underwriter usefulness.
+- Full raw Microsoft -> Gmail header chain is not stored in the repo; only the published `Authentication-Results` values are encoded; `received_headers` is intentionally empty.
+- Body, subject, attachment metadata, and recipient address are synthetic; only the sender identifier and `Authentication-Results` values are grounded in lab observation.
+
+**Next Step:**
+None implied. Future upgrades that would meaningfully exceed this fixture would require either (a) the full Microsoft -> Gmail raw `Received:` chain stored as a tracked artifact, or (b) a real business-mailbox vendor-invoice corpus per the cheaper-proof protocol (the lane that is currently `needs_more_samples`). Neither is authorized here.
+
+---
+
+## 2026-05-30 - Research-Park Capture: Workspace Audit Surfaces, Lab Mailbox Baseline, VPN Deep-Park
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Captured a single bounded research-park entry covering three loose threads (Google Workspace audit-log surfaces, the Microsoft lab mailbox baseline, and VPN services) so the signal is preserved without promoting any of them into active build work.
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Scope:** Notes-only research-park capture. This entry is not a spec, not a queue item, not an authorization, and not a product claim. It does not add anything to `PROJECT_BUILD_AND_AUDIT_QUEUE.md`, `think_sheet.md`, or `Frontier_Intake_Log.md`. It cites prior entries rather than restating them in full.
+
+**1. Google Workspace audit-log surfaces - keep as future research signal.**
+Already enumerated in the 2026-05-29 entries `Future Research Note: Workspace Signals And VPN Services` and `Google Workspace Audit Log Surface Noted` below. The signal set worth keeping visible includes:
+- suspicious sign-ins
+- failed sign-ins
+- password leaks
+- external file sharing
+- external content copied
+- files downloaded / printed / deleted
+- emails classified as spam
+- external emails received
+
+Reason to keep visible: these categories are adjacent to MSP security value, which is the same buyer chain the Stage A wedge sits next to. They are NOT a NorthStar capability, NOT a promised integration, and NOT a buyer-facing claim. Future research material only.
+
+**2. Microsoft lab mailbox baseline - keep as future research signal.**
+Already recorded in the 2026-05-30 entries `Lab Mailbox Baseline Captured` (committed in `ac50d29`) and `Microsoft Lab Mailbox Header Test Recorded` (committed in `f712066`). The baseline proved, in lab conditions:
+- Send from `security-test@northstarsecurityshield.onmicrosoft.com` to Gmail succeeded
+- Gmail reply back to the Microsoft mailbox succeeded
+- SPF / DKIM / DMARC / ARC all passed
+- First Gmail delivery landed in spam
+- Mailbox is lab-only, not client-facing, not a final brand sender
+
+Reason to keep visible: this baseline is reusable lab input for future raw-header capture, reaction-timing test runs, sender-provenance proof work, and Microsoft mailbox workflow testing. None of those follow-ups are promised here and none are queued.
+
+**3. VPN services - deep-park only.**
+- Logged as a possible future MSP packaging angle and nothing more.
+- Not part of the current Stage A email-fraud / inbox-layer wedge.
+- No implementation authorized, no product claim attached, no build queue item added.
+- Reopens only by explicit operator instruction.
+
+**Boundary statement:**
+This entry does not authorize, imply, or support any of the following: a Google Workspace integration, a Microsoft 365 integration, a VPN monitoring product, a workspace dashboard, a cross-domain security product, an MSP-side service expansion, or any claim about NorthStar covering any of the above surfaces. The Stage A wedge (per `VISION.md`) is unchanged.
+
+**Reason:**
+Operator instruction to consolidate three loose discussion threads into one durable research-park entry so the project keeps the signal between sessions and does not accidentally promote any of them.
+
+**Next Step:**
+Default state is parked. None of the three lanes leave the park without explicit operator instruction. No follow-up action is implied by this entry.
+
+---
+
 ## 2026-05-30 - Microsoft Lab Mailbox Header Test Recorded
 **Actor:** Matt + Codex
 
