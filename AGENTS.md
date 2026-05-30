@@ -90,6 +90,8 @@ When Matt asks "what should we do next?" — that is a candidate to invoke the r
 
 §10 of that spec has seven open questions. Until they resolve, the rubric is pre-§11 and you may use it but never claim it is signed.
 
+For path-setting "butterfly effect" decisions that affect revenue, architecture, legal / insurance posture, buyer trust, product identity, signed specs, or future autonomy, use `4. Product_Roadmap/Consequence_Matrix_Process.md` only when Matt explicitly asks. Rubrics rank; the consequence matrix surfaces second-order effects; Matt decides.
+
 ---
 
 ## 8. Forbidden language and vocabulary

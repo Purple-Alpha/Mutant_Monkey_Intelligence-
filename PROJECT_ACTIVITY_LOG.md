@@ -26,6 +26,44 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Consequence Matrix Process Draft Created
+**Actor:** Matt + Codex
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Consequence_Matrix_Process.md` (NEW - pre-§11 operator-triggered process for path-setting "butterfly effect" decisions)
+- `AGENTS.md` (UPDATED - added pointer under the Next-Action Decision Rubric section; agents may use the matrix only when Matt explicitly asks)
+- `MASTER_INDEX.md` (UPDATED - indexed the new process artifact)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Matt identified a missing decision layer: the project needs a lightweight way to surface short-term and long-term consequences before path-setting decisions that affect revenue, architecture, legal / insurance posture, buyer trust, product identity, signed specs, or future autonomy. Existing rubrics rank ideas or next actions; they do not expose the "butterfly effect" of doors opened, doors closed, risks moved, and obligations created.
+
+**Boundary:**
+The Consequence Matrix is not a gate, not a scoring rubric, not a decision authority, not a client-facing artifact, and not a daily-build requirement. It is operator-triggered only. Agents may flag that a decision appears to meet the trigger criteria, but they do not fill the matrix unless Matt explicitly asks.
+
+**Next Step:**
+Review the draft. If accepted, run the normal gate / trigger scan before any commit request. No §11 sign-off is implied by this draft.
+
+---
+
+## 2026-05-30 - Decision Matrix Versus Rubric Methodology Note
+**Actor:** Matt + Codex
+
+**Action:** Reviewed / Noted
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this note)
+
+**Reason:**
+Matt captured a distinction to revisit while refining NorthStar's operator decision tooling: a decision matrix compares multiple options against weighted criteria to choose among alternatives, while a scoring rubric evaluates the quality or performance of a task, deliverable, or option against defined levels. This may be relevant to whether the current Next-Action Decision Rubric should remain a rubric, evolve into a decision matrix, or use both concepts explicitly.
+
+**Next Step:**
+Hold for operator questions. No scoring structure, signed spec, queue item, or implementation change is authorized by this note.
+
+---
+
 ## 2026-05-30 - Microsoft 365 Lab Mailbox Authentication Baseline Captured As Tracked Artifact
 **Actor:** Matt + Cursor (Claude)
 
