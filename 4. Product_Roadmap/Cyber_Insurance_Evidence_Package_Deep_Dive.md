@@ -1,10 +1,14 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 Q1/Q2/Q3/Q4/Q5 resolved by operator on 2026-05-26 / 2026-05-27 (pending §13 lock as D1-D2e, D3-D3a, D4, and D5); remaining §12 open questions still require operator resolution before §13 sign-off.
+**Status:** DRAFT (pre-§11). §12 Q1-Q11 resolved by operator on 2026-05-26 through 2026-05-30 (pending §13 lock as D1-D2e, D3-D3a, D4, D5, D6, D7, D8, D9, D10, D11), with **Q10 a partial resolution**: D10 covers the per-MSP "yes" definition; the count-threshold sub-question (how many MSPs saying yes is required to unlock implementation-spec authoring) remains operator-open and is gated by §13 sign-off preconditions. §13 preconditions also remain open until the v1 test plan in §11 criterion 15 is defined.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
 **Scope reminder:** This package is an *organizational and presentation* layer over evidence NorthStar Inbox Shield already produces. It does not introduce new detection capability, new external claims, or new scope. It assembles existing audit artifacts into a buyer-readable bundle for the email-fraud / inbox-layer MDR control surface only.
+
+**Direction lock:** This package sits inside NorthStar's Evidence and Outcome Reporting lane: Detection → Verification → Evidence → Audit Trail → Outcome Documentation. The v1 evidence-record set in §6 / §12.Q7 maps one record to each stage. Any spec change that breaks this five-stage mapping requires a new operator decision.
+
+**Protected sentence (Cyber Insurance lane invariant):** *"NorthStar helps identify, review, verify, and document high-risk financial exposure before action is taken."* This sentence is the operator-authored summary line for this package's value proposition. The exact wording is preserved; paraphrases, expansions, or softer marketing-style rewrites are drift incidents at sign-off time.
 
 **Selected by:** Operator selection 2026-05-25 evening. Matt's selection is the authority. Cross-reference: `think_sheet.md` row "Cyber Insurance Evidence Package" (2026-05-25); any score recorded there is historical metadata only, not decision authority. The active guidance is "promote with cheaper-proof-first guidance."
 
@@ -277,7 +281,11 @@ A v1.1 reopening of either deferred surface requires concrete MSP-or-underwriter
 Operational commitments introduced by this policy:
 
 - **HC6 — Toolchain pinning.** The implementation spec must pin the PDF render toolchain (engine, version, fonts, template assets) and fold the toolchain identity and version into the package manifest. Silent toolchain mutation across versions is a determinism failure mode and must be prevented by the manifest.
-- **HC7 — Bundle format.** The implementation spec must specify the Markdown bundle archive format (deterministic zipped package), the file layout (rendered Markdown, structured records directory, README, manifest, content hashes), and the integrity model (per-file content hash plus a top-level package hash). Loose-directory delivery is not v1 acceptable.
+- **HC7 — Bundle format, structured-records path, prompting pattern, and determinism pins.** The implementation spec must specify:
+  - the Markdown bundle archive format (deterministic zipped package), the file layout (rendered Markdown, structured records directory at a stable internal path, README, manifest, content hashes), and the integrity model (per-file content hash plus a top-level package hash); loose-directory delivery is not v1 acceptable;
+  - that the structured records directory uses a stable internal folder/path so a future v1.1 top-level JSON render can reuse the same records without bundle-format churn (Q9 D);
+  - the prompting pattern used to generate the rendered-Markdown explanation section for each evidence record: **two-shot evidence-explanation prompting** with one fraud-row and one legit-row contrast pair sourced from the existing eval harness (Q7 / Q8 doctrine consumers); only the positive pattern is named ("two-shot evidence-explanation format"), and rejected prompting modes are not enumerated in the spec or in any buyer-facing copy;
+  - the determinism pins (model identity, temperature, toolchain version, eval-harness contrast-pair source identifier) so two runs against the same inputs produce comparable rendered Markdown; pin values live in the implementation spec, not in §13, so prompt-tuning refinements do not force a spec re-sign.
 - **HC8 — Minimal branding rules.** The implementation spec must define minimal branding rules so the PDF reads as credible without overclaim or scope drift. Branding must not introduce forbidden-language phrases (§9), must not surface repo-internal identifiers (§9 redaction), and must not expand or soften the §2 boundary statement into marketing copy.
 
 ### §6.3 Pricing scope (operator-resolved Q5)
@@ -388,7 +396,7 @@ A Drift Incident Report auto-generates on:
 The package never contains:
 
 - Raw email bodies
-- Raw vendor names if customer-confidential (vendor-name handling is per-tenant policy; see §12 open question)
+- Raw vendor names if customer-confidential (vendor-name handling is per-tenant policy; see §12.Q11)
 - Raw recipient identities (employee names, emails) beyond what the MSP / SMB chooses to include
 - API keys, tokens, credentials, signing keys, or any other secret material
 - Any tenant identifier inside a different tenant's record (Guardrail 11 — sacred)
@@ -420,7 +428,28 @@ Forbidden phrases may appear only when the rendered package is explicitly limiti
 
 The same phrase is blocking when used as a NorthStar capability, certification, compliance, security, detection, underwriting, or outcome claim.
 
-### Vocabulary translation list (v1, enforced by `vocabulary_translation` gate)
+### Operator avoid-list for this package (non-canonical, review guidance only) — Q8 D
+
+The following twelve phrases are operator-flagged for this package's drafting and review. This list is **non-canonical**. The canonical forbidden-language authority for the project is `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §5.1 (§11-signed 2026-05-26). Nothing on this list overrides or expands §5.1; promotion of any term into enforced project-wide forbidden-language status requires a signed §5.1 revision, not an edit here.
+
+- `saved money`
+- `prevented fraud`
+- `blocked the loss`
+- `stopped fraud`
+- `chain of thought`
+- `self-improving AI`
+- `autonomous evolution`
+- `compliant`
+- `certified`
+- `approved by insurer`
+- `carrier-approved`
+- `underwriter-approved`
+
+Use of any phrase on this avoid-list inside Cyber Insurance Evidence Package drafting, generated artifacts, or buyer-facing copy is treated as a review-time flag for operator attention. Operator decides whether to rewrite, accept (with documented context), or, if the case is strong enough, request the §5.1 canonical revision separately.
+
+`compliant` is intentionally retained on this avoid-list even though it already appears in the §7 `forbidden_language` gate above; redundancy here is allowed because the operator avoid-list is a human-readability review aid, not a second source of truth for the gate.
+
+### Vocabulary translation list (v1, enforced by `vocabulary_translation` gate) — Q6 A
 
 Plain-English replacements for carrier jargon are applied at render time. The translation rule list is itself an evidence record and is itself versioned.
 
@@ -432,7 +461,7 @@ Plain-English replacements for carrier jargon are applied at render time. The tr
 | Control attestation framework | The way we record what each control does |
 | Material weakness | A meaningful gap |
 
-The exact translation list is open for operator review at §12.
+**v1 lock.** The five rows above are the v1 translation list. Additions, removals, or rewrites in v1.1+ arrive through the cheaper-proof MSP discovery feedback channel: surface as Frontier Intake entry → `think_sheet.md` row → spec-first promotion through §11 revision (Q7 feedback channel pattern, applied here). No per-carrier or runtime expansion in v1.
 
 ### Redaction sweep workflow
 
@@ -504,10 +533,11 @@ A package reaches "done" if and only if **all** of the following are true:
 12. **Grok findings resolved.** Every Grok-identified deviation is either resolved or explicitly accepted by Matt with `operator_resolution_note` in the corresponding Drift Incident Report.
 13. **No blocking drift incidents open.** All `blocking` Drift Incident Reports are resolved or accepted.
 14. **Operator signature.** Matt has reviewed the rendered package and signed off in his own words. The signature is part of the package — a `signed_by_operator` evidence record with timestamp, scope acknowledgment, and Matt's own wording. AI-authored sign-off text is forbidden (cross-reference: deleted `Human_Written_Communication_Policy.md`, Authorship Rule discussion 2026-05-25/26).
+15. **v1 test plan executed.** The implementation spec's v1 test plan has rendered at least one fictional Stage A evidence case end to end across all five Evidence-and-Outcome-Reporting stages — Detection → Verification → Evidence → Audit Trail → Outcome Documentation — against the five-record set from §12.Q7. The test-plan run produces a captured artifact set and is logged through the project's normal test-evidence surfaces (e.g. `REACTION_TIMING_TEST_LOG.md` when timing is in scope; activity-log entry plus tracked test-input artifact otherwise). This criterion fails closed: a package cannot be done if the v1 test plan has never been run end to end.
 
 ### Machine-readable done declaration
 
-When all 14 criteria are met, the package emits a `done_declaration.json`:
+When all 15 criteria are met, the package emits a `done_declaration.json`:
 
 ```json
 {
@@ -516,20 +546,20 @@ When all 14 criteria are met, the package emits a `done_declaration.json`:
   "tenant_id": "acme-industries-demo",
   "generated_at": "2026-05-26T20:43:12Z",
   "done_at": "2026-05-26T20:55:03Z",
-  "criteria_met": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+  "criteria_met": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
   "grok_audit_output": "audit_outputs/cyber_insurance_evidence_package_2026-05-26T204502Z.md",
   "drift_incidents_resolved": ["drift-..."],
   "operator_signature_evidence_id": "evd-..."
 }
 ```
 
-A missing or partial `done_declaration.json` means the package is not done, regardless of what the rendered surface looks like.
+A missing or partial `done_declaration.json` means the package is not done, regardless of what the rendered surface looks like. A `done_declaration.json` that omits `15` from `criteria_met` is treated as the package not being done; whether that fires a blocking Drift Incident under a new `finding_type` enum value or fits under an existing one (e.g. `overclaiming` if the package is also asserting done state) is an implementation-spec detail and may require a §8 enum revision at that time.
 
 ---
 
 ## §12 Open Questions for Matt
 
-These resolve into locked decisions (D1–Dn) at §11 sign-off. Until then they are open and the spec is pre-§11.
+These resolve into locked decisions D1–D11 at §11 sign-off (D1–D2e from Q1/Q2, D3–D3a from Q3, D4 from Q4, D5 from Q5, D6–D11 from Q6–Q11). All eleven questions are operator-resolved as of 2026-05-30 (each marked "Resolved YYYY-MM-DD by operator (pending §13 lock as DN)" inline), but the spec remains pre-§11 until §13 sign-off lands; the §13 preconditions in that section define what still has to be true before sign-off can begin.
 
 ### Q1. Cadence
 
@@ -559,23 +589,45 @@ These resolve into locked decisions (D1–Dn) at §11 sign-off. Until then they 
 
 ### Q6. Translation list scope
 
-The §9 vocabulary translation list is open. Carrier jargon to translate, plain-English replacements, edge cases (terms that are sometimes jargon and sometimes legitimate). Matt's call on each entry.
+**Resolved 2026-05-30 by operator (pending §13 lock as D6).** D6: lock the §9 vocabulary translation list at its current five rows as the v1 canonical set. Additions, removals, or rewrites in v1.1+ arrive through the cheaper-proof MSP discovery feedback channel — surface as a Frontier Intake entry, promote to `think_sheet.md`, then spec-first promotion through §11 revision. No per-carrier or runtime expansion in v1. See §9 vocabulary translation list for the v1 lock and feedback-channel rule.
 
 ### Q7. Which existing artifacts go in v1 vs v1.1
 
-v1 candidate set is large (everything in §4). Going wide on v1 increases surface area and engineering cost. Going narrow risks omissions underwriters expect. Trade-off is Matt's to make; the spec doesn't prejudge it.
+**Resolved 2026-05-30 by operator (pending §13 lock as D7).** D7: Shape α — one record per Evidence-and-Outcome-Reporting stage in v1, with v1.1 expansion allowed only on cheaper-proof feedback. The v1 record set:
+
+| Stage | v1 evidence record |
+|---|---|
+| Detection | Lift-only invariant test results |
+| Verification | Scoring explanations: internal 0–100 + client-facing 5-axis rubric |
+| Evidence | Effective parameter report, per-tenant |
+| Audit Trail | Signed policy state + tenant override audit |
+| Outcome Documentation | Inbox Shield sample monthly report |
+
+Feedback channel for v1.1 additions: surface cheaper-proof MSP discovery requests as a Frontier Intake entry → promote to `think_sheet.md` → spec-first promotion through §11 revision if the change is structural. Light record-swap tuning between v1 and v1.1 follows the same path; the feedback channel is not a runtime expansion lane.
+
+Cross-reference: the Direction lock (top of spec) requires the five-stage mapping to remain intact; any v1.1 change that breaks the one-record-per-stage shape is a new operator decision, not a tuning detail.
 
 ### Q8. Forbidden-language list — additions
 
-§9 lists v1 forbidden phrases. Carrier-specific jargon, regulator-specific phrases, or competitor-specific language (e.g. "we replace Defender") may need to join the list.
+**Resolved 2026-05-30 by operator (pending §13 lock as D8).** D8: this package inherits the canonical forbidden-language list from `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §5.1 (§11-signed 2026-05-26). For drafting and review of this package only, a twelve-term **non-canonical operator avoid-list** lives in §9 as review guidance. The avoid-list does not create a second source of truth: it does not override §5.1, does not expand the §7 `forbidden_language` gate, and does not authorize new enforcement. Any term whose canonical enforcement is needed project-wide must be added through a signed §5.1 revision, not through this package. See §9 "Operator avoid-list" for the twelve terms.
 
 ### Q9. Render surfaces — Markdown vs JSON vs both
 
-Engineering question. The structured evidence records are JSON / YAML by spec. The buyer-readable surface is open: Markdown for engineering visibility, PDF for delivery, JSON for machine consumption (e.g. an MSP's evidence-management platform). Likely the answer is "all of the above," but Matt confirms.
+**Resolved 2026-05-30 by operator (pending §13 lock as D9).** D9: v1 ships **PDF + Markdown bundle** (per Q3 / §6.2). The Markdown bundle must preserve the machine-readable structured records at a stable internal folder/path inside the bundle so they remain discoverable for downstream tooling without a v1 top-level JSON render surface. **Top-level JSON render is deferred to v1.1**, gated on cheaper-proof MSP demand evidence. HC7 already requires the structured-records directory; D9 sharpens that requirement by locking the path stability as a v1.1-forward-compat constraint. See HC7 in §6.2 for the bundle-format and structured-records-path requirement.
 
 ### Q10. Cheaper-proof gating — what counts as go?
 
-The think_sheet verdict gates spec implementation on cheaper-proof MSP discovery. What signal counts as "go" — 1 of 3 MSPs saying yes? 2 of 3? A different bar? Matt sets the threshold.
+**Resolved 2026-05-30 by operator (pending §13 lock as D10) — partial: per-MSP definition only.** D10 resolves only the per-MSP definition of "yes":
+
+- A single MSP's "yes" requires two named anchors: a **named SMB** plus a **named upcoming insurance / underwriting conversation** for that SMB.
+- Verbal confirmation is acceptable for discovery logging; written follow-up strengthens the signal but is not required to satisfy the per-MSP definition.
+- Discovery scripts must capture the two named anchors verbatim and log them through the existing project surfaces (cheaper-proof runbook + worksheet).
+
+**Still operator-open under Q10 — count threshold.** How many MSPs saying yes (by the D10 per-MSP definition above) is required for cheaper-proof to be considered "validated" enough to unlock implementation-spec authoring per §13 — the original Q10 question (*"1 of 3? 2 of 3? a different bar?"*) — remains an operator call. No threshold count is pre-committed here. Implementation-spec authoring is not authorized by D10 alone; it additionally requires the count threshold to be operator-set and met. The count-threshold decision is also gated by §13 sign-off preconditions (see §13).
+
+### Q11. Vendor-name redaction policy
+
+**Resolved 2026-05-30 by operator (pending §13 lock as D11).** D11: in v1, vendor names are **silently redacted by default** in the rendered package whenever a tenant policy marks them as customer-confidential. The package does not annotate redaction events to buyer-facing readers in v1. v1.1 may add explicit redaction annotations to the rendered package if cheaper-proof MSP feedback (per Q10) shows that underwriters or MSPs care about redaction visibility as part of the evidence chain. Reopening this for v1.1 requires the same feedback-channel pattern as Q7 / D7 — Frontier Intake → `think_sheet.md` → §11 revision. The default-silent / future-visible split keeps v1 surface lean while preserving the operator's option to upgrade redaction visibility if downstream demand justifies it.
 
 ---
 
@@ -583,11 +635,21 @@ The think_sheet verdict gates spec implementation on cheaper-proof MSP discovery
 
 This section is empty until Matt signs.
 
-### Locked decisions (D1–Dn) — populated on sign-off
+### Preconditions for §13 sign-off
+
+§13 cannot be signed until all three of the following hold. These are gating preconditions, not done criteria — they govern whether the sign-off step can begin, not whether a generated package is done.
+
+1. **All §12 questions resolved.** Q1 through Q11 are each marked "Resolved YYYY-MM-DD by operator (pending §13 lock as DN)" in §12 with the operator-authored resolution text intact. At sign-off, every Q maps to a DN in the locked-decisions table below. Q10 is currently a **partial resolution** — D10 covers the per-MSP "yes" definition only; the count-threshold sub-question is still operator-open and is gated by precondition 3 below.
+2. **v1 test plan defined.** The implementation spec for this package defines a v1 test plan that renders at least one fictional Stage A evidence case end to end across the five Evidence-and-Outcome-Reporting stages (Detection → Verification → Evidence → Audit Trail → Outcome Documentation) against the §12.Q7 five-record set. The test plan must be runnable from the spec alone, not from operator memory. A signed-but-test-plan-less package is the failure mode this precondition exists to prevent.
+3. **Q10 count threshold set by operator.** The operator has explicitly set a count threshold for the Q10 cheaper-proof gate — how many MSPs saying yes (by the D10 per-MSP definition) is required for cheaper-proof to be considered "validated" enough to unlock implementation-spec authoring. The threshold is operator-authored; AI-drafted threshold counts are not acceptable. Implementation-spec authoring is not authorized by D10 alone; the count threshold must be operator-set and met before §13 sign-off can authorize the next stage. This precondition exists to close the authority-drift risk that a single MSP yes could be treated as having cleared the cheaper-proof bar.
+
+The §11 Done Criteria criterion 15 enforces the same five-stage end-to-end rendering at package-done time. The §13 precondition 2 above enforces it earlier — at sign-off — so the spec cannot lock without the test plan that criterion 15 later checks against.
+
+### Locked decisions (D1–D11) — populated on sign-off
 
 | # | Decision | Note |
 |---|---|---|
-| (pending) | (pending) | Decisions enter this table only after Matt's signed acceptance of the corresponding §12 open question. |
+| (pending) | (pending) | Decisions enter this table only after Matt's signed acceptance of the corresponding §12 open question. Expected lock at sign-off: D1–D2e (Q1/Q2), D3–D3a (Q3), D4 (Q4), D5 (Q5), D6 (Q6), D7 (Q7), D8 (Q8), D9 (Q9), D10 (Q10), D11 (Q11). |
 
 ### Sign-off line
 
@@ -599,7 +661,7 @@ Per the Authorship Rule (2026-05-25/26 discussion, cross-reference to the delete
 
 Signing this spec:
 
-1. Locks D1–Dn from §12 question resolution.
+1. Locks D1–D11 from §12 question resolution (D1–D2e from Q1/Q2, D3–D3a from Q3, D4 from Q4, D5 from Q5, D6–D11 from Q6–Q11).
 2. Authorizes the next stage — cheaper-proof MSP discovery framing if not yet done, or implementation spec authoring if cheaper-proof has already validated the framing.
 3. Anchors the spec for Pass 1 / Pass 2 implementation work when authorized.
 
@@ -609,6 +671,7 @@ Signing does **not**:
 - Reduce or remove any of the §11 Done Criteria.
 - Permit any AI-side scoping of the audit packet.
 - Override any of the seven non-negotiables in `VISION.md`.
+- Lock prompting determinism pins, contrast-pair sources, or render-toolchain versions — those live at HC7 / implementation spec so prompt-tuning refinements do not force a §11 re-sign.
 
 ---
 

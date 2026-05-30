@@ -5368,3 +5368,57 @@ python -m core.scoring.eval.fraud_eval_harness `
   --show-raw-response `
   --report-out eval_report_2026_05_20_xai_vf_001_debug.md
 ```
+
+## 2026-05-30 - Cyber Insurance Evidence Package §12/§13 Edit Pass Landed
+**Actor:** Codex (Matt-authorized, one-hour bounded edit session)
+
+**Action:** Updated
+
+**Files Changed:**
+- 4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Operator decisions from the Cyber Insurance §12 walkthrough (2026-05-26 through 2026-05-30) were ready to encode in the spec. The §12/§13 edit pass converted those decisions into a §13-lockable draft without signing §13 and without touching any other file outside the work guide's allowed list.
+
+**What landed in the spec:**
+
+- **Direction lock + Protected sentence (top metadata).** Explicit Evidence-and-Outcome-Reporting lane statement (Detection → Verification → Evidence → Audit Trail → Outcome Documentation). Operator-authored protected sentence preserved verbatim: *"NorthStar helps identify, review, verify, and document high-risk financial exposure before action is taken."*
+- **HC7 expanded (§6.2).** Now covers bundle format, stable internal structured-records path (Q9 D), the locked two-shot evidence-explanation prompting pattern with fraud-row + legit-row contrast pair from the eval harness, label hygiene (only the positive pattern is named), and determinism pins (model / temperature / toolchain / contrast-pair source) living at HC7 / implementation spec rather than §13. Prompt-tuning refinements no longer force a §11 re-sign.
+- **§9 — Operator avoid-list (non-canonical) for this package.** Twelve operator-flagged terms (`saved money`, `prevented fraud`, `blocked the loss`, `stopped fraud`, `chain of thought`, `self-improving AI`, `autonomous evolution`, `compliant`, `certified`, `approved by insurer`, `carrier-approved`, `underwriter-approved`). Canonical authority remains `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §5.1; the avoid-list is review guidance only and does not expand the §7 `forbidden_language` gate. `compliant` is intentionally retained in both surfaces; that redundancy is called out inline.
+- **§9 — Vocabulary translation list locked.** The existing five rows are the v1 canonical set. Additions, removals, or rewrites in v1.1+ arrive through Frontier Intake → `think_sheet.md` → spec-first §11 revision. No runtime or per-carrier expansion in v1.
+- **§9 — Vendor-name parenthetical** now points to §12.Q11 explicitly instead of a generic "see §12 open question."
+- **§11 — Criterion 15 added.** Package cannot be done until the v1 test plan has rendered at least one fictional Stage A evidence case end to end across all five EOR stages against the §12.Q7 five-record set, with test-evidence logged through the project's normal surfaces. `criteria_met` array and "all 14 criteria" prose updated to 15 throughout the section.
+- **§12 Q6–Q10 resolved + Q11 added (newly numbered).** Each resolution follows the existing "Resolved YYYY-MM-DD by operator (pending §13 lock as DN)" pattern: D6 (translation list locked at v1 set), D7 (Shape α + five named records, Frontier Intake feedback channel for v1.1), D8 (non-canonical operator avoid-list inheriting §5.1 canonical), D9 (PDF + Markdown bundle, structured records at stable internal path, top-level JSON deferred to v1.1), **D10 partial — per-MSP "yes" definition only (named SMB + named upcoming insurance/underwriting conversation; verbal acceptable); the count-threshold sub-question remains operator-open and is gated by §13 precondition 3**, D11 (silent vendor-name redaction in v1; explicit annotations deferred to v1.1 pending MSP feedback).
+- **§13 Preconditions block added.** §13 cannot be signed until (1) all Q1–Q11 are resolved as marked inline (Q10 partial-resolution status is explicit), (2) the implementation spec defines a v1 test plan runnable from the spec alone, and **(3) the operator has explicitly set the Q10 count threshold — how many MSPs saying yes is required for cheaper-proof to be considered validated. Implementation-spec authoring is not authorized by D10 alone; it additionally requires the count threshold to be operator-set and met.** Locked-decisions table preview now lists the expected D1–D11 lock at sign-off. The sign-off line itself remains operator-authored and untouched per the Authorship Rule. New explicit non-sign-off: signing does not lock prompting determinism pins or render-toolchain versions — those live at HC7 / implementation spec.
+
+**Operator-decision-to-spec mapping (full table):**
+
+| Decision | Where it landed |
+|---|---|
+| Direction lock (EOR lane) | Top metadata + §12.Q7 cross-reference |
+| Protected sentence | Top metadata |
+| Q6 A — translation-list lock | §12.Q6 (resolved as D6); §9 vocabulary translation list lock note |
+| Q7 Shape α + 5 records + Frontier Intake feedback channel | §12.Q7 (resolved as D7); HC7 prompting consumer reference; Direction lock cross-reference |
+| Q8 D — twelve-term non-canonical avoid-list, §5.1 canonical | §12.Q8 (resolved as D8); §9 "Operator avoid-list" subsection |
+| Q9 D — PDF + Markdown bundle, stable structured-records path, JSON deferred to v1.1 | §12.Q9 (resolved as D9); HC7 expanded |
+| Q10 A — per-MSP "yes" definition only (named SMB + named upcoming insurance/underwriting conversation; verbal acceptable). Count threshold deliberately left operator-open | §12.Q10 (resolved as D10, partial); count threshold added as §13 precondition 3 |
+| Q11 E — silent vendor redaction in v1, explicit annotations deferred | §12.Q11 (newly numbered, resolved as D11); §9 vendor-name parenthetical pointer |
+| Two-shot prompting + contrast pair + label hygiene + determinism | HC7 (not §13), per operator direction |
+| §13 test-plan condition | Both §11 criterion 15 and §13 preconditions block |
+
+**Boundaries respected:**
+- No edits outside the work-guide-allowed file list (the spec + this log).
+- AGENTS.md, VISION.md, Compliance_and_Trend_Watch_Process.md, audit_tools/, runtime code, and REACTION_TIMING_TEST_LOG.md were not touched.
+- §13 was not signed; the operator-authored sign-off line is unchanged.
+- No new claims about NorthStar capabilities were introduced.
+- No staging, committing, or pushing performed by the edit pass.
+- Consequence Matrix was not invoked — this pass was execution of decisions already made, not new path-setting.
+
+**Open items flagged for operator review (transparency, not new decisions):**
+- Q10 partial-resolution correction (applied 2026-05-30 mid-edit-pass): the first pass conflated two sub-questions inside Q10 and pre-committed "at least one MSP saying yes" as the v1 go threshold. The operator flagged this as weaker than what was decided. Inspection confirmed the per-MSP "yes" definition was the only thing the §12 walkthrough actually locked; the count-threshold sub-question (1 of 3? 2 of 3? a different bar?) remained operator-open. Q10 was rewritten to a partial resolution, §13 preconditions gained a third precondition requiring the operator-set count threshold, and the top metadata was clarified. The corrected wording explicitly closes the authority-drift risk: "Implementation-spec authoring is not authorized by D10 alone; it additionally requires the count threshold to be operator-set and met."
+- Q6 A: the exact original Option A wording was not restated in the work guide. The encoding used reflects the lean operator pattern that surfaced repeatedly during the walkthrough (lock the current five rows + Frontier Intake feedback channel for v1.1+). Operator should confirm wording at §13 review.
+- §11 criterion 15's failure mode is currently described without a closed `finding_type` enum value — adding one (`missing_test_plan_execution`) to §8 would be a schema surface change beyond this edit pass and is deferred. The inline language flags this as an implementation-spec decision at that time.
+
+**Next Step:**
+Run `complete_gate.py` on the §12/§13 edit-pass packet (manifest at `audit_outputs/pending/cyber_insurance_evidence_package_section_12_13_edit_pass_20260530.manifest.json`). Operator review of the encoded resolutions, then decide whether to (a) hold for §13 sign-off later, (b) stage and commit the edit pass locally, or (c) request wording tightening on the flagged open items above. No staging or commits performed by this entry.
