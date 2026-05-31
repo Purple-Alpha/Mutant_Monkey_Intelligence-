@@ -26,6 +26,31 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Cyber Insurance / Vendor Payment Integrity Direction SPARK Captured
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Created
+
+**Files Changed:**
+- 4. Product_Roadmap/_NorthStar_Cyber_Insurance_Vendor_Payment_Integrity_SPARK.md (new SPARK file; pre-spec, unsigned, not §11)
+- MASTER_INDEX.md (one new SPARK entry under §4 Product_Roadmap, slotted before `_Cross_Channel_Fraud_Shield_Concept_Capture.md` to keep SPARK cluster contiguous)
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Operator-directed capture of the strategic-direction conclusion that NorthStar's cyber-insurance lane is a **buyer-pressure / evidence-readiness wedge** for a **Vendor Payment Integrity Evidence** business spine — *not* a cyber-insurance product line — while translating risky `compliance` / `certification` / `premium reduction` / `approved by` language into NorthStar-safe wording before any of it touches a buyer surface. Operator-supplied keep / rewrite table captured verbatim; operator-supplied NorthStar-safe positioning sentence captured verbatim and labeled internal-only until a separate operator pass clears it for buyer-facing surfaces; operator-supplied future trigger conditions captured as the §5 promotion gate.
+
+This is a SPARK because: (a) the buyer-pressure evidence the §5 trigger conditions require does not yet exist (MSP discovery is the current active queue, per `Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md` D10 — looking for 2 of 3 strong yeses with named SMB anchor + named upcoming insurance / underwriting conversation), (b) the existing §13-signed `Cyber_Insurance_Evidence_Package_Deep_Dive.md` already governs *package implementation* and remains authoritative for package shape / redaction rules / vocabulary translation list / boundary statement — this SPARK is positioning direction, not implementation, and explicitly does not alter that signed spec, (c) the captured direction must survive the gap between today's capture and whenever MSP discovery surfaces the §5 promotion trigger, without drifting into product-line framing or buyer-facing copy in the meantime.
+
+Pure direction-capture pass. No runtime code touched. No signed spec touched. No D-decisions introduced. No new gates created. No additions to `PROJECT_BUILD_AND_AUDIT_QUEUE.md` — the active queue remains MSP discovery against the existing D10 cheaper-proof bar. The §3 positioning sentence is operator-authored and Authorship-Rule-protected; AI-generated rewrites of it are forbidden as buyer-facing copy without a fresh operator pass.
+
+Valid under AGENTS.md §11 Build Momentum Rule because it (a) records a stated operator decision (the verbatim keep / rewrite table + the verbatim positioning sentence + the explicit promotion-trigger gate) and (b) prevents two named drift modes — `wedge-as-product drift` and `forbidden-language slip via wedge framing`. The capture itself, with its boundary discipline and explicit `§5.1` non-claim list, is the artifact that prevents the slip.
+
+**Next Step:**
+Open follow-up only: continue executing the active MSP discovery queue per `Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md` and `Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`. If a §5 trigger fires (named MSP + named SMB + concrete request shape, or primary-source broker / underwriter / carrier-side evidence, or post-incident demand record), capture the trigger into `THREAT_INTEL_LOG.md` and `think_sheet.md`; the operator then decides whether to spec a follow-on Vendor Payment Integrity Positioning deep-dive as its own §11 candidate. No staging, commit, or push on this SPARK until the operator authorizes a follow-on commit cycle.
+
+---
+
 ## 2026-05-31 - Current State Map seeded with Alert-Fatigue Doctrine + Open Verification Gap (+ AGENTS.md §1 read-order promotion)
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)
