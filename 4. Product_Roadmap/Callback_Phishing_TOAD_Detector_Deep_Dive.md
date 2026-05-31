@@ -1,6 +1,6 @@
 # Callback Phishing / TOAD Body-Language Detector — Deep Dive (Part 1)
 
-**Status:** DRAFT (pre-§11). §10 sub-questions Q1–Q5 **resolved 2026-05-30 by stress test** in `think_sheet.md` and locked into §2 as D11–D15. §11 signature still pending — these stress-test verdicts do not sign the spec.
+**Status:** §11 SIGNED 2026-05-30 by Matt Nichol. §10 sub-questions Q1–Q5 resolved 2026-05-30 by stress test in `think_sheet.md` and locked into §2 as D11–D15. Implementation still requires Matt's explicit start-build instruction.
 
 **Scope reminder:** This document specifies **Part 1 only** — body-language detection. Part 2 (phone-number baselining via a `phone_number` closed-enum entry on Vendor Baseline Store) is explicitly **out of scope** for this spec. Part 2 is gated on a separate Vendor Baseline Store enum revision per `4. Product_Roadmap/Vendor_Baseline_Signal_Type_Enum_Revision_Deep_Dive.md`. Part 1 ships independently as a pure-function deterministic detector, the same shape as `header_divergence_detector` and `prompt_injection_detector`.
 
@@ -243,7 +243,7 @@ Do not render:
 
 ## §10 Resolved Questions — Stress-Test Verdicts Locked into §2
 
-**Status: RESOLVED 2026-05-30 by stress test in `think_sheet.md` → "Sub-question stress test — Callback Phishing / TOAD §10 (2026-05-30)".** All five sub-questions ran through the standard 7-axis test; verdicts are recorded there and locked here as D11–D15 (see §2). §11 signature is **still pending** — resolving §10 does not sign the spec.
+**Status: RESOLVED 2026-05-30 by stress test in `think_sheet.md` → "Sub-question stress test — Callback Phishing / TOAD §10 (2026-05-30)".** All five sub-questions ran through the standard 7-axis test; verdicts are recorded there and locked here as D11–D15 (see §2). §11 signed 2026-05-30 by Matt Nichol on the strength of the resolved §10 set.
 
 | Q | Question | Resolution → §2 D-decision |
 |---|----------|----------------------------|
@@ -259,10 +259,10 @@ Stress-test answers and the 7-axis reasoning behind each verdict live in `think_
 
 ## §11 Lockdown Signature
 
-**Status:** UNSIGNED. §10 sub-questions resolved 2026-05-30 by stress test; signature now pending operator review of the resolved D11–D15 set and the spec edits that landed alongside them. Note that D10 is superseded by D15 per the §10 Q5 verdict.
+**Status:** §11 SIGNED 2026-05-30 by Matt Nichol. §10 sub-questions resolved 2026-05-30 by stress test; D1–D9 + D11–D15 are now locked at signature (D10 explicitly superseded by D15 per the §10 Q5 verdict). Implementation still requires Matt's explicit start-build instruction.
 
-**Signed by:** ______________________  
-**Date:** ______________________  
+**Signed by:** ___Matt Nichol___________________  
+**Date:** _______May 30, 2026_______________  
 **Decisions locked at signature:** D1–D9 + D11–D15 (with D10 explicitly superseded by D15).
 
-Signature is incomplete. Implementation does **not** begin until Matt's explicit start-build instruction after signature, and pre-ship gate must complete before commit.
+Signature is complete (see above). Implementation still does **not** begin until Matt's explicit start-build instruction, and pre-ship gate must complete before commit of any runtime code.
