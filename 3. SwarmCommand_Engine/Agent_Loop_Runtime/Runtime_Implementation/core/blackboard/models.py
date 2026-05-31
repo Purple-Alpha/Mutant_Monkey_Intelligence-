@@ -325,7 +325,12 @@ AttachmentClass: TypeAlias = Literal[
 # can only grow via a deliberate schema change. The first eight values
 # match Phase_1_1_Fraud_Prevention_Deep_Dive.md §2.4 verbatim; the
 # ninth value was added after the 40-case eval dataset design grid surfaced
-# three Unicode-obfuscation cases that needed a locked-enum home.
+# three Unicode-obfuscation cases that needed a locked-enum home. The
+# tenth value (``callback_phishing_pattern``) landed alongside the
+# Callback Phishing / TOAD body-language detector per D2 of
+# ``4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md``
+# (§11 SIGNED 2026-05-30) and is emitted exactly once when the detector
+# fires on any of the five v1 phrase categories locked in D11.
 BehavioralDeviationFlag: TypeAlias = Literal[
     "new_banking_instructions",
     "out_of_band_pressure",
@@ -336,6 +341,7 @@ BehavioralDeviationFlag: TypeAlias = Literal[
     "first_time_sender_with_financial_ask",
     "urgency_paired_with_finance",
     "unusual_unicode_obfuscation",
+    "callback_phishing_pattern",
 ]
 
 # Ransomware precursor indicators surfaced by the deterministic detectors in
@@ -702,6 +708,123 @@ class ClientFacingRubricPayload(StrictModel):
         return self
 
 
+class CallbackPhishingCategory(StrictModel):
+    """One v1 callback-phishing phrase category that fired on an email body.
+
+    ``category_name`` is one of the closed five v1 categories locked in D11 of
+    ``4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md`` (§11
+    SIGNED 2026-05-30). Adding or removing a category is a v1.1 spec addendum
+    gated on real-traffic miss / false-positive evidence; it is not a code
+    change.
+
+    ``why_this_category`` is a short, generic, category-level explanation. Per
+    D7 of the TOAD spec it MUST NOT echo the matched lure phrase from the
+    email body, MUST NOT contain raw phone-number digits, and MUST NOT contain
+    raw header content; the strings are bounded at 160 characters (the same
+    cap the 5-axis rubric's ``why_this_score`` field uses for stability).
+    """
+
+    category_name: Literal[
+        "call_now_pressure",
+        "do_not_use_known_channel",
+        "voice_only_finalize",
+        "support_line_substitution",
+        "payment_redirect_call",
+    ]
+    why_this_category: str = Field(min_length=1, max_length=160)
+
+
+class CallbackPhishingAssessment(StrictModel):
+    """Deterministic Callback Phishing / TOAD body-language detector overlay.
+
+    Pure-function deterministic output of
+    ``core/scoring/callback_phishing_detector.py``. Mirrors the shape of the
+    ``HeaderDivergenceAssessment`` / ``PromptInjectionAssessment`` precedents
+    but is a Pydantic ``StrictModel`` (not a plain dataclass) because this
+    block is persisted on ``EmailAnalysisPayload`` and therefore subject to
+    the same blackboard validation discipline as every other payload field.
+
+    Locked per
+    ``4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md`` §5
+    (§11 SIGNED 2026-05-30):
+
+    - ``detector_version`` pinned to ``"v1"`` so a future ``v2`` schema is a
+      deliberate, audit-visible upgrade.
+    - ``fired`` is the single boolean signal for downstream consumers
+      (rubric, daily digest, scoring agent overlay).
+    - ``categories`` is a tuple of ``CallbackPhishingCategory`` rows; per D12
+      the tier signal is fully encoded by ``recommended_risk_floor_lift``
+      banding plus ``len(categories)`` — there is no numeric
+      ``callback_phishing_score`` field in v1.
+    - ``recommended_risk_floor_lift`` is the deterministic banded value from
+      §4.1 (0, 50, 70, or 85). Max-merge semantics live in the scoring-agent
+      wiring (pass 2); this object only encodes the lift the detector wants.
+    - ``out_of_band_verification_required`` is the D8 contract: whenever the
+      detector fires, downstream rendering MUST emit the project-standard
+      wording defined in
+      ``core.scoring.callback_phishing_detector.OUT_OF_BAND_VERIFICATION_WORDING``.
+
+    Per D15 the v1 schema carries no ``phone_number_assessment`` slot;
+    ``extra="forbid"`` enforces that on validation. Part 2 (if it ships)
+    adds the field through its own §11-signed spec, never as a silent
+    v1 patch.
+
+    Schema invariants (validator-enforced, §5 of the spec):
+
+    - When ``fired == False`` then ``categories == ()``,
+      ``recommended_risk_floor_lift == 0``,
+      ``out_of_band_verification_required == False``.
+    - When ``fired == True`` then ``len(categories) >= 1``,
+      ``recommended_risk_floor_lift >= 50`` (the §4.1 minimum band), and
+      ``out_of_band_verification_required == True`` (D8).
+    """
+
+    detector_version: Literal["v1"] = "v1"
+    fired: bool
+    categories: tuple[CallbackPhishingCategory, ...]
+    recommended_risk_floor_lift: int = Field(ge=0, le=100)
+    out_of_band_verification_required: bool
+
+    @model_validator(mode="after")
+    def enforce_fired_invariants(self) -> CallbackPhishingAssessment:
+        if not self.fired:
+            if self.categories:
+                raise ValueError(
+                    "callback_phishing_assessment with fired=False must have "
+                    "categories == () (got non-empty tuple)"
+                )
+            if self.recommended_risk_floor_lift != 0:
+                raise ValueError(
+                    "callback_phishing_assessment with fired=False must have "
+                    "recommended_risk_floor_lift == 0 "
+                    f"(got {self.recommended_risk_floor_lift})"
+                )
+            if self.out_of_band_verification_required:
+                raise ValueError(
+                    "callback_phishing_assessment with fired=False must have "
+                    "out_of_band_verification_required == False"
+                )
+            return self
+
+        if len(self.categories) < 1:
+            raise ValueError(
+                "callback_phishing_assessment with fired=True must have at "
+                "least one category (got 0)"
+            )
+        if self.recommended_risk_floor_lift < 50:
+            raise ValueError(
+                "callback_phishing_assessment with fired=True must have "
+                "recommended_risk_floor_lift >= 50 "
+                f"(got {self.recommended_risk_floor_lift})"
+            )
+        if not self.out_of_band_verification_required:
+            raise ValueError(
+                "callback_phishing_assessment with fired=True must have "
+                "out_of_band_verification_required == True (D8 contract)"
+            )
+        return self
+
+
 class EmailAnalysisPayload(StrictModel):
     """Structured output of the NorthStar Inbox Shield scoring agent.
 
@@ -713,6 +836,14 @@ class EmailAnalysisPayload(StrictModel):
     (see :class:`EmailAnalysisRansomwarePrecursorAnalysis`). Optional to keep
     backward compatibility with Month 1 / Month 2 fixtures that did not carry
     the field; production scoring overlays it after LLM validation.
+
+    ``callback_phishing_assessment`` is the Callback Phishing / TOAD Part 1
+    deterministic overlay (see :class:`CallbackPhishingAssessment`). Optional
+    to keep backward compatibility with all pre-2026-05-30 fixtures; the
+    scoring-agent wiring (pass 2) overlays it after the body-language
+    detector runs. Spec:
+    ``4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md`` §5
+    (§11 SIGNED 2026-05-30).
     """
 
     source_email_record_id: UUID
@@ -738,6 +869,7 @@ class EmailAnalysisPayload(StrictModel):
         ]
     ] = Field(default_factory=list)
     client_facing_rubric: ClientFacingRubricPayload | None = None
+    callback_phishing_assessment: CallbackPhishingAssessment | None = None
 
     @model_validator(mode="after")
     def cap_summary_length(self) -> EmailAnalysisPayload:

@@ -464,9 +464,16 @@ def test_email_analysis_risk_analysis_accepts_full_new_field_set():
     assert len(risk.behavioral_deviation_flags) == 3
 
 
-def test_behavioral_deviation_flag_literal_pins_exactly_nine_values():
+def test_behavioral_deviation_flag_literal_pins_exactly_ten_values():
     """Catches schema drift before any agent starts emitting a flag the schema
-    does not actually allow (same governance pattern as AttachmentClass)."""
+    does not actually allow (same governance pattern as AttachmentClass).
+
+    The tenth value (``callback_phishing_pattern``) was added 2026-05-30 per
+    D2 of ``4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md``
+    (§11 SIGNED 2026-05-30) and is emitted exactly once by the Callback
+    Phishing / TOAD body-language detector when any of its five v1 phrase
+    categories fires.
+    """
     declared = get_args(BehavioralDeviationFlag)
     assert set(declared) == {
         "new_banking_instructions",
@@ -478,6 +485,7 @@ def test_behavioral_deviation_flag_literal_pins_exactly_nine_values():
         "first_time_sender_with_financial_ask",
         "urgency_paired_with_finance",
         "unusual_unicode_obfuscation",
+        "callback_phishing_pattern",
     }
 
 
