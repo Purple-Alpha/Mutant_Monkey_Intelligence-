@@ -26,6 +26,36 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Cyber Insurance MSP Discovery Runbook Prepared
+
+**Actor:** Matt + Cursor (GPT-5.5)
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md` (NEW — operator-facing cheaper-proof runbook for the Cyber Insurance Evidence Package D10 discovery gate. Defines the narrow proof question, 2-of-3 D10 go bar, privacy boundary, existing materials to use, starter MSP target list from `THREAT_INTEL_LOG.md`, short call guide, worksheet instructions, outcome rule, and non-authorizations.)
+- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv` (NEW — three-row worksheet for logging `cybins-discovery-001` through `003`; columns capture MSP relevance, named SMB anchor, named insurance / underwriting anchor, D10 yes/partial/no, buyer pain, evidence gap, pricing signal, follow-up, and notes.)
+- `MASTER_INDEX.md` (UPDATED — indexed the new runbook and worksheet next to the existing cheaper-proof artifacts.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+After the Cyber Insurance queue reality refresh, the repo-side state is clean: §12 Q1-Q11 are resolved, §14 is defined, and the §14 dry run already landed. The remaining blocker is operator discovery, not more spec drafting. This pass prepares the smallest durable operator surface needed to run that discovery without relying on chat memory: a runbook plus worksheet keyed to the spec's D10 rule.
+
+**Boundary:**
+- No Cyber Insurance spec edit.
+- No §13 signature or sign-off-readiness claim.
+- No implementation spec drafted.
+- No runtime code or test harness edited.
+- No real customer data collected.
+- No pricing approval.
+- No client-facing copy authored; the runbook is operator-side discovery prep.
+- No stage, commit, or push in this pass.
+
+**Next Step:**
+Matt runs up to three relevant MSP conversations and fills the worksheet. A D10 yes requires both a named SMB anchor and a named upcoming insurance / underwriting conversation. If 2 of 3 relevant conversations meet that definition, the next project step is §13 sign-off readiness review; otherwise the gate remains open.
+
+---
+
 ## 2026-05-31 - Email Security Testing Framework Q2 Resolved (Pydantic Model Authority)
 
 **Actor:** Matt + Cursor (GPT-5.5)
