@@ -631,6 +631,77 @@ These verdicts move into §2 of `4. Product_Roadmap/Callback_Phishing_TOAD_Detec
 
 ---
 
+## Sub-question stress test — Email Security Testing & Evidence Framework §10 (2026-05-31)
+
+The Email Security Testing & Evidence Framework draft `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` surfaced nine sub-questions in §10. Q2, Q8, Q9 are already resolved (D23, D21, D22). This pass stress-tests Q1, Q3, Q4 — the three §10 explicitly flagged as needing a stress-test verdict before the v1 implementation pass starts — and records lighter verdicts for Q5, Q6, Q7. Same discipline as the prior two passes (rubric §10 2026-05-25 and TOAD §10 2026-05-30): each sub-question goes through the standard 7-axis test, the verdict is recorded here, then moves into spec §2 as a new D-decision. §10 entries flip to "resolved." §11 signature is still pending after that — these verdicts do not sign the spec.
+
+### Q1. Exact `confidence_bucket` bounds — draft proposal `[0,25] / [26,60] / [61,100]` or recalibrate now?
+
+1. **Failure mode** — Recalibrating the bucket bounds *before* the v1 implementation runs against real fixtures means picking new numbers from intuition rather than evidence; calibration drift is the failure mode the §2 D-decisions are meant to prevent. Keeping the draft proposal preserves a stable target for v1 and forces any future re-calibration to cite empirical fixture distribution as evidence. The competing risk — locking bounds that turn out to be wrong — is bounded because the framework is pre-signature and §11-revision can re-tune the bounds after real data accumulates.
+2. **Hidden cost** — A new bound proposal requires re-running every example in §8.2 against the new boundaries, updating the `overconfident` carve-out semantics, and re-justifying the change in §2. Sticking with the draft proposal is zero new work and matches the §8.2 example text already published.
+3. **Specific buyer** — Same MSP / cyber-insurance archetype as the parent spec. Buyers care about a single intuitive split: low ≈ "didn't take a strong position," medium ≈ "moderate," high ≈ "confident," overconfident ≈ "confident and wrong." The draft split matches that intuition and is consistent with the existing runtime `risk_score` bands the rubric already publishes (50 / 70 / 85).
+4. **Cost of inaction** — Not locking the bounds now leaves Q1 open at §11, which violates the user's "close to §11-signable" goal. Locking the proposal with an explicit recalibration gate is the cheapest closure that does not foreclose evidence-based revision.
+5. **Cheaper proof first** — Yes. Ship the draft `[0,25] / [26,60] / [61,100]` split as v1, instrument run output to publish the empirical distribution per bucket in the dashboard `confidence_bucket_distribution` metric (already §8.5), and gate any bound revision on ≥60 real cases distributed across all four buckets + a §11-revision cycle + an operator log entry naming the evidence. The metric already exists; the revision discipline is the cheap addition.
+6. **Existing competitor** — Email-security competitors rarely publish calibration bucket boundaries at all (Mimecast, Defender, Abnormal expose opaque severity scores). NorthStar's wedge is auditable signal-by-signal evidence; a published, named four-bucket calibration with explicit revision discipline is a differentiator. Drifting the bounds quietly between runs would erode that differentiator.
+7. **Pre-mortem** — "We left Q1 open at §11, the v1 implementation invented its own boundaries, and three different runs reported different `overconfident_rate` numbers depending on which boundary version was in effect. Mitigated by locking D24 with the exact draft bounds and gating revision on real fixture evidence + §11-revision cycle."
+
+**Verdict:** Lock the draft bounds as v1. `confidence_bucket` boundaries are exactly `[0,25] / [26,60] / [61,100]` for `low` / `medium` / `high`; `overconfident` is the subset of `high` whose `verdict_match` is not `exact`. Recalibration requires (a) ≥60 real fixture cases distributed across all four buckets, (b) a §11-revision cycle, and (c) an operator entry in `PROJECT_ACTIVITY_LOG.md` naming the empirical distribution evidence. Pre-§11-signature drift is forbidden. (Locks into spec §2 as D24.)
+
+---
+
+### Q3. Should `adjacent` verdict mismatches count partial credit toward `accuracy_supported_only`, or remain strictly excluded?
+
+1. **Failure mode** — Partial credit creates a fuzzy accuracy denominator: a single number that says "94% accurate" can mean "exactly correct 94% of the time" or "exactly correct 70%, adjacent 24%" depending on the credit weighting. Two runs reporting the same accuracy can have very different real verdict quality. The §3 core philosophy explicitly warns against "clean-looking metrics that hide capability gaps"; partial credit is exactly that pattern at the verdict layer. Strict exclusion keeps the accuracy number honest and surfaces adjacency separately via `verdict_match_distribution` (§8.5) so the operator still sees the adjacency signal — just not averaged into accuracy.
+2. **Hidden cost** — Partial credit requires picking a weight (0.5? 0.33? per-axis?), publishing that weight, justifying it, and re-justifying it whenever the rubric ladder changes (the rubric is §11-signed and the ladder shape is fixed, but the underlying severity meaning can shift with new evidence types). Strict exclusion has zero parameter to maintain.
+3. **Specific buyer** — MSPs and cyber-insurance underwriters reading buyer-facing accuracy metrics want a number with a clear denominator. "Exact match" is the cleanest denominator. The `verdict_match_distribution` four-value breakdown (exact / adjacent / mismatch / unscored) preserves the adjacency signal in a way buyers can read at a glance ("we were exactly right 80%, one step off 12%, two-plus steps off 8%") — better than a single weighted number that hides the breakdown.
+4. **Cost of inaction** — Leaving Q3 open at §11 violates the "close to §11-signable" goal. Locking strict exclusion now keeps accuracy honest and preserves operator-friendly adjacency surfacing. The competing v1.1 path (introducing weighted credit later) is still open via §11-revision if evidence ever supports it; locking strict exclusion now does not foreclose that path.
+5. **Cheaper proof first** — Yes. Strict exclusion is the cheaper-to-prove default. If the operator later finds the `verdict_match_distribution` breakdown is genuinely confusing for buyers and a single weighted score would communicate better, the §11-revision path can introduce credit weighting with evidence in hand. The reverse — starting with credit weighting and trying to back out to strict — would require re-justifying every prior accuracy number.
+6. **Existing competitor** — Most ML/eval surfaces use strict exact-match accuracy + a confusion matrix breakdown for nuance. Partial credit for "almost right" is rare outside of subjective NLP evaluation; verdict ladders in security tooling are typically strict.
+7. **Pre-mortem** — "We weighted adjacent at 0.5 to look smoother in dashboards, an MSP read 92% accuracy as a confidence signal, but the underlying distribution was 70% exact + 44% adjacent, and the buyer was misled. Mitigated by strict exclusion + four-value distribution surfacing the adjacency separately."
+
+**Verdict:** Strict exclusion. `accuracy_supported_only` and the derived precision / recall / FPR / FNR treat any `verdict_match` ≠ `exact` as incorrect. `verdict_match_distribution` (§8.5) preserves the four-value breakdown so operators see adjacent-vs-mismatch separately, without averaging it into accuracy. (Locks into spec §2 as D25. Confirms the §8.1 formula that already excludes adjacent from the numerator.)
+
+---
+
+### Q4. Regression-tolerance default — `0` pp strict, or `2` pp permissive?
+
+1. **Failure mode** — A `2 pp` permissive default means any single regression run can lose up to two percentage points on any per-metric value silently — and two adjacent runs each losing two pp accumulate four pp of silent drift. Across ten runs, twenty pp of silent drift is possible if the tolerance is never tightened. A `0 pp` strict default forces every drop to be acknowledged: the operator either explicitly widens the tolerance with a recorded reason and expiry, or fixes the regression. Strict-default-with-widening-discipline is the structural prevention of the silent-drift failure mode.
+2. **Hidden cost** — `0 pp` strict requires per-subcategory widening discipline whenever the operator legitimately needs to accept a small drop (e.g., a new fixture intentionally tightens the bar, or a one-time numeric jitter at a boundary). The widening is one `PROJECT_ACTIVITY_LOG.md` entry per subcategory naming value, rationale, and expiry. That is small, recorded, auditable cost. `2 pp` permissive has no per-event cost but unbounded compounding drift cost over time.
+3. **Specific buyer** — MSPs and cyber-insurance underwriters reading the regression report want to see whether NorthStar is getting better, worse, or holding. A `2 pp` default reports "holding" even when underlying performance is sliding; a `0 pp` default reports honestly. The honesty matches the framework's §3 philosophy.
+4. **Cost of inaction** — Leaving Q4 open at §11 means v1 ships without a tolerance number, the implementation defaults to whatever the developer picks, and the choice never appears in a §11-signed surface. Locking `0` makes the choice explicit and named.
+5. **Cheaper proof first** — Yes. `0 pp` strict is the cheaper-to-revert default. If real operations show the per-subcategory widening discipline is creating excessive friction with low actual value, the §11-revision path can raise the default. The reverse — defaulting to `2 pp`, then trying to tighten after silent drift accumulates — requires reconciling historical regression reports against the new tolerance, which is expensive.
+6. **Existing competitor** — CI / regression-testing surfaces in mature engineering shops default to strict (zero-tolerance) regression with explicit, recorded exceptions. Permissive defaults are the documented anti-pattern in the testing literature; they are how legacy test suites slowly become unreliable.
+7. **Pre-mortem** — "We defaulted to `2 pp`, the framework reported 'within tolerance' across six runs while per-category recall slid from 88% to 80%, an MSP asked why the dashboard claimed stability and we had to explain accumulated drift. Mitigated by `0 pp` default + explicit named widening per subcategory with hard expiry."
+
+**Verdict:** Default `0` percentage points. §4.2 regression-tier rule fails any per-metric drop on a previously-passing case. Per-subcategory widening above 0 requires an operator entry in `PROJECT_ACTIVITY_LOG.md` naming subcategory, tolerance value (pp), rationale, and hard expiry. Tolerance widening is high-severity drift; the default forces a conscious decision rather than silent erosion. (Locks into spec §2 as D26.)
+
+---
+
+### Lighter verdicts (Q5, Q6, Q7)
+
+These three sub-questions are not flagged by §10 as needing a pre-implementation stress test; verdicts here are lighter and lock straight into spec §2.
+
+- **Q5 verdict — D27.** Defer red-team mission file structure to the first real mission, but lock the eight minimum required fields (`mission_id`, `scope`, `hypothesis`, `threat_model`, `controlled_synthetic_only_acknowledgement`, `success_criteria`, `scheduled_for`, `operator_authorization`). Field names intentionally avoid `attestation` per the spec's D10 forbidden-language inheritance. Rationale: structure-by-mission preserves the §4.4 organic discipline while preventing the first mission from drifting into freeform notes. Eight fields is small enough to remember; large enough to make every mission auditable.
+- **Q6 verdict — D28.** No composite quality score in v1. The §8.5 metric list is the dashboard. Rationale: a composite is the exact failure mode §3 warns against — a clean number that hides capability gaps behind averaging. v1.1+ can introduce a composite if buyer feedback genuinely needs it, gated on operator-stated evidence that the §8.5 list is too noisy for monthly reporting.
+- **Q7 verdict — D29.** Lock the Decision Auditor trigger condition: failure cards with `failure_type` ∈ {`schema_violation`, `scope_violation`} are Decision Audit candidates and MUST be linked from the audit-trail event via a new optional `decision_audit_candidate_id` field. The packet shape, the runner integration with `audit_tools/decision_audit_runner.py`, and any dashboard surface for outstanding candidates are v1.1 work and require their own §11-signed spec. v1 marks candidates only; v1 does not run the integration. Rationale: marking is cheap and forward-compatible; running the integration without a separate signed spec is scope creep.
+
+---
+
+### Verdict summary (locks into spec §2 as D24–D29)
+
+| # | Sub-question | Locked v1 verdict |
+|---|---|---|
+| D24 | `confidence_bucket` boundaries | `[0,25] / [26,60] / [61,100]` for `low/medium/high`; `overconfident` carved from `high` by `verdict_match ≠ exact`. Recalibration requires ≥60 real fixture cases, §11-revision, and operator log entry naming evidence. |
+| D25 | `adjacent` partial credit | Strictly excluded from accuracy denominators. `verdict_match_distribution` preserves the four-value breakdown so adjacency stays visible without averaging into accuracy. |
+| D26 | Regression-tolerance default | `0` percentage points strict. Per-subcategory widening requires operator `PROJECT_ACTIVITY_LOG.md` entry naming subcategory, value, rationale, hard expiry. |
+| D27 | Red-team mission file structure | Defer to first mission; lock eight minimum required fields (`mission_id`, `scope`, `hypothesis`, `threat_model`, `controlled_synthetic_only_acknowledgement`, `success_criteria`, `scheduled_for`, `operator_authorization`); field names intentionally avoid `attestation`. |
+| D28 | Composite quality score | None in v1. §8.5 metric list is the dashboard. Composite deferred to v1.1+ gated on operator-stated evidence. |
+| D29 | Decision Auditor integration | Lock trigger only (failure_type ∈ {`schema_violation`, `scope_violation`}); add `decision_audit_candidate_id` linkage field. Runner integration, packet shape, dashboard surface are v1.1 with own signed spec. |
+
+These verdicts move into §2 of `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` as D24–D29 and flip §10 Q1, Q3, Q4, Q5, Q6, Q7 to "resolved 2026-05-31." §11 signature is **still pending** — these stress-test verdicts do not sign the spec.
+
+---
+
 ## Review Cadence
 
 - **Monthly:** every idea in `live park`, score every unscored idea, fill any `ST = N` answers for `promote` band candidates.

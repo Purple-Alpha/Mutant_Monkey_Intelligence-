@@ -26,6 +26,51 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Email Security Testing Framework §10 Closed Out (Q1 / Q3-Q7 → D24-D29)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Updated
+
+**Files Changed:**
+- `think_sheet.md` (UPDATED — added new section `Sub-question stress test — Email Security Testing & Evidence Framework §10 (2026-05-31)` carrying full 7-axis stress tests for Q1, Q3, Q4 plus lighter recorded verdicts for Q5, Q6, Q7, and a verdict-summary table mapping into spec §2 as D24–D29. Follows the same shape as the prior two §10 passes for the rubric (2026-05-25) and Callback Phishing / TOAD (2026-05-30).)
+- `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` (UPDATED — added D24 (Q1 confidence_bucket boundaries locked at `[0,25] / [26,60] / [61,100]`), D25 (Q3 strict exclusion of adjacent from accuracy denominators), D26 (Q4 default regression-tolerance `0` pp), D27 (Q5 red-team mission file deferral with eight minimum-required-fields floor), D28 (Q6 no composite quality score in v1), D29 (Q7 Decision Auditor trigger-only v1 scope plus mandatory `decision_audit_candidate_id` linkage field) to §2; flipped §10 Q1 / Q3 / Q4 / Q5 / Q6 / Q7 from open to RESOLVED with cross-refs to D24–D29 and the relevant §-anchors (§4.2, §4.4, §7.2, §8.1, §8.2, §8.5, §9.4); added the `decision_audit_candidate_id` field to the §9.4 failure-card schema and a closing sentence wiring the failure-card discipline to D29; updated the §11 sign-off placeholder to enumerate D1–D29 coverage including all six new D-decisions and their corresponding Q-resolutions. §11 signature line itself remains blank by design — this pass does NOT sign the spec.)
+- `MASTER_INDEX.md` (UPDATED — refreshed the Email Security Testing & Evidence Framework entry to record all nine §10 sub-questions now RESOLVED pre-§11, the new D24–D29 verdicts and their per-Q mappings, and the corrected `Locks D1–D29` line + tail prose.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+Item 2 of the operator's 2026-05-31 "today's list" — resolve the remaining six open Email Security Testing & Evidence Framework sub-questions (Q1, Q3–Q7) so the spec is close to §11-signable. The §10 implementation-gating note in the draft explicitly required `think_sheet.md` 7-axis stress tests for Q1, Q3, Q4 before any v1 implementation could begin; the lighter Q5 / Q6 / Q7 verdicts are recorded in the same think_sheet entry. All six verdicts follow the project's cheaper-proof-first discipline (lock the safer default, gate any widening on real evidence + §11-revision + operator log entry).
+
+The chosen v1 defaults are:
+- **D24 (Q1):** Lock the draft `[0,25] / [26,60] / [61,100]` bucket bounds; recalibration requires ≥60 real fixture cases distributed across all four buckets + §11-revision + operator log entry naming evidence.
+- **D25 (Q3):** `adjacent` strictly excluded from accuracy denominators; `verdict_match_distribution` already preserves the adjacency signal in §8.5 dashboard surface.
+- **D26 (Q4):** Default regression tolerance `0` pp strict; per-subcategory widening requires explicit operator log entry naming subcategory + pp value + rationale + hard expiry.
+- **D27 (Q5):** Defer red-team mission file structure to first real mission; lock eight minimum required fields (`mission_id`, `scope`, `hypothesis`, `threat_model`, `controlled_synthetic_only_acknowledgement`, `success_criteria`, `scheduled_for`, `operator_authorization`) so the first mission cannot drift into freeform notes. Field names intentionally avoid `attestation` per the D10 forbidden-language inheritance from `Compliance_and_Trend_Watch_Process.md`.
+- **D28 (Q6):** No composite quality score in v1; §8.5 metric list is the dashboard; composite deferred to v1.1+ on operator-stated evidence that the multi-metric surface is too noisy for monthly buyer reporting.
+- **D29 (Q7):** Lock only the Decision Auditor trigger condition (failure cards with `failure_type` ∈ {`schema_violation`, `scope_violation`}) and mandatory `decision_audit_candidate_id` linkage; runner integration / packet shape / dashboard surface deferred to v1.1 with its own §11-signed spec. Trigger-only is forward-compatible without committing v1 to an integration not yet designed.
+
+**Boundary:**
+- This pass does NOT sign §11 of the Email Security Testing & Evidence Framework. The signature line in the spec remains blank by design; only Matt may sign.
+- This pass does NOT authorize implementation of the v1 surface (D7). Implementation begins only after §11 is signed and a separate explicit operator start-build instruction is issued.
+- This pass does NOT change runtime code, does not add or modify detectors, and does not touch `core/scoring/eval/`. Specs + think_sheet + tracker files only.
+- This pass does NOT authorize the v1.1 Decision Auditor integration or the future composite-score addition; both are explicitly deferred and gated on additional signed work.
+- Per-file packet cap (50 KB) caused §10 / §11 of the spec to fall outside the file slice captured directly by `complete_gate.py`; full evidence of those changes is carried by the git diff, which is also captured in the audit packet and which Grok validates against. No content was suppressed from the spec itself.
+
+**Audit Status (split for packet size):**
+Single-shot `complete_gate.py` exceeded the 200 KB packet cap (spec is now ~57 KB, think_sheet ~70 KB, plus index + activity log). Split into three manifest-backed gate runs:
+- **Split A:** spec D24–D29 additions + §9.4 schema field + MASTER_INDEX entry refresh.
+- **Split B:** spec §10 RESOLVED flips + §11 D1–D29 coverage update + think_sheet new stress-test section.
+- **Split C:** this `PROJECT_ACTIVITY_LOG.md` entry.
+- All three: `VERDICT: APPROVE`, comprehensive evidence quality, zero non-negotiable violations.
+- `project_trigger_scan.py` clean against baseline 1043; no runtime baseline change.
+
+**Next Step:**
+- Operator decides whether to sign §11 of the Email Security Testing & Evidence Framework on the strength of the now-resolved §10 set, or to defer until additional review.
+- Implementation of the v1 surface (D7) remains gated on Matt's explicit start-build instruction after §11 is signed.
+- Item 4 on Matt's 2026-05-31 list (Cyber Insurance MSP discovery) is operator-execution work using the runbook + worksheet from commit `45c3b0e`; Cursor does not run MSP conversations.
+
+---
+
 ## 2026-05-31 - Cyber Insurance MSP Discovery Runbook Prepared
 
 **Actor:** Matt + Cursor (GPT-5.5)
