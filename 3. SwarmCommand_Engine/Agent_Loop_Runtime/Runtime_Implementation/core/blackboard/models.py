@@ -918,6 +918,16 @@ class DailyDigestEmailEntry(StrictModel):
             "manual_operator_escalation",
         ]
     ] = Field(default_factory=list)
+    # Derived attribution flag for the daily-digest / demo-renderer rendering
+    # surface, per Callback Phishing / TOAD spec §8.10 / D8: when True, the
+    # render emits the exact wording stored at
+    # ``core.scoring.callback_phishing_detector.OUT_OF_BAND_VERIFICATION_WORDING``
+    # under this row. Set by the digest agent from the upstream
+    # ``EmailAnalysisRiskAnalysis.behavioral_deviation_flags`` containing
+    # ``"callback_phishing_pattern"``; not separately surfaced by the LLM.
+    # Default False keeps every existing digest entry on disk valid
+    # (additive-only schema growth).
+    callback_phishing_pattern_detected: bool = False
 
 
 class DailyDigestRiskEntry(StrictModel):
@@ -941,6 +951,11 @@ class DailyDigestRiskEntry(StrictModel):
             "manual_operator_escalation",
         ]
     ] = Field(default_factory=list)
+    # Derived attribution flag for the daily-digest / demo-renderer rendering
+    # surface, per Callback Phishing / TOAD spec §8.10 / D8. See
+    # ``DailyDigestEmailEntry.callback_phishing_pattern_detected`` for the
+    # full semantics — identical contract.
+    callback_phishing_pattern_detected: bool = False
 
 
 class DailyDigestTaskEntry(StrictModel):

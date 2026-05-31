@@ -35,12 +35,28 @@ from typing import Literal
 
 from core.blackboard.models import (
     BehavioralDeviationFlag,
+    CallbackPhishingAssessment,
     ClientFacingRubricPayload,
     EmailAnalysisImpersonationAnalysis,
     EmailAnalysisPayload,
     EmailAnalysisRansomwarePrecursorAnalysis,
     EmailAnalysisRiskAnalysis,
     EmailRiskAxisBreakdown,
+)
+
+# Rubric §11.2 amendment 2026-05-30 (`callback_phishing_pattern` →
+# `origin_timing`). The amendment authorizes the deterministic mapping from
+# the upstream Callback Phishing / TOAD detector signal into this axis. The
+# string constant matches ``BehavioralDeviationFlag`` and
+# ``core.scoring.callback_phishing_detector.CALLBACK_PHISHING_PATTERN_FLAG``;
+# duplicating it here keeps this module's import surface narrow (no
+# detector-module import), so the rubric mapper stays a pure projection over
+# already-validated payload values.
+_CALLBACK_PHISHING_PATTERN_FLAG: str = "callback_phishing_pattern"
+_CALLBACK_PHISHING_HIGHER_BAND_LIFT: int = 70
+_CALLBACK_PHISHING_HIGHER_BAND_RISK_SCORE: int = 50
+_CALLBACK_PHISHING_WHY_THIS_SCORE: str = (
+    "Callback-phishing body-language pattern detected; verify off-channel."
 )
 
 _RUBRIC_VERSION: Literal["v1"] = "v1"
@@ -296,7 +312,7 @@ def _score_document_integrity(
     return 0, "No meaningful document-integrity concerns.", ()
 
 
-def _score_origin_timing(
+def _score_origin_timing_base(
     risk: EmailAnalysisRiskAnalysis,
     flags: set[BehavioralDeviationFlag],
 ) -> tuple[int, str, tuple[str, ...]]:
@@ -307,6 +323,10 @@ def _score_origin_timing(
     ``out_of_band_pressure`` behavioral flag. Sender-provenance / geo-velocity
     is a separate gated detector and lifts this axis only when that detector
     ships.
+
+    Callers must run the §11.2 amendment overlay (``_score_origin_timing``)
+    on top of this base result. The base function alone does not satisfy
+    the signed rubric contract once the §11.2 amendment is in scope.
     """
     has_oob_pressure = "out_of_band_pressure" in flags
     urgency_count = len(risk.urgency_signals)
@@ -336,6 +356,91 @@ def _score_origin_timing(
     return 0, "No notable origin/timing anomaly.", ()
 
 
+def _score_origin_timing(
+    risk: EmailAnalysisRiskAnalysis,
+    flags: set[BehavioralDeviationFlag],
+    callback_phishing_assessment: CallbackPhishingAssessment | None,
+) -> tuple[int, str, tuple[str, ...]]:
+    """Project ``origin_timing`` per §3.5 base + signed §11.2 amendment.
+
+    The base projection (``_score_origin_timing_base``) covers the original
+    §3.5 evidence sources (``out_of_band_pressure`` flag + ``urgency_signals``
+    count). The §11.2 amendment (SIGNED 2026-05-30 by Matt Nichol, authorized
+    by the §11-SIGNED Callback Phishing / TOAD spec D13) layers two
+    additional rules on top:
+
+    1. **Floor-lift rule.** When ``callback_phishing_pattern`` is present in
+       ``risk.behavioral_deviation_flags``, the projected score MUST be at
+       least 1. If the base projection already returned 1 or 2 from an
+       independent evidence source, the higher base score is preserved
+       (max-merge semantics, mirroring how the
+       ``EmailAnalysisRiskAnalysis.recommended_risk_floor_lift`` overlay
+       max-merges into the final ``risk_score``). The amendment never lowers
+       an existing axis score; this is a one-directional lift.
+
+    2. **Higher-band rule.** When ``callback_phishing_pattern`` is present
+       AND either ``risk.risk_score >= 50`` or
+       ``callback_phishing_assessment.recommended_risk_floor_lift >= 70``
+       (the §4.1 block-eligible band of the TOAD spec — produced when the
+       detector fires on two-or-more categories OR a single
+       ``payment_redirect_call`` category), the projected score MUST be
+       exactly 2. The amendment explicitly authorizes this as the headline
+       reason this axis exists when both conditions hold simultaneously.
+
+    Evidence tagging: when either rule fires, ``callback_phishing_pattern``
+    is added to ``evidence_tags`` so downstream consumers (rendering,
+    monthly digest, audit-marker stream) can attribute the lift to the
+    TOAD signal without re-running the rule. Per §3.5 amendment + D15 of
+    the rubric spec, the ``why_this_score`` text stays inside the 160-char
+    cap and never echoes raw phone digits or raw lure-phrase substrings
+    (TOAD D7 PII safety is enforced upstream by the detector; the rubric
+    just emits the bounded amendment phrase).
+    """
+    base_score, base_why, base_tags = _score_origin_timing_base(risk, flags)
+    if _CALLBACK_PHISHING_PATTERN_FLAG not in flags:
+        return base_score, base_why, base_tags
+
+    higher_band_lift = (
+        callback_phishing_assessment is not None
+        and callback_phishing_assessment.recommended_risk_floor_lift
+        >= _CALLBACK_PHISHING_HIGHER_BAND_LIFT
+    )
+    higher_band_risk = risk.risk_score >= _CALLBACK_PHISHING_HIGHER_BAND_RISK_SCORE
+    higher_band = higher_band_lift or higher_band_risk
+
+    if higher_band:
+        return (
+            2,
+            _CALLBACK_PHISHING_WHY_THIS_SCORE,
+            _dedup_tags(base_tags + (_CALLBACK_PHISHING_PATTERN_FLAG,)),
+        )
+
+    if base_score == 0:
+        return (
+            1,
+            _CALLBACK_PHISHING_WHY_THIS_SCORE,
+            (_CALLBACK_PHISHING_PATTERN_FLAG,),
+        )
+
+    return (
+        base_score,
+        base_why,
+        _dedup_tags(base_tags + (_CALLBACK_PHISHING_PATTERN_FLAG,)),
+    )
+
+
+def _dedup_tags(tags: tuple[str, ...]) -> tuple[str, ...]:
+    """Preserve order, drop duplicates. Pure helper for §11.2 evidence merging."""
+    seen: set[str] = set()
+    deduped: list[str] = []
+    for tag in tags:
+        if tag in seen:
+            continue
+        seen.add(tag)
+        deduped.append(tag)
+    return tuple(deduped)
+
+
 def project_client_facing_rubric(
     payload: EmailAnalysisPayload,
 ) -> ClientFacingRubricPayload:
@@ -350,6 +455,7 @@ def project_client_facing_rubric(
     risk = payload.risk_analysis
     impers = payload.impersonation_analysis
     overlay = payload.ransomware_precursor_analysis
+    callback_phishing_assessment = payload.callback_phishing_assessment
     triggers = list(payload.forced_escalation_triggers)
     flags: set[BehavioralDeviationFlag] = set(risk.behavioral_deviation_flags)
 
@@ -357,7 +463,7 @@ def project_client_facing_rubric(
     s2, why2, tags2 = _score_conversation_continuity(risk, impers, triggers)
     s3, why3, tags3 = _score_vendor_payment_history(risk, flags)
     s4, why4, tags4 = _score_document_integrity(risk, flags, overlay)
-    s5, why5, tags5 = _score_origin_timing(risk, flags)
+    s5, why5, tags5 = _score_origin_timing(risk, flags, callback_phishing_assessment)
 
     axes = (
         EmailRiskAxisBreakdown(

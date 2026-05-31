@@ -43,6 +43,7 @@ from core.blackboard import (
     AuditStatus,
     AuditVerdictPayload,
     BlackboardRecord,
+    CallbackPhishingAssessment,
     ClientFacingRubricPayload,
     EmailAnalysisFailurePayload,
     EmailAnalysisPayload,
@@ -51,6 +52,10 @@ from core.blackboard import (
     GovernanceError,
     RecordType,
     read_records,
+)
+from core.scoring.callback_phishing_detector import (
+    CALLBACK_PHISHING_PATTERN_FLAG,
+    detect_callback_phishing,
 )
 from core.scoring.client_facing_rubric import project_client_facing_rubric
 from core.operator_state import KillSwitchEngaged, is_kill_switch_engaged
@@ -288,6 +293,28 @@ class EmailRiskScoringConfig:
     # When disabled, ``EmailAnalysisPayload.client_facing_rubric`` stays
     # ``None`` and existing report renderers see no change.
     enable_client_facing_rubric: bool = False
+    # ----- Callback Phishing / TOAD detector (§11 SIGNED 2026-05-30) -----
+    # Default OFF per ``Callback_Phishing_TOAD_Detector_Deep_Dive.md`` D6:
+    # "New ``EmailRiskScoringConfig.enable_callback_phishing_detection: bool
+    # = False``. Matches the §9-step-5 activation discipline used for
+    # ransomware precursor overlay and client-facing rubric." When enabled
+    # and ``enable_ransomware_precursor_overlay`` is also on (the path that
+    # owns the floor max-merge), the deterministic body-language detector
+    # at ``core.scoring.callback_phishing_detector.detect_callback_phishing``
+    # runs against ``EmailInboundPayload.body_plain`` only (D14, v1 scope).
+    # When the detector fires, the overlay path appends
+    # ``callback_phishing_pattern`` to
+    # ``EmailAnalysisRiskAnalysis.behavioral_deviation_flags``, max-merges
+    # ``CallbackPhishingAssessment.recommended_risk_floor_lift`` into the
+    # final ``risk_score`` (one-directional lift per TOAD D5), and attaches
+    # the frozen assessment to ``EmailAnalysisPayload.callback_phishing_assessment``.
+    # Rendering surfaces emit the project-standard out-of-band verification
+    # wording at ``CALLBACK_PHISHING_PATTERN_FLAG`` /
+    # ``OUT_OF_BAND_VERIFICATION_WORDING`` per D8 (rendering integration is
+    # owned by the daily-digest agent + demo renderer, not by this module).
+    # When disabled, no detector code runs and no field is touched — the
+    # default-OFF activation gate from TOAD §8.13 holds.
+    enable_callback_phishing_detection: bool = False
 
 
 @dataclass(frozen=True)
@@ -452,11 +479,17 @@ def run_email_risk_scoring_cycle(
                 )
             except GovernanceError:
                 document_metadata_assessment = None
+            callback_phishing_assessment: CallbackPhishingAssessment | None = None
+            if config.enable_callback_phishing_detection:
+                callback_phishing_assessment = detect_callback_phishing(
+                    body_plain=inbound_payload.body_plain or "",
+                )
             analysis_payload = _overlay_ransomware_precursor(
                 analysis_payload,
                 inbound_payload,
                 profile_resolution=profile_resolution,
                 document_metadata_assessment=document_metadata_assessment,
+                callback_phishing_assessment=callback_phishing_assessment,
                 fraud_risk_floor_lift=config.fraud_risk_floor_lift,
                 attachment_risk_floor_lift=config.attachment_risk_floor_lift,
                 url_obfuscation_floor_lift=config.url_obfuscation_floor_lift,
@@ -649,6 +682,7 @@ def _overlay_ransomware_precursor(
     profile_resolution: ProfileResolution | None = None,
     financial_state_ledger_assessment: FinancialStateLedgerAssessment | None = None,
     document_metadata_assessment: DocumentMetadataAssessment | None = None,
+    callback_phishing_assessment: CallbackPhishingAssessment | None = None,
     fraud_risk_floor_lift: int = 0,
     attachment_risk_floor_lift: int = 0,
     url_obfuscation_floor_lift: int = 0,
@@ -788,6 +822,12 @@ def _overlay_ransomware_precursor(
         if prompt_injection is not None
         else 0
     )
+    callback_phishing_floor = (
+        callback_phishing_assessment.recommended_risk_floor_lift
+        if callback_phishing_assessment is not None
+        and callback_phishing_assessment.fired
+        else 0
+    )
     floor_after_precursor = max(
         overlay.recommended_risk_floor,
         header_divergence.score if header_divergence is not None else 0,
@@ -796,6 +836,7 @@ def _overlay_ransomware_precursor(
         fsl_floor,
         document_metadata_floor,
         prompt_injection_floor,
+        callback_phishing_floor,
     )
     base_risk_score = max(
         analysis_payload.risk_analysis.risk_score, floor_after_precursor
@@ -863,11 +904,29 @@ def _overlay_ransomware_precursor(
             list(prompt_injection.indicators),
         )
 
+    callback_phishing_fired = (
+        callback_phishing_assessment is not None
+        and callback_phishing_assessment.fired
+    )
+    if callback_phishing_fired:
+        risk_update["behavioral_deviation_flags"] = _append_unique(
+            list(analysis_payload.risk_analysis.behavioral_deviation_flags),
+            [CALLBACK_PHISHING_PATTERN_FLAG],
+        )
+
     updated_risk_analysis = analysis_payload.risk_analysis.model_copy(update=risk_update)
     update = {
         "risk_analysis": updated_risk_analysis,
         "ransomware_precursor_analysis": overlay.block,
     }
+    # Attach-always convention: when the detector ran, surface its frozen
+    # ``CallbackPhishingAssessment`` whether or not it fired. This matches
+    # ``ransomware_precursor_analysis`` (overlay attaches even with zero
+    # scores) and lets auditors distinguish "detector disabled" (field is
+    # ``None``) from "detector ran and found no callback-phishing pattern"
+    # (field is a fired=False assessment with empty categories / zero lift).
+    if callback_phishing_assessment is not None:
+        update["callback_phishing_assessment"] = callback_phishing_assessment
     if profile_resolution is not None:
         update.update(
             {
@@ -1072,6 +1131,7 @@ def score_one_email_payload(
     llm_client: LLMClient,
     enable_ransomware_precursor_overlay: bool = True,
     enable_client_facing_rubric: bool = False,
+    enable_callback_phishing_detection: bool = False,
     max_action_items: int = NORTHSTAR_MAX_ACTION_ITEMS,
     source_email_record_id: UUID | None = None,
 ) -> EmailAnalysisPayload | EmailRiskScoringInMemoryFailure:
@@ -1115,6 +1175,7 @@ def score_one_email_payload(
         max_action_items=max_action_items,
         enable_ransomware_precursor_overlay=enable_ransomware_precursor_overlay,
         enable_client_facing_rubric=enable_client_facing_rubric,
+        enable_callback_phishing_detection=enable_callback_phishing_detection,
     )
 
     user_prompt = _build_user_prompt(source_email_record_id, inbound_payload)
@@ -1165,10 +1226,16 @@ def score_one_email_payload(
                 manual_escalation_requested=False,
             ),
         )
+        callback_phishing_assessment: CallbackPhishingAssessment | None = None
+        if helper_config.enable_callback_phishing_detection:
+            callback_phishing_assessment = detect_callback_phishing(
+                body_plain=inbound_payload.body_plain or "",
+            )
         analysis_payload = _overlay_ransomware_precursor(
             analysis_payload,
             inbound_payload,
             profile_resolution=profile_resolution,
+            callback_phishing_assessment=callback_phishing_assessment,
         )
 
     if helper_config.enable_client_facing_rubric:

@@ -50,6 +50,10 @@ from core.orchestrator import (
     trigger_workflow,
 )
 from core.orchestrator.routes import blackboard_path
+from core.scoring.callback_phishing_detector import (
+    CALLBACK_PHISHING_PATTERN_FLAG,
+    OUT_OF_BAND_VERIFICATION_WORDING,
+)
 
 SEND_DAILY_DIGEST_WORKFLOW_NAME = "send_daily_digest"
 DAILY_DIGEST_WORKFLOW_ID = "daily_digest"
@@ -108,7 +112,15 @@ Required structure:
 7. Include profile lines exactly as "Profile: <effective_profile>",
    "Tenant default: <tenant_default_profile>" when different, and
    "Escalated by: <forced_escalation_triggers>" when present.
-8. End with "## Operator Guidance" containing 1-3 practical next steps.
+8. When an item includes "callback_phishing_pattern_detected": true, add a
+   separate line under that item that contains exactly this phrase, on one
+   line, without paraphrase, without an added phone number, without an
+   added sender name, and without omitting any word:
+   verify through a previously-known channel, not via the number in this email.
+   This wording is contractually required by the signed Callback Phishing
+   / TOAD detector spec (D8 / section 8.10) and is the only out-of-band
+   verification phrasing the digest may use for this signal.
+9. End with "## Operator Guidance" containing 1-3 practical next steps.
 
 Hard rules:
 - Use only facts present in the JSON. Do not invent senders, links,
@@ -372,6 +384,7 @@ def _rank_important_emails(
             forced_escalation_triggers=list(
                 item.analysis.forced_escalation_triggers
             ),
+            callback_phishing_pattern_detected=_callback_phishing_fired(item.analysis),
         )
         for item in ranked[:_TOP_IMPORTANT_EMAILS]
     ]
@@ -405,9 +418,33 @@ def _rank_top_risks(enriched: list[_EnrichedAnalysis]) -> list[DailyDigestRiskEn
             forced_escalation_triggers=list(
                 item.analysis.forced_escalation_triggers
             ),
+            callback_phishing_pattern_detected=_callback_phishing_fired(item.analysis),
         )
         for item in eligible[:_TOP_RISKS]
     ]
+
+
+def _callback_phishing_fired(analysis: EmailAnalysisPayload) -> bool:
+    """Source-of-truth check for the D8 OOB wording rendering trigger.
+
+    Reads the analysis-side ``behavioral_deviation_flags`` (where the
+    scoring-agent overlay path appends ``callback_phishing_pattern`` on
+    detector fire) rather than the optional
+    ``analysis.callback_phishing_assessment``, because:
+
+    1. The flag is the canonical attribution surface for ``client_facing_rubric``
+       via rubric §11.2; surfacing the same source keeps render-wiring
+       aligned with the §11.2 ``origin_timing`` evidence-tag mapping.
+    2. The assessment is attached attach-always when the detector ran, but
+       only the flag distinguishes ``fired=True`` from a benign ran-and-clean
+       case; reading the flag is the single non-ambiguous truth-source.
+    3. Future renderers consuming the digest payload do not need to import
+       the detector module to learn the wording trigger.
+    """
+
+    return CALLBACK_PHISHING_PATTERN_FLAG in (
+        analysis.risk_analysis.behavioral_deviation_flags
+    )
 
 
 def _flatten_tasks(enriched: list[_EnrichedAnalysis]) -> list[DailyDigestTaskEntry]:

@@ -37,6 +37,7 @@ from core.ingest import ingest_email, sha256_attachment_inspector
 from core.orchestrator import RouteContext
 from core.orchestrator.routes import blackboard_path
 from core.scoring import EmailRiskScoringConfig, run_email_risk_scoring_cycle
+from core.scoring.callback_phishing_detector import OUT_OF_BAND_VERIFICATION_WORDING
 
 REPO_ROOT = Path(__file__).resolve().parents[4]
 RUNTIME_ROOT = Path(__file__).resolve().parents[1]
@@ -462,6 +463,11 @@ def demo_digest_llm_client(system_prompt: str, user_prompt: str) -> str:
                 )
             ]
         )
+        if item.get("callback_phishing_pattern_detected"):
+            lines.append(
+                "  - Phone-based escalation pattern detected - "
+                + OUT_OF_BAND_VERIFICATION_WORDING
+            )
         rubric = item.get("client_facing_rubric")
         if rubric:
             if rubric.get("rubric_status") == "unavailable":
@@ -508,6 +514,11 @@ def demo_digest_llm_client(system_prompt: str, user_prompt: str) -> str:
                     f"Action: `{recommended_action}` - risk `{item['risk_score']}`."
                 )
             )
+            if item.get("callback_phishing_pattern_detected"):
+                lines.append(
+                    "  - Phone-based escalation pattern detected - "
+                    + OUT_OF_BAND_VERIFICATION_WORDING
+                )
             rubric = item.get("client_facing_rubric")
             if rubric:
                 if rubric.get("rubric_status") == "unavailable":

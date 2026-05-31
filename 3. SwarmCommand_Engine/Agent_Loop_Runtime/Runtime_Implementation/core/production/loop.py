@@ -423,6 +423,14 @@ def run_production_cycle(
                 enable_client_facing_rubric=(
                     scoring_config.enable_client_facing_rubric
                 ),
+                # Mirrors ``enable_client_facing_rubric`` preservation for
+                # the Callback Phishing / TOAD activation flag (TOAD spec
+                # §7.7 + §8.14: "Production loop rebuild path must
+                # explicitly preserve the flag (lesson learned from the
+                # rubric Activation Pass).").
+                enable_callback_phishing_detection=(
+                    scoring_config.enable_callback_phishing_detection
+                ),
             )
         email_risk_scoring_result = run_email_risk_scoring_cycle(
             context,
