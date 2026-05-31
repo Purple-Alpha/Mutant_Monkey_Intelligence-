@@ -26,6 +26,37 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Build Momentum Doctrine Added to AGENTS.md §11 (Lane C Ransomware SPARK Dropped)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Updated
+
+**Files Changed:**
+- `AGENTS.md` (UPDATED — inserted a new section `## 11. Build momentum rule` between the existing §10 "What 'stick by my side' means in practice" and the existing §11 "Failure modes to recognize by name". Renumbered old §11 → §12 ("Failure modes to recognize by name") and old §12 → §13 ("When this file should change"). The new §11 captures four operator-authored doctrine rules introduced 2026-05-31 after the operator diagnosed a "safe but stagnant" failure mode in the prior session: (1) **Build Momentum Rule** — when a signed spec, clean scope, and passing gate exist, prefer the next concrete build action over another documentation-only pass; a documentation pass is valid only when it resolves a blocker, prevents known drift, unlocks implementation, records an operator decision, or creates a required audit artifact; (2) **Momentum Bias** — when two safe options exist and one records more process while the other produces a test, fixture, detector, report, runbook, customer artifact, or measurable evidence, choose the measurable build artifact unless the operator explicitly asks for more process; (3) **No Apology Loop Rule** — on a bad call, identify what signal was missed, what rule would have prevented it, the smallest correction, and whether the correction belongs in doctrine, spec, or just this task; no vague "I should have known better" language; (4) **Experiment Boundary** — safe to experiment, strict to ship; experiments / SPARKs / prototypes may fail, but signed specs, customer-facing claims, production paths, commits, and pushes stay disciplined. The section opens with the framing line "Safety is not success. Evidence-producing progress is success." AGENTS.md remains pre-§11 floor doctrine per its existing §11 [now §13] supersession clause; this pass edits floor doctrine freely as the operator's understanding sharpens. Section count grew from 12 to 13. No cross-references inside AGENTS.md broke — every `§11` / `§12` token elsewhere in the file refers to spec-pattern conventions, not to AGENTS.md's own section numbers.)
+- `4. Product_Roadmap/_NorthStar_Ransomware_Testing_Scoping_SPARK.md` (DELETED — this was the original Lane C output: a pre-spec scoping document naming five interpretations of "ransomware testing." The operator's 2026-05-31 post-Lane-C feedback diagnosed Lane C as low-momentum work — "It was not harmful, but it was not momentum" — and explicitly instructed to drop it and replace with measurable test work. Per the new `AGENTS.md` §11 Momentum Bias rule, the SPARK has been removed from the working tree rather than committed. The five interpretations themselves remain available in the JSONL conversation transcript and can be re-captured later if and when the operator selects one. The Phase 1.2 ransomware-precursor floor is untouched.)
+- `MASTER_INDEX.md` (UPDATED — removed the `_NorthStar_Ransomware_Testing_Scoping_SPARK.md` entry that had been added 2026-05-31 between `_NorthStar_Eval_Harness_v1_Sketch_SPARK.md` and `_NorthStar_Strategy_Matrix_Discipline_SPARK.md`. No other index entries changed.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry; also removed the earlier `2026-05-31 - Ransomware Testing Scoping Captured as SPARK` entry because the SPARK it described has been removed from the tree.)
+
+**Reason:**
+On 2026-05-31, after completing Lanes A / B / C of the Sunday-evening interstitial build sequence, the operator returned with explicit doctrine-level feedback. The operator's diagnosis: "the agents are optimizing for: avoid mistake, avoid liability, avoid scope creep, avoid breaking signed specs, avoid being blamed. That keeps the repo safe, but it also creates a second failure mode: safe but stagnant. And you're right: the 'I should have known better' loop is not useful." The operator named the rebalancing: "Guardrails exist to protect the build, not to replace the build." Lane-by-lane operator assessment: Lane A keep; Lane B keep, but should have been bigger; Lane C replace or drop — "It was not harmful, but it was not momentum." The new doctrine codifies four rules and pins the operating principle "Safety is not success. Evidence-producing progress is success." in `AGENTS.md` §11 so the next session reads it on session-start. The dropped Lane C SPARK is replaced separately with measurable test additions captured in a sibling activity-log entry.
+
+**Boundary:**
+- This pass does NOT modify any §11-SIGNED spec. AGENTS.md is pre-§11 floor doctrine per its own §11 [now §13] clause.
+- This pass does NOT touch runtime code, schemas, or tests. Test changes are a separate sibling pass.
+- This pass does NOT relax any safety boundary.
+- This pass does NOT pre-judge how future sessions will operate under the new doctrine. Future agent behavior is observable; if the doctrine itself needs refinement after evidence, that's a separate operator pass.
+- This pass does NOT delete or rewrite the JSONL transcript record of Lane C. The five interpretations of "ransomware testing" remain recoverable from the conversation transcript.
+
+**Audit Status:**
+Single-shot `complete_gate.py` ran against this doctrine pass using a worker manifest at `audit_outputs/pending/build-momentum-doctrine.manifest.json`. `relevant_contracts` is empty because AGENTS.md anchors against no §11-signed spec (it IS the pre-§11 floor doctrine itself; forbidden-language scope is always checked via the packet's always-present FORBIDDEN-LANGUAGE list, not via a relevant_contracts entry). Hide + restore inside the isolation helper hides everything except AGENTS.md and this activity-log entry, then restores all hidden state in a `try/finally` block. Sibling Lane B extension pass runs its own gate with its own manifest.
+
+**Next Step:**
+- Operator decides whether to commit this doctrine pass locally as a separate commit.
+- Future sessions will read the new `AGENTS.md` §11 on session-start (per AGENTS.md §1's "Session-start read order" requiring AGENTS.md first). The new doctrine is now floor for every subsequent session unless / until the operator revises or supersedes it.
+- If the operator later wants to return to the "ransomware testing" scoping question, the five interpretations and their wedge-fit analysis are recoverable from the conversation transcript and can be re-captured as a SPARK at that time.
+---
+
 ## 2026-05-31 - TOAD Scope-Boundary Test Expansion (+2 tests under signed scope; baseline 1043 → 1045)
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)
