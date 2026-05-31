@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **946 tests passing, 1 skipped** (verified 2026-05-27, exit code 0).
+**Runtime baseline (last verified):** **990 tests passing, 1 skipped** (verified 2026-05-30, exit code 0). The +44 delta from the 2026-05-27 `946 tests passing` baseline is the Callback Phishing / TOAD detector pass 1 implementation (commit `014a163`).
 
 ---
 

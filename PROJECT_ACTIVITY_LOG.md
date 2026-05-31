@@ -26,6 +26,37 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - TOAD Detector Pass 1 Landed (commit `014a163`) + Runtime Baseline Bumped 946 → 990
+
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Updated
+
+**Files Changed:**
+- `PROJECT_HANDSHAKE.md` (UPDATED — Current Active Build Track verification baseline bumped from `946 tests passing, 1 skipped (verified 2026-05-27)` to `990 tests passing, 1 skipped (verified 2026-05-30)` with a one-sentence note attributing the +44 delta to TOAD detector pass 1 commit `014a163`.)
+- `PROGRESS.md` (UPDATED — Runtime baseline header bumped from `946 tests passing, 1 skipped (verified 2026-05-27, exit code 0)` to `990 tests passing, 1 skipped (verified 2026-05-30, exit code 0)` with a one-sentence delta note.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+TOAD detector pass 1 landed as commit `014a163 implement callback phishing toad detector pass 1` (5 files changed, 1438 insertions, 3 deletions). Full pytest suite at `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation` ran `990 passed, 1 skipped, exit code 0` after the commit. The +44 test delta is all in the new `tests/test_callback_phishing_detector.py` file (the schema-lock test rename in `tests/test_email_analysis_record.py` is in-place, no count change). This housekeeping pass refreshes the two tracker files that record the live runtime baseline so a fresh session reads correct state and so `python -m scripts.project_trigger_scan --baseline-tests 990` returns clean rather than emitting a `runtime_baseline_changed` packet.
+
+**Boundary:**
+- Tracking-layer edits only. No runtime code touched. No scoring-agent wiring, activation flag, rubric §11.1 amendment, daily-digest rendering, or production-loop integration added by this pass — all of that remains pass 2 work behind a separate explicit operator start-build instruction per spec §9.4.
+- `MASTER_INDEX.md` NOT touched. It carries no live `946 runtime-baseline` reference; per-spec implementation markers like `905 / 905 pytest green` on the rubric entry and `397 / 397 pytest green` on Phase 1.3 are spec-scoped historical records of those specs' implementation moments, not the current global runtime baseline.
+- Historical archive entries in `PROGRESS.md` and `PROJECT_HANDSHAKE.md` (lines referencing older baselines like 555 / 587 / 688 / 905 tests passing) NOT rewritten. Modifying them retrospectively would falsify the chronological record per AGENTS.md §6.
+- Historical activity-log entries referencing `--baseline-tests 946` (older trigger-scan verification statements) NOT rewritten — they are factual records of what was run when.
+- No stage, commit, or push performed by the worker.
+
+**Verification:**
+- Worker manifest written to `audit_outputs/pending/toad_pass_1_tracker_baseline_bump.manifest.json` for the `complete_gate.py` run.
+- `complete_gate.py` invoked with the manifest above; result attached separately.
+- `project_trigger_scan.py --baseline-tests 990` re-run; result attached separately.
+
+**Next Step:**
+Operator review. On commit authorization, the three tracking files land locally (no push) as a separate commit from the TOAD pass 1 runtime commit `014a163`, per the project's split-commit discipline (runtime change + tracker-baseline-bump in separate audit-visible commits). The TOAD detector remains pre-wiring; pass 2 (scoring-agent integration, activation flag default OFF per D6, rubric §11.1 amendment per D13, daily-digest rendering with the D8 OOB wording, production-loop flag-preservation regression) is NOT authorized by this housekeeping pass.
+
+---
+
 ## 2026-05-30 - Callback Phishing / TOAD §11 Signature Housekeeping (Tracking + Queue Layer Refreshed)
 
 **Actor:** Matt + Cursor (Claude)
