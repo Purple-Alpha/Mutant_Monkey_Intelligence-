@@ -26,6 +26,36 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Email Security Testing Framework §11-Signable Polish Pass (no D-decision changes)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` (UPDATED — five surgical pre-§11 polish edits, all aligning section prose with locking D-decisions. NO D-decision changes; §2 entirely untouched. Edits: (1) Removed orphan parenthetical citations "(D17a)" / "(D17b)" / "(D17c)" / "(D17d)" from §4.5.1 / §4.5.2 / §4.5.3 / §4.5.4 headers — D17's text never enumerated sub-letters, so those citations referenced labels that did not exist. (2) Added a "Terminology note — §4 test levels vs §4.5 auto-trigger tiers" paragraph in §4.5 that explicitly distinguishes the §4 four test levels (smoke / regression / adversarial / red-team) from the §4.5 four auto-trigger tiers (smoke / regression / adversarial / eval-corpus), notes the deliberate fourth-tier mismatch, and explains that red-team has no column in the §4.5.8 matrix because it never auto-fires (D18). (3) Tightened §8.2's last sentence from "v1 does not ship continuous reliability diagrams; thresholds may be revised post-§11" to explicitly cite the D24 recalibration path — ≥60 real fixture cases across all four buckets, §11-revision cycle, operator log entry — and to reiterate "pre-§11-signature drift is forbidden; the v1 bounds ship as drafted regardless of early fixture skew." (4) Tightened §4.2 pass condition prose to cite D26's default `0` percentage points and the operator-entry widening path. (5) Extended §4.4's "Input source" bullet to cross-reference D27's eight minimum-required mission fields by name (`mission_id`, `scope`, `hypothesis`, `threat_model`, `controlled_synthetic_only_acknowledgement`, `success_criteria`, `scheduled_for`, `operator_authorization`) without re-listing D27 itself.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+After commit `9e14f8a` resolved all nine §10 sub-questions of the Email Security Testing & Evidence Framework, the spec is functionally §11-signable but had four readability snags that an operator doing a fresh §11-readiness read would have to mentally fix on the fly: (a) orphan D17a-D17d parenthetical citations, (b) implicit §4 / §4.5 four-name vs four-name mismatch, (c) §8.2 prose that didn't cite the D24-locked recalibration path, (d) §4.2 prose that didn't cite D26's default, (e) §4.4 prose that didn't cross-reference D27's eight minimum-required fields. This pass closes all five snags without touching any D-decision text and without changing the substantive contracts those D-decisions lock. The spec becomes readable straight through for §11 sign-off without back-and-forth between §2 and the prose sections; the operator decision the operator was already authorized to make becomes ergonomically easier to make.
+
+**Boundary:**
+- This pass does NOT sign §11. The spec remains DRAFT pre-§11. §11 sign-off remains operator-only.
+- This pass does NOT change any D-decision. §2 (D1-D29) is byte-identical to commit `9e14f8a`. The diff is exclusively in §4.2, §4.4, §4.5 premise + headers, and §8.2 — all of which are prose sections that now match their already-locked D-decision contracts more transparently.
+- This pass does NOT add or remove any spec-level decision. Every change is an *alignment* between prose and an existing locked decision; no new requirement is introduced.
+- This pass does NOT touch any other file. The think_sheet stress-test entries from `9e14f8a` are unchanged; MASTER_INDEX is unchanged; no runtime code touched.
+- This pass does NOT authorize implementation. The conjunctive implementation gate (D7: §11 signature + separate operator start-build instruction) is unchanged.
+- This pass does NOT alter the project queue. `PROJECT_BUILD_AND_AUDIT_QUEUE.md` remains as-is; Cyber Insurance MSP discovery remains queue item 1.
+
+**Audit Status:**
+Single-shot `complete_gate.py` ran with a worker manifest at `audit_outputs/pending/email-testing-polish-pre-11-sign-off.manifest.json` listing the two modified files and a `relevant_contracts` entry referencing only `Compliance_and_Trend_Watch_Process.md` (no D-decision changes, so the framework itself is not a binding contract for this packet — it is the artifact being polished). `project_trigger_scan.py` clean against baseline 1043; no runtime baseline change.
+
+**Next Step:**
+- Operator reads the spec straight through and decides whether to sign §11. The decision aid is the readiness review at `audit_outputs/_email_testing_framework_sign_off_readiness_review_20260531.md` (gitignored working doc).
+- If / when operator signs §11, a separate explicit start-build instruction is still required before any v1 implementation begins per D7. The eval harness shape sketch (this commit cycle's parallel SPARK at `4. Product_Roadmap/_NorthStar_Eval_Harness_v1_Sketch_SPARK.md`) is the reference for what v1 implementation would look like.
+- Subsequent lanes (B fraud-pattern fixture expansion under TOAD's signed scope; C ransomware testing scoping SPARK) follow this polish-pass in the same Sunday-evening session per the operator's 2026-05-31 "actual build + testing" instruction.
+---
+
 ## 2026-05-31 - Eval Harness v1 Shape Sketch Captured as SPARK (no implementation)
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)

@@ -117,7 +117,7 @@ v1 defines four test levels. Each has a fixed input source, evidence-bundle requ
 - **Purpose:** prove that previously-passing cases still pass after a code change. Pin behavior on the closed set of fraud/legit subcategories already covered by `core/scoring/eval/fraud_eval_dataset.jsonl` (40 cases at v1 start).
 - **Input source:** the existing JSONL eval dataset plus any new cases formally promoted into the dataset by a separate §11-signed change to the dataset.
 - **Cadence:** every PR; full nightly run on the active branch.
-- **Pass condition:** confusion matrix matches the recorded baseline within the configured tolerance; per-subcategory recall ≥ the published floor; no new `not_supported_yet`-flagged case silently scored.
+- **Pass condition:** confusion matrix matches the recorded baseline within the configured tolerance (default `0` percentage points per D26; per-subcategory widening above `0` requires the operator-entry path D26 names); per-subcategory recall ≥ the published floor; no new `not_supported_yet`-flagged case silently scored.
 - **Evidence-bundle requirement:** per-case evidence bundle (see §9.1).
 - **Reviewer expectation:** operator-eyes-on for any matrix delta beyond tolerance.
 
@@ -133,7 +133,7 @@ v1 defines four test levels. Each has a fixed input source, evidence-bundle requ
 ### §4.4 Red-team tests
 
 - **Purpose:** simulate a coordinated adversary trying to defeat NorthStar end-to-end against a tenant configuration the operator names in advance. v1 red-team tests are **simulation only** — they run against synthetic tenants seeded inside the runtime test tree, never against live tenants, never against live infrastructure.
-- **Input source:** an operator-authored red-team mission file naming the tenant fixture, the attack sequence, the expected detection points, and the safety-boundary opt-outs that the simulation honors.
+- **Input source:** an operator-authored red-team mission file naming the tenant fixture, the attack sequence, the expected detection points, and the safety-boundary opt-outs that the simulation honors. The mission file MUST carry at least the eight minimum-required fields locked by D27 (`mission_id`, `scope`, `hypothesis`, `threat_model`, `controlled_synthetic_only_acknowledgement`, `success_criteria`, `scheduled_for`, `operator_authorization`); field shape is the mission's choice, presence of all eight is mandatory.
 - **Cadence:** operator-scheduled monthly per §4.5.5; not auto-triggered live.
 - **Pass condition:** documented per-mission; v1 ships no general red-team pass condition.
 - **Evidence-bundle requirement:** mission file + per-step evidence bundle + post-mission failure-card set + UDR summary.
@@ -143,21 +143,23 @@ v1 defines four test levels. Each has a fixed input source, evidence-bundle requ
 
 **Premise (D16):** Test execution is part of the build lifecycle, not an operator reminder. The framework treats "the required test tier ran and its result was recorded" as a precondition for commit completeness. The four auto-trigger contracts in §4.5.1–§4.5.4 are closed per D17; the path × tier matrix is §4.5.8 (D21); v1 enforcement authority is `pre_ship_audit.py` per §4.5.9 (D22). The cadence is not configurable per-developer or per-branch in v1; adding or removing a trigger condition requires a §11-revision cycle.
 
+**Terminology note — §4 test levels vs §4.5 auto-trigger tiers.** §4 enumerates four **test levels**: smoke / regression / adversarial / red-team. §4.5 enumerates four **auto-trigger tiers**: smoke / regression / adversarial / **eval-corpus**. The first three names overlap exactly. The fourth differs deliberately: the §4.5 auto-trigger tier `eval-corpus` is the full `core/scoring/eval/` harness run with prior-baseline-delta comparison (§4.5.4) and IS auto-triggerable; the §4 test level `red-team` (§4.4) is operator-scheduled monthly per §4.5.5 and is NOT auto-triggerable by design (D18). The §4.5.8 path × tier matrix uses S / R / A / E for the four auto-trigger tiers; red-team has no column in the matrix because it never auto-fires.
+
 **Note:** The §4.5.1–§4.5.4 subsections below define **what each tier runs and how the result is recorded**. The **trigger condition** for each tier — which diffs fire it — is the authoritative §4.5.8 path × tier matrix (locked by D21). If a triggered tier did not run, the commit is `not_eligible_for_closure` per D19 regardless of which tier.
 
-#### §4.5.1 Smoke auto-trigger (D17a)
+#### §4.5.1 Smoke auto-trigger
 
 The §4.1 smoke set runs for every detector whose module is in the diff, plus a structural-integrity smoke on the scoring agent. Result is written as a `test_run_started` + `test_run_finished` pair to the audit-trail JSONL per §9.2.
 
-#### §4.5.2 Regression auto-trigger (D17b)
+#### §4.5.2 Regression auto-trigger
 
 The §4.2 regression set runs against `core/scoring/eval/fraud_eval_dataset.jsonl` plus any other published regression fixture set. Recording requirement: full per-case record set + audit-trail events + confusion-matrix snapshot persisted under `audit_outputs/testing_framework/runs/<test_run_id>/`.
 
-#### §4.5.3 Adversarial auto-trigger (D17c)
+#### §4.5.3 Adversarial auto-trigger
 
 The §4.3 adversarial suite runs for the affected detector (e.g., the TOAD pass-2 `test_callback_phishing_break_it.py` shape), plus any adversarial cases tagged for the changed evidence field. Recording requirement: per-case evidence bundles plus an adversarial-intent note for each adversarial case run.
 
-#### §4.5.4 Eval-corpus auto-trigger (D17d)
+#### §4.5.4 Eval-corpus auto-trigger
 
 The harness at `core/scoring/eval/fraud_eval_harness.py` runs against the full dataset, with per-subcategory recall + per-verdict precision recorded. Recording requirement: full eval report + audit-trail events; the report includes the prior-baseline comparison delta.
 
@@ -324,7 +326,7 @@ All denominators include only categories whose status is `supported`. `not_suppo
 
 ### §8.2 Confidence calibration (D12)
 
-Each case is bucketed at run time: **`low`** (`risk_score` in `[0,25]`, "NorthStar declined a strong position"); **`medium`** (`[26,60]`, "moderate position"); **`high`** (`[61,100]` and `verdict_match` ∈ {`exact`, `adjacent`}, "confident and correct or near-correct"); **`overconfident`** (`[61,100]` and `verdict_match == mismatch`, *priority signal* — a confident wrong answer is worse than a hedged wrong answer and surfaces separately in the dashboard). v1 does not ship continuous reliability diagrams; thresholds may be revised post-§11.
+Each case is bucketed at run time: **`low`** (`risk_score` in `[0,25]`, "NorthStar declined a strong position"); **`medium`** (`[26,60]`, "moderate position"); **`high`** (`[61,100]` and `verdict_match` ∈ {`exact`, `adjacent`}, "confident and correct or near-correct"); **`overconfident`** (`[61,100]` and `verdict_match == mismatch`, *priority signal* — a confident wrong answer is worse than a hedged wrong answer and surfaces separately in the dashboard). v1 does not ship continuous reliability diagrams. Thresholds may be revised only via the D24 recalibration path — ≥60 real fixture cases distributed across all four buckets, a §11-revision cycle, and an operator entry in `PROJECT_ACTIVITY_LOG.md` naming the empirical distribution evidence. Pre-§11-signature drift is forbidden; the v1 bounds ship as drafted regardless of early fixture skew.
 
 ### §8.3 Unknown Discovery Rate (D14)
 
