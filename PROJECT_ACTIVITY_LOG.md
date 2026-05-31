@@ -26,6 +26,38 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Callback Phishing / TOAD §11 Signature Housekeeping (Tracking + Queue Layer Refreshed)
+
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Updated
+
+**Files Changed:**
+- `MASTER_INDEX.md` (UPDATED — TOAD entry refreshed from "DRAFT (pre-§11) 2026-05-25; §10 sub-questions Q1–Q5 resolved 2026-05-30 by stress test..." to "§11 SIGNED 2026-05-30 by Matt Nichol (commit `6c4b28f` resolved §10 stress test; commit `0a0c3c0` landed §11 signature + status-text cleanup); implementation pending Matt's explicit start-build instruction; rubric §11.1 amendment per D13 deferred to a separate revision cycle." Mirrors the rubric spec entry pattern at the adjacent line for `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`. The body of the entry preserves the full locked-decision summary D1–D9 + D11–D15 and updates the §11.1 rubric-amendment language from "lands as a §11.1 rubric amendment **with** the TOAD §11 signature" to honest transient-state language reflecting that the rubric amendment did NOT in fact land with the TOAD §11 signature and is now a separate follow-up revision cycle.)
+- `PROJECT_HANDSHAKE.md` (UPDATED — new dated bullet "2026-05-30 Callback Phishing / TOAD §10 resolved + §11 signed" appended to the "Current Next Step" chronological timeline, after the 2026-05-25 sub-question stress test entry and before the "Each lane runs..." process reminder. Records the locked D11–D15 verdicts, the §11 signature with commits `6c4b28f` + `0a0c3c0`, the explicit "TOAD is NOT mid-stress-test any more and §11 is NOT pending" statement so a fresh session reads correct state, the implementation-not-authorized boundary, the rubric §11.1 amendment deferral, the Part 2 gating chain, and the Cross-Channel Fraud Shield SPARK three-stage framing. Existing earlier dated entries — including the 2026-05-25 strategic-clarity build-queue ordering bullet that lists TOAD as a B-tier item — are NOT modified; they are preserved as historical record of decisions taken on those dates.)
+- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (UPDATED — operator focus call (line 59, §2 Build List) and parallel operator focus (line 105, §4 Next Action) both refreshed. Old text "Callback Phishing / TOAD §10 stress-test (pre-§11, not yet on this queue)" replaced with "Callback Phishing / TOAD implementation pass 1 (spec §11 SIGNED 2026-05-30 by Matt Nichol per commits `6c4b28f` + `0a0c3c0`; implementation NOT yet started — requires explicit operator start-build instruction per the TOAD spec §11 footer; the rubric §11.1 amendment per D13 is a deferred carry-over on `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` and does not block detector implementation)". The two lines now read consistently: TOAD §11 is signed, the live operator-focus question is whether to start implementation pass 1 vs. continue the Cyber Insurance §12 close-out, and the implementation gating boundary is preserved. No other parts of the queue file were touched.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+The TOAD detector deep dive was signed 2026-05-30 by Matt Nichol in commit `0a0c3c0` after the §10 stress-test resolution landed in commit `6c4b28f`. The spec body now reads "§11 SIGNED 2026-05-30 by Matt Nichol" at its top status banner, §10 status paragraph, §11 status line, and §11 footer ("Signature is complete (see above)."). However, the project tracking layer (`MASTER_INDEX.md`, `PROJECT_HANDSHAKE.md`, `PROJECT_BUILD_AND_AUDIT_QUEUE.md`, this log) was deliberately NOT updated in commit `0a0c3c0` — per the operator's narrow "small cleanup edit only" + "commit the signed spec locally" scope on that pass. A fresh session reading the tracking layer in that intermediate state would have seen the MASTER_INDEX still saying "DRAFT (pre-§11)", the PROJECT_HANDSHAKE timeline ending at 2026-05-25 with no record of the §11 signature, and the build queue still describing TOAD §10 stress-test as a parallel operator focus competing with Cyber Insurance §12 — and could have plausibly concluded TOAD was still mid-stress-test. This housekeeping pass refreshes the four tracking files to match the actual signed state of the spec. Initially this pass shipped as a three-file refresh (MASTER_INDEX, PROJECT_HANDSHAKE, this log) per a narrower operator scope on that turn; the queue file was added on operator selection of Option 2 in the follow-up checkpoint, gated as a single combined packet.
+
+**Boundary:**
+- Tracking-layer + build-queue edits only. The TOAD spec itself (`4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md`) is NOT modified by this pass. D1–D9 + D11–D15 stand as-is.
+- The Client-Facing 5-Axis Email Scoring Rubric spec (`4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`) is NOT modified by this pass. The §11.1 amendment per D13 of the TOAD spec remains deferred to a separate follow-up revision cycle that will require its own pre-§11 edit pass + worker manifest + `complete_gate.py` run + fresh operator §11.1 signature per AGENTS.md §6 (post-§11 signed specs are immutable except by explicit revision).
+- No runtime code changed. No `core/scoring/callback_phishing_detector.py` exists in the repo and none is created by this pass. Implementation is NOT authorized by the §11 signature; it requires a separate explicit operator start-build instruction per the TOAD spec §11 footer.
+- Only the two TOAD-referencing lines in `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (line 59 operator-focus call, line 105 parallel operator focus) were edited. The §3 Audit List, the cheaper-proof MSP discovery framing, the 14-day Operating Doctrine Trial entry, and the Maintenance Rules section were all left untouched.
+- Historical dated entries in `PROJECT_HANDSHAKE.md` (lines mentioning TOAD as a 2026-05-23, 2026-05-24, or 2026-05-25 strategic position) are NOT rewritten. Modifying them retrospectively would falsify the chronological record per the spirit of AGENTS.md §6 spec-first discipline and the "no decision laundering" failure mode in §11.
+
+**Verification:**
+- Worker manifest written to `audit_outputs/pending/callback_phishing_toad_section_11_signature_housekeeping.manifest.json` for the `complete_gate.py` run (single combined packet covering all four modified files).
+- `complete_gate.py` invoked with the manifest above; result attached separately.
+- `project_trigger_scan.py --baseline-tests 946` re-run; result attached separately.
+
+**Next Step:**
+Operator review of the four tracking-layer edits and the gate / trigger-scan results. On operator commit authorization, the four files land locally (no push) with commit message `refresh toad section 11 tracking state`. The TOAD detector remains pre-implementation; the rubric §11.1 amendment per D13 remains a known live carry-over that will need its own pre-§11 stress / revision pass before it can land on the rubric spec. The operator has flagged TOAD implementation pass 1 as the next real build move after this commit, but implementation still requires an explicit start-build instruction per the TOAD spec §11 footer and is NOT authorized by this housekeeping commit.
+
+---
+
 ## 2026-05-30 - Cross-Channel Fraud Shield SPARK Concept Capture Created
 
 **Actor:** Matt + Cursor (Claude)

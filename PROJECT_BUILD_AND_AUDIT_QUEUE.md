@@ -56,7 +56,7 @@ In execution order. Each item runs only when its predecessors are complete or ex
 4. **14-day Operating Doctrine Trial.**
    Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–3, not after them — it evaluates whether the doctrine governing how items 1–3 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
 
-**Operator focus call (not queue-ordered):** Matt selects the active spec lane when two items compete for attention — currently **Cyber Insurance §12 close-out** (Build item 1) vs **Callback Phishing / TOAD §10 stress-test** (pre-§11, not yet on this queue). Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
+**Operator focus call (not queue-ordered):** Matt selects the active spec lane when two items compete for attention — currently **Cyber Insurance §12 close-out** (Build item 1; blocker is cheaper-proof MSP discovery, not code) vs **Callback Phishing / TOAD implementation pass 1** (spec §11 SIGNED 2026-05-30 by Matt Nichol per commits `6c4b28f` + `0a0c3c0`; implementation NOT yet started — requires explicit operator start-build instruction per the TOAD spec §11 footer; the rubric §11.1 amendment per D13 is a deferred carry-over on `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` and does not block detector implementation). Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
 
 ---
 
@@ -102,7 +102,7 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 **Build List item 1.** Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1 by resolving the minimum §12 decisions needed for the v1 contract. Keep the closure scoped to signable v1, not global roadmap optimization.
 
-**Parallel operator focus (Matt's call, not queue-gated):** Cyber Insurance Evidence Package §12 close-out **or** Callback Phishing / TOAD §10 stress-test — see Build List operator-focus note.
+**Parallel operator focus (Matt's call, not queue-gated):** Cyber Insurance Evidence Package §12 close-out **or** Callback Phishing / TOAD implementation pass 1 (spec §11-signed 2026-05-30 per commits `6c4b28f` + `0a0c3c0`; implementation gated on explicit operator start-build instruction) — see Build List operator-focus note.
 
 Nothing in Build items 2–3 starts until item 1 closes unless Matt explicitly overrides.
 
