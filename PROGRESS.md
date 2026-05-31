@@ -4,7 +4,7 @@
 
 **Update rule:** When a task is closed, mark it ✅, add finish date and verification line, then move to the next item in the list.
 
-**Runtime baseline (last verified):** **990 tests passing, 1 skipped** (verified 2026-05-30, exit code 0). The +44 delta from the 2026-05-27 `946 tests passing` baseline is the Callback Phishing / TOAD detector pass 1 implementation (commit `014a163`).
+**Runtime baseline (last verified):** **1043 tests passing, 1 skipped** (verified 2026-05-30, exit code 0). The +53 delta from the prior `990 tests passing` baseline is the Callback Phishing / TOAD detector pass 2 wiring + break-it tests (commit `9bcb3d5` — 15 new integration tests in `tests/test_callback_phishing_scoring_integration.py` covering default-off no-regression, enabled-fire path, body_plain-only enforcement, attach-always invariant, flag append, max-merge floor lift, signed rubric §11.2 floor-lift, §11.2 higher-band exact-2 branch, and production-loop rebuild preservation; 38 new adversarial tests in `tests/test_callback_phishing_break_it.py` covering false-positive resistance, false-negative resistance, scope-violation probes (no phone-number / no body_html / no numeric callback_phishing_score / no default-off leakage), crash resistance (empty / whitespace / control characters / zero-width unicode / >200K-char bodies / scan-cap probes), over-lift probes, rubric explanation mismatch probes, cross-tenant isolation, production-loop preservation, daily-digest D8 OOB wording rendering, and StrictModel schema integrity).
 
 ---
 

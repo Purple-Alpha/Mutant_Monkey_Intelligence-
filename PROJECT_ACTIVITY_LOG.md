@@ -26,6 +26,45 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - TOAD Detector Pass 2 + Break-It Tests Landed (commit `9bcb3d5`) + Runtime Baseline Bumped 990 → 1043
+
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Updated
+
+**Files changed by this conceptual pass (audit-split into two packets — see "Audit packets" block below; both splits land as one local commit):**
+- `PROJECT_HANDSHAKE.md` (UPDATED in split A — Current Active Build Track verification baseline bumped from `990 tests passing, 1 skipped (verified 2026-05-30)` to `1043 tests passing, 1 skipped (verified 2026-05-30)` with a delta-attribution sentence naming the TOAD pass 2 + break-it commit `9bcb3d5` and the categories of new tests it added.)
+- `MASTER_INDEX.md` (UPDATED in split A — rubric spec entry's "current global runtime baseline" sub-clause bumped from `990 / 990 + 1 skipped verified 2026-05-30 per commits 014a163 + 82a7490` to `1043 / 1043 + 1 skipped verified 2026-05-30 per commits 014a163 + 82a7490 + 9bcb3d5`. The signed `§11 SIGNED` / `§11.1 amendment` / `§11.2 amendment` bold prefix is preserved verbatim; only the test-count sub-clause changes.)
+- `PROGRESS.md` (UPDATED in split B — Runtime baseline header bumped from `990 tests passing, 1 skipped (verified 2026-05-30, exit code 0)` to `1043 tests passing, 1 skipped (verified 2026-05-30, exit code 0)` with the same delta-attribution sentence; +53 = 15 integration tests + 38 break-it tests.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED in split B — this entry.)
+
+**Reason:**
+TOAD detector pass 2 + break-it tests landed as commit `9bcb3d5 wire callback phishing toad pass 2 with break-it tests` (8 files changed, 2018 insertions, 3 deletions). Full pytest suite at `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation` ran `1043 passed, 1 skipped, exit code 0` after the commit. The +53 test delta is 15 new integration tests in `tests/test_callback_phishing_scoring_integration.py` (covering default-off no-regression, enabled-fire path, body_plain-only enforcement, attach-always invariant, flag append, max-merge floor lift, signed rubric §11.2 floor-lift, §11.2 higher-band exact-2 branch, and production-loop rebuild preservation) plus 38 new adversarial / break-it tests in `tests/test_callback_phishing_break_it.py` organised into nine sections (false-positive resistance on benign call-me / billing-line / urgent-compliance / vendor-followup mail; false-negative resistance on weird-casing / weird-spacing / repeated-phrase / all-category / mixed-safe-and-suspicious bodies; scope-violation probes; crash resistance; over-lift probes; rubric explanation mismatch probes; cross-tenant isolation + production-loop rebuild preservation; daily-digest D8 OOB wording rendering probes; and StrictModel schema integrity probes). This housekeeping pass refreshes the three tracker files that record the live runtime baseline so a fresh session reads correct state and so `python -m scripts.project_trigger_scan --baseline-tests 1043` returns clean rather than emitting a `runtime_baseline_changed` packet.
+
+**Boundary:**
+- Tracking-layer edits only. No runtime code touched. No new detector wiring, no signed-spec amendment, no rubric or scoring-agent or production-loop or daily-digest-agent or demo-renderer change added by this pass — all of that already landed inside commit `9bcb3d5` and is the source of the +53 test delta.
+- No signature proxied for Matt. The TOAD spec §11 signature (2026-05-30) and the rubric spec §11.2 signature (2026-05-30) are unchanged. Adding a baseline-bump tracker entry does not re-sign any spec.
+- Historical archive entries in `PROGRESS.md` and `PROJECT_HANDSHAKE.md` (lines referencing older baselines like 555 / 587 / 688 / 905 / 946 / 990 tests passing) NOT rewritten. Modifying them retrospectively would falsify the chronological record per AGENTS.md §6.
+- Historical activity-log entries referencing `--baseline-tests 946` or `--baseline-tests 990` (older trigger-scan verification statements) NOT rewritten — they are factual records of what was run when.
+- No commit, stage, or push performed by the worker.
+
+**Audit packets (split for the 200 KB gate cap):**
+The combined four-file diff exceeded `complete_gate.py`'s 200 KB packet cap (full combined packet measured 336,213 bytes; per-file cap is 50 KB and `PROJECT_ACTIVITY_LOG.md` alone is 540 KB on disk). The same conceptual pass was therefore audited as two split packets, each with its own worker manifest, each named exactly the two files it covers, with the other pair `git stash`-ed during the run so the gate's git-cross-check sees a scoped working tree:
+- Split A — `PROJECT_HANDSHAKE.md` + `MASTER_INDEX.md`. Manifest: `audit_outputs/pending/toad_pass_2_baseline_bump_a_handshake_and_index.manifest.json`.
+- Split B — `PROGRESS.md` + `PROJECT_ACTIVITY_LOG.md` (this entry). Manifest: `audit_outputs/pending/toad_pass_2_baseline_bump_b_progress_and_activity_log.manifest.json`.
+
+The two splits land as a single local commit. Each split-manifest's `completion_claim` explicitly notes that the companion pair ships under the other split, so neither split overclaims relative to its own scope. From the operator commit's standpoint the change set is the four files above as a single atomic bump.
+
+**Verification:**
+- Two worker manifests written under `audit_outputs/pending/`, one per split (paths above).
+- `complete_gate.py` invoked once per split with the matching `--task` / `--claim`; results attached separately.
+- `project_trigger_scan.py --baseline-tests 1043` re-run after both gate passes; result attached separately.
+
+**Next Step:**
+Operator review of the baseline-bump tracker cleanup and gate / trigger-scan results. If accepted, the operator may authorize a local commit to land the tracker bump. After that, the next active build move is the operator's call — candidates include: rebroadcasting the four-document set to a fresh session as the new resume-here state, opening the next TOAD pass (Part 2 phone-number baselining requires the deferred Vendor Baseline Store enum revision spec to be signed first), or returning to the Cyber Insurance Evidence Package lane's remaining cheaper-proof MSP-conversation discovery work.
+
+---
+
 ## 2026-05-30 - Rubric Spec §11.2 Amendment Signed (callback_phishing_pattern → origin_timing per TOAD D13)
 
 **Actor:** Matt + Cursor (Claude)
