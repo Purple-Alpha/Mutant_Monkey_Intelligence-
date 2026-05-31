@@ -15,9 +15,10 @@ In this order, every session, before responding to the first request:
 1. **This file** (`AGENTS.md`).
 2. **`VISION.md`** — seven non-negotiables. Never violate.
 3. **`PROJECT_HANDSHAKE.md`** — current build target, current verification baseline, resume-here state.
-4. **`MASTER_INDEX.md`** — the canonical list of every artifact in the project and what it locks.
-5. **`PROGRESS.md`** — current activity log and recent decisions.
-6. **`PROJECT_BUILD_AND_AUDIT_QUEUE.md`** — default ordering if no operator override.
+4. **`CURRENT_STATE_MAP.md`** — compact map of doctrines already settled across multiple specs and known open gaps. Prevents the "wait, didn't we already solve this?" rediscovery loop. Pre-spec, unsigned, not §11; if any entry conflicts with a §11-signed spec, the signed spec wins.
+5. **`MASTER_INDEX.md`** — the canonical list of every artifact in the project and what it locks.
+6. **`PROGRESS.md`** — current activity log and recent decisions.
+7. **`PROJECT_BUILD_AND_AUDIT_QUEUE.md`** — default ordering if no operator override.
 
 If the operator's first message names a specific track (e.g. "Cyber Insurance Q6," "rubric spec," "drift cleanup"), also read the most recent deep-dive for that track before responding.
 

@@ -26,6 +26,34 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Current State Map seeded with Alert-Fatigue Doctrine + Open Verification Gap (+ AGENTS.md §1 read-order promotion)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Created + Updated
+
+**Files Changed:**
+- CURRENT_STATE_MAP.md (new top-level file; pre-spec, unsigned, not §11)
+- MASTER_INDEX.md (one new entry under Project Control Files for CURRENT_STATE_MAP.md)
+- AGENTS.md (one §1 read-order insertion: CURRENT_STATE_MAP.md added as new item 4, between PROJECT_HANDSHAKE.md and MASTER_INDEX.md; old items 4–6 shifted to 5–7; no other AGENTS.md text changed)
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Operator recall test — "do you remember when we spoke about alert fatigue and what we came up with to fix it?" — surfaced a real drift signal. The design exists across `core/drafting/daily_digest_agent.py` (batch), `Tiered_Detection_Intensity_Deep_Dive.md` (tier), `Financial_State_Ledger_Delta_Tripwire_Deep_Dive.md` + Vendor Baseline Store ("recommend review, not block" → escalate rarely), `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (explain clearly), and the per-tenant override CLI (tune per tenant), with the Stage A "analyze-only, not per-event alerts" framing in `VISION.md` lines 36-44 — but the operator's compressed five-verb statement "batch, tier, escalate rarely, explain clearly, tune per tenant" did not exist as a single captured reference anywhere. Future sessions had no place to find it without re-assembling from five specs.
+
+Operator-authored capture, verbatim, of two paragraphs: (1) the alert-fatigue doctrine, (2) the open verification-workflow gap for vendor-payment changes (four-value enum sketch `verified` / `unresolved` / `false-positive` / `follow-up-needed`). Captured as a new top-level `CURRENT_STATE_MAP.md` because the existing top-level trackers do not fit this shape: AGENTS.md is agent doctrine, VISION.md is long-arc thesis, PROJECT_HANDSHAKE.md is current single active focus, PROGRESS.md is the always-on activity tracker, MASTER_INDEX.md is the artifact catalog. CURRENT_STATE_MAP.md is the "settled design + known gaps" compression layer between VISION.md and the spec library.
+
+Read-order promotion (operator decision, same pass): CURRENT_STATE_MAP.md was added to the AGENTS.md §1 session-start read order at position 4, immediately after PROJECT_HANDSHAKE.md and immediately before MASTER_INDEX.md. Reasoning recorded by the operator: PROJECT_HANDSHAKE tells the agent where the build is, CURRENT_STATE_MAP tells the agent what concepts are already solved versus still open, then MASTER_INDEX gives the full map. Without read-order promotion the file would not actually prevent the rediscovery drift it was created to prevent. The operator framed this as "not extra process; it prevents rediscovery drift."
+
+This is a pure documentation pass and is valid under the AGENTS.md §11 Build Momentum Rule because it (a) records a stated operator decision (the verbatim doctrine + verbatim open gap + the read-order promotion) and (b) prevents the named drift mode of "wait, didn't we already solve this?". No D-decisions are introduced, no new gates created, no signed spec touched, no runtime code touched. The file is pre-spec / unsigned / not §11 and will never be auto-promoted by the assistant.
+
+Operator standing direction recorded with this capture: CURRENT_STATE_MAP.md is to remain lightweight. Its job is to preserve compact "already solved / still open" state so future agents do not rediscover solved concepts from scattered artifacts. It must not be turned into a spec, matrix, or large doctrine file. New entries are operator-authored prose, captured verbatim, with cross-references to the actual anchor artifacts; the file does not introduce D-decisions, requirements, or new gates.
+
+**Next Step:**
+Open follow-up only: whether the captured open verification-workflow gap for vendor-payment changes should be promoted onto `PROJECT_BUILD_AND_AUDIT_QUEUE.md` as a future spec candidate or left parked in `CURRENT_STATE_MAP.md` as acknowledged but not on the queue. The read-order question is resolved in this same pass. Commit message for this four-file capture: `seed current state map with alert fatigue doctrine`.
+
+---
+
 ## 2026-05-31 - Build Momentum Doctrine Added to AGENTS.md §11 (Lane C Ransomware SPARK Dropped)
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)
