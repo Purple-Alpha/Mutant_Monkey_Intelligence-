@@ -26,6 +26,38 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Eval Harness v1 Shape Sketch Captured as SPARK (no implementation)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/_NorthStar_Eval_Harness_v1_Sketch_SPARK.md` (NEW — shape-sketch SPARK for the five eval-harness v1 surfaces the operator named in his 2026-05-31 today-list item 6: fixture format, expected verdict, evidence bundle, failure card, precision/recall output. Every surface anchored to existing D-decisions in the `Email_Security_Testing_Evidence_Framework_Deep_Dive.md` framework draft — no new D-decisions introduced. Flags five open questions for the future spec pass without locking any; records eight items the real spec pass would have to cover beyond the sketch. Explicit conjunctive implementation gate: BOTH framework §11 signature AND a separate operator start-build instruction required before any code touches `core/scoring/eval/`. Named failure modes recorded: sketch-as-spec drift, pre-implementation lock-in, schema bypass, composite-score creep, auto-populated failure-card root cause.)
+- `MASTER_INDEX.md` (UPDATED — added the new SPARK to the SPARK group, slotted between `_NorthStar_Strategy_Matrix_Discipline_SPARK.md` and `_Cross_Channel_Fraud_Shield_Concept_Capture.md`; entry enumerates the five sketched surfaces, the framework D-decisions each surface anchors to, the five flagged open questions, the eight spec-pass scope items, the conjunctive implementation gate, and the named failure modes.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+Operator's 2026-05-31 today-list item 6 was "Only if there is still energy: start planning the eval harness. Not code yet unless the testing framework is signed. Sketch what v1 will need: fixture format, expected verdict, evidence bundle, failure card, precision/recall output." After completing items 2 and the §11 sign-off readiness review (working doc only, under `audit_outputs/`, gitignored), the operator selected the eval-harness sketch as the next Cursor-buildable lane. The SPARK preserves the shape conclusions in a form that is auditable, gated, and explicitly not a spec — preventing the failure mode where a "sketch" silently becomes the implementation contract.
+
+**Boundary:**
+- This SPARK does NOT sign §11 of anything. The Email Security Testing & Evidence Framework remains DRAFT pre-§11.
+- This SPARK does NOT authorize implementation of the v1 eval harness. Implementation requires BOTH framework §11 signature AND a separate explicit operator start-build instruction. Neither is granted by this entry.
+- This SPARK does NOT introduce new D-decisions. Every shape decision cites an existing framework D-decision (D1-D29). The five flagged open questions are explicitly NOT locked here.
+- This SPARK does NOT touch runtime code, does not modify `core/scoring/eval/`, does not change any detector, and does not edit any signed spec.
+- This SPARK does NOT propose a separate `Email_Security_Eval_Harness_v1_Deep_Dive.md` spec. The SPARK explicitly notes that the framework may be implementable directly without a separate harness spec; a separate spec only happens by explicit operator direction.
+- This SPARK does NOT alter the project queue (`PROJECT_BUILD_AND_AUDIT_QUEUE.md`). Build items 1-4 remain in force; the SPARK is parallel sketch work, not a new queue item.
+
+**Audit Status:**
+Single-shot `complete_gate.py` ran against this work using a worker manifest at `audit_outputs/pending/eval-harness-v1-sketch-spark.manifest.json` listing the three modified files (`_NorthStar_Eval_Harness_v1_Sketch_SPARK.md` created, `MASTER_INDEX.md` updated, `PROJECT_ACTIVITY_LOG.md` updated) and a `relevant_contracts` referencing only the signed `Compliance_and_Trend_Watch_Process.md`. `project_trigger_scan.py` clean against baseline 1043; no runtime baseline change.
+
+**Next Step:**
+- Operator decides whether and when to sign §11 of `Email_Security_Testing_Evidence_Framework_Deep_Dive.md`. The sign-off readiness review at `audit_outputs/_email_testing_framework_sign_off_readiness_review_20260531.md` (gitignored working doc, not tracked) is available as the decision aid.
+- If / when framework §11 is signed, operator decides separately whether to authorize v1 implementation start; this SPARK is the existing reference for shape.
+- If the operator instead wants a separate `Email_Security_Eval_Harness_v1_Deep_Dive.md` spec, that requires explicit operator direction; this SPARK does not auto-promote.
+- Item 4 on Matt's 2026-05-31 list (Cyber Insurance MSP discovery) is operator-execution work using the runbook + worksheet from commit `45c3b0e`; remains the highest-priority operator-side action whenever business-hours discovery becomes possible.
+---
+
 ## 2026-05-31 - Email Security Testing Framework §10 Closed Out (Q1 / Q3-Q7 → D24-D29)
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)
