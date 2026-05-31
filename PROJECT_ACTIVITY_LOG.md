@@ -26,6 +26,45 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - NorthStar Strategy Matrix Discipline SPARK Capture Created
+
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/_NorthStar_Strategy_Matrix_Discipline_SPARK.md` (NEW — SPARK only; pre-spec; unsigned; not §11; not pricing approval; not client-facing copy; not a product sheet; not a build authorization; not a new required gate. Records the operator's discipline conclusion from a late-night chat run that produced six different matrices: adopt three lightweight aids now — Pain Matrix (protects against feature creep), Revenue Matrix (protects against unpaid "cool" features), Strategic Relevance Score (four 0-10 questions covering mission fit / MSP sell value / evidence quality / trust + provability — protects the authenticated-deception mission); park three as SPARK — Fear Matrix, Competitive Moat Matrix, Trust Layer Matrix, each with explicit un-defer triggers; schedule the obsolescence-risk discipline through the existing §11 SIGNED `Compliance_and_Trend_Watch_Process.md` monthly Frontier Intake Review + quarterly deep-review, NOT a new process. Locks the boundary that matrices do not decide / do not replace Matt's authority / do not replace the Next-Action Decision Rubric / do not create a new gate / if a matrix conflicts with a signed spec the signed spec wins / if a matrix creates build friction simplify or remove it. Records named failure modes — matrix proliferation, decision laundering through matrix scores, fake progress through re-scoring, calibration drift, adjacent-surface drift, free-work perception, sycophancy / praise-stacking. ~18 KB.)
+- `MASTER_INDEX.md` (UPDATED — indexed the new SPARK file in the Product Roadmap deep-dive cluster, immediately above the existing `_Cross_Channel_Fraud_Shield_Concept_Capture.md` SPARK entry, matching the SPARK / concept-capture pattern. Bullet surfaces the three adopt-now matrices, the three parked matrices, the boundary clauses, and the existing `Compliance_and_Trend_Watch_Process.md` cadence-host reference.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+A late-night chat run produced six matrices in rapid succession (Pain, Revenue, Strategic Relevance, Fear, Competitive Moat, Trust Layer) plus a proposed Quarterly Trend Review. Useful as thinking tools in the conversation, but most of them should not become permanent project artifacts. Matt's discipline conclusion is to adopt three lightweight aids now, park three as SPARK with explicit un-defer triggers, and not invent a new process where `Compliance_and_Trend_Watch_Process.md` already specifies the quarterly cadence. This SPARK preserves the discipline conclusion so the next time matrix-stacking comes up, the chat does not have to re-discover the bound (three matrices is the upper cap for this stage; more is worse, not better). The SPARK explicitly does not author a §11-signed matrix specification — doing so would itself be the failure mode the SPARK warns against (converting judgment aids into signed contracts that then have to be maintained, audited, and gated like locked surfaces).
+
+**Boundary:**
+- SPARK only. Pre-spec. Unsigned. Not §11. Not a roadmap commitment. Not pricing approval. Not client-facing copy. Not a product sheet. Not a build authorization. Not a new required gate.
+- No matrix in this SPARK creates or replaces any gate. `audit_tools/complete_gate.py` and `audit_tools/pre_ship_audit.py` remain the only enforced gates.
+- No matrix supersedes `VISION.md`, the seven non-negotiables, any §11-signed spec, or Matt's operator authority. If a matrix conflicts with a signed spec, the signed spec wins.
+- The Strategic Relevance Score's illustrative example numbers (vendor baselines = high; VPN = parking lot; TOAD = consistent with signed posture) are operator-discretionary, not signed, and not binding on any future build decision. They are sanity probes, not re-authorizations.
+- No pricing, customer-segment, or buyer-table material captured. Pricing belongs in `REVENUE_MAP.md` / `THIRTY_DAY_PLAN.md` after real proof.
+- No client-facing copy authored. Forbidden-language scope inherits from `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md`; the SPARK contains no "compliant", "certified", "insurer-approved", "bulletproof", "fraud-proof", or equivalent phrasing.
+- No edits to `Compliance_and_Trend_Watch_Process.md` in this pass. The SPARK *references* its existing quarterly deep-review cadence; it does not amend it.
+- No new spec for the Competitive Moat Matrix, the Fear Matrix, or the Trust Layer Matrix is authored. The three parked matrices stay parked until their named trigger conditions fire.
+- The companion `_NorthStar_Business_Positioning_SPARK.md` (which would capture the moat-shape conclusion — Vendor Relationship Intelligence + Evidence Engine + Information Integrity) is a separate operator-authorized pass, not written here.
+- No stage / commit / push performed by the worker.
+
+**Prior uncommitted state acknowledged:**
+The working tree already carried uncommitted work from the immediately preceding pass — the Email Security Testing & Evidence Framework spec draft + Q8 / Q9 resolution (see the 2026-05-30 entry immediately below this one). That prior work created `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` (untracked, ~49.9 KB) and modified `MASTER_INDEX.md` + `PROJECT_ACTIVITY_LOG.md`. This Strategy Matrix Discipline SPARK pass landed in the same working tree alongside that prior pass without modifying or re-litigating any of it. The two passes are conceptually independent; combining them in one local commit is an operator call.
+
+**Verification:**
+- Worker manifest written to `audit_outputs/pending/northstar_strategy_matrix_discipline_spark_capture.manifest.json` for the `complete_gate.py` run.
+- `complete_gate.py` invoked with the manifest above; result attached separately.
+- `project_trigger_scan.py --baseline-tests 1043` re-run; result attached separately.
+
+**Next Step:**
+Operator review of the new SPARK file, the MASTER_INDEX entry, and this log entry. If accepted, the operator may then authorize a local commit (with or without the prior Q8 / Q9 work in the same commit — operator's call). If rejected, the worker reverts via `git restore --worktree --` on the two modified tracker files and `git rm` on the new SPARK file per operator instruction. The SPARK is not a queue item; the three lightweight matrices are advisory and may be applied ad-hoc when a real candidate appears, and the three parked matrices stay parked until one of their named trigger conditions fires.
+
+---
+
 ## 2026-05-30 - Email Security Testing & Evidence Framework Spec Draft Authored + Q8 / Q9 Resolved (pre-§11)
 
 **Actor:** Matt + Cursor (Claude)
