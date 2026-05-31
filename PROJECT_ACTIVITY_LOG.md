@@ -26,6 +26,38 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Callback Phishing / TOAD §10 Stress-Test Resolved (D11–D15 Locked, §11 Still Pending)
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Updated
+
+**Files Changed:**
+- `think_sheet.md` (UPDATED — added "Sub-question stress test — Callback Phishing / TOAD §10 (2026-05-30)" with 7-axis stress test for each of Q1–Q5 plus a verdict-summary table that maps each sub-question to its locked v1 D-decision; mirrors the 2026-05-25 rubric §10 stress-test pattern)
+- `4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md` (UPDATED — header status line; §1 in-scope / out-of-scope rewritten to cite D14 / D15 / D12 instead of "deferred-decision" language; §2 added D11–D15 and re-noted D10 as superseded by D15; §2 D2 / D4 rows tightened to cite the resolved decisions; §3 closed-list paragraph tightened to cite D11; §4.3 forward-compat block rewritten to describe Part 2 shipping through its own §11-signed spec; §5 schema block removed the `phone_number_assessment: None = None` field plus the matching invariant, added explanatory paragraphs citing D11 / D12 / D15, added the no-extra-keys / `StrictModel` invariant; §6 rubric mapping rewritten to the 1/2 form per D13 with both OR-clauses; §8 gate test 11 rewritten to assert the OR-clause, gate test 12 rewritten from "forward-compat slot rejection" to "schema discipline — no `phone_number_assessment` field; extra-key rejection raises `ValidationError`"; §9 step 1 marked DONE 2026-05-30; §10 converted from "Open Questions" to "Resolved Questions" with verdict-mapping table; §11 header + locked-decisions line updated to reflect D1–D9 + D11–D15 with D10 superseded.)
+- `MASTER_INDEX.md` (UPDATED — TOAD entry rewritten to reflect §10 resolved, summarize D11–D15, note that §11 is still pending, and remove the stale "§10 sub-questions still open" claim)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+The TOAD detector deep-dive went into DRAFT (pre-§11) status on 2026-05-25 with five §10 sub-questions blocking signature. Matt supplied operator decisions for all five (Q1 = keep the five v1 phrase categories; Q2 = no numeric `callback_phishing_score` field in v1; Q3 = use the 1/2 `origin_timing` rubric mapping; Q4 = `body_plain` only in v1, `body_html` deferred to v1.1+; Q5 = omit `phone_number_assessment` from the v1 schema). This pass records the full 7-axis stress test for each sub-question in `think_sheet.md` (matching the discipline used for the rubric §10 on 2026-05-25), locks each verdict back into §2 of the TOAD spec as D11–D15, rewrites the spec's in-scope / out-of-scope / schema / rendering / gate-test sections to match the resolved decisions, converts §10 to "Resolved," and refreshes the `MASTER_INDEX.md` entry so the index no longer carries the stale "§10 sub-questions still open" claim.
+
+**Boundary:**
+- Spec-only edit. No runtime code changed.
+- §11 signature is **still pending** — resolving §10 does not sign the spec. The signature line (§11) remains unsigned.
+- No commit, no stage, no push performed by the worker. The operator decides whether to commit.
+- D10 is explicitly marked superseded by D15 (not silently rewritten) so the audit trail preserves the original draft posture for review.
+- The §11.1 amendment to `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` is **planned for landing with** the TOAD §11 signature (per D13) and is **not** written in this pass; the rubric spec remains §11-SIGNED and unamended.
+- Part 2 phone-number baselining remains out of scope and gated on the Vendor Baseline Store `vendor_callback_phone_number` enum revision per `4. Product_Roadmap/Vendor_Baseline_Signal_Type_Enum_Revision_Deep_Dive.md`.
+
+**Verification:**
+- Worker manifest written to `audit_outputs/pending/callback_phishing_toad_section_10_resolution.manifest.json` for the `complete_gate.py` run.
+- `complete_gate.py` invocation: see "Next Step" below for the exact command. Result attached to operator report when the gate run completes.
+- `project_trigger_scan.py` invocation: see "Next Step" below for the exact command. Result attached to operator report when the scan completes.
+
+**Next Step:**
+Operator review of the diff in `think_sheet.md` + `4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md` + `MASTER_INDEX.md` + this log entry, the `complete_gate.py` audit output, and the `project_trigger_scan.py` report. If all three return clean and the spec reads correctly, the operator may then sign §11 (or request further revisions before signing). Implementation does not begin until Matt's explicit start-build instruction after signature, and pre-ship gate must complete before commit.
+
+---
+
 ## 2026-05-30 - Consequence Matrix Process Draft Created
 **Actor:** Matt + Codex
 

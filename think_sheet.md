@@ -539,6 +539,98 @@ These verdicts move into §2 of `4. Product_Roadmap/Client_Facing_5_Axis_Email_S
 
 ---
 
+## Sub-question stress test — Callback Phishing / TOAD §10 (2026-05-30)
+
+The Callback Phishing / TOAD body-language detector idea passed the idea-level stress test on 2026-05-24 (row above; `ST = Y`). The spec draft `4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md` then surfaced five sub-questions in §10 that bake into the §11 lockdown if signed. Same discipline as the rubric §10 stress test (above, 2026-05-25): each sub-question goes through the standard 7-axis test, the verdict is recorded here, and the verdict then moves into §2 of the spec as a new D-decision. §10 becomes "resolved." §11 signature still pending after that — these stress-test verdicts do **not** sign the spec.
+
+### Q1. v1 phrase-category list — keep the §3 five, add `mfa_bypass_call`, or remove `support_line_substitution`?
+
+1. **Failure mode** — Adding `mfa_bypass_call` to v1 without real-traffic evidence locks a category whose phrasing overlaps with legitimate IT-helpdesk mail ("call us to reset your MFA"); high false-positive risk on benign helpdesk traffic. Removing `support_line_substitution` loses a documented TOAD play (attacker tells the recipient to "call our updated support line" with an attacker number) that none of the other four categories cleanly cover. Keeping the §3 five preserves the public contract Matt locked in §5 schema (the `category_name` `Literal`) and matches the stress-test answer source on 2026-05-24.
+2. **Hidden cost** — Adding a category requires fixture coverage, pattern variants in code, gate-test updates, and a §8 test row per category. Removing a category breaks the §5 schema `Literal` and requires a schema migration. Holding the v1 list and deferring additions to v1.1 is the cheapest move and matches D2's "closed phrase-category vocabulary in v1" rule.
+3. **Specific buyer** — Same MSP archetype as the parent idea: payroll bureaus, accounting firms, real-estate offices. The v1 five cover the strongest published TOAD shapes; adding `mfa_bypass_call` mostly helps IT-helpdesk-heavy buyers (different archetype). Removing `support_line_substitution` weakens the pitch for AP buyers receiving fake vendor-support emails.
+4. **Cost of inaction** — Not adding `mfa_bypass_call` in v1 means MFA-fatigue callback variants fall back to ransomware-precursor body-language detection + the rubric's `recommended_action`; not silent. Not removing `support_line_substitution` means false-positive risk is bounded by D2's closed-vocabulary discipline + §4.1 banding (single-category fire only lifts to 50 `needs_review`, not `block`).
+5. **Cheaper proof first** — Yes. Ship the v1 five, run the detector against the bounded fixture set, watch the next 5 MSP discovery calls. If MFA-fatigue callback shapes show up as a real miss, add `mfa_bypass_call` as a v1.1 spec addendum (one §11 amendment, one schema-`Literal` extension, one fixture row). Cheaper than locking the category now without evidence.
+6. **Existing competitor** — Next-gen email security (Abnormal, Avanan, Microsoft Defender) does TOAD-shape detection but rarely publishes its category list. v1's named, closed five is the differentiator; expanding before evidence weakens the auditability story.
+7. **Pre-mortem** — "We added `mfa_bypass_call` to v1 without real traffic. The pattern caught a wave of legitimate IT-helpdesk mail at MSPs running mixed-tenant inboxes. Mitigated by holding v1 to the five and gating additions on real-traffic miss reports."
+
+**Verdict:** Keep the §3 five v1 phrase categories (`call_now_pressure`, `do_not_use_known_channel`, `voice_only_finalize`, `support_line_substitution`, `payment_redirect_call`). Do **not** add `mfa_bypass_call` in v1. Do **not** remove `support_line_substitution`. Adding or removing a category is a v1.1 spec addendum gated on real-traffic miss / false-positive evidence after the detector ships. (D11.)
+
+---
+
+### Q2. Numeric `callback_phishing_score` field, or flag + categories + `recommended_risk_floor_lift` only?
+
+1. **Failure mode** — Adding a numeric `callback_phishing_score` creates a second internal score competing with `risk_score` and `recommended_risk_floor_lift`; clients and operators learn another number that has to stay consistent with the §4.1 band table forever. Sibling detectors (FSL, document-metadata) carry their own numeric scores, but those scores feed a richer overlay shape; callback phishing's signal is closer to binary-with-tiers and the §4.1 banding already encodes the tiers via `recommended_risk_floor_lift`.
+2. **Hidden cost** — A numeric score requires a published computation rule, a validator, fixture coverage for every band, a rendering contract, and per-axis drift discipline (the same drift-detection burden the rubric carries). Flag + categories + lift is one fewer surface and one fewer source of drift.
+3. **Specific buyer** — MSPs reading monthly reports want the `recommended_action` + per-axis `origin_timing` lift; they do not want a fourth detector-specific number on the page. Adding a numeric score would have to be hidden from rendering anyway to avoid clutter (§6 already bounds what surfaces).
+4. **Cost of inaction** — Shipping without a numeric score means future analytics ("how many callback-phishing fires hit floor 50 vs 70 vs 85") work from `recommended_risk_floor_lift` + `categories` length, which is already enough signal. v1.1 may add a numeric score if production telemetry needs it; the upgrade path is additive.
+5. **Cheaper proof first** — Yes. Ship flag + categories + lift in v1. If MSP discovery or internal analytics show a real gap that a numeric score would close, add it in v1.1 as an additive schema field.
+6. **Existing competitor** — Most email-security tools expose opaque numeric severity scores; NorthStar's differentiator is auditable signal-by-signal evidence, not another opaque number. A binary `fired` + structured `categories` matches the rubric's per-axis transparency model.
+7. **Pre-mortem** — "We added a numeric `callback_phishing_score` in v1, the §4.1 band table evolved, and the score drifted from the band-implied tier in three releases. Mitigated by not introducing a separate numeric score until production data forces it."
+
+**Verdict:** No numeric `callback_phishing_score` field in v1. Score-emission contract stays: `fired` (bool) + `categories` (tuple) + `recommended_risk_floor_lift` (int, banded per §4.1) + `out_of_band_verification_required` (bool). A numeric score is deferred to v1.1+ and gated on production evidence that the band-implied tier is insufficient signal. (D12.)
+
+---
+
+### Q3. Rubric `origin_timing` mapping — lift to 1 only, or 1/2 with the §4.1 banding?
+
+1. **Failure mode** — A flag-only "lifts to 1" mapping under-weights the strongest callback-phishing hits (multi-category fire + payment overlap, which §4.1 already bands to lift 85) on the client-facing rubric, so the per-axis surface understates risk relative to the internal `recommended_risk_floor`. A 1/2 mapping that uses `risk_score >= 50` as the threshold misses cases where the callback signal itself is the strongest signal on a benign-looking email (the upstream `risk_score` may still be below 50 before the floor lift applies).
+2. **Hidden cost** — A 1/2 mapping requires the rubric `origin_timing` mapper to read either `risk_score` or `recommended_risk_floor_lift`, both of which the rubric already consumes; no new dependency. A "lift to 1 only" rule is one branch; a 1/2 rule that also reads `recommended_risk_floor_lift >= 70` is two branches. Negligible code cost either way; the spec cost is the §11.1 amendment to the rubric, which is required regardless because the rubric spec is §11-SIGNED and any addition to its evidence-tag set is a signed amendment.
+3. **Specific buyer** — MSPs reading the rubric want axis severity to track real evidence severity. A 1/2 mapping that escalates with the §4.1 band aligns the per-axis surface with what the rest of the system already says about the same email.
+4. **Cost of inaction** — A "lift to 1 only" mapping in v1 keeps the rubric understated for high-severity callback hits; clients reading the rubric for the most severe TOAD attacks see `origin_timing = 1` while `recommended_action = block`. Bad alignment between two adjacent surfaces is a trust failure mode the rubric spec is supposed to prevent.
+5. **Cheaper proof first** — Not needed. The mapping is deterministic; the §4.1 band table is locked; the rubric spec already supports per-evidence-tag mapping logic. Using both `risk_score >= 50` AND `recommended_risk_floor_lift >= 70` as alternative triggers for the score-2 escalation is the smallest rule that aligns the two surfaces.
+6. **Existing competitor** — Defender, Mimecast, and other rubric-style surfaces typically escalate axis severity in lockstep with overall severity; NorthStar's rubric should match that intuition.
+7. **Pre-mortem** — "We mapped callback-phishing to `origin_timing = 1` only, missed the multi-category / payment-overlap escalations, and an MSP reading the monthly report saw a misleading `origin_timing` for a `block` action. Mitigated by the 1/2 mapping that uses the callback band as a second trigger."
+
+**Verdict:** Use the 1/2 `origin_timing` rubric mapping:
+- `callback_phishing_pattern` present → `origin_timing` lifts to at least 1.
+- `callback_phishing_pattern` present **AND** (`risk_score >= 50` **OR** `recommended_risk_floor_lift >= 70`, i.e. the higher callback bands per §4.1) → `origin_timing` maps to 2.
+
+This is a §11.1 amendment to `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` that lands **with** the TOAD detector's §11 signature, not before — the rubric spec stays signed but unamended until the TOAD detector signs. (D13.)
+
+---
+
+### Q4. Read `body_plain` only, or also read `body_html`?
+
+1. **Failure mode** — Reading only `body_plain` misses callback-phishing lures that render styled "Call now!" buttons or hidden phone-number digits inside HTML; the detector under-fires on HTML-only TOAD mail. Reading `body_html` requires a parser, opens a new attack surface (HTML parser CVEs, XSS-shaped patterns inside the parser), and breaks the existing project convention that detectors stay on `body_plain` (header divergence, prompt injection, FSL all read `body_plain` only).
+2. **Hidden cost** — `body_html` parsing adds a parser dependency, HTML-sanitization discipline, fixture coverage for parser-edge cases (malformed HTML, encoding quirks, CDATA, comments hiding text), and a new failure mode (`html_parse_error`) the detector has to handle. `body_plain` only is the existing convention and costs nothing new.
+3. **Specific buyer** — Same MSP archetype. MSPs whose tenants run modern mail clients almost always have `body_plain` populated alongside `body_html`; v1 sees the same lure text in both for the vast majority of mail. The HTML-only TOAD case is a known edge that v1.1+ can address with evidence.
+4. **Cost of inaction** — Not reading `body_html` in v1 misses HTML-only TOAD lures that strip the plain-text alternative. Bounded by the rubric `origin_timing` axis still surfacing other evidence and by the `recommended_action` still being driven by `risk_score` floors from upstream detectors. If real traffic shows HTML-only TOAD lures slipping through, v1.1 adds `body_html` as a spec-first addendum.
+5. **Cheaper proof first** — Yes. Ship `body_plain` only in v1, instrument the detector to log when `body_html` is non-empty but the detector did not fire on `body_plain`, and let production data prove (or disprove) the HTML-only miss rate.
+6. **Existing competitor** — Mature email-security tools (Defender, Mimecast, Proofpoint) parse HTML routinely. NorthStar's wedge is auditability + deterministic detectors; adding HTML parsing in v1 weakens the "one parser, one input field" simplicity that the existing detectors share.
+7. **Pre-mortem** — "We added `body_html` to v1, an HTML-parser bug crashed the detector on malformed mail from a major vendor, and the detector silently went OFF for that tenant. Mitigated by holding v1 to `body_plain` and gating `body_html` on real evidence that HTML-only TOAD lures are a measurable miss."
+
+**Verdict:** v1 reads `body_plain` only. `body_html` is deferred to v1.1+ and gated on real evidence (production telemetry or MSP miss reports) that HTML-only TOAD lures slip through the `body_plain` path. (D14.)
+
+---
+
+### Q5. Reserve `phone_number_assessment` as a typed forward-compat slot, or omit it entirely until Part 2 ships?
+
+1. **Failure mode** — Reserving the slot in v1 locks Part 2's design (the `PhoneNumberAssessment` payload shape, the embedding contract, the `None`-default semantics) before Part 2's spec exists. If Part 2's actual design needs a different shape (e.g. a list of per-number assessments, or an integration with the Vendor Baseline Store enum revision that returns different metadata), v1 has to migrate — defeating the "forward-compat" intent. Omitting the slot in v1 leaves Part 2 free to choose its own schema shape through its own §11-signed spec.
+2. **Hidden cost** — Reserving the slot requires a forward-compat validator (v1 must reject any non-`None` value), a §8 gate test (#12 in the current draft), and a documented "this field will be filled by Part 2" comment. All of those have to be revisited when Part 2 actually lands. Omitting the slot is one fewer field, one fewer validator, one fewer gate test, and one less assumption baked into the v1 contract.
+3. **Specific buyer** — No buyer cares about the slot in v1 (the field is always `None`). Buyers care about whether the detector fires correctly on the body-language slice. The slot is internal API surface only.
+4. **Cost of inaction** — Omitting the slot means Part 2, when it ships, adds a new schema field through its own signed spec (matching the existing additive-only schema discipline used for every detector to date — `EmailAnalysisPayload.callback_phishing_assessment` was itself added this way). No migration pain because the field is brand-new to clients of the schema.
+5. **Cheaper proof first** — Yes. The cheaper move is to ship v1 without the slot, let Part 2's spec (gated on the Vendor Baseline Store `vendor_callback_phone_number` enum revision per `4. Product_Roadmap/Vendor_Baseline_Signal_Type_Enum_Revision_Deep_Dive.md`) design the phone-number assessment shape it actually needs, then add it through its own spec-first lane.
+6. **Existing competitor** — Not applicable; this is an internal-schema decision.
+7. **Pre-mortem** — "We reserved `phone_number_assessment: None` in v1, Part 2 needed a list-shaped payload, and we had to migrate the v1 contract anyway. Mitigated by omitting the slot and letting Part 2's signed spec choose the shape."
+
+**Verdict:** Omit `phone_number_assessment` from the v1 `CallbackPhishingAssessment` schema. Part 2 (if it ships) adds the field through its own §11-signed spec via the Vendor Baseline Store enum revision path (`vendor_callback_phone_number` is already proposed in `4. Product_Roadmap/Vendor_Baseline_Signal_Type_Enum_Revision_Deep_Dive.md`). v1 schema discipline stays additive-only; Part 2 ships as a clean schema extension, not a v1 migration. (D15.)
+
+---
+
+### Verdict summary (locks into spec §2 as D11–D15)
+
+| # | Sub-question | Locked v1 verdict |
+|---|---|---|
+| D11 | v1 phrase-category list | Keep the §3 five (`call_now_pressure`, `do_not_use_known_channel`, `voice_only_finalize`, `support_line_substitution`, `payment_redirect_call`). Do not add `mfa_bypass_call`; do not remove `support_line_substitution`. Additions/removals are v1.1 spec addenda gated on real-traffic evidence. |
+| D12 | Numeric `callback_phishing_score` | Not in v1. Emission contract = `fired` + `categories` + `recommended_risk_floor_lift` + `out_of_band_verification_required`. Numeric score deferred to v1.1+ and gated on production evidence. |
+| D13 | Rubric `origin_timing` mapping | 1/2 mapping. Present → `origin_timing >= 1`; present AND (`risk_score >= 50` OR `recommended_risk_floor_lift >= 70`) → `origin_timing == 2`. Lands as a §11.1 amendment to the rubric spec with the TOAD detector's §11 signature. |
+| D14 | `body_html` inclusion | v1 reads `body_plain` only. `body_html` deferred to v1.1+ pending real-traffic evidence of HTML-only TOAD lure miss. |
+| D15 | `phone_number_assessment` slot | Omit from v1 schema. Part 2 (if it ships) adds the field through its own §11-signed spec via the Vendor Baseline Store `vendor_callback_phone_number` enum revision path. v1 stays additive-only. |
+
+These verdicts move into §2 of `4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md` as D11–D15 and replace §10's "open questions" status with "resolved 2026-05-30 by stress test." §11 signature is **still pending** — these stress-test verdicts do not sign the spec.
+
+---
+
 ## Review Cadence
 
 - **Monthly:** every idea in `live park`, score every unscored idea, fill any `ST = N` answers for `promote` band candidates.
