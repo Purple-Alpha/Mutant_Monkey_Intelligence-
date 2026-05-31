@@ -26,6 +26,40 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - TOAD Scope-Boundary Test Expansion (+2 tests under signed scope; baseline 1043 → 1045)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Updated
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_callback_phishing_break_it.py` (UPDATED — added two new tests in §3 "Scope-violation probes" block: `test_non_english_lure_equivalents_do_not_fire_english_only_vocabulary` confirms TOAD D11's English-only closed phrase-category vocabulary by asserting that a body containing Spanish and French semantic equivalents of the canonical lure phrases — `llame ahora mismo`, `no utilice el número`, `solo podemos finalizar esto por teléfono`; `appeler immédiatement`, `n'utilisez pas le numéro habituel`, `ne pouvons finaliser que par téléphone` — does NOT fire the v1 English-only patterns. `test_lure_in_sender_address_local_part_does_not_fire_body_plain_only` confirms TOAD D14's `body_plain`-only input surface by asserting that lure phrasing appearing only in the sender email-address local part (`call-us-immediately@example.com`) while body_plain is benign business correspondence does NOT fire. Two fixture constants added (`_NON_ENGLISH_LURE_BODY`, `_BENIGN_BODY_WITH_LURE_SENDER_DOMAIN_PLAIN`, `_LURE_SHAPED_SENDER_ADDRESS`). All inputs are safe-test-data per the §1.3 safety boundary inherited by TOAD: `.example` domain, synthetic body content, no live malware, no live phishing pages, no real PII.)
+- `PROJECT_HANDSHAKE.md` (UPDATED — single-line baseline change from `1043 tests passing, 1 skipped (verified 2026-05-30)` to `1045 tests passing, 1 skipped (verified 2026-05-31)`. The +2 delta is named with both test function names and tied to TOAD D11 / D14 boundaries. The pre-existing +53 delta description is retained verbatim. No other handshake content changed.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+Per the operator's 2026-05-31 "actual build + testing" instruction during the Sunday-evening interstitial window, Lane B of the agreed A→B→C sequence is fraud-pattern fixture expansion under TOAD's already-§11-SIGNED scope. TOAD spec §11 SIGNED 2026-05-30 by Matt Nichol; D11 locks the v1 phrase-category list to five categories with explicit English vocabulary; D14 locks v1 input surface to `body_plain` only; both boundaries warranted confirmation tests because the existing break-it file (`tests/test_callback_phishing_break_it.py`) covered case-insensitivity, weird spacing, repeated phrases, all-category combinations, mixed safe-and-suspicious bodies, HTML-only lures, phone-number heaviness, no-numeric-score-field, default-OFF resistance, crash resistance, lift-only invariant, rubric integration, cross-tenant isolation, and production-loop preservation — but did NOT explicitly probe the non-English-equivalent boundary or the sender-address-only boundary. The two new tests close both gaps with conservative, fast, deterministic inputs that exercise stated D-decisions without expanding detector scope. Both new tests passed on first run; the full runtime pytest suite reports `1045 passed, 1 skipped in 11.85s` (was `1043 passed, 1 skipped` at the prior 2026-05-30 baseline).
+
+**Boundary:**
+- This pass does NOT change any signed spec. The TOAD spec §2 D1-D15 is byte-identical to its §11-SIGNED 2026-05-30 form. No new detector behavior; no rule-set change; no schema change; no new public surface.
+- This pass does NOT touch detector source code (`core/scoring/callback_phishing_detector.py`), scoring-agent code, blackboard models, or any other runtime module. Only the existing break-it test file received additions.
+- This pass does NOT modify the Email Security Testing & Evidence Framework draft. That spec remains DRAFT pre-§11 (with the 2026-05-31 polish pass also uncommitted in the working tree).
+- This pass does NOT modify the eval harness (`core/scoring/eval/`), the fraud eval dataset (`fraud_eval_dataset.jsonl`), or any Phase 1.1-scope artifact. The framework §4.2 "any new cases formally promoted into the dataset by a separate §11-signed change to the dataset" rule was respected — this pass adds tests inside TOAD's signed scope, not inside the Phase 1.1 dataset's scope.
+- This pass does NOT update `PROGRESS.md`. The baseline change is recorded in `PROJECT_HANDSHAKE.md` only, matching the existing pattern of single-source baseline tracking in the handshake.
+- This pass does NOT signal the framework v1 implementation is starting. The conjunctive implementation gate (framework D7: §11 signature + separate operator start-build instruction) remains unchanged; neither condition is granted by this pass.
+- This pass does NOT add any new public test-data category, new D11 phrase category, new D14 input surface, or new D-decision of any kind.
+- This pass uses inputs that are explicitly safe under the inherited safety boundary (`.example` domain, synthetic body content, no live malware, no live phishing pages, no unauthorized third-party probing, no real PII).
+
+**Audit Status:**
+Single-shot `complete_gate.py` ran against this work using a worker manifest at `audit_outputs/pending/toad-scope-boundary-test-expansion.manifest.json` listing the three modified files. The signed TOAD spec is in `relevant_contracts`. The packet stays well inside the 200KB cap because the test file's per-test additions are small and `files_read` is trimmed. The runtime pytest suite ran cleanly at `1045 passed, 1 skipped` (the standard `cleanup_dead_symlinks` PermissionError at the Windows `%TEMP%\pytest-of-mattn\pytest-current` symlink is a known harmless pytest-on-Windows quirk unrelated to test results; it fires after the pass count is reported). `project_trigger_scan.py` is run after the gate and the baseline tracker in `PROJECT_HANDSHAKE.md` is already updated to 1045 so the scan reads the new baseline cleanly.
+
+**Next Step:**
+- Operator decides whether to commit this Lane B pass locally as a separate commit (the SPARK + polish + Lane B work in the tree are three logically distinct passes that warrant three separate commits, following the pattern from 2026-05-30 commits `184b344` / `f752bb0` / `9e14f8a`).
+- Lane C of the operator's 2026-05-31 A→B→C sequence is the ransomware testing scoping SPARK (`4. Product_Roadmap/_NorthStar_Ransomware_Testing_Scoping_SPARK.md`) — pre-spec scoping for what "ransomware testing" actually means inside NorthStar's email-fraud / inbox-layer MDR wedge per the Cyber Insurance Evidence Package §1.2 boundary. Lane C will follow this entry in the same Sunday-evening session.
+- The framework §11 sign-off remains a separate operator decision; the readiness review at `audit_outputs/_email_testing_framework_sign_off_readiness_review_20260531.md` (gitignored working doc) is the decision aid.
+- The Cyber Insurance MSP discovery queue item remains the operator-side action whenever business-hours discovery becomes possible, using the runbook + worksheet from commit `45c3b0e`.
+---
+
 ## 2026-05-31 - Email Security Testing Framework §11-Signable Polish Pass (no D-decision changes)
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)

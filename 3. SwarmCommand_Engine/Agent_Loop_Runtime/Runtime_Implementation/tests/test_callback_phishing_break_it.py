@@ -188,6 +188,35 @@ _PHONE_NUMBER_HEAVY_BODY = (
     "ABA 121000358 / account 9871234509.\n"
 )
 
+# Non-English equivalents of the canonical English lure phrases. The detector
+# is locked to a closed English vocabulary (TOAD D11). Translations carry the
+# same semantic intent ("call us immediately", "do not use the number on file",
+# "we can only finalize this by phone") and an attacker switching languages
+# should not silently slip past — but also should not fire on the English-only
+# patterns. v1 scope is English-only by D11; a multilingual extension would be
+# a v1.1 spec addendum on real-traffic evidence, not a silent regex broadening.
+_NON_ENGLISH_LURE_BODY = (
+    "Por favor llame ahora mismo para confirmar. No utilice el número "
+    "que tiene en archivo. Solo podemos finalizar esto por teléfono hoy.\n"
+    "Veuillez nous appeler immédiatement. N'utilisez pas le numéro "
+    "habituel. Nous ne pouvons finaliser que par téléphone aujourd'hui.\n"
+)
+
+# Lure language appears ONLY in the sender email-address local part, not in
+# body_plain. Body content is benign and contains no canonical lure phrasing.
+# Per TOAD D14, the detector reads body_plain only — sender address parsing
+# happens elsewhere in the pipeline. A future expansion of the detector to
+# inspect sender address tokens would be a v1.1 spec addendum, not silent
+# scope creep.
+_BENIGN_BODY_WITH_LURE_SENDER_DOMAIN_PLAIN = (
+    "Hi team,\n"
+    "Reminder that the standard monthly invoice will arrive Friday. "
+    "Banking details unchanged. Reach the AR desk by replying to this "
+    "thread if you have any questions about the line items.\n"
+    "Thanks,\nAR\n"
+)
+_LURE_SHAPED_SENDER_ADDRESS = "call-us-immediately@example.com"
+
 # HTML-only lure -- entire body_plain is benign; lure language is exclusively
 # inside body_html. TOAD D14 says body_plain only in v1.
 _HTML_LURE_BODY_PLAIN = "Please review the attached document."
@@ -537,6 +566,68 @@ def test_default_off_survives_sandbox_path_too(tmp_path) -> None:
     assert isinstance(result, EmailAnalysisPayload)
     assert result.callback_phishing_assessment is None
     assert CALLBACK_PHISHING_PATTERN_FLAG not in result.risk_analysis.behavioral_deviation_flags
+
+
+def test_non_english_lure_equivalents_do_not_fire_english_only_vocabulary(
+    tmp_path,
+) -> None:
+    """TOAD D11: v1 phrase categories are a closed English vocabulary. A body
+    containing Spanish and French semantic equivalents of the canonical lure
+    phrases (``llame ahora mismo``, ``no utilice el número``, ``solo podemos
+    finalizar esto por teléfono``; ``appeler immédiatement``, ``n'utilisez
+    pas le numéro habituel``, ``ne pouvons finaliser que par téléphone``)
+    must NOT fire the English-only patterns. A multilingual extension would
+    require a v1.1 spec addendum on real-traffic evidence (per D11's
+    "adding or removing a category is a v1.1 change requiring a spec
+    addendum gated on real-traffic evidence" rule), not a silent regex
+    broadening here."""
+    parsed = _run_enabled(tmp_path, _NON_ENGLISH_LURE_BODY)
+    assert parsed.callback_phishing_assessment is not None, (
+        "detector should have run (assessment attached attach-always)"
+    )
+    assert parsed.callback_phishing_assessment.fired is False, (
+        "non-English semantic equivalents must NOT fire the v1 English-only "
+        "vocabulary; multilingual support is a v1.1 spec addendum decision"
+    )
+    assert (
+        CALLBACK_PHISHING_PATTERN_FLAG
+        not in parsed.risk_analysis.behavioral_deviation_flags
+    )
+    assert parsed.callback_phishing_assessment.recommended_risk_floor_lift == 0
+    assert (
+        parsed.callback_phishing_assessment.out_of_band_verification_required
+        is False
+    )
+
+
+def test_lure_in_sender_address_local_part_does_not_fire_body_plain_only(
+    tmp_path,
+) -> None:
+    """TOAD D14: the detector reads ``body_plain`` only. A fixture whose
+    sender email address local part contains canonical lure phrasing
+    (``call-us-immediately@example.com``) while body_plain is benign
+    business correspondence must NOT fire. Sender-address parsing is the
+    job of other pipeline components (header parser, sender-provenance
+    detector if/when it ships); silently extending the callback-phishing
+    detector to read sender tokens would be a v1.1 scope expansion
+    requiring its own spec addendum, not an implicit broadening."""
+    parsed = _run_enabled(
+        tmp_path,
+        body_plain=_BENIGN_BODY_WITH_LURE_SENDER_DOMAIN_PLAIN,
+        sender=_LURE_SHAPED_SENDER_ADDRESS,
+    )
+    assert parsed.callback_phishing_assessment is not None, (
+        "detector should have run (assessment attached attach-always)"
+    )
+    assert parsed.callback_phishing_assessment.fired is False, (
+        "lure language in the sender address local part must NOT fire when "
+        "body_plain is benign; D14 scopes the detector input to body_plain only"
+    )
+    assert (
+        CALLBACK_PHISHING_PATTERN_FLAG
+        not in parsed.risk_analysis.behavioral_deviation_flags
+    )
+    assert parsed.callback_phishing_assessment.recommended_risk_floor_lift == 0
 
 
 # ===========================================================================
