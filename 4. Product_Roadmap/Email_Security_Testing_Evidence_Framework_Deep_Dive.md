@@ -81,6 +81,7 @@ These decisions are advisory until §11 is signed; once §11 is signed they beco
 - **D20. Failed-test acceptance is conjunctive, not disjunctive.** If a required test fails, the build can still continue only if **all four** of these conditions are met: (a) the failure is recorded in the per-case evidence bundle per §9.1 plus the audit-trail per §9.2; (b) the failure is classified in a failure-analysis card per §9.4 with a named failure-type value from the closed enum `{verdict_mismatch, overconfident, evidence_missing, schema_violation, scope_violation}`; (c) the operator accepts the failure explicitly with a signed acceptance entry in `PROJECT_ACTIVITY_LOG.md` (or via the named-reason override path on `pre_ship_audit.py`); (d) a retest item is created with the failure card's `Decision` field set to `retest_required` and the retest scheduled per the §9.5 loop. Missing any one of the four conditions blocks the commit unconditionally; partial satisfaction is not partial acceptance.
 - **D21. v1 Auto-Trigger Path Matrix is locked in §4.5.8.** Resolves Q8. The matrix in §4.5.8 is the authoritative path × tier intersection that decides, for any given diff, which of smoke / regression / adversarial / eval-corpus is required, whether the full pytest suite is required, and whether failure-analysis + retest records are required. Twelve surfaces are enumerated: detector logic, scoring logic, rubric mapping, rendering / digest / reporting, schema / model, production loop, agent orchestration, evidence packaging, test fixtures, prompt / spec-output, signed-spec changes that alter expected runtime behavior, and docs-only. Adding a new surface or changing a tier requirement requires a §11-revision cycle; v1 implementation matches the matrix exactly.
 - **D22. v1 enforcement authority for D19 is `audit_tools/pre_ship_audit.py`.** Resolves Q9. `pre_ship_audit.py` is the always-on pre-commit gate that reads the audit trail per §9.2 and refuses `VERDICT: SHIP` when the required test tier for the diff (per the D21 matrix) does not have a `test_run_finished` event matching the commit's `HEAD` SHA or a fast-forward ancestor. `complete_gate.py` audits the work packet for spec / non-negotiable compliance but does **not** replace the cadence gate; the two enforcement layers are independent and additive. CI is future v1.1 / v2 layering, not v1. Operator override of a `pre_ship_audit.py` cadence-gate failure is allowed only with all D20 conjunctive conditions satisfied (recorded reason + failure classification from the closed enum + retest link + signed acceptance entry naming risk owner and hard expiry).
+- **D23. Pydantic model is the authoritative v1 per-case shape.** Resolves Q2. v1 implementation defines the per-case record and evidence-bundle shapes as strict Pydantic models matching §7 / §9. Generated JSON Schema may be emitted for docs, downstream validation, or report consumers, but it is derived from the Pydantic models and is not a second source of truth. On-disk JSON / JSONL records must round-trip through the models; a generated-schema mismatch is fixed by changing the model or the generator, not by hand-editing schema.
 
 ---
 
@@ -286,6 +287,8 @@ test_run_id              FK into the run-level audit record
 recorded_at_utc          ISO-8601 UTC timestamp
 ```
 
+v1 authority rule (D23 / Q2): the list above is implemented as strict Pydantic models. Generated JSON Schema is a derived artifact for consumers, not the source of truth; fixture and run-output JSON must validate by round-tripping through the models.
+
 ### §7.3 verdict_match semantics
 
 - **`exact`** — `actual_verdict == expected_verdict`. Positive in verdict-precision/recall denominator.
@@ -417,7 +420,7 @@ Additive, optional, structured per-case field: `reviewer_initials` (2-4 chars), 
 The following questions are open pre-§11. None of them block §11 signature individually, but at least Q1, Q3, and Q4 should have a stress-test verdict in `think_sheet.md` before the v1 implementation pass starts.
 
 - **Q1.** Exact `confidence_bucket` bounds (D12). Spec proposes `[0,25] / [26,60] / [61,100]` for `low/medium/high` with `overconfident` carved from `high` by `verdict_match`; real fixture distribution may suggest a different split.
-- **Q2.** JSON schema or Pydantic model as authoritative per-case shape? v1 implementation pass can pick either; on-disk shape is identical.
+- **Q2. RESOLVED 2026-05-31 — see D23 and §7.2.** Pydantic models are the authoritative v1 per-case and evidence-bundle shape. Generated JSON Schema is allowed only as a derived artifact for docs / consumers / downstream validation; on-disk JSON / JSONL must round-trip through the models.
 - **Q3.** Should `adjacent` verdict mismatches count partial credit toward `accuracy_supported_only`, or remain strictly excluded (as drafted)? Stress-test before locking.
 - **Q4.** Regression-tolerance default? Draft does not name a number; v1 can default to `0` and let operators widen per-subcategory, or default to `2` pp across the board.
 - **Q5.** Red-team mission file schema (§4.4). Defer to first real mission; structure organically.
@@ -432,7 +435,7 @@ The following questions are open pre-§11. None of them block §11 signature ind
 
 **Status:** UNSIGNED. This draft is pre-§11. The decisions in §2 are advisory until Matt signs.
 
-**Locked decisions covered by this signature, once given:** D1–D22 as drafted in §2, plus the §4.5 auto-trigger cadence contract referenced by D16–D20, the §4.5.8 v1 trigger matrix locked by D21 (Q8 resolution), and the §4.5.9 v1 enforcement authority locked by D22 (Q9 resolution). The full text of each D-decision is authoritative in §2; this section is the signature placeholder, not a re-statement.
+**Locked decisions covered by this signature, once given:** D1–D23 as drafted in §2, plus the §4.5 auto-trigger cadence contract referenced by D16–D20, the §4.5.8 v1 trigger matrix locked by D21 (Q8 resolution), the §4.5.9 v1 enforcement authority locked by D22 (Q9 resolution), and the Pydantic-model authority rule locked by D23 (Q2 resolution). The full text of each D-decision is authoritative in §2; this section is the signature placeholder, not a re-statement.
 
 **Signed by:** ____________________________________
 

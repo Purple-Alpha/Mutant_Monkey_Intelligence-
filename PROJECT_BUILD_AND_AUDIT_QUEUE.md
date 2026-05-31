@@ -17,7 +17,7 @@
 > 4. `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` — §11 SIGNED 2026-05-26; canonical compliance-claim boundary (§5).
 > 5. `audit_tools/complete_gate.py` — the gate that enforces the audit-evidence rule above.
 >
-> Then continue from **Build List item 1** unless the operator overrides. Do not pre-decide §10 / §12 open questions on any spec without operator direction.
+> Then continue from **Build List item 1** unless the operator overrides. Do not pre-decide open questions on any spec without operator direction.
 
 ---
 
@@ -38,25 +38,19 @@ This file is not a contract. The contracts are the signed §11 specs. This file 
 
 In execution order. Each item runs only when its predecessors are complete or explicitly skipped by the operator.
 
-1. **Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1.**
-   Resolve its §12 minimum decisions:
-   - cadence / stale threshold
-   - delivery mechanism
-   - per-carrier stance (variants vs. carrier-agnostic)
-   - v1 artifact set
-   - cheaper-proof go bar
-   Other §12 questions may stay open past §11 if they aren't blocking the sign-off contract.
+1. **Run cheaper-proof MSP discovery for the Cyber Insurance Evidence Package.**
+   The spec drafting lane is closed enough for discovery: `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` has §12 Q1-Q11 resolved, §14 defined as the fictional Stage A test plan, and the §14 plan run in commit `5bcb507`. The remaining §13 sign-off blocker is precondition 3: **2 of 3 relevant MSP conversations** must meet the D10 per-MSP "yes" definition (named SMB + named upcoming insurance / underwriting conversation). This is operator discovery work, not code.
 
-2. **Run cheaper-proof MSP discovery.**
-   Use the Cyber Insurance Evidence Package framing to test whether MSPs actually want this evidence package before any implementation. The "cheaper-proof go bar" set by Build item 1 is the decision criterion.
+2. **Only after cheaper-proof go: §13 sign-off readiness review.**
+   If the 2-of-3 threshold is met and logged through the cheaper-proof runbook / worksheet, run the normal sign-off-readiness review and `complete_gate.py` packet before Matt decides whether to sign §13. Do not draft signature wording for Matt.
 
-3. **Only after cheaper-proof go: draft implementation spec.**
+3. **Only after §13 is signed: draft implementation spec.**
    Not code yet. Define generation workflow, artifact schema, redaction gates, and output surfaces. Spec-first discipline. §11 again.
 
 4. **14-day Operating Doctrine Trial.**
    Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–3, not after them — it evaluates whether the doctrine governing how items 1–3 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
 
-**Operator focus call (not queue-ordered):** Matt selects the active spec lane when two items compete for attention — currently **Cyber Insurance §12 close-out** (Build item 1; blocker is cheaper-proof MSP discovery, not code) vs **Callback Phishing / TOAD implementation pass 1** (spec §11 SIGNED 2026-05-30 by Matt Nichol per commits `6c4b28f` + `0a0c3c0`; implementation NOT yet started — requires explicit operator start-build instruction per the TOAD spec §11 footer; the rubric §11.1 amendment per D13 is a deferred carry-over on `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` and does not block detector implementation). Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
+**Operator focus call (not queue-ordered):** Matt selects the active lane when items compete for attention. Current queue-aligned focus is Cyber Insurance cheaper-proof discovery (Build item 1). Callback Phishing / TOAD pass 1 and pass 2 are already implemented and committed (`014a163`, `9bcb3d5`); TOAD pass 2 tracker baseline is committed at `c2ff29f`. Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
 
 ---
 
@@ -80,10 +74,10 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
    - operator wording is Matt-authored (not AI-paraphrased completion claims)
    The `complete_gate.py` gate handles item 1 automatically when invoked; this item is operator-side discipline. Any change inside `audit_tools/` also fires a `complete_gate.py` self-audit (the v1.1 contract — `audit_tools/` is in gate scope from v1.1 onward, so editing the gate itself triggers an audit run).
 
-3. **Before any implementation.**
+3. **Before any Cyber Insurance implementation spec or implementation.**
    Audit must verify:
    - cheaper-proof gate was satisfied or explicitly overridden by Matt with a recorded reason
-   - the relevant spec is §11-signed
+   - the Cyber Insurance Evidence Package spec is §13-signed
    - implementation scope matches the signed spec — no scope creep, no quiet additions
    - no claims surfaced anywhere in the implementation that fall outside the email-fraud / inbox-layer MDR boundary
 
@@ -100,11 +94,9 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 ## §4 Next Action
 
-**Build List item 1.** Close `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` to signable v1 by resolving the minimum §12 decisions needed for the v1 contract. Keep the closure scoped to signable v1, not global roadmap optimization.
+**Build List item 1.** Run cheaper-proof MSP discovery for the Cyber Insurance Evidence Package. The required go bar is the D10 threshold already recorded in the spec: 2 of 3 relevant MSP conversations must each provide a named SMB plus a named upcoming insurance / underwriting conversation.
 
-**Parallel operator focus (Matt's call, not queue-gated):** Cyber Insurance Evidence Package §12 close-out **or** Callback Phishing / TOAD implementation pass 1 (spec §11-signed 2026-05-30 per commits `6c4b28f` + `0a0c3c0`; implementation gated on explicit operator start-build instruction) — see Build List operator-focus note.
-
-Nothing in Build items 2–3 starts until item 1 closes unless Matt explicitly overrides.
+Nothing in Build items 2–3 starts until item 1 closes unless Matt explicitly overrides with a recorded reason.
 
 ---
 

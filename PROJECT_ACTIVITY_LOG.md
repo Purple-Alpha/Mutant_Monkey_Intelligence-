@@ -26,6 +26,62 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Email Security Testing Framework Q2 Resolved (Pydantic Model Authority)
+
+**Actor:** Matt + Cursor (GPT-5.5)
+
+**Action:** Updated
+
+**Files Changed (audit-split for the 200 KB gate cap):**
+- `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` (UPDATED in split A — resolved §10 Q2 by adding D23: strict Pydantic models are the authoritative v1 per-case and evidence-bundle shape; generated JSON Schema is a derived artifact only. Added the D23 authority rule to §7.2 and updated the unsigned §11 sign-off placeholder coverage line from D1-D22 to D1-D23.)
+- `MASTER_INDEX.md` (UPDATED in split A — refreshed the Email Security Testing Framework entry to say Q2 is resolved 2026-05-31 as D23, Q1 and Q3-Q7 remain open, and D1-D23 are now the draft decision set.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED in split B — this entry.)
+
+**Reason:**
+The Email Security Testing Framework draft still had Q1-Q7 open after Q8/Q9 were resolved. Q2 was the smallest non-behavioral open question and could be resolved without changing runtime scope, test semantics, metric math, or §11 signature state. The repo already uses strict Pydantic model discipline for runtime records, so making Pydantic models authoritative for the v1 per-case shape follows existing local practice and avoids a two-authority JSON Schema vs model split.
+
+**Boundary:**
+- Draft spec only; pre-§11. No §11 signature authored.
+- No runtime code, test harness implementation, fixtures, schemas, or audit tools edited.
+- Generated JSON Schema is allowed only as a derived artifact; it is not a second source of truth.
+- Q1 and Q3-Q7 remain open.
+- No stage, commit, or push in this pass.
+
+**Audit packets:**
+- Split A (`email_security_testing_framework_q2_pydantic_authority_a_spec_index`) covers the spec + index changes.
+- Split B (`email_security_testing_framework_q2_pydantic_authority_b_activity_log`) covers this activity-log entry only.
+
+**Next Step:**
+If continuing this lane, the next highest-value open questions are Q1 / Q3 / Q4 because §10 already states those should have stress-test verdicts before the v1 implementation pass starts.
+
+---
+
+## 2026-05-31 - Cyber Insurance Queue Reality Refresh
+
+**Actor:** Matt + Cursor (GPT-5.5)
+
+**Action:** Updated
+
+**Files Changed:**
+- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (UPDATED — removed the stale "close Cyber Insurance §12" next-action framing and replaced it with the real current queue item: run cheaper-proof MSP discovery against the already-resolved Cyber Insurance Evidence Package spec. Records that §12 Q1-Q11 are resolved, §14 is defined, and the §14 fictional Stage A test plan already ran in commit `5bcb507`; the remaining §13 sign-off blocker is Q10 precondition 3: 2 of 3 relevant MSP conversations meeting the D10 named-anchor definition.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+The working queue was stale after the Cyber Insurance Evidence Package lane advanced through §12 resolution, §14 test-plan definition (`670ec6a`), and §14 Stage A dry-run execution (`5bcb507`). The queue still described Build List item 1 as "Close §12 to signable v1" even though the spec now states Q1-Q11 are resolved and §14 satisfies the defined-test-plan precondition. The real blocker is no longer spec drafting; it is operator discovery: the Q10 go bar requires 2 of 3 relevant MSP conversations to each produce a named SMB plus a named upcoming insurance / underwriting conversation.
+
+**Boundary:**
+- Queue/tracker cleanup only. No signed spec edited.
+- No Cyber Insurance implementation spec drafted.
+- No package-generation runtime code edited.
+- No claim that §13 is signable today; §13 precondition 3 remains open until the D10 cheaper-proof threshold is met in actual discovery.
+- No proxy decision: the queue now states the existing operator-set gate; it does not assert that the gate has been met.
+- No stage, commit, or push in this pass.
+
+**Next Step:**
+Run the actual cheaper-proof MSP discovery work. If 2 of 3 relevant MSP conversations meet the D10 definition and are logged through the cheaper-proof runbook / worksheet, the next queue item becomes §13 sign-off readiness review for Matt's decision.
+
+---
+
 ## 2026-05-31 - NorthStar Strategy Matrix Discipline SPARK Capture Created
 
 **Actor:** Matt + Cursor (Claude)
