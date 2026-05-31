@@ -217,6 +217,72 @@ _BENIGN_BODY_WITH_LURE_SENDER_DOMAIN_PLAIN = (
 )
 _LURE_SHAPED_SENDER_ADDRESS = "call-us-immediately@example.com"
 
+# Quoted-reply context: lure phrasing appears inside a `> `-prefixed quoted
+# block (the standard email-reply quoting convention). The detector reads
+# body_plain end-to-end and does not strip reply quoting; the `> ` prefix
+# is preamble, not an intra-phrase character, so the regex word boundaries
+# still match on the canonical phrases. An attacker forwarding their own
+# prior lure into a reply chain should not escape detection by burying it
+# in a quoted block.
+_QUOTED_REPLY_LURE_BODY = (
+    "Thanks for your reply -- forwarding the original below for context.\n"
+    "\n"
+    "On 2026-05-30 the vendor wrote:\n"
+    "> Please call us immediately to confirm.\n"
+    "> Do not use the number on file.\n"
+    "> The old number is no longer in service.\n"
+)
+
+# "Callback" as a plain noun (the very word the detector is named after) and
+# "call back" as a verb+adverb pair must not fire any category. The TOAD v1
+# detector is phrase-based (D11 closed vocabulary), not keyword-based. A
+# legitimate business email scheduling a callback or referencing the noun
+# "callback" carries none of the misdirection / urgency / off-channel
+# coercion the five v1 categories require. False-positives on the bare
+# word would be the single highest-volume failure mode in production.
+_CALLBACK_NOUN_BENIGN_BODY = (
+    "Hi team,\n"
+    "Please schedule a callback for next Tuesday afternoon. The customer "
+    "requested a callback on the warranty issue and is happy to call back "
+    "at their convenience. Standard business hours apply.\n"
+    "Thanks,\n"
+    "Support\n"
+)
+
+# Typo / misspelling variants of the canonical lure phrases. The detector
+# matches literal regex patterns inside a closed v1 vocabulary (D11); it
+# does NOT perform fuzzy / edit-distance / typo-tolerant matching. An
+# attacker who introduces typos may slip past v1 detection — that is a
+# stated v1 boundary, not a v1 defect. A future v1.1 tightening would
+# require a spec addendum, not a silent regex broadening. This test pins
+# the byte-exact boundary so any future "let's add typo tolerance" change
+# has to land as an explicit spec decision.
+_TYPO_LURE_BODY = (
+    "Pleese cal us imediatly to confirm. Do nott use the numbr on file. "
+    "We can onlee finlize this matter by fone today.\n"
+)
+
+# Strong payment context (ACH, banking, wire, account changes) with NO
+# call-to-action verb. The `payment_redirect_call` category is the most
+# severe in the v1 vocabulary because it lifts to 70 (block-eligible) on
+# a single-category fire. Its regex requires BOTH a call verb
+# (`call|phone|dial|ring`) AND a payment-redirect noun phrase. Pure
+# payment-change language without the call verb must not fire
+# `payment_redirect_call`, even though every word other than the verb is
+# present. This pins the AND-logic and prevents a future "broaden the
+# payment_redirect_call recall" change from quietly removing the verb
+# requirement.
+_PAYMENT_CONTEXT_NO_CALL_BODY = (
+    "Hi finance team,\n"
+    "Please update the ACH details in our vendor master to the new "
+    "banking information attached. The revised routing number replaces "
+    "the prior wire destination; account changes take effect for the "
+    "next invoice cycle. Reply to this thread to confirm the updated "
+    "payment instructions are in place.\n"
+    "Thanks,\n"
+    "AR\n"
+)
+
 # HTML-only lure -- entire body_plain is benign; lure language is exclusively
 # inside body_html. TOAD D14 says body_plain only in v1.
 _HTML_LURE_BODY_PLAIN = "Please review the attached document."
@@ -626,6 +692,135 @@ def test_lure_in_sender_address_local_part_does_not_fire_body_plain_only(
     assert (
         CALLBACK_PHISHING_PATTERN_FLAG
         not in parsed.risk_analysis.behavioral_deviation_flags
+    )
+    assert parsed.callback_phishing_assessment.recommended_risk_floor_lift == 0
+
+
+def test_lure_phrasing_inside_quoted_reply_block_still_fires(tmp_path) -> None:
+    """TOAD D11 + D14: the detector reads ``body_plain`` end-to-end without
+    stripping reply-quoting conventions. A ``> ``-prefixed quoted block
+    that carries canonical lure phrasing (``Please call us immediately``,
+    ``Do not use the number on file``, ``The old number is no longer in
+    service``) must still fire because the ``> `` prefix is preamble, not
+    an intra-phrase character — the regex word boundaries match cleanly
+    around the canonical English phrases. An attacker forwarding a prior
+    lure into a reply chain should not escape detection by burying it
+    inside a quoted block."""
+    parsed = _run_enabled(tmp_path, _QUOTED_REPLY_LURE_BODY)
+    assert parsed.callback_phishing_assessment is not None, (
+        "detector should have run (assessment attached attach-always)"
+    )
+    assert parsed.callback_phishing_assessment.fired is True, (
+        "quoted-reply lure must fire; `> ` prefix is preamble, not "
+        "intra-phrase, so D11 patterns still match"
+    )
+    fired_categories = {
+        c.category_name for c in parsed.callback_phishing_assessment.categories
+    }
+    assert "call_now_pressure" in fired_categories, (
+        "`Please call us immediately` inside quoted block must fire "
+        "call_now_pressure regardless of `> ` prefix"
+    )
+    assert "do_not_use_known_channel" in fired_categories, (
+        "`Do not use the number on file` inside quoted block must fire "
+        "do_not_use_known_channel regardless of `> ` prefix"
+    )
+    assert (
+        CALLBACK_PHISHING_PATTERN_FLAG
+        in parsed.risk_analysis.behavioral_deviation_flags
+    )
+
+
+def test_callback_noun_and_call_back_verb_do_not_fire_any_category(
+    tmp_path,
+) -> None:
+    """TOAD D11: the v1 detector is phrase-based on a closed vocabulary,
+    not keyword-based. The bare noun ``callback`` and the verb+adverb pair
+    ``call back`` must NOT fire any category. A legitimate business email
+    scheduling a callback or referencing the noun ``callback`` carries
+    none of the misdirection / urgency / off-channel coercion the five v1
+    categories require. False-positives on the bare word would be the
+    single highest-volume false-positive failure mode in production
+    because ``callback`` is normal customer-service vocabulary. This test
+    pins the phrase-vs-keyword distinction at the integration boundary so
+    any future "expand vocabulary to include callback alone" change has
+    to land as an explicit D-decision."""
+    parsed = _run_enabled(tmp_path, _CALLBACK_NOUN_BENIGN_BODY)
+    assert parsed.callback_phishing_assessment is not None, (
+        "detector should have run (assessment attached attach-always)"
+    )
+    assert parsed.callback_phishing_assessment.fired is False, (
+        "the bare noun `callback` and the verb pair `call back` must NOT "
+        "fire any v1 category; D11 vocabulary is phrase-based, not "
+        "keyword-based"
+    )
+    assert len(parsed.callback_phishing_assessment.categories) == 0
+    assert (
+        CALLBACK_PHISHING_PATTERN_FLAG
+        not in parsed.risk_analysis.behavioral_deviation_flags
+    )
+    assert parsed.callback_phishing_assessment.recommended_risk_floor_lift == 0
+    assert (
+        parsed.callback_phishing_assessment.out_of_band_verification_required
+        is False
+    )
+
+
+def test_typo_variants_of_canonical_phrases_do_not_fire(tmp_path) -> None:
+    """TOAD D11: the detector matches literal regex patterns inside a
+    closed v1 English vocabulary; it does NOT perform fuzzy / edit-distance
+    / typo-tolerant matching. Common typos of the canonical phrases
+    (``Pleese cal us imediatly``, ``Do nott use the numbr on file``,
+    ``onlee finlize this matter by fone``) must NOT fire. An attacker who
+    introduces typos may slip past v1 detection — that is a stated v1
+    boundary, not a v1 defect. Future v1.1 tightening (typo tolerance,
+    confusable-character normalization, edit-distance matching) would
+    require a spec addendum on real-traffic evidence, not a silent regex
+    broadening. This test pins the byte-exact boundary."""
+    parsed = _run_enabled(tmp_path, _TYPO_LURE_BODY)
+    assert parsed.callback_phishing_assessment is not None, (
+        "detector should have run (assessment attached attach-always)"
+    )
+    assert parsed.callback_phishing_assessment.fired is False, (
+        "typo variants of canonical phrases must NOT fire; D11 vocabulary "
+        "is byte-exact, not fuzzy"
+    )
+    assert (
+        CALLBACK_PHISHING_PATTERN_FLAG
+        not in parsed.risk_analysis.behavioral_deviation_flags
+    )
+    assert parsed.callback_phishing_assessment.recommended_risk_floor_lift == 0
+
+
+def test_payment_context_without_call_verb_does_not_fire_payment_redirect_call(
+    tmp_path,
+) -> None:
+    """TOAD D11: the ``payment_redirect_call`` category is the most severe
+    in the v1 vocabulary because a single-category fire lifts the risk
+    floor to 70 (block-eligible per TOAD §4.1). Its regex requires the
+    conjunction of (a) a call-to-action verb (``call|phone|dial|ring``)
+    AND (b) a payment-redirect noun phrase (``new|updated|revised``
+    ``ACH|wire|banking|account`` ``details|instructions|info``). A body
+    rich in payment-change context but containing NO call-to-action verb
+    must NOT fire ``payment_redirect_call``. This pins the AND-logic and
+    prevents any future "broaden payment_redirect_call recall" change from
+    quietly removing the verb requirement — which would lift any
+    legitimate ACH-update vendor email to the 70-floor block band."""
+    parsed = _run_enabled(tmp_path, _PAYMENT_CONTEXT_NO_CALL_BODY)
+    assert parsed.callback_phishing_assessment is not None, (
+        "detector should have run (assessment attached attach-always)"
+    )
+    fired_categories = {
+        c.category_name for c in parsed.callback_phishing_assessment.categories
+    }
+    assert "payment_redirect_call" not in fired_categories, (
+        "payment context without a call verb must NOT fire "
+        "payment_redirect_call; the category's regex requires the "
+        "conjunction of call-to-action verb AND payment-redirect noun"
+    )
+    assert parsed.callback_phishing_assessment.fired is False, (
+        "no v1 category should fire on benign ACH-update language without "
+        "any misdirection, urgency, or off-channel coercion shape"
     )
     assert parsed.callback_phishing_assessment.recommended_risk_floor_lift == 0
 

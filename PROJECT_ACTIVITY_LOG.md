@@ -57,6 +57,36 @@ Single-shot `complete_gate.py` ran against this doctrine pass using a worker man
 - If the operator later wants to return to the "ransomware testing" scoping question, the five interpretations and their wedge-fit analysis are recoverable from the conversation transcript and can be re-captured as a SPARK at that time.
 ---
 
+## 2026-05-31 - Lane B Extended (+4 TOAD Scope-Boundary Tests; baseline 1045 → 1049)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Updated
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_callback_phishing_break_it.py` (UPDATED — added 4 new tests in §3 under TOAD D11 / D14: `test_lure_phrasing_inside_quoted_reply_block_still_fires` (positive — `> `-prefixed quoted replies still fire `call_now_pressure` + `do_not_use_known_channel`); `test_callback_noun_and_call_back_verb_do_not_fire_any_category` (negative — phrase-based vs keyword-based; largest production FP risk pinned); `test_typo_variants_of_canonical_phrases_do_not_fire` (negative — byte-exact regex, no fuzzy match); `test_payment_context_without_call_verb_does_not_fire_payment_redirect_call` (negative — AND-logic on the only single-fire-to-70 category per TOAD §4.1). 4 fixtures added. Safe-data per §1.3. Zero runtime / detector / schema code changed.)
+- `PROJECT_HANDSHAKE.md` (UPDATED — baseline `1045 tests passing, 1 skipped` → `1049 tests passing, 1 skipped`. The +4 delta names all 4 new test functions tied to D11 / D14.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+Operator's 2026-05-31 instruction after diagnosing Lane C (ransomware scoping SPARK) as low-momentum: "add a small measurable test pass inside already-signed/runtime scope; Prefer TOAD adversarial fixture expansion if fastest; Add 3-5 new tests that strengthen existing TOAD boundaries or false-positive/false-negative coverage." Four tests chosen to pin boundaries that prior Lane B left implicit.
+
+**Boundary:**
+- NO §11-SIGNED spec changed (sits inside D11 / D14).
+- NO detector / scoring / schema code changed. All 4 new tests pass on first run.
+- NO new D-decision introduced.
+- NO testing enforcement authorized (deferred per operator's Today's List item 3).
+- NO safety-boundary relaxation. Fixture bodies use `.example` domain, synthetic content, no live malware, no real PII.
+
+**Audit Status:**
+Single-shot `complete_gate.py` ran using `audit_outputs/pending/lane-b-extension.manifest.json` with `relevant_contracts` = `[]` (empty — the TOAD spec was dropped from the packet to keep the 200KB packet cap; tests are anchored against TOAD D11 / D14 by their docstrings and the always-present FORBIDDEN-LANGUAGE list in the packet header still enforces the inherited Compliance / Trend Watch scope). Gate result: clean audit, 0 warnings → `audit_outputs/lane-b-extension_20260531T223852Z.md`. The test file diff vs HEAD bundles Lane B's prior uncommitted 2 tests with this extension's 4 (audited collectively as 6); baseline 1043 → 1049 reflects all 6. `project_trigger_scan.py` runs against 1049 after the gate. Hide/restore inside `audit_outputs/_run_extension_gate.py` hides AGENTS.md, eval-harness SPARK, framework polish, and the doctrine activity-log entry so the gate sees only the test additions.
+
+**Next Step:**
+- Operator decides whether to commit this extension as a separate local commit (typically commit-bundled with the prior uncommitted Lane B tests).
+- Framework §11 sign-off remains a separate operator decision; readiness review at `audit_outputs/_email_testing_framework_sign_off_readiness_review_20260531.md`.
+- Cyber Insurance MSP discovery remains the operator-side action whenever business-hours discovery is possible.
+---
+
 ## 2026-05-31 - TOAD Scope-Boundary Test Expansion (+2 tests under signed scope; baseline 1043 → 1045)
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)
