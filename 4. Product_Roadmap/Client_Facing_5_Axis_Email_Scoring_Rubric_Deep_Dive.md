@@ -1,6 +1,6 @@
 # Client-Facing 5-Axis Email Scoring Rubric — Spec-First Deep Dive
 
-**Status:** §11 SIGNED 2026-05-25 by Matt Nichol; implementation landed (Pass 1 + Pass 2 + Activation + post-Grok remediation); 905/905 pytest green, 1 skipped; §11.1 amendment 2026-05-25 (`rubric_status` / D12 audit-marker contract).  
+**Status:** §11 SIGNED 2026-05-25 by Matt Nichol; implementation landed (Pass 1 + Pass 2 + Activation + post-Grok remediation); 905/905 pytest green, 1 skipped (rubric-spec-scoped baseline at signature; the current global runtime baseline is 990 / 990 pytest green, 1 skipped, verified 2026-05-30); §11.1 amendment 2026-05-25 (`rubric_status` / D12 audit-marker contract) SIGNED; **§11.2 amendment 2026-05-30 SIGNED by Matt Nichol (`callback_phishing_pattern` → `origin_timing` evidence-tag mapping per TOAD D13). `core/scoring/client_facing_rubric.py` mapper changes are now authorized only within the TOAD pass 2 implementation scope and still require the normal worker manifest, `complete_gate.py`, trigger scan, and operator commit authorization.**  
 **Date:** 2026-05-25  
 **Owner:** Matt Nichol  
 **Source-of-truth links:** `think_sheet.md` (promote row + 2026-05-24 idea-level stress test + 2026-05-25 §10 sub-question stress test), `PROJECT_HANDSHAKE.md` (2026-05-25 Stage A scope + A→B→C→D ordering), `THREAT_INTEL_LOG.md` (2026-05-25 strategic rationale), `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/email_risk_scoring_agent.py` (internal 0-100 scoring path), `4. Product_Roadmap/Product_Sheets/Fraud_Detection_Product_Sheet.md`.
@@ -144,7 +144,8 @@ Measures timing and origin-pattern anomalies currently available from existing r
 
 Primary evidence sources (v1):
 - temporal/date inconsistency signals already represented in current analysis evidence
-- existing header-context anomalies that map to origin/timing concerns without requiring GeoIP/ASN.
+- existing header-context anomalies that map to origin/timing concerns without requiring GeoIP/ASN
+- presence of `callback_phishing_pattern` in `behavioral_deviation_flags` (added by §11.2 amendment, signed 2026-05-30 by Matt Nichol; see §11.2 for the deterministic floor-lift / higher-band projection rule and TOAD-spec authorization chain).
 
 Important boundary:
 - Sender-provenance/geo-velocity remains separately gated behind cheaper proof; this axis must **not** imply that geo-velocity is implemented.
@@ -337,4 +338,61 @@ Signature is complete. Implementation still requires Matt's explicit start-build
 **Re-signed by:** _____Matt Nichol _______________  
 **Re-signed date:** ________May, 25th. 2026____________  
 **Decisions locked by amendment:** D18, D19, plus the §5 / §6 / §7 deltas above.
+
+---
+
+## §11.2 Amendment — `callback_phishing_pattern` → `origin_timing` Evidence-Tag Mapping (SIGNED 2026-05-30)
+
+**Status:** §11.2 SIGNED 2026-05-30 by Matt Nichol. Runtime code changes authorized by this amendment are limited to the TOAD pass 2 implementation scope and still require the normal worker manifest, `complete_gate.py`, trigger scan, and operator commit authorization.
+
+**Numbering note:** The signed Callback Phishing / TOAD spec at `4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md` (§11 SIGNED 2026-05-30 by Matt Nichol) refers to this amendment as a "§11.1 amendment" in §6, D13, and §9.4. That naming was set when the TOAD spec was drafted, before this rubric spec received its own §11.1 amendment on 2026-05-25 (D12 failure sentinel + rendering scope). To avoid collision with the already-signed D12 §11.1 amendment, this amendment is numbered **§11.2** while satisfying TOAD D13's substantive intent verbatim. No semantic change to the TOAD spec is implied or required by this renumbering.
+
+**Trigger:** Direct authorization from the §11-SIGNED TOAD spec. D13 of that spec (the §10 Q3 stress-test verdict) locked the `callback_phishing_pattern → origin_timing` mapping and explicitly named this rubric spec as its landing surface:
+
+> "**D13.** 1/2 mapping. Present → `origin_timing >= 1`. Present AND (`risk_score >= 50` OR `recommended_risk_floor_lift >= 70`) → `origin_timing == 2`. §11.1 amendment to the rubric spec lands with the TOAD detector's §11 signature."
+
+The TOAD §11 signature landed 2026-05-30 in commits `0a0c3c0` (signature + status-text cleanup) and `55d1aa0` (tracker housekeeping). D13's timing condition (`with the TOAD §11 signature, not before`) is therefore satisfied as of 2026-05-30. This amendment is the rubric-side counterpart D13 promised; the TOAD spec **is** the upstream contract authorizing this amendment.
+
+**Contract delta locked here:**
+
+- **§3.5 (`origin_timing`)** — Adds an additional evidence-source bullet plus an explicit deterministic projection rule. The existing §3.5 ordinal definitions ("0: No notable origin/timing anomaly. 1: One moderate timing/origin inconsistency. 2: Strong origin/timing inconsistency contributing to fraud likelihood.") are unchanged; this amendment locks a third evidence source that contributes to the same scale, and pins the precise minimum/equal score that source produces:
+
+  Additional evidence source for `origin_timing` (v1, per TOAD D13):
+  - presence of `callback_phishing_pattern` in `EmailAnalysisRiskAnalysis.behavioral_deviation_flags` (the Callback Phishing / TOAD Part 1 body-language detector firing). This is a deterministic, pure-function signal produced by `core/scoring/callback_phishing_detector.detect_callback_phishing` per the §11-SIGNED TOAD spec; the detector reads `body_plain` only (TOAD D14), emits no numeric `callback_phishing_score` (TOAD D12), and never extracts or stores phone-number digits (TOAD D3 / D15).
+
+  Deterministic projection rule (per TOAD D13, verbatim):
+
+  1. **Floor-lift rule.** When `callback_phishing_pattern` is present in `behavioral_deviation_flags`, the projected `origin_timing` axis score MUST be at least `1`. If other evidence already justifies score `1` or `2` under the existing §3.5 ordinal scale, the higher score is preserved (max-merge semantics, mirroring how `EmailAnalysisRiskAnalysis.recommended_risk_floor_lift` max-merges into `recommended_risk_floor` end-to-end). The detector itself never lowers an existing axis score; this is a one-directional lift.
+
+  2. **Higher-band rule.** When `callback_phishing_pattern` is present **AND** at least one of:
+     - `EmailAnalysisRiskAnalysis.risk_score >= 50` (the "needs_review" internal band, also the FSL hit floor reference), or
+     - `EmailAnalysisPayload.callback_phishing_assessment.recommended_risk_floor_lift >= 70` (the §4.1 block-eligible band of the TOAD spec; this is the lift produced when the TOAD detector fires on either two-or-more categories OR a single `payment_redirect_call` category),
+
+     the projected `origin_timing` axis score MUST be exactly `2`. This is an exact-score equality, not a floor; the rationale is that when both conditions hold simultaneously, body-language callback evidence is strong enough on its own to make `origin_timing` the headline reason this axis exists. The score remains within the existing §5 `Field(ge=0, le=2)` bound and does not require any schema change.
+
+- **§5 (Data Contract Additions)** — No schema change. The existing `EmailRiskAxisBreakdown.evidence_tags: tuple[str, ...]` field already supports the contract; this amendment formalizes that pass-2 mapper logic SHOULD include `"callback_phishing_pattern"` as a string entry in the `evidence_tags` tuple of the `origin_timing` axis when the floor-lift or higher-band rule fires, so downstream consumers (rendering, monthly digest, audit-marker stream) can attribute the lift to the TOAD signal without re-running the rule. The string vocabulary on `evidence_tags` is intentionally open (`tuple[str, ...]`); this amendment does not narrow it.
+
+- **§6 (Rendering Contract)** — No new render line and no new disclaimer required. The existing rendering contract already specifies per-axis `why_this_score` strings; pass-2 mapper SHOULD set `origin_timing.why_this_score` to a bounded explanation referencing the TOAD signal (e.g. "Callback-phishing body-language pattern detected; verify off-channel.") when the floor-lift or higher-band rule fires. The 160-character cap (D15 of this rubric spec) and D7 PII safety rules (no raw phone-number digits, no raw lure-text echoes — also enforced by the TOAD detector itself per its D7) continue to apply unchanged. Per TOAD D8, downstream rendering surfaces beyond the rubric (daily digest, demo renderer) MUST emit the project-standard out-of-band verification wording when the TOAD detector fires; that wording lives at `core.scoring.callback_phishing_detector.OUT_OF_BAND_VERIFICATION_WORDING` and is a TOAD-spec contract, not a rubric-spec contract.
+
+- **§8 (Gate Tests)** — No removal of any existing closure gate test. This amendment authorizes the TOAD-side §8.11 gate test ("Rubric integration (per D13)...") in the signed TOAD spec; that test is owned by the TOAD spec's gate list, not by this rubric spec's §8 list. The existing rubric §8 gate tests 1-14 continue to apply unchanged for the rubric spec's own closure surface.
+
+**Decisions added:**
+
+- **D20** — `callback_phishing_pattern` is an authorized evidence source for the `origin_timing` axis per TOAD D13. Mapping rule: presence lifts `origin_timing >= 1`; presence + (`risk_score >= 50` OR `recommended_risk_floor_lift >= 70`) sets `origin_timing == 2`. The mapping is **additive only**: it does not remove or alter the existing temporal/date-inconsistency and header-context evidence sources locked in §3.5, does not change axis names (D14), does not change `axis_total` arithmetic (D10 equal-weighting), does not change the `Field(ge=0, le=2)` axis score bound (D2), does not change the `why_this_score` 160-char cap (D15), and does not change the `rubric_status` D12 failure sentinel contract (§11.1 amendment). Adding or removing this evidence source is a future spec addendum requiring its own pre-§11.x stress test and operator signature.
+
+**Backward compatibility:** existing analyses pre-amendment that do not carry `callback_phishing_pattern` in `behavioral_deviation_flags` validate and project identically to pre-amendment behaviour. No data migration required. No existing `ClientFacingRubricPayload` instances on disk need to be re-validated. The pass-2 mapper code change is additive: a new evidence-tag check inside the existing `origin_timing` projection branch, lifting the score only when the new rule fires.
+
+**Authorization chain (audit trail):**
+
+1. TOAD spec §10 Q3 stress-tested 2026-05-30 in `think_sheet.md` → "Sub-question stress test — Callback Phishing / TOAD §10 (2026-05-30)".
+2. Verdict locked as TOAD D13 in `4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md` §2 (commit `6c4b28f resolve callback phishing toad section 10 stress test`).
+3. TOAD §11 signed 2026-05-30 by Matt Nichol (commit `0a0c3c0 sign callback phishing toad section 11`; tracker housekeeping `55d1aa0 refresh toad section 11 tracking state`).
+4. TOAD implementation pass 1 landed 2026-05-30 (commit `014a163 implement callback phishing toad detector pass 1` — pure-function detector + schema additions + 44 tests; runtime baseline bumped 946 → 990 in commit `82a7490 bump runtime baseline after toad pass 1`).
+5. TOAD implementation pass 2 (scoring-agent wiring + activation flag + rubric mapper change + production-loop flag-preservation regression) is blocked on this §11.2 amendment landing per TOAD §9.4 and TOAD §8.11. This amendment unblocks that pass; the actual code change to `core/scoring/client_facing_rubric.py` lands in TOAD pass 2, not in any commit produced by this revision cycle.
+
+**Re-signed by:** _________Matt Nichol_____________  
+**Re-signed date:** ________May, 30th. 2026______________  
+**Decisions locked by amendment:** D20, plus the §3.5 / §5 / §6 deltas above.
+
+Signature is complete. Edits to `core/scoring/client_facing_rubric.py` or TOAD pass 2 wiring are authorized only within the signed TOAD pass 2 scope and still require the normal worker manifest, `complete_gate.py`, trigger scan, and operator commit authorization before any runtime commit.
 

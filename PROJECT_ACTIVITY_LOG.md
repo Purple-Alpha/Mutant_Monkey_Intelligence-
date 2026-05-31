@@ -26,6 +26,39 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Rubric Spec §11.2 Amendment Signed (callback_phishing_pattern → origin_timing per TOAD D13)
+
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (UPDATED — added and signed new `## §11.2 Amendment` section after the existing §11.1 amendment, locking the verbatim TOAD D13 mapping: presence of `callback_phishing_pattern` in `behavioral_deviation_flags` lifts `client_facing_rubric.origin_timing >= 1`; presence AND (`risk_score >= 50` OR `recommended_risk_floor_lift >= 70`) sets `origin_timing == 2`. Added a small `(added by §11.2 amendment, signed 2026-05-30 by Matt Nichol...)` cross-reference bullet to §3.5's evidence-source list. Updated the top status banner to record `§11.2 amendment 2026-05-30 SIGNED by Matt Nichol`. D20 named as the new locked decision; full authorization-chain audit trail recorded inside the amendment text.)
+- `MASTER_INDEX.md` (UPDATED — rubric spec entry's bold prefix expanded to surface the new §11.2 amendment with explicit SIGNED status, the TOAD D13 mapping summary, and the boundary that mapper code changes are authorized only inside TOAD pass 2 scope and still require the normal gate / scan / operator commit authorization; the existing §11 + §11.1 signed status is preserved verbatim.)
+- `PROJECT_HANDSHAKE.md` (UPDATED — new dated bullet `2026-05-30 Rubric spec §11.2 amendment signed (callback_phishing_pattern → origin_timing per TOAD D13)` inserted at the head of the "Current Next Step" timeline above the existing 2026-05-30 TOAD §10-resolved-+-§11-signed bullet, recording the TOAD D13 mapping locked by the amendment, the additive-only boundary, the numbering note explaining why this is §11.2 rather than the TOAD-spec-named "§11.1", and the explicit status that TOAD pass 2 is now unblocked by the rubric signature but still requires a fresh explicit start-build instruction plus normal manifest / gate / scan / commit workflow.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+TOAD §11 signed 2026-05-30 (commits `0a0c3c0` + `55d1aa0`) and TOAD pass 1 implementation landed 2026-05-30 (commit `014a163` + tracker bump `82a7490`). TOAD pass 2 (scoring-agent wiring + activation flag + rubric mapper change + production-loop flag-preservation regression) cannot close per the signed TOAD spec §9.4 / §8.11 / D13 / §6 without the rubric-side `callback_phishing_pattern → origin_timing` mapping landing as a rubric-spec amendment. D13 explicitly names this rubric spec as the landing surface and `2026-05-30 with the TOAD §11 signature, not before` as the timing condition; that condition is now satisfied. Per AGENTS.md §6, post-§11 signed specs are immutable except by explicit operator-instructed revision: this revision cycle (operator instruction → spec edit → complete_gate.py → operator §11.2 signature) is that explicit revision. Matt provided the operator instruction 2026-05-30 ("Execute R-first. Run the rubric §11.1 revision cycle before TOAD pass 2 implementation.") and is the operator who will sign §11.2; the worker drafted the amendment text and left the signature line blank.
+
+**Boundary:**
+- Only the rubric spec and the three required tracking docs were edited. No runtime code changed (no edits to `core/scoring/client_facing_rubric.py` or any scoring-agent / detector module).
+- No signature proxied for Matt. The §11.2 `Re-signed by:` and `Re-signed date:` lines are left blank exactly as the §11 lockdown convention requires; only Matt may complete them.
+- The existing §11 signature (D1–D17 + 2026-05-25) and §11.1 amendment (D18 + D19 + 2026-05-25) are unchanged. Adding §11.2 is additive only — no axis names changed, no `axis_total` arithmetic changed, no schema field added or removed, no `why_this_score` 160-char cap changed, no `Field(ge=0, le=2)` axis score bound changed, no rendering disclaimer scope changed, no §8 closure gate removed or modified, no `rubric_status` D12 sentinel contract changed.
+- TOAD spec NOT modified by this pass. D13 was the upstream authorization; this pass implements the rubric-side counterpart D13 promised.
+- TOAD detector pass 1 implementation (commit `014a163`) NOT modified. The detector continues to be a pure function with no runtime caller; TOAD pass 2 wiring is gated on this §11.2 signature.
+- No commit, stage, or push performed by the worker.
+
+**Verification:**
+- Worker manifest written to `audit_outputs/pending/rubric_section_11_2_amendment_revision_cycle.manifest.json` for the `complete_gate.py` run.
+- `complete_gate.py` invoked with the manifest above; result attached separately.
+- `project_trigger_scan.py --baseline-tests 990` re-run; result attached separately.
+
+**Next Step:**
+Operator review of the signed §11.2 amendment cleanup and gate / trigger-scan results. If accepted, the operator may authorize a local commit. After the §11.2 signature commit lands, TOAD pass 2 implementation (scoring-agent wiring + activation flag default OFF per TOAD D6 + rubric mapper change per TOAD D13 + production-loop flag-preservation regression per TOAD §8.14 + daily-digest D8 OOB wording emission per TOAD §8.10 + cross-tenant blackboard isolation regression per TOAD §8.7 pass-2 form) can begin behind a fresh operator start-build instruction.
+
+---
+
 ## 2026-05-30 - TOAD Detector Pass 1 Landed (commit `014a163`) + Runtime Baseline Bumped 946 → 990
 
 **Actor:** Matt + Cursor (Claude)
