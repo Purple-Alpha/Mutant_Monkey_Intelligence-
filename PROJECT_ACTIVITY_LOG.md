@@ -26,6 +26,40 @@ What should happen next.
 
 ---
 
+## 2026-05-30 - Cross-Channel Fraud Shield SPARK Concept Capture Created
+
+**Actor:** Matt + Cursor (Claude)
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/_Cross_Channel_Fraud_Shield_Concept_Capture.md` (NEW — SPARK only; pre-spec; unsigned; not §11; not a product, brand, or revenue plan. Three-stage framing: Stage A = existing TOAD email body-language detector; Stage B = deferred per-tenant known-channel phone-number baseline gated on the existing pending-signature Vendor Baseline Signal Type Enum Revision spec; Stage C = any phone-system / live-call integration of any kind, parked behind a hard legal / consent review. Records what the SPARK does NOT include, parked failure modes, and trigger conditions for un-deferring Stage B only — Stage C never auto-triggers.)
+- `MASTER_INDEX.md` (UPDATED — indexed the new SPARK file under the existing 4. Product_Roadmap section, immediately after the `_SPARK_Bibles_Concept_Capture.md` entry, matching the SPARK / concept-capture pattern.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry.)
+
+**Reason:**
+A separate proposal block in chat tried to bundle the TOAD §10 commit (`6c4b28f`) with a new sub-brand ("Northstar Telefraud Solutions"), a hypothetical real-time call-audio scanner ("Northstar Core" / "Northstar LiveGuard"), a multi-tier revenue matrix with per-user / per-channel / per-minute pricing, and a re-narration of D11–D15 as commercial profit-margin foresight — all into a single "add this to think_sheet" ask. The TOAD detector v1 is, per commit `6c4b28f`, an email-only / `body_plain`-only / no-`phone_number_assessment` detector. The proposal misrepresented that scope, invented a streaming phone-audio engine that does not exist in any commit or any spec, implied a NorthStar sub-brand that has no operator sign-off, and would have created wiretap / consent exposure if recorded as project posture. Per AGENTS.md §3 (challenge when warranted), §4 (no proxy decisions), §6 (spec-first discipline), and §11 (named failure modes: authority drift, decision laundering, free-work perception, forbidden-language slip, sycophancy), the bundled ask was refused. Matt then drew the clean separation explicitly in chat ("TOAD §10 = committed and clean. Telefraud / phone-audio product = not committed, not approved, not spec'd.") and offered a safe shape for preserving only the salvageable kernel — the cross-channel framing — under a different name ("Cross-Channel Fraud Shield") with explicit Stage A / Stage B / Stage C gating. This entry records the creation of that SPARK file.
+
+**Boundary:**
+- SPARK only. Pre-spec. Unsigned. Not §11. Not a roadmap commitment. Not a product. Not a brand. Not a revenue plan.
+- The TOAD spec (`4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md`) and its commit `6c4b28f` are NOT modified by this pass. The locked decisions D1–D9 + D11–D15 stand as-is.
+- No phone-audio engine, no SIP-gateway integration, no real-time speech-to-text, no transcription surface, no recording surface, and no third-party telephony API is authorized, designed, or pilotable. Stage C is parked behind a hard legal / consent review and does **not** auto-trigger on any combination of signal volume, baseline adoption, or buyer demand.
+- No new entity, sub-brand, or product-line name is recorded. "Northstar Telefraud Solutions," "Core," and "LiveGuard" appear in the SPARK only as named failure modes (identity drift) and are explicitly NOT registered as candidate names.
+- No revenue / pricing material recorded. No customer-segment matrix. No per-user / per-channel / per-minute rate. Pricing belongs in `REVENUE_MAP.md` or `THIRTY_DAY_PLAN.md` if and when a real proof exists, not in this SPARK.
+- D11–D15 are NOT re-narrated as commercial design or profit-margin foresight. They remain what they are: scope-discipline decisions for an email body-language detector.
+- No claim of compliance, certification, insurance approval, or "ready for banks / insurance / call centers / BPOs." Forbidden-language carve-outs per `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` are explicitly engaged for any future client-facing positioning.
+- No `think_sheet.md` edit in this pass. The proposal block was correctly held out of the stress-test ledger because it had not run the standard 7-axis test.
+
+**Verification:**
+- Worker manifest written to `audit_outputs/pending/cross_channel_fraud_shield_spark_concept_capture.manifest.json` for the `complete_gate.py` run.
+- `complete_gate.py` invoked with the manifest above; result attached separately.
+- `project_trigger_scan.py --baseline-tests 946` re-run; result attached separately.
+
+**Next Step:**
+Operator review of the new SPARK file, the MASTER_INDEX entry, and this log entry. If accepted, the operator may then authorize a local commit (no push). If rejected, the worker reverts via `git restore --worktree --` on the three modified paths (and `git rm` on the new file) per operator instruction. The SPARK is not a queue item; un-deferring Stage B requires one of the trigger conditions listed in `4. Product_Roadmap/_Cross_Channel_Fraud_Shield_Concept_Capture.md` to fire, and Stage C remains hard-parked behind legal / consent review.
+
+---
+
 ## 2026-05-30 - Callback Phishing / TOAD §10 Stress-Test Resolved (D11–D15 Locked, §11 Still Pending)
 **Actor:** Matt + Cursor (Claude)
 
