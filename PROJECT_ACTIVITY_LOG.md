@@ -26,6 +26,55 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Linux Bring-Up Command Checklist Captured
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `be2b006` (`add linux line ending policy`).
+
+**Action:** Created
+
+**Files Changed:**
+- `4. Product_Roadmap/Linux_Bringup_Command_Checklist.md` (new, ~10 KB, 12 sections)
+- `MASTER_INDEX.md` (one new Project Control Files entry, slotted directly before the `Linux_Migration_Readiness_Pass.md` entry to keep the Linux pair contiguous)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+Operator instruction: prepare the exact command sequence Matt should run on Linux to verify NorthStar parity. This is the tighter execution playbook that pairs with the wider readiness pass §5 command sketch. The checklist locks the Linux verification sequence so the actual bring-up is a copy-paste pass, not an improvisation pass.
+
+**Sections:**
+- §1 prerequisites (Python 3.13+/3.14, pip, venv, git, sqlite3 CLI; Debian/Fedora/Arch install lines; `.env` with `XAI_API_KEY` does not travel with the repo and must be transferred manually).
+- §2 clone-or-rsync (Option A `git clone`, Option B `rsync` from Windows with `.venv` / `__pycache__` / `.pytest_cache` / `audit_outputs/decision_audits` excluded; HEAD match + `.gitattributes`-in-force verification).
+- §3 virtualenv setup.
+- §4 dependency install with the documented gap workaround (see Known Findings below).
+- §5 trigger scan baseline 1055.
+- §6 targeted pytest in five-test order (vendor_baseline_isolation_boundary → vendor_baseline_store → vendor_payment_integrity_break_it → fraud_eval_harness → pre_ship_audit).
+- §7 full pytest expecting `1055 passed, 1 skipped`.
+- §8 audit-gate smoke using a doc-only `PROJECT_ACTIVITY_LOG.md` entry that doubles as the smoke and the durable record (matching the `cd1d5d5` / `5662872` / `be2b006` pattern).
+- §9 PASS criteria (six conjunctive checks).
+- §10 FAIL capture bundle (six diagnostic captures for remote diagnosis without round-trips).
+- §11 what NOT to do during bring-up.
+- §12 operator decision points enabled by a green bring-up.
+
+**Known finding surfaced during checklist drafting (not fixed in this commit; flagged for separate operator-authorized work):**
+
+`requirements.txt` at commit `be2b006` declares only `pywin32 ; sys_platform == "win32"`. The actual NorthStar runtime depends on pydantic (~2.13), pytest (~9.0), cryptography (~48), requests (~2.33), and httpx (~0.27), which are currently expected to be system-installed on the Windows dev box. On a fresh Linux box, `pip install -r requirements.txt` will install nothing of substance (pywin32 is platform-skipped), and the first `python -m pytest` will fail with `ModuleNotFoundError: No module named 'pydantic'`. The checklist §4 documents this gap and provides an explicit `pip install` line as the bring-up workaround until a separate `pin runtime dependencies in requirements.txt` commit closes it. This is a follow-up operator decision, not a checklist failure.
+
+**Pass / fail criteria:**
+Green bring-up requires all six §9 conjunctive checks. Fail capture per §10 produces a complete diagnostic bundle (pip freeze, git state and config, system+locale facts, failing command output, first-failing pytest, gate audit report) sufficient for remote diagnosis.
+
+**What this checklist deliberately does NOT do:**
+- Does not run the bring-up itself (this is a playbook, not an execution pass).
+- Does not authorize the migration window (operator decision).
+- Does not run renormalization, change git config, edit signed specs, or edit runtime code.
+- Does not push.
+- Does not promote anything to `PROJECT_BUILD_AND_AUDIT_QUEUE.md`.
+
+**No runtime test count change** (baseline remains 1055 passed / 1 skipped).
+
+**Next Step:**
+Operator decides when to actually execute the bring-up on a Linux box. The checklist §12 enumerates the operator decision points enabled by a green bring-up (renormalization commit, `requirements.txt` dep-pinning commit, primary-dev-surface switch, CI provisioning).
+
+---
+
 ## 2026-05-31 - Linux Line-Ending Policy Established (.gitattributes Added)
 
 **Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `5662872` (`remove stale revenue map references`).
