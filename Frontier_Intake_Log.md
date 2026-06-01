@@ -223,3 +223,47 @@ NorthStar evidence outputs should clearly show:
 - Promotion of the Vendor Payment Integrity SPARK out of SPARK status. The §5 promotion-trigger gate in `_NorthStar_Cyber_Insurance_Vendor_Payment_Integrity_SPARK.md` still governs — peer-discussion evidence is explicitly listed there as a non-trigger.
 
 ---
+
+### 2026-05-31 — Vendor payment-change verification research: process control is the product surface
+
+**Date:** 2026-05-31
+**Source:** Operator-provided deep-research report, archived at `4. Product_Roadmap/Research_Inputs/Vendor_Payment_Change_Verification_Research_Report.md` (research synthesis; useful as input, not a signed source of truth)
+**Signal type:** Vendor-payment verification workflow / small-business control design
+**Evidence strength:** Moderate research input — aligns with the operator's Reddit discovery signals and existing NorthStar Vendor Payment Integrity direction, but is not primary customer discovery and not D10 MSP evidence
+**Classification per intake protocol:** **Confirmation** (reinforces NorthStar's existing direction; does NOT surface a new candidate)
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar.
+
+**Reason D10 does not advance:** No named MSP, no named SMB anchor tied to an MSP conversation, and no named upcoming insurance / underwriting conversation. This is research input about process controls, not an MSP discovery conversation.
+
+**NorthStar relevance:** Strongly reinforces the existing Vendor Payment Integrity evidence lane: the practical problem is controlling vendor payment-detail changes before money moves, not detecting generic phishing. Supports the open verification-workflow gap already captured in `CURRENT_STATE_MAP.md` without resolving or promoting that gap.
+
+**Raw signal summary:**
+The safest practical small-business control stack is: document the payment-change request, verify it through an independent callback to a known-good number, require second approval when a second person exists, and avoid releasing the first payment to changed details the same day unless an owner records an override after extra checks. For single-owner businesses, substitute stronger fallback controls: known-good callback, independent source lookup, delay, and test payment / micro-deposit / bank-validation control for higher-risk changes.
+
+**Interpretation:**
+The "changed payment details" event is the attack surface. Amount matters less at the change-record stage; thresholds matter later when releasing money. NorthStar should treat vendor-payment changes as a review workflow state, not merely as a risk-score event.
+
+**Product takeaway (captured as a note, not as implementation guidance):**
+NorthStar's future Vendor Payment Change Verification Workflow should be able to track:
+
+- change requested
+- verification pending
+- known-good callback completed
+- second approval required / completed
+- first payment delayed or released
+- rejected / held / escalated
+- evidence preserved
+
+The evidence trail should record who requested the change, what changed, which trusted channel verified it, who approved it, when the first payment was released, and what evidence was preserved.
+
+**Boundary:** Does **NOT** authorize:
+
+- A new spec, queue item, runtime implementation, or workflow UI.
+- Cyber Insurance Evidence Package D10 advancement.
+- Banking, lending, money-movement, reimbursement, guarantee, insurance, or compliance claims.
+- Client-facing copy, pricing, or product packaging changes.
+- Modification of signed specs.
+- Treating the archived report's threshold values as NorthStar policy. Any thresholds must be operator-selected and spec-gated before implementation.
+
+---

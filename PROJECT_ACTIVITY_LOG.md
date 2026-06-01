@@ -26,6 +26,33 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Vendor Payment-Change Verification Research Input Archived
+
+**Actor:** Codex, at operator request.
+
+**Action:** Created / Updated / Moved
+
+**Files Changed:**
+- `4. Product_Roadmap/Research_Inputs/Vendor_Payment_Change_Verification_Research_Report.md` (MOVED / ARCHIVED - operator-provided `deep-research-report.md` stored as raw research input under product-roadmap research inputs)
+- `Frontier_Intake_Log.md` (UPDATED - new ad-hoc Confirmation entry: vendor payment-change verification research)
+- `MASTER_INDEX.md` (UPDATED - new research-input entry)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Operator asked to store the useful parts of the vendor-payment verification research. Captured the signal as research input, not doctrine: the strongest NorthStar takeaway is that vendor payment-detail changes are a documented review workflow surface (request logged, known-good callback, second approval where possible, delayed / validated first payment, evidence preserved), not merely a generic phishing or risk-score event.
+
+**Boundary:**
+This does not advance Cyber Insurance Evidence Package D10, does not create a new spec or queue item, does not authorize runtime work, does not touch signed specs, does not create banking / lending / money-movement / compliance / insurance claims, and does not treat the report's threshold values as NorthStar policy. Any workflow enum, threshold, or implementation detail still needs a separate operator decision and spec-gated pass.
+
+**Verification:**
+- `project_trigger_scan.py --baseline-tests 1055`: clean (`scan_clean`, baseline 1055 / 1055, drift findings empty).
+- `complete_gate.py --task vendor-payment-verification-research-input`: clean audit, 0 warnings (`audit_outputs/vendor-payment-verification-research-input_20260601T052054Z.md`).
+
+**Next Step:**
+Leave this as an ad-hoc Confirmation unless Matt explicitly picks up the open Vendor Payment Change Verification Workflow gap for a future spec or build pass.
+
+---
+
 ## 2026-05-31 - Linux Bring-Up Dependencies Pinned in requirements.txt
 
 **Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `5c77748` (`add linux bringup command checklist`).
