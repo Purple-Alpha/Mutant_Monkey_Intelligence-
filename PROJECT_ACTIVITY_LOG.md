@@ -26,6 +26,38 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Cyber Insurance / Vendor Payment Integrity MSP Call Pack Added
+
+**Actor:** Matt + Codex
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `1. Business_Operations/Client_Documents/Cyber_Insurance_Vendor_Payment_Integrity_MSP_Call_Pack.md` (CREATED - operator-facing call pack that turns the existing cheaper-proof runbook into a 10-minute MSP discovery flow, seven questions, D10 strong-yes / partial / no criteria, safe wording replacements, worksheet logging instructions, and follow-up email template.)
+- `MASTER_INDEX.md` (UPDATED - added the new call pack under `1. Business_Operations/Client_Documents`.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry.)
+
+**Reason:**
+Matt called out that the project needed useful forward motion instead of more prompt handoff ceremony. The active queue remains Cyber Insurance Evidence Package cheaper-proof MSP discovery, so the highest-leverage artifact is a practical operator call pack that makes the first MSP conversation easier to run and log.
+
+**Boundary:**
+- No runtime code changed.
+- No signed spec changed.
+- No pricing approved.
+- No client-facing copy approved.
+- No broker / insurer outreach authorized.
+- No queue item added or reordered.
+- The D10 go bar remains unchanged: three relevant MSP conversations, looking for two strong yeses with both a named SMB anchor and a named upcoming insurance / underwriting / renewal conversation.
+
+**Verification:**
+- `complete_gate.py` worker-manifest audit for this pass: clean audit, 0 warnings.
+- `project_trigger_scan.py --baseline-tests 1049`: clean, no drift.
+
+**Next Step:**
+Use the call pack to run the first MSP discovery conversation, then log the result in `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`.
+
+---
+
 ## 2026-05-31 - Cyber Insurance / Vendor Payment Integrity Direction SPARK Captured
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)
