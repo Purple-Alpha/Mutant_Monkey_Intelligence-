@@ -41,4 +41,22 @@ This is operator-acknowledged open work; not on any current build queue.
 
 ---
 
+## Development surface — Linux primary
+
+> **Development surface doctrine:** As of 2026-06-01, NorthStar development is Linux-first in WSL2 Ubuntu at `/home/socialarchitect/northstar`; the Windows repo path is backup/reference only. Do not start new build work from the Windows copy unless Matt explicitly asks or Linux is unavailable.
+
+**Cutover evidence:**
+
+- Windows repo and Linux clone both matched branch `safety/queue-drift-cleanup-20260528` at commit `b85d22d` before the cutover note was recorded.
+- Linux venv created under `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/.venv`.
+- `pip install -r requirements.txt` succeeded on Ubuntu; `pywin32` was correctly skipped by its `sys_platform == "win32"` marker.
+- Linux trigger scan returned `scan_clean` at baseline 1055.
+- Linux targeted Vendor Payment Integrity break-it tests: 6 passed.
+- Linux full pytest: 1055 passed, 1 skipped.
+- Linux `complete_gate.py --pre-commit` smoke with venv active returned "no staged files in hook scope; nothing to audit."
+
+**Operational rule:** Future agents should use `/home/socialarchitect/northstar` as the working copy. If Windows and Linux copies diverge, stop and reconcile by commit hash before editing.
+
+---
+
 **End of current state map. New entries appended only on explicit operator capture; never auto-promoted from the assistant.**

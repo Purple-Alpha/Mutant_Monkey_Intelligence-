@@ -26,6 +26,42 @@ What should happen next.
 
 ---
 
+## 2026-06-01 - Linux Primary Development Surface Cutover Recorded
+
+**Actor:** Codex, at operator request.
+
+**Action:** Updated
+
+**Files Changed:**
+- `PROJECT_HANDSHAKE.md` (UPDATED - added current development surface section naming WSL2 Ubuntu `/home/socialarchitect/northstar` as primary and Windows path as backup / reference)
+- `CURRENT_STATE_MAP.md` (UPDATED - added compressed development-surface doctrine with Linux parity evidence and divergence rule)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Operator chose the clean path after Linux parity was proven. The project needed a durable resume instruction so future sessions do not drift back to the Windows path by default. This records Linux-first development as the current operational surface without changing runtime code, signed specs, dependencies, line-ending policy, or project scope.
+
+**Cutover evidence:**
+- WSL2 Ubuntu working copy: `/home/socialarchitect/northstar`.
+- Branch: `safety/queue-drift-cleanup-20260528`.
+- Cutover baseline commit before this note: `b85d22d`.
+- Linux dependency install from `requirements.txt`: succeeded; `pywin32` skipped correctly on Linux.
+- Linux trigger scan: `scan_clean`, baseline 1055 / 1055, drift findings empty.
+- Linux targeted Vendor Payment Integrity break-it tests: 6 passed.
+- Linux full pytest: 1055 passed, 1 skipped.
+- Linux gate smoke: `complete_gate.py --pre-commit` with venv active returned no staged files in hook scope; nothing to audit.
+
+**Boundary:**
+This is an operational cutover record only. It does not change product scope, does not touch runtime code, does not touch signed specs, does not run renormalization, does not push, and does not make Windows unusable. Windows remains backup / reference; future build work should start from Linux unless Matt explicitly says otherwise.
+
+**Verification:**
+- `project_trigger_scan.py --baseline-tests 1055`: clean (`scan_clean`, baseline 1055 / 1055, drift findings empty).
+- `complete_gate.py --task linux-primary-development-surface-cutover`: clean audit, 0 warnings (`audit_outputs/linux-primary-development-surface-cutover_20260601T164602Z.md`).
+
+**Next Step:**
+After the cutover record is committed and pulled into the Linux clone, continue future build work from `/home/socialarchitect/northstar`.
+
+---
+
 ## 2026-05-31 - Vendor Payment-Change Verification Research Input Archived
 
 **Actor:** Codex, at operator request.
