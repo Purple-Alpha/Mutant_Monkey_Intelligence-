@@ -26,6 +26,33 @@ What should happen next.
 
 ---
 
+## 2026-06-01 - Linux Workflow Quickstart Added
+
+**Actor:** Codex, at operator request.
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `LINUX_WORKFLOW_QUICKSTART.md` (CREATED - operator-facing daily-use guide for WSL2 / Linux workflow)
+- `AGENTS.md` (UPDATED - added §1.1 current development surface so future agents start from `/home/socialarchitect/northstar`)
+- `MASTER_INDEX.md` (UPDATED - indexed the new quickstart)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+
+**Reason:**
+Operator asked to update the project so there is no confusion after the Linux move. The quickstart records the practical daily commands and the difference between PowerShell paths and Ubuntu paths, including the meaning of the terminal prompt, venv activation, test commands, gate smoke command, commit-history output, and secret-handling caution.
+
+**Boundary:**
+This is orientation documentation only. It does not change runtime code, signed specs, dependencies, line-ending policy, baseline, audit gates, or product scope. Windows remains backup / reference; Linux remains the primary development surface.
+
+**Verification:**
+- `project_trigger_scan.py --baseline-tests 1055`: clean (`scan_clean`, baseline 1055 / 1055, drift findings empty).
+- `complete_gate.py --task linux-workflow-quickstart`: clean audit, 0 warnings (`audit_outputs/linux-workflow-quickstart_20260601T165952Z.md`).
+
+**Next Step:**
+Future sessions should begin in `/home/socialarchitect/northstar`, read `AGENTS.md`, and use `LINUX_WORKFLOW_QUICKSTART.md` when terminal/path confusion appears.
+
+---
+
 ## 2026-06-01 - Linux Primary Development Surface Cutover Recorded
 
 **Actor:** Codex, at operator request.

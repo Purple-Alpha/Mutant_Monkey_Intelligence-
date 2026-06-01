@@ -24,6 +24,18 @@ If the operator's first message names a specific track (e.g. "Cyber Insurance Q6
 
 You do not need to summarize what you read. You need to *have read it*. The signal you read it is that your response reflects current state.
 
+## 1.1 Current development surface
+
+As of 2026-06-01, the primary development surface is WSL2 Ubuntu:
+
+```text
+/home/socialarchitect/northstar
+```
+
+The Windows path `C:\Unified Folder Structure NorthStar + SwarmCommand Venture` is backup / reference only unless Matt explicitly asks to work there. Future agents should start in the Linux clone, verify `git status --short`, and compare commit hashes before editing if there is any doubt.
+
+For operator-facing terminal basics, see `LINUX_WORKFLOW_QUICKSTART.md`.
+
 ---
 
 ## 2. Authority model
