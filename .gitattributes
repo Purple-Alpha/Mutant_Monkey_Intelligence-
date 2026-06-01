@@ -1,0 +1,105 @@
+# NorthStar + SwarmCommand Venture — line-ending policy
+# Established 2026-05-31 per `4. Product_Roadmap/Linux_Migration_Readiness_Pass.md` §6.
+#
+# Purpose: settle CRLF/LF behavior before the Windows-first → Linux-first
+# development switch so cross-platform diffs do not become noisy.
+#
+# IMPORTANT — this commit establishes the policy ONLY. It does NOT run
+# `git add --renormalize .`; existing tracked files keep their current
+# in-repo line endings until a separate, explicit renormalization commit
+# is run by the operator. See §6.1 of the readiness pass for that step.
+
+# ---------------------------------------------------------------------------
+# Default: auto-detect text, normalize to LF in repo. Binary files carved out
+# explicitly below so that mis-detection cannot corrupt them.
+# ---------------------------------------------------------------------------
+* text=auto eol=lf
+
+# ---------------------------------------------------------------------------
+# Source code and structured text — LF
+# ---------------------------------------------------------------------------
+*.py     text eol=lf
+*.md     text eol=lf
+*.txt    text eol=lf
+*.json   text eol=lf
+*.jsonl  text eol=lf
+*.yaml   text eol=lf
+*.yml    text eol=lf
+*.toml   text eol=lf
+*.csv    text eol=lf
+*.css    text eol=lf
+*.html   text eol=lf
+*.htm    text eol=lf
+*.aspx   text eol=lf
+*.out    text eol=lf
+*.prompt text eol=lf
+
+# ---------------------------------------------------------------------------
+# Shell — LF (POSIX requirement)
+# ---------------------------------------------------------------------------
+*.sh     text eol=lf
+
+# ---------------------------------------------------------------------------
+# Windows-only scripts — CRLF (cmd.exe / PowerShell expect CRLF)
+# ---------------------------------------------------------------------------
+*.ps1    text eol=crlf
+*.bat    text eol=crlf
+*.cmd    text eol=crlf
+
+# ---------------------------------------------------------------------------
+# Images — binary
+# ---------------------------------------------------------------------------
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.gif    binary
+*.webp   binary
+*.svg    binary
+*.ico    binary
+*.bmp    binary
+*.tif    binary
+*.tiff   binary
+
+# ---------------------------------------------------------------------------
+# Documents — binary
+# ---------------------------------------------------------------------------
+*.pdf    binary
+*.docx   binary
+*.doc    binary
+*.odt    binary
+*.ods    binary
+*.odp    binary
+*.xlsx   binary
+*.xls    binary
+*.pptx   binary
+*.ppt    binary
+*.rtf    binary
+
+# ---------------------------------------------------------------------------
+# Archives — binary
+# ---------------------------------------------------------------------------
+*.zip    binary
+*.tar    binary
+*.gz     binary
+*.tgz    binary
+*.bz2    binary
+*.7z     binary
+*.rar    binary
+
+# ---------------------------------------------------------------------------
+# Databases and runtime artifacts — binary
+# ---------------------------------------------------------------------------
+*.sqlite  binary
+*.sqlite3 binary
+*.db      binary
+
+# ---------------------------------------------------------------------------
+# Misc browser/system artifacts — binary
+# ---------------------------------------------------------------------------
+*.download binary
+*.crdownload binary
+*.part     binary
+
+# ---------------------------------------------------------------------------
+# End of policy.
+# ---------------------------------------------------------------------------

@@ -26,6 +26,49 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Linux Line-Ending Policy Established (.gitattributes Added)
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `5662872` (`remove stale revenue map references`).
+
+**Action:** Created
+
+**Files Changed:**
+- `.gitattributes` (new, repo root)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+- `4. Product_Roadmap/Linux_Migration_Readiness_Pass.md` (smallest possible documentation-only temporal-scope clarification to §6.2 closing sentence + §10 section opener + §10 `.gitattributes` bullet; substance preserved, zero D-decisions / risk-verdicts / file-lists / commands / checklist items changed)
+
+**Reason:**
+Operator instruction: prepare the repo for Linux-first development by settling LF/CRLF behavior without changing runtime behavior. This is the first execution step of the `4. Product_Roadmap/Linux_Migration_Readiness_Pass.md` §6 plan (CRLF/LF settlement). Without `.gitattributes` and with `core.autocrlf=true`, every Windows checkout silently triggers `LF will be replaced by CRLF` warnings; once a Linux contributor joins, the cross-platform diffs become noisy and gate packets inflate from line-ending churn. The `.gitattributes` policy makes line endings deterministic per file type so the eventual switch is mechanical.
+
+The first gate run on this commit (RC 2, 1 blocking) flagged the `.gitattributes` creation as a §6.2 / §10 boundary violation in the readiness-pass artifact. Operator review confirmed this was a temporal-scope misclassification (those clauses were scope-limited to the readiness-pass commit `3542f81`, not forever-prohibitions; §6.1 is the actual authorization for the file's creation in a later separately-gated migration-execution commit, which is exactly what this commit is). Per operator's `amend_readiness_pass` disposition decision (do not use `--operator-override`; instead make the smallest documentation-only clarification needed so the gate can understand the sequencing), the readiness-pass artifact's §6.2 closing sentence and §10 section opener + `.gitattributes` bullet were lightly tightened to make the temporal scope unambiguous. The substance of the readiness pass is preserved exactly: no D-decisions changed, no risk verdicts changed, no file lists changed, no commands changed, no checklist items changed.
+
+**Policy summary:**
+- Default: `* text=auto eol=lf` (auto-detect text, normalize to LF in repo).
+- Explicit text LF: `.py`, `.md`, `.txt`, `.json`, `.jsonl`, `.yaml`, `.yml`, `.toml`, `.csv`, `.css`, `.html`, `.htm`, `.aspx`, `.out`, `.prompt`, `.sh`.
+- Explicit text CRLF (Windows-only scripts): `.ps1`, `.bat`, `.cmd`.
+- Binary (images): `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`, `.ico`, `.bmp`, `.tif`, `.tiff`.
+- Binary (documents): `.pdf`, `.docx`, `.doc`, `.odt`, `.ods`, `.odp`, `.xlsx`, `.xls`, `.pptx`, `.ppt`, `.rtf`.
+- Binary (archives): `.zip`, `.tar`, `.gz`, `.tgz`, `.bz2`, `.7z`, `.rar`.
+- Binary (databases / runtime artifacts): `.sqlite`, `.sqlite3`, `.db`.
+- Binary (misc browser/system): `.download`, `.crdownload`, `.part`.
+
+**What this commit deliberately does NOT do:**
+- Does not run `git add --renormalize .` — existing tracked files keep their current in-repo line endings until a separate, explicit renormalization commit is run by the operator (per the readiness pass §6.1 plan, that commit is its own atomic operation because it may touch a large number of files; it must not piggyback on a content commit).
+- Does not change git config (`core.autocrlf`, `core.eol`, `core.filemode` left as-is per the readiness pass §6.2 boundary; operator decides when to flip them).
+- Does not touch runtime code.
+- Does not touch signed specs (the readiness-pass artifact is pre-§11 by design and the temporal-scope clarification edits do not change any decisions, risks, file lists, commands, or checklist items).
+- Does not use `complete_gate.py --operator-override`.
+- Does not push.
+
+**Renormalization status:** PENDING. The `.gitattributes` policy is in force from this commit forward; existing tracked files retain their current in-repo line endings until the operator runs `git add --renormalize .` as a separate commit per readiness pass §6.1.
+
+**No runtime test count change** (baseline remains 1055 passed / 1 skipped).
+
+**Next Step:**
+Per `4. Product_Roadmap/Linux_Migration_Readiness_Pass.md` §6.1, the next operator-authorized step in the Linux migration sequence is the standalone normalization commit (`git config core.autocrlf=false`, `git config core.eol=lf`, `git add --renormalize .`, commit with its own message). That commit will likely trip the audit-gate packet cap due to its size and may need operator override (a documented legitimate use of `--operator-override` per the readiness pass §6.1 and §12 failure-mode notes); the operator decides the timing.
+
+---
+
 ## 2026-05-31 - Linux Migration Readiness Pass Captured
 
 **Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `f5b254d` (`land vendor payment integrity tests and discovery notes`).

@@ -204,7 +204,7 @@ The repo currently has `core.autocrlf=true` and **no `.gitattributes`**. This is
 - Does not flip `core.autocrlf`.
 - Does not run `git add --renormalize`.
 
-All of those are migration-execution steps, not readiness-map steps.
+All of those are migration-execution steps, not readiness-map steps. **The scope-limit "this readiness pass" in this subsection is temporal: it refers to the readiness-pass commit (`3542f81`) that introduced this artifact. It is not a forever-prohibition. §6.1 above is the authorization for each item; each item lands in its own later, separately-gated migration-execution commit (for example, `.gitattributes` may be created in a stand-alone "add linux line ending policy" commit as a migration-execution step, distinct from the readiness-pass commit and from the eventual whole-repo renormalization commit).**
 
 ---
 
@@ -291,9 +291,9 @@ There is no scenario in which a failed Linux migration corrupts the Windows work
 
 ## §10 What NOT To Touch Yet
 
-This readiness pass deliberately does not:
+This readiness pass deliberately does not (the "not" here is temporal — these items are out of scope for the readiness-pass commit `3542f81` that introduced this artifact; later, separately-gated migration-execution commits may execute the §6.1 plan items):
 
-- Create `.gitattributes` (§6 is a plan; the file gets created during the migration, not now).
+- Create `.gitattributes` (§6.1 prescribes the file content; that file is created in a later, separately-gated migration-execution commit, not in the readiness-pass commit `3542f81`).
 - Run `git config` writes (autocrlf, eol, filemode — operator decision, executed during migration).
 - Run `git add --renormalize` (operator decision, executed during migration).
 - Touch runtime code, signed specs, or the Vendor Payment Integrity break-it tests.
