@@ -179,3 +179,47 @@ Operator chooses the next move. Three honest options:
 The intake itself is complete. No detector, spec, or runtime change is authorized by this intake.
 
 ---
+
+## Ad-hoc Signals (between formal reviews)
+
+This section captures one-off discovery signals the operator chooses to log between formal intake reviews. Entries here are **not** a formal intake review, do **not** count toward the cadence rule, and are classified per the same Confirmation / Candidate / Noise schema as Review #1 under the post-2026-05-26 Supersession. None of these entries authorize promotion, runtime work, or queue change on their own. If a signal later warrants formal handling, the operator picks it up into the next monthly intake or directly into `think_sheet.md`.
+
+### 2026-05-31 — Informal accounting/audit response: reviewers want organized evidence more than deep technical inspection
+
+**Date:** 2026-05-31
+**Source:** Informal online discussion / accounting-audit evidence response (no named MSP, no named SMB, no named upcoming underwriting conversation, no citation URL — this is a peer-conversation observation, not a primary published source per `Compliance_and_Trend_Watch_Process.md` §2.6)
+**Signal type:** Cyber-insurance / audit evidence workflow (buyer-pressure shape, not a threat pattern)
+**Evidence strength:** Light but useful — single informal source, consistent with the published 2026 evidence-not-checkboxes trend already captured as Review #1 Confirmation 7
+**Classification per intake protocol:** **Confirmation** (reinforces NorthStar's existing direction; does NOT surface a new candidate)
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar.
+
+**Reason D10 does not advance:** No named MSP, no named SMB, no named upcoming insurance / underwriting conversation. The D10 bar (recorded in `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md`) requires 2 of 3 relevant MSP conversations with named SMB anchor plus named upcoming insurance / underwriting conversation. This signal is peer research, not an MSP discovery conversation.
+
+**NorthStar relevance:** Supports `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` and the `_NorthStar_Cyber_Insurance_Vendor_Payment_Integrity_SPARK.md` Vendor Payment Integrity Evidence positioning. Reinforces (does not extend) Review #1 Confirmation 7 ("MSP cyber insurance + NIS2 + NIST CSF 2.0 driving evidence-not-checkboxes shift in 2026") with a fresh peer data point.
+
+**Raw signal summary:**
+Respondent said basic controls (MFA, security awareness training, backups, patching, screenshots, reports, policies, checkbox-ready artifacts) are table stakes and the evidence often already exists. Reviewers may mainly want screenshots, reports, policies, and checklist-ready artifacts rather than deep technical validation.
+
+**Interpretation:**
+The commercial pain may be fast, organized evidence retrieval rather than deep technical validation. NorthStar should stay scoped to email-fraud / inbox-layer / vendor-payment evidence, but should make proof artifacts boring, clear, and easy to pull.
+
+**Product takeaway (captured as a note, not as implementation guidance):**
+NorthStar evidence outputs should clearly show:
+
+- what was monitored
+- what changed
+- what was reviewed
+- what action was recommended
+- what evidence supports it
+- what is outside scope
+
+**Boundary:** Does **NOT** authorize:
+
+- Broad compliance positioning of any kind (the `Compliance_and_Trend_Watch_Process.md` §5.1 forbidden-language list still governs; "compliant" / "certified" / "approved by insurer" / "premium reducer" stay forbidden in NorthStar voice).
+- Scope expansion into MFA, backups, patching, security awareness training, or any non-email control surface. NorthStar stays scoped to email-fraud / inbox-layer / vendor-payment evidence per `VISION.md` Stage A.
+- Runtime code, spec edits, queue changes (no addition to `PROJECT_BUILD_AND_AUDIT_QUEUE.md`), pricing changes, or client-facing claims.
+- A new spec, matrix, or product line.
+- Promotion of the Vendor Payment Integrity SPARK out of SPARK status. The §5 promotion-trigger gate in `_NorthStar_Cyber_Insurance_Vendor_Payment_Integrity_SPARK.md` still governs — peer-discussion evidence is explicitly listed there as a non-trigger.
+
+---

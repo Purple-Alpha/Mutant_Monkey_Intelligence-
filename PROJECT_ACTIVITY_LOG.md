@@ -58,6 +58,36 @@ Use the call pack to run the first MSP discovery conversation, then log the resu
 
 ---
 
+## 2026-05-31 - Frontier_Intake_Log Ad-hoc Signal Captured (Audit-Evidence Workflow Confirmation)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Updated
+
+**Files Changed:**
+- Frontier_Intake_Log.md (one new section appended at end: `## Ad-hoc Signals (between formal reviews)` with the first entry — 2026-05-31 informal accounting/audit response. Review #1 and the intake protocol are untouched.)
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Operator-directed research logging of one informal discovery signal: an accounting/audit peer response observed that many business reviews are basic-control and evidence driven (MFA, security awareness training, backups, patching, screenshots, reports, policies, checkbox-ready artifacts), and that reviewers often want **organized evidence more than deep technical inspection**. This is a buyer-pressure / workflow-shape signal, not a threat pattern or AI/agent pattern.
+
+Logged into `Frontier_Intake_Log.md` rather than `THREAT_INTEL_LOG.md` because (a) `THREAT_INTEL_LOG.md`'s entry shape is Pattern class / Pattern shape / Policy update link / Verification (designed for attack patterns with runtime test responses) and does not fit a buyer-workflow signal, (b) `Frontier_Intake_Log.md` Review #1 already captured the parallel 2026 published trend as Confirmation 7 ("MSP cyber insurance + NIS2 + NIST CSF 2.0 driving evidence-not-checkboxes shift in 2026"), and this signal reinforces that confirmation with a fresh peer data point. Captured under a new `## Ad-hoc Signals (between formal reviews)` section so it is clearly separate from the formal monthly intake cadence, does not count toward the cadence rule, and inherits the same Confirmation / Candidate / Noise schema under the post-2026-05-26 Supersession.
+
+Classified as **Confirmation** (reinforces existing direction; does NOT surface a new candidate). Evidence strength: **light but useful** — single informal source, consistent with the published 2026 evidence-not-checkboxes trend.
+
+**D10 status:** Does NOT count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar. Reason: no named MSP, no named SMB, no named upcoming insurance / underwriting conversation. The D10 bar per `Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md` requires 2 of 3 relevant MSP conversations with named SMB anchor plus named upcoming insurance / underwriting conversation. The active queue remains MSP discovery against the existing D10 cheaper-proof bar; this entry does not advance it.
+
+**NorthStar relevance:** Supports `Cyber_Insurance_Evidence_Package_Deep_Dive.md` and the `_NorthStar_Cyber_Insurance_Vendor_Payment_Integrity_SPARK.md` Vendor Payment Integrity Evidence positioning. Captured the operator's interpretation (commercial pain is fast organized evidence retrieval, not deep technical validation) and product takeaway note (NorthStar evidence outputs should clearly show: what was monitored / what changed / what was reviewed / what action was recommended / what evidence supports it / what is outside scope) — as **captured notes, not implementation guidance**.
+
+Explicit boundary in the new entry: does NOT authorize broad compliance positioning, scope expansion into MFA / backups / patching / security awareness training, runtime code, spec edits, queue changes, pricing changes, client-facing claims, a new spec or matrix, or promotion of the Vendor Payment Integrity SPARK out of SPARK status. The `Compliance_and_Trend_Watch_Process.md` §5.1 forbidden-language list still governs; the §5 promotion-trigger gate inside the Vendor Payment Integrity SPARK still governs (peer-discussion evidence is a stated non-trigger there).
+
+This is research logging only. No D-decisions introduced. No new gates. No runtime code touched. No signed spec touched. No queue change. No promotion.
+
+**Next Step:**
+None required. The signal sits in `Frontier_Intake_Log.md` until either the next formal monthly intake review picks it up alongside other signals, or an MSP discovery conversation produces real D10-qualifying evidence that would supersede / extend it. The active queue continues to be MSP discovery against the existing D10 cheaper-proof bar.
+
+---
+
 ## 2026-05-31 - Cyber Insurance / Vendor Payment Integrity Direction SPARK Captured
 
 **Actor:** Matt + Cursor (Claude Opus 4.7)
