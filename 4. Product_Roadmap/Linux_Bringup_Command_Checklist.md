@@ -104,29 +104,20 @@ The `.venv/` directory is gitignored. Do not commit it. Do not name it different
 
 ## §4 Dependency install
 
-**Important — known gap:** as of commit `be2b006`, `requirements.txt` only declares `pywin32 ; sys_platform == "win32"`. The actual NorthStar runtime depends on pydantic, pytest, cryptography, requests, and httpx, which are currently expected to be system-installed. Until that gap is closed (separate operator-authorized commit to pin dependencies properly), the Linux bring-up uses an explicit install line.
+The dependency-declaration gap that existed at commit `be2b006` was closed by a follow-up commit (`pin linux bringup dependencies`) that pinned the full runtime + test surface in `requirements.txt`. The Linux bring-up dependency install is now the single primary path below.
 
 ```bash
-# Step 4.1 — install the (platform-scoped) requirements.txt file.
+# Step 4.1 — install the full pinned dependency set. `pywin32` is skipped
+#            automatically on Linux by its platform marker.
 pip install -r "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/requirements.txt"
 
-# Step 4.2 — install the explicit runtime / test dependencies that are NOT yet
-# in requirements.txt. Versions below match the current Windows dev box at
-# commit be2b006; tighten or relax as the dep-pinning commit lands.
-pip install \
-  "pydantic>=2.13,<3" \
-  "pytest>=9.0,<10" \
-  "cryptography>=48,<49" \
-  "requests>=2.33,<3" \
-  "httpx>=0.27,<1"
-
-# Step 4.3 — sanity check that pywin32 was correctly SKIPPED on Linux.
+# Step 4.2 — sanity check that pywin32 was correctly SKIPPED on Linux.
 pip list 2>/dev/null | grep -i pywin32 \
   && echo "UNEXPECTED: pywin32 installed on Linux" \
   || echo "OK: pywin32 not installed (expected; platform marker honored)"
 ```
 
-A future commit titled `pin runtime dependencies in requirements.txt` is the right separate fix; until then, the explicit `pip install` above is the bring-up workaround.
+If `pip install -r requirements.txt` ever fails on Linux because a pinned wheel is unavailable for your distro's Python version, the fallback is to install the dependencies individually with the same pins (read them directly out of `requirements.txt`); do not silently relax the pin range. Any pin change is a separate operator-authorized commit, not a bring-up improvisation.
 
 ---
 
@@ -340,9 +331,10 @@ That bundle is enough for a remote diagnosis without further round-trips.
 These are NOT part of the bring-up itself; they are the explicit operator decisions enabled by a green bring-up.
 
 1. **Renormalization commit** (per readiness pass §6.1) — flip `core.autocrlf=false` + `core.eol=lf` per-repo, run `git add --renormalize .` as its own atomic commit. Will likely need `--operator-override` at the gate because of size.
-2. **`requirements.txt` dep pinning commit** — close the §4 gap so `pip install -r requirements.txt` works without the explicit `pip install` step. Separate operator-authorized commit.
-3. **Primary development surface switch** — once Linux bring-up is green, decide whether to switch the primary dev box to Linux now or run both in parallel for a week.
-4. **CI provisioning** — if Linux bring-up is green and stable, a Linux-only CI workflow becomes possible. That is its own separate spec.
+2. **Primary development surface switch** — once Linux bring-up is green, decide whether to switch the primary dev box to Linux now or run both in parallel for a week.
+3. **CI provisioning** — if Linux bring-up is green and stable, a Linux-only CI workflow becomes possible. That is its own separate spec.
+
+*(The §4 dependency-pinning gap that originally appeared here as a fourth operator decision point was closed in advance of bring-up by the `pin linux bringup dependencies` commit. The current §4 is now the single primary path.)*
 
 ---
 

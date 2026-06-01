@@ -1,1 +1,29 @@
+# NorthStar + SwarmCommand Venture — runtime / test dependencies
+# Pinned 2026-05-31 to match the Windows dev box at commit `5c77748`.
+# Python: 3.13.x or 3.14.x (3.14.4 verified on the current dev box).
+#
+# Pin discipline: exact `==` pins for full reproducibility. When a security
+# advisory or a planned upgrade requires a bump, that is a separate
+# operator-authorized commit with a fresh full pytest pass and a fresh
+# trigger scan at the then-current baseline. No "while we're in here"
+# upgrades.
+#
+# This file covers both runtime and test dependencies. The project does
+# not (yet) split them into separate requirements files; pytest is needed
+# by the audit-gate machinery as well as the test suite.
+
+# --- Runtime dependencies -------------------------------------------------
+pydantic==2.13.4
+cryptography==48.0.0
+requests==2.33.1
+httpx==0.27.2
+
+# --- Test dependencies ----------------------------------------------------
+pytest==9.0.3
+
+# --- Platform-specific dependencies ---------------------------------------
+# pywin32 is only used by `core/production_state/vendor_baseline/isolation.py`
+# inside the `sys.platform == "win32"` branch (Windows DACL hardening).
+# Linux installs SKIP this dependency by design; the POSIX `chmod` branch
+# handles hardening there.
 pywin32 ; sys_platform == "win32"

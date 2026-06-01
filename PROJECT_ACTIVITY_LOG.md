@@ -26,6 +26,57 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Linux Bring-Up Dependencies Pinned in requirements.txt
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `5c77748` (`add linux bringup command checklist`).
+
+**Action:** Updated
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/requirements.txt` (replaced — was a one-line `pywin32` declaration; now a fully-pinned runtime + test dependency file with explicit pin discipline notes)
+- `4. Product_Roadmap/Linux_Bringup_Command_Checklist.md` (§4 rewritten — single-primary-path now; §12 operator-decision-points list trimmed because the dep-pinning item is closed by this commit)
+- `MASTER_INDEX.md` (the `Linux_Bringup_Command_Checklist.md` entry's §4 and §12 descriptions updated to match the new checklist state)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+Operator instruction: pin runtime/test dependencies before Linux bring-up so `pip install -r requirements.txt` is the single primary path on a fresh Linux box, instead of relying on the §4 workaround the bring-up checklist documented for the dependency-declaration gap. This closes the gap surfaced during the checklist draft (commit `5c77748`).
+
+**Pin set (exact `==` pins for full reproducibility):**
+- `pydantic==2.13.4`
+- `cryptography==48.0.0`
+- `requests==2.33.1`
+- `httpx==0.27.2`
+- `pytest==9.0.3`
+- `pywin32 ; sys_platform == "win32"` (existing; preserved verbatim)
+
+Python version requirement (documented in file comment, not enforced by `requirements.txt` itself): 3.13.x or 3.14.x (3.14.4 verified on the current dev box).
+
+**Pin-change discipline (documented in the file's header comment):**
+Any pin bump — for a security advisory, a planned upgrade, or compatibility with a new Python version — is a separate operator-authorized commit. The bump commit must land a fresh full pytest pass and a fresh trigger scan at the then-current baseline. No "while we're in here" upgrades.
+
+**Verification chain run for this commit:**
+- `pip install -r requirements.txt` on the Windows dev box: all five new pins were already-satisfied (no installs performed; pin-set matches the dev box exactly).
+- Targeted pytest on `tests/test_vendor_payment_integrity_break_it.py`: 6 passed (the platform-sensitive Vendor Payment Integrity break-it tests confirm the dep-pin set is functional).
+- Full pytest: 1055 passed, 1 skipped — exact baseline match.
+- `project_trigger_scan.py --baseline-tests 1055`: clean (`scan_clean`, drift findings empty).
+- `complete_gate.py`: see commit log for verdict.
+
+**What this commit deliberately does NOT do:**
+- Does not touch runtime code (only `requirements.txt`, the bring-up checklist, the master index, and this log).
+- Does not touch signed specs.
+- Does not run renormalization.
+- Does not change git config.
+- Does not push.
+- Does not introduce new dependencies — only pins what was already in use on the Windows dev box.
+- Does not split `requirements.txt` into runtime + test files (the project does not currently use that pattern; splitting would be a separate operator decision).
+
+**No runtime test count change** (baseline remains 1055 passed / 1 skipped).
+
+**Next Step:**
+The Linux bring-up checklist's §4 is now the single primary path. The remaining operator decision points enabled by a green bring-up are §12 of the checklist: renormalization commit, primary-dev-surface switch, CI provisioning.
+
+---
+
 ## 2026-05-31 - Linux Bring-Up Command Checklist Captured
 
 **Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `be2b006` (`add linux line ending policy`).
