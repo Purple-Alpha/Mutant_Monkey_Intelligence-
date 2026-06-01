@@ -26,6 +26,37 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Cyber Insurance / Vendor Payment Integrity Discovery Call Sheet Added
+
+**Actor:** Matt + Codex
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `1. Business_Operations/Client_Documents/Cyber_Insurance_Vendor_Payment_Integrity_Discovery_Call_Sheet.md` (CREATED - operator-facing tomorrow sheet with COEDC / Access Kelowna first, direct MSP targets, broker fallback targets, safe outreach templates, tomorrow sequence, result labels, and boundary language.)
+- `MASTER_INDEX.md` (UPDATED - added the call sheet under `1. Business_Operations/Client_Documents`.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry.)
+
+**Reason:**
+Matt cannot run outbound discovery until tomorrow, so the useful work tonight is preparing the contact path rather than adding more specs. The call sheet turns the already-committed call pack into a practical first-action list: COEDC / Access Kelowna as the warm referral door, then local MSP and broker fallbacks if needed.
+
+**Boundary:**
+- No runtime code changed.
+- No signed spec changed.
+- No queue item added or reordered.
+- No client-facing copy approved.
+- No outreach sent by this pass.
+- No D10 evidence claimed; only completed conversations logged in the worksheet can count.
+
+**Verification:**
+- `complete_gate.py` worker-manifest audit for this pass: clean audit, 0 warnings.
+- `project_trigger_scan.py --baseline-tests 1049`: clean, no drift.
+
+**Next Step:**
+Tomorrow, submit or call the COEDC / Access Kelowna business-support path, then log any resulting conversation or referral outcome in the MSP discovery worksheet.
+
+---
+
 ## 2026-05-31 - Cyber Insurance / Vendor Payment Integrity MSP Call Pack Added
 
 **Actor:** Matt + Codex
@@ -55,6 +86,80 @@ Matt called out that the project needed useful forward motion instead of more pr
 
 **Next Step:**
 Use the call pack to run the first MSP discovery conversation, then log the result in `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`.
+
+---
+
+## 2026-05-31 - Railbridge Post-Invoice Payment Operations SPARK Captured (Separate Venture / Adjacent Product)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Created SPARK; updated index.
+
+**Files Changed:**
+- `4. Product_Roadmap/_NorthStar_Railbridge_Post_Invoice_Payment_Operations_SPARK.md` (CREATED - SPARK-only direction capture; pre-spec, unsigned, not §11; not a product spec; not a banking / lending / money-movement / compliance / insurance authorization; not validated market proof; signal capture only.)
+- `MASTER_INDEX.md` (UPDATED - new SPARK entry slotted into the existing SPARK cluster, between the Cyber Insurance Vendor Payment Integrity SPARK and the Cross-Channel Fraud Shield Concept Capture, preserving cluster contiguity.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry.)
+
+**Reason:**
+Operator-directed capture of a Railbridge product-discovery signal as a **separate venture / adjacent-product note**, not as NorthStar proof and not as Cyber Insurance Evidence Package D10 evidence. NorthStar and Railbridge share an operator (Matt) and shared discipline (spec-first habit, no compliance / certification / approval claims, authority model: operator decides, rubrics rank), but are NOT merged — different brands, different codebases, different customer segments, different wedges. NorthStar = vendor payment integrity / email-fraud evidence for MSPs and SMBs. Railbridge = receivables and payment-operations clarity for service businesses.
+
+Railbridge concept (captured verbatim from operator): service businesses already have invoicing solved; the pain starts after the invoice is sent — e-transfers, emails, screenshots, partial payments, follow-ups, and figuring out who actually paid versus who still owes. Railbridge is not trying to replace accounting software; the near-term focus is organizing payment requests, payment tracking, follow-ups, and bank-payment workflows. Long-term direction (captured for preservation only, no implementation authorization) sketches an evolution into receivables management, day-to-day financial operations, business bank accounts, movement of funds, cash-flow visibility, and access to capital. Positioning line: "Railbridge is the operating layer after the invoice is sent." Core insight: payment truth is the pain, not invoicing. Pilot status: early; free pilots running; seeking more participants. Website: `railbridgepay.com`.
+
+SPARK structured into 12 sections: §1 Status; §2 Source Signal (operator observation, not market validation); §3 Problem Observed (payment-truth detective work); §4 Customer Segment (service businesses with mixed-channel payment workflows); §5 V1 Wedge (payment requests + tracking + follow-ups + bank-payment workflows); §6 Long-Term Direction (directional sketch only, no commitment); §7 NorthStar Relationship (adjacent, not merged — shared discipline only); §8 Boundaries / Non-Authorizations (no banking / lending / money-movement / compliance / insurance / runtime / signed-spec / queue / D10 advancement / merged-brand work); §9 Open Questions (vertical fit, pilot signal quality, channel mix, minimum V1 shape, venture relationship — all 5 captured verbatim from operator); §10 anti-drift boundaries footer; §11 named failure modes (brand merge drift, D10 laundering, banking / lending claim slip, forbidden-language slip via venture framing, pre-pilot promotion, free-work perception cross-venture, Authorship Rule violation, sycophancy / praise-stacking); §12 MASTER_INDEX intent.
+
+Explicit boundaries: SPARK does NOT decide; does NOT authorize buyer-facing copy (the §5 positioning line is internal-only); does NOT authorize banking, lending, money-movement, compliance, or insurance work of any kind; does NOT edit any §11-SIGNED NorthStar spec; does NOT promote anything to `PROJECT_BUILD_AND_AUDIT_QUEUE.md`; does NOT advance Cyber Insurance Evidence Package D10 (D10 still requires named NorthStar-relevant MSP + named SMB + named upcoming insurance / underwriting conversation per `Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md`; Railbridge service-business pilot evidence does not satisfy that bar); does NOT merge the NorthStar and Railbridge brands; does NOT touch runtime code; does NOT touch the Vendor Payment Integrity break-it tests added earlier this session.
+
+Forbidden-language tokens (`compliance` / `certification` / `premium reduction` / `approved by`) appear only inside the §8 / §10 / §11 boundary lists as the explicit list of phrases Railbridge must not adopt — allowed-context carve-out per `Compliance_and_Trend_Watch_Process.md` §5.3. Banking / lending / money-movement vocabulary in §6 long-term-direction is captured verbatim per operator instruction and explicitly framed as a directional sketch with no implementation authorization.
+
+This is signal capture only. No D-decisions introduced. No new gates. No runtime code touched. No signed spec touched. No queue change. No promotion. No NorthStar D10 advancement.
+
+**Next Step:**
+None required from this lane. The Railbridge SPARK sits in `4. Product_Roadmap/` for future operator reference. NorthStar's active queue remains MSP discovery against the existing Cyber Insurance Evidence Package D10 cheaper-proof bar. Railbridge product work runs on its own track under separate operator authorization, not from this SPARK.
+
+---
+
+## 2026-05-31 - Vendor Payment Integrity Break-It Tests Added (Runtime Baseline 1049 -> 1055)
+
+**Actor:** Matt + Cursor (Claude Opus 4.7)
+
+**Action:** Added runtime test file; updated baseline trackers.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_vendor_payment_integrity_break_it.py` (CREATED - six adversarial break-it tests inside already-built / §11-SIGNED Vendor Payment Integrity evidence path scope; no new product behaviour; no signed spec edits; no Cyber Insurance package implementation touched.)
+- `PROGRESS.md` (UPDATED - runtime-baseline header `1049 -> 1055`, +6 delta described inline with the six tests' boundary coverage.)
+- `PROJECT_HANDSHAKE.md` (UPDATED - current verification baseline `1049 -> 1055`, mirror of the PROGRESS.md +6 delta description.)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry.)
+
+**Reason:**
+Operator-directed lane switch off the Cyber Insurance discovery lane (D10 cheaper-proof MSP discovery blocks only that lane, not the whole project) into existing-runtime break-it testing on the Vendor Payment Integrity evidence path. Goal: produce measurable evidence tonight inside already-built / signed scope without new product behaviour or signed-spec edits.
+
+Tests added probe scope boundaries within these signed contracts:
+
+- `4. Product_Roadmap/Financial_State_Ledger_Delta_Tripwire_Deep_Dive.md` (D9 risk floor 85, D11 no autonomous payment decision, D13 data minimization, §3 extraction rules)
+- `4. Product_Roadmap/Vendor_Baseline_Store_Deep_Dive.md` (D2 hash-only storage, D5 per-tenant HKDF salt, D6 per-tenant file isolation)
+- `4. Product_Roadmap/Tiered_Detection_Intensity_Deep_Dive.md` (D11 lift-only invariant)
+- `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (D16 `recommended_action` most prominent, vendor-payment-history axis evidence path)
+- `CURRENT_STATE_MAP.md` Alert-fatigue doctrine (batch / tier / escalate rarely / explain clearly / tune per tenant; Stage A is decision-support and evidence, not a per-email alert stream)
+
+Six tests in `tests/test_vendor_payment_integrity_break_it.py`:
+
+1. `test_multiple_new_payment_signals_recommend_review_never_block` - three first-seen signals (routing + account + payment_portal_url) inside one email leave `recommended_action == "needs_review"`, `recommended_risk_floor == 85` (not summed), `requires_out_of_band_verification == True`; assessment dump contains no `block` / `blocked` / `quarantine` / `quarantined` / `deny` / `denied` / `reject` / `rejected` / `auto_block` / `auto_quarantine` token under `recommended_action`. Pins FSL D9 + D11.
+2. `test_no_raw_financial_values_leak_across_full_signal_set` - adversarial probe stacking routing / account / IBAN (spaced and packed) / SWIFT (spaced and packed) / payment-portal URL carrying `token=supersecret&sid=abc`; `asdict(assessment)` dump contains none of the raw forms; each finding's `redacted_display` matches the spec's `***NNNN` / `GB82...5432` / `DEUT...` / host-only shapes. Pins FSL D13 + Vendor Baseline Store D2.
+3. `test_payment_context_without_labelled_identifier_does_not_trigger` - benign vendor mail with `pay` / `remit` / `invoice` / `billing` context plus a bare 10-digit reference number produces zero extracted signals, zero findings, `recommended_action == "none"`, and opens no per-tenant Vendor Baseline Store row. Pins FSL §3 extraction rules and the Alert-fatigue doctrine "Stage A stays quiet on routine vendor mail" surface.
+4. `test_multi_finding_overlay_max_merges_and_preserves_higher_existing_risk` - assemble three-finding FSL assessment, exercise `_overlay_ransomware_precursor` across LLM risk 10 / 50 / 84 / 85 / 86 / 95 / 100; results 85 / 85 / 85 / 85 / 86 / 95 / 100. Multi-finding does NOT stack additively; lift-only invariant holds. Pins Tiered Detection Intensity D11 and FSL D9.
+5. `test_daily_digest_agent_does_not_import_financial_state_ledger_directly` - reads `inspect.getsource(daily_digest_agent)` and module namespace; asserts the digest agent does not import `core.scoring.financial_state_ledger`, `FinancialStateLedgerAssessment`, `assess_financial_state_delta`, or `DeltaTripwireFinding`. Pins the Alert-fatigue doctrine in code: Stage A digest is one batch per `(tenant_id, digest_date)` over already-overlaid `risk_score` / `behavioral_deviation_flags`, not a per-email FSL alert stream.
+6. `test_per_tenant_salt_yields_different_hashes_and_no_raw_value_on_disk` - ingest identical raw routing number `555444333` into `tenant_break_it_a` and `tenant_break_it_b`; `record_a.signal_hash != record_b.signal_hash` (per-tenant HKDF salt actually changes the output); both per-tenant SQLite paths exist and are distinct; raw routing bytes appear in neither on-disk file. Pins Vendor Baseline Store D2 / D5 / D6.
+
+**Verification:**
+
+- Targeted: `python -m pytest tests/test_vendor_payment_integrity_break_it.py -v` -> **6 passed** in 0.33s.
+- Full runtime: `python -m pytest -q` from `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation` -> **1055 passed, 1 skipped** in 13.21s, exit code 0. Zero regressions; delta exactly +6 from the prior 1049 baseline.
+- No bugs found; no fixes required.
+- No spec edits, no runtime / detector / scoring / daily-digest / vendor-baseline-store code changed.
+- No Cyber Insurance package implementation touched; no `PROJECT_BUILD_AND_AUDIT_QUEUE.md` change; no new SPARK, matrix, or business-discovery artifact created.
+
+**Next Step:**
+None required from this lane. Trackers (`PROGRESS.md` + `PROJECT_HANDSHAKE.md`) now reflect the new 1055 baseline. The active project queue remains MSP discovery against the existing `Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md` D10 cheaper-proof bar (operator real-world work, gated until tomorrow per operator availability).
 
 ---
 
