@@ -26,6 +26,65 @@ What should happen next.
 
 ---
 
+## 2026-05-31 - Linux Migration Readiness Pass Captured
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request, on clean tree after commit `f5b254d` (`land vendor payment integrity tests and discovery notes`).
+
+**Action:** Created
+
+**Files Changed:**
+- `4. Product_Roadmap/Linux_Migration_Readiness_Pass.md` (new)
+- `MASTER_INDEX.md` (one new Project Control Files entry, sequenced after the `audit_tools/pre_ship_audit.py` line)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+Operator instruction: produce a Linux Migration Readiness Pass — identify what must be fixed before moving NorthStar development from Windows-first to Linux-first this week, without changing runtime behavior, signed specs, or git config. Goal is a practical map first, so the actual Linux switch can be one focused execution pass.
+
+**Scope inspected:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/scripts/*` (4 Python scripts + `__init__.py`; pure Python; no `sys.platform` / `win32` / `PowerShell` / `cmd.exe` / `os.sep` / `tempfile`-with-Windows-flags / `cp1252`-baked-in references)
+- `audit_tools/*.py` (`encoding="utf-8"` everywhere; `subprocess.run` text-mode; no shell-specific assumptions)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/requirements.txt` (already `pywin32 ; sys_platform == "win32"`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/production_state/vendor_baseline/isolation.py` (already cross-platform; `sys.platform == "win32"` branch + POSIX else branch; pywin32 imported lazily inside Windows branch only)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/eval/fraud_eval_harness.py` (cp1252 reconfigure is best-effort, Linux ignores it)
+- Git config (`core.autocrlf=true`, `core.symlinks=false`, `core.ignorecase=true`, `core.filemode=false` — all Windows defaults; no `.gitattributes` file exists in repo)
+- `**/*.ps1` (exactly one match: `AI_Phishing_Simulation_Business/Inbox_Shield/run_demo.ps1` — legacy PoC, not on NorthStar critical path)
+- `**/*.sh` (exactly one match: `Internal_Tools/precommit_llm_safety_hook.sh` — already bash, already POSIX, only needs `chmod +x` if installed as real hook)
+- `**/*.bat` (zero matches)
+- `**/pyproject.toml` (zero matches — pure `requirements.txt` setup)
+- `**/conftest.py` (zero matches — no test-bootstrap conftest)
+
+**Risk verdict reported:** LOW.
+- Runtime is already cross-platform aware by design.
+- Two mechanical settlements required before switch: CRLF/LF settlement (§6 plan — create `.gitattributes`, flip `core.autocrlf=false`, run standalone normalization commit) and optional `chmod +x` + `git update-index --chmod=+x` for the bash hook if installed.
+- One structural concern (R7) carries over unchanged: gate's 200 KB packet cap is unrelated to platform and not addressed by migration.
+
+**Verified absent during inspection:**
+- No `os.system("cmd.exe ...")` or `os.system("powershell ...")` calls.
+- No `subprocess.run(["cmd", ...])` or `subprocess.run(["powershell", ...])` calls.
+- No registry reads.
+- No COM/OLE/WMI dependencies.
+- No hardcoded `C:\\` paths in Python sources.
+- No backslash path separators outside of regex character classes.
+- No reliance on `os.sep` for portability shims (everything uses `pathlib.Path`).
+- No Windows-only environment variables.
+
+**What this pass does NOT do (boundary):**
+- Does not create `.gitattributes`.
+- Does not flip `core.autocrlf`, `core.eol`, or `core.filemode`.
+- Does not run `git add --renormalize`.
+- Does not touch runtime code, signed specs, the Vendor Payment Integrity break-it tests, the `requirements.txt`, or `Internal_Tools/precommit_llm_safety_hook.sh`.
+- Does not mirror `run_demo.ps1` as `run_demo.sh`.
+- Does not address the gate's 200 KB packet cap (R7, unrelated to migration).
+- Does not promote anything to `PROJECT_BUILD_AND_AUDIT_QUEUE.md`.
+- Does not authorize the migration window; the operator decides when to execute.
+
+**No runtime test count change.** Baseline remains 1055 passed / 1 skipped. No code change, no test added, no test removed.
+
+**Next Step:**
+Operator decides when (and whether) to execute the migration per the §8 checklist. The readiness artifact is the map; the migration is a separate operator-authorized pass.
+
+---
+
 ## 2026-05-31 - Cyber Insurance / Vendor Payment Integrity Discovery Call Sheet Added
 
 **Actor:** Matt + Codex
