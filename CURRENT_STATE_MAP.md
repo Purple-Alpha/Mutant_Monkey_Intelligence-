@@ -41,6 +41,36 @@ This is operator-acknowledged open work; not on any current build queue.
 
 ---
 
+## False-positive / false-negative correction evidence loop
+
+> **False-positive / false-negative correction evidence loop:** NorthStar keeps moving forward by testing, preserving misses and over-flags, showing where the system made mistakes, recording why each mistake warranted corrective action, recording what changed to improve it, and proving that the corrective action is now in place.
+
+**Operator direction captured 2026-06-01:** the project should not hide misses, over-flags, or uncomfortable test outcomes. False negatives are evidence that NorthStar missed or under-explained a real risk. False positives are evidence that NorthStar may create unnecessary review burden, buyer distrust, or alert fatigue. Both buy credibility only if the corrective record includes the **why**: why this was a real issue, why the chosen correction was warranted, and why the correction is proportionate.
+
+The expected pattern is:
+
+- run the test or live diagnostic
+- preserve the miss or over-flag
+- classify the failure type (`false_negative`, `false_positive`, expectation-contract issue, fixture issue, prompt issue, detector issue, workflow issue)
+- record why it became a corrective action (risk, buyer impact, evidence gap, alert-fatigue risk, or spec mismatch)
+- apply a scoped correction
+- rerun or add regression coverage
+- record the corrective action and evidence that it now holds
+
+**Internal credibility record:** The why-rationale does not have to be public or client-facing. It can live in internal eval reports, failure cards, activity-log entries, or audit packets. But it must be durable enough that a later operator, auditor, or buyer-trust review can see that NorthStar did not silently tune around failures.
+
+**Anchor artifacts already using this pattern:**
+
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/eval_report_2026_05_22_phase_1_5_rerun.md` - preserved a 36/40 gate failure with clean precision / FPR but weak vendor-invoice recall.
+- `PROJECT_HANDSHAKE.md` entries 152-158 - record the calibration and recovery passes that preserved failed cases, diagnosed contract brittleness vs model gaps, patched prompt/examples/dataset floors, and reran live eval to a gate pass.
+- `PROGRESS.md` tasks 3-6 - preserve the Phase 1.5 fail verdict, no-spend prompt patch, 5/5 vendor-invoice diagnostic recovery, and optional full rerun deferral.
+- `CURRENT_STATE_MAP.md` Alert-fatigue doctrine - false positives matter because Stage A should not become a per-email noise stream.
+- `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` - draft framework for failure cards, retest linkage, evidence-required scoring, and failed-test acceptance discipline.
+
+**Boundary:** This loop does not authorize weakening tests to make failures disappear. A false negative or false positive may justify a detector/prompt/workflow correction, a dataset-contract correction, or an expectation correction, but the reason must be recorded. The correction must be scoped, proportionate, and retestable.
+
+---
+
 ## Development surface — Linux primary
 
 > **Development surface doctrine:** As of 2026-06-01, NorthStar development is Linux-first in WSL2 Ubuntu at `/home/socialarchitect/northstar`; the Windows repo path is backup/reference only. Do not start new build work from the Windows copy unless Matt explicitly asks or Linux is unavailable.

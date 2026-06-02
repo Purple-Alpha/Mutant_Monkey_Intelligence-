@@ -38,11 +38,11 @@ This file is not a contract. The contracts are the signed §11 specs. This file 
 
 In execution order. Each item runs only when its predecessors are complete or explicitly skipped by the operator.
 
-1. **Run cheaper-proof MSP discovery for the Cyber Insurance Evidence Package.**
-   The spec drafting lane is closed enough for discovery: `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md` has §12 Q1-Q11 resolved, §14 defined as the fictional Stage A test plan, and the §14 plan run in commit `5bcb507`. The remaining §13 sign-off blocker is precondition 3: **2 of 3 relevant MSP conversations** must meet the D10 per-MSP "yes" definition (named SMB + named upcoming insurance / underwriting conversation). This is operator discovery work, not code.
+1. **Continue Cyber Insurance / Vendor Payment Integrity evidence-package build shaping after operator removal of the call-sheet blocker.**
+   Operator override recorded 2026-06-02: the `Cyber_Insurance_Vendor_Payment_Integrity_Discovery_Call_Sheet.md` path is no longer the active build blocker and has been removed from the working tree. The project has enough research / Reddit / Todd / live-run / testing-footing signal to keep building the pre-spec evidence-package footing instead of cycling on the call sheet. This does **not** claim D10 is satisfied, does **not** authorize §13 sign-off, and does **not** edit the signed / pre-sign Cyber Insurance Evidence Package spec. It only changes the forward queue so the active build path is no longer stalled on that call-sheet workflow.
 
-2. **Only after cheaper-proof go: §13 sign-off readiness review.**
-   If the 2-of-3 threshold is met and logged through the cheaper-proof runbook / worksheet, run the normal sign-off-readiness review and `complete_gate.py` packet before Matt decides whether to sign §13. Do not draft signature wording for Matt.
+2. **Later: explicit operator decision on Cyber Insurance §13 readiness path.**
+   Because the call-sheet/D10 path has been removed as the active blocker but D10 is not being claimed complete, any move toward §13 sign-off requires a separate operator decision and a fresh audit packet that states the basis clearly. Do not draft signature wording for Matt.
 
 3. **Only after §13 is signed: draft implementation spec.**
    Not code yet. Define generation workflow, artifact schema, redaction gates, and output surfaces. Spec-first discipline. §11 again.
@@ -50,7 +50,7 @@ In execution order. Each item runs only when its predecessors are complete or ex
 4. **14-day Operating Doctrine Trial.**
    Spec drafted at `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (DRAFT pre-§11). Operator signs §11 to activate. Trial runs **in parallel** with items 1–3, not after them — it evaluates whether the doctrine governing how items 1–3 are executed (queue-driven defaults, gate-enforced completion, rubric demotion, no AI-authored authority, TVL role) reduces micromanagement and drift over a fixed 14-day window. Retrospective at trial end produces one of four decisions: D1 keep / D2 tighten / D3 loosen / D4 rollback. The trial does not block any other queue item; it only governs the operating mode while the other items run.
 
-**Operator focus call (not queue-ordered):** Matt selects the active lane when items compete for attention. Current queue-aligned focus is Cyber Insurance cheaper-proof discovery (Build item 1). Callback Phishing / TOAD pass 1 and pass 2 are already implemented and committed (`014a163`, `9bcb3d5`); TOAD pass 2 tracker baseline is committed at `c2ff29f`. Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
+**Operator focus call (not queue-ordered):** Matt selects the active lane when items compete for attention. Current operator-selected focus is Cyber Insurance / Vendor Payment Integrity evidence-package build shaping after removal of the call-sheet blocker. Callback Phishing / TOAD pass 1 and pass 2 are already implemented and committed (`014a163`, `9bcb3d5`); TOAD pass 2 tracker baseline is committed at `c2ff29f`. Queue order still governs what is *authorized* to start; operator instruction governs what runs *now*.
 
 ---
 
@@ -94,7 +94,7 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 ## §4 Next Action
 
-**Build List item 1.** Run cheaper-proof MSP discovery for the Cyber Insurance Evidence Package. The required go bar is the D10 threshold already recorded in the spec: 2 of 3 relevant MSP conversations must each provide a named SMB plus a named upcoming insurance / underwriting conversation.
+**Build List item 1.** Continue Cyber Insurance / Vendor Payment Integrity evidence-package build shaping after the operator removed the call-sheet blocker. Use the already-gated research artifacts, testing-footing artifacts, live-run output, Reddit captures, and Todd signal as the current working basis. Do not claim D10 is complete, do not start §13 sign-off, and do not authorize implementation without a separate operator decision and gate.
 
 Nothing in Build items 2–3 starts until item 1 closes unless Matt explicitly overrides with a recorded reason.
 

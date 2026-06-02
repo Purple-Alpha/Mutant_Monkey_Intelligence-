@@ -224,6 +224,138 @@ NorthStar evidence outputs should clearly show:
 
 ---
 
+
+### 2026-06-01 - Reddit cyber-insurance replies: underwriter evidence pressure is sharper and more technical
+
+**Date:** 2026-06-01
+**Source:** Operator-provided Reddit discussion replies (three replies; no citation URL captured in this log; informal peer discussion, not primary published source per `Compliance_and_Trend_Watch_Process.md` §2.6)
+**Signal type:** Cyber-insurance / underwriting evidence workflow and buyer-pressure shape
+**Evidence strength:** Light but useful -- informal community signal, consistent with the published 2026 evidence-not-checkboxes trend already captured as Review #1 Confirmation 7 and with the 2026-05-31 ad-hoc accounting/audit response
+**Classification per intake protocol:** **Confirmation** (reinforces NorthStar's existing direction; does NOT surface a new candidate)
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar.
+
+**Reason D10 does not advance:** No named MSP conversation, no named SMB anchor, and no named upcoming insurance / underwriting conversation tied to an MSP client. These Reddit replies are discovery signal only. The D10 bar still requires 2 of 3 relevant MSP conversations with both named anchors recorded in `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`.
+
+**Raw signal summary:**
+
+- One respondent said cyber-insurance questionnaires have become much harder since around 2023: underwriters ask better questions and phrase them in ways that make it harder to answer "yes" when controls are only partially implemented.
+- The same respondent warned that underwriter teams may have more practical cyber / engineering depth than internal auditors, and may ask for restrictive domain-admin checkout limits, low caps on privileged service-account roles, conditional access policies for service accounts, MFA with fewer exceptions, stricter SMS-MFA posture, and tighter VPN / role-based / zero-trust access controls.
+- The same respondent advised bringing the best technical SMEs to the kickoff, taking careful notes, huddling quickly afterward, and routing clarifying questions back to underwriters without oversharing live implementation weakness in the room.
+- A second respondent suggested contacting insurers directly to ask what evidence they request, said auditors have asked them to show evidence of security controls being used, and said they would count the evidence-package concept as a "yes" in this context.
+- That second respondent also observed that evidence gathering is often bottlenecked less by the audit experience itself and more by legacy design decisions, individual company choices, and already-known shortcomings.
+- A third respondent asked whether simple technical evidence such as `nmap` output or findings on unexpectedly open ports would be enough, which suggests uncertainty about what evidence is credible or sufficient.
+
+**Interpretation:**
+The pressure is not just "have controls." It is "prove control reality clearly enough for a more technical reviewer." The Reddit signal reinforces NorthStar's evidence-readiness lane: buyers and MSPs may need structured, defensible records that show what was detected, reviewed, verified, and documented, while staying honest about what NorthStar does not cover.
+
+**Product takeaway (captured as a note, not as implementation guidance):**
+Future discovery questions should test whether MSPs need help packaging:
+
+- control-use evidence, not just policy statements
+- reviewer-ready artifacts that avoid overclaiming
+- technical evidence summaries understandable to non-engineers
+- exception / partial-implementation notes that do not become accidental admissions
+- clean separation between email-fraud / vendor-payment evidence and broader control surfaces like MFA, VPN, EDR, backups, patching, and network exposure
+
+**Discovery takeaway:**
+The next MSP / broker conversation can ask a sharper version of the evidence question:
+
+> When an underwriter asks for proof that a control is actually operating, what evidence is hardest for your SMB clients to pull together quickly without overexplaining or overclaiming?
+
+This is a discovery prompt only. It does not modify the D10 gate and does not authorize client-facing copy.
+
+**Boundary:** Does **NOT** authorize:
+
+- Cyber Insurance Evidence Package D10 advancement.
+- Runtime code, package-generation implementation, spec edits, queue changes, or pricing changes.
+- Scope expansion into MFA, VPN, service-account governance, domain-admin governance, vulnerability scanning, EDR, backups, patching, or network controls.
+- Broad compliance, certification, insurer approval, premium, coverage, or outcome claims in NorthStar voice.
+- Treating Reddit replies as validated market proof or as a substitute for direct MSP discovery.
+
+---
+
+### 2026-06-01 - Reddit renewal-friction reply: evidence folders beat renewal-week artifact scramble
+
+**Date:** 2026-06-01
+**Source:** Operator-provided Reddit reply to a cybersecurity audit / cyber-insurance renewal-friction post (single reply; no citation URL captured in this log; informal peer discussion, not primary published source per `Compliance_and_Trend_Watch_Process.md` §2.6)
+**Signal type:** Cyber-insurance / underwriting evidence workflow and artifact-readiness pain
+**Evidence strength:** Light but useful -- informal community signal, consistent with Review #1 Confirmation 7 and the 2026-06-01 Reddit cyber-insurance replies above
+**Classification per intake protocol:** **Confirmation** (reinforces NorthStar's existing direction; does NOT surface a new candidate)
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar.
+
+**Reason D10 does not advance:** No named MSP conversation, no named SMB anchor, and no named upcoming insurance / underwriting conversation tied to an MSP client. This is Reddit discovery signal only.
+
+**Raw signal summary:**
+Respondent said they are seeing more renewals ask for actual artifacts, including MFA policy, admin audit logs, mailbox forwarding rules, DMARC / SPF / DKIM status, and proof that payment-change approvals are logged somewhere. The respondent said clean evidence helps, but does not automatically prevent premium increases when claims history, industry, or revenue profile is rough. The painful part is pulling screenshots and CSV exports during renewal week instead of keeping a small evidence folder current.
+
+**Interpretation:**
+This reinforces the difference between evidence readiness and insurance outcome promises. NorthStar should not imply premium control, coverage qualification, or underwriter approval. The useful product lane is a small, current, scoped evidence folder for email / payment-change review reality, not a broad compliance package.
+
+**Product takeaway (captured as a note, not as implementation guidance):**
+Future Cyber Insurance Evidence Package shaping should keep testing whether the buyer / MSP pain is:
+
+- evidence artifact freshness
+- screenshot / CSV export scramble during renewal week
+- proof that payment-change approvals are logged somewhere
+- mailbox-forwarding / auth posture evidence as adjacent context, not NorthStar scope
+- clean distinction between "helps the conversation" and "changes premium outcome"
+
+**Boundary:** Does **NOT** authorize:
+
+- Cyber Insurance Evidence Package D10 advancement.
+- Runtime code, package-generation implementation, spec edits, queue changes, or pricing changes.
+- Scope expansion into MFA policy management, admin audit logging, mailbox-forwarding monitoring, DMARC / SPF / DKIM management, or any broad control surface outside the signed Stage A email-fraud / inbox-layer MDR lane.
+- Broad compliance, certification, insurer approval, premium, coverage, or outcome claims in NorthStar voice.
+- Treating Reddit replies as validated market proof or as a substitute for direct MSP discovery.
+
+---
+
+### 2026-06-01 - Reddit vendor payment-change replies: bank-detail changes should be high-risk events
+
+**Date:** 2026-06-01
+**Source:** Operator-provided Reddit replies to a vendor payment-change verification post (two replies; no citation URL captured in this log; informal peer discussion, not primary published source per `Compliance_and_Trend_Watch_Process.md` §2.6)
+**Signal type:** Vendor-payment verification workflow / small-business control design
+**Evidence strength:** Light but useful -- informal community signal, consistent with the 2026-05-31 vendor payment-change verification research entry below
+**Classification per intake protocol:** **Confirmation** (reinforces NorthStar's existing direction; does NOT surface a new candidate)
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar.
+
+**Reason D10 does not advance:** No named MSP conversation, no named SMB anchor, and no named upcoming insurance / underwriting conversation tied to an MSP client. This is Reddit discovery signal only.
+
+**Raw signal summary:**
+
+- One respondent said the core controls are already covered, but added that any bank-account change should be treated as a high-risk event regardless of payment amount.
+- The same respondent said vendor payment fraud often succeeds because the process for changing payment details is less strict than the process for approving the payment itself.
+- Suggested controls included verification through a known contact, callback, documented verification, and possibly a small test payment before updating larger recurring payments.
+- A second respondent said sudden changes should be ignored or verified by direct calls, prior invoices, recent orders, or details known by the legitimate caller and recipient but not by someone only reading email.
+- That second respondent challenged the value of second-person approval by itself: it adds another set of eyes but does not necessarily reduce risk unless the verification process is sound.
+
+**Interpretation:**
+The event that needs a durable review record is the payment-detail change itself. Amount thresholds may matter later for payment release, but the change-request stage should be treated as high risk even for small payments because it can redirect future recurring payments.
+
+**Product takeaway (captured as a note, not as implementation guidance):**
+Future Vendor Payment Integrity shaping should keep the record centered on:
+
+- payment-detail change requested
+- known-good contact source
+- callback / independent verification performed
+- verification evidence documented
+- approval recorded, if applicable
+- test payment / delayed first payment considered for higher-risk changes
+- second-person approval treated as additive only when paired with actual independent verification
+
+**Boundary:** Does **NOT** authorize:
+
+- A new spec, queue item, runtime implementation, workflow UI, payment release control, or test-payment workflow.
+- Cyber Insurance Evidence Package D10 advancement.
+- Banking, lending, money-movement, reimbursement, guarantee, insurance, or compliance claims.
+- Client-facing copy, pricing, or product packaging changes.
+- Treating Reddit replies as validated market proof or as a substitute for direct MSP discovery.
+
+---
+
 ### 2026-05-31 — Vendor payment-change verification research: process control is the product surface
 
 **Date:** 2026-05-31
