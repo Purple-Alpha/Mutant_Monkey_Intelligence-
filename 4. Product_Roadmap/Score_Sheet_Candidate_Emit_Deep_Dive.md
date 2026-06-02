@@ -125,3 +125,29 @@ Wave 1 does not authorize modifying `pre_ship_audit.py`. Wave 2 may implement on
 Unsigned.
 
 No implementation is authorized until the operator signs this spec or explicitly authorizes a narrower follow-up spec.
+
+
+## §12 Operator-Confirmed Draft Decisions (2026-06-02, pre-§11)
+
+These resolve the §10 open questions. They are operator-confirmed draft decisions. They are NOT §11-signed and do NOT authorize implementation.
+
+1. **File format (1a):** JSONL. First line is a `packet_header` object; each following line is one `candidate` row.
+2. **Multi-track (1b):** A packet may carry candidate rows for multiple tracks. Each row carries its own `track`.
+3. **event_id timing (1c):** `event_id` is null at emission and assigned only at promotion. Until then a candidate is tracked by `candidate_ref` = `candidate_packet_id` + row index.
+4. **Filename (2a):** `YYYYMMDDTHHMMSSZ_<emitter>_<short_context>.candidate.jsonl`.
+5. **Archive handling (2b / 4d):** Resolved packets are moved (never deleted) into `audit_outputs/score_sheet_candidates/promoted/` or `.../rejected/` and given a status suffix (e.g. `.promoted.jsonl`, `.rejected.jsonl`).
+6. **Track taxonomy (3a):** The closed `track` taxonomy is deferred to Wave 0 Q11. Candidates may carry a provisional `track` label, but must not be promoted to evidence until the track maps to the resolved Wave 0 taxonomy.
+7. **recorded_by (3b):** Tool-emitted candidate rows use `recorded_by` = `tool_candidate`. The specific emitter is recorded in the packet header `emitter` field.
+8. **Operator review checklist (4a):** Before promotion the operator confirms: (1) the finding is real, not a tool artifact; (2) failure_type is correct; (3) no PII/secrets/raw payloads; (4) track maps to the resolved taxonomy; (5) finding_summary is accurate and complete; (6) corrective_action and retest_reference are filled or intentionally blank; (7) event_id is assigned at promotion; (8) operator identity and date are recorded.
+9. **Promotion mechanism (4b):** Manual only at Wave 1. An automated review/promotion script is deferred to Wave 3.
+10. **Proof of operator promotion (4c):** A promoted evidence row carries, in-band, the operator identity, the promotion date, and a back-reference to the originating `candidate_ref` / `candidate_packet_id`.
+
+### §12.1 Still Open For The Implementation Spec
+
+- Exact minimum PII/secrets scanner before candidate write.
+- Exact closed `track` taxonomy (inherited from Wave 0 Q11).
+- Exact `event_id` assignment format at promotion.
+
+### §12.2 Boundary
+
+Still pre-§11. No implementation, canonical ledger write path, pre-commit hook, review script, D10 completion, §13 sign-off, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim is authorized.
