@@ -122,10 +122,13 @@ Wave 1 does not authorize modifying `pre_ship_audit.py`. Wave 2 may implement on
 
 ## §11 Sign-Off
 
-Unsigned.
+**Status:** SIGNED.
 
-No implementation is authorized until the operator signs this spec or explicitly authorizes a narrower follow-up spec.
-
+- **Signed by:** Matt Nichol
+- **Date:** 2026-06-02
+- **Authorization scope (operator's own words):** Approving the Wave 1 candidate-emission architectural contract as our governing framework, with all tool modifications and code implementation strictly frozen until the Wave 2 specification is signed.
+- **Still NOT authorized by this sign-off:** runtime code / implementation (gated to a separate Wave 2 authorization), automatic promotion, canonical ledger writes outside the operator-controlled path, D10 completion, §13 sign-off, client-facing copy, and any compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
+- **Basis:** `Score_Sheet_Candidate_Emit_Signoff_Readiness.md` and the clean gates it references (artifact, tracker closeout, §12 decisions, stress test, and Wave 0 Q11 resolution).
 
 ## §12 Operator-Confirmed Draft Decisions (2026-06-02, pre-§11)
 
