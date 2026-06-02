@@ -1,0 +1,9 @@
+[
+  {
+    "system_prompt_chars": 17871,
+    "user_prompt_chars": 1155,
+    "raw_response": "{\n  \"summary\": \"Vendor claims updated remittance for invoice 8841 with new account details provided only in attached PDF; body requests wire payment and confirmation before end of week.\",\n  \"action_items\": [\n    {\n      \"task\": \"Verify banking change directly with known vendor contact using established channels\",\n      \"owner\": null,\n      \"due_date\": null\n    },\n    {\n      \"task\": \"Do not process payment or update records until verification complete\",\n      \"owner\": null,\n      \"due_date\": null\n    }\n  ],\n  \"risk_analysis\": {\n    \"risk_score\": 72,\n    \"risk_factors\": [\"new banking instructions\", \"payment urgency\"],\n    \"phishing_signals\": [],\n    \"urgency_signals\": [\"before the end of the week\"],\n    \"financial_risk\": \"high\",\n    \"vendor_fraud_score\": 65,\n    \"wire_transfer_anomaly_score\": 55,\n    \"invoice_authenticity_score\": 40,\n    \"behavioral_deviation_flags\": [\"new_banking_instructions\", \"urgency_paired_with_finance\"]\n  },\n  \"impersonation_analysis\": {\n    \"impersonation_likelihood\": 15,\n    \"suspicious_elements\": [],\n    \"sender_legitimacy_notes\": \"Sender domain matches vendor name; no domain anomaly detected.\"\n  },\n  \"recommended_action\": \"needs_review\"\n}",
+    "model": "grok-4",
+    "provider": "xai"
+  }
+]
