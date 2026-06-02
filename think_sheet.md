@@ -832,3 +832,54 @@ Format: 7-axis stress test per `AGENTS.md` discipline. Verdict candidates below 
 ---
 **End of stress-test entry. No D-decision is locked tonight. Verdicts above are inputs for a future operator-authorized lockdown.**
 
+## Sub-question stress test — Score Sheet Candidate Emit Deep Dive §10/§12 (2026-06-02)
+
+**Status:** Internal stress test for Wave 1 pre-§11 draft decisions. Not §11. Not implementation authorization. Not canonical ledger authority. Not client-facing copy.
+
+**Artifact under stress:** `4. Product_Roadmap/Score_Sheet_Candidate_Emit_Deep_Dive.md`
+
+**Decision set under stress:**
+
+- JSONL candidate packets with packet-header first line.
+- Multi-track candidate packets allowed; each row carries `track`.
+- `event_id` assigned only at promotion.
+- Full candidate filename: `YYYYMMDDTHHMMSSZ_<emitter>_<short_context>.candidate.jsonl`.
+- Resolved candidates moved to `promoted/` or `rejected/` with status suffix; never deleted.
+- `track` taxonomy deferred to Wave 0 Q11; no promotion until mapped.
+- `recorded_by = tool_candidate`.
+- 8-item operator review checklist.
+- Manual-only promotion at Wave 1.
+- In-band proof of promotion: operator identity, promotion date, candidate back-reference.
+
+### Axis 1 — Failure Mode
+
+Main risk: JSONL makes packet-level metadata less obvious than YAML/JSON, and multi-track packets can bury review complexity. Mitigation: first line must be `packet_header`; every row must carry `record_type`, `candidate_ref`, and `track`.
+
+### Axis 2 — Hidden Cost
+
+Manual promotion protects authority but costs operator time. This is acceptable at Wave 1 because the review script is explicitly deferred to Wave 3; the cost is a deliberate safety tax.
+
+### Axis 3 — Specific Buyer / Operator Value
+
+The buyer is internal first: future operator, auditor, or builder trying to prove the system learned from failures without trusting automation blindly. The design supports this by keeping candidates non-authoritative until promotion.
+
+### Axis 4 — Cost Of Inaction
+
+If candidate emission stays undefined, future tools may either avoid producing useful evidence or silently create rows with unclear authority. That would weaken the testing discipline and make failure/retest trails harder to trust.
+
+### Axis 5 — Cheaper Proof First
+
+Manual JSONL candidate packets are the cheaper proof before building any review UI or promotion script. A single `pre_ship_audit.py` candidate packet can validate the format before broader emitters exist.
+
+### Axis 6 — Existing Competitor / Alternative
+
+Alternative approaches include test reports, CI logs, spreadsheets, or ad hoc markdown notes. Those are easier to start but weaker at preserving row-level promotion state, candidate identity, and no-delete lifecycle.
+
+### Axis 7 — Pre-Mortem
+
+If this fails, likely causes are: candidate packets become too noisy, operator review is skipped, provisional `track` labels drift, unsafe payloads leak into candidate files, or promotion proof becomes unclear. The current decisions reduce those risks by requiring manual promotion, deferred `track` mapping, no-PII guard, and in-band promotion proof.
+
+### Verdict Candidate
+
+Keep the §12 decisions. They improve the Wave 1 spec without replacing the existing testing loop. The only remaining high-risk dependency is the unresolved Wave 0 `track` taxonomy Q11; therefore no candidate should promote until track mapping is resolved.
+
