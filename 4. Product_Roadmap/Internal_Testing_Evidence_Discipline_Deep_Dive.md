@@ -155,3 +155,23 @@ The 7-axis stress test entries with full reasoning are in `think_sheet.md` under
 ## §11 Sign-off
 **Pending operator authorship.** Do not infer, draft, or auto-fill.
 
+
+## §12 Operator-Confirmed Draft Decision — Q11 Track Taxonomy (2026-06-02, pre-§11)
+
+This section resolves Wave 0 §10.B / Q11 as an operator-confirmed draft decision. It is NOT §11-signed and does NOT authorize implementation.
+
+The closed `track` enum for the internal testing-evidence ledger is:
+
+1. `testing_evidence` — internal testing discipline, score sheet, candidate/retest/correction records.
+2. `email_security` — core Stage A email-fraud / inbox-layer MDR behavior.
+3. `callback_phishing_toad` — callback phishing / TOAD lane.
+4. `vendor_payment_integrity` — vendor-payment change / payment redirect evidence lane.
+5. `cyber_insurance_evidence` — evidence-package research, artifacts, and underwriting-proof packaging lane.
+6. `agent_runtime` — agent loop/runtime checks and agent-emitted diagnostics.
+7. `audit_gate` — `complete_gate.py`, `pre_ship_audit.py`, audit-tool behavior, and gate evidence.
+8. `ops_queue` — project queue, handoff, current-state, progress, and activity-log operational tracking.
+9. `research_intake` — source/signal capture and synthesis inputs before they are mapped into a product/evidence lane.
+
+Boundary for `research_intake`: this track is for raw or synthesized inputs, not for promoted product claims. If a research signal becomes part of a product/evidence package, the promoted row should map to the downstream product track while preserving source references.
+
+No `misc`, `general`, or catch-all track is allowed. New tracks require a future operator-confirmed spec amendment before use.

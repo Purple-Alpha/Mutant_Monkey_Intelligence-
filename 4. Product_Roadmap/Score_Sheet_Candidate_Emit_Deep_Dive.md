@@ -151,3 +151,24 @@ These resolve the §10 open questions. They are operator-confirmed draft decisio
 ### §12.2 Boundary
 
 Still pre-§11. No implementation, canonical ledger write path, pre-commit hook, review script, D10 completion, §13 sign-off, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim is authorized.
+
+
+## §13 Wave 0 Q11 Track Taxonomy Dependency Resolved (2026-06-02, pre-§11)
+
+Wave 1 §12 originally deferred candidate promotion until Wave 0 Q11 resolved the closed `track` taxonomy.
+
+Wave 0 Q11 is now resolved as a draft pre-§11 decision in `Internal_Testing_Evidence_Discipline_Deep_Dive.md` §12. Candidate rows must use one of the following `track` values before promotion:
+
+- `testing_evidence`
+- `email_security`
+- `callback_phishing_toad`
+- `vendor_payment_integrity`
+- `cyber_insurance_evidence`
+- `agent_runtime`
+- `audit_gate`
+- `ops_queue`
+- `research_intake`
+
+A candidate may still be emitted with a provisional `track` label during experimentation, but it must not be promoted until the track maps to one of the closed values above.
+
+This resolves the Wave 1 dependency on Wave 0 Q11, but remains pre-§11 and does not authorize implementation.
