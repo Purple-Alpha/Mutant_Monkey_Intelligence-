@@ -26,6 +26,30 @@ What should happen next.
 
 ---
 
+## 2026-06-02 — Wave 1 candidate-emission pre-spec draft gate-clean
+
+### Files
+
+- `4. Product_Roadmap/Score_Sheet_Candidate_Emit_Deep_Dive.md` (created)
+- `MASTER_INDEX.md` (Wave 1 draft index entry)
+- `PROGRESS.md` (handoff updated)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+### Summary
+
+- Created `Score_Sheet_Candidate_Emit_Deep_Dive.md` as the Wave 1 draft pre-spec for testing-evidence candidate emission.
+- The draft defines candidate-only behavior: files under `audit_outputs/score_sheet_candidates/`, inheritance of the 13-column testing-evidence schema, operator-promotion boundary, no-delete/archive rule, no-PII / no-secrets / no-raw-payload guard, failure/correction/retest preservation, first emitter candidate (`audit_tools/pre_ship_audit.py`), and open questions for future §11.
+- The draft explicitly preserves the existing false-positive / false-negative correction evidence loop. It does not introduce a replacement testing concept.
+- Gate-clean: `audit_outputs/score_sheet_candidate_emit_deep_dive_draft_20260602_20260602T220436Z.md`.
+
+### Status
+
+- Draft pre-§11.
+- No implementation authorized.
+- No canonical ledger write path authorized.
+- No pre-commit hook or review script authorized.
+- No D10 completion, §13 sign-off, §11 sign-off, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
+
 ## 2026-06-02 — Wave 0 testing-discipline foundation gate-clean
 
 ### Files
