@@ -26,6 +26,180 @@ What should happen next.
 
 ---
 
+## 2026-06-02 — Wave 0 testing-discipline foundation gate-clean
+
+### Files
+
+- `4. Product_Roadmap/Internal_Testing_Evidence_Discipline_Deep_Dive.md` (created 2026-06-01 PT; gated 2026-06-02T04:10:00Z UTC)
+- `think_sheet.md` (2026-06-01 7-axis stress-test entry appended; gated with the deep-dive in the same artifact packet)
+- `MASTER_INDEX.md` (this entry plus the deep-dive bullet)
+- `PROGRESS.md` (handoff section updated to 2026-06-02 ~13:00 PT)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+### Summary
+
+- Created `Internal_Testing_Evidence_Discipline_Deep_Dive.md` as the Wave 0 foundation draft for the internal testing-evidence discipline. Pre-§11. Locks the 13-column row contract (12 carry-forward columns plus the new `track` column), closed `event_type` / `pass_fail` / `failure_type` / `recorded_by` / `track` enums, the single-canonical-ledger rule, the candidate-vs-evidence boundary for future auto-derivation, the internal-only v1 disclosure boundary, 14 named failure modes, and 12 audit requirements including a hard no-PII guard at §9.1.
+- §10.A records direction from the 2026-06-01 7-axis stress test as verdict candidates: Q1 single canonical ledger plus required `track` column with per-track filtered views (per-track separate ledgers explicitly rejected); Q4 closed list of four calibration-observation triggers; Q5 permanent retention for compliant rows plus PII guard plus counsel review before live client data touches the surface; Q7 candidate-only auto-derivation under `audit_outputs/score_sheet_candidates/` with operator-promotion as the only path to evidence; Q10 all 13 columns mandatory.
+- §10.B carries still-open Q2 (append authority lifecycle), Q3 (stale-row review trigger N), Q6 (external-render abstraction confirmation), Q8 (agent-bible relationship), Q9 (schema-revision rule), Q11 (`track` enum closed taxonomy), Q12 (candidate file format YAML/JSON), Q13 (PII pre-commit hook scope).
+- §10.C records the recommended staged cadence: Wave 0 (tonight's draft, authorized); Wave 1 (`Score_Sheet_Candidate_Emit_Deep_Dive.md` draft + §11); Wave 2 (first emitter implementation in `audit_tools/pre_ship_audit.py`); Wave 3 (`Score_Sheet_Interactive_Review_Deep_Dive.md` plus PII pre-commit hook); Wave 4 (gradual expansion to `fraud_eval_harness`, `REACTION_TIMING_TEST_LOG.md`, the audit runners, etc.). Waves 1–4 require explicit operator authorization per wave.
+- Appended 2026-06-01 7-axis stress-test entry to `think_sheet.md` under "Sub-question stress test — Internal Testing Evidence Discipline §10 (2026-06-01)" covering Q1–Q13. Verdict candidates explicitly NOT D-locked.
+- Gate-clean: `audit_outputs/internal_testing_evidence_discipline_deep_dive_draft_20260601_20260602T041000Z.md` (packet size 96,729 bytes; touched files 2; blocking=0; warnings=0).
+
+### Status
+
+- Pre-spec / pre-§11.
+- No D-decisions locked.
+- No §11 signature.
+- No implementation authorized.
+- No D10, §13, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
+- Working tree at the time of this entry: deep-dive untracked, `think_sheet.md` modified, both gate-clean from the artifact packet. Today's tracker mods (this entry, `MASTER_INDEX.md`, `PROGRESS.md`) are being added as closeout work and will gate as three separate tracker packets, same pattern as the 2026-06-01 tracker gates.
+
+## 2026-06-01 - Stage A precursor-chain demo runner prepped for §14 fictional case
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request (lane B2 selected from the directional-options question earlier in the same session).
+
+**Action:** Created
+
+**Files Changed:**
+- `Research/v1_test_plan_runners/stage_a_vendor_payment_redirect_001/README.md` (CREATED — boundary + intent header)
+- `Research/v1_test_plan_runners/stage_a_vendor_payment_redirect_001/RUN_INSTRUCTIONS.md` (CREATED — operator steps for the zero-spend smoke + authorized live run)
+- `Research/v1_test_plan_runners/stage_a_vendor_payment_redirect_001/runner.py` (CREATED — the inline runner script)
+- `MASTER_INDEX.md` (UPDATED — indexed the new runner directory)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+- `audit_outputs/pending/cyber_insurance_v1_stage_a_runner_prep_20260601.manifest.json` (CREATED — worker manifest for gate)
+
+**Reason:**
+Operator selected lane B2 from the directional-options question — "real grok-4 scoring + fake deterministic digest" — to capture a real-model response on the central buyer narrative (auth-pass-but-content-risk) against the §14.5 fictional fixture, without drifting into implementation work. The runner is **prep only**; Cursor drafted it, Matt authorizes any live XAI spend by invoking with `--scoring-mode live-xai`.
+
+**Boundary:**
+The runner exercises the existing Stage A precursor chain (`ingest_email` → `run_email_risk_scoring_cycle` → `record_confirmation_request` → `record_confirmation_outcome` → `run_daily_digest_cycle`) end-to-end against the §14.5 fixture. It does **not** produce the five `cyber_insurance_v1_*` §14.3 record types (Detection / Verification / Evidence / Audit Trail / Outcome Documentation) because those record types are not implemented in `core/blackboard/models.py::RecordType` today — implementation is gated on §11 sign-off of `Cyber_Insurance_Evidence_Package_Deep_Dive.md`, which is gated on §13 sign-off, which is gated on D10. It does **not** execute a §14.4 pass/fail verdict, does **not** advance D10 / §13 / implementation, does **not** write to `production_state` / tenant overrides / the policy pipeline / any external system, does **not** make any send / mailbox call, and does **not** authorize client-facing copy or any claim of compliance / certification / insurer-approval / coverage-qualification / premium-reducer / fraud-prevention. Outputs land under `Runtime_Implementation/demo_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/` — intentionally NOT the spec-named `audit_outputs/cyber_insurance_v1_test_plan/...` paths reserved for a future §14-conformant run.
+
+**Truthful mapping recorded in the runner:**
+- Runtime `TwoChannelOutcomeStatus` enum = `confirmed | rejected | unable_to_verify | expired`.
+- §14.3.5 operator-authored heading = *"Vendor invoice review — payment change reviewed before action."*
+- The runner records `outcome_status="confirmed"` with `channel_kind="previously_known_phone"` and a `channel_description` carrying the §14.3.5 heading verbatim. The heading is **not** silently injected into the runtime enum.
+
+**Spend expectation:**
+One real `grok-4` API call (~vf-001-equivalent cost) when invoked with `--scoring-mode live-xai`. Zero spend with `--scoring-mode fake`. Operator is expected to smoke-test with `fake` first per `RUN_INSTRUCTIONS.md` §3, then run live per §4.
+
+**Verification:**
+- Worker manifest: `audit_outputs/pending/cyber_insurance_v1_stage_a_runner_prep_20260601.manifest.json`
+- `complete_gate.py` run from `/home/socialarchitect/northstar` with the venv active and `.env` present; unrelated dirty working-tree files temporarily stashed and the already-gated untracked research-input files temporarily parked, then restored exactly after the gate ran.
+
+**Next Step:**
+Operator decides when to invoke the live run. If the live response misses the auth-pass-but-content-risk pattern, the `CURRENT_STATE_MAP.md` correction-evidence-loop doctrine applies — capture the failure as a new entry in `Cyber_Insurance_Internal_Correction_Evidence_Record_Set.md` (§4 schema), do not tune the prompt to make the failure disappear. After-run housekeeping is documented in `RUN_INSTRUCTIONS.md` §6.
+
+---
+
+## 2026-06-01 - Cyber Insurance Internal Correction-Evidence Record Set (seed)
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request.
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Research_Inputs/Cyber_Insurance_Internal_Correction_Evidence_Record_Set.md` (CREATED — pre-spec internal record-set seed; one anchor entry `cer-2026-05-22-001`)
+- `MASTER_INDEX.md` (UPDATED — indexed the new artifact)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+- `audit_outputs/pending/cyber_insurance_internal_correction_evidence_record_set_20260601.manifest.json` (CREATED — worker manifest for gate)
+
+**Reason:**
+The V1 Synthesis (`§9` work item #6) and V1 Record-Set Sketch (`§6` correction-evidence placeholder) both flag the need to operationalize the 2026-06-01 `CURRENT_STATE_MAP.md` *False-positive / false-negative correction evidence loop* doctrine for the cyber-insurance evidence surface. Operator authorized the next pre-spec shaping step: seed the internal credibility record set with the existing 2026-05-22 vendor-invoice recall preservation + no-spend prompt patch + 5/5 diagnostic recovery as the first real anchor. Current external research basis is `Research/deep-research-report.md`.
+
+**Boundary:**
+Pre-spec shaping only. Does not edit signed specs, does not change D10 criteria, does not advance D10, does not authorize §13 sign-off, does not authorize implementation / runtime code / dataset / schema / eval-harness / production-loop changes, does not authorize client-facing copy or pricing, does not weaken any existing test, does not lower any expectation bound, and does not invent vendor IDs / datasets / dollar losses / manual catches / detection rates beyond what already exists in the saved 2026-05-22 eval reports. No claim of compliance, certification, insurer approval, premium reduction, coverage qualification, or fraud prevention is made.
+
+**Verification:**
+- Worker manifest: `audit_outputs/pending/cyber_insurance_internal_correction_evidence_record_set_20260601.manifest.json`
+- `complete_gate.py` run from `/home/socialarchitect/northstar` with the venv active and `.env` present; unrelated dirty working-tree files temporarily stashed and the already-gated untracked research-input files temporarily parked, then restored exactly after the gate ran.
+
+**Next Step:**
+Operator decides whether to log additional correction-evidence anchors as further failures or over-flags are preserved by the eval / runtime surfaces, and whether (and when) to authorize a sanitized buyer-render of the §6.2 shape. D10 MSP discovery and §14 v1 test-plan execution remain separate decisions per the cheaper-proof runbook and `Cyber_Insurance_Evidence_Package_Deep_Dive.md` §14.5.
+
+---
+
+## 2026-06-01 - Cyber Insurance Evidence Package V1 Record-Set Sketch
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request.
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Research_Inputs/Cyber_Insurance_Evidence_Package_V1_Record_Set_Sketch.md` (CREATED - pre-spec shaping sketch of the v1 record set against the §14 fixture)
+- `MASTER_INDEX.md` (UPDATED - indexed the new sketch artifact)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+- `audit_outputs/pending/cyber_insurance_evidence_package_v1_record_set_sketch_20260601.manifest.json` (CREATED - worker manifest for gate)
+
+**Reason:**
+The V1 Synthesis (2026-06-01) cleared the gate cleanly (`blocking=0 warnings=0`) and §9 of that synthesis listed a v1 record-set sketch against the §14 fictional case (`stage_a_vendor_payment_redirect_001.json`) as the next concrete shaping step. Operator requested the sketch so the shape of the smallest v1 Vendor Payment Change Review Evidence Package is explicit before D10 closes and §13 sign-off readiness review begins.
+
+**Boundary:**
+Pre-spec shaping only. Does not edit signed specs, does not change D10 criteria, does not claim D10 progress, does not authorize implementation, runtime code, package generation, rendering pipelines, client-facing copy, pricing, or any §14 test-plan execution. The §14 fictional fixture is the anchor; no real client / vendor / mailbox data is used. Forbidden claim language stays inside the §2 non-scope boundary context only.
+
+**Verification:**
+- Worker manifest: `audit_outputs/pending/cyber_insurance_evidence_package_v1_record_set_sketch_20260601.manifest.json`
+- `complete_gate.py` run from `/home/socialarchitect/northstar` with the venv active and `.env` present; unrelated dirty working-tree files stashed for scope-coverage check.
+
+**Next Step:**
+Operator decides whether to begin populating §6 correction-evidence records from the 2026-05-22 vendor-invoice recall preservation + patch + recovery anchor, and whether to schedule the §14 inline run per §14.5 (pass / fail recorded in `PROJECT_ACTIVITY_LOG.md` and optionally `REACTION_TIMING_TEST_LOG.md`). D10 MSP discovery work continues separately per the cheaper-proof runbook.
+
+---
+
+## 2026-06-01 - Cyber Insurance Evidence Package V1 Synthesis
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request.
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Research_Inputs/Cyber_Insurance_Evidence_Package_V1_Synthesis.md` (CREATED - pre-spec synthesis of current inputs into a v1 package shape)
+- `MASTER_INDEX.md` (UPDATED - indexed the new synthesis artifact)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+- `audit_outputs/pending/cyber_insurance_evidence_package_v1_synthesis_20260601.manifest.json` (CREATED - worker manifest for gate)
+
+**Reason:**
+Matt has enough directional evidence (Pain Points Research Map, 2026-06-01 Reddit confirmation entries, the new `CURRENT_STATE_MAP.md` false-positive / false-negative correction evidence loop, an MSP-owner coffee invite from Todd / CMIT Solutions, and existing NorthStar runtime evidence around vendor-payment change detection, audit trails, false-negative recovery, and correction loops) to stop treating the Cyber Insurance Evidence Package as a vague idea. Operator asked for a pre-spec synthesis that turns these inputs into a practical v1 shape without pretending the MSP discovery gate has already passed.
+
+**Boundary:**
+Research / shaping input only. Does not edit signed specs, does not change D10 criteria, does not claim D10 is complete or partially met, does not authorize implementation or runtime code, does not authorize buyer-facing copy or pricing, does not authorize broker / carrier outreach. Forbidden claim language (`compliant`, `certified`, `insurer-approved`, `premium reducer`, `guarantee`, etc.) avoided outside the explicit non-claim contexts. Todd's reply classified as **credible door opening, not D10 yes** per the locked cheaper-proof runbook bar.
+
+**Verification:**
+- Worker manifest: `audit_outputs/pending/cyber_insurance_evidence_package_v1_synthesis_20260601.manifest.json`
+- `complete_gate.py` run from `/home/socialarchitect/northstar` with the venv active and `.env` present.
+
+**Next Step:**
+Operator decides §8 path (keep D10 / revise D10 / treat D10 as discovery quality bar while shaping v1 in parallel). Operator runs Todd coffee conversation against the existing `Cyber_Insurance_Vendor_Payment_Integrity_MSP_Call_Pack.md` and logs the result in `Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv` against the D10 per-MSP definition.
+
+---
+
+## 2026-06-01 - Cyber-Insurance Evidence Pain Points Research Map
+
+**Actor:** Cursor (Claude Opus 4.7), at operator request.
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Research_Inputs/Cyber_Insurance_Evidence_Pain_Points_Research_Map.md` (CREATED - pre-spec pain-point investigation map)
+- `MASTER_INDEX.md` (UPDATED - indexed the new research input)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED - this entry)
+- `audit_outputs/pending/cyber_insurance_evidence_pain_points_research_map_20260601.manifest.json` (CREATED - worker manifest for gate)
+
+**Reason:**
+Matt is gathering external evidence / pain-point inputs around cyber-insurance underwriting and evidence readiness. Operator asked for a clean research / deep-dive capture surface — not implementation, not product claims, not D10 gate advancement.
+
+**Boundary:**
+Research input only. Does not edit signed specs, change D10 criteria, claim MSP discovery progress, or produce client-facing copy. Forbidden claim language avoided. NorthStar relevance section is hypotheses only.
+
+**Verification:**
+- Worker manifest: `audit_outputs/pending/cyber_insurance_evidence_pain_points_research_map_20260601.manifest.json`
+- `complete_gate.py` run from `/home/socialarchitect/northstar` (unrelated dirty files stashed for scope check only): **not completed** — root `.env` missing; `XAI_API_KEY` not configured. Gate message: `missing .env at /home/socialarchitect/northstar/.env`. Not overridden.
+- Earlier gate attempt with a larger `files_read` / `relevant_contracts` list hit `audit_packet_too_large` (264,863 bytes vs 200,000 cap); manifest was trimmed per `AGENTS.md` §5 before the `.env` failure.
+
+**Next Step:**
+Matt logs external captures using §4 evidence fields in the research map (or linked worksheets). D10 MSP discovery remains the separate operational queue item per `PROJECT_BUILD_AND_AUDIT_QUEUE.md` Build List item 1.
+
+---
+
 ## 2026-06-01 - Linux Workflow Quickstart Added
 
 **Actor:** Codex, at operator request.
@@ -6677,3 +6851,154 @@ No runtime code was modified. The scoring and digest LLM clients were determinis
 
 **Next Step:**
 Run `complete_gate.py` on the §14 execution packet. If clean, operator can decide whether to commit the tracked fixture / index / activity-log evidence locally. The remaining non-engineering blocker before §13 sign-off is still Q10 precondition 3: 2 of 3 relevant MSP conversations must meet the D10 definition in actual cheaper-proof discovery.
+
+## 2026-06-01 - False-Negative Correction Evidence Loop Captured
+**Actor:** Codex (operator-direction capture)
+
+**Action:** Updated
+
+**Files Changed:**
+- CURRENT_STATE_MAP.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Matt clarified the forward direction for NorthStar testing and evidence: keep going forward, keep testing, keep producing and preserving false negatives, show where mistakes happened, record what was done to improve them, and prove corrective action is now in place.
+
+**What changed:**
+- Added `False-negative correction evidence loop` to `CURRENT_STATE_MAP.md`.
+- Captured the expected pattern: run test / preserve miss / classify why it missed / apply scoped correction / rerun or add regression coverage / record corrective action evidence.
+- Anchored the doctrine to existing project surfaces that already follow this pattern: Phase 1.5 eval failure, PROJECT_HANDSHAKE recovery entries, PROGRESS tasks 3-6, and the draft Email Security Testing Evidence Framework.
+
+**Boundary respected:**
+- This does not authorize weakening tests to hide failures.
+- This does not change D10, the build queue, signed specs, or runtime code.
+- False negatives remain evidence, not embarrassment and not automatic permission to broaden scope.
+
+## 2026-06-01 - False-Positive Why-Rationale Added To Correction Loop
+**Actor:** Codex (operator-direction capture)
+
+**Action:** Updated
+
+**Files Changed:**
+- CURRENT_STATE_MAP.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Matt clarified that false positives are as important as false negatives for credibility. Every false positive should show the corrective action and one more factor: why the issue was made into a corrective action. The why-rationale does not need to be public, but it must exist as internal evidence.
+
+**What changed:**
+- Renamed the doctrine to `False-positive / false-negative correction evidence loop`.
+- Added false positives as first-class evidence, especially because they can create unnecessary review burden, buyer distrust, or alert fatigue.
+- Added a required why-rationale step: record why the failure became corrective action, such as risk, buyer impact, evidence gap, alert-fatigue risk, or spec mismatch.
+- Added an internal credibility-record note: the rationale can live in internal eval reports, failure cards, activity-log entries, or audit packets, but must be durable.
+
+**Boundary respected:**
+- This does not authorize weakening tests to hide failures.
+- This does not change D10, the build queue, signed specs, or runtime code.
+- Corrective actions must remain scoped, proportionate, and retestable.
+
+## 2026-06-01 - Reddit Renewal-Friction Evidence Folder Signal Logged
+**Actor:** Codex (operator-provided Reddit capture)
+
+**Action:** Updated
+
+**Files Changed:**
+- Frontier_Intake_Log.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Matt provided another Reddit reply from a cybersecurity audit / cyber-insurance renewal-friction thread. The respondent reported that renewals are asking for actual artifacts such as MFA policy, admin audit logs, mailbox forwarding rules, DMARC / SPF / DKIM status, and proof that payment-change approvals are logged somewhere. The respondent also distinguished clean evidence from premium outcome guarantees: evidence helps, but premium increases may still happen based on claims history, industry, or revenue profile.
+
+**What changed:**
+- Added a new ad-hoc Confirmation entry to `Frontier_Intake_Log.md`: `2026-06-01 - Reddit renewal-friction reply: evidence folders beat renewal-week artifact scramble`.
+- Logged the signal as evidence-readiness confirmation only.
+- Preserved the key product implication: the pain is keeping a small current evidence folder instead of scrambling for screenshots and CSV exports during renewal week.
+
+**Boundary respected:**
+- Does not advance D10.
+- Does not authorize implementation, runtime code, spec edits, queue changes, pricing, or client-facing copy.
+- Does not expand NorthStar into MFA policy management, admin audit logging, mailbox-forwarding monitoring, or DMARC / SPF / DKIM management.
+- Does not make compliance, certification, insurer-approval, premium, coverage, or outcome claims.
+
+---
+
+## 2026-06-01 - Testing Discipline Footing Replayed To Linux Primary
+**Actor:** Codex (operator-direction capture and Linux replay)
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Research_Inputs/Testing_Score_Sheet_Schema.md` (CREATED in Linux primary — pre-spec internal testing row schema)
+- `4. Product_Roadmap/Research_Inputs/Testing_Plan_V1.md` (CREATED in Linux primary — pre-spec V1 testing plan)
+- `Research/queries/2026-06-01_linux_primary_handoff.md` (CREATED in Linux primary — handoff note)
+- `Research/queries/2026-06-01_testing_scoring_correction_evidence_brief.md` (CREATED in Linux primary — operator brief)
+- `Research/queries/2026-06-01_testing_scoring_correction_evidence_research.md` (CREATED in Linux primary — supporting research)
+- `MASTER_INDEX.md` (UPDATED — indexed the two testing-footing artifacts)
+- `PROGRESS.md` (UPDATED — current handoff now reflects Linux replay)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Matt clarified that tonight's target is to establish footing for the future agent-bible / evolving-defense-system discipline, not to build the full agent bible. The footing is the internal testing score-sheet discipline plus the first V1 testing plan: record meaningful test events, preserve passes / failures / partials / blocked runs, capture plain-English why, link corrective action to retest evidence, and keep calibration observations visible.
+
+**What changed:**
+- Replayed the Windows-only `Testing_Score_Sheet_Schema.md` and `Testing_Plan_V1.md` into Linux primary.
+- Replayed the supporting query / handoff notes under `Research/queries/`.
+- Indexed the two testing artifacts in `MASTER_INDEX.md`.
+- Updated `PROGRESS.md` so the next startup read sees that the artifacts are now in Linux and still need gate review.
+
+**Boundary respected:**
+- Pre-spec footing only.
+- Does not create the future agent bible.
+- Does not authorize implementation, runtime code, a score-sheet writer, database table, dashboard, CI gate, buyer-facing render, D10 progress, §13 sign-off, pricing, or another live LLM call.
+- Does not weaken or reinterpret any test expectation.
+- Does not make compliance, certification, insurer-approval, coverage-qualification, premium-reduction, or fraud-prevention claims.
+
+**Next Step:**
+Inspect the Linux diff, create a worker manifest for `testing_score_sheet_schema_and_plan_20260601`, and run `audit_tools/complete_gate.py` before any ready / done / commit claim.
+
+---
+
+## 2026-06-01 - Reddit Vendor Payment-Change High-Risk Signal Logged
+**Actor:** Codex (operator-provided Reddit capture)
+
+**Action:** Updated
+
+**Files Changed:**
+- Frontier_Intake_Log.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Matt provided another Reddit vendor payment-change verification discussion. The replies reinforced that a bank-account / payment-detail change should be treated as a high-risk event regardless of payment amount, because fraud often succeeds when the process for changing payment details is weaker than the process for approving payments.
+
+**What changed:**
+- Added a new ad-hoc Confirmation entry to `Frontier_Intake_Log.md`: `2026-06-01 - Reddit vendor payment-change replies: bank-detail changes should be high-risk events`.
+- Captured the control shape: known-good contact, callback, documented verification, optional small test payment / delayed larger recurring payment, and skepticism that second-person approval alone reduces risk without real independent verification.
+
+**Boundary respected:**
+- Does not advance D10.
+- Does not authorize a new spec, queue item, runtime implementation, workflow UI, payment release control, test-payment workflow, pricing, or client-facing copy.
+- Does not make banking, lending, money-movement, reimbursement, guarantee, insurance, compliance, certification, insurer-approval, premium, coverage, or fraud-prevention claims.
+
+---
+
+## 2026-06-02 - Call Sheet Removed As Active Build Blocker
+**Actor:** Matt Nichol (operator direction), captured by Codex
+
+**Action:** Removed / Updated
+
+**Files Changed:**
+- `1. Business_Operations/Client_Documents/Cyber_Insurance_Vendor_Payment_Integrity_Discovery_Call_Sheet.md` (REMOVED from working tree by operator direction)
+- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (UPDATED — Build List item 1 no longer treats the call-sheet / D10 discovery workflow as the active build blocker)
+- `MASTER_INDEX.md` (UPDATED — call sheet entry marked retired / removed)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Matt decided the call sheet and its D10 workflow were slowing the build down and that the project has enough current signal to keep building: gated cyber-insurance research artifacts, Reddit confirmation logs, Todd / CMIT door-opening signal, the live `grok-4` Stage A demo run, and the newly gated testing-footing artifacts. The operator direction is to continue Cyber Insurance / Vendor Payment Integrity evidence-package build shaping rather than keep cycling on the call sheet.
+
+**Boundary respected:**
+- This does not claim D10 is complete.
+- This does not authorize §13 sign-off.
+- This does not edit the Cyber Insurance Evidence Package spec.
+- This does not authorize implementation, runtime code, pricing, or client-facing copy.
+- This does not create compliance, certification, insurer-approval, premium, coverage, or fraud-prevention claims.
+- Historical references to the call sheet may remain in older logs, but the active queue no longer treats it as the next build blocker.

@@ -707,3 +707,128 @@ These verdicts move into §2 of `4. Product_Roadmap/Email_Security_Testing_Evide
 - **Monthly:** every idea in `live park`, score every unscored idea, fill any `ST = N` answers for `promote` band candidates.
 - **Quarterly:** every idea in `deep park` and `moonshot`, revisit the `retire` candidates.
 - **On demand:** any time a new idea sparks — score it here first, before it touches `PROGRESS.md`.
+
+---
+### Sub-question stress test — Internal Testing Evidence Discipline §10 (2026-06-01)
+Source spec: `4. Product_Roadmap/Internal_Testing_Evidence_Discipline_Deep_Dive.md` (pre-§11 draft, authored 2026-06-01).
+Format: 7-axis stress test per `AGENTS.md` discipline. Verdict candidates below are NOT D-decisions; they are inputs for a future operator-authorized stress-test → D-lockdown session. AI-drafted under operator review. Operator decisions on storage, PII guard, candidate-only auto-derivation, 13-column schema, and Wave 0–Wave 4 cadence are reflected in the verdicts below.
+#### Q1. Storage shape — single ledger / per-track / schema-only?
+- **A. Failure mode:** A single ever-growing file becomes unscannable; per-month files lose cross-track context; schema-only with no storage means no accumulation; per-track separate ledgers hide cross-track patterns.
+- **B. Hidden cost:** Any storage choice costs append discipline. SQLite/Postgres backend would require a runtime gate this spec excludes.
+- **C. Specific buyer:** A future cyber-insurance underwriter or MSP audit reviewer asking "show me your test history." Wants a stable indexed surface, not fragmented per-track files.
+- **D. Cost of inaction:** Test events scatter across `eval_report_*.md`, `PROGRESS.md`, `PROJECT_ACTIVITY_LOG.md`, ad-hoc demo outputs.
+- **E. Cheaper proof first:** Schema-only for v1 — rows live as repo-resident artifact references inside the spec doc + per-event linkage in `PROJECT_ACTIVITY_LOG.md`. Promote to dedicated ledger only when row count justifies it AND operator authorizes.
+- **F. Existing competitor:** NTSB report library, Toyota andon log, ISO 27001 Improvement Log, Cloudflare public-postmortem index, FDA CAPA log, DO-178C verification data set, AICPA SOC 2 internal evidence base — all single canonical surfaces with stable IDs, indexed/tagged by domain, not split into separate ledgers.
+- **G. Pre-mortem:** A year out, failure mode is "rows lived in too many places, no one could reconstruct the trail" or "per-track split made cross-track patterns invisible."
+**Verdict candidate:** Single canonical ledger + required 13th `track` column + per-track filtered views (queries / scripts) over the canonical surface. Per-track separate ledgers explicitly rejected. Cross-track rows tagged `cross_track` with explicit named tracks. v1 = schema-only with rows as repo-resident artifact references; promotion to dedicated ledger file gated on row count + operator authorization. Storage backend (DB/SQLite) deferred indefinitely.
+#### Q2. Append authority — final `recorded_by` lifecycle?
+- **A. Failure mode:** Unattended AI authorship makes the discipline a rubber-stamp surface; operator-only authorship collapses throughput.
+- **B. Hidden cost:** Operator review time per AI-drafted row.
+- **C. Specific buyer:** Auditor asking "who closed this row?" The `recorded_by` value answers it.
+- **D. Cost of inaction:** Future agents infer authority from convenience.
+- **E. Cheaper proof first:** Schema already says AI-drafted rows require operator review. Run with that rule.
+- **F. Existing competitor:** GitOps PR approval, MLOps model-promotion approval, SOC 2 change management — all human-gated state changes.
+- **G. Pre-mortem:** A year out, failure is "AI-drafted rows accumulated and got cited as evidence without review."
+**Verdict candidate:** keep three-value `recorded_by` enum. AI-drafted rows are pending state, not evidence. Operator promotes by editing `recorded_by` in the same row from `AI-drafted` → `operator-Matt + AI-drafted under operator review`; promotion is the closure act. Operator-bearing values cannot revert to `AI-drafted` (revert = §8.4 authority drift).
+#### Q3. Failure-row closure rule — stale-row review trigger?
+- **A. Failure mode:** "Open — no correction yet" forever = warehoused failures. Required-correction-only = real false-positive observations can't close.
+- **B. Hidden cost:** Operator review time per stale review.
+- **C. Specific buyer:** Auditor reviewing whether NorthStar truly learns from failures.
+- **D. Cost of inaction:** V1 plan's blocked/fail rows reach no deterministic state.
+- **E. Cheaper proof first:** V1 plan §6.1 already requires fail rows to either link `cer-*` or explicitly state "open — no correction yet." Run V1 for ~30 days; revisit if a pattern emerges.
+- **F. Existing competitor:** ISO 27001 nonconformity log requires effectiveness review on closure. FAA DO-178C requires either code fix or formal requirement change.
+- **G. Pre-mortem:** A year out, failure is "30 open-no-correction rows that no one revisited."
+**Verdict candidate:** keep schema rule; proposed 60-day stale-row review trigger — any `open — no correction yet` row older than 60 days is a flagged-stale event requiring an explicit operator decision (close-with-correction, close-with-no_action, or extend-review). Trigger is operator-driven; no automation in v1. Final number locked at D-lockdown session.
+#### Q4. Calibration-observation threshold — closed list vs operator judgment?
+- **A. Failure mode:** Every-pass = noise. Too-few = lost signal of "right answer for the right reason."
+- **B. Hidden cost:** Noise dilution; under-recording loses evidence chain.
+- **C. Specific buyer:** Auditor asking whether the discipline distinguishes "right answer right reason" from "right answer by luck."
+- **D. Cost of inaction:** Default = operator-bias-vulnerable.
+- **E. Cheaper proof first:** V1 has one calibration-observation seed (`tss-2026-06-01-001`); rest are silent passes. Run with that ratio.
+- **F. Existing competitor:** Google SRE postmortems sometimes apply to near-misses. Toyota Five Whys applies even when no defect surfaced.
+- **G. Pre-mortem:** A year out, failure is "every pass row records 'pass — calibration observation: nothing notable' and the noise drowns failures."
+**Verdict candidate:** closed list of four triggers — (i) authentication/auth-pass behavior under content risk; (ii) previously failing case now passing under retest; (iii) benign edge case staying quiet despite high inherent ambiguity; (iv) detector firing for intended evidence reason rather than coincident score. Outside those triggers, pass rows record without calibration_observation. Future auto-derivation surfaces that detect calibration-shaped events emit candidate rows only.
+#### Q5. Retention — permanent / archival / Canada-specific?
+- **A. Failure mode:** Permanent = unscannable; archival = lost history. Statute-driven retention may apply if PII enters the surface.
+- **B. Hidden cost:** Storage trivial; cognitive cost real.
+- **C. Specific buyer:** Future underwriter / MSP buyer asking for history; operator's own counsel reviewing PIPEDA and provincial privacy compliance.
+- **D. Cost of inaction:** Default = permanent in repo; PII unmanaged.
+- **E. Cheaper proof first:** Lock no-PII rule as §9.1 hard guard; permanent retention then has no statutory floor in Canada because compliant rows carry no personal information.
+- **F. Existing competitor:** NTSB reports permanent. NIST SP 800-61 retention per organizational policy. SOC 2 typically 7+ years. PIPEDA's "only as long as necessary" applies to personal information specifically; CRA business records default 6 years; AICPA / SOC 2 7 years.
+- **G. Pre-mortem:** A year out, failure is "score sheet got too long" (solved by indexing) or "PII slipped in and PIPEDA / provincial privacy obligations fired" (solved by §9.1 hard guard + Wave 3 PII pre-commit hook).
+**Verdict candidate:** permanent retention for compliant rows; rows that violate §9.1 are drafts, not evidence; redact in place rather than delete. Index by year + event_type + track. Counsel review required before live client / underwriter / MSP data touches the surface — research note alone is not legal authority. PII pre-commit hook (Wave 3) is the operational guard.
+#### Q6. External-render abstraction — locked internal-only or staged pathway?
+- **A. Failure mode:** Undefined external = ad-hoc disclosure. Premature definition = scope creep into client-facing copy that violates §7.
+- **B. Hidden cost:** External-abstraction layer requires its own §11-signed spec.
+- **C. Specific buyer:** Underwriter, MSP buyer, future SOC 2 auditor.
+- **D. Cost of inaction:** Internal-only is fine; the question is future externalization.
+- **E. Cheaper proof first:** Lock internal-only for v1 with explicit "external render = separate signed spec" gate.
+- **F. Existing competitor:** SOC 2 / SOC 3 split. AICPA model. NIST SP 800-150.
+- **G. Pre-mortem:** A year out, failure is "drafted external render without authorization, exposed raw internals."
+**Verdict candidate:** v1 internal-only. External rendering requires a separate §11-signed disclosure spec (proposed name `Testing_Evidence_External_Disclosure_Deep_Dive.md`). No external surface in v1.
+#### Q7. Relationship to existing surfaces — supplement / replace / sibling / auto-derive?
+- **A. Failure mode:** Overlap = duplication; gap = drift; auto-derivation without an operator gate = authority drift.
+- **B. Hidden cost:** Cross-reference discipline; candidate-vs-evidence boundary maintenance.
+- **C. Specific buyer:** Future agent reading the spec, deciding where to record a new event.
+- **D. Cost of inaction:** Ad-hoc placement.
+- **E. Cheaper proof first:** Map each existing surface to a clear role in §1.1 / §3.3 / §7 of the spec.
+- **F. Existing competitor:** ISO 27001 separates incident log, audit log, improvement log — distinct surfaces with handoffs. pytest reports → candidate emission is the AEV / chaos-engineering pattern.
+- **G. Pre-mortem:** A year out, failure is "eval harness writes one place, regression tests another, score sheet a third, no one knows which is canonical" or "auto-derivation auto-promoted candidates as evidence."
+**Verdict candidate:** score sheet is the canonical event-record surface. `REACTION_TIMING_TEST_LOG.md` is a timing-specific specialization that flows into the score sheet via `retest_evidence` pointers. Eval reports under `core/scoring/eval/` remain per-rerun source-of-truth artifacts. Regression suites continue as code-level evidence with no score-sheet duplication. `Email_Security_Testing_Evidence_Framework_Deep_Dive.md` remains the verdict-match / failure-card framework, narrower than this discipline; this spec supersets it without replacing. Auto-derivation produces candidate rows only (per §3.3); operator review is the only path from candidate to evidence; auto-promotion is §8.4 / §8.14 failure mode.
+#### Q8. Agent-bible relationship — substrate / sibling / successor?
+- **A. Failure mode:** Score-sheet-as-bible = scope creep. Sibling-with-no-substrate = bible reinvents this.
+- **B. Hidden cost:** Bible drafting is a separate, larger spec.
+- **C. Specific buyer:** Future agent learning the system's discipline.
+- **D. Cost of inaction:** Until bible is drafted, score sheet substrates implicitly.
+- **E. Cheaper proof first:** Tonight's footing already does this.
+- **F. Existing competitor:** NTSB safety-recommendation accumulation feeds aviation policy; substrate, not "the bible."
+- **G. Pre-mortem:** A year out, failure is "score sheet ate the bible's scope" or "bible re-invented a worse score sheet."
+**Verdict candidate:** score sheet is substrate. Future agent bible is a sibling spec that cites the score sheet as one of its evidence surfaces but does not embed the schema or replace this discipline. Bible drafting is separately authorized future work.
+#### Q9. Schema-revision rule — amendment block vs full re-spec?
+- **A. Failure mode:** Easy revision = drift. Hard revision = stuck bug fixes.
+- **B. Hidden cost:** Each revision requires gate work.
+- **C. Specific buyer:** Future auditor checking for silent calibration drift (`AGENTS.md` §12 named failure mode).
+- **D. Cost of inaction:** Ad-hoc edits.
+- **E. Cheaper proof first:** §11.x amendment block pattern (already used by `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` §11.2 + the TOAD §11.1 pattern).
+- **F. Existing competitor:** DO-178C controlled-change CCB. ISO 27001 improvement log. SOC 2 change management.
+- **G. Pre-mortem:** A year out, failure is "schema silently changed three times; older rows are incompatible."
+**Verdict candidate:** post-§11, schema revisions follow the §11.x amendment-block pattern with explicit `MIGRATION-NOTE` blocks for any column or enum change. No silent revisions. No removal of an existing column without an operator-authored migration plan. Additive enum values allowed only via amendment.
+#### Q10. Mandatory-fields contract — strict 13 / per-event-type required-field map?
+- **A. Failure mode:** Strict 13 forces empty values where they're not meaningful (e.g. `retest_evidence` on a fresh test). Loose contract loses scannability.
+- **B. Hidden cost:** Verbose nulls.
+- **C. Specific buyer:** Auditor reviewing rows.
+- **D. Cost of inaction:** Schema is already strict per `Testing_Score_Sheet_Schema.md` §4.1; this spec's §3.1 adds the 13th column.
+- **E. Cheaper proof first:** Run V1 with the strict rule.
+- **F. Existing competitor:** FDA executed test-case schema is strict but allows null where defined.
+- **G. Pre-mortem:** A year out, failure is "couldn't decide what to write in `retest_evidence` for a fresh test, so wrote 'pending'."
+**Verdict candidate:** all 13 columns mandatory; nulls are legal where §3.1 / pre-spec §4.1 already say they are; `pending` is not a valid value for any field. Per-event-type required-field map and per-track required-tag map are future amendments.
+#### Q11. `track` enum — closed taxonomy.
+- **A. Failure mode:** Open taxonomy = drift; too-narrow taxonomy = forces `cross_track` over-use; bad track names = cross-track patterns invisible.
+- **B. Hidden cost:** Every track addition is a §11.x amendment; cost compounds.
+- **C. Specific buyer:** Future agent or operator running per-track filtered views.
+- **D. Cost of inaction:** Ad-hoc track values appear in rows; schema drift.
+- **E. Cheaper proof first:** Use today's `MASTER_INDEX.md` track structure as the working set; expand only when a real cross-track event surfaces a gap.
+- **F. Existing competitor:** ITIL service taxonomy, ISO 27001 control areas, NTSB cause-category enum — all closed taxonomies with explicit revision paths.
+- **G. Pre-mortem:** A year out, failure is "we have 17 track values and no one remembers which is which."
+**Verdict candidate:** working set of 8 values from spec §4 (`inbox_shield_core`, `policy_pipeline`, `operator_state_kill_switch`, `sandbox_mutation`, `cyber_insurance_evidence_track`, `audit_infrastructure`, `threat_intel`, `cross_track`). Final taxonomy locked at Wave 1 spec drafting; operator-owned.
+#### Q12. Candidate file format — YAML vs JSON.
+- **A. Failure mode:** Format inconsistency between emitters; structured-but-unreadable; lossy round-trip on operator edit.
+- **B. Hidden cost:** Parser cost per emitter; readability cost on operator review.
+- **C. Specific buyer:** Operator running future `review_ledger.py`; future agent inspecting a candidate.
+- **D. Cost of inaction:** Each emitter picks its own format.
+- **E. Cheaper proof first:** Pick one format and ship Wave 2 with it; revise via §11.x amendment if it doesn't work.
+- **F. Existing competitor:** pytest produces XML / JSON via plugins; eval-report-style produces Markdown; CSV common in compliance reporting; YAML common in CI / config / human-edited artifacts.
+- **G. Pre-mortem:** A year out, failure is "the format chosen made the candidate file unreadable in the operator review path" or "operator edits broke the parse."
+**Verdict candidate:** YAML, because the schema columns map cleanly to YAML keys and operator review may involve manual edits. JSON acceptable if Wave 1 spec finds machine-parsing requirements outweigh operator readability. Final lock at Wave 1.
+#### Q13. PII pre-commit hook scope — patterns / allowlist.
+- **A. Failure mode:** Under-broad = PII slips through; over-broad = blocks unrelated commits → operator disables hook → guard gone.
+- **B. Hidden cost:** False positives = friction at commit time, exactly the friction the discipline is trying to remove.
+- **C. Specific buyer:** Anyone whose commit gets blocked; future audit reviewer who relies on the guard.
+- **D. Cost of inaction:** PII slips into the canonical ledger; PIPEDA / provincial privacy exposure.
+- **E. Cheaper proof first:** Start narrow — fixed set of high-signal patterns; add patterns only when a real PII slip is observed.
+- **F. Existing competitor:** `git-secrets`, `truffleHog`, GitHub secret scanning — all use closed pattern sets with allowlists.
+- **G. Pre-mortem:** A year out, failure is "hook over-fired and got disabled; or under-fired and a PII slip happened."
+**Verdict candidate:** narrow initial pattern set focused on high-signal items — API key formats (xAI / OpenAI / Anthropic / GitHub PAT / AWS), email-address regex inside score-sheet rows, IBAN / SWIFT / routing-number formats, common JWT / bearer-token formats. Allowlist for fictional demo identifiers (`acme-industries-demo`, `bluefin-marine-supplies-demo`, `tenant_demo`). Final lock at Wave 3 spec.
+---
+**End of stress-test entry. No D-decision is locked tonight. Verdicts above are inputs for a future operator-authorized lockdown.**
+

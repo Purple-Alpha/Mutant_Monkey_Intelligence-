@@ -8,6 +8,38 @@
 
 ---
 
+## Current handoff (updated 2026-06-02 ~13:00 PT)
+
+The pre-spec testing footing is gate-clean in Linux primary:
+
+- `4. Product_Roadmap/Research_Inputs/Testing_Score_Sheet_Schema.md` (gated 2026-06-01; `audit_outputs/testing_score_sheet_schema_and_plan_20260601_20260602T025228Z.md`)
+- `4. Product_Roadmap/Research_Inputs/Testing_Plan_V1.md` (gated 2026-06-01; same packet)
+- `Research/queries/2026-06-01_linux_primary_handoff.md`
+- `Research/queries/2026-06-01_testing_scoring_correction_evidence_brief.md`
+- `Research/queries/2026-06-01_testing_scoring_correction_evidence_research.md`
+
+Wave 0 of the staged Wave 0–Wave 4 testing-discipline cadence is gate-clean:
+
+- `4. Product_Roadmap/Internal_Testing_Evidence_Discipline_Deep_Dive.md` (gated 2026-06-01 PT / 2026-06-02 UTC; `audit_outputs/internal_testing_evidence_discipline_deep_dive_draft_20260601_20260602T041000Z.md`)
+- `think_sheet.md` 2026-06-01 7-axis stress-test entry
+
+Tracker entries for the testing-footing artifacts are gate-clean:
+
+- `MASTER_INDEX.md` (gated 2026-06-01; `testing_score_sheet_tracker_master_index_20260601_20260602T030213Z.md`)
+- `PROGRESS.md` (gated 2026-06-01; `testing_score_sheet_tracker_progress_20260601_20260602T030224Z.md`)
+- `PROJECT_ACTIVITY_LOG.md` (gated 2026-06-01 under broader accumulated claim; `activity_log_accumulated_20260601_tracker_gate_20260602T030502Z.md`)
+
+Tracker entries for `Internal_Testing_Evidence_Discipline_Deep_Dive.md` are being added as today's closeout work. Each tracker mod gates separately, same pattern as the four prior tracker gates.
+
+No §11 signed. No D-decisions locked. No implementation authorized. No D10, §13, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim. Wave 1 (`Score_Sheet_Candidate_Emit_Deep_Dive.md` drafting) is pending explicit operator authorization in a future session.
+
+Remaining for closeout: gate the three new tracker entries individually, then decide commit batches.
+
+## Operator override (updated 2026-06-02)
+Matt removed `1. Business_Operations/Client_Documents/Cyber_Insurance_Vendor_Payment_Integrity_Discovery_Call_Sheet.md` as an active build blocker. Continue Cyber Insurance / Vendor Payment Integrity evidence-package build shaping from the gated research, Reddit captures, Todd signal, live-run output, and testing-footing artifacts. This does not claim D10 completion, §13 sign-off, implementation authorization, pricing approval, or client-facing copy.
+
+---
+
 ## Active Task List
 
 ### Standing rule - Reaction timing test documentation — ✅ DONE 2026-05-28
