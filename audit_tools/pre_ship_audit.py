@@ -416,7 +416,54 @@ def _verdict_summary(report: str) -> str:
     return match.group(1).strip()
 
 
-def _run(report_only: bool = False) -> int:
+def _emit_score_sheet_candidate(
+    *,
+    verdict: str,
+    summary: str,
+    report_path: Path,
+    dry_run: bool,
+) -> None:
+    if verdict == "SHIP":
+        return
+
+    from audit_tools.score_sheet_candidate_emit import emit
+
+    pass_fail = "fail" if verdict == "FIX_FIRST" else "blocked"
+    failure_type = "expectation_contract" if verdict == "FIX_FIRST" else "workflow_issue"
+    finding_summary = summary or f"Pre-ship audit returned {verdict}."
+
+    candidate = {
+        "event_date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "track": "audit_gate",
+        "event_type": "fail" if verdict == "FIX_FIRST" else "blocked",
+        "source_artifact": str(report_path),
+        "test_or_check_name": "pre_ship_audit",
+        "pass_fail": pass_fail,
+        "failure_type": failure_type,
+        "finding_summary": finding_summary,
+        "corrective_action": "Review the pre-ship audit report and address findings before committing.",
+        "retest_reference": "",
+        "notes": "Candidate emitted by pre_ship_audit. Not evidence until operator promotion.",
+    }
+
+    written = emit(
+        [candidate],
+        emitter="pre_ship_audit.py",
+        short_context=verdict.lower(),
+        source_run={
+            "command": "python audit_tools/pre_ship_audit.py",
+            "output_reference": str(report_path),
+            "git_commit": None,
+        },
+        dry_run=dry_run,
+    )
+    if dry_run:
+        print("Score-sheet candidate dry-run complete; no candidate file written.")
+    elif written:
+        print(f"Score-sheet candidate written: {written}")
+
+
+def _run(report_only: bool = False, emit_score_sheet_candidate: bool = False, write_score_sheet_candidate: bool = False) -> int:
     change_summary = _collect_change_summary()
     has_changes = (
         change_summary["diff"].strip()
@@ -454,6 +501,15 @@ def _run(report_only: bool = False) -> int:
         print(summary)
     print()
 
+    if emit_score_sheet_candidate or write_score_sheet_candidate:
+        _emit_score_sheet_candidate(
+            verdict=verdict,
+            summary=summary,
+            report_path=report_path,
+            dry_run=not write_score_sheet_candidate,
+        )
+        print()
+
     if verdict == "SHIP":
         print("Pre-ship audit returned SHIP. Safe to commit and push.")
         return 0
@@ -481,8 +537,22 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Write the report but exit zero even on FIX_FIRST or STOP.",
     )
+    parser.add_argument(
+        "--emit-score-sheet-candidate",
+        action="store_true",
+        help="Emit a score-sheet candidate packet in dry-run mode for blocking audit outcomes.",
+    )
+    parser.add_argument(
+        "--write-score-sheet-candidate",
+        action="store_true",
+        help="Write the score-sheet candidate packet instead of dry-running it.",
+    )
     args = parser.parse_args(argv)
-    return _run(report_only=args.report_only)
+    return _run(
+        report_only=args.report_only,
+        emit_score_sheet_candidate=args.emit_score_sheet_candidate,
+        write_score_sheet_candidate=args.write_score_sheet_candidate,
+    )
 
 
 if __name__ == "__main__":
