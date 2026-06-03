@@ -1,10 +1,10 @@
 # Score Sheet Candidate Review And Promotion Deep Dive (Wave 3)
 
-**Status:** Draft pre-spec. Not §11 signed. Not implementation authorization. Not runtime code. Not a canonical ledger write path. Not client-facing copy.
+**Status:** §11 signed 2026-06-03 by Matt Nichol (Zebra-Comit). Governing Wave 3 review/promotion spec. Authorizes future Wave 3.1 spec drafting only; not implementation authorization, not runtime code, not a canonical ledger write path, not client-facing copy.
 
 **Date drafted:** 2026-06-03
 
-**Authority:** Matt Nichol. Pre-§11 changes flow operator → spec edit → next gate. No implementation, D10, §13, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention authorization is granted by this draft.
+**Authority:** Matt Nichol. §11 ratifies this spec and its §10.A operator-confirmed decisions as Wave 3 truth. No implementation, D10, §13, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention authorization is granted by this spec.
 
 ---
 
@@ -307,9 +307,9 @@ These resolve the §10 questions as operator-confirmed decisions. They are opera
 7. **Q7 — Crypto proof:** **Explicitly rejected for v1.** In-band textual proof (operator identity + date + `candidate_ref` / `candidate_packet_id`) is the only required proof. A future amendment may revisit if an external party ever requires cryptographic proof.
 8. **Q8 — Pre-commit hook coupling:** The no-PII / no-secrets pre-commit hook ships **bundled with the Wave 3.1 review-script spec**, sharing its scanner contract — not with the Wave 3 promotion rules alone.
 
-### §10.B Boundary
+### §10.B Implementation Boundary
 
-Still pre-§11. No implementation, no `review_ledger.py` code, no pre-commit hook code, no canonical ledger automation, no D10 completion, no §13 sign-off, no client-facing copy, and no compliance / certification / insurer-approval / coverage / premium / fraud-prevention claim is authorized by these decisions.
+These decisions are now ratified by §11, but they do not authorize implementation. No `review_ledger.py` code, no pre-commit hook code, no canonical ledger automation, no D10 completion, no §13 sign-off, no client-facing copy, and no compliance / certification / insurer-approval / coverage / premium / fraud-prevention claim is authorized by these decisions.
 
 ---
 

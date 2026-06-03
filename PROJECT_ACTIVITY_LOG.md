@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-03 - Wave 3.1 review ledger helper spec drafted
+
+**Actor:** Cursor, at operator request after Wave 3 §11 signature.
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Score_Sheet_Review_Ledger_Wave3_1_Deep_Dive.md` (CREATED — Wave 3.1 draft implementation spec for future `audit_tools/review_ledger.py` + no-PII / no-secrets pre-commit scanner; spec-only, pre-§11, no code authorization)
+- `4. Product_Roadmap/Score_Sheet_Candidate_Review_Promotion_Deep_Dive.md` (UPDATED — status/header now reflects Wave 3 §11 signed; §10.B renamed to implementation boundary so it no longer says pre-§11)
+- `MASTER_INDEX.md` (UPDATED — Wave 3 entry now reflects signed state; new Wave 3.1 draft indexed)
+- `PROGRESS.md` (UPDATED — current handoff now points to Wave 3.1 draft review/signature/start-build sequence)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Operator chose to proceed with list item 1 (draft Wave 3.1 spec) and prepare list item 2 (separate start-build authorization) before fixing the Cursor/WSL workspace pointer. The Wave 3.1 draft keeps the helper inside the signed Wave 3 boundary: it may read, summarize, scan, prompt, and draft non-canonical rows, but it must not auto-promote, write the canonical ledger, move/delete packets, assign final `event_id`, set final operator-bearing `recorded_by`, touch emitters/runtime state, or make client/compliance/insurance claims.
+
+**Next Step:**
+Operator reviews Wave 3.1 §11 open questions, then signs §12 if acceptable. Implementation still requires a separate operator-authored §13 "start build" authorization; no code begins from the draft alone.
+
+---
+
 ## 2026-06-03 - Wave 3 §10 questions resolved and §11 operator-signed
 
 **Actor:** Matt Nichol (Zebra-Comit) signing; Cursor capturing decisions at operator direction.
