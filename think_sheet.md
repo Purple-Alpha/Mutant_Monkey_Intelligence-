@@ -883,3 +883,53 @@ If this fails, likely causes are: candidate packets become too noisy, operator r
 
 Keep the §12 decisions. They improve the Wave 1 spec without replacing the existing testing loop. The only remaining high-risk dependency is the unresolved Wave 0 `track` taxonomy Q11; therefore no candidate should promote until track mapping is resolved.
 
+## 7-axis stress test — Score Sheet Candidate Emit Implementation Deep Dive (Wave 2, 2026-06-02)
+
+**Status:** Internal stress test for unsigned Wave 2 implementation-spec draft. Not §11. Not implementation authorization. Not code. Not canonical ledger authority.
+
+**Artifact under stress:** `4. Product_Roadmap/Score_Sheet_Candidate_Emit_Implementation_Deep_Dive.md`
+
+**Decision set under stress:**
+
+- First emitter limited to `audit_tools/pre_ship_audit.py`.
+- JSONL candidate packets under `audit_outputs/score_sheet_candidates/`.
+- Atomic write: temp file in same directory, then rename.
+- No packet emitted for clean no-op runs.
+- Safety refusal before candidate write for PII, secrets, raw payloads, mailbox bodies, authorization headers, and real personal data.
+- Emitter never writes canonical ledger rows, never assigns `event_id`, never promotes, never deletes, and never moves packets.
+- Failure/correction/retest loop preserved.
+- Test plan includes dry-run, failing fixture, clean no-op, unsafe-content refusal, null `event_id`, no ledger touch, and interrupted-write behavior.
+
+### Axis 1 — Failure Mode
+
+Primary failure mode: the emitter accidentally becomes an authority path instead of a candidate path. Secondary failure modes: unsafe content leaks into JSONL, clean runs create noise packets, partial writes leave broken files, or `track` mapping drifts.
+
+Mitigation in the draft: explicit no-ledger/no-promotion/no-event-id rules, safety refusal before write, no-op behavior, atomic writes, and inherited closed track taxonomy.
+
+### Axis 2 — Hidden Cost
+
+The cost is implementation ceremony: scanner checks, temp-file writes, refusal paths, and tests for "nothing happened" cases. This cost is justified because candidate emission is the first place tools touch the testing-evidence surface.
+
+### Axis 3 — Specific Buyer / Operator Value
+
+The internal buyer is the operator and future reviewer. The spec gives them a trustworthy first machine-generated candidate source without granting the machine evidence authority.
+
+### Axis 4 — Cost Of Inaction
+
+Without this spec, implementation could jump straight from Wave 1 architecture to code with too many assumptions. That would risk authority drift, noisy packets, missing scanner behavior, and ambiguous test expectations.
+
+### Axis 5 — Cheaper Proof First
+
+The cheapest proof is one emitter only: `pre_ship_audit.py`. It can validate JSONL structure, no-op behavior, safety refusal, and atomic writes without involving the broader agent fleet or runtime product path.
+
+### Axis 6 — Existing Competitor / Alternative
+
+Alternatives are CI logs, markdown audit notes, or direct ledger writes. CI logs and markdown notes are easier but do not create reviewable candidate rows. Direct ledger writes are stronger structurally but violate the operator-promotion boundary.
+
+### Axis 7 — Pre-Mortem
+
+If Wave 2 fails, likely causes are: scanner too shallow, finding summaries too vague, candidate packets too noisy, failure rows not linked to retest rows, or implementation tests not covering refusal/atomic-write paths. The draft partially mitigates these, but scanner pattern detail and event-id format remain before §11.
+
+### Verdict Candidate
+
+Keep the Wave 2 implementation-spec direction, but do not sign §11 until two details are tightened: (1) minimum scanner patterns / refusal examples, and (2) exact `event_id` promotion format or explicit confirmation that it is outside Wave 2 implementation scope. No code should begin before those are resolved or explicitly deferred by the operator.
