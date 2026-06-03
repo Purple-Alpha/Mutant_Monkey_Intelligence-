@@ -175,3 +175,14 @@ The emitter's responsibility is to preserve `candidate_ref` so the promoted evid
 ### §13.4 Boundary
 
 This tightening resolves the Wave 2 stress-test blockers at the spec level. It still does not authorize implementation, code edits, canonical ledger writes, automatic promotion, pre-commit hook implementation, interactive review scripts, additional emitters, D10 completion, §13 sign-off, client-facing copy, or any compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
+
+
+## §14 Signed Amendment — Helper Module Boundary (2026-06-03)
+
+**Status:** SIGNED AMENDMENT.
+
+- **Signed by:** Matt Nichol
+- **Date:** 2026-06-03
+- **Authorization scope (operator's own words):** Authorizing the scoped pre_ship_audit.py emitter implementation to use an isolated helper module for JSONL packet construction, scanner/redaction behavior, and atomic file-write mechanics, while preserving pre_ship_audit.py as the only authorized emitter identity and forbidding standalone or additional emitters.
+- **Boundary:** `audit_tools/pre_ship_audit.py` remains the only authorized Wave 2 emitter identity. A helper module may contain shared JSONL packet-building, scanning, redaction, and atomic-write mechanics only if it is used as part of the scoped `pre_ship_audit.py` emitter path.
+- **Still NOT authorized:** standalone emitters, additional emitters, canonical ledger writes, automatic promotion, interactive review scripts, pre-commit hook implementation, D10 completion, §13 sign-off, client-facing copy, or any compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
