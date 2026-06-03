@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-03 - Wave 3.1 §12 operator-signed
+
+**Actor:** Matt Nichol (Zebra-Comit) signing; Cursor placing signature at operator direction.
+
+**Action:** Signed / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Score_Sheet_Review_Ledger_Wave3_1_Deep_Dive.md` (UPDATED — §12 operator-signed; status header now reflects signed state; stale boundary line replaced with ratified-but-no-build wording)
+- `MASTER_INDEX.md` (UPDATED — Wave 3.1 entry now reflects §12 signed)
+- `PROGRESS.md` (UPDATED — handoff now reflects Wave 3.1 §12 signed, §13 pending)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Operator signed Wave 3.1 §12 after a scored consequence pass (sign-now-no-build chosen as the risk-adjusted best option). §12 ratifies the spec + §11.A decisions as governing truth but authorizes no code. §13 start-build is intentionally separate and remains pending.
+
+**Next Step:**
+Score the §13 start-build decision separately. No `review_ledger.py`, `score_sheet_review_scanner.py`, or score-sheet safety hook code begins until §13 is operator-authorized.
+
+---
+
 ## 2026-06-03 - Wave 3.1 review ledger helper spec drafted
 
 **Actor:** Cursor, at operator request after Wave 3 §11 signature.

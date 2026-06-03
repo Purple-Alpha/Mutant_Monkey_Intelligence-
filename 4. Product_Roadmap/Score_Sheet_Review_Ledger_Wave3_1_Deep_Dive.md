@@ -1,6 +1,6 @@
 # Score Sheet Review Ledger Helper Deep Dive (Wave 3.1)
 
-**Status:** Draft implementation spec. Pre-§11. Spec-only. No runtime code. No hook code. No canonical ledger automation. No operator-state write path. No client-facing copy.
+**Status:** §12 signed 2026-06-03 by Matt Nichol (Zebra-Comit). Governing Wave 3.1 implementation spec. Spec-only; authorizes no runtime code, no hook code, no canonical ledger automation, no operator-state write path, and no client-facing copy until a separate §13 "start build" authorization.
 
 **Date drafted:** 2026-06-03
 
@@ -274,11 +274,9 @@ These decisions are pre-§12. No `review_ledger.py` code, no `score_sheet_review
 
 ## §12 Sign-Off
 
-**Pending operator authorship.** Do not infer, draft, or auto-fill.
+**Matt Nichol (Zebra-Comit) June 3rd. 2026.** Do not infer, draft, or auto-fill.
 
-Until §12 is signed, Wave 3.1 authorizes **no** implementation, **no** `review_ledger.py` code, **no** pre-commit hook code, **no** canonical ledger automation, and **no** change to emitters.
-
-After §12 is signed, implementation still requires a separate explicit operator "start build" instruction.
+This §12 signature ratifies this Wave 3.1 spec and its §11.A operator-confirmed decisions as governing truth for the future `review_ledger.py` helper, the shared `score_sheet_review_scanner.py` module, and the separate score-sheet safety hook. It does **not** authorize any implementation: still **no** `review_ledger.py` code, **no** scanner-module code, **no** pre-commit hook code, **no** canonical ledger automation, and **no** change to emitters until a separate explicit operator §13 "start build" authorization.
 
 ---
 
