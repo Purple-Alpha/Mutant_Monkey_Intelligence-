@@ -26,6 +26,32 @@ What should happen next.
 
 ---
 
+## 2026-06-02 — Candidate emitter write-mode validation passed
+
+### Files
+
+- `audit_tools/score_sheet_candidate_emit.py`
+- `audit_tools/pre_ship_audit.py`
+- `audit_outputs/score_sheet_candidates/` (transient ignored candidate packet created and deleted after verification)
+
+### Summary
+
+- Ran controlled write-mode validation for the signed Wave 2 candidate-emitter path without xAI and without touching the canonical ledger.
+- The helper wrote a real JSONL candidate packet under `audit_outputs/score_sheet_candidates/`.
+- Verified packet shape: first line `packet_header`, second line `candidate`.
+- Verified invariants: `promotion_status=not_reviewed`, `event_id=null`, `recorded_by=tool_candidate`, one candidate row, and valid JSONL.
+- Verified the candidate packet did not dirty git status, confirming the candidate staging area is ignored/transient.
+- Deleted the transient write-mode test packets after verification.
+
+### Boundary
+
+- No canonical ledger write.
+- No operator promotion.
+- No automatic promotion.
+- No client-facing output.
+- No D10, §13, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
+- This records validation only; it does not promote the transient candidate packet to evidence.
+
 ## 2026-06-02 — Wave 1 candidate-emission pre-spec draft gate-clean
 
 ### Files
