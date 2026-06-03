@@ -8,29 +8,8 @@
 
 ---
 
-## Current handoff (updated 2026-06-02 ~15:10 PT)
-
-Wave 1 candidate-emission pre-spec draft is gate-clean:
-
-- `4. Product_Roadmap/Score_Sheet_Candidate_Emit_Deep_Dive.md`
-- Gate: `audit_outputs/score_sheet_candidate_emit_deep_dive_draft_20260602_20260602T220436Z.md`
-
-This is artifact-only Wave 1 planning. It defines candidate file location, 13-column mapping inheritance, candidate lifecycle, operator-promotion boundary, no-delete/archive rule, no-PII / no-secrets / no-raw-payload guard, failure/correction/retest preservation, first emitter candidate, and open questions for future §11.
-
-Tracker closeout is in progress for `MASTER_INDEX.md`, `PROGRESS.md`, and `PROJECT_ACTIVITY_LOG.md`.
-
-No implementation, canonical ledger write path, pre-commit hook, review script, D10 completion, §13 sign-off, §11 sign-off, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim is authorized.
-
-Previous closeout commits are complete:
-
-- `71977e0` — testing evidence footing and Wave 0 foundation
-- `e0fc73f` — Stage A cyber-insurance test runner outputs
-- `59d87eb` — evidence package queue and discovery signals
-
-Next clean move: gate tracker closeout, then commit the Wave 1 draft artifact plus tracker entries.
-
-## Operator override (updated 2026-06-02)
-Matt removed `1. Business_Operations/Client_Documents/Cyber_Insurance_Vendor_Payment_Integrity_Discovery_Call_Sheet.md` as an active build blocker. Continue Cyber Insurance / Vendor Payment Integrity evidence-package build shaping from the gated research, Reddit captures, Todd signal, live-run output, and testing-footing artifacts. This does not claim D10 completion, §13 sign-off, implementation authorization, pricing approval, or client-facing copy.
+## Current handoff (updated 2026-06-03)
+Wave 2 candidate emitter (`score_sheet_candidate_emit.py` + `pre_ship_audit.py` wiring) is implemented and validated on Linux primary (`b7328e7`, backed up to `github` + `backup`). **Wave 3 draft landed:** `4. Product_Roadmap/Score_Sheet_Candidate_Review_Promotion_Deep_Dive.md` + `think_sheet.md` 7-axis stress test (2026-06-03), three clean Grok gates (spec / stress-test / tracker). Follow-up `think_sheet.md` §14 addendum evaluates staging fatigue vs toxic leakage and promotes future `review_ledger.py` from optional helper to critical Wave 3.1 control candidate, still requiring signed spec + separate build authorization. Files synced to Linux primary (`~/northstar`) via `cp`; **pending commit + push** at handoff. Next: commit Wave 3 draft on Linux, then operator §11 on Wave 3, then optional Wave 3.1 `review_ledger.py` implementation spec. No review-script or promotion tooling until separately authorized.
 
 ---
 

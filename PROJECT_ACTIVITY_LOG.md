@@ -26,83 +26,33 @@ What should happen next.
 
 ---
 
-## 2026-06-02 — Candidate emitter write-mode validation passed
+## 2026-06-03 - Wave 3 candidate review and promotion deep-dive drafted
 
-### Files
+**Actor:** Cursor, at operator request (Wave 3 Candidate Review Plan).
 
-- `audit_tools/score_sheet_candidate_emit.py`
-- `audit_tools/pre_ship_audit.py`
-- `audit_outputs/score_sheet_candidates/` (transient ignored candidate packet created and deleted after verification)
+**Action:** Created / Updated
 
-### Summary
+**Files Changed:**
+- `4. Product_Roadmap/Score_Sheet_Candidate_Review_Promotion_Deep_Dive.md` (CREATED — Wave 3 pre-§11 spec: holding pool, 8-item checklist gate, rejection archive, manual promotion boundary, in-band proof, forbidden automation, Manus context non-adoption §2)
+- `think_sheet.md` (UPDATED — 7-axis stress test entry 2026-06-03 plus §14 staging-fatigue vs toxic-leakage addendum naming future `review_ledger.py` as the critical Wave 3.1 control candidate)
+- `MASTER_INDEX.md` (UPDATED — indexed Wave 3 deep-dive)
+- `PROGRESS.md` (UPDATED — handoff to Wave 3 §11 prep)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
 
-- Ran controlled write-mode validation for the signed Wave 2 candidate-emitter path without xAI and without touching the canonical ledger.
-- The helper wrote a real JSONL candidate packet under `audit_outputs/score_sheet_candidates/`.
-- Verified packet shape: first line `packet_header`, second line `candidate`.
-- Verified invariants: `promotion_status=not_reviewed`, `event_id=null`, `recorded_by=tool_candidate`, one candidate row, and valid JSONL.
-- Verified the candidate packet did not dirty git status, confirming the candidate staging area is ignored/transient.
-- Deleted the transient write-mode test packets after verification.
+**Reason:**
+Wave 2 implemented candidate emission; Wave 3 defines human-in-the-loop review and promotion without auto-promotion or implementation authorization. The §14 addendum captures the paired risks of operator fatigue and toxic payload leakage, concluding that future `review_ledger.py` should be treated as a critical review-control candidate after Wave 3 §11, not optional convenience tooling.
 
-### Boundary
+**Surface note:** Drafted on the Windows mirror, then copied to Linux primary (`~/northstar`) via `cp`. Pending commit on Linux; not yet committed or pushed at the time of this entry.
 
-- No canonical ledger write.
-- No operator promotion.
-- No automatic promotion.
-- No client-facing output.
-- No D10, §13, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
-- This records validation only; it does not promote the transient candidate packet to evidence.
+**Gate:**
+- `score_sheet_wave3_spec_20260603` — clean (`audit_outputs/score_sheet_wave3_spec_20260603_20260603T025930Z.md`)
+- `score_sheet_wave3_stress_test_20260603` — clean (`audit_outputs/score_sheet_wave3_stress_test_20260603_20260603T025936Z.md`)
+- `score_sheet_wave3_tracker_20260603` — clean (`audit_outputs/score_sheet_wave3_tracker_20260603_20260603T030103Z.md`)
 
-## 2026-06-02 — Wave 1 candidate-emission pre-spec draft gate-clean
+**Next Step:**
+Operator §11 on Wave 3 spec; then optional Wave 3.1 `review_ledger.py` implementation spec if authorized. Sync/commit from Linux primary (`~/northstar`) when ready.
 
-### Files
-
-- `4. Product_Roadmap/Score_Sheet_Candidate_Emit_Deep_Dive.md` (created)
-- `MASTER_INDEX.md` (Wave 1 draft index entry)
-- `PROGRESS.md` (handoff updated)
-- `PROJECT_ACTIVITY_LOG.md` (this entry)
-
-### Summary
-
-- Created `Score_Sheet_Candidate_Emit_Deep_Dive.md` as the Wave 1 draft pre-spec for testing-evidence candidate emission.
-- The draft defines candidate-only behavior: files under `audit_outputs/score_sheet_candidates/`, inheritance of the 13-column testing-evidence schema, operator-promotion boundary, no-delete/archive rule, no-PII / no-secrets / no-raw-payload guard, failure/correction/retest preservation, first emitter candidate (`audit_tools/pre_ship_audit.py`), and open questions for future §11.
-- The draft explicitly preserves the existing false-positive / false-negative correction evidence loop. It does not introduce a replacement testing concept.
-- Gate-clean: `audit_outputs/score_sheet_candidate_emit_deep_dive_draft_20260602_20260602T220436Z.md`.
-
-### Status
-
-- Draft pre-§11.
-- No implementation authorized.
-- No canonical ledger write path authorized.
-- No pre-commit hook or review script authorized.
-- No D10 completion, §13 sign-off, §11 sign-off, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
-
-## 2026-06-02 — Wave 0 testing-discipline foundation gate-clean
-
-### Files
-
-- `4. Product_Roadmap/Internal_Testing_Evidence_Discipline_Deep_Dive.md` (created 2026-06-01 PT; gated 2026-06-02T04:10:00Z UTC)
-- `think_sheet.md` (2026-06-01 7-axis stress-test entry appended; gated with the deep-dive in the same artifact packet)
-- `MASTER_INDEX.md` (this entry plus the deep-dive bullet)
-- `PROGRESS.md` (handoff section updated to 2026-06-02 ~13:00 PT)
-- `PROJECT_ACTIVITY_LOG.md` (this entry)
-
-### Summary
-
-- Created `Internal_Testing_Evidence_Discipline_Deep_Dive.md` as the Wave 0 foundation draft for the internal testing-evidence discipline. Pre-§11. Locks the 13-column row contract (12 carry-forward columns plus the new `track` column), closed `event_type` / `pass_fail` / `failure_type` / `recorded_by` / `track` enums, the single-canonical-ledger rule, the candidate-vs-evidence boundary for future auto-derivation, the internal-only v1 disclosure boundary, 14 named failure modes, and 12 audit requirements including a hard no-PII guard at §9.1.
-- §10.A records direction from the 2026-06-01 7-axis stress test as verdict candidates: Q1 single canonical ledger plus required `track` column with per-track filtered views (per-track separate ledgers explicitly rejected); Q4 closed list of four calibration-observation triggers; Q5 permanent retention for compliant rows plus PII guard plus counsel review before live client data touches the surface; Q7 candidate-only auto-derivation under `audit_outputs/score_sheet_candidates/` with operator-promotion as the only path to evidence; Q10 all 13 columns mandatory.
-- §10.B carries still-open Q2 (append authority lifecycle), Q3 (stale-row review trigger N), Q6 (external-render abstraction confirmation), Q8 (agent-bible relationship), Q9 (schema-revision rule), Q11 (`track` enum closed taxonomy), Q12 (candidate file format YAML/JSON), Q13 (PII pre-commit hook scope).
-- §10.C records the recommended staged cadence: Wave 0 (tonight's draft, authorized); Wave 1 (`Score_Sheet_Candidate_Emit_Deep_Dive.md` draft + §11); Wave 2 (first emitter implementation in `audit_tools/pre_ship_audit.py`); Wave 3 (`Score_Sheet_Interactive_Review_Deep_Dive.md` plus PII pre-commit hook); Wave 4 (gradual expansion to `fraud_eval_harness`, `REACTION_TIMING_TEST_LOG.md`, the audit runners, etc.). Waves 1–4 require explicit operator authorization per wave.
-- Appended 2026-06-01 7-axis stress-test entry to `think_sheet.md` under "Sub-question stress test — Internal Testing Evidence Discipline §10 (2026-06-01)" covering Q1–Q13. Verdict candidates explicitly NOT D-locked.
-- Gate-clean: `audit_outputs/internal_testing_evidence_discipline_deep_dive_draft_20260601_20260602T041000Z.md` (packet size 96,729 bytes; touched files 2; blocking=0; warnings=0).
-
-### Status
-
-- Pre-spec / pre-§11.
-- No D-decisions locked.
-- No §11 signature.
-- No implementation authorized.
-- No D10, §13, client-facing copy, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
-- Working tree at the time of this entry: deep-dive untracked, `think_sheet.md` modified, both gate-clean from the artifact packet. Today's tracker mods (this entry, `MASTER_INDEX.md`, `PROGRESS.md`) are being added as closeout work and will gate as three separate tracker packets, same pattern as the 2026-06-01 tracker gates.
+---
 
 ## 2026-06-01 - Stage A precursor-chain demo runner prepped for §14 fictional case
 
@@ -6947,108 +6897,76 @@ Matt clarified that false positives are as important as false negatives for cred
 - This does not change D10, the build queue, signed specs, or runtime code.
 - Corrective actions must remain scoped, proportionate, and retestable.
 
-## 2026-06-01 - Reddit Renewal-Friction Evidence Folder Signal Logged
-**Actor:** Codex (operator-provided Reddit capture)
-
-**Action:** Updated
-
-**Files Changed:**
-- Frontier_Intake_Log.md
-- PROJECT_ACTIVITY_LOG.md
-
-**Reason:**
-Matt provided another Reddit reply from a cybersecurity audit / cyber-insurance renewal-friction thread. The respondent reported that renewals are asking for actual artifacts such as MFA policy, admin audit logs, mailbox forwarding rules, DMARC / SPF / DKIM status, and proof that payment-change approvals are logged somewhere. The respondent also distinguished clean evidence from premium outcome guarantees: evidence helps, but premium increases may still happen based on claims history, industry, or revenue profile.
-
-**What changed:**
-- Added a new ad-hoc Confirmation entry to `Frontier_Intake_Log.md`: `2026-06-01 - Reddit renewal-friction reply: evidence folders beat renewal-week artifact scramble`.
-- Logged the signal as evidence-readiness confirmation only.
-- Preserved the key product implication: the pain is keeping a small current evidence folder instead of scrambling for screenshots and CSV exports during renewal week.
-
-**Boundary respected:**
-- Does not advance D10.
-- Does not authorize implementation, runtime code, spec edits, queue changes, pricing, or client-facing copy.
-- Does not expand NorthStar into MFA policy management, admin audit logging, mailbox-forwarding monitoring, or DMARC / SPF / DKIM management.
-- Does not make compliance, certification, insurer-approval, premium, coverage, or outcome claims.
-
----
-
-## 2026-06-01 - Testing Discipline Footing Replayed To Linux Primary
-**Actor:** Codex (operator-direction capture and Linux replay)
+## 2026-06-01 - Testing Score Sheet Schema Drafted
+**Actor:** Cursor (operator-direction capture)
 
 **Action:** Created / Updated
 
 **Files Changed:**
-- `4. Product_Roadmap/Research_Inputs/Testing_Score_Sheet_Schema.md` (CREATED in Linux primary — pre-spec internal testing row schema)
-- `4. Product_Roadmap/Research_Inputs/Testing_Plan_V1.md` (CREATED in Linux primary — pre-spec V1 testing plan)
-- `Research/queries/2026-06-01_linux_primary_handoff.md` (CREATED in Linux primary — handoff note)
-- `Research/queries/2026-06-01_testing_scoring_correction_evidence_brief.md` (CREATED in Linux primary — operator brief)
-- `Research/queries/2026-06-01_testing_scoring_correction_evidence_research.md` (CREATED in Linux primary — supporting research)
-- `MASTER_INDEX.md` (UPDATED — indexed the two testing-footing artifacts)
-- `PROGRESS.md` (UPDATED — current handoff now reflects Linux replay)
-- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+- 4. Product_Roadmap/Research_Inputs/Testing_Score_Sheet_Schema.md
+- MASTER_INDEX.md
+- PROGRESS.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Supporting Research Captured Earlier This Session:**
+- Research/queries/2026-06-01_testing_scoring_correction_evidence_brief.md
+- Research/queries/2026-06-01_testing_scoring_correction_evidence_research.md
 
 **Reason:**
-Matt clarified that tonight's target is to establish footing for the future agent-bible / evolving-defense-system discipline, not to build the full agent bible. The footing is the internal testing score-sheet discipline plus the first V1 testing plan: record meaningful test events, preserve passes / failures / partials / blocked runs, capture plain-English why, link corrective action to retest evidence, and keep calibration observations visible.
+Matt chose to move forward tonight with the M1 + M2 + M3 score-sheet discipline rather than leave it as chat-only doctrine. The goal was to capture one pre-spec internal row schema for recording every meaningful NorthStar test event with expected outcome, actual outcome, pass / fail / partial / blocked status, plain-English why, failure or calibration type, scoped corrective action, retest evidence, timestamp, and recorder identity.
 
 **What changed:**
-- Replayed the Windows-only `Testing_Score_Sheet_Schema.md` and `Testing_Plan_V1.md` into Linux primary.
-- Replayed the supporting query / handoff notes under `Research/queries/`.
-- Indexed the two testing artifacts in `MASTER_INDEX.md`.
-- Updated `PROGRESS.md` so the next startup read sees that the artifacts are now in Linux and still need gate review.
+- Created `Testing_Score_Sheet_Schema.md` as a pre-spec shaping artifact under `4. Product_Roadmap/Research_Inputs/`.
+- Defined the exact 12-column Testing Score Sheet row:
+  `test_id`, `event_type`, `what_was_tested`, `expected_outcome`, `actual_outcome`, `pass_fail`, `why_plain_english`, `failure_type`, `corrective_action`, `retest_evidence`, `recorded_at`, `recorded_by`.
+- Locked field rules for pass rows, fail rows, blocked rows, `no_action` corrective-action handling, retest-evidence links, and no raw payload / no chain-of-thought / no secret-material storage.
+- Added two seed rows:
+  - `tss-2026-05-22-001` for the Phase 1.5 vendor-invoice false-negative recovery, linked to `cer-2026-05-22-001` and the five saved vf-001..vf-005 diagnostic reports.
+  - `tss-2026-06-01-001` for the live grok-4 auth-pass / content-risk calibration observation on the fictional §14 vendor-payment-redirect fixture.
+- Added an internal / external boundary section: full rows are internal by default; any buyer-facing render would require a future signed spec / operator authorization and would summarize rather than expose raw failure records.
+- Added `MASTER_INDEX.md` entry under the existing Research Inputs cluster.
+- Updated the `PROGRESS.md` handoff note so future startup reads see that the draft exists and the remaining work is Linux-primary sync plus gate, not drafting from scratch.
 
 **Boundary respected:**
-- Pre-spec footing only.
-- Does not create the future agent bible.
-- Does not authorize implementation, runtime code, a score-sheet writer, database table, dashboard, CI gate, buyer-facing render, D10 progress, §13 sign-off, pricing, or another live LLM call.
-- Does not weaken or reinterpret any test expectation.
-- Does not make compliance, certification, insurer-approval, coverage-qualification, premium-reduction, or fraud-prevention claims.
+- Pre-spec only. Not §11, not §13, not D10 evidence, not implementation, not runtime code, not client-facing copy, not pricing approval.
+- Does not authorize a score-sheet writer, database table, dashboard, portal, CI gate, or eval-harness change.
+- Does not weaken, relax, reinterpret, or delete any existing expectation bound.
+- Does not advance Cyber Insurance D10 or §13 sign-off.
+- Does not claim compliance, certification, insurer approval, coverage qualification, premium reduction, or fraud prevention.
+- External research is used as validation only; project authority remains the internal repo anchors and operator decisions.
 
-**Next Step:**
-Inspect the Linux diff, create a worker manifest for `testing_score_sheet_schema_and_plan_20260601`, and run `audit_tools/complete_gate.py` before any ready / done / commit claim.
+**Operational caveat:**
+The file was written in the accessible Windows mirror because this Cursor environment could not access `/home/socialarchitect/northstar` via file tools and WSL shell calls returned no usable status. Per `AGENTS.md` §1.1, Linux primary remains the source of truth; this change must be copied or replayed into `/home/socialarchitect/northstar` before gate / commit work.
 
----
+## 2026-06-01 - Testing Plan V1 Drafted
+**Actor:** Cursor (operator-direction capture)
 
-## 2026-06-01 - Reddit Vendor Payment-Change High-Risk Signal Logged
-**Actor:** Codex (operator-provided Reddit capture)
-
-**Action:** Updated
+**Action:** Created / Updated
 
 **Files Changed:**
-- Frontier_Intake_Log.md
+- 4. Product_Roadmap/Research_Inputs/Testing_Plan_V1.md
+- MASTER_INDEX.md
+- PROGRESS.md
 - PROJECT_ACTIVITY_LOG.md
 
 **Reason:**
-Matt provided another Reddit vendor payment-change verification discussion. The replies reinforced that a bank-account / payment-detail change should be treated as a high-risk event regardless of payment amount, because fraud often succeeds when the process for changing payment details is weaker than the process for approving payments.
+Matt directed the work to move from the score-sheet schema into the actual V1 testing plan. The plan needed to operationalize the schema without asking for another decision, using the evidence already gathered tonight and preserving the rule that failures, blocked attempts, and passes all remain evidence.
 
 **What changed:**
-- Added a new ad-hoc Confirmation entry to `Frontier_Intake_Log.md`: `2026-06-01 - Reddit vendor payment-change replies: bank-detail changes should be high-risk events`.
-- Captured the control shape: known-good contact, callback, documented verification, optional small test payment / delayed larger recurring payment, and skepticism that second-person approval alone reduces risk without real independent verification.
+- Created `Testing_Plan_V1.md` as a pre-spec testing plan under `4. Product_Roadmap/Research_Inputs/`.
+- Scoped V1 to existing evidence surfaces only: the 2026-05-22 Phase 1.5 eval failure, five post-correction vendor-invoice diagnostics, the 2026-06-01 missing-`openai` blocked attempt, the successful live grok-4 auth-pass / content-risk calibration run, and an optional future full eval rerun hook.
+- Defined the ordered V1 test-event plan with proposed score-sheet row IDs:
+  - `tss-2026-05-22-001`
+  - `tss-2026-05-22-002`
+  - `tss-2026-06-01-000`
+  - `tss-2026-06-01-001`
+  - `tss-next-full-eval-rerun-001`
+- Added recording rules for failure rows, pass / calibration rows, blocked rows, and partial rows.
+- Added V1 execution sequence and V1 completion criteria.
+- Added `MASTER_INDEX.md` entry.
 
 **Boundary respected:**
-- Does not advance D10.
-- Does not authorize a new spec, queue item, runtime implementation, workflow UI, payment release control, test-payment workflow, pricing, or client-facing copy.
-- Does not make banking, lending, money-movement, reimbursement, guarantee, insurance, compliance, certification, insurer-approval, premium, coverage, or fraud-prevention claims.
-
----
-
-## 2026-06-02 - Call Sheet Removed As Active Build Blocker
-**Actor:** Matt Nichol (operator direction), captured by Codex
-
-**Action:** Removed / Updated
-
-**Files Changed:**
-- `1. Business_Operations/Client_Documents/Cyber_Insurance_Vendor_Payment_Integrity_Discovery_Call_Sheet.md` (REMOVED from working tree by operator direction)
-- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (UPDATED — Build List item 1 no longer treats the call-sheet / D10 discovery workflow as the active build blocker)
-- `MASTER_INDEX.md` (UPDATED — call sheet entry marked retired / removed)
-- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
-
-**Reason:**
-Matt decided the call sheet and its D10 workflow were slowing the build down and that the project has enough current signal to keep building: gated cyber-insurance research artifacts, Reddit confirmation logs, Todd / CMIT door-opening signal, the live `grok-4` Stage A demo run, and the newly gated testing-footing artifacts. The operator direction is to continue Cyber Insurance / Vendor Payment Integrity evidence-package build shaping rather than keep cycling on the call sheet.
-
-**Boundary respected:**
-- This does not claim D10 is complete.
-- This does not authorize §13 sign-off.
-- This does not edit the Cyber Insurance Evidence Package spec.
-- This does not authorize implementation, runtime code, pricing, or client-facing copy.
-- This does not create compliance, certification, insurer-approval, premium, coverage, or fraud-prevention claims.
-- Historical references to the call sheet may remain in older logs, but the active queue no longer treats it as the next build blocker.
+- Pre-spec only. Not §11, not §13, not D10 evidence, not implementation, not runtime code, not client-facing copy, not pricing approval.
+- Does not authorize another live LLM call, a full 40-case rerun, runtime code, a score-sheet implementation, buyer-facing wording, D10 progress, or §13 sign-off.
+- Does not weaken, relax, reinterpret, or delete any test expectation.
+- Keeps Linux-primary sync and gate as required before any commit / ready / done claim.
