@@ -273,11 +273,13 @@ Wave 0 §10.A Q1 remains in force: the canonical ledger may stay **schema-only**
 
 Wave 3 v1 promotion therefore means:
 
-1. The promoted 13-column row is written to an operator-chosen canonical artifact (e.g. amendment block in [`Testing_Score_Sheet_Schema.md`](Research_Inputs/Testing_Score_Sheet_Schema.md), a dedicated ledger stub file if operator authorizes one, or a structured entry in `PROJECT_ACTIVITY_LOG.md` that embeds the full row shape).
+1. The promoted 13-column row is written to the **operator-confirmed default canonical surface: an amendment block in [`Testing_Score_Sheet_Schema.md`](Research_Inputs/Testing_Score_Sheet_Schema.md)** (resolves §10 Q2). Rows live next to the schema that defines them.
 2. The source candidate packet is archived under `promoted/`.
 3. No separate per-track ledger files are created.
 
-Transition to a dedicated ledger file requires explicit operator authorization per Wave 0 — not automatic at Wave 3.
+### §9.1 Hundred-row split trigger (operator-confirmed)
+
+The schema-file amendment block is the canonical surface **only while small**. The moment the promoted-row count in that block **crosses 100 rows**, the rows must be split out into a single dedicated ledger file (the option-(c) stub) at the next promotion, and `Testing_Score_Sheet_Schema.md` retains only a pointer to it. This is a mandatory transition, not optional: Markdown row tables degrade past ~100 rows. The split preserves the single-canonical-ledger rule (still one surface, no per-track files) and requires no fresh operator authorization once this threshold is crossed — the threshold itself is the authorization. Crossing 100 rows without splitting is a Wave 3 housekeeping failure.
 
 ---
 
@@ -292,13 +294,30 @@ Transition to a dedicated ledger file requires explicit operator authorization p
 7. **Crypto proof:** Explicitly reject for v1, or defer to a future amendment?
 8. **Pre-commit hook coupling:** Confirm PII hook ships only with review-script spec, not Wave 3 promotion rules alone.
 
+### §10.A Operator-Confirmed Decisions (2026-06-03, pre-§11)
+
+These resolve the §10 questions as operator-confirmed decisions. They are operator-confirmed and feed the §11 signature, but this block itself does NOT sign §11 or authorize implementation.
+
+1. **Q1 — Review helper:** YES. `audit_tools/review_ledger.py` is authorized as a future **Wave 3.1 spec** (not code) that may list packets, prompt the 8-item checklist, and draft promotion rows. It must never auto-promote, assign canonical `event_id`, set operator-bearing `recorded_by`, move packets to `promoted/`, delete candidates, or write the canonical ledger.
+2. **Q2 — Canonical write surface:** `Testing_Score_Sheet_Schema.md` amendment block is the v1 default, subject to the **§9.1 hundred-row split trigger** (auto-split to a dedicated ledger file once the block crosses 100 rows).
+3. **Q3 — Rejection enum:** Free-text rejection reasons in v1; revisit a closed enum only when row volume justifies it.
+4. **Q4 — Track-slug table:** Defined in **Wave 0** alongside the nine-value `track` taxonomy (Wave 0 §12), not duplicated here. Wave 3 references it.
+5. **Q5 — Deferred packet TTL:** Carry forward Wave 0 Q3 (60-day idea) as not-locked; revisit with the Wave 3.1 review helper. No TTL enforcement tooling in Wave 3 v1.
+6. **Q6 — Manus dataset intake:** Any sanitized external dataset enters only through a separate operator-authorized `research_intake` spec, wholly outside Wave 3.
+7. **Q7 — Crypto proof:** **Explicitly rejected for v1.** In-band textual proof (operator identity + date + `candidate_ref` / `candidate_packet_id`) is the only required proof. A future amendment may revisit if an external party ever requires cryptographic proof.
+8. **Q8 — Pre-commit hook coupling:** The no-PII / no-secrets pre-commit hook ships **bundled with the Wave 3.1 review-script spec**, sharing its scanner contract — not with the Wave 3 promotion rules alone.
+
+### §10.B Boundary
+
+Still pre-§11. No implementation, no `review_ledger.py` code, no pre-commit hook code, no canonical ledger automation, no D10 completion, no §13 sign-off, no client-facing copy, and no compliance / certification / insurer-approval / coverage / premium / fraud-prevention claim is authorized by these decisions.
+
 ---
 
 ## §11 Sign-Off
 
-**Pending operator authorship.** Do not infer, draft, or auto-fill.
+**Matt Nichol(Zebra-Comit) June, 3rd. 2026.** Do not infer, draft, or auto-fill.
 
-Until §11 is signed, Wave 3 authorizes **no** implementation, **no** `review_ledger.py`, **no** pre-commit hook, **no** canonical ledger automation, and **no** change to emitters.
+This §11 signature ratifies the spec and its §10.A decisions as governing Wave 3 truth and authorizes the *future drafting* of a Wave 3.1 `review_ledger.py` + PII-hook spec. It does **not** authorize any implementation: still **no** `review_ledger.py` code, **no** pre-commit hook code, **no** canonical ledger automation, and **no** change to emitters until a separate explicit operator "start build" authorization.
 
 ---
 

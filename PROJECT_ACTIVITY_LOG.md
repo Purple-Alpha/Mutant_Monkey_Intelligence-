@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-06-03 - Wave 3 §10 questions resolved and §11 operator-signed
+
+**Actor:** Matt Nichol (Zebra-Comit) signing; Cursor capturing decisions at operator direction.
+
+**Action:** Updated / Signed
+
+**Files Changed:**
+- `4. Product_Roadmap/Score_Sheet_Candidate_Review_Promotion_Deep_Dive.md` (UPDATED — added §9.1 hundred-row split trigger; added §10.A Operator-Confirmed Decisions resolving all eight §10 questions; §11 operator-signed; replaced stale "until §11 is signed" boundary line with the ratified-but-no-code boundary)
+- `PROGRESS.md` (UPDATED — current handoff now reflects §11 signed + §10.A decisions)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Operator chose to walk the §10 open questions before signing rather than sign blind. The four substantive calls: Q2 canonical write surface = `Testing_Score_Sheet_Schema.md` amendment block with a hard §9.1 trigger that auto-splits to a dedicated ledger file once the block crosses 100 rows; Q7 cryptographic promotion proof explicitly rejected for v1 (in-band textual proof only); Q1 `review_ledger.py` authorized as a future Wave 3.1 spec (never auto-promote); Q8 PII pre-commit hook bundled with that Wave 3.1 review-script spec. Q3/Q4/Q5/Q6 accepted as recommended (free-text rejection reasons; track-slug table in Wave 0; deferred-TTL carry-forward; Manus datasets via separate `research_intake` spec). §11 signature ratifies the spec + §10.A as governing Wave 3 truth and unlocks drafting the Wave 3.1 spec, but authorizes no implementation code.
+
+**Next Step:**
+cp the edited spec + trackers to `~/northstar`, run the audit gate, commit/push. Then optionally draft the Wave 3.1 `review_ledger.py` + PII-hook spec (spec only). No code until a separate operator "start build" authorization.
+
+---
+
 ## 2026-06-03 - Wave 3 candidate review and promotion deep-dive drafted
 
 **Actor:** Cursor, at operator request (Wave 3 Candidate Review Plan).
