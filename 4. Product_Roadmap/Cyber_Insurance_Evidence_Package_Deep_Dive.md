@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Deep Dive
 
-**Status:** DRAFT (pre-§11). §12 Q1-Q11 resolved by operator on 2026-05-26 through 2026-05-30 (pending §13 lock as D1-D2e, D3-D3a, D4, D5, D6, D7, D8, D9, D10, D11). §13 sign-off state at this revision: precondition 1 (all §12 questions resolved) satisfied; precondition 2 (v1 test plan defined and runnable from the spec alone) satisfied by §14 added 2026-05-30; precondition 3 (operator-set Q10 count threshold — 2 of 3 relevant MSP conversations meeting the D10 per-MSP definition — met in actual cheaper-proof MSP discovery) remains open. §11 criterion 15 (v1 test plan **executed** end to end) also remains open until the §14 plan has been run and the run-level pass / fail recorded in the project's normal test-evidence surfaces.
+**Status:** §13 SIGNED 2026-06-03 by Matt Nichol (operating entity name TBD pending project rename; the "zebra-comit" handle is retracted). This signature is recorded in the working tree and is uncommitted; committing it fires the pre-ship / completion gate per `AGENTS.md` §5, which must pass or be explicitly operator-overridden with a recorded reason before commit. Prior state was DRAFT (pre-§11). §12 Q1-Q11 resolved by operator on 2026-05-26 through 2026-05-30 (pending §13 lock as D1-D2e, D3-D3a, D4, D5, D6, D7, D8, D9, D10, D11). §13 sign-off state at this revision: precondition 1 (all §12 questions resolved) satisfied; precondition 2 (v1 test plan defined and runnable from the spec alone) satisfied by §14 added 2026-05-30; precondition 3 (operator-set Q10 count threshold — 2 of 3 relevant MSP conversations meeting the D10 per-MSP definition — met in actual cheaper-proof MSP discovery OR explicitly overridden by Matt with recorded reason) satisfied by Matt's signed operator override in `PROJECT_ACTIVITY_LOG.md` on 2026-06-03. D10 is **overridden, not met**; do not describe the override as D10 completion, cheaper-proof validation, or market proof. §11 criterion 15 (v1 test plan **executed** end to end) remains open until the §14 plan has been run and the run-level pass / fail recorded in the project's normal test-evidence surfaces.
 
 **Authority model:** Matt's vision is the product authority. This document is a Technical Verification Layer artifact. It defines technical risks, failure modes, evidence schemas, audit requirements, and machine-readable "done" criteria. It does not score, approve, or judge the product direction.
 
@@ -12,7 +12,7 @@
 
 **Selected by:** Operator selection 2026-05-25 evening. Matt's selection is the authority. Cross-reference: `think_sheet.md` row "Cyber Insurance Evidence Package" (2026-05-25); any score recorded there is historical metadata only, not decision authority. The active guidance is "promote with cheaper-proof-first guidance."
 
-**Spec drafting is operator-authorized and gated on cheaper-proof MSP discovery validation** per the think_sheet stress test verdict. This draft does not unblock implementation; it produces the contract that cheaper-proof discovery conversations can frame against.
+**Spec drafting is operator-authorized and originally gated on cheaper-proof MSP discovery validation** per the think_sheet stress test verdict. On 2026-06-03, Matt signed an operator override removing the D10 cheaper-proof gate as the active blocker on the §13 readiness path. This override does not claim cheaper-proof validation and does not unblock implementation by itself; it only allows §13 sign-off review to proceed on an explicitly recorded operator decision supported by direction-confirming signal.
 
 ---
 
@@ -635,7 +635,7 @@ Cross-reference: the Direction lock (top of spec) requires the five-stage mappin
 
 Reopening the threshold (to 1-of-3, 3-of-3, written-follow-up required, or any other revision) is a v1.1 question pending live discovery feedback; it follows the Frontier Intake → `think_sheet.md` → spec-first §11 revision pattern.
 
-Implementation-spec authoring is not authorized by D10 threshold-set alone; the §13 sign-off precondition (see §13) additionally requires the 2-of-3 threshold to be **met** in actual cheaper-proof discovery work, not merely asserted.
+Implementation-spec authoring is not authorized by D10 threshold-set alone. The original §13 sign-off precondition required the 2-of-3 threshold to be **met** in actual cheaper-proof discovery work, not merely asserted. On 2026-06-03, Matt signed an operator override removing that cheaper-proof gate as the active blocker. The override is preserved as "D10 overridden, not met" and must not be represented as cheaper-proof validation or market proof.
 
 ### Q11. Vendor-name redaction policy
 
@@ -643,9 +643,9 @@ Implementation-spec authoring is not authorized by D10 threshold-set alone; the 
 
 ---
 
-## §13 §11 Sign-Off Placeholder
+## §13 §11 Sign-Off
 
-This section is empty until Matt signs.
+**Status:** SIGNED 2026-06-03 by Matt Nichol. Operating entity name is TBD pending the in-progress project rename (the "zebra-comit" handle is retracted). Operator authorized this sign-off in-session on 2026-06-03 by selecting "Lock Cyber Insurance §13 now under Matt Nichol (entity name TBD after rename)." The sign-off is recorded in the working tree and is uncommitted; committing it fires the pre-ship / completion gate per `AGENTS.md` §5.
 
 ### Preconditions for §13 sign-off
 
@@ -653,19 +653,33 @@ This section is empty until Matt signs.
 
 1. **All §12 questions resolved.** Q1 through Q11 are each marked "Resolved YYYY-MM-DD by operator (pending §13 lock as DN)" in §12 with the operator-authored resolution text intact. At sign-off, every Q maps to a DN in the locked-decisions table below.
 2. **v1 test plan defined and runnable from the spec alone.** Satisfied 2026-05-30 by §14 of this deep dive. §14 names the fictional Stage A case, the fixture path, the per-stage expected outputs, the end-to-end pass / fail criteria, and the runtime invocation sequence — all of which the implementation spec inherits verbatim when it gets written. A signed-but-test-plan-less package is the failure mode this precondition exists to prevent; §14's presence in the spec closes that failure mode at the *defined* layer. The *executed* layer is covered separately by §11 criterion 15.
-3. **Q10 count threshold met.** The operator-set Q10 count threshold — **2 of 3 relevant MSP conversations** meeting the D10 per-MSP definition — has been met in actual cheaper-proof discovery work, with the two named anchors per MSP captured verbatim in the cheaper-proof runbook / worksheet. Implementation-spec authoring is not authorized by D10 threshold-set alone; the threshold must be **met** by real discovery, not asserted. This precondition closes the authority-drift risk that a single MSP yes (or zero MSP yeses) could be treated as having cleared the cheaper-proof bar.
+3. **Q10 count threshold met or explicitly overridden.** The operator-set Q10 count threshold — **2 of 3 relevant MSP conversations** meeting the D10 per-MSP definition — is the default cheaper-proof gate. On 2026-06-03, Matt signed an operator override in `PROJECT_ACTIVITY_LOG.md` removing that cheaper-proof gate as the active blocker on the §13 readiness path. The override is supported by direction-confirming signal already logged in `Frontier_Intake_Log.md` and explicitly characterized as **not D10 evidence** and **not validated market proof**. Therefore, for this §13 review, precondition 3 is satisfied by explicit operator override, not by D10 completion.
 
 The §11 Done Criteria criterion 15 enforces the same five-stage end-to-end rendering at package-done time. The §13 precondition 2 above enforces it earlier — at sign-off — so the spec cannot lock without the test plan that criterion 15 later checks against.
 
-### Locked decisions (D1–D11) — populated on sign-off
+### Locked decisions (D1–D11) — locked at sign-off 2026-06-03
 
 | # | Decision | Note |
 |---|---|---|
-| (pending) | (pending) | Decisions enter this table only after Matt's signed acceptance of the corresponding §12 open question. Expected lock at sign-off: D1–D2e (Q1/Q2), D3–D3a (Q3), D4 (Q4), D5 (Q5), D6 (Q6), D7 (Q7), D8 (Q8), D9 (Q9), D10 (Q10), D11 (Q11). |
+| D1 | Cadence: hybrid — quarterly snapshot, on-demand regeneration, annual full review at the tenant's insurance-renewal anniversary. | From Q1. |
+| D2–D2e | Stale-evidence thresholds: 30-day vs 90-day per-category defaults, structural signed-artifact freshness exemption, superseded-artifact annotation. | From Q2. |
+| D3–D3a | v1 delivery surfaces: PDF (buyer-facing) + Markdown bundle (audit/engineering companion); landing page and evidence vault deferred to v1.1+. | From Q3. |
+| D4 | Single carrier-agnostic format; no per-carrier variants in v1 or later (product policy, not backlog). | From Q4. |
+| D5 | Not priced by NorthStar in v1; MSP decides bundling; no pricing field in package schema or `done_declaration.json`. | From Q5. |
+| D6 | Lock the §9 vocabulary-translation list at its current five rows for v1; additions via the cheaper-proof feedback channel + §11 revision. | From Q6. |
+| D7 | Shape α: exactly one evidence record per Evidence-and-Outcome-Reporting stage (Detection → Verification → Evidence → Audit Trail → Outcome Documentation). | From Q7. |
+| D8 | Inherit the canonical forbidden-language list from `Compliance_and_Trend_Watch_Process.md` §5.1; the §9 twelve-term avoid-list is review guidance only. | From Q8. |
+| D9 | v1 ships PDF + Markdown bundle with structured records at a stable internal path; top-level JSON render deferred to v1.1. | From Q9. |
+| D10 | Cheaper-proof go bar definition retained (per-MSP "yes" = named SMB + named upcoming underwriting conversation; 2-of-3 relevant MSPs). **For this sign-off, D10 is OVERRIDDEN, not met**, per Matt's signed 2026-06-03 operator override in `PROJECT_ACTIVITY_LOG.md`. The override is operator decision + direction-confirming signal, not validated market proof. | From Q10 + 2026-06-03 override. |
+| D11 | Vendor names silently redacted by default in the rendered package when tenant policy marks them customer-confidential in v1; explicit redaction annotations deferred to v1.1. | From Q11. |
 
 ### Sign-off line
 
-> *(To be authored by Matt in his own words at §11 sign-off.)*
+> §13 SIGNED 2026-06-03 — Matt Nichol (operating entity name TBD pending project rename). Authorized in-session; accepts the 2026-06-03 D10 operator override (D10 overridden, not met) as the basis for precondition 3.
+
+*Authorship note: the line above records Matt's explicit in-session authorization to lock §13 (he selected the "lock §13 now under Matt Nichol, entity TBD" option). The assistant did not compose sign-off rationale in the operator's voice; Matt may replace this line with his own personal wording at any time, and must set the operating entity name once the project rename is decided.*
+
+*Commit discipline: this sign-off is recorded in the working tree and is uncommitted. Per `AGENTS.md` §5, committing it fires the pre-ship / completion gate, which must pass or be explicitly operator-overridden with a recorded reason before commit.*
 
 Per the Authorship Rule (2026-05-25/26 discussion, cross-reference to the deleted `Human_Written_Communication_Policy.md` failure mode): the sign-off text is operator-authored. AI may help structure, may proofread, may flag inconsistencies — AI does not draft the operator's signature wording or attribute decisions to the operator without explicit operator authorship.
 
@@ -674,7 +688,7 @@ Per the Authorship Rule (2026-05-25/26 discussion, cross-reference to the delete
 Signing this spec:
 
 1. Locks D1–D11 from §12 question resolution (D1–D2e from Q1/Q2, D3–D3a from Q3, D4 from Q4, D5 from Q5, D6–D11 from Q6–Q11).
-2. Authorizes the next stage — cheaper-proof MSP discovery framing if not yet done, or implementation spec authoring if cheaper-proof has already validated the framing.
+2. Authorizes the next stage — implementation spec authoring only if Matt either (a) treats cheaper-proof as validated through future discovery, or (b) continues under the 2026-06-03 signed operator override that removes D10 as the active blocker while preserving the "overridden, not met" boundary.
 3. Anchors the spec for Pass 1 / Pass 2 implementation work when authorized.
 
 Signing does **not**:

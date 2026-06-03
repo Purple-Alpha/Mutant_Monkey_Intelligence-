@@ -399,3 +399,70 @@ The evidence trail should record who requested the change, what changed, which t
 - Treating the archived report's threshold values as NorthStar policy. Any thresholds must be operator-selected and spec-gated before implementation.
 
 ---
+
+### 2026-06-03 — Operator concept: freelancer "piggyback" channel onto the NorthStar shield ("lung" model)
+
+**Date:** 2026-06-03
+**Source:** Operator-originated concept (Matt Nichol), captured at operator request so it is not lost. A fuller writeup exists in an external Gemini draft (not yet in the repo); this entry is a stub pending that import.
+**Signal type:** Distribution / platform / business-model concept (NorthStar as shared defensive infrastructure for independent freelancers)
+**Evidence strength:** Operator idea only — no external citation, no market validation, no customer discovery
+**Classification per intake protocol:** **Candidate (operator-captured)** — logged as a Candidate at operator direction. Honest scope note below: this is a platform / distribution / go-to-market concept, not a Stage A inbox-layer detector candidate, so it does not fit the usual "sits inside locked Stage A detection scope" Candidate test cleanly; it leans Stage B / C and channel strategy. Recorded as a Candidate per operator instruction, not pre-scored or pre-ranked.
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar. Unrelated to D10.
+
+**Raw concept summary (operator words, paraphrased for the log):**
+Build a sanctioned integration path that lets independent freelancers (solo security practitioners, one-person IT consultants, freelance MSP-adjacent operators) "piggyback" onto the back of the NorthStar security shield rather than each building their own defense capability. NorthStar becomes "like a lung" — the shared organ that oxygenates many smaller players, so freelancers breathe cybersecurity defense through NorthStar's detection / evidence / shield infrastructure. NorthStar is the shared respiratory system; freelancers are the capillaries reaching SMBs.
+
+**Wording flag (operator named the idea a "back door"):**
+In security, "back door" means a covert / unauthorized access path. The concept as described is the opposite — an *authorized, sanctioned integration / partner entry point* freelancers connect through. Any future capture, spec, or copy must rename this to an authorized integration / partner channel; "back door" must not survive into NorthStar voice or any client-facing surface.
+
+**How it relates to existing direction (context only, not adoption):**
+- Rhymes with the `VISION.md` wedge ("the trust layer MSPs install once and bundle") — but extends the channel from MSPs to individual freelancers.
+- Rhymes with the Stage C cross-tenant signature-sharing arc (`VISION.md` — signatures/patterns can cross tenants, customer data never does; Guardrail 11). A freelancer-piggyback model would have to honor that same isolation non-negotiable.
+- Cuts across the seven `VISION.md` non-negotiables (kill switch, full audit, reversibility, tenant isolation, signed promotion, adversarial-review, operator approval) — any freelancer access path would inherit all of them, not relax them.
+
+**Boundary:** Does **NOT** authorize:
+
+- Any runtime code, integration surface, partner API, access path, or "back door" of any kind.
+- A new spec, SPARK, queue item, or `think_sheet.md` row (operator picks it up one at a time when ready, per the intake protocol).
+- Promotion out of this log; no auto-pipeline to roadmap or implementation.
+- Scope expansion beyond the locked Stage A email-fraud / inbox-layer MDR surface.
+- Any pricing, partner-program, revenue-share, or client-facing claim.
+- Treating the external Gemini draft as repo truth; it must be imported and reviewed before any of it is cited as project state.
+
+**Next step (operator choice):** When ready, paste the fuller Gemini writeup so it can be captured properly, or pick this up into `think_sheet.md` for operator-driven stress-testing. Until then it sits here as a preserved operator idea.
+
+---
+
+### 2026-06-03 — Todd Chapman / CMIT Solutions reply: credible door, not a D10 yes
+
+**Date:** 2026-06-03
+**Source:** Operator-reported MSP-owner reply (Todd Chapman, CMIT Solutions); coffee invitation to understand mutual value; skeptical of outreach wording. Not yet logged in `Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv` at time of capture.
+**Signal type:** Cyber-insurance / MSP discovery (Vendor Payment Integrity evidence-package framing)
+**Evidence strength:** Operator-reported single conversation signal — real MSP-owner engagement, not primary published source per `Compliance_and_Trend_Watch_Process.md` §2.6
+**Classification per intake protocol:** **Confirmation** for "MSP discovery is in motion" and **partial** for D10 purposes — reinforces that outreach can produce engaged skepticism (framing signal), not validated market proof
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar.
+
+**Reason D10 does not advance:** Per `Cyber_Insurance_Evidence_Package_Cheaper_Proof_Runbook.md`, a D10 per-MSP `yes` requires both a **named SMB anchor** voluntarily provided by the MSP and a **named upcoming insurance / underwriting / renewal / claim-documentation conversation** for that SMB. Todd's reply is an MSP-owner invitation to coffee to explore mutual value — useful `partial` at best (framing interest from a relevant MSP), not both anchors.
+
+**Raw signal summary:**
+- Todd was skeptical of the outreach wording but did not reject the underlying idea.
+- Offered coffee to understand whether there is mutual value.
+- First real MSP-owner door in motion for the cyber-insurance / vendor-payment-integrity evidence lane.
+
+**Interpretation:**
+Credible door opening, not gate clearance. Wording skepticism is buyer-language signal (overclaim or unclear value), not product rejection. Natural setting for the runbook's three discovery questions and pricing-signal question without sales pressure.
+
+**Product takeaway (captured as a note, not as implementation guidance):**
+- Log worksheet row as `partial` after the coffee conversation unless both named anchors appear voluntarily.
+- Preserve framing-learning in discovery notes so outreach copy can be tightened before the next MSP touch.
+- Do not treat Todd as authorization for §13, implementation, or D10 completion.
+
+**Boundary:** Does **NOT** authorize:
+- D10 advancement, §13 sign-off, implementation, runtime code, queue changes, pricing, or client-facing copy.
+- Treating one engaged MSP reply as validated market proof or as a substitute for 2-of-3 relevant MSP conversations with both anchors.
+
+**Next step (operator):** Run the coffee conversation using `Cyber_Insurance_Vendor_Payment_Integrity_MSP_Call_Pack.md` + cheaper-proof runbook questions; log outcome in `Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`.
+
+---
