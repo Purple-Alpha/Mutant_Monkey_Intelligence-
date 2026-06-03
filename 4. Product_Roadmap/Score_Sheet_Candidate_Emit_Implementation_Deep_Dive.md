@@ -120,3 +120,57 @@ Sign-off: unsigned.
 No code may be written until this spec is §11-signed.
 
 This spec does not authorize implementation, edits to `pre_ship_audit.py`, canonical ledger writes, automatic promotion, pre-commit hook implementation, interactive review scripts, additional emitters, D10 completion, §13 sign-off, client-facing copy, or any compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
+
+
+## §13 Pre-Signoff Tightening — Scanner Minimums And event_id Scope (2026-06-02)
+
+This section resolves the two tightening items identified by the Wave 2 stress test. It is pre-§11 and does not authorize implementation.
+
+### §13.1 Minimum Scanner Patterns
+
+Before writing a candidate packet, the emitter must scan all candidate-bound strings for unsafe content.
+
+Minimum blocker categories:
+
+1. **Secret-like terms and values:** `api_key`, `secret`, `token`, `password`, `authorization`, `bearer`, `sk-`, `xox`, and similar key/token prefixes or labels.
+2. **Authorization headers:** any value or line beginning with `Authorization:` or containing `Bearer `.
+3. **Real email addresses:** block email addresses unless the domain ends with `.example`, `.test`, `.invalid`, or `.localhost`.
+4. **Phone-like personal data:** block common phone formats such as `555-555-5555`, `(555) 555-5555`, `+1 555 555 5555`, or equivalent digit-separated forms.
+5. **Raw mailbox/message payload markers:** block raw email/header markers such as `From:`, `To:`, `Subject:`, `Received:`, `Message-ID:`, `Content-Type:`, MIME boundaries, or full message-body style multiline payloads.
+6. **Large raw text blobs:** block candidate fields that appear to contain unstructured raw payloads instead of short summaries.
+
+### §13.2 Refusal And Redaction Behavior
+
+If unsafe content is detected, the emitter must not write the unsafe value into the candidate packet.
+
+Allowed responses:
+
+- redact the unsafe field as `[REDACTED_BY_CANDIDATE_EMITTER]` and include a short redaction note
+- emit a safety/refusal candidate that records the refusal without copying the unsafe content
+- emit no packet and print/log a refusal if the content cannot be safely summarized
+
+The emitter must prefer refusal over lossy or misleading summaries when safety is uncertain.
+
+### §13.3 event_id Scope
+
+The Wave 2 emitter never assigns a canonical `event_id`.
+
+Candidate rows must continue to write:
+
+`"event_id": null`
+
+Promotion-time assignment remains outside the emitter. The operator-controlled promotion path assigns the canonical ID.
+
+Recommended promotion-time format:
+
+`TE-YYYYMMDD-<track>-NNNN`
+
+Example:
+
+`TE-20260602-audit_gate-0001`
+
+The emitter's responsibility is to preserve `candidate_ref` so the promoted evidence row can carry an in-band back-reference to the candidate packet and row index.
+
+### §13.4 Boundary
+
+This tightening resolves the Wave 2 stress-test blockers at the spec level. It still does not authorize implementation, code edits, canonical ledger writes, automatic promotion, pre-commit hook implementation, interactive review scripts, additional emitters, D10 completion, §13 sign-off, client-facing copy, or any compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
