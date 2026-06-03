@@ -94,9 +94,24 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 ## §4 Next Action
 
-**Build List item 1.** Continue Cyber Insurance / Vendor Payment Integrity evidence-package build shaping after the operator removed the call-sheet blocker. Use the already-gated research artifacts, testing-footing artifacts, live-run output, Reddit captures, and Todd signal as the current working basis. Do not claim D10 is complete, do not start §13 sign-off, and do not authorize implementation without a separate operator decision and gate.
+**Operator override recorded 2026-06-03** (`PROJECT_ACTIVITY_LOG.md`): the D10 cheaper-proof MSP-discovery gate is no longer the active blocker on this lane. Matt is moving the Cyber Insurance / Vendor Payment Integrity lane forward on operator-gathered evidence. D10 is **overridden, not satisfied** — preserve that distinction in any buyer/audit review.
 
-Nothing in Build items 2–3 starts until item 1 closes unless Matt explicitly overrides with a recorded reason.
+**Override basis (already lodged):** `Frontier_Intake_Log.md` 2026-06-01 Reddit cyber-insurance / renewal-friction / vendor-payment-change entries + 2026-05-31 vendor payment-change verification research. Operator-stated boundary: **ad-hoc Confirmation signal, NOT D10 evidence, NOT validated market proof.** The override rests on operator decision supported by direction-confirming signal, not on market proof.
+
+**§13 SIGNED 2026-06-03** by Matt Nichol (operating entity TBD pending project rename). D1-D11 locked; D10 carried as overridden, not met. Sign-off is uncommitted; committing fires the pre-ship / completion gate.
+
+**Cyber Insurance implementation spec DRAFTED 2026-06-03 (Build item 3, pre-§11).** Matt issued the explicit start instruction; the implementation deep-dive `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Implementation_Deep_Dive.md` now exists as a DRAFT (unsigned). It implements the §13-signed deep-dive without re-opening any D1–D11 decision and adds no new claim. It is NOT signed, NOT implementation authorization, NOT code.
+
+**Project rename PARKED 2026-06-03 (not decided).** Gut-checked Round Zebra, OcuComit, BluComit, AxionComet, CyanComet — all collided in/near the cyber-insurance lane. Web checks are collision-smell only, not legal clearance. No name selected; no file rename applied. Deferred to a real USPTO + registrar clearance pass.
+
+**Implementation-spec §16 IQ1–IQ7 RESOLVED 2026-06-03** (operator-selected after TVL advisory scoring): IQ1 both function+CLI; IQ2 dedicated pinned PDF dependency (watch-item: new cross-platform supply-chain surface); IQ3 Grok-4 / temp 0; IQ4 `vf-001`+legit contrast pair from `fraud_eval_dataset.jsonl`; IQ5 7-day stale pre-warning; IQ6 `audit_outputs/cyber_insurance_packages/`; IQ7 test-plan runner first. §13 pins concretized. Still pre-§11.
+
+**Next concrete actions, in order:**
+1. **Implementation-spec §11 sign-off.** Requires a fresh audit packet per Audit List item 3 (verifies D10-overridden-with-reason, deep-dive is §13-signed, scope matches, no out-of-boundary claims). Operator authors the sign-off line; assistant does not.
+3. **Project rename clearance pass (parked).** Real USPTO + registrar checks on an operator-chosen shortlist, then a separate controlled rename pass touching `VISION.md` + many specs.
+4. Commit discipline: the §13 sign-off, this implementation draft, and the rest of the Wave 3.1 dirty tree still need split + gate before any commit.
+
+Implementation code (Build item 3 → Pass 1) does not start until the implementation spec is §11-signed AND a separate explicit operator start-build instruction is issued.
 
 ---
 
