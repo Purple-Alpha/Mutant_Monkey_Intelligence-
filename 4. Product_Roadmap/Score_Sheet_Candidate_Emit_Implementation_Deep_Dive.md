@@ -115,12 +115,13 @@ These tests would themselves become testing-evidence rows once the system is liv
 
 ## §12 Sign-Off And Non-Authorizations
 
-Sign-off: unsigned.
+**Status:** SIGNED.
 
-No code may be written until this spec is §11-signed.
-
-This spec does not authorize implementation, edits to `pre_ship_audit.py`, canonical ledger writes, automatic promotion, pre-commit hook implementation, interactive review scripts, additional emitters, D10 completion, §13 sign-off, client-facing copy, or any compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
-
+- **Signed by:** Matt Nichol
+- **Date:** 2026-06-03
+- **Authorization scope (operator's own words):** Authorizing the Wave 2 implementation specification mechanics, specifically locking down the first emitter scope for pre_ship_audit.py, file-write behaviors, and the PII scanner requirements.
+- **Still NOT authorized by this sign-off:** canonical ledger writes, automatic promotion, interactive review scripts, pre-commit hook implementation, additional emitters beyond the first scoped `pre_ship_audit.py` emitter, D10 completion, §13 sign-off, client-facing copy, and any compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim.
+- **Basis:** signed Wave 1 candidate-emission contract, Wave 2 implementation-spec draft, Wave 2 stress test, and §13 scanner/event_id tightening.
 
 ## §13 Pre-Signoff Tightening — Scanner Minimums And event_id Scope (2026-06-02)
 
