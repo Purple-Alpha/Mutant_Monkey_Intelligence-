@@ -48,7 +48,7 @@ Then Matt called a STOP and a build-loop review. Findings + fixes: the loop was 
 
 **Operator decisions (this session):**
 - **Commit cadence = STANDING (§4 tuning).** Matt authorized: any gate-clean, fully-green slice in the §18.3 authorized code home (`core/evidence_package/`) is committed + logged automatically, no per-commit prompt; pushes to remote remain explicit. Recorded as an operator §4 decision.
-- **Operating domain = `mutanmonkeysecurity.com`** (recorded verbatim in README; agent flagged possible intended spelling `mutantmonkeysecurity.com` / "Mutant Monkey Security" for operator confirm — not auto-corrected).
+- **Operating domain = `mutantmonkeysecurity.com`** ("Mutant Monkey Security"). First recorded with a missing "t" (`mutanmonkeysecurity.com`); corrected after the operator confirmed the registered domain via WHOIS (registered 2026-06-04). Operator PII from the WHOIS record was deliberately NOT stored in the repo.
 - Earlier "Nchol"->"Nichol" signature typo corrected on Matt's explicit instruction.
 
 **Next Step:**

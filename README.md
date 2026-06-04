@@ -1,6 +1,6 @@
 # NorthStar + SwarmCommand
 
-**Operating domain:** `mutanmonkeysecurity.com` (recorded 2026-06-04 per operator instruction; domain string recorded verbatim).
+**Operating domain:** `mutantmonkeysecurity.com` (Mutant Monkey Security; registered by the operator 2026-06-04, confirmed via WHOIS).
 
 Working name is in transition. Rename-candidate history and screening criteria live in `PROJECT_ACTIVITY_LOG.md`. The canonical product thesis is `VISION.md`.
 
