@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-04 - Done-declaration scaffolding (milestone A) + rebrand decision via Consequence Matrix (milestone B)
+**Actor:** Matt Nichol (milestone sequence + rebrand decision) + Cursor (Claude Opus 4.8, build / gate / matrix).
+
+**Action:** Added (code) + Decided (rebrand path) + Created (matrix) + Updated (trackers)
+
+**Files Changed:**
+- 3. SwarmCommand_Engine/.../core/evidence_package/done_declaration.py (NEW; declaration component, 15 Done Criteria eval, deep-dive §11)
+- 3. SwarmCommand_Engine/.../core/evidence_package/package_generator.py (stage 10 wiring + done_evaluation manifest block) + __init__.py (exports)
+- 3. SwarmCommand_Engine/.../tests/test_cyber_insurance_done_declaration.py (NEW; 8 tests) + test_cyber_insurance_evidence_package_generator.py (not-done assertion)
+- 4. Product_Roadmap/_Rebrand_to_Mutant_Monkey_Security_Consequence_Matrix.md (NEW; operator-triggered matrix, outcome Option B)
+- decision_cycles_log.md (Cycle 2 logged) + MASTER_INDEX.md (matrix entry)
+
+**Reason:**
+Operator set today's arc: milestones A->B->C->D by 5pm, then E (Grok stage 9) as capstone. **A (done-declaration):** built the `declaration` component evaluating all 15 Done Criteria (1-10 from §7 gates, 13 from drift dir, 11/12/14/15 from inputs), failing closed; emits `done_declaration.json` only when all 15 hold. Pass 1 has no live Grok audit + no operator signature, so a package correctly evaluates **NOT done** (11/12/14/15 unmet), emits no declaration, and records a `done_evaluation` block in the manifest — exposing exactly what stage 9 + operator signature must close. Grok gate **clean (0/0, comprehensive; `audit_outputs/cyber_insurance_done_declaration_scaffolding_20260604T172209Z.md`)**; **1105 passed, 1 skipped**; auto-committed under STANDING (`d75c3e7`). **B (rebrand):** flagged as a butterfly decision; ran the Consequence Matrix on how far to propagate "Mutant Monkey Security". Operator chose **Option B** — external brand + domain now, "NorthStar"/"SwarmCommand" stay internal codenames, trademark clearance (cyber classes) runs in parallel, deep rename of signed specs/code deferred (review trigger: first signed MSP pilot OR trademark-clearance result). The matrix surfaced; Matt decided.
+
+**Next Step:**
+Milestone C (private test-data store spec draft), then D (push local commits to remote/backup). E (Grok stage 9 wiring) requires operator authorization to expand the signed Pass-1 boundary first.
+
+---
+
 ## 2026-06-04 - Audit-packet assembly slice (gate-clean) + build-loop fix + STANDING commit authorization + operating domain noted
 **Actor:** Matt Nichol (milestone + operator decisions) + Cursor (Claude Opus 4.8, build / gate / fixes).
 
