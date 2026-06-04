@@ -1,6 +1,6 @@
 # Cyber Insurance Evidence Package — Implementation Deep Dive
 
-**Status:** DRAFT pre-§11. Not signed. Not implementation authorization. Not runtime code yet. Not client-facing copy. This document defines *how* the Cyber Insurance Evidence Package would be built; it does not authorize building it. Code begins only after this spec is §11-signed AND Matt issues a separate explicit start-build instruction.
+**Status:** §11 SIGNED 2026-06-03 by Matt Nichol (Zebra-Comit), authored in-chat. Not implementation authorization. Not runtime code yet. Not client-facing copy. This document defines *how* the Cyber Insurance Evidence Package would be built; signing it locks the build-layer decisions but does not by itself authorize building it. Code begins only after a separate explicit operator start-build instruction. **Commit boundary:** committing this signature fires the readiness audit (Audit List item 3) per `AGENTS.md` §5 and §17 below; the sign-off is recorded in the working tree, uncommitted, until that gate runs.
 
 **Date drafted:** 2026-06-03
 
@@ -332,9 +332,9 @@ Mechanical realization of D5 / HC10–HC13:
 
 ---
 
-## §17 §11 Sign-Off Placeholder
+## §17 §11 Sign-Off
 
-**Status:** UNSIGNED. This is a placeholder. The sign-off line is operator-authored per the Authorship Rule (`AGENTS.md` §4 / §12, deleted `Human_Written_Communication_Policy.md` failure mode). The assistant does not draft Matt's signature wording or attribute the decision to him.
+**Status:** SIGNED 2026-06-03 by Matt Nichol (Zebra-Comit). The sign-off line was operator-authored in-chat per the Authorship Rule (`AGENTS.md` §4 / §12); the assistant placed it at operator direction and did not compose it.
 
 ### What signing this spec would do
 
@@ -355,9 +355,11 @@ Mechanical realization of D5 / HC10–HC13:
 
 Before this implementation spec can be called ready/signed, the audit must verify: the cheaper-proof gate was satisfied or explicitly overridden by Matt with a recorded reason (overridden 2026-06-03); the deep-dive is §13-signed (it is); implementation scope matches the signed spec with no scope creep; and no claim falls outside the email-fraud / inbox-layer MDR boundary. That audit runs at the readiness/commit boundary, not at draft time.
 
-### Sign-off line (operator-authored — placeholder, do not fill in for Matt)
+### Sign-off line (operator-authored)
 
-> _Pending. Matt authors this line when he chooses to sign. Operating entity name to be set once the project rename is decided._
+> Matt Nichol (Zebra-Comit) June 3rd. 2026
+>
+> _Operator-authored in-chat. Entity name "Zebra-Comit" is the handle used at signing; the project rename remains parked (see `PROJECT_ACTIVITY_LOG.md` 2026-06-03), and the final operating entity name may supersede this handle once the rename clears._
 
 ---
 

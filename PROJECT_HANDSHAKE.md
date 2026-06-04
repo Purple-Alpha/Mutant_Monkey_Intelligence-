@@ -26,22 +26,25 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 
 ## Current State (2026-06-03)
 - **Cyber Insurance Evidence Package deep-dive: §13 SIGNED** (Matt; operating entity name TBD, project rename parked). D1-D11 locked. **D10 is OVERRIDDEN, not met** — signed operator override; basis is ad-hoc confirmation signal, not validated market proof.
-- **Cyber Insurance Evidence Package IMPLEMENTATION spec: pre-§11 DRAFT, decision-complete.** §16 IQ1-IQ7 operator-resolved; §13 determinism pins set (Grok-4 / temp 0 / dedicated PDF toolchain / `vf-001`+legit contrast pair). UNSIGNED. No code yet.
+- **Cyber Insurance Evidence Package IMPLEMENTATION spec: §11 SIGNED 2026-06-03** by Matt Nichol (Zebra-Comit), authored in-chat. Build-layer §3-§16 locked (IQ1-IQ7 + §13 pins: Grok-4 / temp 0 / dedicated PDF toolchain / `vf-001`+legit pair). Signed-spec slice Grok audit is **clean: 0 blocking / 0 warnings** (`audit_outputs/cyber_insurance_section11_spec_signature_slice_20260603_20260604T001901Z.md`). Signature is staged from the audit slice, **uncommitted**. Signing ≠ code authorization. No code yet.
 - **Wave 3.1 score-sheet review ledger helper:** implemented, Grok-clean, committed (`audit_tools/review_ledger.py` + scanner + hook + tests).
 - **Doc rotation done (2026-06-03):** `PROJECT_ACTIVITY_LOG.md`, `PROGRESS.md`, `MASTER_INDEX.md`, and this handshake were trimmed to active heads with verbatim archives, to fit the audit-gate packet cap (200KB / 50KB per file).
 - **AGENTS.md §3.1 Decision Presentation Rule added:** decisions arrive pre-scored (ranking, why, consequence, recommended default) routed through the existing rubric engines; no bare unscored menus.
 - **Project rename away from "NorthStar": PARKED.** Collisions found (Zebra, Axion, cyan AG, etc.); no name chosen; needs a real USPTO + registrar clearance pass.
 
 ## Current Next Step (single live action)
-**Operator §11 sign-off of the Cyber Insurance Evidence Package IMPLEMENTATION spec**
-(`4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Implementation_Deep_Dive.md`), authored by Matt
-(Authorship Rule — assistant does not draft the signature). After sign-off **and** a separate explicit
-start-build instruction: build the **§14 test-plan runner first** (IQ7), which discharges Done
-Criterion 15. The §14 v1 test plan has not yet been executed.
+**Commit authorization is the next operator-authority decision.** The implementation spec §11 is now
+operator-signed (2026-06-03, in-chat) and the signed-spec audit slice is Grok-clean (0 blocking / 0
+warnings). The §13 sign-off (`85f2069`) and Wave 3.1 (`24a1498`) are ALREADY committed; the only
+uncommitted work is exactly three files: the implementation spec (with the §11 signature) plus this
+handshake and `PROJECT_ACTIVITY_LOG.md`. AFTER a separate explicit operator start-build instruction:
+build the **§14 test-plan runner first** (IQ7), discharging Done Criterion 15. The §14 v1 test plan
+has not yet been executed.
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`, **6 commits ahead of `github`, NOT pushed** (count as of
-2026-06-03; pushing is an explicit operator instruction, never inferred).
+Branch `safety/queue-drift-cleanup-20260528`, **7 commits ahead of `github`, NOT pushed** (count
+verified via `git status` 2026-06-03; pushing is an explicit operator instruction, never inferred).
+The §11 sign-off + tracker edits above are working-tree changes not yet committed.
 
 ## Required Files to Check Before Work
 Follow the `AGENTS.md` §1 session-start read order first. Core governance files:

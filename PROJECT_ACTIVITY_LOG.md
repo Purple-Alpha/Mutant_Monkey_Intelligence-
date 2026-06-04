@@ -26,6 +26,43 @@ What should happen next.
 
 ---
 
+## 2026-06-03 - Cyber Insurance IMPLEMENTATION spec §11 SIGNED by Matt (in-chat)
+**Actor:** Matt Nichol (Zebra-Comit) — operator §11 sign-off authored in-chat; Cursor (Claude) placing the operator-authored signature at his direction.
+
+**Action:** Signed / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Implementation_Deep_Dive.md` (UPDATED — status header DRAFT pre-§11 → §11 SIGNED; §17 placeholder → §17 §11 Sign-Off with the operator-authored line)
+- `PROJECT_HANDSHAKE.md` (UPDATED — Current State + Current Next Step replaced)
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+
+**Reason:**
+Matt gave his signature directly in chat to eliminate the recurring authorship back-and-forth: "Matt Nichol (Zebra-Comit) June 3rd. 2026." This signs §11 of the implementation deep-dive, locking the build-layer decisions in §3–§16 (including the §16 IQ1–IQ7 resolutions and the §13 determinism pins). Authorship Rule honored: the line is operator-composed; the assistant only placed it.
+
+**What signing locks (per §17):**
+- The build-layer HOW (§3–§15) and the IQ1–IQ7 resolutions as the v1 baseline (refinable later without a deep-dive re-sign).
+- Pass-1 implementation is authorized ONLY after a separate explicit operator start-build instruction — signing ≠ code authorization.
+
+**What signing does NOT do:**
+- Does not authorize code, a commit, or a push.
+- Does not re-open any signed deep-dive decision (D1–D11, HC6–HC13, the 15 Done Criteria).
+- Does not represent the D10 override as cheaper-proof validation or market proof — D10 remains overridden, not met.
+
+**Audit-gate result (signed-spec slice):**
+Initial full dirty-tree readiness packet was too large (`304,956` bytes vs. `200,000` cap). First staged-only spec slice was also too large (`259,159` bytes). The manifest was tightened to the signed implementation spec plus signed compliance contract only, producing packet `f5e2d2f1e451b63f9f6bff22547607be2fdabf7276d151bb2ed25cd6c28b2b20` at `139,126` bytes. Grok ran on `grok-4` and returned **clean: 0 blocking / 0 warnings** at `audit_outputs/cyber_insurance_section11_spec_signature_slice_20260603_20260604T001901Z.md`.
+
+**Remaining audit boundary:**
+The clean Grok result covers the signed implementation-spec slice only (the two tracker files were not in the Grok packet — they are housekeeping doc updates). The §13 sign-off (`85f2069`) and Wave 3.1 (`24a1498`) are ALREADY committed; the only uncommitted work is three files (the spec + this log + the handshake). No split is needed; committing remains operator-only and no push is authorized.
+
+**Entity-name note:** The signature uses the "Zebra-Comit" handle (consistent with the Wave 3 / Wave 3.1 signatures). The §13 deep-dive sign-off used "operating entity name TBD." The project rename is still PARKED; the final entity name may supersede this handle once a real USPTO + registrar clearance pass completes.
+
+**Git drift noted this session:** `PROJECT_HANDSHAKE.md` previously read "6 commits ahead of github"; actual `git status` is ahead 7. Corrected in the handshake update.
+
+**Next Step:**
+Commit authorization is the next operator-authority decision (one commit, three files: spec + two trackers). The implementation spec signature has Grok-clean evidence. Implementation code (runner-first per IQ7) starts only after a separate explicit operator start-build instruction.
+
+---
+
 ## 2026-06-03 - PROJECT_HANDSHAKE.md rotated to crisp resume-here form (fix new-chat drift)
 **Actor:** Matt (raised the problem); Codex (assistant edit)
 
