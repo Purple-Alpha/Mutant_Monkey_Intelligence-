@@ -94,24 +94,15 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 ## §4 Next Action
 
-**Operator override recorded 2026-06-03** (`PROJECT_ACTIVITY_LOG.md`): the D10 cheaper-proof MSP-discovery gate is no longer the active blocker on this lane. Matt is moving the Cyber Insurance / Vendor Payment Integrity lane forward on operator-gathered evidence. D10 is **overridden, not satisfied** — preserve that distinction in any buyer/audit review.
+**Current state 2026-06-03:** Cyber Insurance Evidence Package §13 is signed and committed (`85f2069`). The implementation spec is §11 signed and committed (`4308b22`). The §14 runner-first milestone passed live `grok-4` and tracker/intake commits landed (`908cb9b`, `e5a5caf`). Package-generator Pass 1 is now built locally: `core/evidence_package/` + `scripts/cyber_insurance_package_generate.py` produce a deterministic Markdown bundle from the §14 artifacts with all nine local §7 gates passing.
 
-**Override basis (already lodged):** `Frontier_Intake_Log.md` 2026-06-01 Reddit cyber-insurance / renewal-friction / vendor-payment-change entries + 2026-05-31 vendor payment-change verification research. Operator-stated boundary: **ad-hoc Confirmation signal, NOT D10 evidence, NOT validated market proof.** The override rests on operator decision supported by direction-confirming signal, not on market proof.
+**Boundary:** D10 remains overridden, not met. Pass 1 is internal only: no PDF, no live Grok package audit, no done declaration, no operator package signature, no buyer-facing release, no pricing, no push.
 
-**§13 SIGNED 2026-06-03** by Matt Nichol (operating entity TBD pending project rename). D1-D11 locked; D10 carried as overridden, not met. Sign-off is uncommitted; committing fires the pre-ship / completion gate.
-
-**Cyber Insurance implementation spec DRAFTED 2026-06-03 (Build item 3, pre-§11).** Matt issued the explicit start instruction; the implementation deep-dive `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Implementation_Deep_Dive.md` now exists as a DRAFT (unsigned). It implements the §13-signed deep-dive without re-opening any D1–D11 decision and adds no new claim. It is NOT signed, NOT implementation authorization, NOT code.
-
-**Project rename PARKED 2026-06-03 (not decided).** Gut-checked Round Zebra, OcuComit, BluComit, AxionComet, CyanComet — all collided in/near the cyber-insurance lane. Web checks are collision-smell only, not legal clearance. No name selected; no file rename applied. Deferred to a real USPTO + registrar clearance pass.
-
-**Implementation-spec §16 IQ1–IQ7 RESOLVED 2026-06-03** (operator-selected after TVL advisory scoring): IQ1 both function+CLI; IQ2 dedicated pinned PDF dependency (watch-item: new cross-platform supply-chain surface); IQ3 Grok-4 / temp 0; IQ4 `vf-001`+legit contrast pair from `fraud_eval_dataset.jsonl`; IQ5 7-day stale pre-warning; IQ6 `audit_outputs/cyber_insurance_packages/`; IQ7 test-plan runner first. §13 pins concretized. Still pre-§11.
+**Committed 2026-06-04:** gate library `db32cd5` (fresh Grok gate clean), generator + CLI `ff0f41e` (via `complete_gate.py --operator-override`; Matt explicitly authorized generator Pass-1 start-build, internal scope; the §11-signed implementation spec is a no-code document, so the override path is the designed mechanism and a warning-level drift incident is recorded). Focused tests 16 passed. Doctrine/log/tracker docs committed alongside.
 
 **Next concrete actions, in order:**
-1. **Implementation-spec §11 sign-off.** Requires a fresh audit packet per Audit List item 3 (verifies D10-overridden-with-reason, deep-dive is §13-signed, scope matches, no out-of-boundary claims). Operator authors the sign-off line; assistant does not.
-3. **Project rename clearance pass (parked).** Real USPTO + registrar checks on an operator-chosen shortlist, then a separate controlled rename pass touching `VISION.md` + many specs.
-4. Commit discipline: the §13 sign-off, this implementation draft, and the rest of the Wave 3.1 dirty tree still need split + gate before any commit.
-
-Implementation code (Build item 3 → Pass 1) does not start until the implementation spec is §11-signed AND a separate explicit operator start-build instruction is issued.
+1. **Next generator slice.** Package audit-packet assembly or done-declaration scaffolding (each its own start-build is already covered by the 2026-06-04 generator Pass-1 authorization for internal scope; confirm scope per slice). PDF toolchain stays deferred for operator review because IQ2 introduces a new supply-chain surface.
+2. **Push remains an explicit operator instruction.** 13 commits are unpushed; do not push unless Matt says so.
 
 ---
 

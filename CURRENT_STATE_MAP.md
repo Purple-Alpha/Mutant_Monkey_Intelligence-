@@ -89,4 +89,14 @@ The expected pattern is:
 
 ---
 
+## Cyber Insurance evidence package build surface
+
+> **Current module-path lock:** Cyber Insurance Evidence Package gate and generator code lives under `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/evidence_package/`. Do not create parallel namespaces such as `core/cyber_insurance/` or `core/cyber_insurance_evidence_gates/` for the same surface.
+
+**Operator-captured correction, 2026-06-03:** A Codex run produced a clean Grok audit for `core/cyber_insurance_evidence_gates/`, but the audited `.py` source files did not persist in the Linux working tree; only `__pycache__` remained. The surviving, verified source path was `core/evidence_package/`. Future workers must verify audited files exist on disk before trusting the audit report and must target the locked path above unless a later signed spec or explicit operator instruction changes it.
+
+**Boundary:** This entry does not add a new gate, commit authorization, generator feature, buyer-facing copy, or signed-spec decision. It records the current implementation surface to prevent namespace drift and lost-file audit evidence.
+
+---
+
 **End of current state map. New entries appended only on explicit operator capture; never auto-promoted from the assistant.**

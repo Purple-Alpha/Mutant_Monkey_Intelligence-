@@ -505,3 +505,35 @@ Reinforces the existing pre-§11 draft `4. Product_Roadmap/Vendor_Payment_Verifi
 - Treating Reddit replies (or the operator's own post) as validated market proof or as a substitute for direct MSP discovery.
 
 ---
+
+### 2026-06-03 — Enron / SpamAssassin public corpora: real-world confirmation of untraceable executive impersonation; corpora NOT adopted as test data
+
+**Date:** 2026-06-03
+**Source:** Operator-provided public-corpus index (SpamAssassin public corpus listing + Enron Email Dataset `readme.html`, CALO/CMU, William W. Cohen; page "last modified Apr 20 2026"). The salient item is a research note appended to that readme: in April 2026, digital-forensics analysts reported a technical flaw in the Enron corpus that allowed users to impersonate others — including executives such as Jeff Skilling — without leaving a trace, with internal legal correspondence (Michelle Cash, July 2000) said to acknowledge but not address the vulnerability, and actual forged mailboxes reported. Secondary research, not a primary NorthStar-verified source per `Compliance_and_Trend_Watch_Process.md` §2.6.
+**Signal type:** Threat pattern — sender / executive impersonation and forged-mailbox provenance; secondarily, email-corpus authenticity.
+**Evidence strength:** Moderate as a threat-pattern confirmation; the corpus-authenticity claims themselves are second-hand and now cast doubt on Enron as ground-truth.
+**Classification per intake protocol:** **Confirmation** (reinforces NorthStar's existing direction; does NOT surface a new candidate).
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar. No named MSP, SMB anchor, or underwriting conversation. Discovery signal only.
+
+**NorthStar relevance:**
+A widely studied, "real" email corpus turning out to permit untraceable impersonation and forged mailboxes is direct real-world reinforcement of NorthStar's locked Stage A wedge: header-divergence detection (From / Reply-To / Return-Path / Sender), sender-provenance reasoning, and out-of-band Two-Channel Confirmation exist precisely because mailbox "from" identity is forgeable and impersonation can be trace-light. Reinforces existing direction; resolves nothing and promotes nothing.
+
+**Test-data decision (operator delegated this call, 2026-06-04):**
+The corpora are **NOT** adopted as NorthStar test or eval data. Reasons:
+
+- Collides with `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md` **D6** (v1 test-data sources are exactly five: `.example` domains, fake vendors, fake URLs / inert attachments, synthetic `.eml` fixtures, lab mailbox) and **§1.3** ("MUST NOT ingest, transmit, or persist real customer email content. Test fixtures must be synthetic.").
+- Privacy: Enron is real individuals' private mail; the readme itself asks users to respect that privacy.
+- Authenticity: the April-2026 finding undermines Enron's value as labeled ground truth.
+- Staleness: 2000-era (Enron) and 2002-2005 (SpamAssassin) messages predate the modern SPF / DKIM / DMARC / Received-chain shapes the detectors key on.
+
+**Parked option (not authorized here):** read-only use of corpus *structure* as design reference to hand-author more realistic synthetic `.eml` fixtures — never ingesting or persisting real bodies — may be reconsidered when the Email Security Testing Evidence Framework reaches §11, since that spec owns test-data sourcing.
+
+**Boundary:** Does **NOT** authorize:
+
+- Ingesting, downloading into the repo, transmitting, or persisting any real email corpus.
+- Any change to the synthetic-only test-data lock (D6 / §1.3) outside a §11-revision of that spec.
+- A new spec, queue item, runtime implementation, or detector.
+- Broad compliance, certification, insurer-approval, or outcome claims in NorthStar voice.
+
+---
