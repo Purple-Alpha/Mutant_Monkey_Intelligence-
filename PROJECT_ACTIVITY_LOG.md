@@ -46,6 +46,23 @@ Milestone C (private test-data store spec draft), then D (push local commits to 
 
 ---
 
+## 2026-06-04 - Private test-data store spec draft (milestone C)
+**Actor:** Matt Nichol (milestone) + Cursor (Claude Opus 4.8, draft).
+
+**Action:** Created (pre-§11 spec) + Updated (MASTER_INDEX)
+
+**Files Changed:**
+- 4. Product_Roadmap/Private_Test_Data_Store_Deep_Dive.md (NEW; pre-§11 draft, D1-D8 proposed, 7 §10 open questions)
+- MASTER_INDEX.md (entry)
+
+**Reason:**
+Milestone C of today's arc. Drafted the spec-first contract for an operator-controlled, self-hosted store (MinIO / S3-compatible, private-mesh-only) for test data + generated evidence artifacts, so sensitive material never transits third-party AI / consumer-cloud — a data-sovereignty boundary aligned with VISION local-first. Test/lab data only in v1; git stays source of truth. §11 blank by design; seven operator-only open questions remain (host target, MinIO topology, mesh sovereignty tradeoff, retention, integration surface, key management, production boundary).
+
+**Next Step:**
+Milestone D (push local commits to remote/backup). Then E (Grok stage 9) pending operator authorization to expand the Pass-1 boundary.
+
+---
+
 ## 2026-06-04 - Audit-packet assembly slice (gate-clean) + build-loop fix + STANDING commit authorization + operating domain noted
 **Actor:** Matt Nichol (milestone + operator decisions) + Cursor (Claude Opus 4.8, build / gate / fixes).
 
