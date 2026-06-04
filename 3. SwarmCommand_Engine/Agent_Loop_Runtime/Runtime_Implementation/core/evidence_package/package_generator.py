@@ -21,7 +21,14 @@ from hashlib import sha256
 from pathlib import Path
 from typing import Any, Literal, Mapping, Sequence
 
+from . import audit_packet as audit_packet_mod
 from . import gates
+
+CONTRACT_DOCUMENTS: tuple[str, ...] = (
+    "VISION.md",
+    "4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md",
+    "4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Implementation_Deep_Dive.md",
+)
 
 PACKAGE_VERSION = "v1"
 DEFAULT_MODEL_IDENTITY = "grok-4"
@@ -51,6 +58,9 @@ class EvidencePackageResult:
     manifest_path: Path
     package_markdown_path: Path
     gate_results: tuple[gates.GateResult, ...]
+    audit_packet_dir: Path
+    audit_packet_manifest_path: Path
+    audit_packet_coverage_complete: bool
 
     @property
     def gates_passed(self) -> bool:
@@ -143,6 +153,31 @@ def generate_package_from_test_plan(
         _atomic_write_json(gate_path, _gate_result_to_dict(result))
         touched_files.add(gate_path)
 
+    # Stage 8 (spec section 3 / section 10): assemble the coverage-complete Grok
+    # audit packet from every file touched during stages 1-7 (reads + writes)
+    # plus the contract documents. Pass 1 assembles and persists; it does not
+    # submit to Grok.
+    read_files = [source_dir / filename for filename, _category, _record_id in RECORD_SPECS.values()]
+    read_set = {path.resolve() for path in read_files}
+    written_files = sorted(
+        (path for path in touched_files if path.resolve() not in read_set),
+        key=lambda path: path.as_posix(),
+    )
+    contract_files = [_repo_root() / relative for relative in CONTRACT_DOCUMENTS]
+    audit_packet = audit_packet_mod.assemble_audit_packet(
+        package_id=package_id,
+        read_files=read_files,
+        written_files=written_files,
+        contract_files=contract_files,
+        workspace_root=_repo_root(),
+    )
+    audit_packet_dir = output_root / f"{package_id}__audit_packet"
+    audit_packet_summary = audit_packet_mod.write_audit_packet(
+        audit_packet,
+        audit_dir=audit_packet_dir,
+        workspace_root=_repo_root(),
+    )
+
     manifest_path = package_dir / "manifest.json"
     manifest = _build_manifest(
         package_id=package_id,
@@ -156,6 +191,8 @@ def generate_package_from_test_plan(
         fraud_contrast_id=fraud_contrast_id,
         legit_contrast_id=legit_contrast_id,
         audit_packet_files=touched_files | {manifest_path},
+        audit_packet=audit_packet,
+        audit_packet_manifest_path=audit_packet_summary["manifest_path"],
     )
     _atomic_write_json(manifest_path, manifest)
     touched_files.add(manifest_path)
@@ -180,6 +217,9 @@ def generate_package_from_test_plan(
         manifest_path=manifest_path,
         package_markdown_path=package_markdown_path,
         gate_results=gate_results,
+        audit_packet_dir=audit_packet_dir,
+        audit_packet_manifest_path=audit_packet_summary["manifest_path"],
+        audit_packet_coverage_complete=audit_packet.coverage_complete,
     )
 
 
@@ -377,6 +417,8 @@ def _build_manifest(
     fraud_contrast_id: str,
     legit_contrast_id: str,
     audit_packet_files: Sequence[str | Path],
+    audit_packet: audit_packet_mod.AssembledAuditPacket,
+    audit_packet_manifest_path: Path,
 ) -> dict[str, Any]:
     file_hashes = _package_file_hashes(package_dir)
     package_hash = sha256(
@@ -398,6 +440,14 @@ def _build_manifest(
         "file_hashes": file_hashes,
         "package_hash": f"sha256:{package_hash}",
         "audit_packet_files": [_repo_relative(Path(path)) for path in audit_packet_files],
+        "audit_packet": {
+            "artifact_path": _repo_relative(audit_packet_manifest_path),
+            "packet_hash": audit_packet.packet_hash,
+            "coverage_complete": audit_packet.coverage_complete,
+            "file_count": audit_packet.file_count,
+            "missing_paths": list(audit_packet.missing_paths),
+            "grok_submitted": audit_packet.grok_submitted,
+        },
         "pdf_rendered": False,
         "grok_audit_submitted": False,
         "done_declaration_emitted": False,

@@ -128,6 +128,30 @@ def test_generator_manifest_pins_model_and_marks_pass1_deferrals(tmp_path):
     assert manifest["done_declaration_emitted"] is False
 
 
+def test_generator_assembles_coverage_complete_audit_packet(tmp_path):
+    result = _generate(tmp_path)
+
+    assert result.audit_packet_coverage_complete is True
+    assert result.audit_packet_manifest_path.exists()
+
+    packet = json.loads(result.audit_packet_manifest_path.read_text(encoding="utf-8"))
+    assert packet["coverage_complete"] is True
+    assert packet["grok_submitted"] is False
+    assert packet["missing_paths"] == []
+
+    written = {entry["path"] for entry in packet["files"] if entry["role"] == "written"}
+    reads = [entry["path"] for entry in packet["files"] if entry["role"] == "read"]
+    for stage in ("detection", "verification", "evidence", "audit_trail", "outcome_documentation"):
+        assert any(path.endswith(f"records/{stage}.json") for path in written)
+    assert len(reads) == 5
+    assert all(entry["sha256"].startswith("sha256:") for entry in packet["files"])
+
+    manifest = json.loads(result.manifest_path.read_text(encoding="utf-8"))
+    assert manifest["audit_packet"]["coverage_complete"] is True
+    assert manifest["audit_packet"]["grok_submitted"] is False
+    assert manifest["audit_packet"]["packet_hash"].startswith("sha256:")
+
+
 def test_generator_is_deterministic_for_same_inputs(tmp_path):
     first = _generate(tmp_path)
     first_manifest = json.loads(first.manifest_path.read_text(encoding="utf-8"))

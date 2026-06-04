@@ -1,6 +1,13 @@
 """Cyber-insurance evidence package gate library + Pass 1 generator."""
 
+from . import audit_packet
 from . import gates
+from .audit_packet import (
+    AssembledAuditPacket,
+    AuditPacketFile,
+    assemble_audit_packet,
+    write_audit_packet,
+)
 from .gates import (
     BOUNDARY_STATEMENT,
     FRESHNESS_THRESHOLDS_DAYS,
@@ -25,8 +32,12 @@ from .package_generator import (
 )
 
 __all__ = [
+    "AssembledAuditPacket",
+    "AuditPacketFile",
     "BOUNDARY_STATEMENT",
     "EvidencePackageResult",
+    "assemble_audit_packet",
+    "audit_packet",
     "FRESHNESS_THRESHOLDS_DAYS",
     "FORBIDDEN_LANGUAGE_PHRASES",
     "VOCABULARY_TRANSLATIONS",
@@ -44,4 +55,5 @@ __all__ = [
     "run_signed_provenance_gate",
     "run_stale_evidence_gate",
     "run_vocabulary_translation_gate",
+    "write_audit_packet",
 ]
