@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-04 - Criterion 14 operator package-signature mechanism
+**Actor:** Matt Nichol (operator instruction) + Cursor (GPT-5.5, build + gate).
+
+**Action:** Added (code) + Updated (tests / queue / trackers)
+
+**Files Changed:**
+- 3. SwarmCommand_Engine/.../core/evidence_package/operator_signature.py (NEW; criterion-14 mechanism)
+- 3. SwarmCommand_Engine/.../core/evidence_package/__init__.py (exports)
+- 3. SwarmCommand_Engine/.../tests/test_cyber_insurance_operator_signature.py (NEW; 6 tests)
+- 3. SwarmCommand_Engine/.../tests/test_cyber_insurance_pipeline_integration.py (updated to use the real signature mechanism)
+- PROJECT_BUILD_AND_AUDIT_QUEUE.md, PROJECT_HANDSHAKE.md, decision_cycles_log.md (queue / resume / cycle updates)
+
+**Reason:**
+Operator selected the next queue item: criterion 14 operator package-level signature mechanism. Built only the mechanism, not a proxy signature: `record_operator_signature()` writes a `signed_by_operator` evidence record from caller-supplied operator wording + scope acknowledgment; records timestamp, reviewed rendered package path, authorship rule, and deterministic `evd-operator-signature-*` id; validates missing wording / scope acknowledgment / rendered artifact; `load_operator_signature_evidence_id()` fails closed on missing or malformed records. The actual signing remains Matt-authority and requires Matt-authored wording. Pipeline integration now uses the real signature mechanism rather than a placeholder evidence id. Grok gate **clean (0/0; `audit_outputs/cyber_insurance_operator_signature_mechanism_20260604T192050Z.md`)**; **1122 passed, 1 skipped**; committed `a65babf` under STANDING.
+
+**Next Step:**
+Queue §4 now points to PDF render surface review / decision (IQ2 supply-chain surface) as the next generator-facing item. Real-customer-data controls decision remains gated before any non-synthetic Grok submission. Push remains explicit; commits after GitHub `0e9002d` are local-only until Matt pushes again.
+
+---
+
 ## 2026-06-04 - Done-declaration scaffolding (milestone A) + rebrand decision via Consequence Matrix (milestone B)
 **Actor:** Matt Nichol (milestone sequence + rebrand decision) + Cursor (Claude Opus 4.8, build / gate / matrix).
 

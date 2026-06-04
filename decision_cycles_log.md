@@ -127,3 +127,20 @@ CYCLE 3 — 2026-06-04T19:00Z
                  1 skipped; committed ab9846a under STANDING.
   SURPRISES:     None. Handshake git-state correction committed first (cef-style tracker hygiene) to
                  isolate the test slice for a clean gate; queue §4 refreshed in the same Log step.
+
+CYCLE 4 — 2026-06-04T19:18Z
+  OBSERVE: Queue §4 named criterion 14 (operator package-signature mechanism) as the next generator
+           slice after Cycle 3. Generator stages 8/9/10 are wired and proven to chain; remaining
+           "done" gap is a way to capture Matt-authored package sign-off as evidence. Baseline 1116.
+  SELECTED:      Criterion 14 operator package-signature mechanism (operator direct instruction:
+                 "alright lets do it").
+  EXPECTED:      Build the mechanism only: record Matt-supplied wording + scope acknowledgment as a
+                 signed_by_operator evidence record with timestamp and reviewed rendered artifact path;
+                 no AI-authored sign-off text, no proxy signature. The evidence id satisfies criterion
+                 14 when passed to the done evaluator; malformed/missing records fail closed.
+  EXECUTED AT:   2026-06-04T19:20Z
+  AUDIT VERDICT: PASS — Grok gate clean 0/0
+                 (audit_outputs/cyber_insurance_operator_signature_mechanism_20260604T192050Z.md);
+                 1122 passed, 1 skipped; committed a65babf under STANDING.
+  SURPRISES:     None. Pipeline integration was updated to use the real signature mechanism instead of
+                 a placeholder evidence id, keeping the end-to-end proof honest.
