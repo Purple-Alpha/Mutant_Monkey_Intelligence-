@@ -112,6 +112,10 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/production/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/scoring/",
+    # Cyber Insurance Evidence Package generator: the §18.3 authorized code
+    # home. Added 2026-06-04 (loop-review Fix B) so this code path actually
+    # auto-fires the gate and --pre-commit mode cannot false-pass it.
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/evidence_package/",
     "production_state/",
     "1. Business_Operations/Client_Documents/",
 )

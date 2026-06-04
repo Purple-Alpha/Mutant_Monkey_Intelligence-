@@ -684,6 +684,15 @@ def test_scope_matches_core_scoring_directory(gate) -> None:
     )
 
 
+def test_scope_matches_evidence_package_authorized_code_home(gate) -> None:
+    # The §18.3 authorized code home must be in hook scope so the gate fires
+    # on it and --pre-commit mode cannot false-pass it (loop-review Fix B).
+    assert gate._matches_hook_scope(
+        "3. SwarmCommand_Engine/Agent_Loop_Runtime/"
+        "Runtime_Implementation/core/evidence_package/audit_packet.py"
+    ) is True
+
+
 def test_scope_matches_audit_tools_from_v1_1_onward(gate) -> None:
     assert gate._matches_hook_scope("audit_tools/complete_gate.py") is True
     assert gate._matches_hook_scope("audit_tools/grok_audit_runner.py") is True

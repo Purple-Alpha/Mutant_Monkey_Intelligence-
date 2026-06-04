@@ -85,6 +85,30 @@ Matt's repeated, explicit instruction (logged 2026-06-03): stop handing him bare
 
 8. **Do not invert the rule (trivia-escalation).** Spending Matt's authority on low-substance, reversible changes while handing him genuine decisions raw is as much a violation as unscored-choice dumping — it is the "trivia-escalation / decision-inversion" failure mode (§12). The test is always *substantive impact and reversibility*, never how official the surface looks. If you catch yourself escalating something cosmetic, decide it; if you catch yourself dumping something consequential, score it first. Heavy process belongs on what is hard to undo, not on what is easy to undo.
 
+9. **Decisions chain; menus are for milestone-setting only (logged 2026-06-04).** A multi-option A/B/C/D menu belongs at exactly one place: choosing the next *milestone* (the Next-Action Decision Rubric cycle). Once Matt accepts a milestone, every step inside delivering it — scope, sequencing, the gate run, fixing a typo, which clean unit to commit, what follows on success — **chains automatically**; do not stop to ask. Each completed decision rolls straight into the next. When a genuine operator-authority fork arises mid-stream (§4), surface it as a **single evidence-bearing item** — either a one-line confirm ("this is gate-clean and green — commit? y/n") or a scored either/or — never a bare menu, and never a menu padded with non-decisions ("pause," "continue") or tangents. Before surfacing anything, ask: *does the evidence I already hold settle this?* If yes, decide it. The only things that reach Matt are (a) the milestone choice and (b) the residue of genuine operator-authority forks the evidence cannot settle.
+
+---
+
+## 3.2 The Build Loop (canonical — run this every in-session build)
+
+This is the explicit operating loop. It exists because the loop was previously implicit, so each session and each model re-derived it and the "where do I stop and ask" boundary drifted (the 2026-06-04 loop-review finding). Follow these steps in order. The right-hand tag says whether a step **chains** (you just do it and roll into the next) or **escalates** (reaches Matt).
+
+| # | Step | Behavior |
+|---|---|---|
+| 0 | **Milestone select** — run the Next-Action Decision Rubric (§7); present scored candidates; Matt selects. | **ESCALATES** — this is the *only* A/B/C/D menu in the whole loop. |
+| 1 | **Scope** — read the relevant signed-spec sections + current code; state the slice boundary in one line. | chains |
+| 2 | **Expected outcome** — capture the one-line expected result (rubric D7) *before* building. | chains |
+| 3 | **Build** — implement exactly the one scoped slice. | chains |
+| 4 | **Test** — add/extend focused tests; run focused + full suite; green is required to proceed. | chains |
+| 5 | **Gate** — write the worker manifest (§5), run `complete_gate.py`; a clean audit is required. | chains |
+| 6 | **Commit** — per §4 and the commit-cadence decision. | **ESCALATES** minimally — a single "gate-clean + green — commit? y/n", never a menu. (If standing authorization is in force, this also chains.) |
+| 7 | **Log** — record the rubric cycle to `decision_cycles_log.md` (Step 8 audit verdict + Step 9); sync trackers. | chains |
+| 8 | **Roll forward** — return to step 0 for the next milestone, or stop if Matt says stop. | chains |
+
+**The decision boundary (anti-drift core):** the only points in the entire loop that reach Matt are **step 0 (milestone)** and **step 6 (commit)** — plus any genuine mid-stream operator-authority fork (§4) the evidence cannot settle, surfaced as one evidence-bearing item per §3.1.9. Everything else chains. If you find yourself asking Matt anything at steps 1–5 or 7–8, stop: either the evidence already settles it (decide it) or it is a real §4 fork (surface it as a single scored item, not a menu).
+
+**Failure to run the loop is itself drift.** A reaction-timing or build claim of "done" without steps 4 and 5 is not done (§5). A menu presented anywhere except step 0 is a §3.1.9 violation.
+
 ---
 
 ## 4. No proxy decisions
