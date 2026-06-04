@@ -26,25 +26,25 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 
 ## Current State (2026-06-03)
 - **Cyber Insurance Evidence Package deep-dive: §13 SIGNED** (Matt; operating entity name TBD, project rename parked). D1-D11 locked. **D10 is OVERRIDDEN, not met** — signed operator override; basis is ad-hoc confirmation signal, not validated market proof.
-- **Cyber Insurance Evidence Package IMPLEMENTATION spec: §11 SIGNED 2026-06-03** by Matt Nichol (Zebra-Comit), authored in-chat. Build-layer §3-§16 locked (IQ1-IQ7 + §13 pins: Grok-4 / temp 0 / dedicated PDF toolchain / `vf-001`+legit pair). Signed-spec slice Grok audit is **clean: 0 blocking / 0 warnings** (`audit_outputs/cyber_insurance_section11_spec_signature_slice_20260603_20260604T001901Z.md`). Signature is staged from the audit slice, **uncommitted**. Signing ≠ code authorization. No code yet.
+- **Cyber Insurance Evidence Package IMPLEMENTATION spec: §11 SIGNED 2026-06-03** by Matt Nichol (Zebra-Comit), authored in-chat and committed (`4308b22`). Build-layer §3-§16 locked (IQ1-IQ7 + §13 pins: Grok-4 / temp 0 / dedicated PDF toolchain / `vf-001`+legit pair). Signed-spec slice Grok audit is **clean: 0 blocking / 0 warnings** (`audit_outputs/cyber_insurance_section11_spec_signature_slice_20260603_20260604T001901Z.md`). Signing did not authorize code beyond the later operator-selected runner-first milestone.
+- **§14 test-plan runner-first milestone: EXECUTED / PASS** (live `grok-4`, 2026-06-04T00:49Z). Evidence under `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/`; `run_summary.md` and `verdict.json` show all seven §14.4 conditions passed, all nine §7 gates passed, and zero drift incidents. This is internal test evidence only, not buyer-facing output or D10 market proof.
 - **Wave 3.1 score-sheet review ledger helper:** implemented, Grok-clean, committed (`audit_tools/review_ledger.py` + scanner + hook + tests).
 - **Doc rotation done (2026-06-03):** `PROJECT_ACTIVITY_LOG.md`, `PROGRESS.md`, `MASTER_INDEX.md`, and this handshake were trimmed to active heads with verbatim archives, to fit the audit-gate packet cap (200KB / 50KB per file).
 - **AGENTS.md §3.1 Decision Presentation Rule added:** decisions arrive pre-scored (ranking, why, consequence, recommended default) routed through the existing rubric engines; no bare unscored menus.
 - **Project rename away from "NorthStar": PARKED.** Collisions found (Zebra, Axion, cyan AG, etc.); no name chosen; needs a real USPTO + registrar clearance pass.
 
 ## Current Next Step (single live action)
-**Commit authorization is the next operator-authority decision.** The implementation spec §11 is now
-operator-signed (2026-06-03, in-chat) and the signed-spec audit slice is Grok-clean (0 blocking / 0
-warnings). The §13 sign-off (`85f2069`) and Wave 3.1 (`24a1498`) are ALREADY committed; the only
-uncommitted work is exactly three files: the implementation spec (with the §11 signature) plus this
-handshake and `PROJECT_ACTIVITY_LOG.md`. AFTER a separate explicit operator start-build instruction:
-build the **§14 test-plan runner first** (IQ7), discharging Done Criterion 15. The §14 v1 test plan
-has not yet been executed.
+**Commit the §14 PASS tracker update if Matt authorizes.** The implementation spec §11 is already
+committed (`4308b22`), and the runner-first milestone has now produced a live `grok-4` §14 PASS under
+`audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/`. Next build-layer
+milestone after commit authorization: begin the actual package-generation surface under
+`audit_outputs/cyber_insurance_packages/`, using the §14 artifacts as the first known-good internal
+fixture. Still internal; no buyer-facing package release is implied.
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`, **7 commits ahead of `github`, NOT pushed** (count
-verified via `git status` 2026-06-03; pushing is an explicit operator instruction, never inferred).
-The §11 sign-off + tracker edits above are working-tree changes not yet committed.
+Branch `safety/queue-drift-cleanup-20260528`, **8 commits ahead of `github`, NOT pushed** (count
+verified via `git status` 2026-06-03 after commit `4308b22`; pushing is an explicit operator
+instruction, never inferred). Current working-tree changes are tracker updates for the §14 PASS.
 
 ## Required Files to Check Before Work
 Follow the `AGENTS.md` §1 session-start read order first. Core governance files:

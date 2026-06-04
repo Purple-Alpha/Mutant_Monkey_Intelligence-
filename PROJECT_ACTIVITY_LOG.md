@@ -26,6 +26,57 @@ What should happen next.
 
 ---
 
+## 2026-06-03 - Cyber Insurance §14 test-plan runner executed (live Grok-4 PASS)
+**Actor:** Cursor (GPT-5.5) after Matt selected Action A / runner-first build.
+
+**Action:** Executed / Recorded
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (UPDATED — this entry)
+- `PROJECT_HANDSHAKE.md` (UPDATED — Current State + Current Next Step replaced)
+- `PROGRESS.md` (UPDATED — current handoff replaced)
+- `MASTER_INDEX.md` (UPDATED — implementation spec status corrected to §11 signed; indexed the signed-spec Grok audit output and §14 evidence directory so trigger scan resolves the handshake reference)
+
+**Generated Evidence (gitignored / not committed):**
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/run_summary.md`
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/verdict.json`
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/detection.json`
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/verification.json`
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/evidence.json`
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/audit_trail.json`
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/outcome_documentation.md`
+- `audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/scoring_raw_response.json`
+
+**Reason:**
+After §11 sign-off of the implementation spec, Matt selected the runner-first milestone (Action A) and clarified that no buyer-readiness work should be implied. This was the separate explicit start-build instruction required by the signed implementation spec. Scope stayed internal: execute the §14 fictional Stage A test-plan runner first, not build buyer-facing package output.
+
+**Run Summary:**
+An inline runner was generated outside the repo at `/tmp/cyber_insurance_section14_runner.py`, matching the signed implementation spec's §14 runner mechanics. The first fake-mode smoke exposed a runner bug (it read `risk_score` from the wrong payload path and produced a fail); the bug was corrected in the inline runner, fake-mode then passed, and the live `grok-4` run executed once.
+
+Live run:
+- Started: `2026-06-04T00:49:07.656205+00:00`
+- Finished: `2026-06-04T00:49:14.177448+00:00`
+- Scoring mode: `live-xai` / `grok-4`
+- Verdict: **PASS**
+- §14.4 conditions: all seven passed.
+- §7 gates: all nine passed.
+- Drift incidents: none.
+- Verification score captured: internal score `68`, `recommended_action=needs_review`, content/intent axes `70`, urgency `60`, sender `25`.
+
+**Boundary:**
+This is internal §14 test evidence only. It is not buyer-facing output, not D10 market proof, not an underwriter claim, not pricing, not implementation of the full package generator, and not a claim that the package is done. It discharges the implementation-spec runner-first milestone / Done Criterion 15 evidence requirement for the fictional Stage A case.
+
+**Tracked-output cleanup:**
+The pre-existing research demo runner smoke touched two tracked `demo_outputs/` files; those were restored because they are not part of the §14 evidence packet. Durable §14 evidence lives under `audit_outputs/`.
+
+**Tracker verification:**
+Initial trigger scan after tracker edits found one drift item: `PROJECT_HANDSHAKE.md` referenced `audit_outputs/cyber_insurance_section11_spec_signature_slice_20260603_20260604T001901Z.md` but `MASTER_INDEX.md` had no entry. Added the index entry plus the new §14 evidence-directory entry. Rerun returned `scan_clean` with baseline `1072`.
+
+**Next Step:**
+Commit the tracker updates for the §14 PASS if Matt authorizes (four tracked files: activity log, handshake, progress, master index). After that, the next build-layer milestone is to start the actual package-generation surface (`audit_outputs/cyber_insurance_packages/`) using the §14 artifacts as the first known-good fixture, still internal and not buyer-facing.
+
+---
+
 ## 2026-06-03 - Cyber Insurance IMPLEMENTATION spec §11 SIGNED by Matt (in-chat)
 **Actor:** Matt Nichol (Zebra-Comit) — operator §11 sign-off authored in-chat; Cursor (Claude) placing the operator-authored signature at his direction.
 
