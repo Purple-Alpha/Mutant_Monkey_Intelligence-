@@ -3,6 +3,7 @@
 from . import audit_packet
 from . import done_declaration
 from . import gates
+from . import operator_signature
 from . import package_auditor
 from .audit_packet import (
     AssembledAuditPacket,
@@ -14,6 +15,11 @@ from .done_declaration import (
     DoneEvaluation,
     emit_done_declaration_if_done,
     evaluate_done_criteria,
+)
+from .operator_signature import (
+    OperatorSignatureRecord,
+    load_operator_signature_evidence_id,
+    record_operator_signature,
 )
 from .package_auditor import (
     PackageAuditResult,
@@ -50,6 +56,7 @@ __all__ = [
     "BOUNDARY_STATEMENT",
     "DoneEvaluation",
     "EvidencePackageResult",
+    "OperatorSignatureRecord",
     "PackageAuditResult",
     "assemble_audit_packet",
     "audit_package",
@@ -58,8 +65,11 @@ __all__ = [
     "done_declaration",
     "emit_done_declaration_if_done",
     "evaluate_done_criteria",
+    "load_operator_signature_evidence_id",
+    "operator_signature",
     "package_auditor",
     "parse_audit_output",
+    "record_operator_signature",
     "FRESHNESS_THRESHOLDS_DAYS",
     "FORBIDDEN_LANGUAGE_PHRASES",
     "VOCABULARY_TRANSLATIONS",

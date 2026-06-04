@@ -25,6 +25,7 @@ from core.evidence_package import (
     evaluate_done_criteria,
     emit_done_declaration_if_done,
     generate_package_from_test_plan,
+    record_operator_signature,
 )
 
 FIXED_NOW = datetime(2026, 6, 4, 19, 0, 0, tzinfo=timezone.utc)
@@ -170,13 +171,23 @@ def test_full_pipeline_chains_generation_audit_and_done_declaration(tmp_path):
         grok_audit_output=audit_result.grok_output_path,
     ) is None
 
-    # --- Supply the operator signature + test-plan evidence -> done -----
+    # --- Supply the operator signature mechanism + test-plan evidence -> done -
+    signature = record_operator_signature(
+        package_dir=result.package_dir,
+        package_id=result.package_id,
+        package_version="v1",
+        tenant_id=TENANT,
+        rendered_package_path=result.package_markdown_path,
+        operator_wording="Matt-authored sign-off wording for this synthetic package.",
+        scope_acknowledgment="I reviewed the rendered package and understand the v1 scope boundary.",
+        signed_at=FIXED_NOW,
+    )
     done_eval = evaluate_done_criteria(
         gate_results=result.gate_results,
         drift_dir=drift_dir,
         grok_audit_output=audit_result.grok_output_path,
         grok_findings_resolved=True,
-        operator_signature_evidence_id="evd-operator-signature-001",
+        operator_signature_evidence_id=signature.evidence_id,
         test_plan_evidence_id="cybins-v1-testplan-vendor-payment-redirect-001",
     )
     assert done_eval.is_done is True
@@ -191,13 +202,13 @@ def test_full_pipeline_chains_generation_audit_and_done_declaration(tmp_path):
         generated_at=FIXED_NOW,
         now=FIXED_NOW,
         grok_audit_output=audit_result.grok_output_path,
-        operator_signature_evidence_id="evd-operator-signature-001",
+        operator_signature_evidence_id=signature.evidence_id,
     )
     assert declaration_path is not None and declaration_path.exists()
     declaration = json.loads(declaration_path.read_text(encoding="utf-8"))
     assert declaration["criteria_met"] == list(range(1, 16))
     assert declaration["grok_audit_output"] == audit_result.grok_output_path
-    assert declaration["operator_signature_evidence_id"] == "evd-operator-signature-001"
+    assert declaration["operator_signature_evidence_id"] == signature.evidence_id
 
 
 def test_pipeline_audit_with_deviation_blocks_done(tmp_path):
