@@ -22,6 +22,7 @@ from pathlib import Path
 from typing import Any, Literal, Mapping, Sequence
 
 from . import audit_packet as audit_packet_mod
+from . import done_declaration as done_declaration_mod
 from . import gates
 
 CONTRACT_DOCUMENTS: tuple[str, ...] = (
@@ -61,6 +62,8 @@ class EvidencePackageResult:
     audit_packet_dir: Path
     audit_packet_manifest_path: Path
     audit_packet_coverage_complete: bool
+    is_done: bool
+    done_declaration_path: Path | None
 
     @property
     def gates_passed(self) -> bool:
@@ -178,6 +181,26 @@ def generate_package_from_test_plan(
         workspace_root=_repo_root(),
     )
 
+    # Stage 10 (spec §11 / deep-dive §11): evaluate the 15 Done Criteria. Pass 1
+    # has no live Grok package audit (criteria 11/12) and no operator signature
+    # (criterion 14), so a Pass-1 package correctly evaluates to NOT done and no
+    # done_declaration.json is emitted.
+    drift_dir = package_dir / "drift"
+    done_evaluation = done_declaration_mod.evaluate_done_criteria(
+        gate_results=gate_results,
+        drift_dir=drift_dir,
+        grok_audit_output=None,
+        operator_signature_evidence_id=None,
+        test_plan_evidence_id=None,
+    )
+    done_evaluation_record = done_declaration_mod.build_done_evaluation_record(
+        done_evaluation,
+        package_id=package_id,
+        package_version=PACKAGE_VERSION,
+        tenant_id=tenant_id,
+        generated_at=generated_at,
+    )
+
     manifest_path = package_dir / "manifest.json"
     manifest = _build_manifest(
         package_id=package_id,
@@ -193,9 +216,23 @@ def generate_package_from_test_plan(
         audit_packet_files=touched_files | {manifest_path},
         audit_packet=audit_packet,
         audit_packet_manifest_path=audit_packet_summary["manifest_path"],
+        done_evaluation_record=done_evaluation_record,
     )
     _atomic_write_json(manifest_path, manifest)
     touched_files.add(manifest_path)
+
+    done_declaration_path = done_declaration_mod.emit_done_declaration_if_done(
+        done_evaluation,
+        package_dir=package_dir,
+        package_id=package_id,
+        package_version=PACKAGE_VERSION,
+        tenant_id=tenant_id,
+        generated_at=generated_at,
+        now=generated_at,
+        grok_audit_output=None,
+    )
+    if done_declaration_path is not None:
+        touched_files.add(done_declaration_path)
 
     markdown_bundle_path = package_dir / f"{package_id}_markdown_bundle.zip"
     _write_bundle(
@@ -220,6 +257,8 @@ def generate_package_from_test_plan(
         audit_packet_dir=audit_packet_dir,
         audit_packet_manifest_path=audit_packet_summary["manifest_path"],
         audit_packet_coverage_complete=audit_packet.coverage_complete,
+        is_done=done_evaluation.is_done,
+        done_declaration_path=done_declaration_path,
     )
 
 
@@ -419,6 +458,7 @@ def _build_manifest(
     audit_packet_files: Sequence[str | Path],
     audit_packet: audit_packet_mod.AssembledAuditPacket,
     audit_packet_manifest_path: Path,
+    done_evaluation_record: Mapping[str, Any],
 ) -> dict[str, Any]:
     file_hashes = _package_file_hashes(package_dir)
     package_hash = sha256(
@@ -448,9 +488,10 @@ def _build_manifest(
             "missing_paths": list(audit_packet.missing_paths),
             "grok_submitted": audit_packet.grok_submitted,
         },
+        "done_evaluation": dict(done_evaluation_record),
         "pdf_rendered": False,
         "grok_audit_submitted": False,
-        "done_declaration_emitted": False,
+        "done_declaration_emitted": bool(done_evaluation_record.get("done_declaration_emitted", False)),
     }
 
 

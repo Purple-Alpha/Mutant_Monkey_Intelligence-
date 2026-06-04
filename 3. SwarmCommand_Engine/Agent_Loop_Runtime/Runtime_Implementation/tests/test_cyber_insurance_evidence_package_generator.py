@@ -152,6 +152,23 @@ def test_generator_assembles_coverage_complete_audit_packet(tmp_path):
     assert manifest["audit_packet"]["packet_hash"].startswith("sha256:")
 
 
+def test_generator_pass1_evaluates_not_done_and_emits_no_declaration(tmp_path):
+    result = _generate(tmp_path)
+
+    assert result.is_done is False
+    assert result.done_declaration_path is None
+    assert not (result.package_dir / "done_declaration.json").exists()
+
+    manifest = json.loads(result.manifest_path.read_text(encoding="utf-8"))
+    done = manifest["done_evaluation"]
+    assert done["is_done"] is False
+    assert done["done_declaration_emitted"] is False
+    assert manifest["done_declaration_emitted"] is False
+    # Gate-backed criteria + criterion 13 met; the Pass-1 gaps are 11/12/14/15.
+    assert sorted(done["criteria_met"]) == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13]
+    assert {item["criterion"] for item in done["criteria_unmet"]} == {11, 12, 14, 15}
+
+
 def test_generator_is_deterministic_for_same_inputs(tmp_path):
     first = _generate(tmp_path)
     first_manifest = json.loads(first.manifest_path.read_text(encoding="utf-8"))

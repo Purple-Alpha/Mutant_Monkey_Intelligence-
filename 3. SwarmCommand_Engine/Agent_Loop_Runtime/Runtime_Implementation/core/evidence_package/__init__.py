@@ -1,12 +1,18 @@
 """Cyber-insurance evidence package gate library + Pass 1 generator."""
 
 from . import audit_packet
+from . import done_declaration
 from . import gates
 from .audit_packet import (
     AssembledAuditPacket,
     AuditPacketFile,
     assemble_audit_packet,
     write_audit_packet,
+)
+from .done_declaration import (
+    DoneEvaluation,
+    emit_done_declaration_if_done,
+    evaluate_done_criteria,
 )
 from .gates import (
     BOUNDARY_STATEMENT,
@@ -35,9 +41,13 @@ __all__ = [
     "AssembledAuditPacket",
     "AuditPacketFile",
     "BOUNDARY_STATEMENT",
+    "DoneEvaluation",
     "EvidencePackageResult",
     "assemble_audit_packet",
     "audit_packet",
+    "done_declaration",
+    "emit_done_declaration_if_done",
+    "evaluate_done_criteria",
     "FRESHNESS_THRESHOLDS_DAYS",
     "FORBIDDEN_LANGUAGE_PHRASES",
     "VOCABULARY_TRANSLATIONS",
