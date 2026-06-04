@@ -67,7 +67,7 @@ Matt's repeated, explicit instruction (logged 2026-06-03): stop handing him bare
 
 1. **Default to deciding.** If a choice is build-layer or mechanical — naming, default values, file paths, which of several equivalent approaches, isolation/packet mechanics, ordering, how to split a commit — **make the call**, state it in one line with your reason, and move on. Do not ask.
 
-2. **Escalate only operator-authority decisions** (§2): commits, pushes, §11/§13 sign-offs, direction/track changes, scope changes, pricing, and anything touching a signed spec or the seven `VISION.md` non-negotiables.
+2. **Escalate only operator-authority decisions, graded by substance — not by which files get touched** (§2): commits, pushes, §11/§13 sign-offs, direction/track changes, scope changes, pricing, and any change to the *substance* of a signed spec's locked decisions or the seven `VISION.md` non-negotiables. Grade by impact and reversibility. A change that alters a locked decision, scope, pricing, legal/trademark/external-identity posture, or a non-negotiable escalates. A reversible, substance-free edit — a cosmetic or internal label/codename change, formatting, a typo, a comment — is a build-layer call to make and report, even if it mechanically touches a signed-spec file. Editing a signed file is not, by itself, an operator-authority decision; changing what that file *decides* is. (A project-wide rename is still run as one deliberate, recorded pass for execution safety, and the name choice's real gate is trademark/registrar clearance — an operator/legal matter, not an agent guardrail to spend on the operator.)
 
 3. **Every escalated decision must arrive PRE-SCORED.** Before you ask, you must already have done the analysis. For each real option present:
    - a **score or best/worst ranking**,
@@ -82,6 +82,8 @@ Matt's repeated, explicit instruction (logged 2026-06-03): stop handing him bare
 6. This does not override §2 or §4: you still never make the operator-authority decision yourself, and no proxy decisions. It changes only *how* you bring those decisions to Matt — with evidence, ranked, and with a recommendation — never raw.
 
 7. **Use the engines that already exist; do not improvise scoring.** "Pre-scored" is not a license to invent ad-hoc rankings. The project already has the machinery: the Next-Action Decision Rubric (§7) for "what should we do next" choices, the Consequence Matrix (§7, when Matt asks) for path-setting / butterfly decisions, and the 5-axis rubrics (§2) for their domains. Route the decision through the right existing engine and present its output. This rule's whole purpose is to make you *use* the decision system the project already built, not bypass it with raw menus.
+
+8. **Do not invert the rule (trivia-escalation).** Spending Matt's authority on low-substance, reversible changes while handing him genuine decisions raw is as much a violation as unscored-choice dumping — it is the "trivia-escalation / decision-inversion" failure mode (§12). The test is always *substantive impact and reversibility*, never how official the surface looks. If you catch yourself escalating something cosmetic, decide it; if you catch yourself dumping something consequential, score it first. Heavy process belongs on what is hard to undo, not on what is easy to undo.
 
 ---
 
@@ -209,6 +211,7 @@ These are the named failure modes from the existing specs. If you catch yourself
 - **Forbidden-language slip** — using "compliant," "certified," "policy," or similar outside allowed carve-outs.
 - **Authorship Rule violation** — drafting operator signature text or attributing decisions to Matt without his explicit authorship.
 - **Unscored-choice dumping** — presenting Matt a decision or multiple-choice with no scoring, no consequences, and no recommended default; offloading analysis that is the agent's job (§3.1). This includes asking him build-layer/mechanical questions you should have decided yourself.
+- **Trivia-escalation / decision-inversion** — escalating low-substance, reversible changes (cosmetic renames, internal codenames, label/formatting edits, typos) to operator authority while simultaneously dumping genuine unscored decisions on Matt. Inverts the authority model: heavy process on what doesn't matter, no analysis on what does. Grade by substantive impact and reversibility, not by whether an edit touches an official-looking file (§3.1.2, §3.1.8).
 
 ---
 

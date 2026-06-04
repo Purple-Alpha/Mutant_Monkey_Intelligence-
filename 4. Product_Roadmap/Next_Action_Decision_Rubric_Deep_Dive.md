@@ -1,6 +1,6 @@
 # Next-Action Decision Rubric — Spec-First Deep Dive
 
-**Status:** DRAFT (pre-§11). Authored 2026-05-27 by Matt Nichol after the 2026-05-26 evening "Next-Action Build System v1" design. §10 open questions require operator resolution before §11 sign-off.
+**Status:** §11 SIGNED 2026-06-04 by Matt Nichol (Zebra-Comet). Authored 2026-05-27 by Matt Nichol after the 2026-05-26 evening "Next-Action Build System v1" design. All 7 §10 open questions resolved and locked as D13–D19 (see §10.R and §11). Gate audit clean: grok-4, 0 blocking / 0 warnings, packet `3805524a…`, 2026-06-04T06:23:34Z.
 **Date:** 2026-05-27
 **Owner:** Matt Nichol
 **Source-of-truth links:** `think_sheet.md` (existing project-idea rubric — distinct artifact), `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (existing email-explanation rubric — distinct artifact), `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §1.1 (rubrics-are-advisory supersession; this spec inherits and respects that doctrine), `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (canonical for ordering — relationship locked in §10 Q1), `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (operating mode under which this rubric is exercised).
@@ -315,9 +315,25 @@ The rubric itself does not invoke `audit_tools/complete_gate.py` on every cycle 
 
 ---
 
-## §10 Open Questions for Matt
+## §10 Open Questions for Matt — CLOSED 2026-06-04
 
-These resolve into locked decisions (D13–D…) at §11 sign-off. Until then they are open and the spec is pre-§11.
+All seven questions were resolved and locked at Matt's §11 sign-off on 2026-06-04. They are now decisions D13–D19 (table in §11). The questions below are retained for historical record.
+
+### §10.R Resolution status (LOCKED 2026-06-04 at §11 sign-off → D13–D19)
+
+All seven questions were resolved with operator-reviewed, pre-scored recommendations and locked at Matt's §11 signature on 2026-06-04. They are now decisions D13–D19 (see §11). Any future change to these requires the §9 spec-revision cycle (fresh `complete_gate.py` audit + new §11 signature).
+
+| Q | Proposed resolution | Becomes | One-line rationale |
+|---|---|---|---|
+| Q1 | (c) Hybrid — queue is default source; conversational candidates allowed when queue is stale/unfit | D13 | Keeps queue authoritative for ordering; rubric usable live; avoids queue/rubric collision (FM vi). |
+| Q2 | (b) Informal operator intent — modes are labels the operator may state, not thresholds the rubric enforces | D14 | Formal modes would let a mode pick the action = authority drift (FM i), against D2. |
+| Q3 | (c) New dedicated artifact `decision_cycles_log.md` | D15 | Durable + greppable for D6 calibration; keeps activity log clean; avoids decision-laundering (FM vii). |
+| Q4 | (b) at the 14-day Operating Doctrine retro **plus** (d) trigger at ≥3 PARTIAL/FAIL in a row | D16 | Bundles into existing retro (no new ritual) with an early-warning safety net. |
+| Q5 | (b) on FAIL audits only **plus** (c) operator-demand opt-in | D17 | Spends gate budget only on real failures; preserves learning signal; spec flags (b)/(c) as likely. |
+| Q6 | (c) Defer until one trial cycle of direct spec use | D18 | Avoids baking a production prompt pre-use; does not block §11 tonight. |
+| Q7 | (a) Reference scoring — worked "do nothing" example (e.g. L0 R0–1 E0 FC1 Rv2 → 3–4) | D19 | Consistency without special-casing; keeps D4 (same axes) intact. |
+
+These are now locked in the §11 decision table below as D13–D19; the §10 questions are closed.
 
 ### Q1. Source of options
 
@@ -386,19 +402,25 @@ D4 allows "do nothing" as a candidate but does not specify how it scores. Should
 
 ---
 
-## §11 Sign-Off Placeholder
+## §11 Sign-Off — SIGNED 2026-06-04
 
-This section is empty until Matt signs.
+Signed by Matt Nichol (Zebra-Comet) on 2026-06-04 after a clean gate audit (grok-4, 0 blocking / 0 warnings; packet `3805524af18fe71ac1b0dc00355458cbbe106e5ccf05a96e5f252b246b6efd25`). The seven §10 open questions are now locked as D13–D19.
 
-### Locked decisions (D13–D…) — populated on sign-off
+### Locked decisions (D13–D19)
 
-| # | Decision | Note |
+| # | Decision | Locked value |
 |---|---|---|
-| (pending) | (pending) | Decisions enter this table only after Matt's signed acceptance of the corresponding §10 open question. |
+| D13 | Source of options (Q1) | **Hybrid.** `PROJECT_BUILD_AND_AUDIT_QUEUE.md` is the default candidate source; conversational candidates may be added when the queue is stale or does not fit the current session. The queue retains its canonical-ordering claim. |
+| D14 | Mode formalization (Q2) | **Informal operator intent.** `stability` / `learning` / `experiment` are labels the operator may state as context; they are NOT thresholds the rubric enforces. No mode mechanically selects an action (preserves D2). |
+| D15 | Cycle-log persistence (Q3) | **New dedicated artifact** `decision_cycles_log.md`. Durable and greppable for D6 calibration review; keeps `PROJECT_ACTIVITY_LOG.md` clean; logs operator-decided vs rubric-ranked separately (mitigates FM vii). |
+| D16 | Calibration cadence (Q4) | **14-day Operating Doctrine retro (baseline) plus a streak trigger** at ≥3 consecutive PARTIAL or FAIL Step-8 verdicts, which prompts an earlier mismatch-log review. |
+| D17 | Grok-audit boundary (Q5) | **On FAIL audits only, plus operator-demand opt-in.** A FAIL Step-8 verdict triggers a Grok review of the artifact the action touched; the operator may also opt any cycle in. The loop does not otherwise tax the gate budget. |
+| D18 | Compressed system-prompt block (Q6) | **Deferred.** No production system-prompt artifact is built until the rubric has been used directly for at least one trial cycle; the decision is revisited then. Until built, the spec text is the source of truth. |
+| D19 | "Do nothing" scoring (Q7) | **Reference scoring.** A worked example is provided (e.g. Leverage 0, Risk 0–1, Evidence 0, Future Cost 1, Reversibility 2 → 3–4). "Do nothing" is scored on the same five axes as any other candidate (preserves D4); no reserved band or separate column. |
 
 ### Sign-off line
 
-> *(To be authored by Matt in his own words at §11 sign-off.)*
+> Matt Nichol (Zebra-Comet) June 4th. 2026
 
 Per the Authorship Rule (2026-05-25 / 26 discussion, cross-reference to the deleted `Human_Written_Communication_Policy.md` failure mode): the sign-off text is operator-authored. AI may help structure, may proofread, may flag inconsistencies — AI does not draft the operator's signature wording or attribute decisions to the operator without explicit operator authorship.
 
@@ -406,14 +428,14 @@ Per the Authorship Rule (2026-05-25 / 26 discussion, cross-reference to the dele
 
 Signing this spec:
 
-1. Locks D13–D… from §10 question resolution.
+1. Locks D13–D19 from the §10 question resolution.
 2. Authorizes the rubric to be used inside the active project session as the tactical-layer scoring engine.
-3. If §10 Q6 resolves to (a), authorizes generating the compressed system-prompt block from this signed source-of-truth.
+3. Per D18 (Q6 = defer), does NOT yet authorize a compressed system-prompt block; that is revisited after one trial cycle of direct use, and if built later it is generated from this signed source-of-truth via a spec revision.
 
 Signing does **not**:
 
 - Authorize the rubric to make decisions on its own. D2 stands regardless of signature.
-- Override `PROJECT_BUILD_AND_AUDIT_QUEUE.md`'s canonical-ordering claim until §10 Q1 resolves.
+- Override `PROJECT_BUILD_AND_AUDIT_QUEUE.md`'s canonical-ordering claim. Per D13 (hybrid), the queue stays authoritative for default ordering; the rubric operates beside it, not over it.
 - Reduce or modify the seven non-negotiables in `VISION.md`.
 
 ---

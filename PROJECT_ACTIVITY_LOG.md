@@ -26,6 +26,86 @@ What should happen next.
 
 ---
 
+## 2026-06-04 - swarm-command experiment reviewed; doctrine PROSE ported to a SPARK (no code merged)
+**Actor:** Matt Nichol (direction) + Cursor (Claude Opus 4.8, review + port).
+
+**Action:** Reviewed (external experiment) + Created (SPARK) + Updated (MASTER_INDEX)
+
+**Files Changed:**
+- 4. Product_Roadmap/_SwarmCommand_Governance_Articulation_SPARK.md (NEW; prose-only, non-binding)
+- MASTER_INDEX.md (SPARK entry added)
+
+**Reason:**
+Matt pointed at `C:\\Unified Folder Structure NorthStar + SwarmCommand Venture\\Blu_Team\\swarm-command.zip` (in WSL: `/mnt/c/.../Blu_Team/swarm-command.zip`), a 10KB clean-room SwarmCommand PoC created 2026-06-03 23:37 by a separate model/tool (it hardcodes `/home/ubuntu/swarm-command/`, not the real environment). Read-only inspection only; nothing extracted. Honest review surfaced: (1) the experiment's `complete_gate.py` is a ~40-line stub — `validate_payload` checks a boolean + 4 forbidden words + a hardcoded path, and `run_adversarial_test` returns success on any non-empty payload while the README/doctrine claim "cryptographic check" + "instant process termination"; this is the rubber-stamp failure mode and must never be confused with the real Grok-backed `audit_tools/complete_gate.py`; (2) namespace-collision risk — it ships its own `complete_gate.py` / `doctrine.md` / `MASTER_INDEX.md`; (3) overclaiming "combat/iron-gated" voice. The governance philosophy and the seven evolution standards were faithful and worth keeping.
+
+Operator selected: leave the experiment in `Blu_Team` (do NOT merge), and port the PROSE ONLY into a SPARK in the real repo. Created `_SwarmCommand_Governance_Articulation_SPARK.md` with false enforcement claims stripped, ASCII-only, box-drawing diagram converted to plain ASCII, and a hard §0 disclaimer that it does not supersede AGENTS.md / the real gate / signed specs and explicitly disowns the stub gate. No stub code crossed over.
+
+**Next Step:**
+None required; SPARK is non-binding. Uncommitted with the rest of the 2026-06-04 session slice — awaiting operator commit authorization.
+
+## 2026-06-04 - Next-Action Decision Rubric §11 SIGNED (D13-D19 locked) + decision_cycles_log.md created
+**Actor:** Matt Nichol (operator §11 signature) + Cursor (Claude Opus 4.8, drafting / gate run / execution).
+
+**Action:** Signed (spec §11) + Created (decision_cycles_log.md) + Updated (MASTER_INDEX + trackers)
+
+**Files Changed:**
+- 4. Product_Roadmap/Next_Action_Decision_Rubric_Deep_Dive.md (§11 SIGNED; D13-D19 locked; §10 closed; status header updated)
+- decision_cycles_log.md (NEW; D15 Step-9 persistence surface; schema + header only)
+- MASTER_INDEX.md (added the rubric entry — it had NO prior index entry, a drift gap now closed — plus the decision_cycles_log.md entry)
+- PROJECT_HANDSHAKE.md, PROGRESS.md (Current State + next step + git state)
+
+**Reason:**
+Matt authored the §11 signature and instructed sign-off ("please sign me off now"). Per the spec's own §9 and AGENTS §5, the gate ran BEFORE recording the signature: `complete_gate.py --task next_action_decision_rubric_signoff` returned clean (grok-4, 0 blocking / 0 warnings, packet `3805524af18fe71ac1b0dc00355458cbbe106e5ccf05a96e5f252b246b6efd25`, evidence quality "comprehensive"; report `audit_outputs/next_action_decision_rubric_signoff_20260604T062334Z.md`). The audit packet covered all four dirty files (rubric, AGENTS.md, this log, handshake) since the gate audits the whole working tree. The 7 §10 questions locked as D13-D19: D13 hybrid option source, D14 informal operator modes, D15 dedicated `decision_cycles_log.md`, D16 14-day-retro + ≥3-streak calibration, D17 Grok-on-FAIL + operator opt-in, D18 compressed-prompt deferred one trial cycle, D19 reference-scored "do nothing" on the same five axes.
+
+**NOTE (operator authorship):** Matt's signature line was first typed `Matt Nchol (Zebra-Comet) June 4th. 2026` and recorded VERBATIM per the Authorship Rule. On 2026-06-04 Matt explicitly authorized correcting the "Nchol" typo to "Nichol"; the signed signature now reads `Matt Nichol (Zebra-Comet) June 4th. 2026`. The agent changed only the spelling at Matt's instruction; no other signature text was altered.
+
+**Next Step:**
+Operator commit authorization for this uncommitted sign-off slice (no commit without explicit instruction); then the next Cyber Insurance generator slice. The rubric is now the live tactical decision tool — future "what next?" choices route through it and log to `decision_cycles_log.md`.
+
+## 2026-06-04 - Privacy / data-sovereignty direction noted (private cloud storage for testing - forward intent)
+**Actor:** Matt Nichol (direction) + Cursor (Claude Opus 4.8, logging).
+
+**Action:** Logged (forward-looking infrastructure direction; nothing built)
+
+**Files Changed:**
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Matt is steering the project toward maximum privacy / data sovereignty (motivated by ad-profiling creep tagging him "cybersecurity," and a preference to keep the build self-reliant). Stated intent: "soon" build his own private cloud storage for testing. Context: a prior Gemini suggestion conflated this sound sovereignty goal with an "uncensored local model to escape policy filters" framing — that framing was set aside; the legitimate core is privacy + independence, not removing safety signals. Matt is not building offensive/malware tooling; the product is defensive (cyber insurance evidence, BEC/impersonation detection). Occasional Anthropic policy warnings noted but not screenshotted; Matt will capture the next one so it can be triaged (false-positive vs genuine gray-zone).
+
+**Recommended shape (build-layer, when Matt is ready):** MinIO (self-hosted, S3-compatible, Docker) as the primary testing-data store; optional Nextcloud for a human-facing file UI; repurpose an older PC as a dedicated TrueNAS (ZFS snapshots for test fixtures) or Proxmox host; keep LAN-only with Tailscale/WireGuard for remote access (no open ports). Project payoff: a sovereign, encrypted, access-controlled store is the responsible home for raw email-header samples that partly blocked the sender-provenance geo-velocity detector.
+
+**Next Step:**
+When Matt is ready, write a small spec/SPARK for the private test-data store (storage layout, encryption-at-rest, access control, how the test pipeline reads it) before building. Not started; rubric §11 sign-off remains the current live action.
+
+## 2026-06-04 - AGENTS.md decision-calibration guardrail added (trivia-escalation fix) + Small Moose Security logged as rename candidate
+**Actor:** Matt Nichol (operator concern + direction) + Cursor (Claude Opus 4.8, drafting/execution).
+
+**Action:** Updated (AGENTS.md doctrine) + Logged (rename candidate)
+
+**Files Changed:**
+- AGENTS.md (§3.1.2 rewritten; §3.1.8 added; §12 failure-mode list extended)
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Matt raised a structural concern (not anger; explicitly "voicing concerns"): the agent has been (a) leaving the actual decision-support guardrails behind — chiefly the unsigned Next-Action Decision Rubric — while (b) spending operator authority on a low-substance internal name change. He called the name guardrail "foolish": it has zero impact beyond an internal label, yet it was escalated to him, while genuine decisions were dumped raw. Root cause found in doctrine: AGENTS §3.1.2 said escalate "anything touching a signed spec," which conflates *mechanically editing a signed file* with *changing a locked decision*. Fix: §3.1.2 now grades escalation by substance + reversibility, not file-touch; cosmetic/label/internal-name edits are build-layer calls to make and report. Added §3.1.8 and a named §12 failure mode "trivia-escalation / decision-inversion" so this stops being a per-session promise. This is a pre-§11 AGENTS edit, authorized by §13 (edit freely until the companion spec is signed) and by Matt's explicit "fix this now" direction.
+
+**Rename candidates (LOGGED, not decided):**
+- "Small Moose Security" (variants: SmallMooseCyber.com, SmallMooseLabs.com, SmallMooseSec.com; internal codename "Project Small Moose"). Matt's proposal; distinctive, memorable, Canadian, anti-generic vs the ViperForce/ApexGuard naming cluster. Status: leading candidate. No web/trademark collision check run yet.
+- "Mutant Security" (Matt's proposal 2026-06-03 eve; upgraded candidate after class-scoped collision correction). Pro: rolls off the tongue, easy to spell, easy to remember, maps to mutating/polymorphic threats, and has strong product/merch potential. Exact `.com` domain availability confirmed by Matt: `mutantsecurity.com` available as of 2026-06-03 evening. Earlier out-of-class concerns (energy drinks/nutrition) are not blockers under the corrected screening rule below. Remaining real checks: in-class cybersecurity/software/services conflicts and famous-mark dilution edge cases. No CIPO/USPTO class-scoped collision check run yet.
+- "Flying Moose" (Matt 2026-06-03; prefers over Small Moose). Assessment: strongest of the moose set so far — "moose don't fly" keeps the absurdist/self-aware edge, and it appears more ownable (no dominant national brand spotted). No collision check run yet.
+- "Blue Moose" (Matt 2026-06-03). Weaker on collision: established consumer food brand "Blue Moose of Boulder" (hummus/snacks) + many cafes/restaurants; .com likely gone; "blue" leans on the generic security trust-color. Likely clear in a cybersec-software class but already occupied in consumer space. No collision check run yet.
+- Matt does NOT like "Small Moose" (stated 2026-06-03) — demote from leading; he is actively iterating, moose theme retained for now.
+
+**Screening-criteria correction (operator insight, 2026-06-03):** Name collisions are only disqualifying when they conflict **in or adjacent to the cybersecurity class** (likelihood of confusion in the relevant market). Out-of-class collisions (e.g. "Mutant" energy drink, "Blue Moose" hummus) are apples-to-oranges and do NOT block use. Screen names on three SEPARATE axes, only the first being a legal blocker: (1) in-class conflict — cybersecurity software/services, ~Nice classes 9/42/45 — the real battle; (2) famous-mark cross-class dilution — rare, only the handful of marks famous enough for all-class protection (Apple/Coca-Cola/etc.; Marvel owns specific X-Men marks, not the word "mutant"); (3) domain availability — practical/logistics, not a legal conflict (and SwarmCommand house-of-brands sidesteps it). Prior collision-smell notes above were over-broad; future clearance passes screen by class, not by any-appearance-anywhere.
+
+**Domain/brand-architecture fact (new):** Matt already owns **swarmcommand.ca**. This opens a house-of-brands path: SwarmCommand as platform/parent, the security product as a sub-brand (e.g. mutantsecurity.swarmcommand.ca or a named product line) — already-paid, sidesteps the NorthStar collision without a new standalone identity. To be weighed against a clean standalone brand. Note "SwarmCommand" is already the internal engine name (`3. SwarmCommand_Engine/`).
+
+All of the above: NOT applied to any file. Project rename remains PARKED pending a real CIPO + USPTO + registrar clearance pass and a separate controlled rename pass (label swap across VISION.md + many specs, not a decision change).
+
+**Next Step:**
+Drive the Next-Action Decision Rubric to §11 sign-ready by resolving its 7 §10 open questions with pre-scored recommendations (operator-selected approach this session), then run complete_gate.py and present for Matt's §11 signature.
+
 ## 2026-06-04 - Cyber Insurance implementation spec §18 amendment SIGNED (authorized code home + signature threshold)
 **Actor:** Matt Nichol (operator signature) + Cursor (Claude Opus 4.8, drafting/execution).
 

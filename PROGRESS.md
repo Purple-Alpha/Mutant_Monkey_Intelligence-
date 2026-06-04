@@ -19,6 +19,8 @@
 
 **Wave 3.1 score-sheet review ledger helper:** implemented, Grok-clean, committed (`24a1498`) with scanner, helper, hook, tests, and 1072/1 full-suite baseline.
 
+**Next-Action Decision Rubric §11 SIGNED (2026-06-04).** Matt authored the signature and instructed sign-off. Per the spec's own §9 + AGENTS §5, `complete_gate.py` ran first and returned clean (grok-4, 0 blocking / 0 warnings, "comprehensive" evidence; `audit_outputs/next_action_decision_rubric_signoff_20260604T062334Z.md`). The 7 §10 questions locked as D13-D19: hybrid option source, informal operator modes, dedicated `decision_cycles_log.md`, 14-day-retro + ≥3-streak calibration, Grok-on-FAIL + operator opt-in, compressed-prompt deferred one trial cycle, reference-scored "do nothing" on the same five axes. `decision_cycles_log.md` created (D15); MASTER_INDEX drift gap closed (the rubric had no prior index entry). The rubric is now the live tactical decision engine — it ranks, Matt selects. Also this session: the AGENTS.md decision-calibration guardrail (§3.1.2 substance-graded escalation, §3.1.8, and the §12 "trivia-escalation / decision-inversion" failure mode). Signature reads `Matt Nichol (Zebra-Comet) June 4th. 2026` (the initial "Nchol" typo was corrected to "Nichol" on Matt's explicit 2026-06-04 instruction).
+
 ---
 ## Active Task List
 
