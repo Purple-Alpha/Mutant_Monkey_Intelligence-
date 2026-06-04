@@ -144,3 +144,32 @@ CYCLE 4 — 2026-06-04T19:18Z
                  1122 passed, 1 skipped; committed a65babf under STANDING.
   SURPRISES:     None. Pipeline integration was updated to use the real signature mechanism instead of
                  a placeholder evidence id, keeping the end-to-end proof honest.
+
+CYCLE 5 — 2026-06-04T19:30Z
+  OBSERVE: Queue §4 named "PDF render surface review / decision (IQ2 supply-chain surface)" as the next
+           item, deferred pending an explicit operator decision because IQ2 adds a new
+           cross-platform supply-chain/dependency surface (butterfly candidate). Spec-first check:
+           IQ2 is already RESOLVED in the §11-signed impl spec (line 326 = "dedicated pinned PDF
+           dependency"); line 342 says the concrete engine pin is refinable without a deep-dive re-sign.
+           Open part = which concrete engine + whether to build now. Baseline 1122.
+  DECISION (operator-authority, pre-scored engine options; Det/Supply/Fit/X-plat/Rev, 0-2 each):
+    ReportLab (pure-Python, pip-only)   2 2 2 2 1  TOTAL 9  <- recommended
+    WeasyPrint (HTML/CSS->PDF)          1 0 2 1 1  TOTAL 5
+    wkhtmltopdf (binary)                1 0 2 1 1  TOTAL 5
+    Pandoc+LaTeX                        1 0 2 1 1  TOTAL 5
+                 ReportLab wins the exact dimension IQ2 flagged: no system binaries -> smallest
+                 supply-chain surface to pin/test/audit; deterministic; cross-platform by default.
+  SELECTED:      ReportLab pinned + build the minimal internal/synthetic renderer now (operator chose
+                 "reportlab_build"). Stays inside the no-buyer-delivery Pass-1 envelope.
+  EXPECTED:      New pdf_renderer.py: deterministic (reportlab invariant) internal PDF from manifest +
+                 records; boundary statement verbatim/prominent (HC8); rendered/pdf_render.json sidecar
+                 with pinned engine identity+version (HC6) and pdf_sha256; engine-pin fail-closed;
+                 NOT auto-wired into generation (explicit separate step, like stage 9); no buyer delivery.
+                 requirements.txt pins reportlab==4.2.5 + transitive pillow/chardet.
+  EXECUTED AT:   2026-06-04T19:37Z
+  AUDIT VERDICT: PASS — Grok gate clean 0/0
+                 (audit_outputs/cyber_insurance_pdf_render_surface_20260604T193751Z.md); 1128 passed,
+                 1 skipped; committed under STANDING.
+  SURPRISES:     None. Build-layer call (stated): renderer is a separate explicit render_package_pdf()
+                 rather than folded into generate_package_from_test_plan, to keep generation
+                 deterministic/offline and PDF an opt-in internal step.

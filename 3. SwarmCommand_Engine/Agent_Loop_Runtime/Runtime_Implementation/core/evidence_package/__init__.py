@@ -5,6 +5,7 @@ from . import done_declaration
 from . import gates
 from . import operator_signature
 from . import package_auditor
+from . import pdf_renderer
 from .audit_packet import (
     AssembledAuditPacket,
     AuditPacketFile,
@@ -44,6 +45,12 @@ from .gates import (
     run_stale_evidence_gate,
     run_vocabulary_translation_gate,
 )
+from .pdf_renderer import (
+    PdfRenderResult,
+    RENDER_ENGINE_IDENTITY,
+    render_engine_version,
+    render_package_pdf,
+)
 from .package_generator import (
     EvidencePackageResult,
     generate_package_from_test_plan,
@@ -58,6 +65,8 @@ __all__ = [
     "EvidencePackageResult",
     "OperatorSignatureRecord",
     "PackageAuditResult",
+    "PdfRenderResult",
+    "RENDER_ENGINE_IDENTITY",
     "assemble_audit_packet",
     "audit_package",
     "audit_packet",
@@ -69,6 +78,9 @@ __all__ = [
     "operator_signature",
     "package_auditor",
     "parse_audit_output",
+    "pdf_renderer",
+    "render_engine_version",
+    "render_package_pdf",
     "record_operator_signature",
     "FRESHNESS_THRESHOLDS_DAYS",
     "FORBIDDEN_LANGUAGE_PHRASES",

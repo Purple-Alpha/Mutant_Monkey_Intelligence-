@@ -18,6 +18,14 @@ cryptography==48.0.0
 requests==2.33.1
 httpx==0.27.2
 
+# Cyber Insurance Evidence Package PDF render surface (IQ2: dedicated pinned
+# PDF toolchain). ReportLab is pure-Python (no system binaries), chosen to
+# minimize the new cross-platform supply-chain surface the spec flagged. The
+# two transitive deps below (pillow, chardet) are pinned for reproducibility.
+reportlab==4.2.5
+pillow==12.2.0
+chardet==7.4.3
+
 # --- Test dependencies ----------------------------------------------------
 pytest==9.0.3
 

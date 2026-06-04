@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-04 - PDF render surface (IQ2 supply-chain decision + internal renderer)
+**Actor:** Matt Nichol (IQ2 engine decision) + Cursor (Claude Opus 4.8, build + gate).
+
+**Action:** Decided (PDF engine pin) + Added (code) + Updated (deps / tests / queue / trackers)
+
+**Files Changed:**
+- 3. SwarmCommand_Engine/.../core/evidence_package/pdf_renderer.py (NEW; deterministic internal PDF renderer)
+- 3. SwarmCommand_Engine/.../core/evidence_package/__init__.py (exports)
+- 3. SwarmCommand_Engine/.../requirements.txt (pin reportlab==4.2.5 + transitive pillow==12.2.0, chardet==7.4.3)
+- 3. SwarmCommand_Engine/.../tests/test_cyber_insurance_pdf_renderer.py (NEW; 6 tests)
+- PROJECT_BUILD_AND_AUDIT_QUEUE.md, PROJECT_HANDSHAKE.md, decision_cycles_log.md, PROGRESS.md (decision / resume / cycle updates)
+
+**Reason:**
+Operator-authority IQ2 decision, brought pre-scored (not a raw menu). Spec-first check: IQ2 was already RESOLVED in the §11-signed impl spec (line 326, "dedicated pinned PDF dependency"); only the concrete engine pin + build-now were open, and the engine pin is refinable without a re-sign (line 342). Engine options scored on Determinism / Supply-chain minimalism / Fit / Cross-platform / Reversibility; **ReportLab** won (9 vs 5) on the exact dimension IQ2 flagged — pure-Python, no system binaries, smallest cross-platform supply-chain surface to pin/test/audit. Matt selected "pin ReportLab + build the minimal internal/synthetic renderer now." `render_package_pdf()` produces a byte-deterministic PDF (reportlab invariant mode) from the manifest + records, prints the §2 boundary statement verbatim (HC8), and writes a `rendered/pdf_render.json` sidecar carrying the pinned engine identity+version (HC6) and pdf_sha256; engine-pin mismatch and empty boundary fail closed. Build-layer call (stated): renderer is a separate explicit step, NOT auto-wired into `generate_package_from_test_plan`, so generation stays deterministic/offline — mirrors how stage 9 was isolated. Scope held inside the no-buyer-delivery Pass-1 envelope. Grok gate **clean (0/0; `audit_outputs/cyber_insurance_pdf_render_surface_20260604T193751Z.md`)**; **1128 passed, 1 skipped**; committed under STANDING.
+
+**Next Step:**
+Real-customer-data controls decision stays gated before any non-synthetic Grok submission OR buyer-facing render. Buyer PDF delivery remains an explicit operator decision. Push remains explicit; new commit is local-only until Matt pushes.
+
+---
+
 ## 2026-06-04 - Criterion 14 operator package-signature mechanism
 **Actor:** Matt Nichol (operator instruction) + Cursor (GPT-5.5, build + gate).
 
