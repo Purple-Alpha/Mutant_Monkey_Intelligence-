@@ -3,6 +3,7 @@
 from . import audit_packet
 from . import done_declaration
 from . import gates
+from . import package_auditor
 from .audit_packet import (
     AssembledAuditPacket,
     AuditPacketFile,
@@ -13,6 +14,12 @@ from .done_declaration import (
     DoneEvaluation,
     emit_done_declaration_if_done,
     evaluate_done_criteria,
+)
+from .package_auditor import (
+    PackageAuditResult,
+    audit_package,
+    build_audit_payload,
+    parse_audit_output,
 )
 from .gates import (
     BOUNDARY_STATEMENT,
@@ -43,11 +50,16 @@ __all__ = [
     "BOUNDARY_STATEMENT",
     "DoneEvaluation",
     "EvidencePackageResult",
+    "PackageAuditResult",
     "assemble_audit_packet",
+    "audit_package",
     "audit_packet",
+    "build_audit_payload",
     "done_declaration",
     "emit_done_declaration_if_done",
     "evaluate_done_criteria",
+    "package_auditor",
+    "parse_audit_output",
     "FRESHNESS_THRESHOLDS_DAYS",
     "FORBIDDEN_LANGUAGE_PHRASES",
     "VOCABULARY_TRANSLATIONS",
