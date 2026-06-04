@@ -100,9 +100,13 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 **Committed 2026-06-04:** gate library `db32cd5` (fresh Grok gate clean), generator + CLI `ff0f41e` (via `complete_gate.py --operator-override`; Matt explicitly authorized generator Pass-1 start-build, internal scope; the §11-signed implementation spec is a no-code document, so the override path is the designed mechanism and a warning-level drift incident is recorded). Focused tests 16 passed. Doctrine/log/tracker docs committed alongside.
 
+**Committed 2026-06-04 (later session):** generator stages 8 (audit-packet assembly, `ec91074`), 10 (done-declaration, `d75c3e7`), and 9 (Grok package audit — separate explicit injectable step, `264a340`) are built, gate-clean, and pushed off-site (github `7d4b3c1`+). An end-to-end pipeline integration test (`ab9846a`) proves stages 8->9->10 chain on a synthetic package. Rebrand decided via Consequence Matrix (Option B — external brand "Mutant Monkey Security" + domain now; internal codenames stay; deep rename deferred). Private test-data store spec drafted (pre-§11, `7cf4361`). Baseline 1116 passing, 1 skipped.
+
 **Next concrete actions, in order:**
-1. **Next generator slice.** Package audit-packet assembly or done-declaration scaffolding (each its own start-build is already covered by the 2026-06-04 generator Pass-1 authorization for internal scope; confirm scope per slice). PDF toolchain stays deferred for operator review because IQ2 introduces a new supply-chain surface.
-2. **Push remains an explicit operator instruction.** 13 commits are unpushed; do not push unless Matt says so.
+1. **Criterion 14 slice — operator package-level signature mechanism.** Builds the mechanism by which Matt's package-level sign-off is captured as a `signed_by_operator` evidence record; the actual signing stays operator authority. Closes the last generator-side "done" gap besides PDF.
+2. **PDF render surface stays deferred for operator review** because IQ2 introduces a new supply-chain/dependency surface. Do not start without an explicit operator decision on that surface.
+3. **Real-customer-data controls decision (gated).** Before any non-synthetic package is ever submitted to the stage-9 Grok audit, a separate controls/redaction-for-external-audit decision + spec is required. v1 is synthetic/test packages only.
+4. **Push remains an explicit operator instruction.** Pushing is never inferred; operator authorized today's pushes specifically.
 
 ---
 

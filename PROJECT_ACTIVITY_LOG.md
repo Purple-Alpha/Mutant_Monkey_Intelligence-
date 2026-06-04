@@ -99,6 +99,24 @@ Cyber Insurance generator now has stages 8 (packet), 9 (Grok audit), 10 (done-de
 
 ---
 
+## 2026-06-04 - End-to-end pipeline integration test (rubric cycle 3, milestone C)
+**Actor:** Matt Nichol (milestone) + Cursor (Claude Opus 4.8, build + gate).
+
+**Action:** Added (test) + Updated (queue §4 refresh, cycle log, handshake git-state)
+
+**Files Changed:**
+- 3. SwarmCommand_Engine/.../tests/test_cyber_insurance_pipeline_integration.py (NEW; 2 tests)
+- PROJECT_BUILD_AND_AUDIT_QUEUE.md (§4 refreshed — stages 8/9/10 done + pushed; next = criterion 14)
+- decision_cycles_log.md (Cycle 3 logged, PASS) + PROJECT_HANDSHAKE.md (git-state -> github 7d4b3c1)
+
+**Reason:**
+Rubric Cycle 3 ranked an end-to-end pipeline integration test top (9); operator selected it. Stages 8/9/10 had each been unit-tested in isolation but never proven to chain. The new test exercises generation -> stage 8 packet -> stage 9 Grok audit (injected fake client, no network) -> stage 10 done-evaluation on a synthetic package, asserting: not-done after generation (gaps 11/12/14/15); a clean stage-9 audit closes 11/12 with zero drift; the package stays not-done without the operator signature (14/15) and emits no declaration; signature + test-plan evidence flips is_done to True and writes done_declaration.json (criteria 1-15); and a blocking stage-9 deviation writes an open blocking drift incident that holds criterion 13. Test-only — no runtime/detection/scoring/PDF change. Grok gate **clean (0/0; `audit_outputs/cyber_insurance_pipeline_integration_20260604T190819Z.md`)**; **1116 passed, 1 skipped**; committed `ab9846a` under STANDING. Two pieces of drift were cleared in the same pass: the uncommitted handshake git-state edit (committed `dc...` tracker hygiene) and the stale queue §4 ("13 commits unpushed; do not push").
+
+**Next Step:**
+Queue §4 now names criterion 14 (operator package-level signature mechanism) as the next generator slice. PDF stays deferred (IQ2). Real-customer-data controls decision gated before any non-synthetic Grok submission.
+
+---
+
 ## 2026-06-04 - Audit-packet assembly slice (gate-clean) + build-loop fix + STANDING commit authorization + operating domain noted
 **Actor:** Matt Nichol (milestone + operator decisions) + Cursor (Claude Opus 4.8, build / gate / fixes).
 

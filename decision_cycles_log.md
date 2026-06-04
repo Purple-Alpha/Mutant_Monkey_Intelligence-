@@ -103,3 +103,27 @@ CYCLE 2 — 2026-06-04T16:56Z
                  passed, 1 skipped; committed 264a340. Second gate surprise: the matrix doc was caught
                  as a manifest coverage gap (Pass-1-wiring-bug guard working) — added to the manifest
                  and re-ran clean.
+
+CYCLE 3 — 2026-06-04T19:00Z
+  OBSERVE: Day arc A-E complete + pushed off-site (github 7d4b3c1). Cyber Insurance generator has
+           stages 8/9/10 wired (synthetic-only), each unit-tested in isolation but not yet proven to
+           chain. Drift surfaced: uncommitted handshake git-state edit; stale queue §4 ("13 commits
+           unpushed; do not push"). Baseline 1114 green.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    C End-to-end pipeline integration test (8->9->10, synthetic, no network)   L1 R2 E2 FC2 Rv2  TOTAL 9
+    A Criterion 14: operator package-signature mechanism                        L2 R1 E2 FC1 Rv2  TOTAL 8
+    D Resolve 7 §10 questions in private test-data store spec, toward §11       L1 R1 E1 FC1 Rv2  TOTAL 6
+    E Apply Option-B external brand to non-signed client-facing surfaces        L1 R1 E1 FC1 Rv2  TOTAL 6
+    B PDF render surface (IQ2 supply-chain review needed first)                 L2 R0 E1 FC0 Rv1  TOTAL 4
+    F Wrap / do nothing                                                         L0 R0 E0 FC1 Rv2  TOTAL 3
+  SELECTED:      ACTION C (operator-chosen).
+  EXPECTED:      One durable test exercising generation -> stage 8 packet -> stage 9 audit (fake clean
+                 client) -> stage 10 done-eval; asserts not-done after generation (gaps 11/12/14/15),
+                 stage 9 closes 11/12 with zero drift, still not-done without operator signature (14),
+                 and signature + test-plan evidence flips to done + writes done_declaration.json.
+  EXECUTED AT:   2026-06-04T19:08Z
+  AUDIT VERDICT: PASS — Grok gate clean 0/0
+                 (audit_outputs/cyber_insurance_pipeline_integration_20260604T190819Z.md); 1116 passed,
+                 1 skipped; committed ab9846a under STANDING.
+  SURPRISES:     None. Handshake git-state correction committed first (cef-style tracker hygiene) to
+                 isolate the test slice for a clean gate; queue §4 refreshed in the same Log step.
