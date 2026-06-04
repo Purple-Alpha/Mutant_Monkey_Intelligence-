@@ -466,3 +466,42 @@ Credible door opening, not gate clearance. Wording skepticism is buyer-language 
 **Next step (operator):** Run the coffee conversation using `Cyber_Insurance_Vendor_Payment_Integrity_MSP_Call_Pack.md` + cheaper-proof runbook questions; log outcome in `Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`.
 
 ---
+
+### 2026-06-03 — Reddit thread (operator's own post): vendor payment-change controls confirmed; second verification reframed as an independent lock
+
+**Date:** 2026-06-03
+**Source:** Operator-published Reddit post (operator is the OP, `u/Important_Claim_1607`), cross-posted to `r/FraudPrevention` and `r/Scams`; ~411 views; replies from `u/Impossible_Egg_5597` and `u/kschang` (flagged trusted contributor). No citation URL captured in this log; informal peer discussion, not a primary published source per `Compliance_and_Trend_Watch_Process.md` §2.6.
+**Operator-authorship note:** The OP reply in the thread is the operator's own wording and is **NOT** counted as independent external confirmation. Only the two third-party replies are external signal here.
+**Signal type:** Vendor-payment verification workflow / small-business control design
+**Evidence strength:** Light but useful — informal community signal; consistent with and slightly sharper than the 2026-06-01 "Reddit vendor payment-change replies" entry and the 2026-05-31 vendor payment-change verification research entry above
+**Classification per intake protocol:** **Confirmation** (reinforces NorthStar's existing Vendor Payment Integrity direction; does NOT surface a new candidate)
+
+**D10 status:** Does **NOT** count toward the Cyber Insurance Evidence Package D10 cheaper-proof MSP go-bar.
+
+**Reason D10 does not advance:** No named MSP conversation, no named SMB anchor, and no named upcoming insurance / underwriting conversation tied to an MSP client. This is community discovery signal only.
+
+**Raw signal summary (external replies):**
+
+- The operator's proposed controls — distrust phone numbers/links in the email, verify via a known-good number or separate channel, document who verified and when, require a second approver for larger changes — were affirmed by respondents as essentially right.
+- `u/Impossible_Egg_5597`: treat **any** bank-account change as a high-risk event regardless of payment amount; vendor-payment fraud often succeeds because the change-details process is less strict than the payment-approval process; verify through a known contact, perform a callback, document the verification, and consider a small **test payment** before updating larger recurring payments.
+- `u/kschang`: ignore sudden changes; verify via direct calls and corroborate against prior invoices / recent orders / details only the legitimate parties would know (not an email eavesdropper); cautioned that second-person approval "spreads blame" and adds eyeballs but does not by itself reduce risk.
+
+**Operator framing captured (operator's own reply, not external validation):**
+
+- The operator reframed the second verification not as blame-spreading but as a credit-card-style flag: an unrecognized change is held until proof is shown, and a second **independent** verification method is "the last lock" that is hardest to mock/spoof. This sharpens the prior `u/kschang` critique: the value is in independence of the second channel, not in the headcount of approvers.
+
+**Interpretation:**
+Consistent with prior entries: the durable review record should center on the payment-detail **change event** itself, treated as high-risk even for small amounts because it can redirect future recurring payments. The new nuance worth preserving is the independence point — a second verification only adds protection when it is a genuinely independent channel, not a second reviewer of the same email.
+
+**Product takeaway (captured as a note, not as implementation guidance):**
+Reinforces the existing pre-§11 draft `4. Product_Roadmap/Vendor_Payment_Verification_Workflow_Ergonomics_Deep_Dive.md` (four-value disposition enum + evidence + retest linkage). Future shaping should keep the disposition record centered on: change requested → known-good contact source → independent callback/verification performed → evidence documented → approver recorded (additive only when paired with real independent verification) → test/delayed first payment considered for higher-risk changes.
+
+**Boundary:** Does **NOT** authorize:
+
+- A new spec, queue item, runtime implementation, workflow UI, payment-release control, or test-payment workflow.
+- Cyber Insurance Evidence Package D10 advancement or §13/§11 movement.
+- Banking, lending, money-movement, reimbursement, guarantee, insurance, or compliance claims.
+- Client-facing copy, pricing, or product packaging changes.
+- Treating Reddit replies (or the operator's own post) as validated market proof or as a substitute for direct MSP discovery.
+
+---
