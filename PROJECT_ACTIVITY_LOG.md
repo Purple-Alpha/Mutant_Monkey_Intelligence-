@@ -26,6 +26,39 @@ What should happen next.
 
 ---
 
+## 2026-06-03 - PROJECT_HANDSHAKE.md rotated to crisp resume-here form (fix new-chat drift)
+**Actor:** Matt (raised the problem); Codex (assistant edit)
+
+**Action:** Updated
+
+**Files Changed:**
+- PROJECT_HANDSHAKE.md (rebuilt as a one-screen resume-here)
+- PROJECT_HANDSHAKE_ARCHIVE_2026-06-03.md (new; full prior handshake verbatim)
+
+**Reason:**
+Matt reported the handshake "does not work for a new chat" and causes drift. Root cause: the
+"## Current Next Step" section had grown to ~235 lines of stale dated bullets (2026-05-24 onward),
+the verification-baseline paragraph was a wall of text, and "Last Updated" was 9 days stale
+(2026-05-25) while work had continued to 2026-06-03. A fresh chat could not extract the live state.
+Same append-bloat disease as the ACTIVITY_LOG/PROGRESS/MASTER_INDEX rotation earlier today.
+
+**Fix:**
+Rebuilt PROJECT_HANDSHAKE.md as a crisp resume-here: current build track, dev surface, verification
+baseline (1072/1), a current-state block (§13 signed; implementation spec pre-§11 decision-complete;
+Wave 3.1 landed; doc rotation + §3.1 rule done; rename parked), a single live Current Next Step
+(operator §11 sign-off of the implementation spec, then runner-first build), git state (6 ahead of
+github, not pushed), trimmed check-list pointing at AGENTS.md §1 + MASTER_INDEX, and the update/resume
+rules. Added a HYGIENE RULE: Current State + Current Next Step are REPLACED each session, never
+appended; superseded detail goes to the archive. Full prior handshake preserved verbatim in the
+archive (no deletions).
+
+**Next Step:**
+New-chat protocol is now: AGENTS.md §1 read order -> this crisp handshake's Current State + Current
+Next Step -> latest activity-log entry. Keep the handshake replaced (not appended) at session end so
+it never re-bloats.
+
+---
+
 ## 2026-06-03 - Doctrine: Decision Presentation Rule added to AGENTS.md (operator instruction)
 **Actor:** Matt (operator instruction); Codex (assistant edit)
 
