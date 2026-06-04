@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-03 - Doctrine: Decision Presentation Rule added to AGENTS.md (operator instruction)
+**Actor:** Matt (operator instruction); Codex (assistant edit)
+
+**Action:** Updated
+
+**Files Changed:**
+- AGENTS.md (§2 authority model refined; new §3.1 Decision Presentation Rule; §12 failure mode added)
+
+**Reason:**
+Matt's explicit, repeated instruction: stop presenting decisions/multiple-choice with no scoring, no consequences, and no recommended default. Over multiple sessions the assistant regressed into offloading analysis onto the operator (bare `AskQuestion` menus), which burned his time and damaged the project. Root cause: AGENTS.md said "prefer multi-choice questions" and "you build, never decisions" with no rule that surfaced decisions must be scored, and no permission for the agent to decide build-layer/mechanical choices itself. The over-literal reading of "never decisions" made the agent ask about everything.
+
+**What the rule now says:**
+- §2: the agent makes and reports build-layer/mechanical calls (naming, defaults, paths, equivalent approaches, isolation/packet mechanics, ordering, commit splits) without asking; only operator-authority decisions (commits, pushes, sign-offs, direction, scope, pricing, signed specs, the seven non-negotiables) escalate.
+- §3.1 (mandatory): every escalated decision must arrive pre-scored — score/best-worst ranking, why it scores that way, the consequence/second-order effect, and an explicit recommended default. A bare unscored choice is a doctrine violation. AskQuestion is for confirming a scored recommendation, not dumping unanalyzed options.
+- §12: new named failure mode "Unscored-choice dumping."
+
+**Next Step:**
+Honor it immediately and every session. Pre-§11 of the Operator_Companion spec, AGENTS.md is editable as the operator's understanding sharpens (§13); this records that sharpening. No commit made (operator authorizes commits).
+
+---
+
 ## 2026-06-03 - Cyber Insurance implementation spec §16 IQ1-IQ7 resolved + §13 pins set (still pre-§11)
 **Actor:** Codex (assistant) advisory scoring; Matt (operator) selection
 
