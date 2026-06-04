@@ -55,3 +55,29 @@ CYCLE 1 — 2026-06-04T15:36Z
                  Gate result: grok-4, 0 blocking / 0 warnings, comprehensive, packet 173,576 B
                  (audit_outputs/cyber_insurance_audit_packet_assembly_20260604T155835Z.md). Tests:
                  1095 passed, 1 skipped.
+
+CYCLE 2 — 2026-06-04T16:56Z
+  OBSERVE: Audit-packet slice done + committed (ec91074), gate-clean. Build loop now canonical
+           (AGENTS §3.2); gate-scope hole fixed; STANDING commit cadence in force. Domain
+           mutantmonkeysecurity.com registered (operator side). Tree clean; 6 commits local-only
+           ahead of last push b18fa79. Baseline 1095 green.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    A Done-declaration scaffolding (15 Done Criteria -> done_declaration.json)   L2 R1 E2 FC1 Rv2   TOTAL 8
+    B Scope rebrand via Consequence Matrix (NorthStar -> Mutant Monkey Security) L1 R2 E2 FC1 Rv2   TOTAL 8
+    D Push 6 local commits to remote/backup                                       L1 R2 E2 FC2 Rv1   TOTAL 8
+    C Draft private test-data store spec (MinIO/TrueNAS)                          L2 R1 E1 FC1 Rv2   TOTAL 7
+    E Wire stage 9 Grok package-audit                                             L2 R0 E0 FC1 Rv1   TOTAL 4 (boundary-blocked)
+    F Do nothing / defer                                                          L0 R0 E0 FC1 Rv2   TOTAL 3
+  SELECTED:      Operator set a full-day SEQUENCE: A -> B -> C -> D by 5pm, then E (Grok) as
+                 capstone. E is gated on operator authorization to expand the signed Pass-1
+                 boundary. This entry covers milestone A; B/C/D/E continue the same arc.
+  EXPECTED (A):  Generator evaluates all 15 Done Criteria; Pass-1 package evaluates NOT done
+                 (11/12/14/15 unmet), emits no done_declaration.json, records a done_evaluation
+                 block in the manifest; gate clean; tests green.
+  EXECUTED AT:   2026-06-04T17:22Z
+  AUDIT VERDICT: PASS (A) — Grok gate clean 0/0, comprehensive
+                 (audit_outputs/cyber_insurance_done_declaration_scaffolding_20260604T172209Z.md);
+                 1105 passed, 1 skipped; auto-committed under STANDING (d75c3e7).
+  SURPRISES:     None for A. Note: the loop ran clean this time — committing each slice as it
+                 finished kept the tree isolated, so no mixed-tree dance was needed (the Cycle 1
+                 surprise (1) is now structurally prevented by Fix B + STANDING).
