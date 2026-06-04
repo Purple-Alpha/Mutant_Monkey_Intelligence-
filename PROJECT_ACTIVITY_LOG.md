@@ -63,6 +63,23 @@ Milestone D (push local commits to remote/backup). Then E (Grok stage 9) pending
 
 ---
 
+## 2026-06-04 - Push to backup (milestone D); GitHub off-site push blocked on credentials
+**Actor:** Matt Nichol (authorized push) + Cursor (Claude Opus 4.8, push).
+
+**Action:** Pushed (local backup) + Blocked (github) + Updated (handshake)
+
+**Files Changed:**
+- (no repo files) git push to remote `backup`
+- PROJECT_HANDSHAKE.md (git state, current next step, verification baseline 1105, last-updated)
+
+**Reason:**
+Milestone D of today's arc. Local `backup` remote (`/mnt/c/northstar_backups/northstar.git`) updated `b18fa79..7cf4361` (10 commits) — durable against a WSL2 loss. **GitHub off-site push BLOCKED:** the shell has no GitHub credentials, no `gh` CLI, and no git credential helper (`could not read Username for https://github.com`). Did not guess or configure credentials (operator-authority + secret-handling boundary). Off-site durability awaits operator action.
+
+**Next Step:**
+Operator chooses how to enable the GitHub push (PAT / install+auth gh / push from own terminal). Then milestone E (Grok stage 9 wiring) — still gated on operator authorization to expand the signed Pass-1 boundary.
+
+---
+
 ## 2026-06-04 - Audit-packet assembly slice (gate-clean) + build-loop fix + STANDING commit authorization + operating domain noted
 **Actor:** Matt Nichol (milestone + operator decisions) + Cursor (Claude Opus 4.8, build / gate / fixes).
 
