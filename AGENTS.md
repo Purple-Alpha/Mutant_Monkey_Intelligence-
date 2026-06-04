@@ -152,9 +152,9 @@ If you're unsure whether an action counts as a proxy decision, it does. Ask.
 
 When Matt asks "what should we do next?" — that is a candidate to invoke the rubric. Read its §3 axis definitions and §4 loop before scoring. Output the ranked candidates in §7 format. Never label any candidate "recommended"; never present a total as a decision. Matt selects.
 
-§10 of that spec has seven open questions. Until they resolve, the rubric is pre-§11 and you may use it but never claim it is signed.
+That spec is **§11 SIGNED (2026-06-04)**; its §10 questions are closed (D13–D19). It is the live tactical engine — use it, and log each cycle to `decision_cycles_log.md`.
 
-For path-setting "butterfly effect" decisions that affect revenue, architecture, legal / insurance posture, buyer trust, product identity, signed specs, or future autonomy, use `4. Product_Roadmap/Consequence_Matrix_Process.md` only when Matt explicitly asks. Rubrics rank; the consequence matrix surfaces second-order effects; Matt decides.
+For path-setting **"butterfly effect"** decisions that affect revenue, architecture, legal / insurance posture, buyer trust, product identity (rename / domain / rebrand), signed specs, or future autonomy, use `4. Product_Roadmap/Consequence_Matrix_Process.md`. Run the full matrix only when Matt asks — but **proactively FLAG the decision as a butterfly decision the moment you spot one**, and never bury it under a one-line consequence. Rubrics rank; the consequence matrix surfaces second-order effects; Matt decides. "butterfly effect" is also a catch-phrase Matt can say at any time to force this stop (§12).
 
 ---
 
@@ -236,6 +236,7 @@ These are the named failure modes from the existing specs. If you catch yourself
 - **Authorship Rule violation** — drafting operator signature text or attributing decisions to Matt without his explicit authorship.
 - **Unscored-choice dumping** — presenting Matt a decision or multiple-choice with no scoring, no consequences, and no recommended default; offloading analysis that is the agent's job (§3.1). This includes asking him build-layer/mechanical questions you should have decided yourself.
 - **Trivia-escalation / decision-inversion** — escalating low-substance, reversible changes (cosmetic renames, internal codenames, label/formatting edits, typos) to operator authority while simultaneously dumping genuine unscored decisions on Matt. Inverts the authority model: heavy process on what doesn't matter, no analysis on what does. Grade by substantive impact and reversibility, not by whether an edit touches an official-looking file (§3.1.2, §3.1.8).
+- **Butterfly-effect blindness** — making, presenting, or acting on a *path-setting* decision (revenue, product identity / rename / domain, architecture, legal / insurance posture, buyer trust, signed specs, future autonomy) without surfacing its **second-order chain**. A one-line "consequence" is not enough for these. **"butterfly effect" is a hard-stop catch-phrase:** if Matt says it, or if you are about to touch anything path-setting, STOP, name the downstream chain, and offer the Consequence Matrix (§7) before proceeding. Honest caveat (do not delete): this entry recurred across sessions 2026-06-03/04 *after* the rule was written, so writing doctrine does not by itself prevent the lapse — the only real guards are structural ask-point removal, the gate, and Matt invoking the phrase to halt the agent. This is a catch mechanism, not a cure.
 
 ---
 
