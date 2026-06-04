@@ -375,4 +375,48 @@ Before this implementation spec can be called ready/signed, the audit must verif
 
 ---
 
-**End of draft. Pre-§11. No implementation work, code, or commit is authorized by this document.**
+## §18 Signed Amendment — Authorized Code Home & Signature Threshold (2026-06-04)
+
+**Amendment status:** Operator-signed amendment to the §11-signed spec, added under the `AGENTS.md` §6 revision cycle (operator instruction 2026-06-04 → spec edit → fresh `complete_gate.py` audit → operator signature in §18.6). It supersedes only the specific clauses named in §18.1; all other locked decisions (D1–D11, HC6–HC13, the 15 Done Criteria, the nine §7 gate contracts, the §13 determinism pins, the §2 boundary statement, the email-fraud / inbox-layer MDR scope) remain in force unchanged.
+
+**Purpose:** Remove the standing friction whereby every in-scope generator-code commit tripped a blocking audit finding (because the unamended body declared all code out of scope) and required an `--operator-override`. This amendment establishes a permanent authorized code home and a signature threshold so routine implementation no longer needs a per-commit operator signature, while the independent Grok audit stays fully in force. This is forward-looking friction removal; it does not retroactively change the authorization status of any prior commit.
+
+### §18.1 Superseded clauses
+
+- §1 "Out of scope → Writing the generation code. This is a spec; code is gated on §11 sign-off + a separate operator start-build instruction." — **amended:** generation code is authorized within the envelope in §18.2–§18.4. The separate-start-build-instruction requirement is replaced by the standing authorization in §18.3 for in-scope implementation, and retained as an operator signature for architectural changes per §18.4.
+- §17 "What signing this spec would NOT do → Authorize code by itself (a separate operator start-build instruction is still required)." — **amended** to the same effect.
+- The former document-final line "End of draft. Pre-§11. No implementation work, code, or commit is authorized by this document." is **void**: this document is §11-signed (see §17) and carries this §18 amendment.
+
+### §18.2 Authorized code home
+
+- The sole authorized code home for the Cyber Insurance Evidence Package generator and its supporting libraries is `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/evidence_package/`, plus the thin operator CLI at `scripts/cyber_insurance_package_generate.py` and focused tests under `tests/`.
+- Creating a parallel namespace for this surface (e.g. `core/cyber_insurance/`, `core/cyber_insurance_evidence_gates/`) is forbidden drift, consistent with the `CURRENT_STATE_MAP.md` module-path lock.
+
+### §18.3 Standing implementation authorization (no per-commit signature)
+
+- Within the authorized code home, writing, refactoring, testing, and committing code that fulfils already-locked decisions is **standing-authorized**. It requires automated test verification (focused tests green) and the normal `complete_gate.py` audit, but **not** a separate operator start-build instruction or a per-commit operator signature.
+- The `complete_gate.py` independent Grok audit remains fully in force. Because in-scope code is no longer a spec violation, a clean audit now passes **without** `--operator-override`. The amendment removes only the false "code out of scope" finding; it does not suppress any real finding.
+- The standing authorization is bounded to the internal Pass-1+ envelope: no PDF buyer delivery, no external / compliance claim, no D10 advancement, no change to runtime detection / scoring / promotion behavior, and no buyer-facing release.
+
+### §18.4 Signature threshold (architectural vs implementation)
+
+- **Architectural change — requires operator signature (a new signed amendment):** modifying any D1–D11, HC6–HC13, the 15 Done Criteria, the nine §7 gate contracts, the §13 determinism pins, the §2 boundary statement, or the email-fraud / inbox-layer MDR scope; adding any external, compliance, certification, insurer-approval, coverage, premium, or fraud-prevention claim; or expanding beyond the internal Pass-1+ envelope.
+- **Implementation progress — automated verification only:** code within the authorized code home that fulfils locked decisions without triggering any architectural condition above.
+- If a change is ambiguous between the two categories, it is treated as architectural and requires the operator signature (mirrors `AGENTS.md` §4: if unsure, it is a proxy decision — ask).
+
+### §18.5 What this amendment does NOT do
+
+- Does not alter any D1–D11 / HC6–HC13 / Done Criteria / §7 gate contract / §13 determinism pin / §2 boundary statement.
+- Does not authorize PDF buyer delivery, a Grok package audit as done-state, a done declaration, buyer-facing output, pricing, or D10.
+- Does not weaken `complete_gate.py` or suppress any Grok finding; it removes only the false "code out of scope" finding for in-scope work.
+- Does not override any of the seven `VISION.md` non-negotiables.
+
+### §18.6 Amendment sign-off line (operator-authored)
+
+> Matt Nichol (Zebra-Comit) June 4th 2026
+>
+> _Operator-authored in-chat per the Authorship Rule (`AGENTS.md` §4 / §12); the assistant placed it at operator direction and did not compose it. "Zebra-Comit" is the signing handle; the project rename remains parked and the final operating entity name may supersede it once cleared._
+
+---
+
+**End of document. §11-signed 2026-06-03 (§17); §18 amendment SIGNED 2026-06-04 (§18.6). Standing implementation authorization in §18.3 is in effect.**
