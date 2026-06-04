@@ -26,6 +26,34 @@ What should happen next.
 
 ---
 
+## 2026-06-04 - Audit-packet assembly slice (gate-clean) + build-loop fix + STANDING commit authorization + operating domain noted
+**Actor:** Matt Nichol (milestone + operator decisions) + Cursor (Claude Opus 4.8, build / gate / fixes).
+
+**Action:** Added (code) + Fixed (loop + gate scope) + Decided (commit cadence) + Created (README) + Updated (trackers)
+
+**Files Changed:**
+- 3. SwarmCommand_Engine/.../core/evidence_package/audit_packet.py (NEW; §8/§10 audit-packet assembly)
+- 3. SwarmCommand_Engine/.../core/evidence_package/package_generator.py (stage 8 wiring + manifest reference)
+- 3. SwarmCommand_Engine/.../core/evidence_package/__init__.py (exports)
+- 3. SwarmCommand_Engine/.../tests/test_cyber_insurance_audit_packet.py (NEW; 6 tests) + test_cyber_insurance_evidence_package_generator.py (coverage assertion)
+- audit_tools/complete_gate.py (Fix B: added core/evidence_package/ to HOOK_SCOPE_PREFIXES_ALWAYS) + tests/test_complete_gate.py (regression test)
+- AGENTS.md (§3.1.9 decisions-chain rule; §3.2 canonical Build Loop)
+- decision_cycles_log.md (Cycle 1 logged, PASS)
+- README.md (NEW; operating domain + front page)
+
+**Reason:**
+Rubric Cycle 1 selected the audit-packet assembly slice (milestone B). Built `audit_packet.py` (the §10 coverage-complete packet: every stage 1-7 touched file + the three contract docs, hashed, chunked, `grok_submitted=false`), wired as stage 8, manifest reference added. Tests: **1095 passed, 1 skipped**. Grok gate **clean (0/0, comprehensive, packet 173,576 B; `audit_outputs/cyber_insurance_audit_packet_assembly_20260604T155835Z.md`)**.
+
+Then Matt called a STOP and a build-loop review. Findings + fixes: the loop was implicit (root cause of behavioral drift) -> **Fix A**, wrote the canonical Build Loop into AGENTS §3.2 with the decision boundary (only step 0 milestone + step 6 commit reach the operator; everything else chains) and §3.1.9 (menus are for milestone-setting only). The gate's hook scope omitted the §18.3 authorized code home -> **Fix B**, added `core/evidence_package/` to `HOOK_SCOPE_PREFIXES_ALWAYS` (closed a `--pre-commit` false-pass hole), locked with a regression test (42 gate tests green).
+
+**Operator decisions (this session):**
+- **Commit cadence = STANDING (§4 tuning).** Matt authorized: any gate-clean, fully-green slice in the §18.3 authorized code home (`core/evidence_package/`) is committed + logged automatically, no per-commit prompt; pushes to remote remain explicit. Recorded as an operator §4 decision.
+- **Operating domain = `mutanmonkeysecurity.com`** (recorded verbatim in README; agent flagged possible intended spelling `mutantmonkeysecurity.com` / "Mutant Monkey Security" for operator confirm — not auto-corrected).
+- Earlier "Nchol"->"Nichol" signature typo corrected on Matt's explicit instruction.
+
+**Next Step:**
+Commit the session work (STANDING covers the evidence_package slice; the loop-review doctrine/tooling + README are operator-directed). Then next milestone via the rubric.
+
 ## 2026-06-04 - swarm-command experiment reviewed; doctrine PROSE ported to a SPARK (no code merged)
 **Actor:** Matt Nichol (direction) + Cursor (Claude Opus 4.8, review + port).
 

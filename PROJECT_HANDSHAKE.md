@@ -21,7 +21,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1072 tests passing, 1 skipped** (verified 2026-06-03) from
+**1095 tests passing, 1 skipped** (verified 2026-06-04) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (2026-06-03)
@@ -40,10 +40,13 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **AGENTS.md decision-calibration guardrail added 2026-06-04:** §3.1.2 now grades escalation by substance + reversibility (not "touches a signed file"); §3.1.8 + §12 "trivia-escalation / decision-inversion" failure mode added. Fixes the inversion of heavy-guardrailing trivia (e.g. an internal name change) while dumping real decisions raw.
 
 ## Current Next Step (single live action)
-**Decide/build the next Cyber Insurance generator slice** (friction-free under §18.3) — candidates: package audit-packet assembly or done-declaration scaffolding; PDF toolchain still deferred for operator review (IQ2 supply-chain surface). The Next-Action Decision Rubric is now §11 SIGNED — route "what next?" choices through it (5 axes, ranked; Matt selects) and log to `decision_cycles_log.md`. **NOTE:** this session's sign-off work (rubric §11, AGENTS guardrail, MASTER_INDEX, PROGRESS, activity log, handshake, new `decision_cycles_log.md`) is **uncommitted** — awaiting operator commit authorization (no commit/push without explicit instruction). Parked operator threads: project rename (Mutant Security leading; `mutantsecurity.com` available, class-scoped clearance pending) and a private test-data store spec (MinIO/TrueNAS direction).
+**Pick the next milestone via the Next-Action Decision Rubric.** The build loop is now canonical (AGENTS §3.2): only step 0 (milestone) and step 6 (commit) reach the operator; everything else chains. Audit-packet assembly slice is DONE + gate-clean. PDF toolchain + done-declaration still deferred (IQ2 supply-chain surface, operator review). Parked operator threads: project rename (now leaning "Mutant Monkey Security" / `mutanmonkeysecurity.com`, recorded verbatim, spelling unconfirmed) and a private test-data store spec (MinIO/TrueNAS direction).
+
+## Commit Cadence (operator §4 decision, 2026-06-04)
+**STANDING authorization in force.** Any gate-clean, fully-green slice inside the §18.3 authorized code home (`core/evidence_package/`) is committed + logged automatically, no per-commit prompt. Pushes to remote remain an explicit operator instruction, never inferred. Doctrine/tooling/spec changes outside the code home still follow normal authorization.
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`. Last pushed to `github` and local `backup` at **`b18fa79`** (2026-06-04, operator-authorized). **Uncommitted working-tree changes** from the 2026-06-04 rubric-signoff session are NOT yet committed: the rubric §11 sign-off, AGENTS.md guardrail, MASTER_INDEX / PROGRESS / PROJECT_ACTIVITY_LOG / PROJECT_HANDSHAKE updates, and the new `decision_cycles_log.md`. Awaiting operator commit authorization; pushing remains an explicit operator instruction, never inferred.
+Branch `safety/queue-drift-cleanup-20260528`. Last pushed to `github` and local `backup` at **`b18fa79`**. The 2026-06-04 rubric-signoff slice was committed as **`3a3c446`** (operator-authorized). This session's work — audit-packet assembly slice, build-loop fixes (AGENTS §3.2/§3.1.9, gate-scope Fix B + test), Cycle 1 log, and the new `README.md` — is being committed under STANDING + operator direction. Not yet pushed; pushing remains explicit.
 
 ## Required Files to Check Before Work
 Follow the `AGENTS.md` §1 session-start read order first. Core governance files:

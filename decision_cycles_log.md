@@ -26,4 +26,32 @@ CYCLE <n> — <UTC timestamp>
 
 ---
 
-(No cycles logged yet. The first cycle is recorded here the next time the rubric is run in-session.)
+CYCLE 1 — 2026-06-04T15:36Z
+  OBSERVE: Next-Action Decision Rubric §11 SIGNED (uncommitted last night). Cyber Insurance
+           generator Pass 1 committed + friction-free under §18.3; verification baseline green.
+           Standing loose end: last night's signed slice (rubric, AGENTS guardrail, trackers,
+           decision_cycles_log, SPARK) done + gate-clean but uncommitted. Parked: rename
+           (Mutant Security, mutantsecurity.com available), private test-data store.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    A Commit last night's signed slice (local)            L1 R2 E2 FC2 Rv2   TOTAL 9
+    B Generator slice: package audit-packet assembly      L2 R1 E2 FC1 Rv2   TOTAL 8
+    C Generator slice: done-declaration scaffolding        L2 R1 E1 FC1 Rv2   TOTAL 7
+    D Draft private test-data store spec (MinIO/TrueNAS)   L2 R1 E1 FC1 Rv2   TOTAL 7
+    E Name collision-smell pass (cyber-class scoped)       L1 R1 E1 FC1 Rv2   TOTAL 6
+    F Do nothing / defer to queue                          L0 R0 E0 FC1 Rv2   TOTAL 3
+  SELECTED:      ACTION B (operator-chosen, not rubric-ranked)
+  EXPECTED:      Generator emits a durable, coverage-complete audit/audit_packet.json (+ chunked
+                 contents) covering every read+written file from stages 1-7 with hashes and
+                 contract refs, grok_submitted=false; manifest references it; gate 9 still passes;
+                 new and existing focused tests stay green.
+  EXECUTED AT:   2026-06-04T15:58Z
+  AUDIT VERDICT: PASS
+  SURPRISES:     (1) complete_gate HOOK_SCOPE_PREFIXES_ALWAYS does NOT include core/evidence_package/,
+                 so --pre-commit mode would false-pass and normal mode audits the whole working tree
+                 with no file scoping. Resolved by committing last night's already-clean slice first
+                 (rubric candidate A, score 9), isolating today's code for a clean audit — A naturally
+                 sequenced ahead of B. (2) Manifest relevant_contracts must be real, §11-signed file
+                 paths; the §13-signed "what" deep-dive and VISION.md were rejected and removed.
+                 Gate result: grok-4, 0 blocking / 0 warnings, comprehensive, packet 173,576 B
+                 (audit_outputs/cyber_insurance_audit_packet_assembly_20260604T155835Z.md). Tests:
+                 1095 passed, 1 skipped.
