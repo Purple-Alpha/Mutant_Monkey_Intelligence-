@@ -34,11 +34,13 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **AGENTS.md §3.1 Decision Presentation Rule added:** decisions arrive pre-scored (ranking, why, consequence, recommended default) routed through the existing rubric engines; no bare unscored menus.
 - **Project rename away from "NorthStar": PARKED.** Collisions found (Zebra, Axion, cyan AG, etc.); no name chosen; needs a real USPTO + registrar clearance pass.
 
+- **Cyber Insurance implementation spec §18 amendment: SIGNED 2026-06-04** (Matt, Zebra-Comit; committed `3aec44b`; pre+post-signature gate audits clean). Declares `core/evidence_package/` the authorized generator code home; in-scope generator code now commits clean through the gate with **no `--operator-override` and no per-commit signature**. Operator signature is required only for §18.4 architectural changes (locked decisions, boundary, scope, external claims). The independent Grok audit stays in force.
+
 ## Current Next Step (single live action)
-**Decide the next generator slice.** Gate library and generator Pass 1 are committed; doctrine/log/tracker docs are committed. Candidate next slices: package audit-packet assembly or done-declaration scaffolding. PDF toolchain remains deferred for operator review (IQ2 introduces a new supply-chain surface).
+**Decide the next generator slice** (now friction-free under §18.3). Gate library, generator Pass 1, doctrine/tracker docs, and the §18 amendment are committed. Candidate next slices: package audit-packet assembly or done-declaration scaffolding. PDF toolchain remains deferred for operator review (IQ2 introduces a new supply-chain surface).
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`, **13 commits ahead of `github`, NOT pushed** (after `db32cd5` gate library, `ff0f41e` generator, and the doctrine/log/tracker docs commit; pushing is an explicit operator instruction, never inferred).
+Branch `safety/queue-drift-cleanup-20260528`, **14 commits ahead of `github`** (after `db32cd5` gate library, `ff0f41e` generator, `05711bb` tracker/guardrails, `3aec44b` §18 amendment), plus this tracker-sync commit. Operator instructed a push of the stack on 2026-06-04; pushing otherwise remains an explicit operator instruction, never inferred.
 
 ## Required Files to Check Before Work
 Follow the `AGENTS.md` §1 session-start read order first. Core governance files:

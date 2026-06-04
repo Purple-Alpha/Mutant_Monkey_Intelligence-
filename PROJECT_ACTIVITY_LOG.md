@@ -26,6 +26,30 @@ What should happen next.
 
 ---
 
+## 2026-06-04 - Cyber Insurance implementation spec §18 amendment SIGNED (authorized code home + signature threshold)
+**Actor:** Matt Nichol (operator signature) + Cursor (Claude Opus 4.8, drafting/execution).
+
+**Action:** Drafted / Audited / Signed / Committed
+
+**Files Changed:**
+- `4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Implementation_Deep_Dive.md` (§18 amendment appended + signed; committed `3aec44b`)
+
+**Reason:**
+The §11-signed implementation spec is a "no-code" document, so every in-scope generator-code commit tripped a blocking gate finding and needed `--operator-override` (see the generator Pass-1 entry below). Per `AGENTS.md` §6 revision cycle, a §18 signed amendment was drafted to remove that standing friction at the source. §18 (a) declares `core/evidence_package/` + the thin CLI + focused tests the authorized generator code home; (b) replaces the per-commit separate-start-build-instruction requirement with a standing implementation authorization for in-scope code; (c) introduces a signature threshold — architectural changes (D1–D11, HC6–HC13, Done Criteria, §7 gate contracts, §13 pins, §2 boundary, scope, any external claim) require an operator signature; implementation progress within the authorized home requires only automated test verification + the normal gate; (d) supersedes only the named §1 / §17 code-gating clauses and voids the stale pre-§11 footer.
+
+**Authority / scope correction vs the original operator plan:**
+Operator's plan included editing `complete_gate.py` to stop blocking the directory. That was not executed: the gate does not block by directory — the block was Grok auditing code against the spec text. Editing the gate to suppress findings for a path would suppress real defect findings too (the Pass-1 wiring-bug failure mode), so the safe fix was the spec amendment alone. The independent Grok audit stays fully in force; §18 removes only the false "code out of scope" finding. This refinement was surfaced and operator-confirmed (Option A) before editing the signed spec.
+
+**Verification:**
+- Pre-signature gate audit: clean (`audit_outputs/cyber_insurance_impl_spec_section18_amendment_20260604_20260604T025424Z.md`, blocking=0).
+- Post-signature gate audit: clean (`audit_outputs/cyber_insurance_impl_spec_section18_amendment_20260604_20260604T030200Z.md`, blocking=0).
+
+**Boundary:**
+§18 does not alter any locked decision, the §2 boundary statement, scope, or any VISION non-negotiable; does not authorize PDF buyer delivery, done declaration, buyer-facing output, pricing, or D10; does not weaken the gate.
+
+**Next Step:**
+Future in-scope generator slices (package audit-packet assembly, done-declaration scaffolding) commit clean through the gate with no override and no per-commit signature. Push the local stack on operator instruction.
+
 ## 2026-06-04 - Cyber Insurance generator Pass-1 start-build EXPLICITLY authorized + committed via operator-override
 **Actor:** Matt Nichol (operator authorization) + Cursor (Claude Opus 4.8, execution).
 
