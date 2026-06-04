@@ -81,3 +81,25 @@ CYCLE 2 — 2026-06-04T16:56Z
   SURPRISES:     None for A. Note: the loop ran clean this time — committing each slice as it
                  finished kept the tree isolated, so no mixed-tree dance was needed (the Cycle 1
                  surprise (1) is now structurally prevented by Fix B + STANDING).
+  ----- continuation: milestones B/C/D/E of the same operator-set arc -----
+  B (rebrand):   Flagged as a butterfly decision; ran the Consequence Matrix
+                 (_Rebrand_to_Mutant_Monkey_Security_Consequence_Matrix.md). Operator chose Option B
+                 (external brand + domain now; NorthStar/SwarmCommand stay internal codenames;
+                 trademark clearance in parallel; deep rename deferred). Committed 729a964.
+  C (test store):Drafted Private_Test_Data_Store_Deep_Dive.md (pre-§11, D1-D8, 7 open questions).
+                 Committed 7cf4361.
+  D (push):      Local backup remote durable (f59f54c). GitHub initially blocked (no creds in shell);
+                 operator pushed from own terminal -> github b18fa79..f59f54c. Off-site durable.
+  E (stage 9):   SURPRISE/correction: I mislabeled E as "blocked by a signed boundary." The §11-signed
+                 impl spec §10 in fact REQUIRES the Grok audit (Done Criteria 11/12) — the deferral was
+                 the operator's 2026-06-04 Pass-1 scope call, not a signed prohibition. Missed signal:
+                 characterized a boundary without quoting the artifact. Rule that catches it: spec-first
+                 (quote the signed text before labeling a constraint). Ran the Consequence Matrix
+                 (_Stage9_Grok_Package_Audit_Consequence_Matrix.md); operator authorized Option B
+                 conditioned on an honest on-the-merits assessment (it IS warranted — required stage).
+                 Built package_auditor.py as a separate explicit injectable-client step; generation
+                 untouched/offline. Grok gate CLEAN 0/0
+                 (audit_outputs/cyber_insurance_stage9_package_auditor_20260604T175758Z.md); 1114
+                 passed, 1 skipped; committed 264a340. Second gate surprise: the matrix doc was caught
+                 as a manifest coverage gap (Pass-1-wiring-bug guard working) — added to the manifest
+                 and re-ran clean.

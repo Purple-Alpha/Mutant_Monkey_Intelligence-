@@ -21,7 +21,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1105 tests passing, 1 skipped** (verified 2026-06-04, after done-declaration slice) from
+**1114 tests passing, 1 skipped** (verified 2026-06-04, after stage-9 package-auditor slice) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (2026-06-03)
@@ -40,13 +40,13 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **AGENTS.md decision-calibration guardrail added 2026-06-04:** §3.1.2 now grades escalation by substance + reversibility (not "touches a signed file"); §3.1.8 + §12 "trivia-escalation / decision-inversion" failure mode added. Fixes the inversion of heavy-guardrailing trivia (e.g. an internal name change) while dumping real decisions raw.
 
 ## Current Next Step (single live action)
-**Milestone E — wire stage 9 Grok package-audit — which is BLOCKED pending operator authorization to expand the signed Pass-1 boundary** (the boundary forbids a live Grok package audit; E cannot start until that is amended). Today's arc A->B->C->D is complete: A done-declaration scaffolding (committed `d75c3e7`, gate-clean), B rebrand decision via Consequence Matrix (Option B, `729a964`), C private test-data store spec draft (`7cf4361`), D push (local `backup` updated; **GitHub off-site push blocked — no credentials/`gh`/credential-helper in the shell**, awaiting operator). The build loop is canonical (AGENTS §3.2). Rebrand decided (Option B): "Mutant Monkey Security" is the external/commercial brand + domain now; NorthStar/SwarmCommand stay internal codenames; trademark clearance runs in parallel; deep rename deferred to first signed MSP pilot OR trademark-clearance result. PDF toolchain still deferred (IQ2 supply-chain surface).
+**Pick the next milestone via the Next-Action Decision Rubric.** Today's full arc A->B->C->D->E is COMPLETE. The Cyber Insurance generator now has stages 8 (audit-packet assembly), 9 (Grok package audit — explicit, injectable, synthetic-only), and 10 (done-declaration) wired. Remaining before a real package can be "done": criterion 14 operator package-level signature, PDF render surface (deferred, IQ2 supply-chain), and a separate real-customer-data controls decision before any non-synthetic Grok submission (v1 is synthetic/test packages only). Rebrand decided (Option B): "Mutant Monkey Security" external/commercial brand + domain now; NorthStar/SwarmCommand stay internal codenames; trademark clearance in parallel; deep rename deferred to first signed MSP pilot OR trademark-clearance result. Build loop canonical (AGENTS §3.2); STANDING in force.
 
 ## Commit Cadence (operator §4 decision, 2026-06-04)
 **STANDING authorization in force.** Any gate-clean, fully-green slice inside the §18.3 authorized code home (`core/evidence_package/`) is committed + logged automatically, no per-commit prompt. Pushes to remote remain an explicit operator instruction, never inferred. Doctrine/tooling/spec changes outside the code home still follow normal authorization.
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`, HEAD **`7cf4361`**. Local `backup` remote updated to `7cf4361` (2026-06-04, `b18fa79..7cf4361`, 10 commits) — durable against a WSL2 loss. **`github` remote is 10 commits behind: the push is BLOCKED** because the shell has no GitHub credentials, no `gh` CLI, and no credential helper. Off-site durability is pending operator action (provide a PAT / install+auth `gh` / push from their own terminal). Today's commits: `d75c3e7` (done-declaration), `0aea29a` (cycle 2 log), `729a964` (rebrand matrix), `7cf4361` (test-data store spec). STANDING governs auto-commits in the code home; pushing remains explicit (operator authorized today's push, github leg blocked on creds).
+Branch `safety/queue-drift-cleanup-20260528`, HEAD **`264a340`** (+ trackers commit pending after this update). Operator pushed `b18fa79..f59f54c` to **`github`** from their own terminal 2026-06-04 — off-site durable. Local `backup` also current to `f59f54c`. The stage-9 slice `264a340` and the trackers commit land after; **re-push (github + backup) needed to bring both remotes to HEAD** — pushing remains explicit (operator authorized today's pushes). Today's commits: `d75c3e7` done-declaration, `0aea29a` cycle-2 log, `729a964` rebrand matrix, `7cf4361` test-data store spec, `f59f54c` day-arc trackers, `264a340` stage-9 auditor. STANDING governs auto-commits in the code home.
 
 ## Required Files to Check Before Work
 Follow the `AGENTS.md` §1 session-start read order first. Core governance files:
