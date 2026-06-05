@@ -26,6 +26,72 @@ What should happen next.
 
 ---
 
+## 2026-06-04/05 - Private Test-Data Store: §10 resolved (D9-D15) + Q3 mesh Consequence Matrix + §11 SIGNED
+**Actor:** Matt Nichol (operator decisions + §11 signature) + Cursor (Claude Opus 4.8, analysis / drafting / matrix / gate).
+
+**Action:** Decided (all 7 open questions) + Created (Q3 matrix) + Signed (§11) + Updated (spec / index / decision log)
+
+**Files Changed:**
+- 4. Product_Roadmap/Private_Test_Data_Store_Deep_Dive.md (all 7 §10 questions -> D9-D15; §11 SIGNED 2026-06-05)
+- 4. Product_Roadmap/_Private_Test_Data_Store_Q3_Mesh_Consequence_Matrix.md (NEW; Q3 sovereignty tradeoff; outcome Option B / self-hosted WireGuard)
+- MASTER_INDEX.md (matrix entry + spec status refresh)
+- decision_cycles_log.md (Cycle 6)
+- PROJECT_HANDSHAKE.md (live-action pointer)
+- PROGRESS.md, PROJECT_BUILD_AND_AUDIT_QUEUE.md (status refresh)
+
+**Reason:**
+Milestone selected via Next-Action Decision Rubric (Cycle 6): operator chose B (resolve the Private Test-Data Store open questions toward §11) over the agent's momentum-bias recommendation A (render a sample PDF). All seven §10 questions were brought pre-scored with recommended defaults. Operator accepted six as locked decisions: D9 host = WSL2 primary now / NAS durable copy when hardware exists; D10 topology = single-node MinIO ~250GB expandable; D11 retention = evidence packages + audit packets indefinite, bulky test corpora auto-expire 90d unless tagged keep; D12 integration = local-first + explicit sync (confirms §4 path 2, zero runtime coupling); D13 keys = OS keychain primary + gitignored secrets file, never in repo; D14 production boundary = strictly test/lab forever for this store (real customer data needs its own production-datastore spec — ties to the deferred real-customer-data controls decision). Q3 (mesh: Tailscale vs self-hosted WireGuard vs Headscale) is the data-sovereignty crux the spec itself flagged; operator triggered a Consequence Matrix rather than accept a default. Matrix written (`_Private_Test_Data_Store_Q3_Mesh_Consequence_Matrix.md`); key finding is that the Tailscale client is plain WireGuard so Option A does not lock out B/C later (migration is config, not data), with the live cost being Tailscale's control plane seeing connection metadata (never artifact bytes). Operator initially leaned A (Tailscale) then overrode to **Option B (self-hosted WireGuard, full sovereignty)** — own sandbox/keys, no third-party control plane, explicitly accepting the steeper learning curve to "learn how to do this correctly first" rather than adopt a managed mesh and migrate later (Headscale/Option C documented as fallback only). Promoted to spec decision D15 — resolving the last open §10 question. Operator then authored the §11 signature ("Matt Nichol (zebra-comet) June 5th, 2026"). Per AGENTS §5/§6 the gate ran on the signed slice: first pass clean with 1 warning (a stale Tailscale reference left in the handshake's Current Next Step), which was fixed; re-run clean 0/0 (`private_test_data_store_section11_signoff_20260605_20260605T000550Z.md`). The signature locks the design contract only; no infrastructure stood up. Doc/spec only; no runtime code changed, no external/compliance/insurance claim. Commit split for the 200KB packet cap: substantive slice (spec + Q3 matrix + handshake/queue/decision-log/progress) committed `dde3416` after the clean gate; MASTER_INDEX + this activity log paired in a separate gate-clean tracker commit.
+
+**Next Step:**
+Private Test-Data Store is §11 SIGNED; standing up infrastructure (MinIO + WireGuard) requires a separate explicit operator start-build instruction. Real-customer-data controls decision (milestone C) remains the larger gated track, best run after Codex finishes consolidating the agent folder. Commits local until the next explicit push (GitHub current at 16f75ef; this session adds dde3416 + the tracker commit).
+
+---
+
+## 2026-06-04 - Operator agent roster logged (own-AI substrate)
+**Actor:** Matt Nichol (provided agent folder) + Cursor (read + log).
+
+**Action:** Logged (reference capture; agents live in a separate repo)
+
+**Files Changed:**
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Matt pointed at his existing agent definitions to inform the "use our own AI on a locked machine" direction. The canonical definitions live OUTSIDE this repo, on the Windows side at `C:\SwarmCommandCenter_\.claude\agents\*.md` (mirrored in `.codex\agents\*.toml`) — a different project from NorthStar (`/home/socialarchitect/northstar`). Five agents are defined as a separation-of-duties pipeline (Sage -> Maven -> Dax -> Haven -> Deploy):
+- **Sage** = architect (designs schemas/flow; hard rule: NEVER writes code).
+- **Maven** = builder (implements Sage's design; hard rule: does NOT design/change architecture; calls ARIES for 3D).
+- **Dax** = auditor (audits Maven's output vs Sage's spec; hard rule: DO NOT BUILD / DO NOT FIX FILES YOURSELF — audit and report only; sends failures back to Maven).
+- **Haven** = security/compliance gate (read-only scan before deploy; outputs CLEARED / BLOCKED; hard rule: does NOT write files or run scripts).
+- **ARIES** = 3D production specialist (Blender/Unity; called by Maven; hard rule: no general web/app code). NOTE: an older onboarding doc names it "ARES"; the live agent def is "ARIES".
+
+**Findings / honest gaps (for the future controls decision):**
+1. Dax IS structurally independent of Maven (separate agent, explicit "do not build/fix" hard rule) — this matches NorthStar's non-negotiable that the auditor is a separate negative-feedback layer ("you are not the auditor"). Confirms Matt's "none of my agents are the same agent."
+2. These agents are scoped to the **SwarmCommandCenter website pipeline** (swarmcommand.ca / Netlify / Supabase / `scc_web_site_build`). Dax's current checklist is HTML/nav/site integrity, NOT cyber-insurance-package spec compliance. Using Dax as the locked-machine replacement for the Grok package audit would require a NorthStar-domain audit brief (the equivalent of `complete_gate.py`'s spec-compliance audit), not the website checklist.
+3. **Poindexter is NOT yet a defined agent** — only an empty `poindexter_sprint.md` exists. The "numbers watcher" is intent, not an implemented agent.
+
+**Next Step:**
+No NorthStar files or pins changed. When the real-customer-data controls Consequence Matrix runs, default recommendation: Dax (with a purpose-written NorthStar audit brief) on the locked machine as the Grok replacement for real packages, holding the Sage/Maven/Dax/Haven separation so the auditor never audits its own build. Author Poindexter's definition before relying on it.
+
+---
+
+## 2026-06-04 - Real-customer-data model boundary intent logged
+**Actor:** Matt Nichol (operator intent) + Cursor (logging / boundary capture).
+
+**Action:** Logged (operating intent, not signed-spec revision)
+
+**Files Changed:**
+- PROJECT_ACTIVITY_LOG.md
+- PROGRESS.md
+- PROJECT_HANDSHAKE.md
+- PROJECT_BUILD_AND_AUDIT_QUEUE.md
+
+**Reason:**
+Matt clarified the real-customer-data crossroads: for real customer packages, the intended direction is to use NorthStar's own AI on a locked operator-controlled machine, not send real customer data to Grok/xAI. Grok remains acceptable for synthetic/test package audits while API tokens remain available and while the operator still considers it safe; it should be retired when tokens run out or if it is no longer safe to use. This is logged as operator intent only. It does **not** modify the §11-signed implementation spec today: §13/IQ3 currently pins `grok-4` / temperature 0 for the synthetic/test audit path, and changing the real-package audit model requires an explicit future revision path (operator instruction -> spec edit -> fresh gate -> operator sign-off).
+
+**Next Step:**
+When the real-customer-data controls decision is started, default recommendation should be local locked-machine audit for real customer packages, with Grok limited to synthetic/test packages until sunset. Run the full Consequence Matrix before changing §13/IQ3 or allowing any non-synthetic package to leave the machine.
+
+---
+
 ## 2026-06-04 - PDF render surface (IQ2 supply-chain decision + internal renderer)
 **Actor:** Matt Nichol (IQ2 engine decision) + Cursor (Claude Opus 4.8, build + gate).
 
