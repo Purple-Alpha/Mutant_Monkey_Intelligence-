@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Blue-team swarm map captured + adopted; agent_concepts folder created
+**Actor:** Matt Nichol (vision + adoption) + Cursor (capture / cross-map / gate / logging).
+
+**Action:** Created + Adopted + Moved
+
+**Files Changed:**
+- agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md (NEW SPARK; captured verbatim, then OPERATOR-ADOPTED; moved here from 4. Product_Roadmap)
+- agent_concepts/README.md (NEW; folder rules)
+- MASTER_INDEX.md (two new entries + path update)
+
+**Reason:**
+Matt dropped a 70-agent / ten-team blue-team swarm architecture into chat and later disclosed it was a deliberate test of whether the agent would drop everything and start building it. The decision protocol held: the idea was captured as a SPARK (authority-free, builds nothing, expands no signed scope), flagged as a butterfly / path-setting artifact, and cross-mapped against current runtime + signed/drafted specs (each of the 70 agents tagged EXISTS / SPECCED / GOVERNANCE / NET-NEW; ~30-40 already have a surface, the clear net-new cluster being the orchestration layer #1/#2/#68/#69 and several Stage-B detectors). Matt then adopted it as the official `VISION.md` Stage B/C architecture map and the backlog source for daily milestones — **adoption is not build authorization**; each agent still runs Next-Action Rubric -> spec-first -> gate -> sign-off one at a time. Matt also asked for a dedicated `agent_concepts/` folder to dump future build theories; the swarm map was moved into it (single canonical copy, no duplication) and a README defines the RAW vs ADOPTED states and the promotion rules. Two gate runs clean 0/0 (`blue_team_swarm_architecture_map_spark_20260605T034822Z.md`, `agent_concepts_folder_setup_20260605T035605Z.md`); committed `93822dd` then `48a5ce5`; both on local backup.
+
+**Next Step:**
+Next session opens by setting the daily milestone list, drawn from the adopted swarm map per `DECISION_PROTOCOL.md` §4. GitHub push of the post-`f1fb901` local commits remains an explicit operator terminal step.
+
+---
+
 ## 2026-06-05 - Real-customer-data controls decision (Option B) + standing-mode extension
 **Actor:** Matt Nichol (milestone selection + butterfly decision) + Cursor (matrix / logging).
 
