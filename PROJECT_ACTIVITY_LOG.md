@@ -26,6 +26,28 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Real-customer-data controls decision (Option B) + standing-mode extension
+**Actor:** Matt Nichol (milestone selection + butterfly decision) + Cursor (matrix / logging).
+
+**Action:** Decided + Logged
+
+**Files Changed:**
+- 4. Product_Roadmap/_Real_Customer_Data_Controls_Consequence_Matrix.md (NEW; outcome Option B)
+- MASTER_INDEX.md (matrix index entry)
+- decision_cycles_log.md (Cycle 7)
+- PROJECT_HANDSHAKE.md (next step + commit cadence extension + git state)
+- PROJECT_BUILD_AND_AUDIT_QUEUE.md (status refresh)
+
+**Reason:**
+Milestone selected via Next-Action Decision Rubric (Cycle 7): operator chose to back up local commits first (push attempted; GitHub still credential-blocked through the agent, local `backup` remote made durable through `815431d`), then run the real-customer-data controls decision. This is a butterfly / path-setting decision (real customer data, legal/insurance posture, sovereignty), so it correctly went through the Consequence Matrix. Four options scored; operator selected **Option B**: real customer packages are audited by operator-controlled local AI on a locked machine, Grok stays synthetic/test only until sunset. The decision sets the controls scope boundary (synthetic = Grok ok; real = local-AI only; Private Test-Data Store stays test/lab forever) and authorizes the next spec/draft path only — it does not by itself change §13/IQ3, authorize real-data handling, or open buyer delivery.
+
+**Standing-mode extension (operator instruction, 2026-06-05):** Matt directed that decisions chain and the agent stop asking per-step. Recording his instruction: STANDING auto-commit now covers gate-clean, fully-green slices for in-scope code AND for doc/log/spec-draft slices, committed locally without per-step confirmation. Hard escalations still reach Matt and never auto-proceed: pushes to remote, §11/§13 sign-offs, scope/pricing/legal-trademark/external-identity changes, butterfly path-setting decisions, the seven VISION non-negotiables, and changes to the substance of a signed spec's locked decisions. This is the structural fix for the "stopping every two minutes / recommend-then-ask" failure mode (AGENTS §3.1.9, §3.2 build loop).
+
+**Next Step:**
+Roll into the determined next build action under Option B: draft the production / real-customer-data controls spec (pre-§11) so it can later be gated and operator-signed. Push remains explicit operator authority.
+
+---
+
 ## 2026-06-05 - Gemini briefing prompt saved
 **Actor:** Matt Nichol (operator request) + Cursor (draft / file creation / index update).
 
