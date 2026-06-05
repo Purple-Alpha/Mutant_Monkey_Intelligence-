@@ -66,9 +66,11 @@ The package explicitly does **not** cover:
 
 ### Required boundary statement (printed in the generated package)
 
-> *"This package covers NorthStar Inbox Shield's email-fraud and inbox-layer MDR control surface only. Other controls in your security stack — including MFA, EDR, backups, incident response plans, and patch management — are not in this package's scope and must be evidenced by your MSP or other vendors. This package does not guarantee underwriting approval or premium reduction; it provides auditable evidence of one control surface for your underwriter's review."*
+> *"This package covers Mutant Monkey Inbox Shield's email-fraud and inbox-layer MDR control surface only. Other controls in your security stack — including MFA, EDR, backups, incident response plans, and patch management — are not in this package's scope and must be evidenced by your MSP or other vendors. This package does not guarantee underwriting approval or premium reduction; it provides auditable evidence of one control surface for your underwriter's review."*
 
 This statement is part of the contract. Removing it, softening it, or replacing it with marketing copy is a drift incident.
+
+**Buyer-facing brand note (§13 revision 2026-06-05):** the product is named **Mutant Monkey Inbox Shield** on all buyer-facing surfaces (the rebrand Option B external/commercial brand; see `_Rebrand_to_Mutant_Monkey_Security_Consequence_Matrix.md`). "NorthStar Inbox Shield" remains the **internal codename** used throughout the runtime code and the engineering-facing prose in this and other specs; the deep rename of internal code/specs stays deferred per Option B. Only buyer-facing strings (this boundary statement, the rendered package, the MSP retainer summary) carry the external brand in v1.
 
 ---
 
@@ -676,6 +678,10 @@ The §11 Done Criteria criterion 15 enforces the same five-stage end-to-end rend
 ### Sign-off line
 
 > §13 SIGNED 2026-06-03 — Matt Nichol (operating entity name TBD pending project rename). Authorized in-session; accepts the 2026-06-03 D10 operator override (D10 overridden, not met) as the basis for precondition 3.
+
+**REVISION RE-SIGNED 2026-06-05.** The §2 boundary statement was revised this date — the buyer-facing product name changed from "NorthStar Inbox Shield" to "Mutant Monkey Inbox Shield" (rebrand Option B external brand; internal codename unchanged; see the §2 buyer-facing brand note and `_Rebrand_to_Mutant_Monkey_Security_Consequence_Matrix.md`). Per `AGENTS.md` §6 this revision required a fresh gate and a new operator re-signature. Matt authored the re-signature wording below in-session; the assistant only placed it.
+
+> §13 RE-SIGNED 2026-06-05 — Approved by Matt Nichol, Sovereign Operator
 
 *Authorship note: the line above records Matt's explicit in-session authorization to lock §13 (he selected the "lock §13 now under Matt Nichol, entity TBD" option). The assistant did not compose sign-off rationale in the operator's voice; Matt may replace this line with his own personal wording at any time, and must set the operating entity name once the project rename is decided.*
 

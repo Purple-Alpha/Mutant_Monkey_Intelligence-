@@ -932,7 +932,7 @@ def test_scope_boundary_extracted_verbatim_from_deep_dive(
     spec_dir = gate.WORKSPACE_ROOT / "4. Product_Roadmap"
     spec_dir.mkdir()
     exact_quote = (
-        '> *"This package covers NorthStar Inbox Shield\'s email-fraud and '
+        '> *"This package covers Mutant Monkey Inbox Shield\'s email-fraud and '
         "inbox-layer MDR control surface only. Other controls in your "
         "security stack — including MFA, EDR, backups, incident response "
         "plans, and patch management — are not in this package's scope "

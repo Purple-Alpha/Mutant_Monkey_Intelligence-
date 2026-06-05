@@ -415,7 +415,7 @@ def _render_markdown(
             "## MSP Retainer Summary",
             "",
             (
-                "NorthStar provides an auditable evidence bundle for the email-fraud "
+                "Mutant Monkey Security provides an auditable evidence bundle for the email-fraud "
                 "and inbox-layer MDR control surface only; the MSP remains responsible "
                 "for evidencing all other security controls."
             ),

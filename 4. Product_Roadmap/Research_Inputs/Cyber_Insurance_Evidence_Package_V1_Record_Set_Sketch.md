@@ -343,7 +343,7 @@ signed_by: null
 >
 > **Scope boundary (printed in every package; unedited):**
 >
-> > *"This package covers NorthStar Inbox Shield's email-fraud and inbox-layer MDR control surface only. Other controls in your security stack — including MFA, EDR, backups, incident response plans, and patch management — are not in this package's scope and must be evidenced by your MSP or other vendors. This package does not guarantee underwriting approval or premium reduction; it provides auditable evidence of one control surface for your underwriter's review."*
+> > *"This package covers Mutant Monkey Inbox Shield's email-fraud and inbox-layer MDR control surface only. Other controls in your security stack — including MFA, EDR, backups, incident response plans, and patch management — are not in this package's scope and must be evidenced by your MSP or other vendors. This package does not guarantee underwriting approval or premium reduction; it provides auditable evidence of one control surface for your underwriter's review."*
 
 **Source artifact path.**
 
@@ -371,7 +371,7 @@ audit_outputs/cyber_insurance_v1_test_plan/stage_a_vendor_payment_redirect_001/o
 
 This is the deep-dive §2 required boundary statement. Every package surface that touches buyer eyes prints it unedited.
 
-> *"This package covers NorthStar Inbox Shield's email-fraud and inbox-layer MDR control surface only. Other controls in your security stack — including MFA, EDR, backups, incident response plans, and patch management — are not in this package's scope and must be evidenced by your MSP or other vendors. This package does not guarantee underwriting approval or premium reduction; it provides auditable evidence of one control surface for your underwriter's review."*
+> *"This package covers Mutant Monkey Inbox Shield's email-fraud and inbox-layer MDR control surface only. Other controls in your security stack — including MFA, EDR, backups, incident response plans, and patch management — are not in this package's scope and must be evidenced by your MSP or other vendors. This package does not guarantee underwriting approval or premium reduction; it provides auditable evidence of one control surface for your underwriter's review."*
 
 Per `Compliance_and_Trend_Watch_Process.md` §5.3, this paragraph also creates an explicit non-scope context inside which boundary phrases (`guarantee`, `underwriting approval`, `premium reduction`) may appear — solely to negate them.
 

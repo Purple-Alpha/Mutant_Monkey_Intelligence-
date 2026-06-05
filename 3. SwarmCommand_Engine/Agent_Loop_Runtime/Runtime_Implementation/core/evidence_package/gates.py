@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 BOUNDARY_STATEMENT = (
-    "This package covers NorthStar Inbox Shield's email-fraud and inbox-layer MDR control "
+    "This package covers Mutant Monkey Inbox Shield's email-fraud and inbox-layer MDR control "
     "surface only. Other controls in your security stack — including MFA, EDR, backups, "
     "incident response plans, and patch management — are not in this package's scope and "
     "must be evidenced by your MSP or other vendors. This package does not guarantee "
