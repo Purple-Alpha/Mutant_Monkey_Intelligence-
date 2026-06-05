@@ -173,3 +173,35 @@ CYCLE 5 — 2026-06-04T19:30Z
   SURPRISES:     None. Build-layer call (stated): renderer is a separate explicit render_package_pdf()
                  rather than folded into generate_package_from_test_plan, to keep generation
                  deterministic/offline and PDF an opt-in internal step.
+
+CYCLE 6 — 2026-06-04T22:35Z
+  OBSERVE: Operator refreshed (slept), asked "what's on the agenda today?" GitHub current at 16f75ef;
+           Codex consolidating the agent folder in parallel (separate repo). Cyber Insurance generator
+           stages 8/9/10 + criterion-14 signature + PDF renderer all built/proven, synthetic-only.
+           Private Test-Data Store spec is pre-§11 with 7 open §10 questions. Baseline 1128 green.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    A Generate full synthetic package end-to-end + render the sample PDF (openable)   L1 R1 E2 FC2 Rv2  TOTAL 8
+    B Private Test-Data Store: resolve the 7 open questions toward §11                 L2 R2 E1 FC1 Rv2  TOTAL 8
+    C Real-customer-data controls Consequence Matrix now                              L2 R2 E1 FC0 Rv2  TOTAL 7
+    D Wrap for the day                                                                L0 R0 E0 FC1 Rv2  TOTAL 3
+  SELECTED:      ACTION B (operator-chosen; A was the agent recommendation via momentum-bias tiebreak,
+                 operator overrode to B). C scored FC0 because the locked-machine option depends on the
+                 agent substrate Codex is mid-cleanup on — premature to run C now.
+  EXPECTED:      Bring all 7 operator-only §10 questions pre-scored with recommended defaults; operator
+                 accepts/overrides; record resolutions into the spec (leave §11 unsigned).
+  EXECUTED AT:   2026-06-04T22:40Z
+  OUTCOME:       Operator accepted the six recommended defaults (Q1->D9 WSL2-primary-now/NAS-later,
+                 Q2->D10 single-node ~250GB, Q4->D11 packets-indefinite/corpora-90d, Q5->D12
+                 local-first+explicit-sync, Q6->D13 OS-keychain+gitignored-secrets, Q7->D14
+                 strictly-test/lab-forever). For Q3 (mesh/sovereignty crux) operator triggered a
+                 Consequence Matrix -> _Private_Test_Data_Store_Q3_Mesh_Consequence_Matrix.md
+                 (A Tailscale / B WireGuard / C Headscale); operator initially leaned A, then overrode
+                 to Option B (self-hosted WireGuard, full sovereignty — own sandbox/keys, no third-party
+                 control plane, accepts the learning curve), promoted to spec D15. That resolved the
+                 LAST open §10 question -> all seven now D9-D15. Operator then authored the §11 signature
+                 ("Matt Nichol (zebra-comet) June 5th, 2026"); gate run on the signed slice clean
+                 (1 warning: a stale Tailscale reference in the handshake, fixed). §11 SIGNED;
+                 start-build still requires a separate explicit operator instruction.
+  AUDIT VERDICT: N/A — pre-§11 spec/doc edits only, no code; gate fires at §11 sign-off per the spec.
+  SURPRISES:     None. Six of seven questions were low-risk/reversible enough to accept-all; only the
+                 sovereignty tradeoff (Q3) warranted the matrix, matching the spec's own §10 Q3 flag.

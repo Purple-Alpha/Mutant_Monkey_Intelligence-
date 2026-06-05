@@ -1,6 +1,6 @@
 # Private Test-Data Store — Deep Dive
 
-**Status:** DRAFT (pre-§11). Authored 2026-06-04 by Cursor (Claude Opus 4.8) on Matt Nichol's instruction (milestone C). No infrastructure stood up; §11 signature blank by design. Proposed locked decisions in §2 are drafts for operator review — they lock only at §11.
+**Status:** §11 SIGNED 2026-06-05 by Matt Nichol. Authored 2026-06-04 by Cursor (Claude Opus 4.8) on Matt Nichol's instruction (milestone C); all seven §10 questions resolved 2026-06-04/05 and promoted to locked decisions D9-D15 (Q3/mesh via Consequence Matrix `_Private_Test_Data_Store_Q3_Mesh_Consequence_Matrix.md` -> Option B / self-hosted WireGuard, full sovereignty). Decisions D1-D15 are locked. No infrastructure stood up; per the locked terms, implementation requires a separate explicit operator start-build instruction.
 **Owner:** Matt Nichol
 **Purpose:** Spec-first contract for an operator-controlled, self-hosted store for NorthStar test data and generated evidence artifacts, so that sensitive test material never transits third-party AI or consumer-cloud services.
 
@@ -38,12 +38,19 @@ It does not replace git. Git remains the source of truth for code and specs. Thi
 
 - **D1 — Self-hosted and operator-controlled.** The store runs on hardware/OS the operator controls. No consumer cloud, no third-party managed object store, for test data.
 - **D2 — S3-compatible object store (MinIO) as the interface.** Rationale: the eval harness and evidence-package generator already think in artifacts/paths; an S3 API is vendor-neutral, scriptable, and gives a clean local→NAS migration path without rewriting callers. Chosen over Nextcloud because the workload is programmatic object storage, not human file-sharing.
-- **D3 — Private mesh only; no public ingress.** Reachability via a private overlay network (Tailscale or self-hosted WireGuard — see §10 Q3). No port-forwarding, no public S3 endpoint, no internet-facing console.
+- **D3 — Private mesh only; no public ingress.** Reachability via a private overlay network (self-hosted WireGuard per D15, which resolves Q3). No port-forwarding, no public S3 endpoint, no internet-facing console.
 - **D4 — Purpose- and tenant-scoped buckets.** Separate buckets/prefixes per artifact class (`test-fixtures`, `evidence-packages`, `audit-packets`, `reaction-timing`). Fictional-tenant isolation mirrors the runtime tenant-isolation invariant: no cross-tenant artifact bleed.
 - **D5 — Synthetic / lab data only.** Inherits the Email Security Testing framework boundary: `.example` domains, fake vendors, inert attachments, synthetic `.eml`, lab mailbox. No live malware, no real customer PII.
 - **D6 — Encryption at rest and in transit; secrets never in the repo.** Access keys live outside git (env / OS keychain / secrets file gitignored). Inherits the gate redaction discipline — a committed key is a hard fail.
 - **D7 — Versioning on; documented restore path.** Object versioning enabled; a written, tested restore procedure. Durability is a first-class requirement, not an afterthought.
 - **D8 — No third-party processing by default.** The store does not sync or hand artifacts to any external service on its own. If an artifact must go to an external model (e.g., the Grok gate), that is an explicit, separately-logged operator/agent action; the store itself is inert.
+- **D9 — Host target: WSL2 primary now; NAS durable copy when hardware exists (resolves Q1).** v1 runs on the WSL2 primary. A dedicated NAS/Proxmox durable mirror is a documented follow-on, not a v1 blocker, mirroring the existing Linux-primary + Windows-backup pattern. Acceptable because D5 keeps all stored data synthetic/regenerable. (Operator-accepted 2026-06-04.)
+- **D10 — Topology: single-node MinIO, ~250GB expandable (resolves Q2).** Single-node is right-sized for one operator + lab-scale corpora and evidence packages; distributed HA is out of scope for v1 and revisitable later. (Operator-accepted 2026-06-04.)
+- **D11 — Retention (resolves Q4).** Evidence packages and audit packets are kept indefinitely (small, audit-relevant project evidence). Bulky regenerable test corpora auto-expire at 90 days unless tagged `keep`. (Operator-accepted 2026-06-04.)
+- **D12 — Integration surface: local-first + explicit sync (resolves Q5; confirms §4 path 2).** Callers keep writing to local disk; a separate explicit sync step pushes to MinIO. Zero runtime coupling in v1; the store stays optional. A future move to direct S3 writes is its own gated slice. (Operator-accepted 2026-06-04.)
+- **D13 — Key management (resolves Q6).** MinIO access keys live in the OS keychain primary, with a gitignored secrets file for headless/scripted access. Never in the repo (inherits D6). (Operator-accepted 2026-06-04.)
+- **D14 — Production boundary: strictly test/lab forever for THIS store (resolves Q7).** This store never holds real customer evidence packages. Real customer data requires a separate production-datastore spec with production controls — tracked as the deferred real-customer-data controls decision. (Operator-accepted 2026-06-04.)
+- **D15 — Mesh: self-hosted WireGuard (resolves Q3).** Reachability via self-hosted WireGuard — no third-party control plane; operator owns key generation, peer config, and the network path end to end (full sovereignty, consistent with D1 and VISION local-first). Chosen via Consequence Matrix (`_Private_Test_Data_Store_Q3_Mesh_Consequence_Matrix.md`); the operator overrode an initial Tailscale lean in favor of the safest fully-sovereign path and explicitly accepts the steeper setup/learning curve. Watch-item: a hand-rolled config is the likeliest public-exposure failure mode — mitigated by D3 (no public ingress) plus an external reachability check before the store holds artifacts. Headscale (self-hosted control plane) is the documented fallback only if raw WireGuard config-management proves operationally unsustainable. (Operator-decided 2026-06-05.)
 
 ---
 
@@ -92,18 +99,22 @@ Default recommendation for v1: path 2 (local-first + explicit sync), because it 
 
 ## §10 Open Questions (operator-only)
 
-- **Q1 — Host target.** WSL2 primary only, a dedicated TrueNAS/Proxmox box, or both (dev on WSL2, durable copy on NAS)?
-- **Q2 — MinIO topology + capacity.** Single-node vs distributed; what capacity target for v1?
-- **Q3 — Mesh choice (sovereignty tradeoff).** Tailscale (managed control plane, faster to stand up, trusts Tailscale's coordination server) vs self-hosted WireGuard (full sovereignty, more setup). This is itself arguably a Consequence-Matrix-worthy sub-decision.
-- **Q4 — Retention / lifecycle.** How long are old test artifacts and evidence packages kept; auto-expire policy?
-- **Q5 — Integration surface.** Direct S3 writes from the runtime vs local-first + explicit sync (§4)?
-- **Q6 — Key management.** Where do MinIO access keys live (env / OS keychain / gitignored secrets file)?
-- **Q7 — Production boundary.** Does this store ever hold real customer evidence packages, or strictly test/lab forever? (v1 proposes strictly test/lab; production use would need its own spec + controls.)
+All seven original questions were resolved by operator on 2026-06-04 and promoted to locked decisions (Q1->D9, Q2->D10, Q3->D15, Q4->D11, Q5->D12, Q6->D13, Q7->D14).
+
+- **Q1 — Host target.** RESOLVED -> D9.
+- **Q2 — MinIO topology + capacity.** RESOLVED -> D10.
+- **Q3 — Mesh choice (sovereignty tradeoff).** RESOLVED -> D15 (Option B / self-hosted WireGuard, via Consequence Matrix `_Private_Test_Data_Store_Q3_Mesh_Consequence_Matrix.md`).
+- **Q4 — Retention / lifecycle.** RESOLVED -> D11.
+- **Q5 — Integration surface.** RESOLVED -> D12.
+- **Q6 — Key management.** RESOLVED -> D13.
+- **Q7 — Production boundary.** RESOLVED -> D14.
+
+No §10 questions remain open. The spec is now §11-signable (operator-authored signature).
 
 ---
 
 ## §11 Sign-off
 
-_Pending operator §11. Proposed decisions D1-D8 lock on signature. Implementation does not begin until §11 is signed, the §10 questions are resolved, and a separate explicit operator start-build instruction is issued._
+_§11 SIGNED 2026-06-05. Decisions D1-D15 are locked. All seven §10 questions resolved (D9-D15). This signature locks the design contract only; per the locked terms, implementation does not begin until a separate explicit operator start-build instruction is issued (no infrastructure is stood up by this signature)._
 
-**Operator signature:** ______________________
+**Operator signature:** Matt Nichol (zebra-comet) June 5th, 2026
