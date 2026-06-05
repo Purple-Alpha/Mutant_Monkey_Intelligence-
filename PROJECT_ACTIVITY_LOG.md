@@ -44,7 +44,24 @@ Milestone selected via Next-Action Decision Rubric (Cycle 7): operator chose to 
 **Standing-mode extension (operator instruction, 2026-06-05):** Matt directed that decisions chain and the agent stop asking per-step. Recording his instruction: STANDING auto-commit now covers gate-clean, fully-green slices for in-scope code AND for doc/log/spec-draft slices, committed locally without per-step confirmation. Hard escalations still reach Matt and never auto-proceed: pushes to remote, §11/§13 sign-offs, scope/pricing/legal-trademark/external-identity changes, butterfly path-setting decisions, the seven VISION non-negotiables, and changes to the substance of a signed spec's locked decisions. This is the structural fix for the "stopping every two minutes / recommend-then-ask" failure mode (AGENTS §3.1.9, §3.2 build loop).
 
 **Next Step:**
-Roll into the determined next build action under Option B: draft the production / real-customer-data controls spec (pre-§11) so it can later be gated and operator-signed. Push remains explicit operator authority.
+Roll into the determined next build action under Option B: draft the production / real-customer-data controls spec (pre-§11) so it can later be gated and operator-signed. Push remains explicit operator authority. (Done same session — see next entry.)
+
+---
+
+## 2026-06-05 - Real-customer-data controls spec drafted (pre-§11)
+**Actor:** Cursor (draft) on operator instruction.
+
+**Action:** Drafted
+
+**Files Changed:**
+- 4. Product_Roadmap/Real_Customer_Data_Controls_Deep_Dive.md (NEW; DRAFT pre-§11)
+- MASTER_INDEX.md (index entry)
+
+**Reason:**
+Determined next build action after the Option B decision. Pre-§11 draft controls contract: synthetic/test path keeps the external-model audit; real-customer path is local-AI-only on a locked machine with no external egress, a separate production datastore (D4), builder/auditor separation (D3), and Done-Criteria output parity (D6). §13/IQ3 revision is a precondition for any real-package audit (D7) and is NOT performed here. Seven operator-only §10 questions left open (local substrate, locked-machine definition, auditor agent, production datastore, done-criteria parity, external-model sunset, buyer-delivery linkage). Authorizes no infrastructure and no real-data handling.
+
+**Next Step:**
+Operator-only: take the §10 questions toward §11 when ready (the next milestone for this track). No build of the local substrate, production datastore, or §13/IQ3 revision begins until §11 sign-off + an explicit start-build instruction.
 
 ---
 
