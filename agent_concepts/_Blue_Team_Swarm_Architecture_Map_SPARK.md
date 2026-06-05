@@ -2,6 +2,8 @@
 
 **Status:** SPARK / vision capture. Pre-spec, unsigned, NOT §11, authority-free. Authored 2026-06-05 by Cursor capturing Matt Nichol's operator vision verbatim (preserved in §D below) plus an agent-added cross-map and boundary layer. **This file builds nothing, authorizes nothing, and expands no signed scope.** It does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec. It is a map to draw milestones from, not a build order.
 
+**Operator adoption (2026-06-05):** Matt adopted this as the official Stage B/C architecture map and the backlog source for daily milestones (per `DECISION_PROTOCOL.md` §4). **Adoption is not build authorization** — every agent here still runs the normal Next-Action Rubric -> spec-first -> gate -> operator sign-off path one at a time. Lives in the `agent_concepts/` design-dump folder.
+
 **Brand note:** buyer-facing surfaces use **Mutant Monkey**; "NorthStar" / "SwarmCommand" remain internal codenames per the rebrand Option B decision. The operator vision below uses "NorthStar" as the internal codename; no rename is implied.
 
 ---

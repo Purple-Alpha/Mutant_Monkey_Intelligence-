@@ -1,0 +1,17 @@
+# agent_concepts/
+
+**Status:** Idea / theory staging area. Pre-spec, unsigned, NOT §11, authority-free. Created 2026-06-05 on Matt Nichol's instruction.
+
+**Purpose:** A place for Matt to dump agent/swarm design theories and "what I want to build" ideas before they are committed to anything. This folder is the **operator's design backlog** — raw concepts and adopted maps that daily milestones get drawn from.
+
+## Rules for this folder
+
+1. **Nothing here builds, authorizes, or scopes anything.** Files here do not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec. If a concept here ever conflicts with those, they win.
+2. **Concepts are not promotions.** A design here becomes real only by going through the normal path: Next-Action Decision Rubric (pick it as a milestone) -> spec-first deep-dive in `4. Product_Roadmap/` -> `complete_gate.py` -> operator sign-off.
+3. **Brand:** buyer-facing surfaces use **Mutant Monkey**; "NorthStar" / "SwarmCommand" stay internal codenames per the rebrand Option B decision.
+4. **Index new artifacts.** Add a `MASTER_INDEX.md` entry for anything substantive dropped here, same as anywhere else in the project.
+5. **Two states per file:** RAW (a dump, not yet reviewed) or ADOPTED (operator has accepted it as a map/backlog source). Adoption still is not build authorization.
+
+## Contents
+
+- `_Blue_Team_Swarm_Architecture_Map_SPARK.md` — **ADOPTED 2026-06-05.** The 70-agent / ten-team blue-team swarm architecture (Stage B/C articulation of `VISION.md`). Includes a cross-map of each agent against current runtime + signed/drafted specs, butterfly/boundary flags, and the operator vision verbatim. This is the official Stage B/C map and the backlog source for daily milestones.
