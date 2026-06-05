@@ -65,6 +65,26 @@ Operator-only: take the §10 questions toward §11 when ready (the next mileston
 
 ---
 
+## 2026-06-05 - Mutant Monkey package-audit brief authored (milestone C2)
+**Actor:** Matt Nichol (milestone selection + brand-wording instruction) + Cursor (draft / gate / logging).
+
+**Action:** Created + Audited + Logged
+
+**Files Changed:**
+- 4. Product_Roadmap/Mutant_Monkey_Package_Audit_Brief.md (NEW; operational brief v1, pre-deployment)
+- MASTER_INDEX.md (index entry)
+- PROJECT_ACTIVITY_LOG.md, PROGRESS.md, PROJECT_HANDSHAKE.md, PROJECT_BUILD_AND_AUDIT_QUEUE.md (status sync)
+
+**Reason:**
+Milestone C2, selected via the Next-Action Decision Rubric (rubric ranked C1/C2 tied at 8; operator chose C2). Authored the concrete D11 artifact the §11-signed Real-Customer-Data Controls spec requires: the local-AI package auditor's role/contract, mirroring `complete_gate.py` at the package level. Defines hard boundaries (real data never leaves the locked machine, binary synthetic/real classification, no rubber-stamp, no claim drift, boundary statement intact, tenant isolation), the Stage-9-parity timestamped output contract satisfying Done Criteria 11/12, the `clean`/`warnings_only`/`blocked` verdict vocabulary, builder/auditor separation, and the D9 calibration gate. Per Matt's explicit instruction the operator-facing wording is **Mutant Monkey**; the signed-spec D11 internal codename ("NorthStar package-audit brief") is kept as a one-line traceability note only — the signed spec was NOT edited (a label rename inside a signed spec would need its own revision gate). Gate clean 0/0 (`mutant_monkey_package_audit_brief_20260605T023820Z.md`); committed `6026deb` and backed up.
+
+**Boundary:** The brief is pre-deployment. It deploys nothing, authorizes no real-customer-data handling, makes no §13/IQ3 change, stands up no infrastructure, and adds no external/compliance/insurance claim. It governs synthetic-package calibration only until: the local-AI substrate passes the D9 calibration gate, §13/IQ3 is revised and re-signed (D7), and Matt issues an explicit activation instruction.
+
+**Next Step:**
+Operator's call (next milestone). Buildable items still behind the signed controls contract: Production Evidence Store §10 -> §11 (D12), §13/IQ3 revision path (D7, butterfly), and calibrating the local-AI auditor against synthetic packages once a substrate exists (D9). GitHub push remains an explicit operator terminal step.
+
+---
+
 ## 2026-06-05 - Real-customer-data controls spec §11 SIGNED
 **Actor:** Matt Nichol (operator §11 signature) + Cursor (placement / gate / logging).
 
