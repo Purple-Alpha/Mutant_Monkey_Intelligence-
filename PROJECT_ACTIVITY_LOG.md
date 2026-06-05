@@ -65,6 +65,25 @@ Operator-only: take the §10 questions toward §11 when ready (the next mileston
 
 ---
 
+## 2026-06-05 - Real-customer-data controls spec §11 SIGNED
+**Actor:** Matt Nichol (operator §11 signature) + Cursor (placement / gate / logging).
+
+**Action:** Signed + Audited + Logged
+
+**Files Changed:**
+- 4. Product_Roadmap/Real_Customer_Data_Controls_Deep_Dive.md (§11 SIGNED; status header + §11 block)
+- MASTER_INDEX.md, PROGRESS.md, PROJECT_HANDSHAKE.md, PROJECT_BUILD_AND_AUDIT_QUEUE.md (status sync)
+
+**Reason:**
+After the §10 questions resolved to D9-D15, a §11-readiness gate ran clean (`real_customer_data_controls_section11_readiness_20260605T021403Z.md`). Matt then authored the §11 signature line in-session ("Matt Nichol(Zebra-Comet) June,5th. 2026"); the assistant placed but did not author it. A fresh signed-spec gate ran clean (`real_customer_data_controls_section11_signature_20260605T022538Z.md`, 0/0). Signing locks D1-D15 as the controls contract. Per AGENTS §4/§6 the signature is operator-authored; the assistant only placed the wording. Signed spec committed `e77f85c` and backed up to the local mirror.
+
+**Boundary (unchanged by signing):** Signing the controls contract authorizes NOTHING operational by itself. No infrastructure, no §13/IQ3 pin change, no real-customer-data handling, and no buyer delivery begin from this signature. D7 keeps the §13/IQ3 revision a precondition for any real-package audit; D12 requires a separate Production Evidence Store spec before real artifacts exist; D9/D11 require a calibrated local-AI substrate with a NorthStar audit brief and builder/auditor separation before any real-package audit; D8/D15 keep buyer delivery separately gated. Each is a future explicit operator gate.
+
+**Next Step:**
+Operator's call. The signed contract now governs the real-customer path. The next buildable items behind it (all gated, none auto-started): the Production Evidence Store deep-dive (D12), the §13/IQ3 revision path (D7), and the NorthStar local-AI package-audit brief (D11). GitHub push remains an explicit operator terminal step.
+
+---
+
 ## 2026-06-05 - Real-customer-data controls §10 resolved toward §11
 **Actor:** Matt Nichol (operator resolution) + Cursor (draft update / logging).
 
