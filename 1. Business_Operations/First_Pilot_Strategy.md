@@ -4,6 +4,19 @@
 
 **Brand:** buyer-facing = **Mutant Monkey** (Inbox Shield / Security); NorthStar/SwarmCommand are internal codenames.
 
+**Correction note (2026-06-05):** an earlier draft of this doc treated Reddit as a starting channel to "go mine." That was wrong — the operator has already produced a Reddit discovery corpus AND a warm MSP lead. This doc now leads with what already exists (§0.1) and points the first action at that lead, not at cold Reddit.
+
+---
+
+## §0.1 What you've already produced (don't start from zero)
+
+Logged in `Frontier_Intake_Log.md` and synthesized in `4. Product_Roadmap/Research_Inputs/Cyber_Insurance_Section13_Readiness_Packet_20260603.md`:
+
+- **Reddit discovery corpus (2026-06-01 / 06-03):** independent confirmation that underwriters demand proof controls *operate* (not just exist), that bank-detail/vendor-payment changes are high-risk events, and that renewal-week evidence scramble is real. This shaped pain points P02/P07/P10/P13/P15 and confirmed the evidence-package direction. It also surfaced buyer language (e.g. the "is nmap evidence enough?" confusion).
+- **A real MSP door: Todd Chapman / CMIT Solutions** — offered coffee to explore mutual value; skeptical of the outreach wording but did not reject the idea. This is the **first real MSP-owner door** and is the live lead.
+
+**What this did and did not do (our own logged rule):** all of the above is **discovery / confirmation signal**, valuable for shaping the product and finding a door. **None of it counts toward D10**, the cheaper-proof go-bar, which requires **2 of 3 relevant MSP conversations** each with a **named SMB anchor** + a **named upcoming insurance/underwriting conversation**, recorded in `Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`. That worksheet is currently **empty (0 of 3)**; D10 is **overridden, not met**. So: direction and door = done; pilot proof = not yet.
+
 ---
 
 ## §1 What we are honestly selling today
@@ -98,11 +111,13 @@ AVOID (forbidden): "stops/prevents all phishing", "guarantees fraud prevention",
 
 ## §8 Concrete next actions (operator)
 
-1. Read 3-5 Reddit threads on BEC / cyber-insurance-renewal pain; copy the exact phrases buyers use (feeds our copy).
-2. List 5-10 candidate MSPs/SMBs (Kelowna-local first).
+**Lead with the warm lead, not cold Reddit.**
+1. **Follow up Todd Chapman / CMIT Solutions** — take the coffee. Run it on `Cyber_Insurance_Vendor_Payment_Integrity_MSP_Call_Pack.md` + the cheaper-proof runbook questions; bring the synthetic evidence-package PDF as the "this is what you'd receive" demo. Goal: understand his clients' vendor-payment/renewal pain and see if a named SMB + a named renewal conversation surface.
+2. **Log the outcome in `Cyber_Insurance_Evidence_Package_MSP_Discovery_Worksheet.csv`** (currently 0 of 3) — `partial` unless both named anchors appear voluntarily. This is how D10 actually advances.
 3. Decide the first-pilot shape (§9) — recommended: retrospective fraud review.
 4. (Pre-pilot build, small) a written, locked-machine real-email intake + handling procedure before any real batch arrives.
-5. Use the synthetic evidence-package PDF as the demo asset.
+5. Line up 2-3 more MSP touches (Kelowna-local first) so the 2-of-3 D10 bar is reachable.
+6. Use Reddit as *ongoing* research/language-mining and warm-intro hunting (§6) — secondary to working the Todd lead, not the starting point.
 
 ---
 
