@@ -1,6 +1,6 @@
 # Real-Customer-Data Controls — Deep Dive
 
-**Status:** DRAFT (pre-§11). Authored 2026-06-05 by Cursor on Matt Nichol's instruction, rolling forward from the real-customer-data controls decision (Option B; `_Real_Customer_Data_Controls_Consequence_Matrix.md`). No runtime code, no infrastructure, no signed-spec change is authorized by this draft. The §10 questions are resolved as D9-D15 on Matt's 2026-06-05 "agree all" instruction. §11 signature is blank by design.
+**Status:** §11 SIGNED 2026-06-05 by Matt Nichol. Authored 2026-06-05 by Cursor on Matt Nichol's instruction, rolling forward from the real-customer-data controls decision (Option B; `_Real_Customer_Data_Controls_Consequence_Matrix.md`); §10 resolved to D9-D15 on Matt's "agree all" instruction; §11 signed the same day after a clean readiness gate. Signing locks the controls contract (D1-D15) only. It authorizes no runtime code, no infrastructure, no §13/IQ3 pin change, no real-customer-data handling, and no buyer delivery — each of those remains a separate explicit operator gate per the decisions below.
 
 **Owner:** Matt Nichol
 
@@ -107,6 +107,8 @@ Resolved 2026-06-05 by Matt Nichol's "agree all" instruction after the seven que
 
 ## §11 Sign-off
 
-_§11 signature blank by design. This draft has its §10 questions resolved but remains pre-§11. Implementation, infrastructure, the §13/IQ3 revision, and any handling of real customer data do not begin until this spec is §11-signed by Matt and a separate explicit operator start-build instruction is issued._
+This spec is §11 SIGNED. Signing locks D1-D15 as the controls contract. It does NOT authorize implementation, infrastructure, the §13/IQ3 revision, real-customer-data handling, or buyer delivery; each of those still requires a separate explicit operator start-build or sign-off per the decisions above. A revision to any locked decision requires the normal path: operator instruction -> spec edit -> fresh `complete_gate.py` audit -> new operator §11 signature.
 
-**Operator signature:** _(blank — operator-authored at §11)_
+> §11 SIGNED — Matt Nichol(Zebra-Comet) June,5th. 2026
+
+*Authorship note: Matt authored the signature line above in-session; the assistant only placed it. The §10 resolutions D9-D15 reflect Matt's explicit "agree all" instruction after the seven questions were presented one by one with defaults and consequences.*
