@@ -234,3 +234,34 @@ CYCLE 7 — 2026-06-05T01:24Z
                  the operator). Correction: STANDING extended to auto-commit gate-clean doc/spec-draft
                  slices; agent decides + rolls forward on ranked defaults; stops only for push, §11/§13
                  sign-off, scope/pricing/legal/identity, butterfly path changes, and non-negotiables.
+
+CYCLE 8 — 2026-06-05T04:10Z
+  OBSERVE: One-hour "cleanup then path forward" session. Drift cleanup done first: PROGRESS baseline
+           header corrected 1072->1128 (verified by full suite run), tonight's decision-protocol /
+           swarm-map / agent_concepts work logged across trackers (committed c3ec656). Matt's 70-agent
+           blue-team swarm map captured (93822dd) and OPERATOR-ADOPTED as the Stage B/C architecture map,
+           moved into the new agent_concepts/ design-dump folder (48a5ce5). Tree clean; baseline 1128.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    A Production Evidence Store §10 -> §11 (resolve Q1-Q5, sign)        L2 R1 E2 FC1 Rv2  TOTAL 8
+    B Spec the first swarm-map agent (spec-first deep-dive)             L2 R1 E2 FC1 Rv2  TOTAL 8
+    C Real MSP pilot motion (operator-led; D10 market proof)           L2 R2 E1 FC1 Rv1  TOTAL 7
+    D D9 local-AI calibration protocol design (no substrate yet)       L1 R1 E1 FC1 Rv2  TOTAL 6
+    E §13/IQ3 revision (butterfly; authorize local-AI for real pkgs)   L2 R0 E1 FC0 Rv1  TOTAL 4 (premature)
+    F Wrap / do nothing                                                L0 R0 E0 FC1 Rv2  TOTAL 3
+  SELECTED:      ACTION B (operator-chosen). Within B, agent build-layer call: Lookalike Domain Detector
+                 (swarm map #10) — self-contained, deterministic, no new network/supply-chain surface,
+                 strengthens Stage A sender analysis, pairs with the Vendor Baseline Store, evidence-
+                 producing. Honest flag carried to operator: C (a real pilot) is the highest-leverage
+                 move overall but is operator-authority, not an agent build.
+  EXPECTED:      One pre-§11 spec-first deep-dive for the chosen detector following the detector-spec
+                 template (§0-§5 + §10 open questions + §11 placeholder); no runtime code; bounded
+                 against existing detectors; gate clean; indexed.
+  EXECUTED AT:   2026-06-05T04:10Z
+  AUDIT VERDICT: PASS — Grok gate clean 0/0
+                 (audit_outputs/lookalike_domain_detector_spec_draft_20260605T040950Z.md); doc-only,
+                 no test delta (1128/1); committed fe4c3bd under STANDING.
+  SURPRISES:     Scope grounding (spec-first): the existing url_obfuscation_detector already does
+                 punycode/homoglyph for BODY URLs, and header_divergence_detector covers auth/routing —
+                 but no detector scores the SENDING/identity domain vs known-good domains, which an
+                 attacker-owned look-alike passes cleanly. So #10 is genuinely net-new + complementary;
+                 D4 locks reuse of the existing homoglyph machinery so the two cannot drift apart.
