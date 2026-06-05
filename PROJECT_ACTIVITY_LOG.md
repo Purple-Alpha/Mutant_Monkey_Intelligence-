@@ -65,6 +65,27 @@ Operator-only: take the §10 questions toward §11 when ready (the next mileston
 
 ---
 
+## 2026-06-05 - Real-customer-data controls §10 resolved toward §11
+**Actor:** Matt Nichol (operator resolution) + Cursor (draft update / logging).
+
+**Action:** Resolved + Updated
+
+**Files Changed:**
+- 4. Product_Roadmap/Real_Customer_Data_Controls_Deep_Dive.md
+- MASTER_INDEX.md
+- PROJECT_ACTIVITY_LOG.md
+- PROJECT_HANDSHAKE.md
+- PROJECT_BUILD_AND_AUDIT_QUEUE.md
+- PROGRESS.md
+
+**Reason:**
+Matt reported that the GitHub push landed successfully through `f1fb901`, restoring the normal off-site backup path. Matt then resolved all seven local-AI blueprint questions with "agree all." The draft spec now encodes those answers as D9-D15: D9 calibration gate over fixed model, D10 verifiable locked-machine controls, D11 Dax as default auditor only with a NorthStar package-audit brief and builder/auditor separation, D12 separate Production Evidence Store spec for real artifacts, D13 Stage-9-parity local audit output, D14 explicit Grok/xAI synthetic sunset triggers, and D15 buyer delivery separately gated. §11 remains blank and operator-authored; this still authorizes no infrastructure, no §13/IQ3 change, no real-customer-data handling, and no buyer delivery.
+
+**Next Step:**
+Gate + commit this draft-resolution slice under standing cadence. The next operator-authority gate for this track is §11 signature wording if Matt chooses to lock the controls contract; no local-AI substrate or production datastore build starts until after §11 plus a separate start-build instruction.
+
+---
+
 ## 2026-06-05 - Gemini briefing prompt saved
 **Actor:** Matt Nichol (operator request) + Cursor (draft / file creation / index update).
 

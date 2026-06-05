@@ -27,6 +27,8 @@
 
 **Real-customer-data audit-model intent logged (2026-06-04).** Matt clarified the intended path for the real-world data crossroads: real customer packages should move toward NorthStar's own AI running on a locked operator-controlled machine, not Grok/xAI. Grok remains acceptable for synthetic/test package audits while tokens remain available and while the operator still considers it safe; retire it when tokens run out or if it stops being safe. This is an operating-intent log, **not** a signed-spec change: current §13/IQ3 still pins `grok-4` / temp 0 for the synthetic/test audit path. Before any real customer package is audited or buyer-rendered, run the real-customer-data controls Consequence Matrix and, if changing the audit model, revise §13/IQ3 through the normal gate + operator sign-off path.
 
+**Real-customer-data controls draft §10 RESOLVED (2026-06-05).** Consequence Matrix outcome is Option B: real customer packages stay on operator-controlled local AI; Grok/xAI remains synthetic/test only until sunset; Private Test-Data Store remains test/lab forever. `Real_Customer_Data_Controls_Deep_Dive.md` is still DRAFT pre-§11, but its seven open questions are resolved to proposed D9-D15 by Matt's "agree all" instruction: calibration gate over fixed model, verifiable locked-machine checklist, Dax-with-NorthStar-audit-brief default, separate Production Evidence Store spec, Stage-9-parity local audit output, explicit Grok/xAI synthetic sunset triggers, and buyer delivery separately gated. §11 remains blank/operator-authored. No infrastructure, §13/IQ3 change, real customer data handling, or buyer delivery is authorized yet.
+
 ---
 ## Active Task List
 
