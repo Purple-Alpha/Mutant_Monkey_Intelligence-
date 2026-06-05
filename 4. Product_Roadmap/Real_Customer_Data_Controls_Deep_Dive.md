@@ -1,6 +1,6 @@
 # Real-Customer-Data Controls — Deep Dive
 
-**Status:** DRAFT (pre-§11). Authored 2026-06-05 by Cursor (Claude Opus 4.8) on Matt Nichol's instruction, rolling forward from the real-customer-data controls decision (Option B; `_Real_Customer_Data_Controls_Consequence_Matrix.md`). No runtime code, no infrastructure, no signed-spec change is authorized by this draft. The §10 open questions are operator-only. §11 signature is blank by design.
+**Status:** DRAFT (pre-§11). Authored 2026-06-05 by Cursor on Matt Nichol's instruction, rolling forward from the real-customer-data controls decision (Option B; `_Real_Customer_Data_Controls_Consequence_Matrix.md`). No runtime code, no infrastructure, no signed-spec change is authorized by this draft. The §10 questions are resolved as D9-D15 on Matt's 2026-06-05 "agree all" instruction. §11 signature is blank by design.
 
 **Owner:** Matt Nichol
 
@@ -46,6 +46,13 @@ This spec is a controls / boundary contract. It does not build the local-AI subs
 - **D6 — Local audit output must satisfy the Done-Criteria contract.** The local-AI audit produces output parity with the Stage 9 contract (a saved audit artifact dated after generation, deviations as Drift Incident Reports) so Done Criteria 11/12 can be evaluated identically regardless of which auditor ran. A local audit that cannot produce this parity is not a valid package audit.
 - **D7 — §13/IQ3 revision is a precondition for any real-package audit.** The implementation spec currently pins the package audit to Grok-4. No real package may be audited until §13/IQ3 is revised through the normal path (operator decision -> spec edit -> fresh gate -> operator §13 sign-off) to authorize the local-AI auditor for the real path. This draft does not perform that revision.
 - **D8 — No buyer delivery of real packages until separately authorized.** The renderer remains internal/synthetic; buyer-facing delivery of a real package is a separate explicit operator decision (ties to the standing buyer-delivery gate).
+- **D9 — Local-AI substrate locks to calibration criteria, not a forever model.** The real-package auditor is selected by a local substrate profile and calibration gate, not by hard-marrying the project to one model name in this spec. Before it may audit real packages, the local AI must pass the same synthetic package cases the external Stage 9 path can pass, catch deliberately planted spec/claim/data-boundary mistakes, and refuse to bless a broken package. The exact model/runtime is selected when the locked machine is built and may be changed later only by rerunning the calibration gate and logging the change.
+- **D10 — "Locked machine" means verifiable operator control.** Minimum v1 locked-machine controls are: operator physical control, full-disk encryption, no cloud-sync folder for real artifacts, no browser/session sharing during audits, no external network during real-package audit runs except explicitly logged local-network dependencies, and a short per-run checklist recording those facts. "Locked" is not a trust statement; it is a recorded condition of the audit run.
+- **D11 — Dax is the default local auditor role, with a NorthStar package-audit brief.** The operator's existing Dax auditor agent is the default local-auditor shell because it already exists as a separated auditor role. It must receive a NorthStar Cyber Insurance Package Audit Brief before it may audit this surface; its current non-NorthStar / website-focused brief is not sufficient. If Dax built or materially edited a package, Dax cannot audit that package; builder/auditor separation always wins.
+- **D12 — Production datastore gets its own deep-dive spec.** Real customer package artifacts require a separate Production Evidence Store spec before any real package is generated, stored, audited, rendered, or delivered. The Private Test-Data Store remains test/lab forever and cannot be widened by this spec. The production store spec must cover tenant isolation, encryption/key handling, backup/restore, retention, deletion, access control, audit trail, and no-cloud-sync boundaries.
+- **D13 — Local audit output must mirror the Stage 9 evidence contract.** The local AI must emit a saved, timestamped audit artifact with package ID, auditor identity/profile, input package hash, spec references checked, verdict, findings, and Drift Incident Reports for deviations. A bare pass/fail, chat transcript, or unstructured thumbs-up does not satisfy Done Criteria 11/12.
+- **D14 — Grok/xAI synthetic sunset trigger is explicit and low-friction.** Grok/xAI is retired even for synthetic/test audits when any of these occur: API tokens run out, provider terms or safety posture become unacceptable to the operator, the local-AI auditor passes the synthetic calibration gate and the operator chooses to consolidate, or any external-model data-boundary incident occurs. Retiring Grok for synthetic/test audits needs an operator log entry; re-authorizing it later requires a fresh controls decision.
+- **D15 — Buyer delivery stays separately gated.** This spec's D8 remains the live buyer-delivery boundary. Detailed delivery mechanics belong in a later Buyer Delivery / Production Package Delivery spec, not as a side effect of real-data controls. No real package is buyer-delivered until that later authorization path is run.
 
 ---
 
@@ -84,22 +91,22 @@ The boundary is enforced by classification: a package is either synthetic/test o
 
 ---
 
-## §10 Open Questions (operator-only)
+## §10 Resolved Questions
 
-These are path-setting and remain Matt's to resolve; the agent will bring each pre-scored when this spec is taken toward §11.
+Resolved 2026-06-05 by Matt Nichol's "agree all" instruction after the seven questions were presented one by one with defaults and consequences. These resolutions are encoded as D9-D15 above and are ready for §11 review.
 
-- **Q1 — Local AI substrate.** Which local model + runtime on the locked machine (and the minimum quality/calibration bar before it is trusted to audit real packages)?
-- **Q2 — Locked-machine definition.** What exactly makes the machine "locked" (network isolation, disk encryption, no-sync, physical control) and how is that verified?
-- **Q3 — Auditor agent.** Reuse an operator-roster agent (e.g. Dax) with a new NorthStar package-audit brief, or define a dedicated NorthStar auditor? Either way, how is builder/auditor independence proven?
-- **Q4 — Production datastore.** Does the real-package production datastore get its own deep-dive spec (recommended), and what production controls does it require beyond the test store?
-- **Q5 — Done-Criteria parity.** Exact output schema the local audit must emit so Done Criteria 11/12 evaluate identically to the external path.
-- **Q6 — External-model sunset trigger.** The precise condition(s) that retire Grok even for synthetic/test (token exhaustion, terms change, safety judgment) and what replaces it.
-- **Q7 — Buyer delivery linkage.** Whether real-package buyer delivery is gated only by D8 here or also folded into a separate buyer-delivery spec.
+- **Q1 — Local AI substrate -> D9.** Lock the calibration gate and selection criteria, not a forever model name.
+- **Q2 — Locked-machine definition -> D10.** Locked means verifiable operator control: physical control, disk encryption, no cloud sync, no shared sessions, no external network during audit runs except logged local dependencies, and a per-run checklist.
+- **Q3 — Auditor agent -> D11.** Reuse Dax as the default auditor role, but only with a NorthStar Cyber Insurance Package Audit Brief and never on packages Dax built or materially edited.
+- **Q4 — Production datastore -> D12.** Real customer package artifacts require their own Production Evidence Store deep-dive spec; the Private Test-Data Store stays test/lab forever.
+- **Q5 — Done-Criteria parity -> D13.** Local audit output mirrors the Stage 9 evidence contract with timestamped audit artifacts and Drift Incident Reports, not bare pass/fail.
+- **Q6 — External-model sunset trigger -> D14.** Retire Grok/xAI for synthetic/test when tokens run out, provider terms/safety posture fail, local calibration passes and the operator consolidates, or any external-model data-boundary incident occurs.
+- **Q7 — Buyer delivery linkage -> D15.** Buyer delivery stays separately gated here, with detailed mechanics deferred to a later Buyer Delivery / Production Package Delivery spec.
 
 ---
 
 ## §11 Sign-off
 
-_§11 signature blank by design. This draft iterates freely (pre-§11). Implementation, infrastructure, the §13/IQ3 revision, and any handling of real customer data do not begin until every §10 question is resolved, the spec is §11-signed by Matt, and a separate explicit operator start-build instruction is issued._
+_§11 signature blank by design. This draft has its §10 questions resolved but remains pre-§11. Implementation, infrastructure, the §13/IQ3 revision, and any handling of real customer data do not begin until this spec is §11-signed by Matt and a separate explicit operator start-build instruction is issued._
 
 **Operator signature:** _(blank — operator-authored at §11)_
