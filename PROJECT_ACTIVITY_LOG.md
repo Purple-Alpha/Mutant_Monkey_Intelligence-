@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Gemini briefing prompt saved
+**Actor:** Matt Nichol (operator request) + Cursor (draft / file creation / index update).
+
+**Action:** Created + Indexed
+
+**Files Changed:**
+- MUTANT_MONKEY_GEMINI_BRIEFING.md
+- MASTER_INDEX.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Matt wants Gemini to act as a listening-first plain-language explainer for Cursor / project updates. Created a saved prompt that teaches Gemini the project vision, Mutant Monkey Security / NorthStar naming split, Stage A/B/C arc, Cyber Insurance Evidence Package focus, audit-gate vocabulary, signed-spec discipline, synthetic-data boundary, and how to explain pasted assistant messages in spoken-friendly language. This is an operator support artifact only: not a signed spec, not a product claim, and not an authority surface.
+
+**Next Step:**
+Matt can paste the prompt into Gemini and save it. Future updates to the prompt should keep it plain-language and listening-first.
+
+---
+
 ## 2026-06-05 - Cyber Insurance buyer-brand boundary revision re-signed
 **Actor:** Matt Nichol (operator re-signature) + Cursor (brand-boundary implementation / gate / tracker update).
 
