@@ -26,6 +26,29 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Cyber Insurance buyer-brand boundary revision re-signed
+**Actor:** Matt Nichol (operator re-signature) + Cursor (brand-boundary implementation / gate / tracker update).
+
+**Action:** Updated + Re-signed + Audited
+
+**Files Changed:**
+- 4. Product_Roadmap/Cyber_Insurance_Evidence_Package_Deep_Dive.md
+- 4. Product_Roadmap/Research_Inputs/Cyber_Insurance_Evidence_Package_V1_Record_Set_Sketch.md
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/evidence_package/gates.py
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/evidence_package/package_generator.py
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_complete_gate.py
+- PROJECT_HANDSHAKE.md
+- PROGRESS.md
+- PROJECT_BUILD_AND_AUDIT_QUEUE.md
+
+**Reason:**
+Operator identified a buyer-facing identity drift in the generated sample PDF: the §2 boundary statement still said "NorthStar Inbox Shield" even though the external/commercial brand is moving to Mutant Monkey Security under the rebrand Option B decision. The correction is deliberately narrow and Option-B-consistent: buyer-facing package surfaces now say **Mutant Monkey Inbox Shield** / **Mutant Monkey Security**, while "NorthStar Inbox Shield" remains the internal codename across runtime code and engineering-facing specs. No blanket repo rename occurred. Because the §2 boundary statement is a locked element of the §13-signed Cyber Insurance Evidence Package deep-dive, this was handled as a signed-spec revision: spec edited, full runtime suite run (**1128 passed, 1 skipped**), synthetic package regenerated and PDF re-rendered for visual inspection, `complete_gate.py` run clean (0 blocking / 0 warnings), then Matt authored the §13 re-signature wording: **"Approved by Matt Nichol, Sovereign Operator"**. The assistant placed the wording but did not author it.
+
+**Next Step:**
+Push remains explicit operator authority. The next substantive milestone remains the real-customer-data controls decision before any non-synthetic Grok submission or buyer delivery.
+
+---
+
 ## 2026-06-04/05 - Private Test-Data Store: §10 resolved (D9-D15) + Q3 mesh Consequence Matrix + §11 SIGNED
 **Actor:** Matt Nichol (operator decisions + §11 signature) + Cursor (Claude Opus 4.8, analysis / drafting / matrix / gate).
 
