@@ -65,6 +65,26 @@ Operator-only: take the §10 questions toward §11 when ready (the next mileston
 
 ---
 
+## 2026-06-05 - Decision-routing protocol authored (trial)
+**Actor:** Matt Nichol (instruction + requirements) + Cursor (draft / gate / logging).
+
+**Action:** Created + Audited (trial, pre-adoption)
+
+**Files Changed:**
+- DECISION_PROTOCOL.md (NEW; proposal/trial)
+- MASTER_INDEX.md (index entry)
+- PROJECT_ACTIVITY_LOG.md, PROJECT_HANDSHAKE.md (status sync)
+
+**Reason:**
+Direct fix for the recurring, operator-flagged failure: the agent stopping too often and handing Matt technical (Bin 1) choices he is not positioned to make, plus surfacing operator (Bin 2) choices without consequences. Matt instructed building a real decision tree and added two hard requirements: (1) every choice he is asked to make must carry each option's positive and negative outcomes plus a why-on-demand, and (2) a daily milestone list that every decision traces back to. `DECISION_PROTOCOL.md` encodes: Bin 1 (technical/reversible -> agent decides silently, never asks) vs Bin 2 (operator-authority/irreversible/money/identity/legal/real-data/buyer-delivery/butterfly/non-negotiable -> always reaches Matt with positives, negatives, consequence, recommendation, why-on-demand); daily-milestone anchoring; and a challenge guard that checks every instruction (including Matt's) against signed specs, the seven VISION non-negotiables, the forbidden-language list, and butterfly triggers, stopping to explain before building on conflict. It corrects the operator's AGENT_RULES.md sketch (a scoring script may rank within a bin but never promotes Bin 2 to Bin 1 and never overrides a signed spec or non-negotiable). Gate clean 0/0 (`decision_protocol_trial_20260605T034103Z.md`); committed `6a83bfc`. The agent begins operating under it as a trial now; formal adoption into AGENTS.md authority is a separate explicit operator decision; until adopted, AGENTS.md wins on any conflict.
+
+**Boundary:** Authorizes no infrastructure, no real-data handling, no commit/push/signature by itself, and adds no external/compliance/insurance claim. Does not override AGENTS.md, the seven non-negotiables, or any signed spec.
+
+**Next Step:**
+Next session opens by setting the daily milestone list (the protocol's §4). Trial runs; Matt evaluates whether it actually stops the over-asking before deciding on formal adoption.
+
+---
+
 ## 2026-06-05 - Mutant Monkey package-audit brief authored (milestone C2)
 **Actor:** Matt Nichol (milestone selection + brand-wording instruction) + Cursor (draft / gate / logging).
 

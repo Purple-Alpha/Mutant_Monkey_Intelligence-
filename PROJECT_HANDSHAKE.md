@@ -48,6 +48,9 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 ## Git State
 Branch `safety/queue-drift-cleanup-20260528`. Operator pushed GitHub successfully through `f1fb901` (`ec270a5..f1fb901`), restoring off-site backup for the buyer-brand, Gemini, controls-decision, and controls-draft commits. Push through the agent remains credential-blocked, so future GitHub pushes are still explicit operator terminal steps. Local `backup` remote (`/mnt/c/northstar_backups/northstar.git`) is current through the latest local tracker/spec commits. GitHub is behind local and needs the post-`f1fb901` commits pushed by the operator; run `git status -sb` for the exact live count. STANDING governs gate-clean local commits; pushes remain explicit.
 
+## Decision Routing (trial, 2026-06-05)
+`DECISION_PROTOCOL.md` is in TRIAL (committed `6a83bfc`, not yet adopted into AGENTS.md authority). The agent operates under it now: Bin 1 (technical/reversible) = agent decides silently, never asks; Bin 2 (operator-authority/irreversible/money/identity/legal/real-data/buyer-delivery/butterfly/non-negotiable) = always reaches Matt with each option's positives, negatives, consequence, recommendation, and why-on-demand. Every session opens by setting a daily milestone list; every decision traces to it. The agent challenges any instruction (including Matt's) that collides with signed specs / the seven non-negotiables / forbidden language / butterfly triggers, before building. On any conflict AGENTS.md wins until Matt formally adopts the protocol.
+
 ## Required Files to Check Before Work
 Follow the `AGENTS.md` §1 session-start read order first. Core governance files:
 `MASTER_INDEX.md`, `PROJECT_HANDSHAKE.md`, `PROJECT_GUARDRAILS.md`, `PROJECT_ACTIVITY_LOG.md`,
