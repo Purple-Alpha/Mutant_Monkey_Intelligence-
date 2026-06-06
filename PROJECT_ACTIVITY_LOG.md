@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Production Evidence Store §10 resolved + §11 SIGNED
+**Actor:** Matt Nichol (operator-authored §11 signature); Cursor placed verbatim and resolved §10.A on the "lock the defaults" instruction.
+
+**Action:** Updated / Signed
+
+**Files Changed:**
+- `4. Product_Roadmap/Production_Evidence_Store_Deep_Dive.md` (added §10.A Operator-Confirmed Decisions; §11 signed "Matt Nichol", placed verbatim; status header set to "§11 SIGNED (2026-06-05)")
+- `PROJECT_HANDSHAKE.md` (Current Next Step + Last Updated replaced)
+- `MASTER_INDEX.md` (Production Evidence Store status updated to §11 SIGNED)
+- `PROGRESS.md` (milestone status updated to §11 SIGNED)
+
+**Reason:**
+Operator locked the recommended defaults for all five §10 open questions, then signed §11. Q1 same host / isolated MinIO instance (dedicated host deferred); Q2 per-tenant credentials from day one; Q3 indefinite-until-explicit-delete for evidence-bearing classes; Q4 operator-controlled off-site media only (weekly + post-package, no consumer cloud); Q5 read-only-from-locked-machine + egress-deny checklist in v1 (air-gapped copy deferred). Spec-only; no code, no infrastructure.
+
+**Next Step:**
+Gate the signed spec slice via `complete_gate.py`, then commit under STANDING (operator pushes to GitHub). §11 sign-off locks the contract only — it authorizes no infrastructure and no real-customer-data handling; a separate explicit start-build instruction remains required.
+
+---
+
 ## 2026-06-05 - Lookalike Domain Detector build slice implemented
 **Actor:** Cursor, under explicit operator start-build authorization.
 
