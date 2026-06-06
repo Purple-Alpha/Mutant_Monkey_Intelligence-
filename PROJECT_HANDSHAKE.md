@@ -40,7 +40,11 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **AGENTS.md decision-calibration guardrail added 2026-06-04:** §3.1.2 now grades escalation by substance + reversibility (not "touches a signed file"); §3.1.8 + §12 "trivia-escalation / decision-inversion" failure mode added. Fixes the inversion of heavy-guardrailing trivia (e.g. an internal name change) while dumping real decisions raw.
 
 ## Current Next Step (single live action)
-**Production Evidence Store §11 SIGNED (2026-06-05) by Matt Nichol.** All five §10 open questions are locked in §10.A in `4. Product_Roadmap/Production_Evidence_Store_Deep_Dive.md`: Q1 same host / isolated MinIO instance + `mms-` namespaces (dedicated host deferred); Q2 **per-tenant credentials from day one** (no shared all-tenant credential); Q3 indefinite-until-explicit-delete for evidence-bearing classes (no time-based auto-expiry); Q4 operator-controlled off-site media only, weekly + post-package mirror (no consumer cloud); Q5 read-only-from-locked-machine + egress-deny checklist in v1 (air-gapped copy deferred). Signature "Matt Nichol" placed verbatim; status header set to "§11 SIGNED." **Pending: gate the signed spec slice via `complete_gate.py`, then commit under STANDING (operator pushes).** §11 sign-off locks the contract only — it does NOT authorize infrastructure; a separate explicit start-build instruction is still required before any production store or real-customer-data handling.
+**Executive Impersonation Detector (swarm agent #21) §10 RESOLVED — READY FOR §11 SIGNATURE (2026-06-06).** Milestone B: promoted the next blue-team swarm-map agent on the proven Lookalike path. Drafted `4. Product_Roadmap/Executive_Impersonation_Detector_Deep_Dive.md` — pure/offline detector for executive-impersonation BEC (claimed exec principal + identity mismatch + closed-vocabulary authority/secrecy/urgency/task-directive pressure), reusing `extract_identity_domains`, the per-tenant Vendor Baseline Store roster pattern, and the `LookalikeDomainAssessment` schema shape; default-off, max-merge non-additive floor lift (weak≤25/probable 70/strong 85), `sender_identity` evidence-attribution-only flag. §10.A locks all seven questions; operator refined Q1 privacy wording, Q7 rubric-boundary guard, and §11 wording ("stable engineering blueprint", no-code-until-Build-Authorization). **Pending: Matt's operator-authored §11 signature (no auto-fill), then gate the spec slice via `complete_gate.py` and commit in small slices (spec alone first, trackers separate).** Authorizes no code, no wiring, no default-on, no rubric change.
+
+**Production Evidence Store §11 SIGNED + BANKED (2026-06-05).** §10.A locks all five questions (Q1 same host / isolated MinIO instance; Q2 per-tenant credentials day one; Q3 indefinite-until-explicit-delete for evidence-bearing classes; Q4 operator off-site media only; Q5 read-only-from-locked-machine + egress-deny v1). Committed in four gate-clean slices and pushed to GitHub + backup through `4145dc2`. Locks the contract only — no infrastructure, no real-customer-data handling, until a separate explicit start-build instruction.
+
+**Session opening 2026-06-06:** set today's milestone list, then pick one. Recommended next: **Local-AI audit substrate planning (spec-only)** — advances the real-customer-data path (Dax/NorthStar local auditor per controls D6/D11) with no infrastructure and no real data. Alternatives: promote another swarm-map agent build slice; draft the Mutant Monkey package-auditor D9 calibration plan; §13/IQ3 revision prep. Todd/MSP parked until Tuesday.
 
 **Real-customer-data controls remain signed but not operationally started:** controls spec §11 signed (`e77f85c`), D11 package-audit brief authored (`6026deb`), Lookalike Domain Detector build slice banked (`13f3cb1`/`0ceb582`). No real-customer-data handling, §13/IQ3 revision, local-AI substrate, production evidence store infrastructure, or buyer delivery starts without separate operator authorization. Todd/MSP motion parked until Tuesday by operator instruction.
 
@@ -75,7 +79,8 @@ then the latest `PROJECT_ACTIVITY_LOG.md` entry. That is the resume point.
 Matt
 
 ## Last Updated
-2026-06-05 - Production Evidence Store §11 SIGNED by Matt Nichol and BANKED: §10.A locked (Q1-Q5),
-§11 signature placed verbatim, committed in four gate-clean slices (`6aae6b9`/`770075b`/`7bb5d25`/`e5c3672`)
-and pushed to GitHub + local backup. Working tree clean, branch aligned with both remotes through `e5c3672`.
-No infrastructure authorized; next-step start-build remains a separate explicit operator gate.
+2026-06-06 - Milestone B: Executive Impersonation Detector (#21) spec drafted and §10 resolved (§10.A,
+Q1-Q7) on the proven Lookalike path; operator applied three refinements (Q1 privacy wording, Q7 rubric-boundary
+guard, §11 "stable engineering blueprint" wording). Status "§10 RESOLVED — READY FOR §11 SIGNATURE"; signature
+blank by design. Pending: Matt's §11 signature, then gate + commit in small slices. No code authorized.
+(Prior: Production Evidence Store §11 SIGNED + BANKED through `4145dc2`, GitHub + backup aligned.)

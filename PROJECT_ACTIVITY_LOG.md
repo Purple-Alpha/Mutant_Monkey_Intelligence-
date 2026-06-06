@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Executive Impersonation Detector (#21) drafted, §10 resolved
+**Actor:** Cursor on Matt Nichol's instruction (Milestone B selection + "lock the defaults"); operator authored three precision refinements.
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Executive_Impersonation_Detector_Deep_Dive.md` (new spec; §10.A Operator-Confirmed Decisions; status header "§10 RESOLVED — READY FOR §11 SIGNATURE"; §11 prepared, signature blank)
+- `MASTER_INDEX.md` (new entry)
+- `PROGRESS.md` (milestone entry)
+- `PROJECT_HANDSHAKE.md` (Current Next Step + Last Updated replaced)
+
+**Reason:**
+Milestone B = promote the next blue-team swarm-map agent. Picked agent #21 Executive Impersonation via scored shortlist (highest reuse + BEC evidence value + synergy with the just-built Lookalike detector). Drafted the spec on the proven Lookalike path: pure/offline, per-tenant Known-Good Principal Roster + TOAD pattern-engine-style closed pressure vocabulary, default-off max-merge non-additive floor lift, and an explicit `sender_identity` evidence-package structure. §10.A locks all seven questions with FP-safe defaults. Operator refinements: (1) Q1 privacy claim corrected — plaintext display-name forms are a deliberate tradeoff stored only tenant-local because matching needs them; salt protects only derived identifiers, so protection is per-tenant storage isolation, not salted plaintext; (2) Q7 rubric-boundary guard — the `executive_impersonation_pattern` flag is `sender_identity` evidence attribution only and must not create a new axis-score lift or point-structure rule in v1 (signed rubric §3.1 already lists `behavioral_deviation_flags` with "etc."); (3) §11 wording softened from build-ready to "stable engineering blueprint for a future build slice" with an explicit no-code/no-environment-writes-until-Build-Authorization clause.
+
+**Next Step:**
+Matt signs §11 (operator-authored, not auto-filled), then gate the spec slice via `complete_gate.py`. §11 sign-off authorizes no code, no wiring, no default-on, no rubric change — a separate explicit Build Authorization remains required.
+
+---
+
 ## 2026-06-05 - Production Evidence Store §10 resolved + §11 SIGNED
 **Actor:** Matt Nichol (operator-authored §11 signature); Cursor placed verbatim and resolved §10.A on the "lock the defaults" instruction.
 
