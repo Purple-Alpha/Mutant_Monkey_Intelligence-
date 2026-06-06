@@ -825,6 +825,81 @@ class CallbackPhishingAssessment(StrictModel):
         return self
 
 
+class LookalikeDomainFinding(StrictModel):
+    """One deterministic lookalike-domain finding.
+
+    Locked by
+    ``4. Product_Roadmap/Lookalike_Domain_Detector_Deep_Dive.md`` (§11 SIGNED
+    2026-06-05). The finding carries only domain-level evidence: no raw email
+    body, no headers, no tenant secret material, and no mailbox payload text.
+    """
+
+    technique: Literal[
+        "typosquat",
+        "homoglyph",
+        "punycode",
+        "combosquat",
+        "tld_swap",
+        "subdomain_spoof",
+    ]
+    offending_domain: str = Field(min_length=1, max_length=253)
+    matched_known_good: str = Field(min_length=1, max_length=253)
+    distance: int | None = Field(default=None, ge=0, le=10)
+    evidence: str = Field(min_length=1, max_length=160)
+
+
+class LookalikeDomainAssessment(StrictModel):
+    """Deterministic sending-domain lookalike detector overlay.
+
+    Pure-function output of ``core/scoring/lookalike_domain_detector.py``.
+    The detector is default-off at the scoring-agent integration boundary and
+    max-merges ``recommended_risk_floor_lift`` when explicitly enabled.
+    """
+
+    detector_version: Literal["v1"] = "v1"
+    fired: bool
+    lookalike_domain_score: int = Field(ge=0, le=100)
+    findings: tuple[LookalikeDomainFinding, ...]
+    recommended_risk_floor_lift: int = Field(ge=0, le=100)
+
+    @model_validator(mode="after")
+    def enforce_fired_invariants(self) -> LookalikeDomainAssessment:
+        if not self.fired:
+            if self.lookalike_domain_score != 0:
+                raise ValueError(
+                    "lookalike_domain_assessment with fired=False must have "
+                    "lookalike_domain_score == 0"
+                )
+            if self.findings:
+                raise ValueError(
+                    "lookalike_domain_assessment with fired=False must have "
+                    "findings == ()"
+                )
+            if self.recommended_risk_floor_lift != 0:
+                raise ValueError(
+                    "lookalike_domain_assessment with fired=False must have "
+                    "recommended_risk_floor_lift == 0"
+                )
+            return self
+
+        if not self.findings:
+            raise ValueError(
+                "lookalike_domain_assessment with fired=True must have at "
+                "least one finding"
+            )
+        if self.lookalike_domain_score < 1:
+            raise ValueError(
+                "lookalike_domain_assessment with fired=True must have "
+                "lookalike_domain_score >= 1"
+            )
+        if self.recommended_risk_floor_lift < 1:
+            raise ValueError(
+                "lookalike_domain_assessment with fired=True must have "
+                "recommended_risk_floor_lift >= 1"
+            )
+        return self
+
+
 class EmailAnalysisPayload(StrictModel):
     """Structured output of the NorthStar Inbox Shield scoring agent.
 
@@ -844,6 +919,11 @@ class EmailAnalysisPayload(StrictModel):
     detector runs. Spec:
     ``4. Product_Roadmap/Callback_Phishing_TOAD_Detector_Deep_Dive.md`` §5
     (§11 SIGNED 2026-05-30).
+
+    ``lookalike_domain_assessment`` is the deterministic sending-domain
+    lookalike detector overlay (see :class:`LookalikeDomainAssessment`).
+    Optional to preserve default-off/no-regression behavior until explicitly
+    enabled by the scoring config.
     """
 
     source_email_record_id: UUID
@@ -870,6 +950,7 @@ class EmailAnalysisPayload(StrictModel):
     ] = Field(default_factory=list)
     client_facing_rubric: ClientFacingRubricPayload | None = None
     callback_phishing_assessment: CallbackPhishingAssessment | None = None
+    lookalike_domain_assessment: LookalikeDomainAssessment | None = None
 
     @model_validator(mode="after")
     def cap_summary_length(self) -> EmailAnalysisPayload:

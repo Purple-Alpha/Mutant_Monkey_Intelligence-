@@ -18,6 +18,11 @@ from .email_authentication_detector import (
     EmailAuthenticationAssessment,
     score_email_authentication,
 )
+from .lookalike_domain_detector import (
+    LOOKALIKE_SENDER_DOMAIN_FLAG,
+    detect_lookalike_domains,
+    extract_identity_domains,
+)
 from .prompt_injection_detector import (
     PromptInjectionAssessment,
     PromptInjectionFamily,
@@ -46,6 +51,9 @@ __all__ = [
     "EmailRiskScoringSuccess",
     "run_email_risk_scoring_cycle",
     "score_email_authentication",
+    "LOOKALIKE_SENDER_DOMAIN_FLAG",
+    "detect_lookalike_domains",
+    "extract_identity_domains",
     "parse_received_chain",
     "project_client_facing_rubric",
 ]

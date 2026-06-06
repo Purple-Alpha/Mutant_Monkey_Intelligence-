@@ -50,6 +50,7 @@ from core.blackboard import (
     EmailInboundPayload,
     Environment,
     GovernanceError,
+    LookalikeDomainAssessment,
     RecordType,
     read_records,
 )
@@ -84,6 +85,10 @@ from core.scoring.email_authentication_detector import score_email_authenticatio
 from core.scoring.financial_state_ledger import FinancialStateLedgerAssessment
 from core.scoring.ghost_thread_detector import score_ghost_thread
 from core.scoring.header_divergence_detector import score_header_divergence
+from core.scoring.lookalike_domain_detector import (
+    LOOKALIKE_SENDER_DOMAIN_FLAG,
+    detect_lookalike_domains,
+)
 from core.scoring.prompt_injection_detector import score_prompt_injection
 
 EMAIL_ANALYSIS_COMPLETE_WORKFLOW_ID = "email_analysis_complete"
@@ -315,6 +320,15 @@ class EmailRiskScoringConfig:
     # When disabled, no detector code runs and no field is touched — the
     # default-OFF activation gate from TOAD §8.13 holds.
     enable_callback_phishing_detection: bool = False
+    # ----- Lookalike Domain detector (§11 SIGNED 2026-06-05) -----
+    # Default OFF per Lookalike Domain Detector D7 / §10.A Q5. When enabled,
+    # the detector compares header From + Reply-To domains (D9 / Q6) against
+    # the provided tenant known-good domain set (D5 / Q2), appends the existing
+    # ``lookalike_sender_domain`` behavioral flag on fire, max-merges the
+    # assessment's floor lift, and attaches the frozen assessment. The default
+    # path runs no detector code and changes no payload field.
+    enable_lookalike_domain_detection: bool = False
+    lookalike_known_good_domains: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -484,12 +498,20 @@ def run_email_risk_scoring_cycle(
                 callback_phishing_assessment = detect_callback_phishing(
                     body_plain=inbound_payload.body_plain or "",
                 )
+            lookalike_domain_assessment: LookalikeDomainAssessment | None = None
+            if config.enable_lookalike_domain_detection:
+                lookalike_domain_assessment = detect_lookalike_domains(
+                    from_address=inbound_payload.sender,
+                    headers=inbound_payload.headers,
+                    known_good_domains=config.lookalike_known_good_domains,
+                )
             analysis_payload = _overlay_ransomware_precursor(
                 analysis_payload,
                 inbound_payload,
                 profile_resolution=profile_resolution,
                 document_metadata_assessment=document_metadata_assessment,
                 callback_phishing_assessment=callback_phishing_assessment,
+                lookalike_domain_assessment=lookalike_domain_assessment,
                 fraud_risk_floor_lift=config.fraud_risk_floor_lift,
                 attachment_risk_floor_lift=config.attachment_risk_floor_lift,
                 url_obfuscation_floor_lift=config.url_obfuscation_floor_lift,
@@ -683,6 +705,7 @@ def _overlay_ransomware_precursor(
     financial_state_ledger_assessment: FinancialStateLedgerAssessment | None = None,
     document_metadata_assessment: DocumentMetadataAssessment | None = None,
     callback_phishing_assessment: CallbackPhishingAssessment | None = None,
+    lookalike_domain_assessment: LookalikeDomainAssessment | None = None,
     fraud_risk_floor_lift: int = 0,
     attachment_risk_floor_lift: int = 0,
     url_obfuscation_floor_lift: int = 0,
@@ -706,7 +729,8 @@ def _overlay_ransomware_precursor(
        is MEDIUM or HIGH and upstream PDF metadata is present.
     7. Adversarial prompt-injection detection on body + extracted attachment
        text when the effective security profile is MEDIUM or HIGH.
-    8. Phase 1.4 floor lifts driven by signed policy state.
+    8. Lookalike sending-domain detection when explicitly enabled by config.
+    9. Phase 1.4 floor lifts driven by signed policy state.
 
     Pure transform: returns a new ``EmailAnalysisPayload`` with the
     ``ransomware_precursor_analysis`` block populated and
@@ -828,6 +852,12 @@ def _overlay_ransomware_precursor(
         and callback_phishing_assessment.fired
         else 0
     )
+    lookalike_domain_floor = (
+        lookalike_domain_assessment.recommended_risk_floor_lift
+        if lookalike_domain_assessment is not None
+        and lookalike_domain_assessment.fired
+        else 0
+    )
     floor_after_precursor = max(
         overlay.recommended_risk_floor,
         header_divergence.score if header_divergence is not None else 0,
@@ -837,6 +867,7 @@ def _overlay_ransomware_precursor(
         document_metadata_floor,
         prompt_injection_floor,
         callback_phishing_floor,
+        lookalike_domain_floor,
     )
     base_risk_score = max(
         analysis_payload.risk_analysis.risk_score, floor_after_precursor
@@ -913,6 +944,20 @@ def _overlay_ransomware_precursor(
             list(analysis_payload.risk_analysis.behavioral_deviation_flags),
             [CALLBACK_PHISHING_PATTERN_FLAG],
         )
+    lookalike_domain_fired = (
+        lookalike_domain_assessment is not None
+        and lookalike_domain_assessment.fired
+    )
+    if lookalike_domain_fired:
+        risk_update["behavioral_deviation_flags"] = _append_unique(
+            list(
+                risk_update.get(
+                    "behavioral_deviation_flags",
+                    analysis_payload.risk_analysis.behavioral_deviation_flags,
+                )
+            ),
+            [LOOKALIKE_SENDER_DOMAIN_FLAG],
+        )
 
     updated_risk_analysis = analysis_payload.risk_analysis.model_copy(update=risk_update)
     update = {
@@ -927,6 +972,8 @@ def _overlay_ransomware_precursor(
     # (field is a fired=False assessment with empty categories / zero lift).
     if callback_phishing_assessment is not None:
         update["callback_phishing_assessment"] = callback_phishing_assessment
+    if lookalike_domain_assessment is not None:
+        update["lookalike_domain_assessment"] = lookalike_domain_assessment
     if profile_resolution is not None:
         update.update(
             {
