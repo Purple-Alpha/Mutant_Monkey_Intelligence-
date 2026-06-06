@@ -43,7 +43,7 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 **Multi-model lane structure is on a 3-day TRIAL (opened 2026-06-06, review 2026-06-09).** Execution vs advisory lanes + the git-step rule + handoff routing (AGENTS.md §2.1 / §2.1.1) are being evaluated, not locked. Log lane incidents inline in `PROJECT_ACTIVITY_LOG.md` (stale-step incidents, relays per decision, gate rejections from lane confusion, advisory catch rate, friction notes). Review question on 2026-06-09: did lane discipline reduce stale errors more than it added relay cost? War room substrate stays parked until that review produces evidence. No code/build authorized.
 
 
-**Agent Design Contract Template §11 SIGNED (2026-06-06) by Matt Nichol** ("Matt Nichol June 6th 2026", placed verbatim). Spec: `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`. Turns the adopted 6-layer agentic evidence swarm into a required template for future promoted agents. §10.A locks defaults: enforce before §10 resolution; immediate metadata-only #10/#21 retrofit after sign-off; Stage A detectors default Level 3 Specialist; seven-field decision evidence record; promotion/demotion spec-only in v1; pure detectors may declare Pass 1 only until the Two-Pass spec signs; v2 design tree canonical / v1 map inventory-only. **Operator-directed hardening folded into the signed text:** §7.0 immutability boundary — the signed detector contract is immutable; a retrofit adds governance fields to a wrapper only and is NOT permission to touch detection logic; and Q7 settles the v1 map as inventory-only (not a competing design source, not to be relitigated). **Pending: gate the signed-spec slice via `complete_gate.py --task ... --claim ...`, then commit + push (split spec vs trackers to stay under the 200KB packet cap).** No implementation, runtime enforcement, retrofits, or new agent behavior are authorized.
+**Agent Design Contract Template §11 SIGNED + BANKED (2026-06-06)** by Matt Nichol ("Matt Nichol June 6th 2026", placed verbatim). Spec: `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`. Turns the adopted 6-layer agentic evidence swarm into a required template for future promoted agents. §10.A locks defaults: enforce before §10 resolution; immediate metadata-only #10/#21 retrofit after sign-off; Stage A detectors default Level 3 Specialist; seven-field decision evidence record; promotion/demotion spec-only in v1; pure detectors may declare Pass 1 only until the Two-Pass spec signs; v2 design tree canonical / v1 map inventory-only. **Operator-directed hardening folded into the signed text:** §7.0 immutability boundary — the signed detector contract is immutable; a retrofit adds governance fields to a wrapper only and is NOT permission to touch detection logic; and Q7 settles the v1 map as inventory-only (not a competing design source, not to be relitigated). Gate clean 0/0 (`audit_outputs/Agent Design Contract Template §11 sign-off_20260606T220951Z.md`); committed as signed-spec slice `d5decc0`, followed by AGENTS/tracker/lane handoff slices through `be6d8df`. Pushed to GitHub + backup. No implementation, runtime enforcement, retrofits, or new agent behavior are authorized.
 
 **Production Evidence Store §11 SIGNED + BANKED (2026-06-05).** §10.A locks all five questions (Q1 same host / isolated MinIO instance; Q2 per-tenant credentials day one; Q3 indefinite-until-explicit-delete for evidence-bearing classes; Q4 operator off-site media only; Q5 read-only-from-locked-machine + egress-deny v1). Committed in four gate-clean slices and pushed to GitHub + backup through `4145dc2`. Locks the contract only — no infrastructure, no real-customer-data handling, until a separate explicit start-build instruction.
 
@@ -55,7 +55,7 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 **STANDING authorization in force, extended per operator instruction 2026-06-05.** Any gate-clean, fully-green slice is committed + logged automatically with no per-step prompt — this now covers in-scope code (`core/evidence_package/`) AND doc / log / spec-draft / matrix slices. Decisions chain (AGENTS §3.1.9, §3.2); the agent decides on ranked defaults and rolls forward. **Only these still stop and reach Matt, never auto-proceeding:** pushes to remote; §11/§13 sign-offs; scope / pricing / legal-trademark / external-identity changes; butterfly path-setting decisions; the seven VISION non-negotiables; and any change to the substance of a signed spec's locked decisions. Pushes are never inferred.
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`. **Clean and aligned with both remotes through `01e12ee`** (canonical swarm design adoption trackers, 2026-06-06). GitHub (`github`) and local backup (`/mnt/c/northstar_backups/northstar.git`, remote `backup`) both pushed through `01e12ee` (`65110b3..01e12ee`). Push through the agent remains credential-blocked, so GitHub pushes are explicit operator terminal steps. STANDING governs gate-clean local commits; pushes remain explicit. Run `git status -sb` to confirm the live state at session start.
+Branch `safety/queue-drift-cleanup-20260528`. **Clean and aligned with both remotes through `be6d8df`** (Agent Design Contract signed/banked, partner lanes, role pipeline, and 3-day lane-structure trial opened 2026-06-06). GitHub (`github`) and local backup (`/mnt/c/northstar_backups/northstar.git`, remote `backup`) both resolve to `be6d8dfeee4d59c6a66b77668322aebbcd0e0a20`. Pushes remain explicit operator actions; use the Linux integrated terminal for authenticated GitHub pushes. STANDING governs gate-clean local commits; pushes remain explicit. Run `git status -sb` to confirm the live state at session start.
 
 **Commit discipline (learned 2026-06-05 from an avoidable mess):** ALWAYS run `complete_gate.py` (or `--pre-commit` with only the intended slice staged) and see "clean" BEFORE `git commit` — never commit first and gate after. NEVER `git reset` past the last pushed commit (`git log --oneline -5` shows the `github/`+`backup/` ref; do not soft-reset below it). If a packet is `too_large` (200KB cap), split into smaller staged slices and gate each — do not commit the oversized packet anyway.
 
@@ -82,20 +82,16 @@ then the latest `PROJECT_ACTIVITY_LOG.md` entry. That is the resume point.
 Matt
 
 ## Last Updated
-2026-06-06 - Role-based pipeline added to `AGENTS.md` §2.1.1: execution lane (live repo/terminal access)
-vs advisory lanes (committed snapshot) defined by access not brand; the git-step rule (only the execution
-lane issues git/commit/push/next-step instructions; advisory lanes review against a named hash); 4-phase
-pipeline Design(Claude lead, Codex co-review) -> Logic(Codex, code only after §11 sign) -> Audit(gate) ->
-Execute(Cursor+Matt on authorization); away rule (queue proposals only, no commits/pushes while away);
-war-room orchestration substrate parked as a future spec. Pending gate + commit as its own doc slice.
+2026-06-06 - 3-day lane-structure trial opened and banked through `be6d8df`: execution vs advisory
+lanes, git-step rule, 4-phase Design -> Logic -> Audit -> Execute pipeline, away rule, and war-room
+substrate parked. Trial review date: 2026-06-09. GitHub + backup both resolve to `be6d8df`.
 
 2026-06-06 - Partner-lanes (model-strengths) contract added to `AGENTS.md` §2.1: Matt decides /
 Grok audits / Codex builds / Claude designs+governs, each with strengths, guardrails, and lane, plus
-shared cross-lane rules. Committed `85cc5d0` (with the §11-signed Agent Design Contract Template at
-`d5decc0`); both local, not yet pushed.
+shared cross-lane rules. Banked and pushed as part of the `be6d8df` remote-aligned state.
 
-2026-06-06 - Agent Design Contract Template §11 SIGNED by Matt Nichol at
+2026-06-06 - Agent Design Contract Template §11 SIGNED + BANKED by Matt Nichol at
 `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (with operator-directed §7.0 detector-contract
 immutability boundary + Q7 v1-map-inventory-only confirmation folded into the signed text). Canonical design
-adoption banked through `01e12ee`. Pending: gate the signed-spec slice, then commit + push (spec vs trackers
-split). No code, runtime enforcement, retrofits, or new agent behavior authorized.
+adoption banked through `01e12ee`; signed-spec and tracker/lane slices banked through `be6d8df`. No code,
+runtime enforcement, retrofits, or new agent behavior authorized.
