@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Executive Impersonation Detector (#21) §11 SIGNED
+**Actor:** Matt Nichol (operator-authored §11 signature "Matt Nichol June 6th 2026", placed verbatim); Cursor drafted the spec, resolved §10.A, and applied three operator refinements.
+
+**Action:** Signed
+
+**Files Changed:**
+- `4. Product_Roadmap/Executive_Impersonation_Detector_Deep_Dive.md` (§11 signed; status header "§11 SIGNED 2026-06-06")
+- `MASTER_INDEX.md`, `PROGRESS.md` (status updated to §11 SIGNED)
+- `PROJECT_HANDSHAKE.md` (Current Next Step + Last Updated replaced)
+
+**Reason:**
+Matt signed §11 after the §10.A defaults and the three refinements were locked. Signing locks D1-D9 + §10.A as the governing contract. The spec draft was already banked at `d49f4c8`; this signature lands as its own gated slice.
+
+**Next Step:**
+Gate the signed-spec slice via `complete_gate.py --task ... --claim ...`, then commit + push. §11 sign-off authorizes no code, no wiring, no default-on, no rubric change — a separate explicit Build Authorization remains required.
+
+---
+
 ## 2026-06-06 - Executive Impersonation Detector (#21) drafted, §10 resolved
 **Actor:** Cursor on Matt Nichol's instruction (Milestone B selection + "lock the defaults"); operator authored three precision refinements.
 
