@@ -40,7 +40,7 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **AGENTS.md decision-calibration guardrail added 2026-06-04:** §3.1.2 now grades escalation by substance + reversibility (not "touches a signed file"); §3.1.8 + §12 "trivia-escalation / decision-inversion" failure mode added. Fixes the inversion of heavy-guardrailing trivia (e.g. an internal name change) while dumping real decisions raw.
 
 ## Current Next Step (single live action)
-**Canonical swarm design fit ADOPTED (2026-06-06).** Matt confirmed the 6-layer "agentic evidence swarm" articulation fits; `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md` is now the **ADOPTED CANONICAL DESIGN MAP** for agent design and milestone shaping. The v1 70-agent map remains preserved as the original inventory/backlog cross-map. Canonical layers: Command, Detection, Verification, Evidence, Challenge/Red-Team, Learning/Governance. Governing rules: no trust decision without evidence; no high-risk action without verification; no failure without a learning record; **the detector is not the decision; the detector is the trigger for verification.** This is authority-free and builds nothing. **Recommended next milestone: draft the Agent Design Contract template** so every promoted agent declares layer, role, authority level, boundary, evidence requirements, failure modes, promotion/demotion conditions, two-pass role, and decision-evidence-record contribution before Build Authorization. Later retrofit #10 Lookalike and #21 Executive Impersonation with those fields without changing their signed detector contracts.
+**Agent Design Contract Template §11 SIGNED (2026-06-06) by Matt Nichol** ("Matt Nichol June 6th 2026", placed verbatim). Spec: `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`. Turns the adopted 6-layer agentic evidence swarm into a required template for future promoted agents. §10.A locks defaults: enforce before §10 resolution; immediate metadata-only #10/#21 retrofit after sign-off; Stage A detectors default Level 3 Specialist; seven-field decision evidence record; promotion/demotion spec-only in v1; pure detectors may declare Pass 1 only until the Two-Pass spec signs; v2 design tree canonical / v1 map inventory-only. **Operator-directed hardening folded into the signed text:** §7.0 immutability boundary — the signed detector contract is immutable; a retrofit adds governance fields to a wrapper only and is NOT permission to touch detection logic; and Q7 settles the v1 map as inventory-only (not a competing design source, not to be relitigated). **Pending: gate the signed-spec slice via `complete_gate.py --task ... --claim ...`, then commit + push (split spec vs trackers to stay under the 200KB packet cap).** No implementation, runtime enforcement, retrofits, or new agent behavior are authorized.
 
 **Production Evidence Store §11 SIGNED + BANKED (2026-06-05).** §10.A locks all five questions (Q1 same host / isolated MinIO instance; Q2 per-tenant credentials day one; Q3 indefinite-until-explicit-delete for evidence-bearing classes; Q4 operator off-site media only; Q5 read-only-from-locked-machine + egress-deny v1). Committed in four gate-clean slices and pushed to GitHub + backup through `4145dc2`. Locks the contract only — no infrastructure, no real-customer-data handling, until a separate explicit start-build instruction.
 
@@ -52,7 +52,7 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 **STANDING authorization in force, extended per operator instruction 2026-06-05.** Any gate-clean, fully-green slice is committed + logged automatically with no per-step prompt — this now covers in-scope code (`core/evidence_package/`) AND doc / log / spec-draft / matrix slices. Decisions chain (AGENTS §3.1.9, §3.2); the agent decides on ranked defaults and rolls forward. **Only these still stop and reach Matt, never auto-proceeding:** pushes to remote; §11/§13 sign-offs; scope / pricing / legal-trademark / external-identity changes; butterfly path-setting decisions; the seven VISION non-negotiables; and any change to the substance of a signed spec's locked decisions. Pushes are never inferred.
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`. **Clean and aligned with both remotes through `65110b3`** (Executive Impersonation Detector §11 sign-off tracker update, 2026-06-06). GitHub (`github`) and local backup (`/mnt/c/northstar_backups/northstar.git`, remote `backup`) both pushed through `65110b3` (`d49f4c8..65110b3`). Push through the agent remains credential-blocked, so GitHub pushes are explicit operator terminal steps. STANDING governs gate-clean local commits; pushes remain explicit. Run `git status -sb` to confirm the live state at session start.
+Branch `safety/queue-drift-cleanup-20260528`. **Clean and aligned with both remotes through `01e12ee`** (canonical swarm design adoption trackers, 2026-06-06). GitHub (`github`) and local backup (`/mnt/c/northstar_backups/northstar.git`, remote `backup`) both pushed through `01e12ee` (`65110b3..01e12ee`). Push through the agent remains credential-blocked, so GitHub pushes are explicit operator terminal steps. STANDING governs gate-clean local commits; pushes remain explicit. Run `git status -sb` to confirm the live state at session start.
 
 **Commit discipline (learned 2026-06-05 from an avoidable mess):** ALWAYS run `complete_gate.py` (or `--pre-commit` with only the intended slice staged) and see "clean" BEFORE `git commit` — never commit first and gate after. NEVER `git reset` past the last pushed commit (`git log --oneline -5` shows the `github/`+`backup/` ref; do not soft-reset below it). If a packet is `too_large` (200KB cap), split into smaller staged slices and gate each — do not commit the oversized packet anyway.
 
@@ -79,7 +79,20 @@ then the latest `PROJECT_ACTIVITY_LOG.md` entry. That is the resume point.
 Matt
 
 ## Last Updated
-2026-06-06 - Canonical swarm design fit adopted: 6-layer agentic evidence swarm articulation promoted
-inside `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md` as the ADOPTED CANONICAL DESIGN MAP.
-Executive Impersonation Detector §11 SIGNED + BANKED through `65110b3` (GitHub + backup aligned). Next
-recommended milestone: Agent Design Contract template (spec-only), then light #10/#21 retrofit. No code authorized.
+2026-06-06 - Role-based pipeline added to `AGENTS.md` §2.1.1: execution lane (live repo/terminal access)
+vs advisory lanes (committed snapshot) defined by access not brand; the git-step rule (only the execution
+lane issues git/commit/push/next-step instructions; advisory lanes review against a named hash); 4-phase
+pipeline Design(Claude lead, Codex co-review) -> Logic(Codex, code only after §11 sign) -> Audit(gate) ->
+Execute(Cursor+Matt on authorization); away rule (queue proposals only, no commits/pushes while away);
+war-room orchestration substrate parked as a future spec. Pending gate + commit as its own doc slice.
+
+2026-06-06 - Partner-lanes (model-strengths) contract added to `AGENTS.md` §2.1: Matt decides /
+Grok audits / Codex builds / Claude designs+governs, each with strengths, guardrails, and lane, plus
+shared cross-lane rules. Committed `85cc5d0` (with the §11-signed Agent Design Contract Template at
+`d5decc0`); both local, not yet pushed.
+
+2026-06-06 - Agent Design Contract Template §11 SIGNED by Matt Nichol at
+`4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (with operator-directed §7.0 detector-contract
+immutability boundary + Q7 v1-map-inventory-only confirmation folded into the signed text). Canonical design
+adoption banked through `01e12ee`. Pending: gate the signed-spec slice, then commit + push (spec vs trackers
+split). No code, runtime enforcement, retrofits, or new agent behavior authorized.

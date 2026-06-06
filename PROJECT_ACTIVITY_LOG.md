@@ -26,6 +26,76 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Role-based pipeline + git-step rule added to AGENTS.md §2.1.1
+**Actor:** Matt Nichol (selected the corrected pipeline option); Cursor drafted.
+
+**Action:** Drafted (floor doctrine, pre-§11, freely editable)
+
+**Files Changed:**
+- `AGENTS.md` (new §2.1.1 Role-based pipeline: access-based execution-vs-advisory lane definitions; the git-step rule; 4-phase pipeline Design->Logic->Audit->Execute; away rule; parked-automation-substrate note)
+
+**Reason:**
+Stale cross-surface advice (advisory chats handing git steps off lagged paste) bit twice this session. Matt proposed a role pipeline; Cursor pressure-tested it and Matt chose the corrected version: (1) lanes anchored on live repo/terminal access vs committed snapshot, not model brand (the Cursor agent is Claude-family too); (2) only the execution lane issues git/commit/push/next-step instructions; advisory lanes review against a named hash; (3) Codex co-reviews in Design phase but writes no production code until the spec is §11-signed; (4) execution lane carries out commits/pushes on operator authorization, never holds the authority itself (§2/§4); (5) away rule = execution lane queues proposals only, no commits/pushes, while Matt is away. The unified "war room" orchestration substrate (LangGraph/Autogen) is explicitly parked as a future spec, not built.
+
+**Next Step:**
+Gate + commit as its own doc slice (separate from d5decc0/85cc5d0 to stay under the 200KB cap). Pre-§11 floor doctrine, no §11 signature required; pushes remain explicit operator steps. Authorizes no code, no build, no runtime substrate.
+
+---
+
+## 2026-06-06 - Partner-lanes (model-strengths) contract added to AGENTS.md
+**Actor:** Matt Nichol (operator-authored the lane assignments and both model self-assessments); Cursor placed them.
+
+**Action:** Drafted (floor doctrine, pre-§11, freely editable)
+
+**Files Changed:**
+- `AGENTS.md` (new §2.1 Partner lanes — model-strengths contract: Matt decides / Grok audits / Codex builds / Claude designs+governs, with each model's strengths, guardrails, and lane, plus shared cross-lane rules)
+
+**Reason:**
+The team is now multi-model; Matt is bringing Claude in alongside Codex. To stop partners building over the top of each other, each model's strengths and weaknesses are written down as binding lane posture: Codex (builder/spec/implementation; guardrail = local signal must not override governing doctrine, e.g. the Windows/Linux miss); Claude (design/governance/spec-review/pressure-test/language; guardrails = no cross-session memory so paste handoff, no skin-in-game so strong-second-opinion only on the evidence chain, hallucinates specifics so verify+run code, defaults to over-completeness so push for lean). Shared rules: doctrine beats local context, hand off at lane edges, two reviewers on anything touching the evidence chain, write durable nuance into docs. Placed in AGENTS.md because it is the only doc guaranteed read every session (§1 read order); a standalone doc could be skipped.
+
+**Next Step:**
+Gate + commit alongside (or separate from) the Agent Design Contract Template slice. AGENTS.md is pre-§11 floor doctrine, so no §11 signature is required; Matt confirms the lane content and authorizes the commit. Authorizes no code, no build, no new agent behavior.
+
+---
+
+## 2026-06-06 - Agent Design Contract Template §11 SIGNED
+**Actor:** Matt Nichol (operator-authored §11 signature "Matt Nichol June 6th 2026", placed verbatim, plus two directed hardening edits); Cursor drafted, resolved §10.A, and applied the hardening.
+
+**Action:** Signed
+
+**Files Changed:**
+- `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (§11 signed; status "§11 SIGNED 2026-06-06"; §7.0 detector-contract immutability boundary added; D9 strengthened; Q7 v1-map-inventory-only made permanent)
+- `MASTER_INDEX.md`, `PROGRESS.md` (status updated to §11 SIGNED)
+- `PROJECT_HANDSHAKE.md` (Current Next Step + Last Updated replaced)
+
+**Reason:**
+Matt signed §11 and then directed two explicit clarifications folded into the signed text: (1) §7.0 — the signed detector contract for #10/#21 is IMMUTABLE; a retrofit only adds governance fields to a wrapper, never to the detection logic, and "retrofit" is explicitly not permission to reopen the detector contract (any logic change needs that detector's own instruction -> edit -> gate -> new §11); (2) Q7 — the v2 design tree is the permanent canonical design source and the v1 70-agent map is inventory/backlog only, not a competing source and not to be relitigated. These tighten boundaries (they do not loosen anything), so the §11 signature covers the final hardened text.
+
+**Next Step:**
+Gate the signed-spec slice via `complete_gate.py --task ... --claim ...`, then commit + push (split spec vs trackers under the 200KB cap). Authorizes no implementation, no runtime enforcement, no retrofits, and no new agent behavior; metadata-only #10/#21 retrofit is a separate gated slice.
+
+---
+
+## 2026-06-06 - Agent Design Contract Template drafted, §10 resolved
+**Actor:** Cursor on Matt Nichol's instruction ("Agent Design Contract template sure"; "lock it in").
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (new draft spec; §10.A Operator-Confirmed Decisions; status header "§10 RESOLVED — READY FOR §11 SIGNATURE")
+- `MASTER_INDEX.md` (new entry; stale Lookalike status corrected)
+- `PROGRESS.md` (current handoff entry added)
+- `PROJECT_HANDSHAKE.md` (Current Next Step, Git State, Last Updated replaced)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+After the 6-layer agentic evidence swarm fit was adopted, the next governance milestone is a reusable contract that ensures future agents are designed as governed swarm members rather than standalone detectors. The draft defines required fields for layer, role, authority level, boundary, evidence requirements, failure modes, promotion/demotion conditions, two-pass role, decision-evidence-record contribution, data minimization, tenant isolation, calibration, retest evidence, signed-spec dependencies, and Build Authorization dependency. It also defines a metadata-only retrofit posture for #10 Lookalike and #21 Executive Impersonation that must not change their signed detector contracts. §10.A locks the scored defaults: template block required before §10 resolution; immediate metadata-only #10/#21 retrofit after sign-off; Stage A detectors default Level 3 Specialist; seven-field decision evidence record; promotion/demotion spec-only in v1; pure detectors may declare Pass 1 only until the Two-Pass spec signs; v2 design tree canonical / v1 map inventory-only.
+
+**Next Step:**
+Matt signs §11 when ready (operator-authored, not auto-filled), then gate/commit. This draft authorizes no implementation, no runtime enforcement, no retrofits, and no new agent behavior.
+
+---
+
 ## 2026-06-06 - Canonical 6-layer swarm design fit adopted
 **Actor:** Matt Nichol (operator confirmation: "yes everyone agrees with this fit"); Cursor captured the decision.
 
