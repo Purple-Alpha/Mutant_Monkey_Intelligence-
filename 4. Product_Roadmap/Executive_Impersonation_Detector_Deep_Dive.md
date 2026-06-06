@@ -1,6 +1,6 @@
 # Executive Impersonation Detector — Spec-First Deep Dive
 
-**Status:** §10 RESOLVED — READY FOR §11 SIGNATURE. Second agent promoted from the operator-adopted `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` (swarm agent #21, "Executive Impersonation", team 3 — vendor-payment / BEC). Follows the exact proven path of the §11-signed Lookalike Domain Detector (#10): spec-first → §10 → §10.A operator-confirmed decisions → §11 signature → separate explicit "start build". All seven §10 questions are locked in §10.A (2026-06-06). This draft authorizes **no** code, **no** wiring, **no** default-on, and **no** change to the signed Client-Facing 5-Axis Rubric; §11 signature remains operator-authored and blank until Matt signs.
+**Status:** §11 SIGNED 2026-06-06 by Matt Nichol. Second agent promoted from the operator-adopted `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` (swarm agent #21, "Executive Impersonation", team 3 — vendor-payment / BEC). Followed the proven path of the §11-signed Lookalike Domain Detector (#10): spec-first → §10 → §10.A operator-confirmed decisions → §11 signature. D1-D9 + §10.A are locked as the detector contract. Signing locks the contract only — it authorizes **no** code, **no** wiring, **no** default-on, and **no** change to the signed Client-Facing 5-Axis Rubric; a separate explicit operator Build Authorization is required before any implementation.
 
 **Owner:** Matt Nichol
 
@@ -177,4 +177,6 @@ These decisions are pre-§11. Locking them authorizes **no** code, **no** detect
 
 Pre-§11 draft. Signing will lock D1-D9 and the §10.A operator-confirmed decisions as the governing Executive Impersonation Detector contract — a **stable engineering blueprint for a future build slice**. Signing does NOT itself wire the detector default-on or change the signed scoring rubric. **No code generation or environment writes occur until a separate explicit operator Build Authorization.** A revision to any locked decision requires the normal path: operator instruction -> spec edit -> fresh `complete_gate.py` audit -> new operator §11 signature.
 
-**Operator signature:** _(blank — operator-authored at §11; must not be inferred, drafted, or auto-filled)_
+> §11 SIGNED — Matt Nichol June 6th 2026
+
+This §11 signature locks D1-D9 and the §10.A operator-confirmed decisions as the governing Executive Impersonation Detector contract — a stable engineering blueprint for a future build slice. It does **not** wire the detector default-on, change the signed Client-Facing 5-Axis Rubric, or start any code: no code generation or environment writes occur until a separate explicit operator Build Authorization.
