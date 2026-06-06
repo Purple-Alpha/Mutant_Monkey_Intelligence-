@@ -1,12 +1,100 @@
 # Mutant Monkey Blue-Team Swarm — Design Tree (v2, governed)
 
-**Status:** SPARK / design capture. Pre-spec, unsigned, NOT §11, authority-free. Captured 2026-06-05 by Cursor from Matt Nichol's operator design (preserved verbatim in §A below). **Builds nothing, authorizes nothing, expands no signed scope.** Does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec.
+**Status:** ADOPTED CANONICAL DESIGN MAP (2026-06-06 operator decision). Pre-spec, unsigned, NOT §11, authority-free. Captured 2026-06-05 by Cursor from Matt Nichol's operator design (preserved verbatim in §A below), then promoted on 2026-06-06 when Matt confirmed the cleaner 6-layer articulation "fits" and "everyone agrees with this fit." **Builds nothing, authorizes nothing, expands no signed scope.** Does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec.
 
-**Relationship to v1:** this extends `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` (the operator-adopted 70-agent Stage B/C map). v2 adds the governance layer the v1 map did not have: a command structure, Rules of Engagement, agent authority levels, an agent reputation system, a two-pass decision model, a client-safe decision evidence record (replacing exposed chain-of-thought), conflict resolution, and a concrete 14-agent V1 starting swarm. If/when Matt wants v2 to become THE canonical map (superseding v1), that is a one-line operator call; until then both are kept and v2 is treated as the richer evolution.
+**Relationship to v1:** this supersedes `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` as the canonical agent-design map and milestone-shaping source. The v1 70-agent map remains preserved as the original operator-adopted inventory/backlog cross-map; this file is now the governing design articulation for how agents should be shaped before promotion: command structure, Rules of Engagement, authority levels, reputation, two-pass decision model, client-safe decision evidence record, conflict resolution, and the V1 starting swarm.
 
 **Brand / claim note:** "Mutant Monkey" is the buyer brand. The agent names, positioning lines (#13), and slogans below are **internal design labels, not approved buyer-facing copy or claims**. Any buyer-heard wording (especially anything touching cyber-insurance) must still pass the claim boundary in `Compliance_and_Trend_Watch_Process.md` §5 before use — no "compliant / certified / insurer-approved / guaranteed / proof-of-coverage" claims in buyer voice.
 
 **Promotion path:** nothing here is in the build until it goes Next-Action Rubric -> spec-first deep-dive -> `complete_gate.py` -> operator sign-off, one agent/slice at a time (the V1 14-agent list in §A.10 is the natural draw order).
+
+---
+
+## §0 Canonical fit decision (operator-confirmed 2026-06-06)
+
+Matt confirmed this cleaned articulation as the right fit for Mutant Monkey Security:
+
+> **Mutant Monkey Security is not just an email scanner. It is a governed defensive swarm. Each agent has a role, a boundary, evidence requirements, failure modes, promotion conditions, demotion conditions, and a signed record of why it was trusted.**
+
+Canonical internal positioning:
+
+> **Mutant Monkey Security is an agentic evidence swarm that detects trusted-relationship drift, verifies suspicious payment or access events, and produces audit-ready evidence for operator review before money moves or risk escalates.**
+
+Buyer-facing wording must still pass `Compliance_and_Trend_Watch_Process.md` §5 before use; "before money moves" is an internal design target, not a guaranteed buyer claim.
+
+### Canonical six-layer swarm map
+
+```text
+Mutant Monkey Security Swarm
+|
+|-- 1. Command Layer
+|   |-- Swarm Commander Agent
+|   |-- Mission Context Agent
+|   |-- Risk Triage Agent
+|   |-- Human-in-the-Loop Agent
+|   `-- Decision Integrity Agent
+|
+|-- 2. Detection Layer
+|   |-- Header Analysis Agent
+|   |-- Sender Provenance Agent
+|   |-- Vendor Relationship Agent
+|   |-- Payment Change Agent
+|   |-- Executive Impersonation Agent
+|   |-- Language Pressure Agent
+|   |-- Attachment Risk Agent
+|   `-- Link Inspection Agent
+|
+|-- 3. Verification Layer
+|   |-- Known-Good Callback Agent
+|   |-- Geo/Origin Check Agent
+|   |-- Two-Step Verification Agent
+|   |-- Vendor Baseline Agent
+|   `-- Human Approval Agent
+|
+|-- 4. Evidence Layer
+|   |-- Evidence Package Agent
+|   |-- Case Timeline Agent
+|   |-- Verification Outcome Ledger Agent
+|   |-- Control Mapping Agent
+|   `-- Underwriter Summary Agent
+|
+|-- 5. Challenge / Red-Team Layer
+|   |-- Adversarial Test Agent
+|   |-- Regression Test Agent
+|   |-- Failure Classification Agent
+|   |-- Retest Evidence Agent
+|   `-- Drift Watch Agent
+|
+`-- 6. Learning / Governance Layer
+    |-- Promotion Agent
+    |-- Demotion Agent
+    |-- Signed Policy Agent
+    |-- Rollback Agent
+    |-- Independent Decision Auditor
+    `-- Swarm Memory / Agent Bible Agent
+```
+
+### Governing rules
+
+```text
+No trust decision without evidence.
+No high-risk action without verification.
+No failure without a learning record.
+The detector is not the decision.
+The detector is the trigger for verification.
+```
+
+### Stage path
+
+```text
+Stage A -- Analyze and recommend only.
+Stage B -- Auto-defend obvious cases, escalate ambiguous cases.
+Stage C -- Self-evolving defense swarm with signed promotions, demotions, tests, rollback, and audit trails.
+```
+
+### Design consequence
+
+Every future promoted agent should declare its layer, role, authority level, boundary, evidence requirements, failure modes, promotion conditions, demotion conditions, two-pass role, and decision-evidence-record contribution before build authorization. Existing promoted detectors (#10 Lookalike Domain and #21 Executive Impersonation) should receive a later light retrofit to add those fields without changing their signed detection contracts.
 
 ---
 
