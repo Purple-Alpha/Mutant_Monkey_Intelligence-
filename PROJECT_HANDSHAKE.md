@@ -48,7 +48,9 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 **STANDING authorization in force, extended per operator instruction 2026-06-05.** Any gate-clean, fully-green slice is committed + logged automatically with no per-step prompt — this now covers in-scope code (`core/evidence_package/`) AND doc / log / spec-draft / matrix slices. Decisions chain (AGENTS §3.1.9, §3.2); the agent decides on ranked defaults and rolls forward. **Only these still stop and reach Matt, never auto-proceeding:** pushes to remote; §11/§13 sign-offs; scope / pricing / legal-trademark / external-identity changes; butterfly path-setting decisions; the seven VISION non-negotiables; and any change to the substance of a signed spec's locked decisions. Pushes are never inferred.
 
 ## Git State
-Branch `safety/queue-drift-cleanup-20260528`. Operator pushed GitHub successfully through `f1fb901` (`ec270a5..f1fb901`), restoring off-site backup for the buyer-brand, Gemini, controls-decision, and controls-draft commits. Push through the agent remains credential-blocked, so future GitHub pushes are still explicit operator terminal steps. Local `backup` remote (`/mnt/c/northstar_backups/northstar.git`) is current through the latest local commit (`48a5ce5` at the 2026-06-05 cleanup; tracker-sync commit follows). GitHub is behind local by the post-`f1fb901` commits (operator last pushed through `b449593`; not yet pushed: the decision-protocol, swarm-map, agent_concepts, and cleanup commits) and needs `git push github safety/queue-drift-cleanup-20260528` by the operator; run `git status -sb` for the exact live count. STANDING governs gate-clean local commits; pushes remain explicit.
+Branch `safety/queue-drift-cleanup-20260528`. **Clean and aligned with both remotes through `e5c3672`** (Production Evidence Store sign-off, 2026-06-05). GitHub (`github`) and local backup (`/mnt/c/northstar_backups/northstar.git`, remote `backup`) both pushed through `e5c3672` (`0ceb582..e5c3672`). Push through the agent remains credential-blocked, so GitHub pushes are explicit operator terminal steps. STANDING governs gate-clean local commits; pushes remain explicit. Run `git status -sb` to confirm the live state at session start.
+
+**Commit discipline (learned 2026-06-05 from an avoidable mess):** ALWAYS run `complete_gate.py` (or `--pre-commit` with only the intended slice staged) and see "clean" BEFORE `git commit` — never commit first and gate after. NEVER `git reset` past the last pushed commit (`git log --oneline -5` shows the `github/`+`backup/` ref; do not soft-reset below it). If a packet is `too_large` (200KB cap), split into smaller staged slices and gate each — do not commit the oversized packet anyway.
 
 ## Decision Routing (trial, 2026-06-05)
 `DECISION_PROTOCOL.md` is in TRIAL (committed `6a83bfc`, not yet adopted into AGENTS.md authority). The agent operates under it now: Bin 1 (technical/reversible) = agent decides silently, never asks; Bin 2 (operator-authority/irreversible/money/identity/legal/real-data/buyer-delivery/butterfly/non-negotiable) = always reaches Matt with each option's positives, negatives, consequence, recommendation, and why-on-demand. Every session opens by setting a daily milestone list; every decision traces to it. The agent challenges any instruction (including Matt's) that collides with signed specs / the seven non-negotiables / forbidden language / butterfly triggers, before building. On any conflict AGENTS.md wins until Matt formally adopts the protocol.
@@ -73,7 +75,7 @@ then the latest `PROJECT_ACTIVITY_LOG.md` entry. That is the resume point.
 Matt
 
 ## Last Updated
-2026-06-05 - Production Evidence Store §11 SIGNED by Matt Nichol: §10.A Operator-Confirmed Decisions
-block locked (Q1-Q5), §11 signature placed verbatim, status header set to "§11 SIGNED." Pending: gate
-the signed spec slice via `complete_gate.py`, then commit under STANDING. No infrastructure authorized.
-GitHub push remains operator's explicit terminal step (run `git status -sb` for the live delta).
+2026-06-05 - Production Evidence Store §11 SIGNED by Matt Nichol and BANKED: §10.A locked (Q1-Q5),
+§11 signature placed verbatim, committed in four gate-clean slices (`6aae6b9`/`770075b`/`7bb5d25`/`e5c3672`)
+and pushed to GitHub + local backup. Working tree clean, branch aligned with both remotes through `e5c3672`.
+No infrastructure authorized; next-step start-build remains a separate explicit operator gate.

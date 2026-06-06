@@ -40,8 +40,11 @@ What should happen next.
 **Reason:**
 Operator locked the recommended defaults for all five §10 open questions, then signed §11. Q1 same host / isolated MinIO instance (dedicated host deferred); Q2 per-tenant credentials from day one; Q3 indefinite-until-explicit-delete for evidence-bearing classes; Q4 operator-controlled off-site media only (weekly + post-package, no consumer cloud); Q5 read-only-from-locked-machine + egress-deny checklist in v1 (air-gapped copy deferred). Spec-only; no code, no infrastructure.
 
+**Committed + Pushed:**
+Split into four gate-clean slices to stay under the 200KB audit-packet cap: `6aae6b9` (signed spec), `770075b` (MASTER_INDEX + PROJECT_HANDSHAKE), `7bb5d25` (PROJECT_ACTIVITY_LOG), `e5c3672` (PROGRESS). Pushed to GitHub and local backup (`0ceb582..e5c3672`); working tree clean, branch aligned with both remotes.
+
 **Next Step:**
-Gate the signed spec slice via `complete_gate.py`, then commit under STANDING (operator pushes to GitHub). §11 sign-off locks the contract only — it authorizes no infrastructure and no real-customer-data handling; a separate explicit start-build instruction remains required.
+§11 sign-off locks the contract only — it authorizes no infrastructure and no real-customer-data handling; a separate explicit start-build instruction remains required. Optional next milestone: Local-AI audit substrate planning (spec-only). Todd/MSP motion parked until Tuesday.
 
 ---
 
