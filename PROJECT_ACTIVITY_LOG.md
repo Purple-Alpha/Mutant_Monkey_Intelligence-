@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Lookalike Domain Detector build slice implemented
+**Actor:** Cursor, under explicit operator start-build authorization.
+
+**Action:** Recorded
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+- `PROJECT_HANDSHAKE.md` (current state refreshed)
+
+**Recorded Prior Code Slice:**
+- Commit `13f3cb1` — `Implement Lookalike Domain Detector build slice.`
+- Code/test files in that prior committed slice: `core/scoring/lookalike_domain_detector.py`, `core/blackboard/models.py`, `core/blackboard/__init__.py`, `core/scoring/email_risk_scoring_agent.py`, `core/scoring/__init__.py`, `tests/test_lookalike_domain_detector.py`, and `tests/test_lookalike_domain_scoring_integration.py`.
+
+**Reason:**
+This tracker slice records the already-committed Lookalike Domain Detector build slice (`13f3cb1`); it does not add runtime code. Operator explicitly authorized `start build: Lookalike Domain Detector D1-D9` after §11 was signed. Implementation stayed inside the signed contract: no network/DNS/WHOIS, no global brand seed, no body-URL scoring, no autonomous block/quarantine/deny verb, no rubric revision, and default-off until an explicit config enables it. Verification reported before tracker recording: focused `44 passed`; full suite `1146 passed, 1 skipped, 1 warning`.
+
+**Next Step:**
+Gate and commit this tracker slice if clean. Push remains explicit operator action.
+
+---
+
 ## 2026-06-05 - Lookalike Domain Detector §11 SIGNED
 **Actor:** Matt Nichol (authored §11 signature) + Cursor (placement only).
 
