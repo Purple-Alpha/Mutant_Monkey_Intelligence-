@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Canonical 6-layer swarm design fit adopted
+**Actor:** Matt Nichol (operator confirmation: "yes everyone agrees with this fit"); Cursor captured the decision.
+
+**Action:** Updated / Adopted
+
+**Files Changed:**
+- `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md` (promoted to ADOPTED CANONICAL DESIGN MAP; added §0 canonical fit decision)
+- `agent_concepts/README.md` (contents entry updated)
+- `MASTER_INDEX.md` (design-tree entry updated)
+- `PROGRESS.md` (current handoff entry added)
+- `PROJECT_HANDSHAKE.md` (Current Next Step, Git State, Last Updated replaced)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:**
+Matt confirmed the cleaner 6-layer "agentic evidence swarm" articulation is the right fit: Command, Detection, Verification, Evidence, Challenge/Red-Team, and Learning/Governance. The design rule is now explicit: no trust decision without evidence; no high-risk action without verification; no failure without a learning record; the detector is not the decision; the detector is the trigger for verification. This resolves the earlier drift risk between the v1 70-agent map and v2 design tree: v2 is now the canonical design articulation, while v1 remains preserved as the original inventory/backlog cross-map.
+
+**Next Step:**
+Draft the Agent Design Contract template (spec-only) so every promoted agent declares layer, role, authority level, boundary, evidence requirements, failure modes, promotion/demotion conditions, two-pass role, and decision-evidence-record contribution before Build Authorization. Later retrofit #10 Lookalike and #21 Executive Impersonation with those fields without changing their signed detector contracts.
+
+---
+
 ## 2026-06-06 - Executive Impersonation Detector (#21) §11 SIGNED
 **Actor:** Matt Nichol (operator-authored §11 signature "Matt Nichol June 6th 2026", placed verbatim); Cursor drafted the spec, resolved §10.A, and applied three operator refinements.
 
@@ -153,7 +174,7 @@ Operator authors §11 signature when ready (no AI-authored signature). After §1
 - MASTER_INDEX.md (two new entries + path update)
 
 **Reason:**
-Matt dropped a 70-agent / ten-team blue-team swarm architecture into chat and later disclosed it was a deliberate test of whether the agent would drop everything and start building it. The decision protocol held: the idea was captured as a SPARK (authority-free, builds nothing, expands no signed scope), flagged as a butterfly / path-setting artifact, and cross-mapped against current runtime + signed/drafted specs (each of the 70 agents tagged EXISTS / SPECCED / GOVERNANCE / NET-NEW; ~30-40 already have a surface, the clear net-new cluster being the orchestration layer #1/#2/#68/#69 and several Stage-B detectors). Matt then adopted it as the official `VISION.md` Stage B/C architecture map and the backlog source for daily milestones — **adoption is not build authorization**; each agent still runs Next-Action Rubric -> spec-first -> gate -> sign-off one at a time. Matt also asked for a dedicated `agent_concepts/` folder to dump future build theories; the swarm map was moved into it (single canonical copy, no duplication) and a README defines the RAW vs ADOPTED states and the promotion rules. Two gate runs clean 0/0 (`blue_team_swarm_architecture_map_spark_20260605T034822Z.md`, `agent_concepts_folder_setup_20260605T035605Z.md`); committed `93822dd` then `48a5ce5`; both on local backup.
+Matt dropped a 70-agent / ten-team blue-team swarm architecture into chat and later disclosed it was a deliberate test of whether the agent would drop everything and start building it. The decision protocol held: the idea was captured as a SPARK (authority-free, builds nothing, expands no signed scope), flagged as a butterfly / path-setting artifact, and cross-mapped against current runtime + signed/drafted specs (each of the 70 agents tagged EXISTS / SPECCED / GOVERNANCE / NET-NEW; ~30-40 already have a surface, the clear net-new cluster being the orchestration layer #1/#2/#68/#69 and several Stage-B detectors). Matt then adopted it as the original `VISION.md` Stage B/C architecture inventory/backlog map — **adoption is not build authorization**; each agent still runs Next-Action Rubric -> spec-first -> gate -> sign-off one at a time. **Later update:** superseded as canonical design source on 2026-06-06 by `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md`; this file remains the preserved 70-agent inventory/cross-map. Matt also asked for a dedicated `agent_concepts/` folder to dump future build theories; the swarm map was moved into it and a README defines the RAW vs ADOPTED states and the promotion rules. Two gate runs clean 0/0 (`blue_team_swarm_architecture_map_spark_20260605T034822Z.md`, `agent_concepts_folder_setup_20260605T035605Z.md`); committed `93822dd` then `48a5ce5`; both on local backup.
 
 **Next Step:**
 Next session opens by setting the daily milestone list, drawn from the adopted swarm map per `DECISION_PROTOCOL.md` §4. GitHub push of the post-`f1fb901` local commits remains an explicit operator terminal step.
