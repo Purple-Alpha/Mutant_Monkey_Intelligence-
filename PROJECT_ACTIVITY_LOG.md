@@ -26,6 +26,32 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Multi-model lane structure: 3-day trial opened
+**Actor:** Matt Nichol (declared the trial); Cursor recorded.
+
+**Action:** Trial opened (not set in stone)
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (this entry; also a forbidden-language cleanup folded into the partner-lanes entry below — "guaranteed read every session" reworded to "first in the required session-start read order")
+- `PROJECT_HANDSHAKE.md` (trial pointer + review date)
+
+**Reason:**
+The multi-model lane structure (execution vs advisory lanes, the git-step rule, handoff routing, no-ego lane discipline; AGENTS.md §2.1 / §2.1.1) is on a 3-day evaluation, not permanent doctrine. Goal is evidence, not vibes: keep it only if lane discipline reduces stale-step errors more than it adds relay cost. Matt's framing: the project has been going well, but the swarm build is getting more complex, so there is room to do better.
+
+**Signals to watch (logged inline as one-liners when they occur — no new tracking file):**
+- Stale-step incidents (advisory lane issues a git/next-step already overtaken by live state). Hit twice on 2026-06-06; target zero.
+- Relays per decision (the cost side — how many manual hand-relays to settle one thing). If it climbs, the manual pipeline is the bottleneck and the war-room substrate earns a spec.
+- Gate rejections caused by lane confusion.
+- Catch rate (advisory lane catches a boundary slip / claim overreach / edge case the execution lane would have missed — e.g. the forbidden-language "guaranteed" catch on 2026-06-06). The value side.
+- Friction notes (any handoff slower than just doing it in-lane).
+
+**Review trigger:** 2026-06-09 (Tuesday, ~3 days). Read this entry + any inline incident notes and answer one question: did lane discipline reduce stale errors more than it added relay cost? Keep if yes; if relay cost dominates, that is the evidence to spec the war room; if a wash, simplify. War room stays parked until then.
+
+**Next Step:**
+Run the lane pipeline on real swarm work; log incidents inline; review 2026-06-09. Authorizes no code, no build, no runtime substrate.
+
+---
+
 ## 2026-06-06 - Role-based pipeline + git-step rule added to AGENTS.md §2.1.1
 **Actor:** Matt Nichol (selected the corrected pipeline option); Cursor drafted.
 
@@ -51,7 +77,7 @@ Gate + commit as its own doc slice (separate from d5decc0/85cc5d0 to stay under 
 - `AGENTS.md` (new §2.1 Partner lanes — model-strengths contract: Matt decides / Grok audits / Codex builds / Claude designs+governs, with each model's strengths, guardrails, and lane, plus shared cross-lane rules)
 
 **Reason:**
-The team is now multi-model; Matt is bringing Claude in alongside Codex. To stop partners building over the top of each other, each model's strengths and weaknesses are written down as binding lane posture: Codex (builder/spec/implementation; guardrail = local signal must not override governing doctrine, e.g. the Windows/Linux miss); Claude (design/governance/spec-review/pressure-test/language; guardrails = no cross-session memory so paste handoff, no skin-in-game so strong-second-opinion only on the evidence chain, hallucinates specifics so verify+run code, defaults to over-completeness so push for lean). Shared rules: doctrine beats local context, hand off at lane edges, two reviewers on anything touching the evidence chain, write durable nuance into docs. Placed in AGENTS.md because it is the only doc guaranteed read every session (§1 read order); a standalone doc could be skipped.
+The team is now multi-model; Matt is bringing Claude in alongside Codex. To stop partners building over the top of each other, each model's strengths and weaknesses are written down as binding lane posture: Codex (builder/spec/implementation; guardrail = local signal must not override governing doctrine, e.g. the Windows/Linux miss); Claude (design/governance/spec-review/pressure-test/language; guardrails = no cross-session memory so paste handoff, no skin-in-game so strong-second-opinion only on the evidence chain, hallucinates specifics so verify+run code, defaults to over-completeness so push for lean). Shared rules: doctrine beats local context, hand off at lane edges, two reviewers on anything touching the evidence chain, write durable nuance into docs. Placed in AGENTS.md because it is first in the required session-start read order (§1); a standalone doc could be skipped.
 
 **Next Step:**
 Gate + commit alongside (or separate from) the Agent Design Contract Template slice. AGENTS.md is pre-§11 floor doctrine, so no §11 signature is required; Matt confirms the lane content and authorizes the commit. Authorizes no code, no build, no new agent behavior.
