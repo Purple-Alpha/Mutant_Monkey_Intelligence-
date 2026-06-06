@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Lookalike Domain Detector §11 SIGNED
+**Actor:** Matt Nichol (authored §11 signature) + Cursor (placement only).
+
+**Action:** Signed / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Lookalike_Domain_Detector_Deep_Dive.md` (§11 signature placed verbatim: "Matt Nichol June 5th 2026"; status header updated to signed; ratified-but-no-code boundary added)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+- `PROJECT_HANDSHAKE.md` (Current Next Step refreshed)
+
+**Reason:**
+Operator signed §11 right after §10 was resolved. The signature locks D1-D9 and the §10.A operator-confirmed decisions as the governing detector contract and authorizes a future build slice. It does NOT wire the detector default-on, change the signed Client-Facing 5-Axis Rubric, or start any code. Signature wording is operator-authored; the assistant only placed it. Edits made on the WSL primary; gate + commit are operator terminal steps (chat shell backend was down this session).
+
+**Next Step:**
+A gated build slice may implement D1-D9 only on a separate explicit operator "start build" instruction, with the Callback-Phishing-style unit + break-it test posture (false-positive / false-negative resistance, scope-violation probes, crash resistance, cross-tenant isolation, determinism, no-network). Until then, no code.
+
+---
+
 ## 2026-06-05 - Lookalike Domain Detector §10 resolved (defaults locked, pre-§11)
 **Actor:** Matt Nichol (decisions: "lock the defaults") + Cursor (scored options + spec edit).
 

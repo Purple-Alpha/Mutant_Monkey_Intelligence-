@@ -1,6 +1,6 @@
 # Lookalike Domain Detector — Spec-First Deep Dive
 
-**Status:** DRAFT (pre-§11). Authored 2026-06-05 by Cursor on Matt Nichol's instruction (next-milestone selection: "spec the first swarm-map agent"). This is the first agent promoted from the operator-adopted `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` (swarm agent #10, "Lookalike Domain Agent"), team 2 (email identity / sender analysis). **§11 signature is blank by design.** This draft authorizes no code; it is the spec contract that a later build slice implements after operator §10 resolution + §11 sign-off.
+**Status:** §11 SIGNED 2026-06-05 by Matt Nichol. First agent promoted from the operator-adopted `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` (swarm agent #10, "Lookalike Domain Agent"), team 2 (email identity / sender analysis). §10 resolved into §10.A operator-confirmed decisions; D1-D9 locked as the detector contract. Signing authorizes a future build slice but **no code begins** until a separate explicit operator "start build" instruction; signing does not wire the detector default-on or change the signed Client-Facing 5-Axis Rubric.
 
 **Owner:** Matt Nichol
 
@@ -133,4 +133,6 @@ These decisions are pre-§11. Locking them authorizes **no** code, **no** detect
 
 Pre-§11 draft. Signing will lock D1-D9 as the detector contract and authorize a build slice. Signing does NOT itself wire the detector default-on or change the signed scoring rubric. A revision to any locked decision requires the normal path: operator instruction -> spec edit -> fresh `complete_gate.py` audit -> new operator §11 signature.
 
-> §11 SIGNED — _(blank; operator to author)_
+> §11 SIGNED — Matt Nichol June 5th 2026
+
+This §11 signature locks D1-D9 and the §10.A operator-confirmed decisions as the governing Lookalike Domain Detector contract and authorizes a future build slice. It does **not** wire the detector default-on, change the signed Client-Facing 5-Axis Rubric, or start any code: implementation begins only on a separate explicit operator "start build" instruction.
