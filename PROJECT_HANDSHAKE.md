@@ -40,9 +40,9 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **AGENTS.md decision-calibration guardrail added 2026-06-04:** §3.1.2 now grades escalation by substance + reversibility (not "touches a signed file"); §3.1.8 + §12 "trivia-escalation / decision-inversion" failure mode added. Fixes the inversion of heavy-guardrailing trivia (e.g. an internal name change) while dumping real decisions raw.
 
 ## Current Next Step (single live action)
-**Lookalike Domain Detector build slice implemented (2026-06-05):** first adopted swarm-map agent (#10) is now §11-signed and built inside the signed D1-D9 contract. New pure/offline detector compares `From` + `Reply-To` identity domains against provided tenant known-good domains; no DNS/WHOIS/network, no global brand seed, default-off scoring integration, max-merge floor lift only, existing `lookalike_sender_domain` flag append, and persisted assessment overlay. Verification: focused 44 passed; full suite **1146 passed, 1 skipped, 1 warning**. Pending before local commit: `complete_gate.py` on the build slice.
+**Production Evidence Store §11 SIGNED (2026-06-05) by Matt Nichol.** All five §10 open questions are locked in §10.A in `4. Product_Roadmap/Production_Evidence_Store_Deep_Dive.md`: Q1 same host / isolated MinIO instance + `mms-` namespaces (dedicated host deferred); Q2 **per-tenant credentials from day one** (no shared all-tenant credential); Q3 indefinite-until-explicit-delete for evidence-bearing classes (no time-based auto-expiry); Q4 operator-controlled off-site media only, weekly + post-package mirror (no consumer cloud); Q5 read-only-from-locked-machine + egress-deny checklist in v1 (air-gapped copy deferred). Signature "Matt Nichol" placed verbatim; status header set to "§11 SIGNED." **Pending: gate the signed spec slice via `complete_gate.py`, then commit under STANDING (operator pushes).** §11 sign-off locks the contract only — it does NOT authorize infrastructure; a separate explicit start-build instruction is still required before any production store or real-customer-data handling.
 
-**Real-customer-data controls remain signed but not operationally started:** controls spec §11 signed (`e77f85c`), D11 package-audit brief authored (`6026deb`), Production Evidence Store remains draft pre-§11. No real-customer-data handling, §13/IQ3 revision, local-AI substrate, production evidence store, or buyer delivery starts without separate operator authorization. Todd/MSP motion parked until Tuesday by operator instruction.
+**Real-customer-data controls remain signed but not operationally started:** controls spec §11 signed (`e77f85c`), D11 package-audit brief authored (`6026deb`), Lookalike Domain Detector build slice banked (`13f3cb1`/`0ceb582`). No real-customer-data handling, §13/IQ3 revision, local-AI substrate, production evidence store infrastructure, or buyer delivery starts without separate operator authorization. Todd/MSP motion parked until Tuesday by operator instruction.
 
 ## Commit Cadence (operator §4 decision, 2026-06-04; EXTENDED 2026-06-05)
 **STANDING authorization in force, extended per operator instruction 2026-06-05.** Any gate-clean, fully-green slice is committed + logged automatically with no per-step prompt — this now covers in-scope code (`core/evidence_package/`) AND doc / log / spec-draft / matrix slices. Decisions chain (AGENTS §3.1.9, §3.2); the agent decides on ranked defaults and rolls forward. **Only these still stop and reach Matt, never auto-proceeding:** pushes to remote; §11/§13 sign-offs; scope / pricing / legal-trademark / external-identity changes; butterfly path-setting decisions; the seven VISION non-negotiables; and any change to the substance of a signed spec's locked decisions. Pushes are never inferred.
@@ -73,7 +73,7 @@ then the latest `PROJECT_ACTIVITY_LOG.md` entry. That is the resume point.
 Matt
 
 ## Last Updated
-2026-06-05 - Updated after milestone C2: Mutant Monkey package-audit brief authored (D11 artifact,
-committed `6026deb`, gate clean 0/0), pre-deployment. Real-customer-data controls spec remains §11
-SIGNED (`e77f85c`); contract authorizes nothing operational. GitHub push remains operator's explicit
-terminal step (run `git status -sb` for the live delta).
+2026-06-05 - Production Evidence Store §11 SIGNED by Matt Nichol: §10.A Operator-Confirmed Decisions
+block locked (Q1-Q5), §11 signature placed verbatim, status header set to "§11 SIGNED." Pending: gate
+the signed spec slice via `complete_gate.py`, then commit under STANDING. No infrastructure authorized.
+GitHub push remains operator's explicit terminal step (run `git status -sb` for the live delta).
