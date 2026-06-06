@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-05 - Lookalike Domain Detector §10 resolved (defaults locked, pre-§11)
+**Actor:** Matt Nichol (decisions: "lock the defaults") + Cursor (scored options + spec edit).
+
+**Action:** Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Lookalike_Domain_Detector_Deep_Dive.md` (added §10.A Operator-Confirmed Decisions + §10.B Implementation Boundary)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+- `PROJECT_HANDSHAKE.md` (Current Next Step refreshed)
+
+**Reason:**
+First swarm-map agent (#10) advanced toward §11. Operator was given a pre-scored recommendation + consequence for each of the seven §10 questions and chose to lock all seven defaults. Locked: Q1 length-based Damerau-Levenshtein thresholds (1/1/2 by SLD length, transposition = one edit, never vs TLD alone); Q2 Vendor Baseline Store only, no global brand seed in v1; Q3 max-merge floor lift only (weak <=25, probable 70, strong 85), never additive; Q4 combosquat tokens derived from tenant known-good domains only with min length 5 + no generic business words; Q5 default-off until a signed calibration record exists; Q6 header `From` + `Reply-To` in v1, envelope/display-name deferred; Q7 no rubric revision — strong findings feed the signed 5-axis `sender_identity` axis as an evidence tag only. Decisions were captured via spec edit on the WSL primary; the chat command-runner backend was down this session, so gate + commit are operator terminal steps.
+
+**Next Step:**
+Operator authors §11 signature when ready (no AI-authored signature). After §11 + a separate explicit "start build", a gated build slice implements D1-D9 with the Callback-Phishing-style unit + break-it test posture. Run `complete_gate.py` and commit from the WSL terminal (chat shell backend unavailable this session).
+
+---
+
 ## 2026-06-05 - Blue-team swarm map captured + adopted; agent_concepts folder created
 **Actor:** Matt Nichol (vision + adoption) + Cursor (capture / cross-map / gate / logging).
 

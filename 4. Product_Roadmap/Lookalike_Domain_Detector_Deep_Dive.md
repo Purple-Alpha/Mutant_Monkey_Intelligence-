@@ -113,6 +113,22 @@ This detector closes that gap: it compares the message's **identity domains** ag
 - **Q6 — Identity-domain surface.** Header-`From` only in v1, or also `Reply-To` / envelope-`From` / display-name-embedded domains?
 - **Q7 — Client-facing linkage.** Does this feed the signed Client-Facing 5-Axis Rubric `sender_identity` axis, and if so, how (without a rubric revision)?
 
+### §10.A Operator-Confirmed Decisions (2026-06-05, pre-§11)
+
+Operator ("lock the defaults", 2026-06-05) confirmed all seven questions. These resolve §10 and feed the §11 signature, but this block does **not** sign §11 and authorizes **no** code.
+
+1. **Q1 — Edit-distance thresholds.** Exact match short-circuits to 0. Damerau-Levenshtein against each known-good second-level label: SLD length `<5` => max distance 1; length `5-9` => max distance 1; length `10+` => max distance 2. Transposition counts as one edit. Never compute distance against a public-suffix/TLD label alone.
+2. **Q2 — Known-good source + brand seed.** Vendor Baseline Store **only** in v1. No operator-curated global trusted-brand seed list yet; adding one is a later operator-signed amendment. Per-tenant isolation + hash-only / per-tenant-salt posture inherited; no cross-tenant known-good leakage.
+3. **Q3 — Scoring overlay mapping.** Detector emits `0-100`; risk integration is **max-merge floor lift only** (never additive, never a ceiling change): weak/ambiguous findings do not lift above 25; probable look-alike floors to 70; strong look-alike (clear typosquat / homoglyph / subdomain-spoof of a known-good domain) floors to 85. Respects the signed scoring rubric and the Tiered Detection lift-only invariant.
+4. **Q4 — Combosquat token list.** Tokens are derived from the tenant's own known-good domains only. FPR controls: minimum token length 5; no common dictionary / generic business words (e.g. `pay`, `secure`, `invoice`, `billing`); no tokens from public suffixes; no one-letter / short abbreviations unless operator-curated per tenant.
+5. **Q5 — Rollout.** Ships **default-off / opt-in**. Default-on requires a signed calibration record including synthetic adversarial cases, benign near-neighbor cases, cross-tenant isolation tests, and a false-positive review. No default-on before that record exists.
+6. **Q6 — Identity-domain surface.** v1 inspects header `From` **and** `Reply-To` domains. Envelope-`From` and display-name-embedded domains are deferred to a later pass (heavier parsing / higher false-positive risk).
+7. **Q7 — Client-facing linkage.** **No rubric revision now.** Strong look-alike findings may feed the signed Client-Facing 5-Axis Rubric `sender_identity` axis as an **evidence tag only**, within the existing explanation boundary; no new buyer-facing claim language. A future rubric amendment may formalize exact point mapping if the detector proves useful.
+
+### §10.B Implementation Boundary
+
+These decisions are pre-§11. Locking them authorizes **no** code, **no** detector implementation, **no** wiring into the risk overlay, **no** default-on, **no** change to the signed Client-Facing 5-Axis Rubric, and **no** buyer-facing claim. Implementation begins only after operator §11 signature **and** a separate explicit "start build" instruction.
+
 ## §11 Sign-off
 
 Pre-§11 draft. Signing will lock D1-D9 as the detector contract and authorize a build slice. Signing does NOT itself wire the detector default-on or change the signed scoring rubric. A revision to any locked decision requires the normal path: operator instruction -> spec edit -> fresh `complete_gate.py` audit -> new operator §11 signature.
