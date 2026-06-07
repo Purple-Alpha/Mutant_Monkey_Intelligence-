@@ -1,6 +1,6 @@
 # Strategic Direction Matrix - Deep Dive
 
-**Status:** PRE-§11 DRAFT. Authored 2026-06-07; three §10 open questions resolved by the operator the same day (logging surface, Consequence-Matrix ordering, Target-Completeness weighting - folded in below). Operator instinct by Matt Nichol; design pressure-tested in the Claude advisory lane (per AGENTS §2.1.2); drafted into spec form by Cursor (execution lane). NOT signed, NOT authority until Matt signs §11. Builds nothing, authorizes nothing. Does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec.
+**Status:** §11 SIGNED 2026-06-07 by Matt Nichol. Authored 2026-06-07; all four §10 questions resolved the same day (logging surface, Consequence-Matrix ordering, Target-Completeness weighting, and file home ratified by the signature at the current location). Operator instinct by Matt Nichol; design pressure-tested in the Claude advisory lane (per AGENTS §2.1.2); drafted into spec form by Cursor (execution lane). This spec is now authority for strategic-direction scoring. It still authorizes no build (§8): the matrix ranks, Matt selects. Does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any other signed spec.
 
 **Owner:** Matt Nichol
 
@@ -128,17 +128,19 @@ These keep the matrix from becoming a delay tool or an avoid-building tool:
 
 ## §10 Open questions
 
-1. **OPEN.** File home: this draft lives in `4. Product_Roadmap/` alongside the tactical rubric; confirm or relocate to a `governance/` folder if one is established.
+1. **RESOLVED 2026-06-07 (operator §11 signature):** file home ratified as `4. Product_Roadmap/` alongside the tactical rubric, by signing the spec at this location.
 2. **RESOLVED 2026-06-07 (operator):** one shared log. Strategic runs go in `decision_cycles_log.md` with a `type` field (`STRATEGIC` / `TACTICAL`), not a separate file. Folded into §2.4 / §6.
 3. **RESOLVED 2026-06-07 (operator):** the Consequence Matrix is NOT a mandatory first pass. The two are parallel tools for different triggers; consequence scoring is already embedded in Friction Cost + Architecture Fit, so running it first would double-count. Folded into §1.
 4. **RESOLVED 2026-06-07 (operator):** Target Completeness is weighted x2 (ceiling 18, bands rescaled to 14 / 9 / 0); the 0-3 scale is unchanged. Folded into §2.3 / §3 / §5 / §7.
 
-Only Q1 (file home) remains open. All else is resolved; §11 can be signed once Q1 is settled.
+All four questions resolved. Spec signed at §11.
 
 ---
 
 ## §11 Sign-off
 
-Operator-authored signature line. Matt signs here to promote this draft to a §11-locked spec. Until signed, this matrix may be used informally but never claimed as signed, and never cited as authority.
+Operator-authored signature line. Matt signs here to promote this draft to a §11-locked spec.
 
-Signed: ______________________  Date: __________
+Signed (operator-authored): **Matt Nichol June 7th 2026  STRATEGIC**
+
+This spec is now §11-signed and is authority for strategic-direction scoring. Post-§11, it is immutable except by explicit operator-instructed revision (AGENTS §6: operator instruction -> edit -> fresh `complete_gate.py` -> new operator §11 signature).

@@ -26,6 +26,23 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Strategic Direction Matrix §11 SIGNED
+**Actor:** Matt (operator-authored §11 signature); Cursor (recorded signature, ran the sign-off gate).
+
+**Action:** §11 sign-off (pre-§11 draft promoted to signed authority)
+
+**Files Changed:**
+- `4. Product_Roadmap/Strategic_Direction_Matrix_Deep_Dive.md` (status -> SIGNED; §10 Q1 resolved; §11 signature recorded)
+- `MASTER_INDEX.md`
+
+**Reason:**
+Matt authored the §11 signature ("Matt Nichol June 7th 2026  STRATEGIC"). Signing the spec at its current location ratified the last open question (§10 Q1, file home) as `4. Product_Roadmap/`, so all four §10 questions are now resolved. The spec is authority for strategic-direction scoring; it still authorizes no build (§8 - matrix ranks, Matt selects). Post-§11 it is immutable except by explicit operator-instructed revision + fresh gate + new signature (AGENTS §6). No code; sign-off gate fired per AGENTS §5.
+
+**Next Step:**
+Use the matrix on the next strategic fork; log it in `decision_cycles_log.md` with `type: STRATEGIC`. A one-line D15 acknowledgement of the shared log remains flagged for the next operator-authorized revision of the signed Next-Action Decision Rubric spec.
+
+---
+
 ## 2026-06-07 - Strategic Direction Matrix: three §10 questions resolved (operator)
 **Actor:** Matt (operator decisions); Cursor (folded into the draft).
 
