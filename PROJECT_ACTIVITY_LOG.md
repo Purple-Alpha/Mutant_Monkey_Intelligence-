@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Mutant Monkey package-auditor D9 calibration plan drafted
+**Actor:** Matt Nichol (selected the next milestone); Cursor drafted.
+
+**Action:** Created / Gated / Committed
+
+**Files Changed:**
+- `4. Product_Roadmap/Mutant_Monkey_Package_Auditor_D9_Calibration_Plan.md` (new)
+- `MASTER_INDEX.md`
+
+**Reason:**
+Next milestone after the #10/#21 retrofit. Turns the D9 calibration gate (package-audit brief §6, controls spec D9) into a runnable synthetic-only procedure: a corpus split into known-good / planted-defect / refuse sets; three conjunctive requirements (R1 match external Stage-9 baseline with no false `blocked`, R2 catch every planted defect with the catalog-correct cited finding, R3 refuse structurally-invalid / classification-undeterminable / builder==auditor packages); a six-row planted-defect catalog mapped to expected blocking findings + signed-contract refs; a conjunctive 100% pass bar that treats a false pass as the dangerous miss (routed through the false-positive/false-negative correction evidence loop); a saved calibration-run record schema; and the re-calibration triggers. Four operator-only open questions remain (baseline reference, corpus size, partial-miss handling, storage path).
+
+Synthetic/test only. Edits no signed spec, stands up no infrastructure, handles no real customer data. A `calibration_pass` authorizes nothing on the real path by itself — still needs controls D7 (§13/IQ3 revision + re-sign), the substrate build, and explicit operator activation. Gate clean 0/0: `audit_outputs/mutant_monkey_d9_calibration_plan_20260607_20260607T012634Z.md`. Committed `581b7f3`.
+
+**Next Step:**
+Tracker refresh (this entry + handshake). Then resolve the four §9 open questions toward an operator-reviewed plan, or pick another milestone.
+
+---
+
 ## 2026-06-06 - Agent Design Contract metadata retrofit applied to #10 and #21
 **Actor:** Matt Nichol (selected Action 1); Cursor executed.
 
