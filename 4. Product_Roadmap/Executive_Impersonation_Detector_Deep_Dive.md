@@ -18,6 +18,45 @@
 
 ---
 
+## Agent Design Contract Wrapper (metadata-only retrofit)
+
+**Retrofit boundary:** This wrapper is additive governance metadata only, applied under `Agent_Design_Contract_Template_Deep_Dive.md` §7. It does **not** edit, reinterpret, relax, or extend the signed detector contract below. D1-D9, §10.A, scoring bands/floors, default-off posture, input surface, data-minimization rules, rubric linkage, Build Authorization status, and §11 remain unchanged.
+
+| Field | Value |
+|---|---|
+| Agent name | Executive Impersonation Detector |
+| Swarm inventory ID | #21 — Executive Impersonation (CEO/CFO urgency/secrecy) (v1 map inventory/backlog reference only) |
+| Canonical layer | Detection |
+| Canonical team / case type | Vendor-payment / BEC; executive-authority impersonation |
+| Authority level | Level 3 — Specialist Agent |
+| Stage posture | Stage A analyze/recommend only |
+| Role | Produce deterministic executive-impersonation evidence when a claimed executive/authority identity is paired with an identity mismatch and authority/secrecy/urgency/task-directive pressure. |
+| Boundary | The detector is not the decision. It must not decide fraud, approve/deny mail, block/quarantine, alter payment behavior, create a new rubric point rule, or change the LLM `impersonation_likelihood` relationship. |
+| Explicit non-authorities | No autonomous action; no block/quarantine/deny/reject verb; no org-chart sync/network lookup; no phone-number extraction; no buyer-facing claim; no default-on enablement without the signed calibration record required by §10.A Q5. |
+| Inputs | Sender display name, `From` and `Reply-To` domains via `extract_identity_domains`, per-tenant Known-Good Principal Roster, `body_plain`, `tenant_id`, and optional consumed look-alike cue, exactly as locked in D9 / §10.A Q6. |
+| Outputs | `ExecutiveImpersonationAssessment`-style internal assessment: `executive_impersonation_score`, ordered findings, and max-merge `recommended_risk_floor_lift` evidence. |
+| Evidence emitted | Claimed principal role/label, domain relationship, matched technique, pressure category, bounded non-echoing evidence string, and whether the result supports the `executive_impersonation_pattern` evidence tag only. |
+| Data minimization | No raw mailbox body, no body substring over 60 chars, no raw headers beyond scoped identity-domain evidence, no phone digits, no tenant secret material, and no cross-tenant roster leakage. |
+| Tenant isolation | Per-tenant Known-Good Principal Roster only; tenant A's roster must never influence tenant B. Plaintext display-name forms remain tenant-local per §10.A Q1. |
+| Two-pass role | Pass 1 detection only until the Two-Pass Decision Model spec is signed; provides evidence a future Pass 2 challenge can inspect. |
+| Decision Evidence Record contribution | `observed_facts`: claimed display-name match, identity-domain relationship, pressure/task-directive category; `interpretations`: executive-impersonation pattern classification; `assumptions`: tenant roster is current and operator-maintained; `missing_evidence`: absent/stale roster, missing body_plain, missing look-alike cue, or calibration gaps; `recommended_verification`: known-good out-of-band verification for executive/payment/credential requests; `final_outcome_contribution`: `executive_impersonation_pattern` evidence tag / risk-floor input only; `retest_or_learning_record`: false-positive/false-negative correction evidence after calibration failures. |
+| Human review trigger | Probable or strong executive-impersonation evidence on payment, credential, secrecy, urgency, or executive-authority context should route to human review through existing Stage A review vocabulary. |
+| Verification trigger | Any executive-impersonation evidence tied to money movement, vendor changes, credentials, gift cards, or confidential executive directives should trigger known-good out-of-band verification before action. |
+| Scoring / action posture | Max-merge floor lift only, non-additive; `executive_impersonation_pattern` may feed `sender_identity` as evidence attribution only; no deterministic axis-score lift or point-structure change in this retrofit. |
+| Default rollout | Default-off / opt-in until a signed calibration record exists. |
+| Autonomous action | None. |
+| Promotion conditions | Signed calibration record showing acceptable false-positive behavior, synthetic adversarial executive-BEC coverage, benign authorized-executive cases, common-name collision coverage, cross-tenant isolation, no raw-value/body leakage, deterministic results, and useful evidence output. |
+| Demotion conditions | Overclaims beyond evidence, pressure-only over-fire, false positives above accepted calibration boundary, missed serious executive-impersonation cases, cross-tenant leakage, raw-value/body leakage, unsupported recommendations, autonomous-action wording, or failed retests. |
+| Retest evidence | Updated synthetic/adversarial/benign cases plus regression proof after any correction. |
+| Calibration requirement | The signed calibration record required by §10.A Q5 before default-on or increased influence. |
+| Failure modes | Inherits §4 named failure modes: legitimate-executive false positive, common-name collision, pressure-only over-fire, roster staleness, cross-tenant leakage, vocabulary false negative, input DoS, and authority drift. |
+| Required tests | Inherits §5 test requirements: unit, break-it, integration, no-network, no-block-verb, no raw-value/body leak, no phone-digit extraction, default-off no-regression, crash resistance, cross-tenant isolation, and determinism. |
+| Audit requirements | Any implementation or future retrofit/revision remains subject to `complete_gate.py`; this wrapper itself is gated as metadata-only. |
+| Signed-spec dependencies | `Agent_Design_Contract_Template_Deep_Dive.md`, `Vendor_Baseline_Store_Deep_Dive.md`, `Tiered_Detection_Intensity_Deep_Dive.md`, `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`, `VISION.md`, and `Compliance_and_Trend_Watch_Process.md`. |
+| Build Authorization dependency | A separate explicit Build Authorization is still required before implementation; this wrapper authorizes no code, no wiring, no default-on, no rubric change, no buyer-facing claim, and no runtime behavior change. |
+
+---
+
 ## §0 Purpose
 
 Catch the classic Business Email Compromise (BEC) case where an inbound email **claims to be from a known executive or authority figure of the tenant** (CEO, CFO, owner, controller) and pairs that claimed authority with a pressured, secret, or time-boxed task directive (wire this, change the payment details, buy gift cards, "handle it before the close of business, keep it between us") — while the **sending identity is not** the executive's known-good identity (foreign domain, free-mail provider, or a look-alike of the tenant's own domain).

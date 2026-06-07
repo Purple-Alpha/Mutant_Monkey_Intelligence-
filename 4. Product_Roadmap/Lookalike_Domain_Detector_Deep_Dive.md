@@ -17,6 +17,45 @@
 
 ---
 
+## Agent Design Contract Wrapper (metadata-only retrofit)
+
+**Retrofit boundary:** This wrapper is additive governance metadata only, applied under `Agent_Design_Contract_Template_Deep_Dive.md` §7. It does **not** edit, reinterpret, relax, or extend the signed detector contract below. D1-D9, §10.A, scoring bands/floors, default-off posture, input surface, data-minimization rules, rubric linkage, Build Authorization status, and §11 remain unchanged.
+
+| Field | Value |
+|---|---|
+| Agent name | Lookalike Domain Detector |
+| Swarm inventory ID | #10 — Lookalike Domain Agent (v1 map inventory/backlog reference only) |
+| Canonical layer | Detection |
+| Canonical team / case type | Email identity / sender analysis; trusted-domain impersonation |
+| Authority level | Level 3 — Specialist Agent |
+| Stage posture | Stage A analyze/recommend only |
+| Role | Produce deterministic domain-impersonation evidence by comparing message identity domains against the tenant's known-good domain set. |
+| Boundary | The detector is not the decision. It must not decide fraud, approve/deny mail, block/quarantine, change payment behavior, or alter the signed Client-Facing 5-Axis Email Scoring Rubric. |
+| Explicit non-authorities | No autonomous action; no block/quarantine/deny/reject verb; no DNS/WHOIS/network lookup; no buyer-facing claim; no default-on enablement without the signed calibration record required by §10.A Q5. |
+| Inputs | Header `From` and `Reply-To` identity domains, tenant known-good domain set, and `tenant_id`, exactly as locked in D9 / §10.A Q6. |
+| Outputs | `LookalikeDomainAssessment`-style internal assessment: `lookalike_domain_score`, ordered findings, and max-merge `recommended_risk_floor_lift` evidence. |
+| Evidence emitted | Observed identity-domain relationship, matched technique, bounded domain evidence, matched known-good reference per D8 / §10.A, and whether the result supports a `sender_identity` evidence tag only. |
+| Data minimization | No mailbox body content, no raw secret/value leakage, and no cross-tenant known-good leakage; inherits Vendor Baseline Store isolation/privacy posture. |
+| Tenant isolation | Per-tenant known-good source only; tenant A's known-good domains must never influence tenant B. |
+| Two-pass role | Pass 1 detection only until the Two-Pass Decision Model spec is signed; provides evidence a future Pass 2 challenge can inspect. |
+| Decision Evidence Record contribution | `observed_facts`: identity domains + known-good comparison result; `interpretations`: look-alike technique classification; `assumptions`: tenant known-good set is current; `missing_evidence`: absent/stale known-good data or calibration gaps; `recommended_verification`: known-good channel review for high-risk sender-identity anomalies; `final_outcome_contribution`: sender-identity evidence tag / risk-floor input only; `retest_or_learning_record`: false-positive/false-negative correction evidence after calibration failures. |
+| Human review trigger | Strong or probable look-alike evidence on payment, credential, or executive-authority context should route to human review through existing Stage A review vocabulary. |
+| Verification trigger | Any look-alike evidence tied to money movement, credential requests, vendor changes, or executive authority should trigger known-good out-of-band verification before action. |
+| Scoring / action posture | Max-merge floor lift only, non-additive; strong look-alike findings may feed `sender_identity` as evidence attribution only; no rubric point-structure change in this retrofit. |
+| Default rollout | Default-off / opt-in until a signed calibration record exists. |
+| Autonomous action | None. |
+| Promotion conditions | Signed calibration record showing acceptable false-positive behavior, adversarial coverage, benign near-neighbor coverage, cross-tenant isolation, no raw-value leakage, deterministic results, and useful evidence output. |
+| Demotion conditions | Overclaims beyond evidence, false positives above accepted calibration boundary, missed serious look-alike cases, cross-tenant leakage, raw-value leakage, unsupported recommendations, autonomous-action wording, or failed retests. |
+| Retest evidence | Updated synthetic/adversarial/benign cases plus regression proof after any correction. |
+| Calibration requirement | The signed calibration record required by §10.A Q5 before default-on or increased influence. |
+| Failure modes | Inherits §4 named failure modes: new-vendor false positive, regional-brand false positive, homoglyph false negative, combosquat over-firing, cross-tenant leakage, input DoS, and authority drift. |
+| Required tests | Inherits §5 test requirements: unit, break-it, no-network, no-block-verb, no raw-value leak, default-off no-regression, crash resistance, cross-tenant isolation, and determinism. |
+| Audit requirements | Any implementation or future retrofit/revision remains subject to `complete_gate.py`; this wrapper itself is gated as metadata-only. |
+| Signed-spec dependencies | `Agent_Design_Contract_Template_Deep_Dive.md`, `Vendor_Baseline_Store_Deep_Dive.md`, `Tiered_Detection_Intensity_Deep_Dive.md`, `Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md`, `VISION.md`, and `Compliance_and_Trend_Watch_Process.md`. |
+| Build Authorization dependency | The existing implementation remains governed by the signed detector spec and prior build authorization; this wrapper authorizes no new code, no default-on, no rubric change, no buyer-facing claim, and no runtime behavior change. |
+
+---
+
 ## §0 Purpose
 
 Catch the case where an email's **sending identity domain** is a deliberate look-alike of a domain the tenant already trusts — a typosquat, homoglyph, combosquat, TLD-swap, or subdomain-spoof of a known-good vendor/brand domain — even when SPF/DKIM/DMARC pass for the look-alike domain itself (the attacker owns it and authenticates it correctly).

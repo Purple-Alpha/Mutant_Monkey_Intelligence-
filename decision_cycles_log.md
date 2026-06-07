@@ -265,3 +265,30 @@ CYCLE 8 — 2026-06-05T04:10Z
                  but no detector scores the SENDING/identity domain vs known-good domains, which an
                  attacker-owned look-alike passes cleanly. So #10 is genuinely net-new + complementary;
                  D4 locks reuse of the existing homoglyph machinery so the two cannot drift apart.
+
+CYCLE 9 — 2026-06-07T01:05Z
+  OBSERVE: Agent Design Contract Template §11 signed and banked; §10.A Q2 names the immediate
+           #10/#21 metadata-only retrofit as the next post-sign-off step. Git freeze cleared;
+           Linux is the sole development surface; branch clean at start and local-only [ahead 2].
+           No code/build/runtime authorization active for this milestone.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    A #10/#21 metadata-only Agent Design Contract wrapper retrofit       L2 R1 E2 FC1 Rv2  TOTAL 8
+    B Local-AI audit substrate planning (spec-only)                      L2 R1 E1 FC1 Rv2  TOTAL 7
+    C Mutant Monkey package-auditor D9 calibration plan                  L1 R1 E2 FC1 Rv2  TOTAL 7
+    D Promote another swarm-map agent build slice                        L1 R1 E1 FC1 Rv1  TOTAL 5
+    E Do nothing / stop for tonight                                      L0 R1 E0 FC1 Rv2  TOTAL 4
+  SELECTED:      ACTION A (operator-chosen, not rubric-ranked).
+  EXPECTED:      Add Agent Design Contract wrapper metadata to #10 Lookalike Domain and #21 Executive
+                 Impersonation specs only: layer, authority, two-pass role, decision-evidence-record
+                 contribution, promotion/demotion, tests/audit dependencies. Preserve signed detector
+                 contracts unchanged; no detector logic, scoring, rollout, rubric, code, runtime, buyer
+                 claim, or Build Authorization change.
+  EXECUTED AT:   2026-06-07T01:05Z
+  AUDIT VERDICT: PASS (Step-8 self-audit before completion gate): both target specs received wrapper
+                 blocks only, under the Agent Design Contract §7 retrofit boundary; detector contracts
+                 below the wrappers remain unchanged. Completion gate clean 0/0:
+                 audit_outputs/agent_design_contract_retrofit_10_21_20260607_20260607T010948Z.md.
+  SURPRISES:     Initial gate packet was too large (315,428 bytes) because manifest reads/relevant
+                 contracts pulled full signed specs into the packet. Corrected by trimming `files_read`
+                 and keeping the Agent Design Contract Template as the relevant signed contract while
+                 the touched detector specs remained in the packet as modified files.
