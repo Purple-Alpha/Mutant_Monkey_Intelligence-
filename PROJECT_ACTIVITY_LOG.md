@@ -26,6 +26,31 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Swarm spine: first real detector wrapped on the governed-agent contract (Header Divergence)
+**Actor:** Matt (build-direction call: wrap an existing detector before wiring the challenge pass); Cursor (build).
+
+**Action:** Built + tested (runtime code) + gate
+
+**Files Changed:**
+- `core/blackboard/models.py` (new `RecordType.AGENT_CONTRIBUTION` + `AgentContributionPayload` + union/PAYLOAD_MODELS)
+- `core/blackboard/__init__.py` (export)
+- `core/orchestrator/routes.py` (new `submit_agent_contribution` route)
+- `core/orchestrator/__init__.py` (export `submit_agent_contribution`)
+- `core/orchestrator/header_divergence_agent.py` (NEW — `HeaderDivergenceAgent`)
+- `tests/test_header_divergence_agent.py` (NEW — 11 tests, end-to-end proof)
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (Header Analysis status note)
+
+**Reason:**
+Matt overrode the natural next spine slice (challenge pass) with a clear rationale: wiring Layer 5 against stubbed contributions would mean retrofitting two layers at once if the contract needed adjustment under real data. Wrap one real detector end-to-end first. Built `HeaderDivergenceAgent` wrapping `score_header_divergence` (Layer 2 Detection, facts-only — emits divergence indicators as `observed_facts`, no score/interpretation per the L2 promotion bar). Proven end-to-end: seed email on the Blackboard -> Commander dispatches the agent -> `analyze` reads the email via `MissionContext.source_record_id` (the contract's documented input path) -> real `AgentContribution` -> persisted to the Blackboard via a new registry-gated `AGENT_CONTRIBUTION` record type -> Commander assembles a real `DecisionEvidenceRecord` with a real SHA-256 `inputs_digest`. Full suite 1189 passed / 1 skipped; gate clean.
+
+**Findings the real detector surfaced (Matt's instinct confirmed):** (1) the contract had no persistence path for contributions — added `RecordType.AGENT_CONTRIBUTION` + payload + route (additive, pattern-following, implements Matt's "contribution writes to the blackboard"); (2) input access was already designed (agents read the case record from the Blackboard via `source_record_id`), so no contract-shape change was needed.
+
+**Governance boundary (deliberate):** this is the runtime PROOF the contract holds on real data, NOT a formal promotion. Header Analysis stays `DETECTOR_FUNCTION` on the scoreboard until its Agent Design Contract wrapper spec is signed (the L2 promotion bar). For that reason `HeaderDivergenceAgent` is intentionally NOT registered in `build_default_registry`; callers wire it with an explicit registry entry until the wrapper is signed. The Swarm Commander was left untouched (its locked no-DER-persistence boundary holds; only per-agent contributions persist).
+
+**Next Step (spine):** signed Agent Design Contract wrapper for Header Analysis to formally promote it, then the Layer 5 challenge pass against now-proven real contributions, then the second detector. Sequence Matt set: first governed detector -> challenge pass -> second detector -> repeat.
+
+---
+
 ## 2026-06-07 - Strategic Direction Matrix §11 SIGNED
 **Actor:** Matt (operator-authored §11 signature); Cursor (recorded signature, ran the sign-off gate).
 

@@ -47,7 +47,7 @@
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
-| 6 | Header Analysis | `DETECTOR_FUNCTION` | `core/scoring/header_divergence_detector.py`, `email_authentication_detector.py`, `received_chain_parser.py` | 2 Detection | A |
+| 6 | Header Analysis | `DETECTOR_FUNCTION` (contract proven 2026-06-07; promotion pending signed wrapper) | `core/scoring/header_divergence_detector.py`, `email_authentication_detector.py`, `received_chain_parser.py`; runtime governed wrapper proof `core/orchestrator/header_divergence_agent.py` (`HeaderDivergenceAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |
 | 7 | Sender Identity | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (impersonation_analysis) | 2 Detection | A |
 | 8 | Reply-To Mismatch | `DETECTOR_FUNCTION` | `core/scoring/ghost_thread_detector.py` + header divergence | 2 Detection | A |
 | 9 | Domain Reputation | `NOT_STARTED` | none | 2 Detection | A |

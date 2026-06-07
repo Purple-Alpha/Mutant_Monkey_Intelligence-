@@ -45,6 +45,26 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+FORK 1 — 2026-06-07T21:55Z   [type: STRATEGIC]
+  CONTEXT: Swarm spine — what to build after the Swarm Commander case loop (slices 1-5
+           committed). §4 trigger met: build direction / agent sequencing. Decided by Matt
+           directly with written rationale; the matrix was NOT scored (operator-direct call,
+           which the matrix permits — it ranks, Matt selects).
+  OPTIONS (operator-direct; no matrix scoring run):
+    A Wrap an existing detector (Header Analysis) end-to-end on the contract first
+    B Wire the Layer 5 challenge pass into the Commander first (natural next spine slice)
+  RECOMMENDED_NEXT_STEP: Wrap Header Divergence end-to-end to prove the Agent contract holds on
+           real detector output before building Layer 5 on top of it.
+  SELECTED:  OPTION A. Matt's call. Rationale: wiring the challenge pass against stubbed
+           contributions risks retrofitting Layer 5 and Layer 2 at once if the contract needs
+           adjustment under real data; prove the contract on one real detector first.
+  OUTCOME:   Built HeaderDivergenceAgent end-to-end (real AgentContribution -> new
+           AGENT_CONTRIBUTION blackboard record -> real DER w/ SHA-256 inputs_digest). Full suite
+           1189 passed/1 skipped; gate clean. Instinct confirmed: the real detector surfaced the
+           missing contribution-persistence path, which a stub would have hidden. Governed-agent
+           PROMOTION still pending the signed Agent Design Contract wrapper (kept out of the
+           default registry until then).
+
 CYCLE 1 — 2026-06-04T15:36Z
   OBSERVE: Next-Action Decision Rubric §11 SIGNED (uncommitted last night). Cyber Insurance
            generator Pass 1 committed + friction-free under §18.3; verification baseline green.
