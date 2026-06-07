@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Agent Design Contract metadata retrofit applied to #10 and #21
+**Actor:** Matt Nichol (selected Action 1); Cursor executed.
+
+**Action:** Updated / Gated / Committed
+
+**Files Changed:**
+- `4. Product_Roadmap/Lookalike_Domain_Detector_Deep_Dive.md`
+- `4. Product_Roadmap/Executive_Impersonation_Detector_Deep_Dive.md`
+- `decision_cycles_log.md`
+
+**Reason:**
+Matt selected Action 1 from the Next-Action Decision Rubric cycle: the #10/#21 metadata-only retrofit. This executes `Agent_Design_Contract_Template_Deep_Dive.md` §10.A Q2 after §11 sign-off while honoring §7.0's immutability boundary. Each detector spec received a separate **Agent Design Contract Wrapper (metadata-only retrofit)** declaring canonical layer, authority level, Stage posture, role/boundary, explicit non-authorities, inputs/outputs/evidence, data minimization, tenant isolation, two-pass role, Decision Evidence Record contribution, human/verification triggers, scoring/action posture, rollout, autonomous-action status, promotion/demotion, retest/calibration, failure modes, tests, audit requirements, signed dependencies, and Build Authorization dependency.
+
+The retrofit does **not** change either detector's signed contract: D-decisions, §10.A decisions, scoring bands/floors, default-off posture, input surface, data-minimization rules, rubric linkage, Build Authorization status, code, runtime behavior, buyer-facing claims, and push state remain unchanged. Completion gate clean 0/0: `audit_outputs/agent_design_contract_retrofit_10_21_20260607_20260607T011044Z.md`. Committed `cc63fca`.
+
+**Next Step:**
+Tracker refresh only (this entry + handshake). Then pick the next milestone from the remaining scored candidates or stop.
+
+---
+
 ## 2026-06-06 - Git freeze cleared; Linux-native committed, Windows demoted to cold-backup-only
 **Actor:** Matt Nichol (directed the test + the decision); Cursor executed and recorded.
 
