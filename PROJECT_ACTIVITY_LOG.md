@@ -26,6 +26,23 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Strategic Direction Matrix drafted (pre-§11) - strategic counterpart to the tactical rubric
+**Actor:** Matt (operator instinct: score direction forks in a matrix); Claude (design pressure-test, advisory lane per §2.1.2); Cursor (drafted into spec form).
+
+**Action:** Created / Indexed (pre-§11 draft spec)
+
+**Files Changed:**
+- `4. Product_Roadmap/Strategic_Direction_Matrix_Deep_Dive.md` (new, pre-§11 DRAFT)
+- `MASTER_INDEX.md`
+
+**Reason:**
+Matt's instinct - tie-breaks / "which direction do we go" forks should be scored in a matrix, not decided by vibe - was correct and pointed at a gap: the signed tactical Next-Action Decision Rubric has no money/time axis and is built for in-session method, not path-setting direction. Rather than silently mutate the signed rubric (calibration-drift failure mode), the design was routed to Claude, who pinned: keep it separate; 0-3 per axis x 5 axes (Friction Cost, Architecture Fit, Revenue Path Support, Time-to-Value Ratio, Target Completeness), ceiling 15; bands 11-15 build / 7-10 review / 0-6 park; trigger rules (the PROJECT_HANDSHAKE-direction-change test); anti-delay rules; named failure modes. Cursor drafted it into the project deep-dive spec template (§0-§11) and disambiguated it from the Consequence Matrix (effects vs ranking) to prevent a naming collision. Drafted only - §11 sign-off is operator-authored and unsigned; the matrix may be used informally but never claimed as signed.
+
+**Next Step:**
+Resolve §10 open questions (logging surface, Consequence-Matrix ordering, per-axis weighting) when Matt is ready, then Matt signs §11. Until then it is a usable but unsigned draft.
+
+---
+
 ## 2026-06-07 - Swarm spine build slice 5: Swarm Commander case loop (#1/#2, Stage A, in-memory)
 **Actor:** Matt (explicit build directive); Cursor built. Codex gave pre-build say with corrections.
 
