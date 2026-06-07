@@ -1217,6 +1217,20 @@ class AgentRegistryEntry(StrictModel):
     can_mutate: bool = False
     can_access_production_data: bool = False
     max_hops: int = Field(default=10, ge=1, le=10)
+    # --- Governed-swarm dispatch metadata (Blue-Team Swarm build, slice 1) ---
+    # Layer/authority per the adopted 6-layer Design Tree
+    # (1 Command, 2 Detection, 3 Verification, 4 Evidence,
+    # 5 Challenge/Red-Team, 6 Learning/Governance). All four fields are
+    # defaulted so every pre-existing registry constructor stays valid; an
+    # agent should set ``layer``/``authority_level`` explicitly when it is
+    # promoted to a governed agent. Enforcement of stage/autonomy lives in the
+    # orchestrator dispatch guard (validate_agent_dispatch), not in this model.
+    # ``stage_allowed`` defaults to Stage A; ``autonomous_action_allowed``
+    # defaults False and is rejected outright in v1 (see validator below).
+    layer: int = Field(default=2, ge=1, le=6)
+    authority_level: int = Field(default=1, ge=1, le=6)
+    stage_allowed: Literal["stage_a", "stage_b", "stage_c", "stage_b_c_only"] = "stage_a"
+    autonomous_action_allowed: bool = False
 
     @model_validator(mode="after")
     def enforce_agent_safety(self) -> AgentRegistryEntry:
@@ -1224,6 +1238,15 @@ class AgentRegistryEntry(StrictModel):
             raise ValueError("Red agents are sandbox-only")
         if self.can_mutate and Environment.PRODUCTION in self.allowed_environments:
             raise ValueError("Mutation-capable agents are sandbox-only")
+        # Stage A discipline (VISION non-negotiable: analyze / recommend /
+        # evidence only). No agent may be granted autonomous action until a
+        # signed Stage B/C spec deliberately revises this guard.
+        if self.autonomous_action_allowed:
+            raise ValueError(
+                "autonomous_action_allowed is not permitted in v1 "
+                "(Stage A: analyze / recommend / evidence only; a signed "
+                "Stage B/C spec is required to enable autonomous action)"
+            )
         return self
 
 

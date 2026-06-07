@@ -82,6 +82,63 @@ def _write_record(context: RouteContext, record: BlackboardRecord) -> RouteResul
     return RouteResult(record=record, path=path)
 
 
+# Stage permission lattice for pre-dispatch gating. v1 runs Stage A only;
+# higher stages are reserved for signed-authorization agents. A
+# ``stage_b_c_only`` agent is intentionally never eligible for Stage A
+# (analyze) dispatch.
+_STAGE_DISPATCH_PERMISSIONS: dict[str, frozenset[str]] = {
+    "stage_a": frozenset({"stage_a"}),
+    "stage_b": frozenset({"stage_a", "stage_b"}),
+    "stage_c": frozenset({"stage_a", "stage_b", "stage_c"}),
+    "stage_b_c_only": frozenset({"stage_b", "stage_c"}),
+}
+
+
+def validate_agent_dispatch(
+    agent: AgentRegistryEntry,
+    *,
+    stage: str,
+    requests_autonomous_action: bool = False,
+) -> None:
+    """Pre-dispatch guard run at the router boundary before an agent is invoked.
+
+    Enforces two governed-swarm rules in the router (not inside the agent),
+    per the Blue-Team Swarm build order:
+
+    1. Stage gating - an agent may only be dispatched for a stage its registry
+       entry permits (``stage_allowed``).
+    2. Autonomy gating - autonomous action is rejected outright in Stage A and
+       is only ever permitted for an agent whose ``autonomous_action_allowed``
+       is set (which v1 forbids at the model level until a signed Stage B/C
+       spec).
+
+    Raises ``GovernanceError`` on any violation; returns ``None`` when the
+    dispatch is permitted. This guard does not itself invoke the agent.
+    """
+
+    permitted = _STAGE_DISPATCH_PERMISSIONS.get(agent.stage_allowed)
+    if permitted is None:
+        raise GovernanceError(
+            f"unknown agent stage_allowed: {agent.stage_allowed!r}"
+        )
+    if stage not in _STAGE_DISPATCH_PERMISSIONS:
+        raise GovernanceError(f"unknown dispatch stage: {stage!r}")
+    if stage not in permitted:
+        raise GovernanceError(
+            f"agent {agent.agent_id!r} (stage_allowed={agent.stage_allowed!r}) "
+            f"cannot be dispatched for {stage!r}"
+        )
+    if requests_autonomous_action:
+        if stage == "stage_a":
+            raise GovernanceError(
+                "autonomous action is never permitted in Stage A"
+            )
+        if not agent.autonomous_action_allowed:
+            raise GovernanceError(
+                f"agent {agent.agent_id!r} is not authorized for autonomous action"
+            )
+
+
 def submit_ingest_event(
     context: RouteContext,
     *,

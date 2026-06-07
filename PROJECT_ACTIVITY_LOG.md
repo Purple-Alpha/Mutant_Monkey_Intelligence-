@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Swarm spine build slice 1: dispatch metadata + router stage/autonomy guard
+**Actor:** Cursor (execution lane, main builder). Design locked by Claude; build plan reviewed by Codex; both advisory lanes consulted before code.
+
+**Action:** Code (slice 1 of 4 in the DER/interface build)
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/blackboard/models.py`
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/routes.py`
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_blackboard_models.py`
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_orchestrator_routes.py`
+
+**Reason:**
+First code slice of the governed-swarm spine, per Codex's corrected 4-slice plan (prerequisite-hardening first, scored 9/10). Added four defaulted governed-swarm dispatch fields to `AgentRegistryEntry` (`layer`, `authority_level`, `stage_allowed`, `autonomous_action_allowed`) — all defaulted so every pre-existing registry constructor stays valid. Added a model-level guard that rejects `autonomous_action_allowed=True` outright in v1 (Stage A discipline; a signed Stage B/C spec is required to revise it). Added `validate_agent_dispatch()` to `routes.py`: a pre-dispatch router guard that enforces stage gating (an agent only runs for a stage its `stage_allowed` permits; `stage_b_c_only` agents are never eligible for Stage A) and autonomy gating (autonomous action rejected outright in Stage A). Enforcement is in the router, not the agent. No agent invocation wired yet.
+
+**Verification:** Full runtime suite 1153 passed / 1 skipped / 0 failed (`.venv` pytest); the two touched test files 22 passed; ReadLints clean on all four files.
+
+**Next Step:**
+Slice 2 — `core/orchestrator/agent_contract.py` with `MissionContext`, `AgentContribution`, `ChallengeResult`, `DecisionEvidenceRecord`, and the `Agent` Protocol, including layer-restricted contribution-field validation.
+
+---
+
 ## 2026-06-07 - 70-agent scoreboard: five reconciliation questions RESOLVED (Claude design lane, pinned by Matt)
 **Actor:** Claude (design/pattern-reconciliation lane, per AGENTS §2.1.2) proposed; Matt pinned; Cursor applied.
 

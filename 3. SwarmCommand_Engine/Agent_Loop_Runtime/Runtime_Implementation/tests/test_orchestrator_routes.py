@@ -32,10 +32,49 @@ from core.orchestrator import (
     submit_weakness_report,
     trigger_workflow,
 )
+from core.orchestrator.routes import validate_agent_dispatch
 
 
 def context(tmp_path) -> RouteContext:
     return RouteContext(blackboard_root=tmp_path / "blackboard")
+
+
+def _stage_a_agent(stage_allowed: str = "stage_a") -> AgentRegistryEntry:
+    return AgentRegistryEntry(
+        agent_id="dispatch_test_001",
+        display_name="Dispatch Test Agent",
+        role=AgentRole.DETECTION,
+        allowed_environments={Environment.PRODUCTION, Environment.SANDBOX},
+        allowed_write_types={RecordType.DETECTION_RESULT},
+        stage_allowed=stage_allowed,
+    )
+
+
+def test_validate_agent_dispatch_allows_stage_a_for_stage_a_agent():
+    # No exception means the dispatch is permitted.
+    validate_agent_dispatch(_stage_a_agent(), stage="stage_a")
+
+
+def test_validate_agent_dispatch_rejects_out_of_stage():
+    with pytest.raises(GovernanceError, match="cannot be dispatched"):
+        validate_agent_dispatch(_stage_a_agent("stage_a"), stage="stage_b")
+
+
+def test_validate_agent_dispatch_rejects_stage_b_c_only_agent_in_stage_a():
+    with pytest.raises(GovernanceError, match="cannot be dispatched"):
+        validate_agent_dispatch(_stage_a_agent("stage_b_c_only"), stage="stage_a")
+
+
+def test_validate_agent_dispatch_rejects_autonomous_action_in_stage_a():
+    with pytest.raises(GovernanceError, match="never permitted in Stage A"):
+        validate_agent_dispatch(
+            _stage_a_agent(), stage="stage_a", requests_autonomous_action=True
+        )
+
+
+def test_validate_agent_dispatch_rejects_unknown_stage():
+    with pytest.raises(GovernanceError, match="unknown dispatch stage"):
+        validate_agent_dispatch(_stage_a_agent(), stage="stage_z")
 
 
 def test_ingest_route_writes_production_record(tmp_path):

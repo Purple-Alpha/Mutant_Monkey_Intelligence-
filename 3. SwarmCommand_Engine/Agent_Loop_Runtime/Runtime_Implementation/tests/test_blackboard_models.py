@@ -138,6 +138,29 @@ def test_unauthorized_record_type_is_rejected():
         validate_record_against_registry(record, detection_agent())
 
 
+def test_agent_registry_entry_governed_swarm_metadata_defaults():
+    agent = detection_agent()
+    # New governed-swarm dispatch metadata is defaulted so every pre-existing
+    # registry constructor stays valid without specifying it.
+    assert agent.layer == 2
+    assert agent.authority_level == 1
+    assert agent.stage_allowed == "stage_a"
+    assert agent.autonomous_action_allowed is False
+
+
+def test_agent_registry_entry_rejects_autonomous_action_in_v1():
+    with pytest.raises(ValidationError, match="autonomous_action_allowed is not permitted"):
+        AgentRegistryEntry(
+            agent_id="rogue_actuator",
+            display_name="Rogue Actuator",
+            role=AgentRole.WORKFLOW,
+            allowed_environments={Environment.PRODUCTION},
+            allowed_write_types={RecordType.WORKFLOW_TRIGGER},
+            stage_allowed="stage_b_c_only",
+            autonomous_action_allowed=True,
+        )
+
+
 def test_policy_update_requires_signed_sandbox_record():
     payload = PolicyUpdatePayload(
         policy_name="invoice_detection_threshold",
