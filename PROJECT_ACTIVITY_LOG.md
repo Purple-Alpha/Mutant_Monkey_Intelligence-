@@ -26,6 +26,30 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Butterfly Hard-Stop adopted (Option A); Consequence Matrix made mandatory-on-trigger
+**Actor:** Matt Nichol (proposed the protocol; gathered two independent external overviews; selected Option A); Cursor wrote.
+
+**Action:** Updated / Gated / Committed
+
+**Files Changed:**
+- `AGENTS.md` (new §7.1 Butterfly Hard-Stop Protocol; §7 flipped to mandatory-on-trigger)
+- `4. Product_Roadmap/Consequence_Matrix_Process.md` (§2/§3/§6: opt-in retired, now mandatory-on-trigger)
+- `4. Product_Roadmap/Mutant_Monkey_Package_Auditor_D9_Calibration_Plan.md` (two lean review refinements)
+
+**Reason:**
+Matt flagged that the "butterfly effect" discipline had drifted because the Consequence Matrix was wired opt-in ("agents do not run the matrix unless Matt asks") — opt-in depends on remembering, and remembering drifted (the §12 butterfly-effect-blindness failure mode recurred after the rule was first written). Adopted **Option A**: the matrix is now mandatory on a §2 trigger under a new **Butterfly Hard-Stop Protocol** (AGENTS.md §7.1). On trigger the agent STOPs the irreversible action, names the trigger, pre-scores options on the Next-Action Decision Rubric (unmodified), drafts the Consequence Matrix unasked, and lists the external questions; the stop lifts only when independent intel is in hand and Matt records the decision. Two guards bound it: anti-paralysis (the stop is on building, not thinking; it has a completion criterion) and anti-over-trigger (Bin-1 reversible/technical work never trips it; calibrate by substance + reversibility). "Product identity" is now defined (name, domain, brand, voice, claim-boundary, target buyer, category positioning). Independence clause: "gather intel" means an independent overview — a second model, research, or advisory lane — not necessarily Matt personally.
+
+This change was itself run THROUGH the protocol: Matt gathered two independent external overviews before deciding. Both converged on Option A. Both also confirmed a rubric correction — the actual axes are `leverage / risk_reduction / evidence_strength / future_cost / reversibility`; the external reviewer's first pass had misread E as "Effort" and Rv as "Revenue" and proposed a RICE/WSJF-style rescale (1-5 scale, per-axis weights, a revenue axis). That rescale was **declined** as the named "calibration drift" failure mode and a category error (this is a tactical next-action rubric, not a product-prioritization matrix). The Next-Action Decision Rubric was NOT modified; it is §11-signed with §10 closed.
+
+**Parked (not adopted), mapped to existing rubric D10:** the reviewer's rescale ideas (weighted 1-5 scale, per-axis weights, a revenue/time-to-market axis) are recorded here as future-revision candidates. They already fall under the signed rubric's **D10** clause, which defers per-axis weighting "to a future spec revision and gated on real calibration data showing systematic axis-level error." No signed-spec edit was made to park them. (Note: the operator's menu selection said "park as §10 questions," but §10 is closed on the signed spec; parking there would reopen it, so the log + D10 mapping is the correct non-drift home.)
+
+**D9 plan lean refinements (from the same external reviews, non-drift):** `baseline_reference.json` now carries `stage9_source_version` + `captured_at_utc` and is documented immutable-in-place (superseded only by a versioned re-baseline); §6 record schema echoes `baseline_source_version`; §4 adds a hard coverage precondition (a run must cover every §3 catalog row + hard boundary or it is `calibration_miss`, not `calibration_pass`).
+
+**Next Step:**
+Gate clean and commit as one slice. Future butterfly-class decisions follow §7.1.
+
+---
+
 ## 2026-06-06 - D9 calibration plan §9 resolved (lean-first / evidence-triggered hybrid)
 **Actor:** Matt Nichol (resolved the four questions after a strong-second-opinion review); Cursor wrote.
 

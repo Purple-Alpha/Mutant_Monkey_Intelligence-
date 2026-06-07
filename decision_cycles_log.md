@@ -292,3 +292,33 @@ CYCLE 9 — 2026-06-07T01:05Z
                  contracts pulled full signed specs into the packet. Corrected by trimming `files_read`
                  and keeping the Agent Design Contract Template as the relevant signed contract while
                  the touched detector specs remained in the packet as modified files.
+
+CYCLE 10 — 2026-06-07T03:25Z
+  OBSERVE: Matt proposed making the "butterfly effect" hard-stop mandatory (it had drifted because the
+           Consequence Matrix was opt-in: AGENTS.md §7 / Consequence_Matrix_Process §3 said agents do
+           not run the matrix unless asked). This is itself a governance/path-setting (butterfly) change,
+           so it was run THROUGH the proposed protocol: agent framed + pre-scored options, Matt gathered
+           TWO independent external overviews before deciding. Both converged on Option A and both
+           confirmed the rubric correction (axes are leverage/risk_reduction/evidence_strength/future_cost/
+           reversibility — the external reviewer's first pass had misread E as Effort and Rv as Revenue).
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    A Encode now: AGENTS §7.1 Butterfly Hard-Stop + flip Consequence Matrix mandatory-on-trigger  L2 R2 E2 FC1 Rv2  TOTAL 9
+    B Trial informally a few cycles, then encode if it holds                                       L1 R1 E2 FC2 Rv2  TOTAL 8
+    C Light touch: one trigger line, no matrix reactivation                                        L1 R1 E1 FC2 Rv2  TOTAL 7
+  SELECTED:      ACTION A (operator-chosen; endorsed by two independent external overviews + the
+                 live D9 §9 evidence that an outside view moved a decision the build lane could not
+                 self-correct). Honest flag carried to operator: A is highest but carries the real
+                 ongoing future cost (FC1) of permanent process overhead; Guards 1/2 are the mitigation.
+  EXPECTED:      AGENTS.md gains §7.1 Butterfly Hard-Stop Protocol (mandatory-on-trigger; product
+                 identity defined; anti-paralysis + anti-over-trigger guards; independence clause).
+                 Consequence_Matrix_Process flipped from opt-in to mandatory-on-trigger (§2/§3/§6).
+                 D9 plan gets two lean review refinements (baseline source-version/immutability fields;
+                 §3 coverage precondition). Next-Action Decision Rubric NOT modified (signed; §10 closed).
+                 Reviewer's rescale ideas parked against the existing D10 deferral, not in the spec.
+  EXECUTED AT:   2026-06-07T03:25Z
+  AUDIT VERDICT: PASS — completion gate clean 0 blocking / 0 warning
+                 (audit_outputs/butterfly_hard_stop_adoption_20260607_20260607T032853Z.md).
+  SURPRISES:     The a_full selection said "park rubric ideas as §10 questions," but the rubric spec is
+                 §11-signed with §10 explicitly closed (line 336). Parking there would reopen a signed
+                 spec (§6 violation). Corrected: parked the ideas in PROJECT_ACTIVITY_LOG mapped onto the
+                 spec's existing D10 deferral clause; no signed-spec edit. Intent preserved, mechanism fixed.

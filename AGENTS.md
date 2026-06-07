@@ -229,7 +229,35 @@ When Matt asks "what should we do next?" — that is a candidate to invoke the r
 
 That spec is **§11 SIGNED (2026-06-04)**; its §10 questions are closed (D13–D19). It is the live tactical engine — use it, and log each cycle to `decision_cycles_log.md`.
 
-For path-setting **"butterfly effect"** decisions that affect revenue, architecture, legal / insurance posture, buyer trust, product identity (rename / domain / rebrand), signed specs, or future autonomy, use `4. Product_Roadmap/Consequence_Matrix_Process.md`. Run the full matrix only when Matt asks — but **proactively FLAG the decision as a butterfly decision the moment you spot one**, and never bury it under a one-line consequence. Rubrics rank; the consequence matrix surfaces second-order effects; Matt decides. "butterfly effect" is also a catch-phrase Matt can say at any time to force this stop (§12).
+For path-setting **"butterfly effect"** decisions that affect revenue, architecture, legal / insurance posture, buyer trust, product identity (rename / domain / rebrand), signed specs, or future autonomy, use `4. Product_Roadmap/Consequence_Matrix_Process.md` under the **Butterfly Hard-Stop Protocol (§7.1)**. As of 2026-06-07 the matrix is **mandatory on trigger**, not operator-requested: you **proactively FLAG the decision the moment you spot one**, you draft the matrix without waiting to be asked, and you never bury the decision under a one-line consequence. Rubrics rank; the consequence matrix surfaces second-order effects; Matt decides. "butterfly effect" is also a catch-phrase Matt can say at any time to force this stop (§12).
+
+---
+
+## 7.1 Butterfly Hard-Stop Protocol (MANDATORY on trigger)
+
+Authored 2026-06-07 by Matt Nichol. Adopted as **Option A** after two independent external overviews converged on it (recorded in `decision_cycles_log.md` and `PROJECT_ACTIVITY_LOG.md`). This flips the Consequence Matrix from opt-in to **mandatory-on-trigger** and adds an explicit external-intel step. Reason: opt-in wiring is exactly what let butterfly discipline drift — the §12 "butterfly-effect blindness" failure mode recurred *after* the rule was first written, because firing the matrix depended on someone remembering to ask. A mandatory trigger removes the remembering.
+
+**Trigger — butterfly = outcome/scope-changing.** A decision trips the hard-stop if it changes any of: revenue path, architecture or a core dependency, legal / insurance posture (this *includes* regulatory / compliance impact — there is no separate trigger for it), buyer / MSP / SMB trust, **product identity**, the *substance* of a signed spec, future autonomy, or the originally-projected outcome in `VISION.md`. This reuses the Consequence Matrix §2 trigger list; it does not invent a second one.
+
+**Product identity (defined).** The project's name, domain, brand, voice, claim-boundary posture, target buyer, or category positioning. A change to any of these is path-setting.
+
+**On trigger, the agent MUST:**
+
+1. **STOP.** Do not build, commit, sign, or push the irreversible thing.
+2. **Name the trigger** out loud ("this is a butterfly decision because ...").
+3. **Frame the options and pre-score them** on the Next-Action Decision Rubric (§7, used as-is — never rescaled or reweighted to fit the moment; that is calibration drift, §12).
+4. **Draft the Consequence Matrix** (`Consequence_Matrix_Process.md` §4 template). This is now mandatory on trigger, not operator-requested.
+5. **List the specific external questions** worth an independent overview.
+
+Then wait for independent intel before building.
+
+**Resume condition (completion criterion — the stop must resolve, not park forever).** The hard-stop lifts when **(a)** independent intel is in hand and **(b)** the operator records the decision (matrix outcome + a `decision_cycles_log.md` entry). Only then does the agent build.
+
+**Guard 1 — anti-paralysis.** The stop halts the *irreversible action*, not *thinking*. During the stop the agent keeps momentum: framing, scoring, drafting the matrix, listing the intel questions, and any non-irreversible prep. A hard-stop with no completion criterion is drift dressed as caution.
+
+**Guard 2 — anti-over-trigger.** Bin-1 decisions — technical, reversible, substance-free (naming, file paths, formatting, equivalent approaches) — do **NOT** trip the hard-stop. Calibrate by substance + reversibility (§3.1.2). Firing the stop on trivia is the trivia-escalation failure mode (§12); skipping it on a true path-fork is butterfly-effect blindness (§12).
+
+**Independence is the point.** "Gather intel" means an *independent* overview — not necessarily Matt personally every time. A second model, outside research, or an advisory lane qualifies. The value is a viewpoint that is not the build lane's own bias. Proven 2026-06-07: an external overview moved the D9 §9 decision from an internal lean option (scored 8) to a hybrid (scored 10) and killed a heavier option that had scored 3. The bias the build lane could not see in itself was visible from outside.
 
 ---
 

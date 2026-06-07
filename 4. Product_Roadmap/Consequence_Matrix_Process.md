@@ -1,8 +1,8 @@
 # Consequence Matrix Process
 
-**Status:** DRAFT (pre-§11). Created 2026-05-30 from Matt's "butterfly effect" decision discussion.
+**Status:** DRAFT (pre-§11). Created 2026-05-30 from Matt's "butterfly effect" decision discussion. **Updated 2026-06-07: matrix is now MANDATORY on trigger (Butterfly Hard-Stop, AGENTS.md §7.1), not operator-requested.**
 **Owner:** Matt Nichol
-**Purpose:** Operator-triggered process for surfacing second-order consequences of path-setting decisions.
+**Purpose:** Mandatory-on-trigger process for surfacing second-order consequences of path-setting decisions, run under the Butterfly Hard-Stop Protocol.
 
 This file defines a lightweight consequence matrix for decisions whose effects may compound across revenue, architecture, legal / insurance posture, buyer trust, product identity, signed specs, or future autonomy.
 
@@ -20,7 +20,7 @@ NorthStar now has three distinct internal decision surfaces:
 | `Next_Action_Decision_Rubric_Deep_Dive.md` | Tactical / session-level | What should we do next inside this work session? |
 | Consequence Matrix | Path-setting / second-order effects | What future doors does this decision open, close, or quietly authorize? |
 
-The Consequence Matrix exists for the "butterfly effect" layer. It is used before committing to a path, not during every normal build step.
+The Consequence Matrix exists for the "butterfly effect" layer. It is used before committing to a path, not during every normal build step. As of 2026-06-07 it is run under the **Butterfly Hard-Stop Protocol** (`AGENTS.md` §7.1): when a §2 trigger fires, the agent halts the irreversible action, drafts this matrix without being asked, and waits for an independent intel pass before the operator decides.
 
 ---
 
@@ -53,7 +53,7 @@ The Consequence Matrix exists for the "butterfly effect" layer. It is used befor
 
 ## §2 Trigger Rule
 
-Use the Consequence Matrix only when at least one of these is true:
+When at least one of these is true, the Butterfly Hard-Stop fires and the matrix is mandatory (AGENTS.md §7.1):
 
 1. The decision affects revenue, architecture, legal / insurance posture, buyer trust, product identity, signed specs, or future autonomy.
 2. The decision creates or changes buyer-facing language, evidence-record schema, audit artifact category, or claim-boundary surface.
@@ -68,9 +68,9 @@ Do not use the matrix just because a decision feels important. Use it because th
 
 ## §3 Operating Rule
 
-The matrix surfaces consequences. Matt decides.
+The matrix surfaces consequences. Matt decides. This division does not change under the 2026-06-07 update — what changed is *when the matrix gets drafted*, not *who decides*.
 
-Agents may flag that a decision appears to meet the trigger criteria, but agents do not run or fill the matrix unless Matt explicitly asks.
+On a §2 trigger, the agent **must draft the matrix without waiting to be asked** (Butterfly Hard-Stop, AGENTS.md §7.1) and halt the irreversible action until an independent intel pass is in hand and Matt records the decision. The agent fills the cells as a surfacing exercise; it never selects the outcome. The old opt-in rule ("agents do not run the matrix unless Matt explicitly asks") is **retired** — it was the wiring that let butterfly discipline drift. Matt can still invoke the matrix manually any time, and the "butterfly effect" catch-phrase still forces the stop.
 
 The matrix is not:
 
@@ -168,7 +168,7 @@ Time-box v1 usage to 15 minutes. If a cell cannot be filled in one or two senten
 ## §6 Failure Modes
 
 1. **Process gravity.** The matrix starts firing on ordinary tasks and slows the build.
-   - Mitigation: operator-triggered only; use §2 triggers.
+   - Mitigation: §2 triggers only, calibrated by substance + reversibility (Butterfly Hard-Stop Guard 2, AGENTS.md §7.1). Bin-1 reversible/technical work never trips it. Now that the matrix is mandatory-on-trigger, this guard — not operator opt-in — is what prevents over-application.
 
 2. **False precision.** A filled table looks rigorous even when cells are guesses.
    - Mitigation: label cells as `fact`, `estimate`, or `unknown` when needed.
@@ -185,8 +185,8 @@ Time-box v1 usage to 15 minutes. If a cell cannot be filled in one or two senten
 6. **Overweighting hypothetical risk.** Future fears freeze lab work.
    - Mitigation: use the matrix for path-setting choices, not bounded experiments.
 
-7. **Agent over-application.** Agents propose a matrix to look careful.
-   - Mitigation: agents may flag triggers but do not run the matrix without Matt's instruction.
+7. **Agent over-application.** Agents draft a matrix on non-path-setting work to look careful (this risk rose when the matrix became mandatory-on-trigger).
+   - Mitigation: the §2 trigger gate + Guard 2 (substance + reversibility) bound what counts as a trigger. Drafting a matrix on Bin-1 reversible work is itself the trivia-escalation failure mode (AGENTS.md §12); the fix is tighter trigger calibration, not reverting to opt-in.
 
 ---
 
