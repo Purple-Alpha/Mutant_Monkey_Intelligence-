@@ -14,6 +14,7 @@ from pathlib import Path
 from uuid import UUID
 
 from core.blackboard import (
+    AgentContributionPayload,
     AgentRegistryEntry,
     AuditMeta,
     AuditStatus,
@@ -504,6 +505,37 @@ def submit_vendor_baseline_audit(
         tenant_id=tenant_id,
         environment=Environment.PRODUCTION,
         record_type=RecordType.VENDOR_BASELINE_AUDIT,
+        source_agent=source_agent,
+        workflow_id=workflow_id,
+        parent_record_id=parent_record_id,
+        payload=payload.model_dump(mode="json"),
+    )
+    return _write_record(context, record)
+
+
+def submit_agent_contribution(
+    context: RouteContext,
+    *,
+    tenant_id: str,
+    environment: Environment,
+    source_agent: str,
+    payload: AgentContributionPayload,
+    workflow_id: str | None = None,
+    parent_record_id: UUID | None = None,
+) -> RouteResult:
+    """Append one governed-agent ``AgentContribution`` to the Blackboard.
+
+    Registry-gated like every other write: ``source_agent`` must equal the
+    contributing agent's registry id and that entry must list
+    ``RecordType.AGENT_CONTRIBUTION`` in ``allowed_write_types``. This is the
+    approved persistence path for the per-agent contributions the Swarm
+    Commander aggregates into a Decision Evidence Record.
+    """
+
+    record = BlackboardRecord(
+        tenant_id=tenant_id,
+        environment=environment,
+        record_type=RecordType.AGENT_CONTRIBUTION,
         source_agent=source_agent,
         workflow_id=workflow_id,
         parent_record_id=parent_record_id,

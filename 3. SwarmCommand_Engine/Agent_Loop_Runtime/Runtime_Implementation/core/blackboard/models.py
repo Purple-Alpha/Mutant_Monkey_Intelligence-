@@ -37,6 +37,7 @@ class RecordType(str, Enum):
     EFFECTIVE_PARAMETERS_REPORT = "effective_parameters_report"
     VENDOR_BASELINE_AUDIT = "vendor_baseline_audit"
     TWO_CHANNEL_CONFIRMATION = "two_channel_confirmation"
+    AGENT_CONTRIBUTION = "agent_contribution"
 
 
 class AuditStatus(str, Enum):
@@ -1166,6 +1167,34 @@ class SyntheticEmailAttackCasePayload(StrictModel):
         return self
 
 
+class AgentContributionPayload(StrictModel):
+    """Persisted, append-only form of one governed agent's ``AgentContribution``.
+
+    Blue-Team Swarm: the authoritative, layer-restriction-validated type is
+    ``core.orchestrator.agent_contract.AgentContribution``. This payload is the
+    Blackboard-persistence mirror of one already-validated contribution, plus
+    the case linkage (``case_id`` / ``inputs_digest``) the Commander aggregates
+    a Decision Evidence Record from. The closed-vocabulary outcome fields are
+    typed ``str | None`` here on purpose: the strict ``Literal`` validation and
+    the layer-field boundary already ran when the source ``AgentContribution``
+    was constructed; duplicating those ``Literal`` types here would force a
+    circular import (``agent_contract`` already imports from this module). The
+    facts-only discipline still holds - no reasoning trace is stored.
+    """
+
+    case_id: UUID
+    inputs_digest: str = Field(min_length=1)
+    agent_id: str = Field(min_length=1)
+    layer: int = Field(ge=1, le=6)
+    observed_facts: list[str] = Field(default_factory=list)
+    verification_source: str | None = Field(default=None, max_length=253)
+    verification_outcome: str | None = None
+    challenge_result: str | None = None
+    challenge_rationale: str | None = Field(default=None, max_length=160)
+    control_mapping: str | None = Field(default=None, max_length=160)
+    underwriter_note: str | None = Field(default=None, max_length=160)
+
+
 PayloadModel: TypeAlias = (
     IngestEventPayload
     | DetectionResultPayload
@@ -1184,6 +1213,7 @@ PayloadModel: TypeAlias = (
     | EffectiveParametersReportPayload
     | VendorBaselineAuditPayload
     | TwoChannelConfirmationPayload
+    | AgentContributionPayload
 )
 
 
@@ -1205,6 +1235,7 @@ PAYLOAD_MODELS: dict[RecordType, type[BaseModel]] = {
     RecordType.EFFECTIVE_PARAMETERS_REPORT: EffectiveParametersReportPayload,
     RecordType.VENDOR_BASELINE_AUDIT: VendorBaselineAuditPayload,
     RecordType.TWO_CHANNEL_CONFIRMATION: TwoChannelConfirmationPayload,
+    RecordType.AGENT_CONTRIBUTION: AgentContributionPayload,
 }
 
 

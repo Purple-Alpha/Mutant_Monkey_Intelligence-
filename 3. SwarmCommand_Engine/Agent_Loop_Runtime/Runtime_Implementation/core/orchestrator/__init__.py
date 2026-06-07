@@ -14,6 +14,7 @@ from .swarm_commander import SwarmCommander
 from .routes import (
     RouteContext,
     RouteResult,
+    submit_agent_contribution,
     submit_audit_verdict,
     submit_daily_digest,
     submit_detection_result,
@@ -49,6 +50,7 @@ __all__ = [
     "build_default_registry",
     "default_sandbox_tenant_for",
     "validate_agent_dispatch",
+    "submit_agent_contribution",
     "submit_audit_verdict",
     "submit_daily_digest",
     "submit_detection_result",
