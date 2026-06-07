@@ -87,6 +87,8 @@ The expected pattern is:
 
 **Operational rule:** Future agents should use `/home/socialarchitect/northstar` as the working copy. If Windows and Linux copies diverge, stop and reconcile by commit hash before editing.
 
+**Operator-directed hardening, 2026-06-06 (Linux-native commitment):** The Windows path is now **cold backup / reference only; editing it is abandoned.** It is no longer a working copy and no longer a routine divergence-reconciliation peer — Linux is the single development surface. Context: the prior git "freeze" (commands returning no exit status, forcing manual relays) was an environment fault, verified cleared this session by running `git status -sb` and `git log --oneline -3` directly in the Linux terminal (clean, exit code 0). The freeze is logged as environment friction in `PROJECT_ACTIVITY_LOG.md` and is explicitly NOT counted against the multi-model lane-structure trial at its 2026-06-09 review.
+
 ---
 
 ## Cyber Insurance evidence package build surface

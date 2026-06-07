@@ -26,6 +26,31 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - Git freeze cleared; Linux-native committed, Windows demoted to cold-backup-only
+**Actor:** Matt Nichol (directed the test + the decision); Cursor executed and recorded.
+
+**Action:** Verified / Decided / Updated
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (this entry + a friction-note one-liner added to the lane-trial entry below)
+- `CURRENT_STATE_MAP.md` (Development surface entry extended with the operator-directed cold-backup-only demotion)
+- `PROJECT_HANDSHAKE.md` (Current State + Git State + Last Updated refreshed)
+
+**Reason:**
+The git "freeze" (commands returning no exit status, forcing a manual relay to settle git state) is dead. Run directly in the Linux integrated terminal this session: `git status -sb` returned `## safety/queue-drift-cleanup-20260528...github/safety/queue-drift-cleanup-20260528 [ahead 1]` with a clean working tree, and `git log --oneline -3` returned `e9d9d95` / `be6d8df` / `3c72efe` — both with exit code 0, no hang, no relay. Direct execution works, so the relay burden is gone.
+
+Operator decision recorded as this slice:
+1. **Linux-native commitment.** `/home/socialarchitect/northstar` (WSL2 Ubuntu) is the sole development surface, reaffirming the 2026-06-01 Linux-first doctrine.
+2. **Windows copy demoted to cold-backup-only.** `C:\Unified Folder Structure NorthStar + SwarmCommand Venture` is now cold backup / reference only; **editing it is abandoned.** It is no longer a working copy and no longer a divergence-reconciliation peer for routine work.
+3. **Freeze logged as environment friction, not a lane-structure failure.** The relays the freeze caused are attributed to the frozen git environment, NOT to advisory/execution lane discipline, so they do not unfairly count against the lane structure at the 2026-06-09 trial review.
+
+**Reconciliation note:** the branch is `[ahead 1]` of `github` — local `e9d9d95` ("Refresh handshake for be6d8df banked state") is not yet pushed. That is normal local-first state (pushes are explicit); the prior handshake text that said both remotes resolve to `be6d8df` was stale and is corrected in this slice.
+
+**Next Step:**
+Gate this doc slice clean, commit under STANDING (doc/log slice; no push inferred), then pick the next milestone. Standing recommendation: the #10/#21 metadata-only retrofit. Authorizes no code, no build, no runtime change, and no push.
+
+---
+
 ## 2026-06-06 - Multi-model lane structure: 3-day trial opened
 **Actor:** Matt Nichol (declared the trial); Cursor recorded.
 
@@ -44,6 +69,7 @@ The multi-model lane structure (execution vs advisory lanes, the git-step rule, 
 - Gate rejections caused by lane confusion.
 - Catch rate (advisory lane catches a boundary slip / claim overreach / edge case the execution lane would have missed — e.g. the forbidden-language "guaranteed" catch on 2026-06-06). The value side.
 - Friction notes (any handoff slower than just doing it in-lane).
+- **Inline friction note 2026-06-06 (ENVIRONMENT, not lane):** the git "freeze" (commands returning no exit status, forcing manual git relays) was an environment fault, now cleared by running git directly in the Linux terminal. Any relays it caused are environment friction and must NOT be scored against lane discipline on 2026-06-09. See the "Git freeze cleared" entry above.
 
 **Review trigger:** 2026-06-09 (Tuesday, ~3 days). Read this entry + any inline incident notes and answer one question: did lane discipline reduce stale errors more than it added relay cost? Keep if yes; if relay cost dominates, that is the evidence to spec the war room; if a wash, simplify. War room stays parked until then.
 
