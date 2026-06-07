@@ -1,6 +1,6 @@
 # Mutant Monkey Package-Auditor D9 Calibration Plan
 
-**Status:** Operational plan v1 (pre-deployment). Authored 2026-06-06 by Cursor on Matt Nichol's instruction. This plan operationalizes the **D9 calibration gate** defined in `4. Product_Roadmap/Mutant_Monkey_Package_Audit_Brief.md` §6 and locked by `4. Product_Roadmap/Real_Customer_Data_Controls_Deep_Dive.md` D9. It is a runnable calibration procedure, not a signed spec; it edits no signed spec and locks no new decision.
+**Status:** Operational plan v1 (pre-deployment); §9 open questions operator-resolved 2026-06-06 (see §9.A, lean-first / evidence-triggered hybrid). Authored 2026-06-06 by Cursor on Matt Nichol's instruction. This plan operationalizes the **D9 calibration gate** defined in `4. Product_Roadmap/Mutant_Monkey_Package_Audit_Brief.md` §6 and locked by `4. Product_Roadmap/Real_Customer_Data_Controls_Deep_Dive.md` D9. It is a runnable calibration procedure, not a signed spec; it edits no signed spec and locks no new decision.
 
 **Owner:** Matt Nichol
 
@@ -42,7 +42,7 @@
 
 Calibration is a single run over the full corpus that must satisfy all three:
 
-1. **R1 — Match the external Stage-9 baseline.** On every package in the **known-good set**, the auditor must return `clean` with a non-empty `surfaces_examined`, and must NOT raise a false `blocked`. The reference is the external Stage-9 (Grok-path) verdict on the same synthetic package; the local verdict must agree (`clean` where Grok is `clean`).
+1. **R1 — Match the frozen Stage-9 baseline.** On every package in the **known-good set**, the auditor must return `clean` with a non-empty `surfaces_examined`, and must NOT raise a false `blocked`. The reference is the **frozen `baseline_reference.json`** record for that package (its `package_input_sha256` + recorded Stage-9 `clean` verdict, captured once during the Grok-available window per §9.A Q1), not a live external call. The local verdict must agree (`clean` where the frozen baseline is `clean`).
 2. **R2 — Catch planted defects.** On every package in the **planted-defect set**, the auditor must return `blocked` AND emit the specific expected blocking finding (correct `location` + `contract_ref`) from the §3 catalog. A `blocked` for the wrong reason is a partial miss (see §4) — the right defect must be the cited cause.
 3. **R3 — Refuse a broken / self-audited package.** On every package in the **refuse set**, the auditor must refuse (structurally invalid package, undeterminable synthetic/real classification, or builder == auditor), not return `clean` or a normal `blocked`. Refusal is its own outcome and must name why.
 
@@ -112,10 +112,12 @@ One saved, timestamped record per calibration run (synthetic evidence path; late
 calibration_run_id:
 run_started_at_utc:
 run_finished_at_utc:
+git_commit:                 # repo revision the run executed against (provenance, per §9.A Q4)
 auditor_profile:            # model/runtime + brief version
-baseline_reference_profile: # external Stage-9 path used for R1 comparison, if any
+baseline_reference:         # path to baseline_reference.json (the frozen R1 reference, per §9.A Q1)
+baseline_sha256:            # optional tamper breadcrumb for baseline_reference.json
 corpus_manifest:            # list of package_ids + their set (known_good | planted_defect | refuse) + input_sha256
-results:                    # per package: package_id, set, expected, observed_verdict, cited_finding, contract_ref, match (yes/partial/no)
+results:                    # per package: package_id, set, expected_code, observed_code, observed_verdict, contract_ref, match (yes | partial | no)
 r1_known_good:              # pass/fail + any false-blocked list
 r2_planted_defects:         # pass/fail + any false-pass / wrong-cause list
 r3_refuse:                  # pass/fail + any blessed-broken list
@@ -123,6 +125,8 @@ calibration_verdict:        # calibration_pass | calibration_miss
 miss_records:               # for each miss: case_id, observed vs expected, correction_loop_ref
 notes:
 ```
+
+Per §9.A: `expected_code` and `observed_code` recorded side by side in `results` are the partial-miss "diff" — no separate diff engine is built. The record is plaintext under `audit_outputs/` and holds synthetic/redacted inputs only.
 
 A calibration run without this saved record does not count (same discipline as the brief §4 output contract and controls D13).
 
@@ -151,12 +155,31 @@ Until a fresh `calibration_pass` record exists for the current profile, the audi
 
 ---
 
-## §9 Open questions (operator-only)
+## §9 Open questions (operator-resolved 2026-06-06 — see §9.A)
 
 - **Q1 — Baseline reference during calibration.** Use the live external Stage-9 (Grok) path as the R1 reference while tokens remain, or freeze a recorded set of known-good Stage-9 verdicts as the reference so calibration does not depend on a live external call?
 - **Q2 — Corpus size.** Is the seed corpus (existing Bluefin synthetic packages + the six PD cases + three RF cases) sufficient for v1, or set a minimum count (e.g. N known-good, N planted) before a `calibration_pass` is meaningful?
 - **Q3 — Partial-miss handling.** Is "right verdict, wrong cited cause" a hard block (current §4 default) or a warning that may pass with an operator note?
 - **Q4 — Storage path.** Confirm the synthetic calibration records live under the synthetic evidence paths now, migrating to the Production Evidence Store layout only once that spec is built.
+
+### §9.A Operator-resolved decisions (2026-06-06, lean-first / evidence-triggered hybrid)
+
+Resolved by Matt Nichol after a strong-second-opinion review. The framing is **lean-first, evidence-triggered hybrid**: keep the primary gate simple, deterministic, and human-reviewable, and add only narrow backstops that give genuinely different signal at low maintenance cost (grounded in YAGNI, small-test economics, coverage != assurance, snapshot-style frozen baselines, and DORA minimum-viable-platform guidance). The lean core is the product; the backstops are diagnostic attachments, not coequal subsystems.
+
+1. **Q1 — Frozen baseline reference.** The R1 reference is a **single `baseline_reference.json` versioned in git**, not a live Grok call and not handshake front-matter. It is captured once during the Grok-available window: per known-good package, its `package_input_sha256` and the recorded Stage-9 `clean` verdict. R1 compares the local verdict to that frozen record (snapshot-style: compare to stored reference, fail on mismatch). Deterministic, offline, zero token cost, no provider-uptime dependency. Re-baselining is a deliberate, reviewed change, not an automatic overwrite.
+2. **Q2 — Small hand-curated corpus; evidence-driven expansion.** Start with **15-20 named, hand-curated fixtures**, each mapping to exactly one contract rule, one hard boundary, or one known error class (the six §3 PD cases + three RF cases + a small known-good set spanning the genuinely different package shapes). Coverage is measured by "every §3 catalog row and every hard boundary has at least one case," not by raw count. No speculative matrix/permutation generation in v1. Expansion is evidence-driven: every escaped defect becomes one new permanent regression fixture (see backstop 2 below). A larger generated corpus is deferred until measured repeated blind spots justify it.
+3. **Q3 — Exact-match hard failure.** Because the contract is deterministic with exactly one acceptable finding code per planted defect, any expected/observed mismatch — including "right verdict, wrong cited cause" — is a **hard failure** in v1. In a negative-feedback auditor the cited reason is the product; a verdict reached for the wrong reason is a miscalibrated auditor that got lucky. A structural diff engine is **not** built; the expected and observed codes recorded side by side in the §6 record are the diff. Relaxing to "multiple business-equivalent codes" requires later operator decision plus evidence that such cases are common and valid.
+4. **Q4 — Plaintext artifact under `audit_outputs/`.** Synthetic calibration records are plaintext (JSON or Markdown) under the existing `audit_outputs/` convention — uncompressed and greppable, not a bespoke compressed vault and not inside `audit_tools/` (which is in the gate hook scope). Provenance is an in-file `git_commit` plus an optional `baseline_sha256` tamper breadcrumb (OWASP-style: tamper evidence + strict permissions + standard format, not a custom store). Records hold only synthetic/redacted inputs; no secrets, tokens, connection strings, or unnecessary PII; files stay non-web-accessible with strict permissions. Migration to the Production Evidence Store layout happens only once that spec is built and a real path is authorized.
+
+### §9.B Backstops (lean diagnostic attachments, not subsystems)
+
+1. **Escaped-defect promotion (active in v1).** Whenever a real run or later review finds a miss the calibration set should have caught, sanitize that case and add it permanently to the §3 corpus as a named regression fixture. This converts proven risk into a durable asset (risk-based testing; "important error class" coverage).
+2. **Human-reviewable artifacts (active in v1).** The frozen baseline file, the fixture pack, and the run records stay small and plaintext specifically so a person can eyeball and approve them. The real backup for "no tests for the tests" is human inspection of a compact artifact, not another machine.
+3. **Targeted mutation testing (DEFERRED — trigger-gated).** Mutation testing of the calibration logic is a recognized way to check that the suite actually asserts failures, but it presumes a calibration runner that does not exist in this doc-only v1 and pulls in a new tool/dependency. It is therefore **deferred**, to be activated only when: (a) the calibration runner code is implemented, (b) it is scoped to the changed calibration modules, and (c) it runs periodically or pre-release, never per-commit. Until then this backstop is named but dormant; it adds no dependency now.
+
+### §9.C Escalation triggers (when heavier automation earns its cost)
+
+Graduate to richer tooling (generated corpus expansion, broader fixtures, structural diffing) only when the lean design starts failing measurable reality (DORA-style: measure, prioritize by risk, iterate). Concrete triggers: repeated calibration escapes in the same contract-rule family within a quarter; the corpus growing large enough that human review becomes painful; exact-match failures repeatedly flagging outputs that are business-equivalent rather than wrong; or audit artifacts beginning to carry live sensitive data that need stronger retention/tamper controls. If these signals stay low, extra machinery is waste.
 
 ## §10 Sign-off
 
