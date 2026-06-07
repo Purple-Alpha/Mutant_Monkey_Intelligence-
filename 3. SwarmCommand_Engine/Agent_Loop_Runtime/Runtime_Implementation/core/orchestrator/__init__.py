@@ -10,6 +10,7 @@ from .agent_contract import (
     MissionContext,
 )
 from .registry import build_default_registry
+from .swarm_commander import SwarmCommander
 from .routes import (
     RouteContext,
     RouteResult,
@@ -44,6 +45,7 @@ __all__ = [
     "MissionContext",
     "RouteContext",
     "RouteResult",
+    "SwarmCommander",
     "build_default_registry",
     "default_sandbox_tenant_for",
     "validate_agent_dispatch",

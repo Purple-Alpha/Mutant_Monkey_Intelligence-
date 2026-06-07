@@ -26,6 +26,28 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Swarm spine build slice 5: Swarm Commander case loop (#1/#2, Stage A, in-memory)
+**Actor:** Matt (explicit build directive); Cursor built. Codex gave pre-build say with corrections.
+
+**Action:** Code (build-order step 2 of the spine)
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/swarm_commander.py` (new)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/__init__.py`
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_swarm_commander.py` (new)
+
+**Reason:**
+`SwarmCommander.run_case(context, agents, stage="stage_a")` dispatches Stage A agents through the shared `Agent` interface and assembles one in-memory `DecisionEvidenceRecord`. Per agent: look up the `AgentRegistryEntry`, reject any metadata divergence between the runtime agent and its registry entry (layer / authority_level / stage_allowed / autonomous_action_allowed), run `validate_agent_dispatch()` (stage + autonomy gating) before invocation, call `analyze()`, and reject a contribution whose agent_id/layer does not match the dispatched agent. Disposition is the conservative deterministic v1 rule from Codex (no contributions -> human_required; contradicted challenge -> human_required; inconclusive challenge -> hold; contribution verification contradicted -> hold; all facts empty -> clear; else suspicious) - no risk arithmetic.
+
+Codex corrections honored: DER is NOT persisted to the Blackboard (thin aggregation, in-memory/returned); `package_generator` is NOT imported (evidence_anchor stays None unless a caller injects an `anchor_provider`); ChallengeResult kept outcome-only (challenge_pass empty in this analyze-only slice; challenge wiring is a later slice); enums kept lowercase. The Commander never sets `audit_record_id`. No autonomous action under any path; enforcement is in the Commander/router, not the agent. Matt's literal "contributions write to the blackboard" line was deferred because it would require a new RecordType the locked DER design and Codex both forbid in this slice - flagged, not silently dropped.
+
+**Verification:** Full runtime suite 1178 passed / 1 skipped / 0 failed (+11 new commander tests); ReadLints clean on all three files.
+
+**Next Step:**
+Slice 6 (Mission Context routing / required-agent selection) and slice 7 (challenge-pass wiring), per Codex's breakdown - both route to Codex for its say before drafting.
+
+---
+
 ## 2026-06-07 - Swarm spine build slices 2-4: agent contract types (DER + shared interface)
 **Actor:** Cursor (execution lane). Design locked by Claude, plan reviewed by Codex.
 
