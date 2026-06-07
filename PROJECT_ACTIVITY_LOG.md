@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Operator declares the full 70-agent swarm the #1 terminal target
+**Actor:** Matt Nichol (operator declaration); Cursor recorded.
+
+**Action:** Recorded (anti-drift capture)
+
+**Files Changed:**
+- `PROJECT_HANDSHAKE.md`
+- `PROJECT_ACTIVITY_LOG.md`
+
+**Reason:**
+Matt stated explicitly that building the **full 70-agent blue-team swarm** is his #1 target — more important to him than the rest of the build, and the entire reason the rest of the project exists ("the only reason I am building the rest of this project is to get to the 70 agent swarm"). The target is the FULL 70 agents (the ten-team / six-layer map in `agent_concepts/`), **not** the 14-agent V1 subset (which is only §10 of the Design Tree, a starter proving-set) and **not** a trimmed version ("we are not discussing less than"). No other track is to be sacrificed to reach it; the disciplined spec-first -> `complete_gate.py` -> operator-sign path continues unchanged, now pointed at the swarm. The cyber-insurance / evidence / revenue work continues as the instrumental path that funds and proves the project on the way to the swarm.
+
+Captured here and in the handshake Current State tonight specifically so it is not lost between sessions or models. The deliberate top-level VISION.md re-ranking wording is intentionally deferred to a fresh session — re-ranking the swarm as the headline at the vision level is a path-setting framing change and should be worded carefully, not buried in a late-night edit. This entry is the durable record of the operator's intent in the meantime.
+
+Clarification logged for the next session (what is solid vs what is muddy): the operator's *design map* is detailed and intact (70 agents, 10 teams, 6 layers, roles, authority levels, two-pass, reputation, evidence record). What is missing is the *build plan* on top of it — (1) build status verified against current code (the existing tags are approximate and dated 2026-06-05), (2) the distinction between an `EXISTS` detector function and a governed *agent* in the map's shape, and (3) a build order + a single consolidated scoreboard instead of two overlapping maps.
+
+**Next Step:**
+Next session, build the consolidated **70-agent swarm scoreboard**: all 70 agents listed, build status verified against current code (done / partial / not-started), dependency/build order, and a per-agent "done means a governed agent, not just a detector function" definition. Reconcile the 70-agent SPARK and the 6-layer Design Tree into that one tracker. Then resume the disciplined per-agent build loop (rubric -> spec -> gate -> sign), pointed at the swarm.
+
+---
+
 ## 2026-06-07 - Butterfly Hard-Stop adopted (Option A); Consequence Matrix made mandatory-on-trigger
 **Actor:** Matt Nichol (proposed the protocol; gathered two independent external overviews; selected Option A); Cursor wrote.
 
