@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - 70-agent swarm build scoreboard v1 created (execution-lane verified)
+**Actor:** Matt Nichol (directed "keep building" toward the #1 swarm target); Cursor built.
+
+**Action:** Created / Indexed
+
+**Files Changed:**
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (new)
+- `MASTER_INDEX.md`
+
+**Reason:**
+Built the consolidated 70-agent swarm scoreboard that the handshake set as the standing #1 build artifact, reconciling the SPARK 70-agent inventory and the 6-layer Design Tree against the live runtime. Per AGENTS §2.1.2 the work was split by lane: the execution lane verified runtime status against code (the columns it can verify), and the design/pattern-reconciliation decisions (canonical 6-layer placement for ambiguous agents, canonical naming, the ~36 SPARK-only agents, the "done = governed agent" definition, and build order) are flagged as open questions ROUTED TO CLAUDE rather than finalized here.
+
+Headline finding: the swarm is currently a detector stack, not a governed swarm. Execution-lane file-level verification: exactly one GOVERNED_AGENT (#10 Lookalike Domain), ~28 DETECTOR_FUNCTIONs, 7 GOVERNANCE_DOC_ONLY, 7 SPEC_ONLY (incl. #21 which has Agent Design Contract metadata but no detector code), ~22 NOT_STARTED. The orchestration spine is the critical gap: a router + registry exist (`core/orchestrator/`), but no Swarm Commander case loop (#1) or Mission Context (#2) assembles agents into one governed decision with a Decision Evidence Record. Builds/authorizes nothing (Rule 4: a row is status, never build permission).
+
+**Next Step:**
+Route the five open reconciliation questions to Claude (design lane) for canonical layer/name/scope/done-definition/build-order decisions; then resume the per-agent Rubric -> spec -> gate -> sign build loop, spine first.
+
+---
+
 ## 2026-06-07 - Operator declares the full 70-agent swarm the #1 terminal target
 **Actor:** Matt Nichol (operator declaration); Cursor recorded.
 
