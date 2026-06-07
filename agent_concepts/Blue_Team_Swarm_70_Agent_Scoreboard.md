@@ -25,7 +25,9 @@
 
 **Rule 4 (anti-laundering, from Claude review trap 11):** This scoreboard ranks and records status. It NEVER means "approved" or "ready to build." `recommended_*` and build-order are advisory only. Matt selects; the normal Rubric -> spec -> gate -> sign path authorizes each agent. A future session must not read a row as build permission.
 
-**Layer-reconciliation tiebreaker (from Claude review):** when a SPARK agent maps ambiguously between two 6-layer placements, the **more restrictive (higher-authority / more-gated) layer wins** until Matt resolves it explicitly. All `canonical_6layer` values below are **DRAFT pending Claude design review per AGENTS §2.1.2** — pattern-reconciliation is Claude's lane, not the execution lane's.
+**Layer-reconciliation tiebreaker (from Claude review):** when a SPARK agent maps ambiguously between two 6-layer placements, the **more restrictive (higher-authority / more-gated) layer wins** until Matt resolves it explicitly.
+
+**RECONCILIATION RESOLVED 2026-06-07** — the five open questions were routed to Claude (design/pattern-reconciliation lane per AGENTS §2.1.2) and pinned by Matt. The pins are recorded in full in the "Reconciliation resolved" section at the foot of this file; the layer column below is now pinned (no longer DRAFT) accordingly.
 
 **6 layers (Design Tree):** 1 Command | 2 Detection | 3 Verification | 4 Evidence | 5 Challenge/Red-Team | 6 Learning/Governance.
 
@@ -33,17 +35,17 @@
 
 ## Team 1 — Swarm command (SPARK #1-#5)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
-| 1 | Swarm Commander | `DETECTOR_FUNCTION` (partial spine) | `core/orchestrator/routes.py`, `registry.py` (router + registry only; no case loop) | 1 Command | A |
-| 2 | Mission Context | `NOT_STARTED` | none | 1 Command | A |
-| 3 | Risk Triage | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` | 1 Command / 2 Detection (ambiguous → 1) | A |
-| 4 | Human-in-the-Loop | `GOVERNANCE_DOC_ONLY` | VISION non-negotiables 6/7; `core/operator_state/` kill-switch | 1 Command | A |
-| 5 | Decision Integrity | `GOVERNANCE_DOC_ONLY` | AGENTS authority model; client-facing rubric contradiction guard | 6 Governance (ambiguous w/ 1) | A |
+| 1 | Swarm Commander Agent | `DETECTOR_FUNCTION` (partial spine) | `core/orchestrator/routes.py`, `registry.py` (router + registry only; no case loop) | 1 Command | A |
+| 2 | Mission Context Agent | `NOT_STARTED` | none | 1 Command | A |
+| 3 | Risk Triage Agent | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` | 1 Command | A |
+| 4 | Human-in-the-Loop Agent | `GOVERNANCE_DOC_ONLY` | VISION non-negotiables 6/7; `core/operator_state/` kill-switch | 1 Command | A |
+| 5 | Decision Integrity Agent | `GOVERNANCE_DOC_ONLY` | AGENTS authority model; client-facing rubric contradiction guard | 6 Learning/Governance | A |
 
 ## Team 2 — Email identity / sender (SPARK #6-#12)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 6 | Header Analysis | `DETECTOR_FUNCTION` | `core/scoring/header_divergence_detector.py`, `email_authentication_detector.py`, `received_chain_parser.py` | 2 Detection | A |
 | 7 | Sender Identity | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (impersonation_analysis) | 2 Detection | A |
@@ -55,7 +57,7 @@
 
 ## Team 3 — Vendor-payment / BEC (SPARK #13-#22)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 13 | Vendor Relationship Intelligence | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 2 Detection | A |
 | 14 | Payment Change Detection | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` | 2 Detection | A |
@@ -70,7 +72,7 @@
 
 ## Team 4 — Phishing / credential (SPARK #23-#29)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 23 | Credential Phishing | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (credential-harvest signals) | 2 Detection | A |
 | 24 | MFA Manipulation | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (mfa-fatigue signals) | 2 Detection | A |
@@ -82,7 +84,7 @@
 
 ## Team 5 — Attachment / ransomware precursor (SPARK #30-#38)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 30 | Attachment Risk | `DETECTOR_FUNCTION` | `core/precursor/attachment_classifier.py` | 2 Detection | A |
 | 31 | PDF Fingerprint | `DETECTOR_FUNCTION` | `core/scoring/document_metadata_detector.py` | 2 Detection | A |
@@ -96,7 +98,7 @@
 
 ## Team 6 — Language / behavior / deception (SPARK #39-#45)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 39 | Language Pressure | `DETECTOR_FUNCTION` | `core/scoring/callback_phishing_detector.py` (TOAD vocabulary) | 2 Detection | A |
 | 40 | Tone Drift | `NOT_STARTED` | none | 2 Detection | A |
@@ -108,7 +110,7 @@
 
 ## Team 7 — Evidence / audit (SPARK #46-#53)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 46 | Evidence Package | `DETECTOR_FUNCTION` | `core/evidence_package/package_generator.py` | 4 Evidence | A |
 | 47 | Case Timeline | `DETECTOR_FUNCTION` (partial) | Reaction Timing Log + `audit_trail` in evidence package | 4 Evidence | A |
@@ -121,7 +123,7 @@
 
 ## Team 8 — Cyber insurance (SPARK #54-#60)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 54 | Cyber Insurance Evidence | `DETECTOR_FUNCTION` | `core/evidence_package/` (signed Cyber Insurance Evidence Package) | 4 Evidence | A |
 | 55 | Control Mapping | `SPEC_ONLY` | cyber-insurance spec partial | 4 Evidence | A |
@@ -133,7 +135,7 @@
 
 ## Team 9 — Learning / testing (SPARK #61-#68)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 61 | Test Case Generator | `DETECTOR_FUNCTION` | `core/sandbox/red_agents/` (synthetic case generators) | 5 Challenge/Red-Team | A |
 | 62 | Regression Test | `DETECTOR_FUNCTION` | `tests/` pytest suite + cadence gate | 5 Challenge/Red-Team | A |
@@ -146,10 +148,10 @@
 
 ## Team 10 — Review / decision integrity (SPARK #69-#70)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (DRAFT) | Stage |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
 | 69 | Swarm Health | `NOT_STARTED` | none | 6 Governance | A |
-| 70 | Final Review | `GOVERNANCE_DOC_ONLY` (partial) | `complete_gate.py` + `core/evidence_package/package_auditor.py` | 1 Command / 6 Governance | A |
+| 70 | Final Review Agent | `GOVERNANCE_DOC_ONLY` (partial) | `complete_gate.py` + `core/evidence_package/package_auditor.py` | 6 Learning/Governance | A |
 
 ---
 
@@ -165,12 +167,50 @@
 
 ---
 
-## Open reconciliation questions — ROUTED TO CLAUDE (AGENTS §2.1.2, design/pattern-reconciliation lane)
+## Reconciliation resolved (2026-06-07) — Claude design lane, pinned by Matt
 
-The execution lane built the verified-status columns above. The following are design/reconciliation decisions and are **not** the execution lane's to finalize:
+The execution lane built the verified-status columns above. The five reconciliation questions were routed to Claude per AGENTS §2.1.2 and pinned by Matt. Decisions, verbatim in effect:
 
-1. **Canonical 6-layer placement for the ambiguous agents** — #3 (Command vs Detection), #5 (Command vs Governance), #11/#17 (Detection vs Verification), #70 (Command vs Governance). Apply the more-restrictive-layer tiebreaker until Matt resolves.
-2. **Canonical agent names per slot** — the Command layer differs between maps (Risk Triage + Decision Integrity vs Severity Commander + Final Review). Pin one name per agent.
-3. **The ~36 agents in SPARK but not in the Design Tree's ~34-agent canonical tree** — confirm each is in-scope for the full 70, or explicitly parked.
-4. **"Done = governed agent" definition per layer** — what fields/tests/DER contribution make a DETECTOR_FUNCTION count as a GOVERNED_AGENT for its layer.
-5. **Build order** — recommended: spine first (#1 case loop, #2 Mission Context, the DER record type, the agent interface), then wrap existing DETECTOR_FUNCTIONs into governed agents, then net-new detectors, then Stage B (#38). Confirm/resequence.
+### Q1 — Canonical layer placement (pinned in the tables above)
+- **#3 Risk Triage Agent → Layer 1 Command.** It scores and routes incoming signals to the right detection agents — orchestration, not detection. A detection agent observes; Risk Triage decides who observes.
+- **#5 Decision Integrity Agent → Layer 6 Learning/Governance.** Restrictive tiebreaker applies hard: it audits whether decisions were made correctly. Placing it in Command would let it sit inside the loop it audits — violates builder-auditor separation.
+- **#11 Known-Good Contact → Layer 3 Verification.** Confirms identity through a pre-registered out-of-band source; detection flags the anomaly, Known-Good Contact resolves it.
+- **#17 Vendor Master Record → Layer 3 Verification.** A baseline reference used during verification; feeds Verification agents, does not detect independently.
+- **#70 Final Review Agent → Layer 6 Learning/Governance.** Restrictive tiebreaker: it audits whether swarm output was correct. In Command it could authorize its own outputs.
+
+### Q2 — Canonical names (pinned in the tables above)
+| # | Canonical name | Reason |
+|---|---|---|
+| 1 | Swarm Commander Agent | Design Tree name, more precise |
+| 2 | Mission Context Agent | exact match |
+| 3 | Risk Triage Agent | SPARK name; "Severity Commander" implies Stage-A authority it must not hold |
+| 4 | Human-in-the-Loop Agent | exact match |
+| 5 | Decision Integrity Agent | exact match, now Layer 6 |
+| 70 | Final Review Agent | "Final Review" correctly implies audit, not command |
+
+### Q3 — SPARK-only agent scope (default in-scope; mark blockers, never silent exclusion)
+Full 70 unless Matt explicitly parks. No agent is marked out-of-scope without Matt's call — the scoreboard marks the **blocker**, not the exclusion. Three blocker tags:
+- `park_stage_b_c` — any agent whose primary function requires autonomous action (send a callback, block a payment, isolate a mailbox). In-scope conceptually, cannot be built until a Stage B authorization is signed. (e.g. #38 Containment.)
+- `real_data_blocker` — cyber-insurance agents #54–#60 inherit the Compliance §5 claim-sensitive flag; not built until real-data controls (D9 calibration et al.) are in place.
+- `merged` — any agent duplicating a function already covered by a governed agent at another layer: not parked, marked `merged` with a note on which agent absorbs it.
+
+### Q4 — Promotion bar per layer (this is the "done = governed agent" definition)
+A detector function becomes a `GOVERNED_AGENT` only when it clears the bar for its layer; until then it stays `DETECTOR_FUNCTION` no matter how much code exists.
+- **L1 Command:** signed agent contract w/ routing rules + escalation conditions; explicit declaration of what it cannot authorize unilaterally; must NOT hold a Detection/Verification function in the same contract. Bar: contract + authority ceiling + documented human escalation path.
+- **L2 Detection:** signed contract w/ data surface, trigger condition, output schema; ≥1 test proving it fires on a known-bad input and does not fire on a known-good input; Decision Evidence Record contribution declared (observed facts only — no interpretation at this layer without a separate pass). Bar: contract + passing known-input tests + DER fields declared.
+- **L3 Verification:** signed contract; explicit declaration it uses only pre-registered known-good sources, NEVER data from the suspicious event; callback/confirmation outcome logged to the evidence chain. Bar: contract + written source-restriction rule + verified evidence-chain contribution.
+- **L4 Evidence:** signed contract; builder-auditor separation enforced structurally (the agent that assembles a packet cannot audit it); sealed-bundle schema w/ SHA-256 anchor + immutability guarantee. Bar: contract + structural separation + signed bundle schema.
+- **L5 Challenge/Red-Team:** signed contract; ≥1 documented failure mode it is designed to catch w/ a regression test proving the catch; Retest Evidence contribution (every challenge result logged, pass or fail). Bar: contract + failure mode + regression test + retest log.
+- **L6 Learning/Governance:** signed contract; explicit declaration of NO write access to anything it audits; promotion/demotion conditions in writing; signed record of ≥1 decision it audited. Bar: contract + structural read-only constraint + written promotion conditions + one audited decision on record.
+
+### Q5 — Build order (confirmed, spine-first, with one adjustment)
+1. **Shared agent interface + Decision Evidence Record type first.** Everything builds against this; building governed agents before the DER type exists forces a retrofit of all of them.
+2. **#1 Swarm Commander case loop + #2 Mission Context** — the orchestration spine; nothing routes correctly without them.
+3. **Metadata-only retrofit for #10 Lookalike and #21 Executive Impersonation** — already closest to governed; add wrapper fields without touching signed detector contracts.
+4. **Wrap existing detector functions into governed agents**, Detection-layer order, starting with highest evidence-value score.
+5. **Net-new detectors** (no existing code), in build-order rank.
+6. **Stage B autonomy agents** — #38 Containment and any `park_stage_b_c` agent — gated behind explicit signed Stage B authorization. Do not sequence until the Stage B spec is signed.
+
+**Spine drift trap (watch during build):** the Swarm Commander case loop must be built as a **router, not a decision-maker.** It routes to Risk Triage; Risk Triage scores and routes to Detection. If the Commander starts absorbing Risk Triage's function, a Command agent is making detection-level decisions — the first drift trap.
+
+**Authority note:** these pins resolve the SPARK↔Design-Tree ambiguity; they do not create or expand signed scope, and they do not authorize any agent build (Rule 4). The per-agent Rubric → spec → gate → sign path still governs each promotion.

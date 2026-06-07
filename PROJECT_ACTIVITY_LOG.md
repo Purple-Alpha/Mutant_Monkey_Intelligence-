@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - 70-agent scoreboard: five reconciliation questions RESOLVED (Claude design lane, pinned by Matt)
+**Actor:** Claude (design/pattern-reconciliation lane, per AGENTS §2.1.2) proposed; Matt pinned; Cursor applied.
+
+**Action:** Updated
+
+**Files Changed:**
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md`
+
+**Reason:**
+The five reconciliation questions the execution lane flagged on the v1 scoreboard were routed to Claude and pinned by Matt. Applied verbatim: Q1 layer pins (#3 Risk Triage Agent -> L1 Command; #5 Decision Integrity Agent -> L6 Governance; #11 Known-Good Contact + #17 Vendor Master Record -> L3 Verification; #70 Final Review Agent -> L6 Governance, restrictive-layer tiebreaker for #5/#70); Q2 canonical names (#1 Swarm Commander Agent, #2 Mission Context Agent, #3 Risk Triage Agent, #4 Human-in-the-Loop Agent, #5 Decision Integrity Agent, #70 Final Review Agent); Q3 scope (full 70 default-in-scope; mark blockers not exclusions: park_stage_b_c, real_data_blocker for #54-60, merged); Q4 the per-layer promotion bar that defines "done = governed agent"; Q5 confirmed spine-first build order (DER type + agent interface first, then #1/#2 spine, then #10/#21 retrofit, then wrap detectors, then net-new, then Stage B) with the Commander-must-be-a-router drift-trap flag.
+
+These pins resolve SPARK<->Design-Tree ambiguity only; they create/expand no signed scope and authorize no agent build (scoreboard Rule 4). The per-agent Rubric -> spec -> gate -> sign path still governs each promotion.
+
+**Next Step:**
+Swarm build (after Todd Tuesday prep) resumes at Q5 step 1: define the shared agent interface + Decision Evidence Record type. That step is a design artifact -> route the DER/interface design to Claude first, then the execution lane drafts against the locked design.
+
+---
+
 ## 2026-06-07 - 70-agent swarm build scoreboard v1 created (execution-lane verified)
 **Actor:** Matt Nichol (directed "keep building" toward the #1 swarm target); Cursor built.
 
