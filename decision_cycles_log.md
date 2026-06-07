@@ -1,6 +1,10 @@
 # Decision Cycles Log
 
-Dedicated persistence surface for the **Next-Action Decision Rubric** (`4. Product_Roadmap/Next_Action_Decision_Rubric_Deep_Dive.md`, §11 SIGNED 2026-06-04). This artifact exists per locked decision **D15** (Q3 resolution) and is the Step 9 log target of the rubric's 10-step loop.
+Persistence surface for **both** decision tools, discriminated by a `type` field:
+- `type: TACTICAL` - the **Next-Action Decision Rubric** (`4. Product_Roadmap/Next_Action_Decision_Rubric_Deep_Dive.md`, §11 SIGNED 2026-06-04). This artifact exists per locked decision **D15** (Q3 resolution) and is the Step 9 log target of the rubric's 10-step loop. Tactical entries are `type: TACTICAL`.
+- `type: STRATEGIC` - the **Strategic Direction Matrix** (`4. Product_Roadmap/Strategic_Direction_Matrix_Deep_Dive.md`, pre-§11 draft). One shared log per the operator's 2026-06-07 call (matrix §2.4), so any direction change is reconstructable from one place.
+
+Entries with no `type` predate the field and are tactical-rubric cycles (`type: TACTICAL` by default). Adding the `type` field is an additive, backward-compatible change; it does not alter the signed rubric's behaviour. A one-line acknowledgement in the rubric spec's D15 is flagged for the next operator-authorized revision of that signed spec (not edited here, per spec-first discipline).
 
 Each cycle records the Step 5 output (candidates + per-axis scores + totals), the operator-selected action (operator-decided, **not** rubric-ranked — D2 / failure mode vii), the pre-execution expected outcome (D7), the Step 8 audit verdict (PASS / PARTIAL / FAIL), and any surprises or mismatch notes (D6 calibration input).
 
@@ -10,8 +14,10 @@ A score is never a decision. The rubric ranks; Matt selects; reality audits.
 
 ## Entry schema
 
+### Tactical (`type: TACTICAL`) - Next-Action Decision Rubric
+
 ```
-CYCLE <n> — <UTC timestamp>
+CYCLE <n> — <UTC timestamp>   [type: TACTICAL]
   OBSERVE: <factual current state only>
   OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
     ACTION 1   L_ R_ E_ FC_ Rv_   TOTAL _
@@ -22,6 +28,19 @@ CYCLE <n> — <UTC timestamp>
   EXECUTED AT:   <timestamp>
   AUDIT VERDICT: PASS | PARTIAL | FAIL
   SURPRISES:     <free-text notes; empty if none>
+```
+
+### Strategic (`type: STRATEGIC`) - Strategic Direction Matrix
+
+```
+FORK <n> — <UTC timestamp>   [type: STRATEGIC]
+  CONTEXT: <the path-setting fork; which §4 trigger it meets>
+  OPTIONS + SCORES (Friction / ArchFit / Revenue / TimeValue / TargetCompleteness x2, 0-3 each; ceiling 18):
+    OPTION 1   Fr_ Ar_ Rv_ Tv_ Tc_(x2)   TOTAL _ / 18
+    OPTION 2   Fr_ Ar_ Rv_ Tv_ Tc_(x2)   TOTAL _ / 18
+    (... 2+ options ...)
+  RECOMMENDED_NEXT_STEP: <one sentence>
+  SELECTED:  OPTION N. Matt's call. (operator-chosen, not matrix-ranked)
 ```
 
 ---

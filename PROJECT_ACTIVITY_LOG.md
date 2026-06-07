@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Strategic Direction Matrix: three §10 questions resolved (operator)
+**Actor:** Matt (operator decisions); Cursor (folded into the draft).
+
+**Action:** Revised (pre-§11 draft) + shared-log schema extended
+
+**Files Changed:**
+- `4. Product_Roadmap/Strategic_Direction_Matrix_Deep_Dive.md`
+- `decision_cycles_log.md` (schema extended with a `type` field + a STRATEGIC entry block)
+- `MASTER_INDEX.md`
+
+**Reason:**
+Same day it was drafted, Matt resolved three of the four §10 open questions: (1) **one shared log** - strategic runs go in `decision_cycles_log.md` with a `type: STRATEGIC` field, not a separate file (one place to reconstruct any direction change); (2) **Consequence Matrix is NOT a mandatory first pass** - it is a parallel tool for butterfly triggers, and consequence scoring is already embedded in the Friction Cost + Architecture Fit axes, so sequencing it ahead would double-count; (3) **Target Completeness weighted x2** - scale stays 0-3 per axis but Target Completeness is doubled in the total, ceiling becomes 18, bands rescaled to 14-18 build / 9-13 review / 0-8 park, structurally guaranteeing an option that ignores the 70-agent target cannot reach "build it" on the other four axes alone. Only §10 Q1 (file home) remains open. The shared-log `type` field is additive/backward-compatible and does not change the signed rubric's behaviour; a one-line D15 acknowledgement is flagged for the next operator-authorized revision of that signed spec rather than edited in now (spec-first discipline).
+
+**Next Step:**
+Settle §10 Q1 (file home) when Matt is ready, then he signs §11. Matrix is usable informally now; first strategic fork gets logged with `type: STRATEGIC`.
+
+---
+
 ## 2026-06-07 - Strategic Direction Matrix drafted (pre-§11) - strategic counterpart to the tactical rubric
 **Actor:** Matt (operator instinct: score direction forks in a matrix); Claude (design pressure-test, advisory lane per §2.1.2); Cursor (drafted into spec form).
 
