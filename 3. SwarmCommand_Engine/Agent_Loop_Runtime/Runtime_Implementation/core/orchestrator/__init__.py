@@ -1,5 +1,14 @@
 """Orchestrator routing primitives for approved Blackboard writes."""
 
+from .agent_contract import (
+    FINAL_REVIEW_AGENT_ID,
+    Agent,
+    AgentContribution,
+    ChallengeResult,
+    DecisionEvidenceRecord,
+    DecisionTimestamps,
+    MissionContext,
+)
 from .registry import build_default_registry
 from .routes import (
     RouteContext,
@@ -21,14 +30,23 @@ from .routes import (
     submit_vendor_baseline_audit,
     submit_weakness_report,
     trigger_workflow,
+    validate_agent_dispatch,
 )
 from .tenants import default_sandbox_tenant_for
 
 __all__ = [
+    "FINAL_REVIEW_AGENT_ID",
+    "Agent",
+    "AgentContribution",
+    "ChallengeResult",
+    "DecisionEvidenceRecord",
+    "DecisionTimestamps",
+    "MissionContext",
     "RouteContext",
     "RouteResult",
     "build_default_registry",
     "default_sandbox_tenant_for",
+    "validate_agent_dispatch",
     "submit_audit_verdict",
     "submit_daily_digest",
     "submit_detection_result",

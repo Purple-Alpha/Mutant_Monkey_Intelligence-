@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Swarm spine build slices 2-4: agent contract types (DER + shared interface)
+**Actor:** Cursor (execution lane). Design locked by Claude, plan reviewed by Codex.
+
+**Action:** Code (slices 2-4 of 4 in the DER/interface build)
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/agent_contract.py` (new)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/__init__.py`
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_agent_contract.py` (new)
+
+**Reason:**
+The shared governed-agent contract, build-order step 1, in one cohesive module. `MissionContext` (per-case framing + inputs_digest), `AgentContribution` (facts-only, with schema-enforced layer-restricted fields — a Detection-layer agent that writes a verification/challenge/evidence field raises ValidationError), `ChallengeResult` (pass-2 outcome + one client-safe sentence), `DecisionTimestamps` (four reaction-timing anchors), `DecisionEvidenceRecord` (thin aggregation: contributions + challenge_pass + disposition + human_state + evidence_anchor + audit_record_id; no reasoning trace stored), and the `Agent` Protocol (two methods: analyze always, challenge for Verification/Challenge layers). Slice 3 added the builder-auditor separation as a hard schema constraint: `audit_record_id` may only be set when `audit_writer_agent_id == FINAL_REVIEW_AGENT_ID` ("final_review_001"), so the assembler cannot self-audit; and `evidence_anchor` must match the existing `sha256:<64 hex>` package-hash convention (no new sealing invented). Slice 4 exported the new types + `validate_agent_dispatch` from `core.orchestrator`.
+
+**Verification:** Full runtime suite 1167 passed / 1 skipped / 0 failed (+14 new contract tests); ReadLints clean on all three files.
+
+**Next Step:**
+Spine continues at build-order step 2: the #1 Swarm Commander case loop + #2 Mission Context wiring that invokes agents through this interface and assembles a DER. That is the next build slice (design already locked); route to Codex for its say before drafting, per AGENTS §2.1.2.
+
+---
+
 ## 2026-06-07 - Swarm spine build slice 1: dispatch metadata + router stage/autonomy guard
 **Actor:** Cursor (execution lane, main builder). Design locked by Claude; build plan reviewed by Codex; both advisory lanes consulted before code.
 
