@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-06 - D9 calibration plan §9 resolved (lean-first / evidence-triggered hybrid)
+**Actor:** Matt Nichol (resolved the four questions after a strong-second-opinion review); Cursor wrote.
+
+**Action:** Updated / Gated / Committed
+
+**Files Changed:**
+- `4. Product_Roadmap/Mutant_Monkey_Package_Auditor_D9_Calibration_Plan.md`
+
+**Reason:**
+Matt resolved the four §9 open questions as a lean-first / evidence-triggered hybrid (grounded in YAGNI, small-test economics, coverage!=assurance, snapshot-style frozen baselines, DORA minimum-viable-platform). §9.A: Q1 frozen `baseline_reference.json` in git (not live Grok, not handshake front-matter); Q2 15-20 hand-curated fixtures, coverage = every catalog row + boundary, evidence-driven expansion only (no speculative generation); Q3 exact-match hard failure incl. right-verdict-wrong-cause, no diff engine; Q4 plaintext `audit_outputs/` artifact with `git_commit` + optional `baseline_sha256`, synthetic/redacted only, strict perms, not inside `audit_tools/`. §9.B backstops: escaped-defect promotion + human-reviewable artifacts active in v1; targeted mutation testing DEFERRED until the calibration runner code exists (trigger-gated, scoped to changed modules, periodic/pre-release). §9.C escalation triggers added (repeated same-rule escapes, painful corpus size, recurring business-equivalent exact-match failures, live sensitive data in artifacts). Reconciled §2 R1 and the §6 record schema to the frozen baseline.
+
+Process note: this decision was first presented as a bare option menu, which violates AGENTS.md §3.1 (decisions arrive pre-scored through the Next-Action Decision Rubric, never an unscored menu) and the Bin 1 silent-decide rule for technical/reversible choices. Corrected in-session by scoring the encoding options on the rubric before Matt selected.
+
+Doc-only, synthetic-only. Edits no signed spec, no infrastructure, no real data; a `calibration_pass` still requires controls D7 + substrate + explicit operator activation. Gate clean 0/0: `audit_outputs/d9_calibration_plan_section9_resolution_20260607_20260607T022102Z.md`. Committed `add8938`.
+
+**Next Step:**
+Tracker refresh (this entry + handshake). The plan is now operator-resolved through §9; next concrete build step (when authorized) would be the calibration runner itself, at which point the deferred mutation-testing backstop activates.
+
+---
+
 ## 2026-06-06 - Mutant Monkey package-auditor D9 calibration plan drafted
 **Actor:** Matt Nichol (selected the next milestone); Cursor drafted.
 
