@@ -1,6 +1,6 @@
 # Next-Action Decision Rubric — Spec-First Deep Dive
 
-**Status:** §11 SIGNED 2026-06-04 by Matt Nichol (Zebra-Comet). **§12 REVISION PENDING RE-SIGN (2026-06-08):** D13 revised for Build Sequencer adoption (Option B, `_Build_Sequencer_Adoption_Consequence_Matrix.md`). Queue ordering authority retired; scoreboard is canonical candidate generator. Re-sign required before the revision is live authority.
+**Status:** §11 SIGNED 2026-06-04 by Matt Nichol (Zebra-Comet). **§12 REVISION SIGNED 2026-06-08 by Matt Nichol:** D13 revised for Build Sequencer adoption (Option B, `_Build_Sequencer_Adoption_Consequence_Matrix.md`). Queue ordering authority retired; scoreboard is the canonical candidate generator. D13-rev is now live authority.
 **Date:** 2026-05-27
 **Owner:** Matt Nichol
 **Source-of-truth links:** `think_sheet.md` (existing project-idea rubric — distinct artifact), `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (existing email-explanation rubric — distinct artifact), `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §1.1 (rubrics-are-advisory supersession; this spec inherits and respects that doctrine), `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (canonical candidate generator per D13-rev / §12), `PROJECT_HANDSHAKE.md` (today's one-screen view), `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (operating mode under which this rubric is exercised). `PROJECT_BUILD_AND_AUDIT_QUEUE.md` **retired** as ordering authority 2026-06-08 (historical read-only).
@@ -455,7 +455,7 @@ Signing does **not**:
 
 ---
 
-## §12 Spec Revision — Build Sequencer Adoption (2026-06-08, pending §11 re-sign)
+## §12 Spec Revision — Build Sequencer Adoption (2026-06-08, SIGNED)
 
 **Trigger:** Butterfly Hard-Stop (AGENTS.md §7.1) — changes canonical next-action authority chain and D13 substance. Consequence Matrix: `4. Product_Roadmap/_Build_Sequencer_Adoption_Consequence_Matrix.md`. Operator selected **Option B** (2026-06-08).
 
@@ -472,12 +472,12 @@ Signing does **not**:
 3. Does **not** authorize individual agent builds (scoreboard Rule 4 stands).
 4. Does **not** authorize gate automation for scoreboard freshness (doctrine Steps 0.5 / 6.5 only until a separate gate-code slice).
 
-### §11 re-sign placeholder
+### §12 re-sign
 
-> [Matt Nichol — Build Sequencer D13 revision — date]
+> Matt Nichol June 8th 2026
 
-Per Authorship Rule: operator-authored signature only.
+Per Authorship Rule: operator-authored signature, placed verbatim.
 
 ---
 
-**End of spec. D13 revision pending §12 re-sign for live authority.**
+**End of spec. D13 revision SIGNED 2026-06-08 — live authority.**

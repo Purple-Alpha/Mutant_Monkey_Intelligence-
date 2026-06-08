@@ -1,8 +1,8 @@
 # Blue-Team Swarm — 70-Agent Build Scoreboard (v2 — Build Sequencer)
 
-**Status:** WORKING SCOREBOARD + **BUILD SEQUENCER** (candidate generator, **DRAFT**). Pre-spec amendment drafted 2026-06-08 (Option B). **NOT live until Matt §12 re-sign** on `Next_Action_Decision_Rubric_Deep_Dive.md` D13-rev. Authority-free — **builds nothing, authorizes nothing.**
+**Status:** WORKING SCOREBOARD + **BUILD SEQUENCER** (canonical candidate generator). Amendment **LIVE 2026-06-08** — rubric D13-rev §12 SIGNED by Matt Nichol (Option B, `_Build_Sequencer_Adoption_Consequence_Matrix.md`). Authority-free — **builds nothing, authorizes nothing.** A row is status + sequencing input, never build permission (Rule 4). Does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec.
 
-**Authority chain (DRAFT — pending rubric §12 re-sign):** this file will **generate** actionable-now candidates -> Next-Action Decision Rubric **ranks** -> Matt **selects** -> `decision_cycles_log.md` records. `PROJECT_HANDSHAKE.md` is today's one-screen derived view. `PROJECT_BUILD_AND_AUDIT_QUEUE.md` is **retired** (historical only). AGENTS.md §3.2 Steps 0.5/6.5 apply once D13-rev is signed.
+**Authority chain (LIVE 2026-06-08):** this file **generates** actionable-now candidates -> Next-Action Decision Rubric **ranks** -> Matt **selects** -> `decision_cycles_log.md` records. `PROJECT_HANDSHAKE.md` is today's one-screen derived view. `PROJECT_BUILD_AND_AUDIT_QUEUE.md` is **retired** (historical only). AGENTS.md §3.2 Steps 0.5/6.5 are in force.
 
 **Sources reconciled:**
 - `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` — the canonical 70-agent / 10-team inventory (agent IDs #1-#70 come from here).
@@ -244,9 +244,9 @@ A detector function becomes a `GOVERNED_AGENT` only when it clears the bar for i
 
 ---
 
-## Build Sequencer amendment — locked decisions (drafted 2026-06-08, pending rubric §12 re-sign)
+## Build Sequencer amendment — locked decisions (LIVE 2026-06-08)
 
-Governance rules for this file as canonical candidate generator. Rubric D13-rev pending §12 re-sign on `Next_Action_Decision_Rubric_Deep_Dive.md`.
+Governance rules for this file as canonical candidate generator. Rubric D13-rev §12 SIGNED 2026-06-08 by Matt Nichol on `Next_Action_Decision_Rubric_Deep_Dive.md`.
 
 | # | Decision | Locked value |
 |---|---|---|
@@ -259,4 +259,4 @@ Governance rules for this file as canonical candidate generator. Rubric D13-rev 
 
 **Row additions** require operator scope decision or signed scoreboard amendment. **Row updates** within adoption are execution-lane under §2.1.1.B when gated clean.
 
-**Open for operator:** §12 re-sign on rubric D13-rev to make this amendment live across signed specs.
+**Status:** rubric D13-rev §12 SIGNED 2026-06-08; this amendment is live across signed specs.
