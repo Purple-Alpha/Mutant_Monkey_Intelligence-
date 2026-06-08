@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - Build Sequencer adoption (Option B): queue retired, scoreboard = candidate generator
+**Actor:** Matt (Option B selection; scoring-as-backbone rationale) + Claude advisory lane (Build Sequencer design) + Cursor execution lane (Consequence Matrix, governance slice, scoreboard v2 columns, AGENTS Steps 0.5/6.5, rubric §12 D13-rev draft).
+
+**Action:** Updated / Created
+
+**Files Changed:**
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Related commits (prior gated slices):** `893b216` rubric §12 draft + matrix; `bda7fb2` AGENTS Steps 0.5/6.5; `631d94c` queue retired; `40e68b1`/`ddf3414` scoreboard v2 DRAFT; `a2da1e9`/`fb4e810` trackers.
+
+**Reason:** Eliminate the "what's next" trap by moving canonical candidate generation to the scoreboard, retiring stale queue ordering, and wiring freshness into the Build Loop. Butterfly decision (signed-spec substance + authority chain).
+
+**Verification:** Gate pending on governance manifest.
+
+**Next Step:** Matt §12 re-sign on rubric D13-rev; then circle back to swarm build (wrap next detector or second L5 Challenge agent).
+
+---
+
 ## 2026-06-08 - Section 5: Aggregate Corroboration Agent contract §11 SIGNED + Evidence Stage 1 build
 **Actor:** Matt (operator authority: §11 signature "Matt Nichol June 8th" placed verbatim; §10.A Q1-Q3 decisions; standing sign-off-scope decision) + Claude advisory lane (Section 5 contract draft) + Cursor execution lane (reconciliation against real code, signature placement, spec gate/commit, build, test, build gate/commit, trackers).
 
