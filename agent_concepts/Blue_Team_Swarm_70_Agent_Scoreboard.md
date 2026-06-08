@@ -49,7 +49,7 @@
 |---|---|---|---|---|---|
 | 6 | Header Analysis | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Header_Analysis_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/header_divergence_detector.py`, `email_authentication_detector.py`, `received_chain_parser.py`; governed wrapper `core/orchestrator/header_divergence_agent.py` (`HeaderDivergenceAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |
 | 7 | Sender Identity | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (impersonation_analysis) | 2 Detection | A |
-| 8 | Reply-To Mismatch | `DETECTOR_FUNCTION` | `core/scoring/ghost_thread_detector.py` + header divergence | 2 Detection | A |
+| 8 | Reply-To Mismatch | `DETECTOR_FUNCTION` (contract proven 2026-06-07; promotion pending signed wrapper) | `core/scoring/ghost_thread_detector.py` + header divergence; runtime governed wrapper proof `core/orchestrator/ghost_thread_agent.py` (`GhostThreadAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER -> Layer 5 challenge pass) | 2 Detection | A |
 | 9 | Domain Reputation | `NOT_STARTED` | none | 2 Detection | A |
 | 10 | Lookalike Domain | `GOVERNED_AGENT` | `core/scoring/lookalike_domain_detector.py` + signed spec w/ Agent Design Contract wrapper | 2 Detection | A |
 | 11 | Known-Good Contact | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 3 Verification | A |

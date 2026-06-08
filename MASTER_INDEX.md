@@ -229,6 +229,8 @@ Located in `Delivery_Engine/Phishing_Simulations/Campaign_Examples`.
 - Runtime_Implementation/implementation-roadmap.md
 - Runtime_Implementation/core/blackboard/models.py - includes additive `EmailInboundPayload.received_headers` for preserving repeated `Received:` headers as a first-class list while keeping legacy `headers: dict[str, str]` intact.
 - Runtime_Implementation/core/blackboard/storage.py
+- Runtime_Implementation/core/orchestrator/header_divergence_agent.py - governed Layer 2 wrapper proof for Header Analysis (#6): wraps `score_header_divergence`, emits facts-only `AgentContribution` records, persists via registry-gated `AGENT_CONTRIBUTION`; formally governed by signed `Header_Analysis_Agent_Design_Contract_Deep_Dive.md`.
+- Runtime_Implementation/core/orchestrator/ghost_thread_agent.py - governed Layer 2 wrapper proof for Reply-To Mismatch / Ghost Thread (#8): wraps `score_ghost_thread`, emits facts-only `ghost_thread_subject` contributions, persists via registry-gated `AGENT_CONTRIBUTION`, and remains a proof (`DETECTOR_FUNCTION`) until a signed Agent Design Contract exists.
 - Runtime_Implementation/core/orchestrator/registry.py
 - Runtime_Implementation/core/orchestrator/routes.py
 - Runtime_Implementation/core/orchestrator/tenants.py
@@ -292,6 +294,7 @@ Located in `Delivery_Engine/Phishing_Simulations/Campaign_Examples`.
 - Runtime_Implementation/core/sandbox/red_battery.py - `run_red_battery_cycle(...)` entry point: kill-switch boundary, per-profile loop, in-memory Blue invocation via `score_one_email_payload`, per-case `MUTANT_EVALUATION` + `AUDIT_VERDICT`, per-profile aggregated `WEAKNESS_REPORT` with bucket-counted failure-mode summary
 - Runtime_Implementation/core/drafting/daily_digest_agent.py
 - Runtime_Implementation/tests/test_blackboard_models.py
+- Runtime_Implementation/tests/test_ghost_thread_agent.py - second real-detector governed-wrapper proof: Ghost Thread detector -> `AgentContribution` -> Blackboard -> in-memory DER -> Layer 5 challenge pass (12 tests).
 - Runtime_Implementation/tests/test_mutation_engine.py
 - Runtime_Implementation/tests/test_orchestrator_routes.py
 - Runtime_Implementation/tests/test_production_loop.py

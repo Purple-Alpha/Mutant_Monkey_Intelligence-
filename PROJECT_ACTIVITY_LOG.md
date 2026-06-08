@@ -26,10 +26,35 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Ghost Thread runtime wrapper proof built (#8 second detector)
+**Actor:** Matt (build instruction: "ok lets go"); Cursor (build).
+
+**Action:** Built + focused tests passed + code/test gate clean. Commit pending Matt's explicit commit instruction.
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/ghost_thread_agent.py` (new runtime wrapper)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_ghost_thread_agent.py` (new wrapper test suite)
+- `MASTER_INDEX.md`
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md`
+- `PROJECT_HANDSHAKE.md`
+- `PROGRESS.md`
+- `PROJECT_ACTIVITY_LOG.md`
+
+**Reason:**
+Continues the agreed spine sequence after `first governed detector -> challenge pass`: wrap the second existing detector through the now-proven `analyze -> AgentContribution -> Blackboard -> DER -> challenge_pass` path. The new `GhostThreadAgent` wraps the pure `score_ghost_thread` detector as a Layer 2 Detection agent, emits facts-only `ghost_thread_subject` observations (no score/interpretation), persists through the registry-gated `AGENT_CONTRIBUTION` route, and remains a runtime proof only — #8 stays `DETECTOR_FUNCTION` until a signed Agent Design Contract wrapper exists.
+
+**Verification:**
+Focused pytest: `tests/test_ghost_thread_agent.py tests/test_ghost_thread_detector.py tests/test_swarm_commander.py tests/test_header_divergence_agent.py` -> 59 passed. Lints clean on `ghost_thread_agent.py` and `test_ghost_thread_agent.py`. Grok completion gate for the runtime/test slice returned clean, 0 warnings (`audit_outputs/swarm_ghost_thread_agent_code_20260607_20260608T012154Z.md`) after the manifest explicitly recorded Matt's build authorization and the no-promotion/no-registration boundary.
+
+**Next Step:**
+Present the wrapper proof to Matt for explicit commit authorization (no commit inferred). Next build step after commit is the formal Agent Design Contract wrapper for #8, or another detector wrap if Matt chooses to keep accumulating runtime proofs first.
+
+---
+
 ## 2026-06-07 - Header Analysis Agent Design Contract SIGNED (#6 first full governed agent)
 **Actor:** Matt (build-direction instruction + §11 signature "Matt Nichol June 7th 2026"); Cursor (draft + tracker updates).
 
-**Action:** Created + §11 SIGNED 2026-06-07. #6 Header Analysis flips `DETECTOR_FUNCTION` -> `GOVERNED_AGENT` at Evidence Stage 1 (Synthetic). Gate-clean at draft and re-gated clean at signing. Commit pending Matt's explicit commit instruction.
+**Action:** Created + §11 SIGNED 2026-06-07. #6 Header Analysis flips `DETECTOR_FUNCTION` -> `GOVERNED_AGENT` at Evidence Stage 1 (Synthetic). Gate-clean at draft and re-gated clean at signing. Committed `8f0a89f`; handoff tracker correction committed `18f21b5`.
 
 **Files Changed:**
 - `4. Product_Roadmap/Header_Analysis_Agent_Design_Contract_Deep_Dive.md` (new draft spec)
@@ -41,7 +66,7 @@ What should happen next.
 Closes the build sequence's "first *governed* detector" step. The Header Divergence wrapper (`HeaderDivergenceAgent`) was proven end-to-end on 2026-06-07 but stayed `DETECTOR_FUNCTION` because the L2 promotion bar requires a signed Agent Design Contract. This draft is the first per-agent contract under the signed template and the first application of the just-signed Evidence Stage model — it declares Evidence Stage 1 (Synthetic) honestly (only synthetic tests exist), changes no detector logic (template §7.0), and registers nothing in production dispatch. It also sets the repeatable pattern every later detector wrap reuses.
 
 **Next Step:**
-Commit on Matt's explicit go (docs-only: signed spec + MASTER_INDEX + scoreboard + activity log + handshake/progress). Then the build sequence advances to wrapping the second existing detector against the proven analyze -> contribution -> challenge path (per the agreed `first governed detector -> challenge pass -> second governed detector -> repeat` order).
+Proceed to wrapping the second existing detector against the proven analyze -> contribution -> challenge path (per the agreed `first governed detector -> challenge pass -> second governed detector -> repeat` order).
 
 ---
 
