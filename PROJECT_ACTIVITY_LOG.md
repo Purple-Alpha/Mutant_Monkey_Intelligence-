@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Ghost Thread Agent Design Contract §11 SIGNED; #8 promoted to GOVERNED_AGENT
+**Actor:** Matt (§11 signature "Matt Nichol June 7th 2026"; commit instruction); Cursor (draft correction, gate, commit).
+
+**Action:** Signed + gated clean + committed (two commits: contract `275475b`, then trackers).
+
+**Files Changed:**
+- `4. Product_Roadmap/Ghost_Thread_Agent_Design_Contract_Deep_Dive.md` (new, §11 SIGNED — commit `275475b`)
+- `MASTER_INDEX.md` (entry flipped to SIGNED — tracker commit)
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (#8 renamed "Reply-To Mismatch" -> "Ghost Thread Agent", flipped to GOVERNED_AGENT, tally 2->3 — tracker commit)
+- `PROJECT_HANDSHAKE.md`, `PROGRESS.md` (handoff refreshed — tracker commit)
+
+**Reason:**
+The supplied #8 contract draft mis-described the detector as keying on Reply-To domain mismatch. Code review at `67a21ee` confirmed the implemented `GhostThreadAgent` / `score_ghost_thread` detects fake thread continuity only (Re/Fw/Fwd subject prefix + missing non-empty In-Reply-To/References), never Reply-To divergence (that is #6 Header Analysis). The draft was rewritten code-accurate (D4 names `email.subject`+`email.headers`; D9 names the Stage 2 edge-case gap as a known Stage 1 precondition), gated clean (0 warnings, `audit_outputs/ghost_thread_agent_contract_draft_20260607_20260608T025710Z.md`), then signed. The scoreboard #8 was renamed to drop the inaccurate "Reply-To Mismatch" half (§10 Q1 resolution).
+
+**Next Step:**
+Wrap the next existing detector via the proven analyze -> contribution -> challenge path, or resolve §10 open questions before any Stage 2 promotion. No production dispatch / default-registry registration is authorized by this signing.
+
+---
+
 ## 2026-06-07 - Ghost Thread runtime wrapper proof built (#8 second detector)
 **Actor:** Matt (build instruction: "ok lets go"); Cursor (build).
 

@@ -49,7 +49,7 @@
 |---|---|---|---|---|---|
 | 6 | Header Analysis | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Header_Analysis_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/header_divergence_detector.py`, `email_authentication_detector.py`, `received_chain_parser.py`; governed wrapper `core/orchestrator/header_divergence_agent.py` (`HeaderDivergenceAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |
 | 7 | Sender Identity | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (impersonation_analysis) | 2 Detection | A |
-| 8 | Reply-To Mismatch | `DETECTOR_FUNCTION` (contract proven 2026-06-07; promotion pending signed wrapper) | `core/scoring/ghost_thread_detector.py` + header divergence; runtime governed wrapper proof `core/orchestrator/ghost_thread_agent.py` (`GhostThreadAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER -> Layer 5 challenge pass) | 2 Detection | A |
+| 8 | Ghost Thread Agent (renamed from "Reply-To Mismatch" 2026-06-07; Reply-To divergence is #6's signal, not #8's) | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Ghost_Thread_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/ghost_thread_detector.py` (fake thread continuity: Re/Fw/Fwd subject prefix + missing non-empty In-Reply-To/References — NOT Reply-To divergence); governed wrapper `core/orchestrator/ghost_thread_agent.py` (`GhostThreadAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER -> Layer 5 challenge pass) | 2 Detection | A |
 | 9 | Domain Reputation | `NOT_STARTED` | none | 2 Detection | A |
 | 10 | Lookalike Domain | `GOVERNED_AGENT` | `core/scoring/lookalike_domain_detector.py` + signed spec w/ Agent Design Contract wrapper | 2 Detection | A |
 | 11 | Known-Good Contact | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 3 Verification | A |
@@ -157,13 +157,13 @@
 
 ## Tally (execution-lane verified, file-level)
 
-- `GOVERNED_AGENT`: **2** (#10; #6 Header Analysis at Evidence Stage 1, §11-signed 2026-06-07).
-- `DETECTOR_FUNCTION`: **~27** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces; #6 promoted out of this bucket on 2026-06-07).
+- `GOVERNED_AGENT`: **3** (#10; #6 Header Analysis and #8 Ghost Thread at Evidence Stage 1, §11-signed 2026-06-07).
+- `DETECTOR_FUNCTION`: **~26** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces; #6 and #8 promoted out of this bucket on 2026-06-07).
 - `GOVERNANCE_DOC_ONLY`: **7** (#4, #5, #51, #53, #65, #66, #70-partial).
 - `SPEC_ONLY`: **7** (#19, #21, #43, #50, #55, #56, #57, #60 — note #21 has metadata but no code).
 - `NOT_STARTED`: **~22** (the net-new detection + orchestration + memory/health agents).
 
-**Headline:** the swarm is currently a **detector stack plus a partially wired governance spine, not yet a governed swarm**. Exactly one agent (#10) is a governed agent; everything else that "exists" is either a detector function inside the scoring pipeline or a spine component that still lacks a formal per-agent contract. The orchestration spine now has a router + registry + Stage A case loop + in-memory Decision Evidence Record assembly + Layer 5 challenge pass, proven against a real Header Divergence contribution. The remaining gap is formal promotion of real agents through signed Agent Design Contract wrappers and repeated detector wrapping.
+**Headline:** the swarm is currently a **detector stack plus a partially wired governance spine, not yet a governed swarm**. Three agents (#10 Lookalike, #6 Header Analysis, #8 Ghost Thread) are now governed agents; everything else that "exists" is either a detector function inside the scoring pipeline or a spine component that still lacks a formal per-agent contract. The orchestration spine now has a router + registry + Stage A case loop + in-memory Decision Evidence Record assembly + Layer 5 challenge pass, proven against real Header Divergence and Ghost Thread contributions. The remaining gap is formal promotion of more real agents through signed Agent Design Contract wrappers and repeated detector wrapping.
 
 ---
 
