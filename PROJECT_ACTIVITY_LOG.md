@@ -26,6 +26,22 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - CYCLE 15 CLOSED: #24 MFA Manipulation -> GOVERNED_AGENT (Evidence Stage 1)
+**Actor:** Cursor execution lane (§11 signature placement, wrapper build, focused tests, Build Sequencer Step 6.5 sync). Matt provided the §11 signature ("Matt Nichol June 8th 2026").
+
+**Action:** Updated (this entry only)
+
+**Files Changed:**
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Narrative close of CYCLE 15. In prior gated commits this session: Matt §11-signed `4. Product_Roadmap/MFA_Manipulation_Agent_Design_Contract_Deep_Dive.md` (commit `fec6ee7`); the Evidence Stage 1 `MFAManipulationAgent` wrapper (`core/orchestrator/mfa_manipulation_agent.py`) + 18 focused synthetic tests (`tests/test_mfa_manipulation_agent.py`) were built and gated clean 0/0 (commit `09c5425`, full suite 1292 -> 1310 passed); and the Build Sequencer trackers were synced — scoreboard #24 -> `GOVERNED_AGENT` with breadth runway 7 -> 8 plus decision-log CYCLE 15 verdict PASS (`57824d8`), MASTER_INDEX (`601c7d4`), and PROGRESS/PROJECT_HANDSHAKE (`b15502a`). The wrapper is a facts-only Layer 2 Detection wrapper around the immutable pure `score_mfa_fatigue`, emitting only the closed indicators `mfa_push_language` / `verification_code_language`; no score/raw-code/body leakage, not in `build_default_registry`, no autonomy. This single-file entry records that already-completed and already-gated work; it modifies no other file.
+
+**Next Step:**
+No lock open. Next clean pure-detector breadth candidate per the Build Sequencer is #25 Session Theft (`prompt_injection_detector.py`); #31 PDF Fingerprint and #11 Known-Good Contact remain stateful/Layer-3 boundary-contract problems; or a Stage 2 promotion for #23/#24/#27/#30 once ≥3 real samples + a signed promotion record exist.
+
+---
+
 ## 2026-06-08 - CYCLE 15 opened: #24 MFA Manipulation contract DRAFTED
 **Actor:** Cursor execution lane (Build Sequencer pre-build review, rubric scoring, contract draft, tracker sync). Matt directed the session back to building after the Todd prep break. No §11 signature yet.
 
