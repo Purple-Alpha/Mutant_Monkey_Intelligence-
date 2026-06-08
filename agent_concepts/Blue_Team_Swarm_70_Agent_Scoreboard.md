@@ -12,7 +12,7 @@
 ## Legend + reconciliation rules
 
 **Runtime status (execution-lane verified against code):**
-- `GOVERNED_AGENT` — implemented AND carries Agent Design Contract metadata (layer/authority/boundary/evidence/two-pass/DER). Per project state only #10 and #21 have the retrofit, and #21 has the metadata but no detector code.
+- `GOVERNED_AGENT` — implemented AND carries Agent Design Contract metadata (layer/authority/boundary/evidence/two-pass/DER). Per project state #10 and #21 carry the metadata-only retrofit (#21 has metadata but no detector code), and #6 Header Analysis is the first full per-agent signed contract (2026-06-07, Evidence Stage 1) with both detector code and a governed runtime wrapper.
 - `DETECTOR_FUNCTION` — real, tested code exists, but it is a pipeline function, not a governed swarm agent.
 - `GOVERNANCE_DOC_ONLY` — covered by VISION/AGENTS/gate or a signed spec, no dedicated runtime code.
 - `SPEC_ONLY` — signed/drafted spec exists, no runtime code yet.
@@ -47,7 +47,7 @@
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
-| 6 | Header Analysis | `DETECTOR_FUNCTION` (contract proven 2026-06-07; promotion pending signed wrapper) | `core/scoring/header_divergence_detector.py`, `email_authentication_detector.py`, `received_chain_parser.py`; runtime governed wrapper proof `core/orchestrator/header_divergence_agent.py` (`HeaderDivergenceAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |
+| 6 | Header Analysis | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Header_Analysis_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/header_divergence_detector.py`, `email_authentication_detector.py`, `received_chain_parser.py`; governed wrapper `core/orchestrator/header_divergence_agent.py` (`HeaderDivergenceAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |
 | 7 | Sender Identity | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (impersonation_analysis) | 2 Detection | A |
 | 8 | Reply-To Mismatch | `DETECTOR_FUNCTION` | `core/scoring/ghost_thread_detector.py` + header divergence | 2 Detection | A |
 | 9 | Domain Reputation | `NOT_STARTED` | none | 2 Detection | A |
@@ -157,8 +157,8 @@
 
 ## Tally (execution-lane verified, file-level)
 
-- `GOVERNED_AGENT`: **1** (#10).
-- `DETECTOR_FUNCTION`: **~28** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces).
+- `GOVERNED_AGENT`: **2** (#10; #6 Header Analysis at Evidence Stage 1, §11-signed 2026-06-07).
+- `DETECTOR_FUNCTION`: **~27** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces; #6 promoted out of this bucket on 2026-06-07).
 - `GOVERNANCE_DOC_ONLY`: **7** (#4, #5, #51, #53, #65, #66, #70-partial).
 - `SPEC_ONLY`: **7** (#19, #21, #43, #50, #55, #56, #57, #60 — note #21 has metadata but no code).
 - `NOT_STARTED`: **~22** (the net-new detection + orchestration + memory/health agents).

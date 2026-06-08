@@ -26,6 +26,25 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Header Analysis Agent Design Contract SIGNED (#6 first full governed agent)
+**Actor:** Matt (build-direction instruction + §11 signature "Matt Nichol June 7th 2026"); Cursor (draft + tracker updates).
+
+**Action:** Created + §11 SIGNED 2026-06-07. #6 Header Analysis flips `DETECTOR_FUNCTION` -> `GOVERNED_AGENT` at Evidence Stage 1 (Synthetic). Gate-clean at draft and re-gated clean at signing. Commit pending Matt's explicit commit instruction.
+
+**Files Changed:**
+- `4. Product_Roadmap/Header_Analysis_Agent_Design_Contract_Deep_Dive.md` (new draft spec)
+- `MASTER_INDEX.md` (index entry)
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (#6 note: draft wrapper pending signature)
+- `PROJECT_ACTIVITY_LOG.md`
+
+**Reason:**
+Closes the build sequence's "first *governed* detector" step. The Header Divergence wrapper (`HeaderDivergenceAgent`) was proven end-to-end on 2026-06-07 but stayed `DETECTOR_FUNCTION` because the L2 promotion bar requires a signed Agent Design Contract. This draft is the first per-agent contract under the signed template and the first application of the just-signed Evidence Stage model — it declares Evidence Stage 1 (Synthetic) honestly (only synthetic tests exist), changes no detector logic (template §7.0), and registers nothing in production dispatch. It also sets the repeatable pattern every later detector wrap reuses.
+
+**Next Step:**
+Commit on Matt's explicit go (docs-only: signed spec + MASTER_INDEX + scoreboard + activity log + handshake/progress). Then the build sequence advances to wrapping the second existing detector against the proven analyze -> contribution -> challenge path (per the agreed `first governed detector -> challenge pass -> second governed detector -> repeat` order).
+
+---
+
 ## 2026-06-07 - Swarm spine: Layer 5 challenge pass wired into Commander
 **Actor:** Matt (build momentum instruction); Cursor (build).
 
