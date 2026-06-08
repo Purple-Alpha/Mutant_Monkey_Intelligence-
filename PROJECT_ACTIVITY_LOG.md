@@ -26,6 +26,30 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Swarm spine: Layer 5 challenge pass wired into Commander
+**Actor:** Matt (build momentum instruction); Cursor (build).
+
+**Action:** Built + tested + gate-clean + committed (`5d70040` runtime/test slice).
+
+**Files Changed:**
+- `core/orchestrator/swarm_commander.py`
+- `tests/test_swarm_commander.py`
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md`
+- `PROJECT_HANDSHAKE.md`
+- `PROGRESS.md`
+- `PROJECT_ACTIVITY_LOG.md`
+
+**Reason:**
+After the Header Divergence governed-wrapper proof showed the shared contract holds on real detector output, the next spine slice was the parked Layer 5 challenge pass. `SwarmCommander.run_case()` now accepts separate `challenge_agents`, validates them through the same registry metadata + Stage A/autonomy router guard, requires Layer 5 for the challenge pass, runs `challenge()` against real `AgentContribution` objects, validates the returned `ChallengeResult.agent_id`, and includes the results in the in-memory `DecisionEvidenceRecord.challenge_pass` before disposition is computed. Detection agents are still analyze-only unless explicitly supplied as challenge agents; Stage A still grants no autonomous action; the Commander still does not persist the DER.
+
+**Verification:**
+Focused pytest: `tests/test_swarm_commander.py tests/test_header_divergence_agent.py` -> 26 passed. Lints clean on touched runtime/test files. Grok completion gate for the runtime/test slice returned clean, 0 warnings (`audit_outputs/swarm_layer5_challenge_pass_code_20260608T004910Z.md`) after the manifest explicitly recorded Matt's build authorization and the no-promotion/no-registration boundary.
+
+**Next Step:**
+Continue the spine: either draft/sign the Header Analysis Agent Design Contract wrapper for formal promotion, or wrap the second existing detector using the now-proven analyze -> contribution -> challenge path.
+
+---
+
 ## 2026-06-07 - Agent Design Contract Template: Evidence Stage / Promotion / Demotion model added (REVISION, SIGNED, in force)
 **Actor:** Matt (decision + second-opinion review + §11.A re-signature "Matt Nichol June 7th 2026"); Cursor (draft + gate).
 

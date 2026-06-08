@@ -37,7 +37,7 @@
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
 |---|---|---|---|---|---|
-| 1 | Swarm Commander Agent | `DETECTOR_FUNCTION` (partial spine) | `core/orchestrator/routes.py`, `registry.py` (router + registry only; no case loop) | 1 Command | A |
+| 1 | Swarm Commander Agent | `DETECTOR_FUNCTION` (partial spine) | `core/orchestrator/routes.py`, `registry.py`, `swarm_commander.py` (router + registry + Stage A case loop + in-memory DER assembly + Layer 5 challenge pass over real `AgentContribution` objects; not a formally promoted governed agent) | 1 Command | A |
 | 2 | Mission Context Agent | `NOT_STARTED` | none | 1 Command | A |
 | 3 | Risk Triage Agent | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` | 1 Command | A |
 | 4 | Human-in-the-Loop Agent | `GOVERNANCE_DOC_ONLY` | VISION non-negotiables 6/7; `core/operator_state/` kill-switch | 1 Command | A |
@@ -163,7 +163,7 @@
 - `SPEC_ONLY`: **7** (#19, #21, #43, #50, #55, #56, #57, #60 — note #21 has metadata but no code).
 - `NOT_STARTED`: **~22** (the net-new detection + orchestration + memory/health agents).
 
-**Headline:** the swarm is currently a **detector stack, not a governed swarm**. Exactly one agent (#10) is a governed agent; everything else that "exists" is a detector function inside the scoring pipeline. The orchestration spine (#1 Commander case loop, #2 Mission Context) is the critical gap — a router + registry exist, but no case loop assembles agents into one governed decision with a Decision Evidence Record.
+**Headline:** the swarm is currently a **detector stack plus a partially wired governance spine, not yet a governed swarm**. Exactly one agent (#10) is a governed agent; everything else that "exists" is either a detector function inside the scoring pipeline or a spine component that still lacks a formal per-agent contract. The orchestration spine now has a router + registry + Stage A case loop + in-memory Decision Evidence Record assembly + Layer 5 challenge pass, proven against a real Header Divergence contribution. The remaining gap is formal promotion of real agents through signed Agent Design Contract wrappers and repeated detector wrapping.
 
 ---
 
