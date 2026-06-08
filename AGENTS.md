@@ -122,6 +122,16 @@ The pipeline phases:
 
 **Automated substrate is parked.** A unified multi-agent "war room" orchestration substrate (e.g. a local LangGraph/Autogen runner that wires these lanes in code) is a **future spec, not a current build.** It is spec-first if it ever proceeds; nothing is installed or built from this section. This section defines the human-relayed playbook the substrate would later encode.
 
+### 2.1.1.A Anti-duplication lane rule (operator-accepted 2026-06-08)
+
+This rule closes the 2026-06-08 Section 6 overlap: Claude was previously blind to the WSL repo and produced repo-ready test code twice to compensate. That was a filesystem / handoff failure, not an ego failure. From this point forward:
+
+- **One live repo writer.** Only the execution lane writes files into `/home/socialarchitect/northstar`, runs tests/gates, stages commits, or prepares commit messages. Advisory lanes do not make live repo edits.
+- **Advisory code is input, not drop-in truth.** If an advisory lane hands over code, the execution lane treats it as a design artifact to reconcile against the real repo: schemas, constructors, registry metadata, test semantics, and current committed state must be verified before use.
+- **Plans are the preferred handoff.** Advisory lanes should hand over test plans, spec language, invariants, failure modes, register schemas, and review findings. The execution lane turns those into code.
+- **No duplicate implementation after a clean gate.** If a slice already exists and passed its gate, do not rebuild it from another model's version. Diff the advisory input, extract only net-new value, and preserve the gated implementation unless Matt explicitly orders a rewrite.
+- **Combine strengths at the lane boundary.** When two models share a strength, merge outputs by phase: advisory owns pressure-test/design signal; execution owns repo reality and verification; Matt owns the decision.
+
 ### 2.1.2 Mandatory handoff routing (operator-authored 2026-06-06, MANDATORY)
 
 Matt routes the work between partners; this is binding, not advisory preference. It exists because the execution lane (the Cursor agent, Claude-family) repeatedly drifted into design and decision work it should have handed off, and presented raw choices instead of scored hand-offs. The relay is manual: the agent **writes the hand-off out as copy-pasteable prose**, Matt pastes it into the correct partner, and brings the answer back. The Cursor agent stays **main builder for now**, but does not work alone:
