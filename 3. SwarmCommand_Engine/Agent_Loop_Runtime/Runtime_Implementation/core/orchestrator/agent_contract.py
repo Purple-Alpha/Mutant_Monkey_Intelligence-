@@ -212,6 +212,13 @@ class Agent(Protocol):
     agent never reads or enforces its own authority. Detection-layer agents
     return ``None`` from ``challenge`` (Pass 2 is a Verification/Challenge-layer
     concern); whether ``challenge`` is invoked is the router's decision.
+
+    ``challenge`` receives the full per-case ``contributions`` set, not a single
+    contribution: a Layer 5 Challenge agent reviews the aggregate picture (e.g.
+    ghost-thread + SPF failure + header divergence on one email is a different,
+    stronger signal than any one alone) and returns one case-level verdict, or
+    ``None`` when it has no verdict. (Layer 5 Aggregate Challenge Pass spec,
+    §11 SIGNED 2026-06-07, D1/D2.)
     """
 
     agent_id: str
@@ -223,5 +230,5 @@ class Agent(Protocol):
     def analyze(self, context: MissionContext) -> AgentContribution: ...
 
     def challenge(
-        self, contribution: AgentContribution
+        self, contributions: tuple[AgentContribution, ...]
     ) -> ChallengeResult | None: ...

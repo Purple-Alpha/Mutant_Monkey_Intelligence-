@@ -136,8 +136,10 @@ class _ChallengeAgent:
     def analyze(self, context: MissionContext) -> AgentContribution:  # pragma: no cover
         raise AssertionError("challenge agent should not run analyze()")
 
-    def challenge(self, contribution: AgentContribution) -> ChallengeResult | None:
-        if "dmarc_fail" not in contribution.observed_facts:
+    def challenge(
+        self, contributions: tuple[AgentContribution, ...]
+    ) -> ChallengeResult | None:
+        if not any("dmarc_fail" in c.observed_facts for c in contributions):
             return None
         return ChallengeResult(
             agent_id=self.agent_id,
@@ -241,7 +243,7 @@ def test_layer5_challenge_pass_runs_against_authentication_contribution(tmp_path
 
 
 def test_challenge_returns_none(tmp_path):
-    assert _agent(_route_ctx(tmp_path)).challenge(None) is None  # type: ignore[arg-type]
+    assert _agent(_route_ctx(tmp_path)).challenge(()) is None
 
 
 def test_missing_source_record_id_is_rejected(tmp_path):

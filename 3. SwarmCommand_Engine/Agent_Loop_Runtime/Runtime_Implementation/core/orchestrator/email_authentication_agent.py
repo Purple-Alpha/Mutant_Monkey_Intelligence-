@@ -139,7 +139,9 @@ class EmailAuthenticationAgent:
             observed_facts=assessment.indicators,
         )
 
-    def challenge(self, contribution: AgentContribution) -> ChallengeResult | None:
+    def challenge(
+        self, contributions: tuple[AgentContribution, ...]
+    ) -> ChallengeResult | None:
         # Detection layer does not run Pass 2.
         return None
 

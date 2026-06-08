@@ -185,7 +185,7 @@ def test_contribution_persists_to_blackboard_and_reads_back(tmp_path):
 
 
 def test_challenge_returns_none(tmp_path):
-    assert _agent(_route_ctx(tmp_path)).challenge(None) is None  # type: ignore[arg-type]
+    assert _agent(_route_ctx(tmp_path)).challenge(()) is None
 
 
 def test_missing_source_record_id_is_rejected(tmp_path):

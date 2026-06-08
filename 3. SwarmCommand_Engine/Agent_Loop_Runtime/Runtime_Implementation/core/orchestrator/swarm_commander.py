@@ -135,7 +135,10 @@ class SwarmCommander:
 
         ``challenge_agents`` is the Pass-2 injection point for signed future
         Layer 5 agents. Supplying this iterable is explicit; the Commander does
-        not discover, register, or promote Challenge agents on its own.
+        not discover, register, or promote Challenge agents on its own. Each
+        Layer 5 agent is invoked once per case over the full per-case
+        contribution set (aggregate review; Layer 5 spec D1/D2), returning one
+        case-level verdict or ``None``.
         """
 
         contributions: list[AgentContribution] = []
@@ -163,16 +166,18 @@ class SwarmCommander:
                     f"challenge agent {challenge_agent.agent_id!r} must be "
                     "Layer 5 (Challenge/Red-Team)"
                 )
-            for contribution in contributions_tuple:
-                result = challenge_agent.challenge(contribution)
-                if result is None:
-                    continue
-                if result.agent_id != challenge_agent.agent_id:
-                    raise GovernanceError(
-                        f"challenge result agent_id {result.agent_id!r} does not "
-                        f"match challenge agent {challenge_agent.agent_id!r}"
-                    )
-                challenge_results.append(result)
+            # Aggregate review (Layer 5 spec D1/D2): invoke each Layer 5 agent
+            # once per case over the FULL contribution set, not once per
+            # contribution. The agent returns one case-level verdict (or None).
+            result = challenge_agent.challenge(contributions_tuple)
+            if result is None:
+                continue
+            if result.agent_id != challenge_agent.agent_id:
+                raise GovernanceError(
+                    f"challenge result agent_id {result.agent_id!r} does not "
+                    f"match challenge agent {challenge_agent.agent_id!r}"
+                )
+            challenge_results.append(result)
 
         challenge_pass = tuple(challenge_results)
         disposition = _determine_disposition(contributions_tuple, challenge_pass)

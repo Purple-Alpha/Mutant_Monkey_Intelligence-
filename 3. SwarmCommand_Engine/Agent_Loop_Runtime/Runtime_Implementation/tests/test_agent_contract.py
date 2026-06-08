@@ -160,7 +160,7 @@ def test_agent_protocol_is_runtime_checkable():
         def analyze(self, context: MissionContext) -> AgentContribution:
             return AgentContribution(agent_id=self.agent_id, layer=self.layer)
 
-        def challenge(self, contribution: AgentContribution):
+        def challenge(self, contributions: tuple[AgentContribution, ...]):
             return None
 
     assert isinstance(_StubDetectionAgent(), Agent)

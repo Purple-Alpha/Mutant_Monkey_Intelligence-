@@ -85,7 +85,9 @@ class _StubAgent:
             verification_outcome=self._verification_outcome,
         )
 
-    def challenge(self, contribution: AgentContribution):  # pragma: no cover
+    def challenge(
+        self, contributions: tuple[AgentContribution, ...]
+    ):  # pragma: no cover
         raise AssertionError("challenge() must not be invoked in the Stage A case loop")
 
 
@@ -116,7 +118,9 @@ class _ChallengeAgent:
     def analyze(self, context: MissionContext) -> AgentContribution:  # pragma: no cover
         raise AssertionError("analyze() must not be invoked for challenge agents")
 
-    def challenge(self, contribution: AgentContribution) -> ChallengeResult:
+    def challenge(
+        self, contributions: tuple[AgentContribution, ...]
+    ) -> ChallengeResult:
         return ChallengeResult(
             agent_id=self._result_agent_id or self.agent_id,
             challenge_outcome=self._challenge_outcome,
@@ -180,6 +184,68 @@ def test_layer5_challenge_pass_runs_against_real_contribution():
         ),
     )
     assert der.disposition == "suspicious"
+
+
+class _RecordingChallengeAgent:
+    """Layer 5 agent that records exactly what its challenge() pass receives."""
+
+    def __init__(self, agent_id: str = "challenge_001") -> None:
+        self.agent_id = agent_id
+        self.layer = 5
+        self.authority_level = 3
+        self.stage_allowed = "stage_a"
+        self.autonomous_action_allowed = False
+        self.calls: list[tuple[AgentContribution, ...]] = []
+
+    def analyze(self, context: MissionContext) -> AgentContribution:  # pragma: no cover
+        raise AssertionError("analyze() must not be invoked for challenge agents")
+
+    def challenge(
+        self, contributions: tuple[AgentContribution, ...]
+    ) -> ChallengeResult:
+        self.calls.append(contributions)
+        return ChallengeResult(
+            agent_id=self.agent_id,
+            challenge_outcome="confirmed",
+            challenge_basis="Independent signals corroborate across surfaces.",
+        )
+
+
+def test_layer5_challenge_receives_full_aggregate_set_once():
+    # Two detection agents -> two contributions. The Layer 5 agent must be
+    # invoked once per case over the FULL set (aggregate review, D1/D2), not
+    # once per contribution.
+    commander = SwarmCommander(
+        {
+            "blue_detection_001": _detection_entry(),
+            "blue_detection_002": _detection_entry(
+                agent_id="blue_detection_002", authority_level=1
+            ),
+            "challenge_001": _challenge_entry(),
+        }
+    )
+    recorder = _RecordingChallengeAgent()
+    der = commander.run_case(
+        _context(),
+        [
+            _StubAgent(observed_facts=("from_reply_to_divergence",)),
+            _StubAgent(
+                agent_id="blue_detection_002",
+                observed_facts=("dmarc_fail",),
+            ),
+        ],
+        challenge_agents=[recorder],
+    )
+
+    # Invoked exactly once (per case), not once per contribution.
+    assert len(recorder.calls) == 1
+    seen = recorder.calls[0]
+    assert len(seen) == 2
+    seen_facts = {fact for contribution in seen for fact in contribution.observed_facts}
+    assert seen_facts == {"from_reply_to_divergence", "dmarc_fail"}
+    # One case-level verdict from the one challenge agent.
+    assert len(der.challenge_pass) == 1
+    assert der.challenge_pass[0].agent_id == "challenge_001"
 
 
 def test_contradicted_challenge_forces_human_required():
