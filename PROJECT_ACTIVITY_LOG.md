@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - CYCLE 12 closed: #27 Link Inspection GOVERNED_AGENT (Evidence Stage 1)
+**Actor:** Matt (§11 signature "Matt Nichol June 8th 2026") + Cursor execution lane (signature placement, Stage 1 wrapper build, focused tests, gates, commits, step 6.5 + tracker sync).
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Link_Inspection_Agent_Design_Contract_Deep_Dive.md` (DRAFT -> §11 SIGNED; committed `d44a651`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/link_inspection_agent.py` (new `LinkInspectionAgent` wrapper; committed `463cb4e`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_link_inspection_agent.py` (13 focused synthetic tests; committed `463cb4e`)
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (step 6.5 promotion #27 -> GOVERNED_AGENT; committed `fdac840`)
+- `MASTER_INDEX.md` / `PROJECT_HANDSHAKE.md` / `PROGRESS.md` (tracker sync; committed `26fa1dc`)
+- `decision_cycles_log.md` / `PROJECT_ACTIVITY_LOG.md` (this closure slice)
+
+**Reason:** Matt signed the #27 Agent Design Contract, authorizing the Evidence Stage 1 wrapper. The wrapper reuses the proven email-authentication pattern: reads one EMAIL_INBOUND record, calls the immutable `score_url_obfuscation(body_plain, body_html)` detector read-only, and emits facts-only closed URL indicator names as a Layer 2 `AgentContribution` (no numeric score, no raw URL, no body snippet). Not registered in `build_default_registry`; no production dispatch; no autonomy.
+
+**Verification:** Signature gate clean 0/0 (`link_inspection_contract_signature_20260608_*`). Wrapper build gate clean 0/0 (`link_inspection_agent_stage1_build_20260608_*`); focused suite 13/13; full runtime suite 1260 passed, 1 skipped, 4 xfailed. Scoreboard promotion gate clean 0/0 (`link_inspection_scoreboard_promote_20260608_*`). Tracker sync gate clean 0/0 (`link_inspection_trackers_signed_20260608_*`).
+
+**Next Step:** Next Build Loop cycle selects the next scoreboard candidate (clean breadth wraps remaining: #11 Known-Good Contact, #30 Attachment Risk), or #27's Stage 2 promotion once ≥3 real samples + a signed promotion record exist.
+
+---
+
 ## 2026-06-08 - CYCLE 12: Link Inspection Agent contract draft
 **Actor:** Matt (selected governed breadth path: "perfect lets go") + Cursor execution lane (candidate refinement, advisory pre-build reviews, contract draft, gate, commit, tracker sync).
 

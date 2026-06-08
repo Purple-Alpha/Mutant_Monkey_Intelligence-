@@ -74,12 +74,19 @@ CYCLE 12 — 2026-06-08T19:20Z   [type: TACTICAL]
                  signed boundary.
   EXPECTED:      Draft a §11-ready Link Inspection Agent Design Contract that
                  authorizes no code until signed, pins facts-only Layer 2 output,
-                 and preserves URL detector immutability.
-  EXECUTED AT:   2026-06-08T19:28Z
-  AUDIT VERDICT: PASS — contract draft gate clean 0/0; MASTER_INDEX tracker gate clean 0/0
+                 and preserves URL detector immutability; on signature, build the
+                 Evidence Stage 1 wrapper + focused tests.
+  EXECUTED AT:   2026-06-08T19:40Z
+  AUDIT VERDICT: PASS — contract draft gate clean 0/0; §11 signature gate clean 0/0
+                 (`d44a651`); Stage 1 wrapper `LinkInspectionAgent` + 13 focused
+                 tests gate clean 0/0, full runtime suite 1260 passed (`463cb4e`);
+                 scoreboard step 6.5 promotion gate clean 0/0 (`fdac840`); tracker
+                 sync gate clean 0/0 (`26fa1dc`). #27 is now GOVERNED_AGENT at
+                 Evidence Stage 1; breadth runway 4 -> 5.
   SURPRISES:     #18 looked actionable from the scoreboard row, but pre-build review
                  surfaced a detector/workflow layer split. Step 6.5 updated the row
-                 to `NEEDS_SIGNED_CONTRACT` before code.
+                 to `NEEDS_SIGNED_CONTRACT` before code. Wrapper build itself was
+                 uneventful — clean reuse of the proven email-authentication pattern.
 
 FORK 1 — 2026-06-07T21:55Z   [type: STRATEGIC]
   CONTEXT: Swarm spine — what to build after the Swarm Commander case loop (slices 1-5
