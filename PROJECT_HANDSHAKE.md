@@ -46,7 +46,7 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **AGENTS.md decision-calibration guardrail added 2026-06-04:** §3.1.2 now grades escalation by substance + reversibility (not "touches a signed file"); §3.1.8 + §12 "trivia-escalation / decision-inversion" failure mode added. Fixes the inversion of heavy-guardrailing trivia (e.g. an internal name change) while dumping real decisions raw.
 
 ## Current Next Step — TODAY'S MILESTONE LIST (persisted; READ this, don't ask)
-**This list is the answer to "what's next." It lives here on disk, not in chat, and is regenerated at the end of every build cycle so the question never has to be re-asked.** **Candidate source:** `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (Build Sequencer header + actionable-now rows). **Engine:** the §11-signed Next-Action Decision Rubric (D13-rev pending §12 re-sign). Scored 0-2 per axis, max 10. The rubric ranks; **Matt selects** (D2). Queue is **retired** (historical only).
+**This list is the answer to "what's next." It lives here on disk, not in chat, and is regenerated at the end of every build cycle so the question never has to be re-asked.** **Candidate source:** `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (Build Sequencer header + actionable-now rows). **Engine:** the §11-signed Next-Action Decision Rubric (D13-rev §12 SIGNED 2026-06-08 — LIVE). Scored 0-2 per axis, max 10. The rubric ranks; **Matt selects** (D2). Queue is **retired** (historical only).
 
 **OBSERVE (true current state):** #1 target = the full 70-agent governed swarm (not reducible). Spine built + gated: DER/shared interface, Stage A Commander case loop, Layer 5 *aggregate* challenge pass (Section 2 rewire), and 4 detector agents promoted to `GOVERNED_AGENT` at Evidence Stage 1 Synthetic (#6 Header, #6A Email Auth, #8 Ghost Thread, #10 Lookalike). Newest slice: the first Layer 5 *Challenge* agent — the Aggregate Corroboration Agent — built/gated/committed at Evidence Stage 1. Baseline 1247 / 1 skipped / 4 xfailed.
 
@@ -103,7 +103,7 @@ ACTION E — Do nothing this cycle (reference baseline)
   TOTAL:         4
 ```
 
-SELECTED: **ACTION C** (Matt, 2026-06-08). **Option B adopted:** retire queue ordering; scoreboard = Build Sequencer; rubric D13-rev drafted. Governance slice gated pending Matt §12 re-sign on rubric. After sign-off, circle back to today's build (wrap next detector or second L5 Challenge agent).
+SELECTED: **ACTION C** (Matt, 2026-06-08) — **COMPLETE.** Option B adopted and LIVE: queue retired; scoreboard = Build Sequencer; rubric D13-rev §12 SIGNED 2026-06-08 ("Matt Nichol June 8th 2026"). Build Loop Steps 0.5/6.5 in force. Next cycle: read the scoreboard Build Sequencer header for actionable-now candidates, then circle back to today's build (wrap next detector or second L5 Challenge agent).
 
 **Operator scheduling is NOT an agent agenda item (per AGENTS §3, 2026-06-07).** Do not raise, prep for, or re-surface any of Matt's appointments/meetings unless Matt raises it first. The anchor card at `1. Business_Operations/Client_Documents/Todd_Tuesday_MSP_Call_Anchor_Card.md` exists as Matt's own personal notes; it is finished and is not a build deliverable.
 
