@@ -1,6 +1,6 @@
 # Credential Phishing Agent Design Contract — Spec-First Deep Dive
 
-**Status:** DRAFT 2026-06-08. Authored as Build Sequencer CYCLE 14 for swarm agent #23. This draft is **not signed** and authorizes **no code**, **no runtime wiring**, **no detector-logic change**, **no default-registry registration**, **no production dispatch**, **no Evidence Stage 2/3 promotion**, and **no autonomous action**. §11 signature is operator-only.
+**Status:** §11 SIGNED 2026-06-08 by Matt Nichol ("Matt Nichol June 8th 2026", placed verbatim in §11). Authored as Build Sequencer CYCLE 14 for swarm agent #23. The signature authorizes the **Evidence Stage 1 (Synthetic) `CredentialPhishingAgent` wrapper build + focused tests only**. It authorizes **no detector-logic change**, **no default-registry registration**, **no production dispatch**, **no Evidence Stage 2/3 promotion**, and **no autonomous action**. D1-D10 are locked.
 
 **Owner:** Matt Nichol
 
@@ -167,6 +167,6 @@ No design fork is open in this draft. §11 signature confirms D1-D10 and authori
 
 ## §11 Sign-off
 
-PENDING. Operator-authored signature required before runtime implementation.
+SIGNED. D1-D10 locked. Authorizes the Evidence Stage 1 (Synthetic) `CredentialPhishingAgent` wrapper build + focused tests only; no detector-logic change, no default-registry registration, no production dispatch, no Evidence Stage 2/3 promotion, no autonomy.
 
-> [Matt Nichol — Credential Phishing Agent Design Contract — date]
+> Matt Nichol June 8th 2026
