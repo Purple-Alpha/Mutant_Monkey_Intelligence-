@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - CYCLE 14 closed: #23 Credential Phishing GOVERNED_AGENT (Evidence Stage 1)
+**Actor:** Matt (§11 signature "Matt Nichol June 8th 2026") + Cursor execution lane (signature placement, Stage 1 wrapper build, focused tests, gates, commits, step 6.5 + tracker sync).
+
+**Action:** Signed / Created / Updated
+
+**Files Changed (work committed across separate gated slices; this entry modifies only itself):**
+- 4. Product_Roadmap/Credential_Phishing_Agent_Design_Contract_Deep_Dive.md (§11 SIGNED — `f9e988a`)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/credential_phishing_agent.py (new wrapper — `75affc6`)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_credential_phishing_agent.py (17 tests — `75affc6`)
+- agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md + decision_cycles_log.md (step 6.5 promotion + CYCLE 14 verdict — separate slice)
+- MASTER_INDEX.md, PROJECT_HANDSHAKE.md, PROGRESS.md (index/handoff sync — separate slice)
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Matt placed his §11 signature on the Credential Phishing Agent Design Contract, authorizing the Evidence Stage 1 (Synthetic) wrapper build + focused tests only. The `CredentialPhishingAgent` wrapper was built on the proven Agent -> AgentContribution -> SwarmCommander -> DER path: it reads one EMAIL_INBOUND record via `source_record_id`, passes `body_plain`/`body_html`/`subject` to the immutable pure `score_credential_harvesting` detector, and emits facts-only closed credential-harvesting indicator names (`credential_reset_language`, `account_verification_language`) with no numeric score, raw matched phrase, or body/subject text. 17 focused synthetic tests cover protocol conformance, known-bad/good behavior, single-indicator firing, HTML-only and subject-only surfaces, persistence, guardrails, registry-default exclusion, no leakage, and a purity guard (no socket / no subprocess / single delegated detector call). Focused suite 17 passed; full runtime suite 1292 passed, 1 skipped, 4 xfailed (+17 vs the prior 1275 baseline); detector logic unchanged (D2). Step 6.5 promoted #23 to `GOVERNED_AGENT` (breadth runway 6 -> 7). Pre-build review during this cycle also confirmed #31 PDF Fingerprint is NOT a clean wrap (stateful Vendor Baseline Store mutation) and the scoreboard row was marked `NEEDS_SIGNED_CONTRACT`.
+
+**Next Step:**
+No lock open. The next Build Loop cycle selects the next scoreboard candidate — cleanest is #24 MFA Manipulation (the pure sibling of #23 in the same body-signal module) or #25 Session Theft — or a Stage 2 promotion for #23/#27/#30 once ≥3 real samples + a signed promotion record exist. Runtime baseline 1292 passing.
+
+---
+
 ## 2026-06-08 - CYCLE 14 opened: #31 blocked on pre-build review, #23 Credential Phishing contract DRAFTED
 **Actor:** Cursor execution lane (Build Sequencer pre-build review, rubric scoring, contract draft, tracker sync). Operator delegated next-candidate selection by echoing the CYCLE 13 close-out summary as "go." No §11 signature yet.
 
