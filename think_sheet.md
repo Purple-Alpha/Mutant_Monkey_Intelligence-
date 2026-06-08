@@ -4,7 +4,7 @@
 
 **Operating rule:** Ideas are scored here. They do not enter the active project plan (`PROGRESS.md`) without passing the scoring rubric **and** the stress-test gate.
 
-**Last reviewed:** 2026-05-25
+**Last reviewed:** 2026-06-08
 
 ---
 
@@ -59,6 +59,7 @@ Before any idea graduates from this sheet into committed work in `PROGRESS.md`, 
 
 | Date | Idea | Scope | Score | Band | ST | Notes |
 |---|---|---|---|---|---|---|
+| 2026-06-08 | **Swarm Oversight Pipeline (Dax-first; officer names deferred)** | governance/process | 2·1·2·1·1 = 7 | live park | n/a | Four-review merge found the destination is right but the timing is early. Do **not** build a five-seat "board" now. Park the control-plane version: Dax-first artifact-cited reports, behavior baselines, drift thresholds, escalation triggers, and an override/decision log that records Matt's prior inclination before reading the report. Names/personas stay thin and last, if used at all. Unblock trigger: real-data intake opens, first agent reaches Evidence Stage 2, or there is enough real override/miss data for the oversight loop to measure whether it changes decisions. Trend Watch / Pointdexter feeds the Build Sequencer as an input, not a board seat. |
 | 2026-05-22 | AI market-pusher / project-to-buyer lead miner | adjacent-venture | 1·1·0·0·0 = 2 | deep park | n/a | Agent that finds companies likely to need a finished project and routes outreach. Overlaps with original agentic bidding idea. Parked until revenue path is proven. |
 | 2026-05-22 | Iron Grid sponsor-token layer | adjacent-venture | 0·1·0·1·0 = 2 | deep park | n/a | Utility-only fan sponsorship tokens, not betting/payouts. Needs legal/payment review before any launch. |
 | 2026-05-22 | Social Architect BC youth-resource ecosystem | adjacent-venture (mission) | 2·0·0·1·0 = 3 | deep park | n/a | Mission project connected to Freedom's Door; long-term priority funded by future revenue. |
