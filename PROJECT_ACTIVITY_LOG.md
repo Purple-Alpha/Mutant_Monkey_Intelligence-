@@ -26,6 +26,28 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - Layer 5 Section 6 test discipline + anti-duplication lane rule
+**Actor:** Matt (operator authority: commit go-ahead, lane-rule acceptance) + Claude advisory lane (Section 6 test-plan + tracker-draft) + Cursor execution lane (reconciliation against real code, build, gate, commit).
+
+**Action:** Created (Section 6 test suite + failure register) / Updated (AGENTS.md lane rule).
+
+**Commit:** `ade370e` - "Section 6 test discipline + lane rule (AGENTS §2.1.1.A)".
+
+**Files Changed:**
+- AGENTS.md - added §2.1.1.A anti-duplication lane rule (one live repo writer; advisory code is input not drop-in truth; plans preferred; no rebuild after clean gate; combine by phase)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/layer5/__init__.py (new)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/layer5/test_aggregate_challenge_section6.py (new; Class 1 expected-pass, Class 2 adversarial, Class 3 known-gap xfail)
+- audit_outputs/failure_register/layer5_section6_failure_register.json (git-ignored, NOT committed; ADV-001/KG-001/KG-002)
+
+**Reason:**
+Close the signed Layer 5 spec's §6/D7 documented-failure test discipline (three committed test classes, known gaps named with completion paths) for the aggregate challenge mechanism. Also closes a process gap surfaced during the build: the advisory lane (Claude, WSL-blind) produced repo-ready test code twice; §2.1.1.A encodes the fix as a binding lane rule. Claude's blind rewrite was NOT dropped in — the execution lane reconciled its plan against the real contract types (ChallengeResult = challenge_outcome/challenge_basis, not verdict/evidence) and corrected two regressions (skip-inside-xfail -> true xfail; __new__ bypass -> real wrapper construction). Tracker prose for this entry was drafted by the Claude advisory lane and reconciled/written by the execution lane (first run of the new lane rule).
+
+**Verification:** Section 6 Grok gate 0 blocking / 0 warnings before commit (audited against the signed spec via worker manifest). Post-commit full suite: 1234 passed, 1 skipped, 2 xfailed, 1 warning (warning is the pre-existing ReportLab deprecation in tests/test_cyber_insurance_pdf_renderer.py, unrelated).
+
+**Next Step:** Section 5 - first real aggregate Challenge agent. Spec-first (Claude design lead, Matt signs §11); no code until signed. Its Agent Design Contract must resolve ADV-001/D4 (prohibit count-only verdict reasoning) and KG-002/§10 Q1 (multi-Challenge-agent cross-arbitration).
+
+---
+
 ## 2026-06-08 - Layer 5 Aggregate Challenge Pass: spec §11 SIGNED + Section 2 built/gated/committed
 **Actor:** Matt (operator: §11 signature "Matt Nichol June 7th 2026" placed verbatim; Section 2 sign-off "Matt Nichol"; build authorization); Cursor (signature placement, spec gate, spec commit, Section 2 code, code gate, code commit, trackers).
 
