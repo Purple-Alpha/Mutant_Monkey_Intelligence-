@@ -26,6 +26,21 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Ghost Thread Agent Design Contract §11.A SIGNED; §10 Q1-Q4 resolved (§10.A)
+**Actor:** Matt (§11.A revision signature "Matt Nichol June 7th 2026"; commit instruction); Cursor (encode §10.A, gate, commit).
+
+**Action:** Revised + gated clean (pre- and post-signature, 0 warnings) + committed (`82c7c86`).
+
+**Files Changed:**
+- `4. Product_Roadmap/Ghost_Thread_Agent_Design_Contract_Deep_Dive.md` (§10.A added, §11.A signed — commit `82c7c86`)
+- `PROJECT_ACTIVITY_LOG.md`, `PROGRESS.md` (tracker refresh)
+
+**Reason:**
+Resolve the four §10 open questions so a future session reads no ambiguity. Operator-confirmed dispositions: Q1 RESOLVED (scoreboard rename `fbdbe72`; Reply-To/From divergence is #6 Header Analysis, #8 detects thread continuity only); Q2 Option B (explicitly-wired through Evidence Stage 2, default registry / live dispatch only at Evidence Stage 3); Q3 defer-with-boundary (Layer 2 never emits the numeric score under any condition; any Verification-layer use is authored in the Verification-layer spec only, no amendment here); Q4 Option A (one composite `ghost_thread_subject` fact, matching the detector's conjunction-only firing). Signed-spec revision: changes no detector logic, input surface, emitted facts, or Stage 1 behavior; authorizes no registration, dispatch, scoring change, or autonomous action.
+
+**Next Step:**
+Wrap the next existing detector via the proven analyze -> contribution -> challenge path, continuing spine-first build order.
+
 ## 2026-06-07 - Ghost Thread Agent Design Contract §11 SIGNED; #8 promoted to GOVERNED_AGENT
 **Actor:** Matt (§11 signature "Matt Nichol June 7th 2026"; commit instruction); Cursor (draft correction, gate, commit).
 
