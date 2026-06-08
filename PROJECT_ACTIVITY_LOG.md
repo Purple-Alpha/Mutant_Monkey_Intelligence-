@@ -26,6 +26,30 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - Layer 5 Aggregate Challenge Pass: spec §11 SIGNED + Section 2 built/gated/committed
+**Actor:** Matt (operator: §11 signature "Matt Nichol June 7th 2026" placed verbatim; Section 2 sign-off "Matt Nichol"; build authorization); Cursor (signature placement, spec gate, spec commit, Section 2 code, code gate, code commit, trackers).
+
+**Action:** Created (spec) / Updated (orchestrator contract + Commander + three wrappers + tests) / Reviewed (gates).
+
+**Files Changed:**
+- 4. Product_Roadmap/Layer_5_Aggregate_Challenge_Pass_Deep_Dive.md (§11 SIGNED; committed `1c4ccf6`)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/agent_contract.py (`Agent.challenge()` signature → `tuple[AgentContribution, ...]`)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/swarm_commander.py (once-per-case aggregate invocation; `_determine_disposition` unchanged)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/header_divergence_agent.py / ghost_thread_agent.py / email_authentication_agent.py (signature migration; still return `None`)
+- tests/test_agent_contract.py, test_swarm_commander.py (new aggregate test), test_header_divergence_agent.py, test_ghost_thread_agent.py, test_email_authentication_agent.py
+- PROGRESS.md, MASTER_INDEX.md, PROJECT_ACTIVITY_LOG.md (trackers)
+- Section 2 code committed `50f3306`.
+
+**Reason:**
+The operator constraint (2026-06-07): a Challenge agent must review the FULL per-case contribution set, not one contribution at a time. The signed spec locks that mechanism (D1/D2) and the corroborate-don't-vote-count + no-authority discipline (D4/D5); Section 2 implements the signature change + Commander rewire + total implementer migration (D6/D8) in one change set. Governance held: the spec was signed and committed BEFORE any code; both the spec gate and the code gate returned clean 0/0; full suite 1219 passed, 1 skipped; lints clean.
+
+**Boundary:** No detector logic / scoring / `analyze()` change; no Challenge agent registered or promoted; not in `build_default_registry`; no autonomy; nothing pushed (144 commits unpushed; push is operator-only).
+
+**Next Step:**
+(a) Layer 5 Section 6 — documented-failure test discipline + durable failure register (already authorized by the signed spec, no new signature). (b) Section 5 — first real aggregate Challenge agent: requires its OWN §11-signed Agent Design Contract before any build (the spec authorized the mechanism only). na on building any Challenge agent until that contract is signed.
+
+---
+
 ## 2026-06-07 - Email Authentication Agent: wrapper proof committed, Agent Design Contract §11 SIGNED, #6A promoted
 **Actor:** Matt (build authorization to wrap the next detector; §11 signature "Matt Nichol June 7th 2026"; commit instruction; §10 Q1 decision); Cursor (wrapper, tests, contract draft, gates, commits).
 
