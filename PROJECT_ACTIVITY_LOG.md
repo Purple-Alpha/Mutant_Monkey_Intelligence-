@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - CYCLE 12: Link Inspection Agent contract draft
+**Actor:** Matt (selected governed breadth path: "perfect lets go") + Cursor execution lane (candidate refinement, advisory pre-build reviews, contract draft, gate, commit, tracker sync).
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Link_Inspection_Agent_Design_Contract_Deep_Dive.md` (new draft; committed `eca513e`)
+- `MASTER_INDEX.md` (indexed draft; committed `b18926d`)
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` / `PROJECT_HANDSHAKE.md` / `PROGRESS.md` / `decision_cycles_log.md` / `PROJECT_ACTIVITY_LOG.md` (this tracker slice)
+
+**Reason:** CYCLE 12 executed the live Build Sequencer. #18 Callback Verification was deprioritized for immediate code after review found a Layer 2 TOAD detector vs Layer 3 workflow/verification boundary. #27 Link Inspection is the cleaner governed breadth candidate: deterministic detector, facts-only Layer 2 wrapper path, no workflow mutation, no real-data gate, no autonomy.
+
+**Verification:** #27 contract draft gate clean 0/0 (`link_inspection_agent_contract_draft_20260608_20260608T192721Z.md`). MASTER_INDEX tracker gate clean 0/0 (`link_inspection_contract_index_20260608_20260608T192810Z.md`). Runtime code not touched.
+
+**Next Step:** Matt §11 signature on `4. Product_Roadmap/Link_Inspection_Agent_Design_Contract_Deep_Dive.md`; after signature, build the Stage 1 wrapper + focused tests.
+
+---
+
 ## 2026-06-08 - Build Sequencer adoption (Option B): queue retired, scoreboard = candidate generator
 **Actor:** Matt (Option B selection; scoring-as-backbone rationale) + Claude advisory lane (Build Sequencer design) + Cursor execution lane (Consequence Matrix, governance slice, scoreboard v2 columns, AGENTS Steps 0.5/6.5, rubric §12 D13-rev draft).
 
