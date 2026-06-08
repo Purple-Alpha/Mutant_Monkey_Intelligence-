@@ -18,6 +18,10 @@ Hard boundaries (Stage A only):
   before invocation, never in the agent.
 - The Commander never sets ``audit_record_id`` (Final Review Agent only, schema
   enforced).
+- The optional Layer 5 challenge pass below is orchestration support only: this
+  slice does not create, register, or promote any Challenge agent. A supplied
+  challenge agent must already be passed in explicitly by the caller and still
+  clears the same registry + Stage A/autonomy dispatch guard before invocation.
 """
 
 from __future__ import annotations
@@ -97,12 +101,30 @@ class SwarmCommander:
                 f"{', '.join(mismatches)}"
             )
 
+    def _validate_agent_for_dispatch(
+        self,
+        agent: Agent,
+        *,
+        stage: str,
+    ) -> AgentRegistryEntry:
+        entry = self._entry_for(agent)
+        self._assert_metadata_match(agent, entry)
+        # Router guard runs before invocation: stage + autonomy gating. An
+        # agent claiming autonomous action is rejected here in Stage A.
+        validate_agent_dispatch(
+            entry,
+            stage=stage,
+            requests_autonomous_action=agent.autonomous_action_allowed,
+        )
+        return entry
+
     def run_case(
         self,
         context: MissionContext,
         agents: Iterable[Agent],
         *,
         stage: str = "stage_a",
+        challenge_agents: Iterable[Agent] = (),
         anchor_provider: Callable[[], str | None] | None = None,
     ) -> DecisionEvidenceRecord:
         """Dispatch Stage A agents and assemble one in-memory DER.
@@ -110,19 +132,15 @@ class SwarmCommander:
         ``anchor_provider`` is an optional injection point for the future
         Evidence Package Agent; when absent, ``evidence_anchor`` stays ``None``
         (no sealing happens in this slice).
+
+        ``challenge_agents`` is the Pass-2 injection point for signed future
+        Layer 5 agents. Supplying this iterable is explicit; the Commander does
+        not discover, register, or promote Challenge agents on its own.
         """
 
         contributions: list[AgentContribution] = []
         for agent in agents:
-            entry = self._entry_for(agent)
-            self._assert_metadata_match(agent, entry)
-            # Router guard runs before invocation: stage + autonomy gating. An
-            # agent claiming autonomous action is rejected here in Stage A.
-            validate_agent_dispatch(
-                entry,
-                stage=stage,
-                requests_autonomous_action=agent.autonomous_action_allowed,
-            )
+            self._validate_agent_for_dispatch(agent, stage=stage)
             contribution = agent.analyze(context)
             if contribution.agent_id != agent.agent_id:
                 raise GovernanceError(
@@ -136,10 +154,27 @@ class SwarmCommander:
                 )
             contributions.append(contribution)
 
-        # Challenge pass (Pass 2) is wired in a later slice; Stage A analyze-only
-        # here, so challenge_pass is empty.
-        challenge_pass: tuple[ChallengeResult, ...] = ()
         contributions_tuple = tuple(contributions)
+        challenge_results: list[ChallengeResult] = []
+        for challenge_agent in challenge_agents:
+            self._validate_agent_for_dispatch(challenge_agent, stage=stage)
+            if challenge_agent.layer != 5:
+                raise GovernanceError(
+                    f"challenge agent {challenge_agent.agent_id!r} must be "
+                    "Layer 5 (Challenge/Red-Team)"
+                )
+            for contribution in contributions_tuple:
+                result = challenge_agent.challenge(contribution)
+                if result is None:
+                    continue
+                if result.agent_id != challenge_agent.agent_id:
+                    raise GovernanceError(
+                        f"challenge result agent_id {result.agent_id!r} does not "
+                        f"match challenge agent {challenge_agent.agent_id!r}"
+                    )
+                challenge_results.append(result)
+
+        challenge_pass = tuple(challenge_results)
         disposition = _determine_disposition(contributions_tuple, challenge_pass)
         human_state = "requested" if disposition == "human_required" else "not_required"
         evidence_anchor = anchor_provider() if anchor_provider is not None else None

@@ -36,6 +36,25 @@ def _detection_entry(
     )
 
 
+def _challenge_entry(
+    agent_id: str = "challenge_001",
+    *,
+    layer: int = 5,
+    authority_level: int = 3,
+    stage_allowed: str = "stage_a",
+) -> AgentRegistryEntry:
+    return AgentRegistryEntry(
+        agent_id=agent_id,
+        display_name="Test Challenge Agent",
+        role=AgentRole.BLUE,
+        allowed_environments={Environment.PRODUCTION, Environment.SANDBOX},
+        allowed_write_types=set(),
+        layer=layer,
+        authority_level=authority_level,
+        stage_allowed=stage_allowed,
+    )
+
+
 class _StubAgent:
     """Minimal runtime Agent that satisfies the Agent Protocol."""
 
@@ -70,6 +89,41 @@ class _StubAgent:
         raise AssertionError("challenge() must not be invoked in the Stage A case loop")
 
 
+class _ChallengeAgent:
+    """Minimal Layer 5 challenge agent for Pass 2 tests."""
+
+    def __init__(
+        self,
+        agent_id: str = "challenge_001",
+        *,
+        layer: int = 5,
+        authority_level: int = 3,
+        stage_allowed: str = "stage_a",
+        autonomous_action_allowed: bool = False,
+        challenge_outcome: str = "confirmed",
+        challenge_basis: str = "Header fact is structurally consistent.",
+        result_agent_id: str | None = None,
+    ) -> None:
+        self.agent_id = agent_id
+        self.layer = layer
+        self.authority_level = authority_level
+        self.stage_allowed = stage_allowed
+        self.autonomous_action_allowed = autonomous_action_allowed
+        self._challenge_outcome = challenge_outcome
+        self._challenge_basis = challenge_basis
+        self._result_agent_id = result_agent_id
+
+    def analyze(self, context: MissionContext) -> AgentContribution:  # pragma: no cover
+        raise AssertionError("analyze() must not be invoked for challenge agents")
+
+    def challenge(self, contribution: AgentContribution) -> ChallengeResult:
+        return ChallengeResult(
+            agent_id=self._result_agent_id or self.agent_id,
+            challenge_outcome=self._challenge_outcome,
+            challenge_basis=self._challenge_basis,
+        )
+
+
 def _context() -> MissionContext:
     return MissionContext(tenant_id="tenant_demo", inputs_digest="a" * 64)
 
@@ -90,12 +144,105 @@ def test_der_never_carries_audit_record_id():
     assert der.evidence_anchor is None
 
 
-def test_detection_agent_challenge_is_not_invoked():
+def test_detection_agent_challenge_is_not_invoked_when_no_challenge_agents_supplied():
     # _StubAgent.challenge raises; reaching here without error proves it was
-    # never called by the Stage A case loop.
+    # never called as part of the Stage A analyze pass.
     commander = SwarmCommander({"blue_detection_001": _detection_entry()})
     der = commander.run_case(_context(), [_StubAgent()])
     assert der.challenge_pass == ()
+
+
+def test_layer5_challenge_pass_runs_against_real_contribution():
+    commander = SwarmCommander(
+        {
+            "blue_detection_001": _detection_entry(),
+            "challenge_001": _challenge_entry(),
+        }
+    )
+    der = commander.run_case(
+        _context(),
+        [_StubAgent(observed_facts=("from_reply_to_divergence",))],
+        challenge_agents=[
+            _ChallengeAgent(
+                challenge_outcome="confirmed",
+                challenge_basis="Divergence fact is present and bounded.",
+            )
+        ],
+    )
+
+    assert len(der.contributions) == 1
+    assert der.contributions[0].observed_facts == ("from_reply_to_divergence",)
+    assert der.challenge_pass == (
+        ChallengeResult(
+            agent_id="challenge_001",
+            challenge_outcome="confirmed",
+            challenge_basis="Divergence fact is present and bounded.",
+        ),
+    )
+    assert der.disposition == "suspicious"
+
+
+def test_contradicted_challenge_forces_human_required():
+    commander = SwarmCommander(
+        {
+            "blue_detection_001": _detection_entry(),
+            "challenge_001": _challenge_entry(),
+        }
+    )
+    der = commander.run_case(
+        _context(),
+        [_StubAgent(observed_facts=("from_reply_to_divergence",))],
+        challenge_agents=[
+            _ChallengeAgent(
+                challenge_outcome="contradicted",
+                challenge_basis="Second pass could not reproduce fact.",
+            )
+        ],
+    )
+
+    assert der.challenge_pass[0].challenge_outcome == "contradicted"
+    assert der.disposition == "human_required"
+    assert der.human_state == "requested"
+
+
+def test_challenge_agent_must_be_layer5():
+    commander = SwarmCommander(
+        {
+            "blue_detection_001": _detection_entry(),
+            "blue_detection_002": _detection_entry(
+                agent_id="blue_detection_002",
+                layer=2,
+                authority_level=3,
+            ),
+        }
+    )
+    with pytest.raises(GovernanceError, match="must be Layer 5"):
+        commander.run_case(
+            _context(),
+            [_StubAgent()],
+            challenge_agents=[
+                _ChallengeAgent(
+                    agent_id="blue_detection_002",
+                    layer=2,
+                    authority_level=3,
+                )
+            ],
+        )
+
+
+def test_challenge_result_agent_id_must_match_challenge_agent():
+    commander = SwarmCommander(
+        {
+            "blue_detection_001": _detection_entry(),
+            "challenge_001": _challenge_entry(),
+        }
+    )
+    with pytest.raises(GovernanceError, match="challenge result agent_id"):
+        commander.run_case(
+            _context(),
+            [_StubAgent()],
+            challenge_agents=[_ChallengeAgent(result_agent_id="other_challenge")],
+        )
 
 
 def test_stage_ineligible_agent_is_rejected_before_analyze():
