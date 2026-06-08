@@ -19,7 +19,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **BREADTH RUNWAY:** **4** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** wrap candidates include **#7 Sender Identity, #11 Known-Good Contact, #18 Callback Verification, #27 Link Inspection, #30 Attachment Risk** (DETECTOR_FUNCTION rows with empty blockers). Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** wrap candidates include **#7 Sender Identity, #11 Known-Good Contact, #30 Attachment Risk** (DETECTOR_FUNCTION rows with empty blockers). **#27 Link Inspection** now has a contract draft and waits on §11 signature before runtime implementation. **#18 Callback Verification** is paused for a contract split decision: detector-only TOAD evidence is not the same as a Layer 3 verification/workflow outcome. Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -91,7 +91,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 15 | Invoice Fraud | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (invoice_authenticity_score) | 2 Detection | A |  | BREADTH | — | adoption |
 | 16 | Bank Detail Drift | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` + vendor baseline | 2 Detection | A |  | BREADTH | — | adoption |
 | 17 | Vendor Master Record | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 3 Verification | A |  | BREADTH | — | adoption |
-| 18 | Callback Verification | `DETECTOR_FUNCTION` | `core/scoring/callback_phishing_detector.py` + `core/workflows/two_channel_confirmation.py` | 3 Verification | A |  | BREADTH | — | adoption |
+| 18 | Callback Verification | `DETECTOR_FUNCTION` | `core/scoring/callback_phishing_detector.py` + `core/workflows/two_channel_confirmation.py` (detector/workflow split requires signed boundary before a governed wrapper) | 3 Verification | A | NEEDS_SIGNED_CONTRACT | BREADTH | 7 | cycle12 |
 | 19 | Dual-Approval | `SPEC_ONLY` | Vendor Payment Verification Workflow (draft) | 3 Verification | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
 | 20 | Financial Exposure | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` | 2 Detection | A |  | BREADTH | — | adoption |
 | 21 | Executive Impersonation | `SPEC_ONLY` | signed spec + Agent Design Contract metadata; **no detector code** | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
@@ -105,7 +105,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 24 | MFA Manipulation | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (mfa-fatigue signals) | 2 Detection | A |  | BREADTH | — | adoption |
 | 25 | Session Theft | `DETECTOR_FUNCTION` (adjacent) | `core/scoring/prompt_injection_detector.py` (adjacent only) | 2 Detection | A |  | BREADTH | — | adoption |
 | 26 | QR Phishing | `NOT_STARTED` | none (flagged in Frontier Intake) | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 27 | Link Inspection | `DETECTOR_FUNCTION` | `core/precursor/url_obfuscation_detector.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 27 | Link Inspection | `DETECTOR_FUNCTION` | `core/precursor/url_obfuscation_detector.py` + draft contract `4. Product_Roadmap/Link_Inspection_Agent_Design_Contract_Deep_Dive.md` (`eca513e`; pending §11 signature before wrapper code) | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | 9 | eca513e |
 | 28 | Brand Impersonation | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 29 | Form Abuse | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 

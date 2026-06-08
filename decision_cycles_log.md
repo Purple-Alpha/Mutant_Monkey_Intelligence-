@@ -45,6 +45,42 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 12 — 2026-06-08T19:20Z   [type: TACTICAL]
+  OBSERVE: Build Sequencer is live; breadth is the open runway toward the full
+           70-agent governed swarm. Current governed agents: #6, #6A, #8, #10,
+           plus the first Layer 5 Challenge agent at Evidence Stage 1. Depth
+           remains gated by real-data intake; Stage B remains gated by separate
+           autonomy authorization.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   #27 Link Inspection contract draft -> Stage 1 wrapper path
+               L2 R1 E2 FC2 Rv2   TOTAL 9
+    ACTION B   #30 Attachment Risk contract draft -> Stage 1 wrapper path
+               L1 R1 E2 FC1 Rv2   TOTAL 7
+    ACTION C   #18 Callback Verification wrapper now
+               L2 R2 E1 FC1 Rv1   TOTAL 7
+               Note: review found Layer 2 TOAD detector vs Layer 3
+               workflow/verification boundary; code waits on signed contract split.
+    ACTION D   #7 Sender Identity wrapper now
+               L1 R1 E1 FC1 Rv1   TOTAL 5
+               Note: current evidence is broad LLM `impersonation_analysis`, not a
+               clean standalone deterministic detector surface.
+    ACTION E   Second Layer 5 Challenge agent (KG-002 cross-arbitration)
+               L1 R1 E2 FC1 Rv2   TOTAL 7
+    ACTION F   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A breadth path. Matt selected the governed breadth path
+                 with "perfect lets go"; execution-lane refinement selected #27
+                 as the clean immediate candidate and marked #18 blocked pending
+                 signed boundary.
+  EXPECTED:      Draft a §11-ready Link Inspection Agent Design Contract that
+                 authorizes no code until signed, pins facts-only Layer 2 output,
+                 and preserves URL detector immutability.
+  EXECUTED AT:   2026-06-08T19:28Z
+  AUDIT VERDICT: PASS — contract draft gate clean 0/0; MASTER_INDEX tracker gate clean 0/0
+  SURPRISES:     #18 looked actionable from the scoreboard row, but pre-build review
+                 surfaced a detector/workflow layer split. Step 6.5 updated the row
+                 to `NEEDS_SIGNED_CONTRACT` before code.
+
 FORK 1 — 2026-06-07T21:55Z   [type: STRATEGIC]
   CONTEXT: Swarm spine — what to build after the Swarm Commander case loop (slices 1-5
            committed). §4 trigger met: build direction / agent sequencing. Decided by Matt
