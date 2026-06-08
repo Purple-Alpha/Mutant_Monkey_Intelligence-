@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Email Authentication Agent: wrapper proof committed, Agent Design Contract §11 SIGNED, #6A promoted
+**Actor:** Matt (build authorization to wrap the next detector; §11 signature "Matt Nichol June 7th 2026"; commit instruction; §10 Q1 decision); Cursor (wrapper, tests, contract draft, gates, commits).
+
+**Action:** Built + gated clean + committed (three commits: wrapper proof `8e3df20`, signed contract `23e35e8`, then scoreboard promotion + trackers).
+
+**Files Changed:**
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/email_authentication_agent.py` (new, runtime-proof wrapper — commit `8e3df20`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_email_authentication_agent.py` (new, 13 tests — commit `8e3df20`)
+- `4. Product_Roadmap/Email_Authentication_Agent_Design_Contract_Deep_Dive.md` (new, §11 SIGNED — commit `23e35e8`)
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (#6A row added, GOVERNED_AGENT tally 3->4, #6 evidence trimmed — tracker commit)
+- `MASTER_INDEX.md`, `PROGRESS.md`, `PROJECT_ACTIVITY_LOG.md` (tracker refresh)
+
+**Reason:**
+Third detector wrapped on the proven Agent -> AgentContribution -> SwarmCommander -> DER path, then promoted to a governed agent. Email Authentication ingests upstream gateway SPF/DKIM/DMARC results (`Authentication-Results`) as a facts-only Layer 2 signal, distinct from #6 Header Analysis domain divergence. The contract is code-accurate (D1-D9), lift-only (never asserts safe on a pass), and names the "pass means safe" fallacy as a §5 failure mode. §10 Q1 resolved at signing: own scoreboard row (#6A), correcting a pre-wrapper classification artifact that had folded the detector under #6.
+
+**Next Step:**
+Wire the Layer 5 challenge pass against the AGGREGATE per-case AgentContribution set from all three governed detectors (operator design constraint: the Challenge agent reviews the full contribution set, not one contribution at a time). A fourth wrapper follows only after the challenge pass is proven.
+
 ## 2026-06-07 - Ghost Thread Agent Design Contract §11.A SIGNED; §10 Q1-Q4 resolved (§10.A)
 **Actor:** Matt (§11.A revision signature "Matt Nichol June 7th 2026"; commit instruction); Cursor (encode §10.A, gate, commit).
 
