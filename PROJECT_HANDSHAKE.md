@@ -1,6 +1,33 @@
 # Project Handshake
 NorthStar + SwarmCommand Venture
 
+```
+═══════════════════════════════════════════════
+CURRENT NEXT ACTION (as of 19b253d)
+═══════════════════════════════════════════════
+STATE: IDLE (COMMIT_UPDATE complete — Build Map §11 SIGNED / LIVE)
+TRACK: BREADTH
+DEPTH GATE: CLOSED (real-data intake not open)
+
+NEXT ACTION:
+  Run the first live Build Map TRIAGE cycle (Build_Map_Deep_Dive.md §5) on the
+  BREADTH track to select the next governed-agent candidate.
+
+IF BLOCKED:
+  No open §11 lock. (Build Map §10 Q1/Q2 remain UNAUTHORIZED — not in scope until
+  each gets its own Build Authorization.)
+
+CANDIDATE QUEUE (post-triage, ranked):
+  - PENDING first live triage pass. Known input from prior cycles:
+    · #24 MFA Manipulation — GOVERNED_AGENT (done, Evidence Stage 1).
+    · #25 Session Theft — RECLASSIFY: its listed detector is the prompt-injection
+      detector (a different agent); no standalone session-theft detector exists.
+    · #23/#24/#27/#30 — GOVERNED_AGENT awaiting Stage 2 promotion (depth gate CLOSED).
+
+LAST UPDATED: 19b253d 2026-06-08
+═══════════════════════════════════════════════
+```
+
 ## Purpose
 The "start here before doing work" file. Read it after `AGENTS.md` and `VISION.md`.
 It tells a new session, in one screen: where we are now, the single next action, the
