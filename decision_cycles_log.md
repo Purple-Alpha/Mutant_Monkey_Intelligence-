@@ -45,6 +45,50 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 15 — 2026-06-08T22:05Z   [type: TACTICAL]
+  OBSERVE: CYCLE 14 closed with #23 Credential Phishing promoted to GOVERNED_AGENT
+           at Evidence Stage 1 (breadth runway 6 -> 7). No lock open. The
+           Build Sequencer actionable-now header names #24 MFA Manipulation as
+           the cleanest immediate breadth wrap and #25 Session Theft as the
+           next pure-detector alternative. Depth remains blocked by the real-data
+           intake gate; #31/#11/#18 remain boundary-contract problems.
+  PRE-BUILD FINDING: #24 MFA Manipulation is a clean facts-only wrap candidate.
+           `score_mfa_fatigue` is the pure sibling of #23's
+           `score_credential_harvesting` in `body_signal_detector.py`. It reads
+           text surfaces only, returns `BodySignalAssessment(score, indicators)`,
+           emits closed `PrecursorIndicator` tags (`mfa_push_language`,
+           `verification_code_language`), and performs no network, subprocess,
+           baseline, or memory-store behavior.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   #24 MFA Manipulation contract draft -> Stage 1 wrapper path
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: pure facts-only sibling of #23; same proven wrapper/test
+               shape; cleanest unblocked breadth slice after #23.
+    ACTION B   #25 Session Theft contract draft
+               L2 R1 E2 FC1 Rv2   TOTAL 8
+               Note: valuable pure detector (`prompt_injection_detector.py`),
+               but larger surface than #24 and less reusable from the just-built
+               body-signal wrapper pattern.
+    ACTION C   #31 PDF Fingerprint boundary contract
+               L2 R1 E1 FC0 Rv1   TOTAL 5
+               Note: blocked for immediate wrapper because the detector mutates
+               the Vendor Baseline Store; needs Layer 2/3 boundary design first.
+    ACTION D   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A. Matt said "let's get back to the building"; the
+                 Build Sequencer's highest clean candidate is #24 and it reuses
+                 the newly proven #23 body-signal wrapper pattern.
+  EXPECTED:      Draft a §11-ready MFA Manipulation Agent Design Contract that
+                 authorizes no code until signed, pins facts-only Layer 2 output
+                 of the closed MFA-push / verification-code indicator vocabulary,
+                 forbids score/raw-code/body leakage and any baseline/network
+                 behavior, scopes out the sibling score_credential_harvesting
+                 surface (#23), and preserves body-signal detector immutability.
+  EXECUTED AT:   2026-06-08T22:05Z (draft slice)
+  AUDIT VERDICT: PENDING — contract draft + tracker slices to gate; §11 signature
+                 then Stage 1 wrapper + focused tests in subsequent slices.
+  SURPRISES:     None at draft time. #24 is the expected clean sibling of #23.
+
 CYCLE 14 — 2026-06-08T20:40Z   [type: TACTICAL]
   OBSERVE: CYCLE 13 closed with #30 Attachment Risk promoted to GOVERNED_AGENT
            at Evidence Stage 1 (breadth runway 5 -> 6). No lock open. The
