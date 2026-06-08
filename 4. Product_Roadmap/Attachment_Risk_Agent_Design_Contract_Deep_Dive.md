@@ -1,6 +1,6 @@
 # Attachment Risk Agent Design Contract — Spec-First Deep Dive
 
-**Status:** DRAFT 2026-06-08. Authored as Build Sequencer CYCLE 13 for swarm agent #30. This draft is **not signed** and authorizes **no code**, **no runtime wiring**, **no detector-logic change**, **no default-registry registration**, **no production dispatch**, **no Evidence Stage 2/3 promotion**, and **no autonomous action**. §11 signature is operator-only.
+**Status:** §11 SIGNED 2026-06-08 by Matt Nichol ("Matt Nichol June 8th 2026", placed verbatim at §11). Authored as Build Sequencer CYCLE 13 for swarm agent #30. Signing promotes #30 Attachment Risk from `DETECTOR_FUNCTION` to `GOVERNED_AGENT` at **Evidence Stage 1 (Synthetic)** and locks D1-D9 + the §4 Evidence Stage declaration. Signing authorizes the Stage 1 wrapper build (the `AttachmentRiskAgent` wrapper + focused tests over the existing immutable detector) and **nothing else**: **no detector-logic change**, **no default-registry registration**, **no production dispatch**, **no scoring/rubric change**, **no Evidence Stage 2/3 promotion**, and **no autonomous action**. §11 signature is operator-only.
 
 **Owner:** Matt Nichol
 
@@ -162,6 +162,6 @@ No design fork is open in this draft. §11 signature confirms D1-D9 and authoriz
 
 ## §11 Sign-off
 
-PENDING. Operator-authored signature required before runtime implementation.
+SIGNED. This promotes swarm agent #30 Attachment Risk to `GOVERNED_AGENT` at **Evidence Stage 1 (Synthetic)** and locks D1-D9 + the §4 Evidence Stage declaration as the Attachment Risk Agent Design Contract. Signing authorizes the Stage 1 wrapper build only (the `AttachmentRiskAgent` wrapper around the immutable `score_attachment_risk` detector + focused tests); it authorizes **no** detector-logic change, **no** default-registry registration, **no** production dispatch, **no** scoring/rubric change, and **no** autonomous action. Evidence Stage 2/3 promotion is a separate, later, Matt-signed event per template §6.2.
 
-> [Matt Nichol — Attachment Risk Agent Design Contract — date]
+> §11 SIGNATURE — Matt Nichol June 8th 2026
