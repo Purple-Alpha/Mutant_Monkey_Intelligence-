@@ -103,7 +103,9 @@ ACTION E — Do nothing this cycle (reference baseline)
   TOTAL:         4
 ```
 
-SELECTED: **ACTION C** (Matt, 2026-06-08) — **COMPLETE.** Option B adopted and LIVE: queue retired; scoreboard = Build Sequencer; rubric D13-rev §12 SIGNED 2026-06-08 ("Matt Nichol June 8th 2026"). Build Loop Steps 0.5/6.5 in force. Next cycle: read the scoreboard Build Sequencer header for actionable-now candidates, then circle back to today's build (wrap next detector or second L5 Challenge agent).
+SELECTED: **ACTION C** (Matt, 2026-06-08) — **COMPLETE.** Option B adopted and LIVE: queue retired; scoreboard = Build Sequencer; rubric D13-rev §12 SIGNED 2026-06-08 ("Matt Nichol June 8th 2026"). Build Loop Steps 0.5/6.5 in force.
+
+SELECTED NEXT: **ACTION A — governed breadth wrapper path** (Matt: "perfect lets go", 2026-06-08). Execution-lane candidate refinement found #18 Callback Verification has a Layer 2 detector vs Layer 3 workflow/verification boundary, so it is marked `NEEDS_SIGNED_CONTRACT` before code. #27 Link Inspection is the cleanest immediate breadth candidate; its Agent Design Contract draft is committed (`eca513e`) and indexed (`b18926d`). **Current next lock:** Matt §11 signature on `4. Product_Roadmap/Link_Inspection_Agent_Design_Contract_Deep_Dive.md`; only after that does runtime wrapper implementation begin.
 
 **Operator scheduling is NOT an agent agenda item (per AGENTS §3, 2026-06-07).** Do not raise, prep for, or re-surface any of Matt's appointments/meetings unless Matt raises it first. The anchor card at `1. Business_Operations/Client_Documents/Todd_Tuesday_MSP_Call_Anchor_Card.md` exists as Matt's own personal notes; it is finished and is not a build deliverable.
 
