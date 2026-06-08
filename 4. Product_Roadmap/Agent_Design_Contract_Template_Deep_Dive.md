@@ -1,6 +1,6 @@
 # Agent Design Contract Template — Spec-First Deep Dive
 
-**Status:** §11 SIGNED 2026-06-06 by Matt Nichol. Authored 2026-06-06 by Cursor on Matt Nichol's instruction after the operator adopted the 6-layer `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md` as the canonical agent-design map. All seven §10 questions are locked in §10.A (2026-06-06). This is a governance/template contract only. Signing locks D1-D10 + §10.A as the Agent Design Contract Template; it authorizes **no** code, **no** runtime wiring, **no** new agent behavior, **no** autonomous action, **no** detector retrofit, and **no** change to any signed detector spec. A separate explicit operator Build Authorization or metadata-retrofit instruction is required before implementation.
+**Status:** §11 SIGNED 2026-06-06 by Matt Nichol. **REVISION 2026-06-07 SIGNED, in force** ("Matt Nichol June 7th 2026", §11.A, placed verbatim) — §6 rewritten into the Evidence Stage / Promotion / Demotion model (Evidence Stage 1/2/3, distinct from VISION Stage A/B/C; append-only `PROMOTION`/`DEMOTION` ledger in `decision_cycles_log.md`); §6.5 adds progressive-hardening (every real-case miss / demotion trigger becomes a new permanent regression test the agent must pass before (re-)promotion); §3 contract block gains an `Evidence Stage (current)` field and the per-agent Build-Authorization stage line; §10.A Q5 superseded. This revision is **signed and in force as of 2026-06-07** (§11.A). Authored 2026-06-06 by Cursor on Matt Nichol's instruction after the operator adopted the 6-layer `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md` as the canonical agent-design map. All seven §10 questions are locked in §10.A (2026-06-06). This is a governance/template contract only. Signing locks D1-D10 + §10.A as the Agent Design Contract Template; it authorizes **no** code, **no** runtime wiring, **no** new agent behavior, **no** autonomous action, **no** detector retrofit, and **no** change to any signed detector spec. A separate explicit operator Build Authorization or metadata-retrofit instruction is required before implementation.
 
 **Owner:** Matt Nichol
 
@@ -89,6 +89,7 @@ Canonical layer:
 Canonical team / case type:
 Authority level:
 Stage posture:
+Evidence Stage (current):
 
 Role:
 Boundary:
@@ -128,7 +129,8 @@ Build Authorization dependency:
 - **Canonical layer** — one of: Command, Detection, Verification, Evidence, Challenge/Red-Team, Learning/Governance.
 - **Canonical team / case type** — the domain where this agent is allowed to operate (vendor-payment fraud, phishing, ransomware precursor, cyber-insurance evidence, executive impersonation, etc.).
 - **Authority level** — one of the six canonical authority levels from the design tree.
-- **Stage posture** — Stage A analyze/recommend only unless a signed Stage B/C spec says otherwise.
+- **Stage posture** — VISION Stage A analyze/recommend only unless a signed Stage B/C spec says otherwise. (Autonomy axis — distinct from Evidence Stage; see §6.0.)
+- **Evidence Stage (current)** — the agent's validation-maturity stage (1 Synthetic / 2 Supervised / 3 Production) per §6.1, set only at a Matt signature event. Distinct from VISION Stage A/B/C.
 - **Role** — what the agent is for.
 - **Boundary** — what the agent must not do, even when it fires.
 - **Explicit non-authorities** — forbidden outputs/actions (block, quarantine, approve payment, declare fraud, claim compliance, etc.).
@@ -144,15 +146,15 @@ Build Authorization dependency:
 - **Scoring / action posture** — lift-only, evidence-tag-only, no score change, or other signed behavior.
 - **Default rollout** — default-off, opt-in, calibration-gated, or other.
 - **Autonomous action** — normally `none` in Stage A; any non-none requires Stage B/C gating.
-- **Promotion conditions** — measurable evidence that increases trust/influence.
-- **Demotion conditions** — false positives, false negatives, overclaims, unsupported recommendations, or failed retests.
+- **Promotion conditions** — measurable evidence that increases trust/influence; the Evidence-Stage gates are canonical in §6.2 and the case-type evidence requirements in §6.4.
+- **Demotion conditions** — false positives, false negatives, overclaims, unsupported recommendations, or failed retests; canonical demotion triggers and effects in §6.3.
 - **Retest evidence** — what proof must exist after correction.
 - **Calibration requirement** — data/test set required before default-on or authority increase.
 - **Failure modes** — named ways the agent can mislead the system.
 - **Required tests** — unit, integration, break-it, cross-tenant, no-network, no-overclaim, no-autonomous-action tests.
 - **Audit requirements** — gate outputs and evidence records required before commit/ship.
 - **Signed-spec dependencies** — governing specs this agent inherits.
-- **Build Authorization dependency** — explicit operator instruction required before implementation.
+- **Build Authorization dependency** — explicit operator instruction required before implementation. The per-agent Build Authorization also carries the stage line: "At signing, this agent is at Evidence Stage [ ]. No build authorization is granted for Evidence Stage 2 or Stage 3 registration until the promotion conditions in §6.2 are satisfied and a separate promotion record is signed."
 
 ---
 
@@ -196,10 +198,90 @@ Rules:
 
 ---
 
-## §6 Promotion / demotion contract
+## §6 Evidence Stage, Promotion & Demotion
 
-### Promotion conditions
-An agent may gain influence only when it has:
+This is the canonical evidence-stage / promotion / demotion model every governed agent inherits (added 2026-06-07 by operator instruction; supersedes the former spec-only-text posture of §10.A Q5). The current Evidence Stage of any agent is set **only by Matt Nichol's signature** (§6.1). No agent, Cursor, or automated process may self-report or self-advance an evidence stage.
+
+### §6.0 Evidence Stage is NOT VISION Stage A/B/C (read this first)
+
+Two different rulers, never merged (this prevents the naming-collision failure mode):
+
+- **VISION Stage A/B/C** measures **autonomy** — what an agent is allowed to *do*. Stage A = analyze / recommend / evidence only; Stage B/C = signed-gated autonomous action. This is a non-negotiable and is **unchanged** by this section.
+- **Evidence Stage 1/2/3** measures **validation maturity** — how proven an agent is on real data. It changes nothing about autonomy.
+
+Every agent carries both labels at once (e.g. "Stage A autonomy, Evidence Stage 1"). Reaching **Evidence Stage 3 ("Production") does NOT grant any autonomous action**: a Stage-A agent at Evidence Stage 3 still only analyzes / recommends / produces evidence. Autonomy still requires a separate signed Stage B/C spec.
+
+### §6.1 Evidence Stage Status
+
+Every agent governed by this contract operates at exactly one evidence stage at all times. The current stage is set only by Matt Nichol's signature.
+
+| Stage | Name | Meaning |
+|-------|------|---------|
+| 1 | Synthetic | Agent is validated on synthetic test data only. Not registered in production dispatch. |
+| 2 | Supervised | Agent has been validated on real email samples under human review. Eligible for supervised production use. |
+| 3 | Production | Agent runs in the live Commander dispatch path without per-case human review. Drift Watch active. |
+
+The current stage for an agent is recorded in its own contract (§3 field `Evidence Stage (current)`). Matt checks one at signing. **Advancement requires a new signature event — not a contract revision.**
+
+### §6.2 Promotion Conditions
+
+An agent may not advance to the next evidence stage until every condition for that stage is met and Matt signs the promotion record. **Cursor may not register a stage advancement without a signed promotion record in the repo.**
+
+**Evidence Stage 1 → Stage 2 promotion requires all of:**
+
+- Test suite passes clean: at minimum one known-bad input fires correctly, one known-good input does not fire, and one edge case behaves exactly as documented in the agent's §4 output schema.
+- Zero open test failures at gate time.
+- Matt reviews a minimum of 3 real email samples and confirms the agent's `observed_facts` match what a trained analyst would flag on those samples.
+- The 3 real samples and Matt's confirmation are logged to `decision_cycles_log.md` as a `PROMOTION` entry before the signature is placed.
+- Matt signs the Stage 2 promotion record.
+
+**Evidence Stage 2 → Stage 3 promotion requires all of:**
+
+- Stage 1 → Stage 2 conditions remain satisfied (no regression).
+- Agent has run on a minimum of 3 supervised production cases with no anomalous output flagged by the Independent Decision Auditor (`complete_gate.py`, per §9).
+- Drift Watch has been configured and confirmed active for this agent.
+- Demotion conditions in §6.3 are documented and confirmed testable before Stage 3 is entered.
+- Matt signs the Stage 3 promotion record.
+
+**Promotion records are append-only.** A promotion record is never deleted or overwritten, even if the agent is later demoted. The full promotion history of every agent is permanently visible in `decision_cycles_log.md`.
+
+### §6.3 Demotion Conditions
+
+Demotion returns an agent to the previous evidence stage. It is not a punishment — it is the governance mechanism that makes Evidence Stage 3 trustworthy. An agent that can be demoted is an agent that can be trusted.
+
+**Automatic demotion triggers — fire without a human decision:**
+
+- Any regression test that was passing at promotion time now fails.
+- Drift Watch flags an output-pattern anomaly outside the agent's declared behavioral boundary in §4.
+- Evidence-chain integrity check fails on any contribution written by this agent.
+- Agent attempts to write a field outside its layer-restricted output schema.
+
+**Matt-signed demotion triggers — require Matt's signature before taking effect:**
+
+- The Independent Decision Auditor flags a pattern of outputs inconsistent with the agent's declared role in its §2.
+- A real-case review reveals the agent's `observed_facts` would have materially misled a downstream Verification agent.
+- A signed Challenge agent contradicts this agent's output on 2 or more cases within any 30-day window.
+
+**What demotion does:**
+
+- Agent is immediately removed from `build_default_registry` at the demoted stage level.
+- All in-flight cases where this agent contributed are flagged for human review.
+- A `DEMOTION` entry is written to `decision_cycles_log.md` — including which trigger fired, who confirmed it, and the timestamp.
+- The agent may be re-promoted only by satisfying the full promotion conditions for the stage it is re-entering — no shortcuts on re-promotion.
+
+**What demotion does not do:**
+
+- Does not delete the agent's prior contribution records — those are permanent.
+- Does not invalidate evidence packets already sealed with this agent's contributions — those are flagged for review, not voided.
+- Does not authorize Cursor to modify the agent's detector logic without a separate signed spec.
+
+**Forward dependency:** "Drift Watch" is referenced above as a Stage-3 prerequisite but is not yet built. No agent may reach Evidence Stage 3 until Drift Watch exists and is confirmed active (the §6.2 Stage 2 → 3 condition gates this). "Independent Decision Auditor" = `complete_gate.py` (§9).
+
+### §6.4 Case-type-specific evidence requirements (preserved)
+
+The stage model above governs an agent's overall validation maturity. The promotion/demotion *evidence* requirements below remain in force as the per-case-type trust rules that feed the stage gates.
+
+Promotion evidence — an agent may gain influence only when it has:
 - repeatable accuracy evidence for a specific case type;
 - low false-positive evidence under benign tests;
 - low false-negative evidence under adversarial tests;
@@ -208,8 +290,7 @@ An agent may gain influence only when it has:
 - retest evidence after prior failures;
 - no open boundary violations.
 
-### Demotion conditions
-An agent loses influence when it:
+Demotion evidence — an agent loses influence when it:
 - overclaims beyond evidence;
 - misses a serious threat in its scoped domain;
 - produces unsupported recommendations;
@@ -218,7 +299,18 @@ An agent loses influence when it:
 - violates Stage A no-autonomous-action rules;
 - fails retesting after correction.
 
-Promotion/demotion is **case-type specific**, not universal. An agent can be trusted for vendor-payment fraud and untrusted for ransomware precursor review.
+Promotion/demotion is **case-type specific**, not universal: an agent can be trusted for vendor-payment fraud and untrusted for ransomware precursor review. Evidence Stage and case-type trust compose — an Evidence Stage 2 agent is still only trusted for the case types its evidence covers.
+
+### §6.5 Progressive hardening — evolving testing
+
+The stage gates above stop an agent from silently getting worse; this rule makes it get better over time. **Every real-case miss, every demotion trigger, and every corrected false positive or false negative must produce a new permanent regression test.**
+
+- Capture the failing case as a fixture (sanitized / tenant-stripped, per the data-minimization and tenant-isolation rules) and add it to the agent's test suite.
+- Fix the agent.
+- The agent may be promoted or re-promoted only after it passes the new regression test **and** all existing tests with zero open failures.
+- Regression tests are **append-only**: once added, a regression test is never removed, even across demotion and re-promotion. The suite only grows.
+
+This turns every mistake into a locked-in test, so blind spots shrink over time and an agent becomes strictly harder to regress the longer it runs. The new fixture and the correction are recorded alongside the related `DEMOTION` / `PROMOTION` entry in `decision_cycles_log.md`. This rule is the operative form of the §6.4 "retest evidence after prior failures" requirement: retesting is not optional and the test that proves the fix is permanent.
 
 ---
 
@@ -295,7 +387,7 @@ Operator ("lock it in", 2026-06-06) confirmed all seven questions with the defau
 2. **Q2 — Existing signed agents.** #10 Lookalike Domain and #21 Executive Impersonation receive a **metadata-only retrofit immediately after this template is §11-signed**. The retrofit may add layer, role, authority level, two-pass role, decision-evidence-record contribution, promotion/demotion conditions, and related governance metadata. It must not change signed detector logic, scoring floors, default-off/default-on posture, rubric linkage, or Build Authorization status.
 3. **Q3 — Authority-level defaults.** Stage A promoted detectors default to **Level 3 — Specialist Agent**: they may produce domain-specific evidence and review specialized risks, but they cannot override command rules, finalize high-risk cases alone, approve risky actions, or act autonomously. A detector may be lower (Level 1 Observer) if its evidence is immature; any higher level requires its own signed authority decision.
 4. **Q4 — Decision Evidence Record field set.** The seven-field interface in §5 is sufficient for v1: `observed_facts`, `interpretations`, `assumptions`, `missing_evidence`, `recommended_verification`, `final_outcome_contribution`, and `retest_or_learning_record`. `confidence`, `evidence_strength`, and `contradictions` are deferred to a later signed amendment so the v1 contract stays simple and avoids inventing premature scoring semantics.
-5. **Q5 — Promotion/demotion storage.** Promotion/demotion conditions are **spec-only text in v1**. A future ledger/schema for agent reputation events is explicitly deferred until there is enough real or synthetic correction evidence to design it honestly. No reputation engine is implied by this template.
+5. **Q5 — Promotion/demotion storage.** ~~Promotion/demotion conditions are **spec-only text in v1**. A future ledger/schema for agent reputation events is explicitly deferred until there is enough real or synthetic correction evidence to design it honestly. No reputation engine is implied by this template.~~ **SUPERSEDED 2026-06-07 (operator instruction):** §6.2/§6.3 now require append-only `PROMOTION` and `DEMOTION` entries in `decision_cycles_log.md` for every evidence-stage change. This is an append-only audit ledger of stage events recorded by Matt's signature — not an automated reputation engine; no agent self-scores or self-advances. The original Q5 "spec-only text" posture is retired. This change is part of the signed 2026-06-07 revision (see §11.A).
 6. **Q6 — Two-pass linkage.** Pure detectors may declare **Pass 1 only** until the Two-Pass Decision Model spec is signed. They should still state what evidence they provide for a future Pass 2 challenge, but they do not need to define challenge behavior before that orchestration contract exists.
 7. **Q7 — Canonical source (settled, do not relitigate).** `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md` is the **canonical design source** for agent design and milestone shaping — permanently, going forward. `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` (the v1 70-agent map) is **inventory/backlog cross-map only** and is **not a competing design source**. The v1 map served its purpose and will not be reinstated as canonical; future sessions must not treat it as the design authority or "look back" to it for design decisions. Any change to this canonical-source decision requires an explicit operator instruction, not a session interpretation.
 
@@ -310,3 +402,9 @@ Pre-§11 draft. §10 is resolved in §10.A and this spec is ready for operator s
 > §11 SIGNED — Matt Nichol June 6th 2026
 
 This §11 signature locks D1-D10 and the §10.A operator-confirmed decisions as the governing Agent Design Contract Template. It does **not** implement a runtime agent registry, reputation engine, two-pass orchestrator, or any detector retrofit; no code generation or environment writes occur until a separate explicit operator Build Authorization or metadata-retrofit instruction.
+
+### §11.A Revision 2026-06-07 — SIGNED, in force
+
+The 2026-06-07 revision adds the Evidence Stage / Promotion / Demotion governance model (§6.0–§6.4), the progressive-hardening rule (§6.5 — every real-case miss or demotion trigger becomes a new permanent regression test the agent must pass before (re-)promotion; regression suite is append-only and only grows), the `Evidence Stage (current)` contract field and per-agent Build-Authorization stage line (§3), and supersedes §10.A Q5 (promotion/demotion now use an append-only `PROMOTION`/`DEMOTION` ledger in `decision_cycles_log.md`). Per the spec-first discipline, a revision to a §11-signed spec requires a fresh operator signature; that signature is placed below and the revision is **in force as of 2026-06-07**. The revision changes governance text only — it authorizes no code, no runtime enforcement, no retrofit, and no autonomous action. Evidence Stage 1/2/3 is a validation-maturity axis and is **orthogonal to VISION Stage A/B/C**; nothing here grants any agent autonomous action.
+
+> §11.A RE-SIGNATURE — Matt Nichol June 7th 2026

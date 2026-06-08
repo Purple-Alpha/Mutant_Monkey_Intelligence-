@@ -26,6 +26,24 @@ What should happen next.
 
 ---
 
+## 2026-06-07 - Agent Design Contract Template: Evidence Stage / Promotion / Demotion model added (REVISION, SIGNED, in force)
+**Actor:** Matt (decision + second-opinion review + §11.A re-signature "Matt Nichol June 7th 2026"); Cursor (draft + gate).
+
+**Action:** Updated (revision to a §11-signed spec; signed and in force as of 2026-06-07).
+
+**Files Changed:**
+- 4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md
+- MASTER_INDEX.md
+- PROJECT_ACTIVITY_LOG.md
+
+**Reason:**
+Matt directed adding a three-stage evidence/governance model with evolving testing and explicit promotion + demotion. §6 was rewritten into the Evidence Stage / Promotion / Demotion model: three Evidence Stages (1 Synthetic / 2 Supervised / 3 Production) measuring validation maturity, explicitly orthogonal to VISION Stage A/B/C autonomy (§6.0 — Evidence Stage 3 grants no autonomous action, closing the naming-collision risk that caused the prior confusion). Promotion is signature-gated; demotion fires automatically (regression test fail, drift, evidence-chain break, out-of-layer write) or on Matt's signature (auditor pattern flag, real miss, Challenge agent contradicting twice in 30 days). Both are append-only `PROMOTION`/`DEMOTION` entries in `decision_cycles_log.md`. §6.5 adds progressive hardening (Pillar 3, confirmed by an operator second-opinion review): every real-case miss or demotion trigger becomes a new permanent regression test the agent must pass before (re-)promotion; the regression suite is append-only and only grows. §3 contract block gains an `Evidence Stage (current)` field and the per-agent Build-Authorization stage line. This revision supersedes the signed §10.A Q5 "spec-only, no ledger" posture. Per spec-first discipline, Matt placed the §11.A re-signature ("Matt Nichol June 7th 2026"), making the revision signed and in force as of 2026-06-07. No code, no runtime enforcement, no retrofit, no autonomous action.
+
+**Next Step:**
+Matt re-signed §11.A ("Matt Nichol June 7th 2026"); revision is in force. Commit pending explicit operator commit authorization. Next build action returns to the swarm spine: wire the Layer 5 challenge pass against the now-governed Header Divergence contribution, or wrap the next detector.
+
+---
+
 ## 2026-06-07 - Swarm spine: first real detector wrapped on the governed-agent contract (Header Divergence)
 **Actor:** Matt (build-direction call: wrap an existing detector before wiring the challenge pass); Cursor (build).
 
