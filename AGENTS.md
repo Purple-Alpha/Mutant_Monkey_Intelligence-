@@ -132,6 +132,21 @@ This rule closes the 2026-06-08 Section 6 overlap: Claude was previously blind t
 - **No duplicate implementation after a clean gate.** If a slice already exists and passed its gate, do not rebuild it from another model's version. Diff the advisory input, extract only net-new value, and preserve the gated implementation unless Matt explicitly orders a rewrite.
 - **Combine strengths at the lane boundary.** When two models share a strength, merge outputs by phase: advisory owns pressure-test/design signal; execution owns repo reality and verification; Matt owns the decision.
 
+### 2.1.1.B Operator sign-off scope (operator-stated 2026-06-08)
+
+Matt's time and one-handed typing are scarce; per-step sign-off on routine work was identified as pure friction. From this point, the operator signs off on the **important locks only**, and the execution lane proceeds on the rest without stopping to re-ask. The signature is reserved for decisions that lock something in; it is not required to perform the work a prior signature already authorized.
+
+- **Still requires Matt's sign-off (the important ones):**
+  - §11 signatures on specs / Agent Design Contracts (these lock design, promote agents, and grant Build Authorization). Operator-only, unchanged.
+  - New Build Authorization or scope expansion — Evidence Stage 2/3 promotion, registration in `build_default_registry` / production dispatch, anything enabling autonomous action, or any change touching a signed spec or one of the seven `VISION.md` non-negotiables.
+  - Pushing to remote (always an explicit operator step).
+  - Destructive / irreversible git actions (force-push, history rewrite, deletion of governed artifacts).
+- **Execution lane proceeds without per-step sign-off:**
+  - Committing work that is within an already-signed authorization and has a clean 0/0 gate; report the commit hash after.
+  - Tracker updates (PROGRESS / MASTER_INDEX / PROJECT_ACTIVITY_LOG).
+  - Tests, gates, and implementation against an already-locked spec.
+- **Always still true:** report after every commit (full visibility), keep the gate clean before any commit (§5), and hard-stop for anything in the sign-off list above. This does not relax the gate, the challenge guard (§3), or the §2.1.2 handoff routing — it only removes the redundant "confirm what you already decided" step.
+
 ### 2.1.2 Mandatory handoff routing (operator-authored 2026-06-06, MANDATORY)
 
 Matt routes the work between partners; this is binding, not advisory preference. It exists because the execution lane (the Cursor agent, Claude-family) repeatedly drifted into design and decision work it should have handed off, and presented raw choices instead of scored hand-offs. The relay is manual: the agent **writes the hand-off out as copy-pasteable prose**, Matt pastes it into the correct partner, and brings the answer back. The Cursor agent stays **main builder for now**, but does not work alone:

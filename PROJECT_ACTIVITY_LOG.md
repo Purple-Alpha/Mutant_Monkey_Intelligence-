@@ -26,6 +26,29 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - Section 5: Aggregate Corroboration Agent contract §11 SIGNED + Evidence Stage 1 build
+**Actor:** Matt (operator authority: §11 signature "Matt Nichol June 8th" placed verbatim; §10.A Q1-Q3 decisions; standing sign-off-scope decision) + Claude advisory lane (Section 5 contract draft) + Cursor execution lane (reconciliation against real code, signature placement, spec gate/commit, build, test, build gate/commit, trackers).
+
+**Action:** Created (Section 5 contract + agent + test suite) / Updated (trackers + AGENTS.md sign-off scope).
+
+**Commits:** `0d7ff79` - "Aggregate Corroboration Agent Design Contract §11 SIGNED (Section 5 spec)"; `7256816` - "AggregateCorroborationAgent Section 5 build (Evidence Stage 1)".
+
+**Files Changed:**
+- 4. Product_Roadmap/Aggregate_Corroboration_Agent_Design_Contract_Deep_Dive.md (new; §11 SIGNED; committed `0d7ff79`)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/aggregate_corroboration_agent.py (new; first real Layer 5 Challenge agent, Evidence Stage 1; committed `7256816`)
+- 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/layer5/test_aggregate_corroboration_agent_section5.py (new; three-class Section 5 suite; committed `7256816`)
+- AGENTS.md - §2.1.1.B operator sign-off scope (this tracker slice)
+- PROGRESS.md / MASTER_INDEX.md / PROJECT_ACTIVITY_LOG.md (this tracker slice)
+
+**Reason:**
+Section 5 was the next swarm step after the signed Layer 5 spine + Section 6 test discipline. Claude (advisory) drafted the Agent Design Contract; the execution lane reconciled it against the real code (ChallengeResult shape, AgentRegistryEntry authority_level ge1/le6, template §10.A seven-field DER vs the code DecisionEvidenceRecord, AgentRole.BLUE registry convention), folded in three accuracy refinements (Authority Level 5 is above the Stage A default and this signature is the authority decision; the seven evidence fields are conceptual, not a DER schema change; registry role/authority pinned), gated the spec clean, and held for signature. Matt resolved §10.A Q1=B / Q2=A / Q3=confirmed and signed. The Evidence Stage 1 build implements a deterministic facts-only aggregate reviewer enforcing D4 (corroborate-not-vote-count) through behavior + an independent Class 2 probe (closes ADV-005 at the agent-contract layer), with KG-001/KG-002 carried as Class 3 xfails.
+
+**Verification:** Spec gate Grok 0/0 (pre- and post-signature); build gate Grok 0/0 (audited against the three signed contracts via worker manifest). Focused Section 5 suite 13 passed / 2 xfailed; full runtime suite 1247 passed / 1 skipped / 4 xfailed / 1 warning (pre-existing ReportLab deprecation, unrelated). Lints clean. No detector logic, `_determine_disposition`, `DecisionEvidenceRecord` schema, or `build_default_registry` change; not in production dispatch; no autonomy. Nothing pushed.
+
+**Next Step:** Evidence Stage 2 promotion is a separate later Matt-signed event (template §6.2: ≥3 real contribution sets reviewed + signed promotion record). KG-002 cross-arbitration remains deferred until a second Challenge agent contract.
+
+---
+
 ## 2026-06-08 - Layer 5 Section 6 test discipline + anti-duplication lane rule
 **Actor:** Matt (operator authority: commit go-ahead, lane-rule acceptance) + Claude advisory lane (Section 6 test-plan + tracker-draft) + Cursor execution lane (reconciliation against real code, build, gate, commit).
 
