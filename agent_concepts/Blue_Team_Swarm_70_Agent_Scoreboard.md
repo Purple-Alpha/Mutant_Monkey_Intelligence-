@@ -17,9 +17,9 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **#1 TARGET:** full 70-agent governed blue-team swarm (non-reducible).
 
-**BREADTH RUNWAY:** **5** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10, #27.
+**BREADTH RUNWAY:** **6** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10, #27, #30.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **#30 Attachment Risk** is selected for CYCLE 13 and has a contract draft awaiting §11 signature before runtime implementation. Remaining clean wrap candidate: **#11 Known-Good Contact**. **#27 Link Inspection** is `GOVERNED_AGENT` (Evidence Stage 1, §11-signed 2026-06-08, wrapper `463cb4e`); its next gate is the Stage 2 promotion bar (≥3 real samples + signed promotion record). **#7 Sender Identity** needs a clean detector surface before a wrapper (current evidence is a broad LLM scoring field, not a standalone detector). **#18 Callback Verification** is paused for a contract split decision: detector-only TOAD evidence is not the same as a Layer 3 verification/workflow outcome. Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **#30 Attachment Risk** is now `GOVERNED_AGENT` (Evidence Stage 1, §11-signed 2026-06-08, wrapper `0f7fd56`); its next gate is the Stage 2 promotion bar (≥3 real samples + signed promotion record). **#27 Link Inspection** is likewise `GOVERNED_AGENT` awaiting Stage 2. Remaining clean Layer 2 wrap candidate: **#31 PDF Fingerprint** (`document_metadata_detector.py`) and other DETECTOR_FUNCTION rows with empty blockers. **#11 Known-Good Contact** is available but stateful / Layer 3 verification-oriented (tighter boundary contract needed before code). **#7 Sender Identity** needs a clean detector surface (current evidence is a broad LLM scoring field). **#18 Callback Verification** is paused for a contract split decision: detector-only TOAD evidence is not the same as a Layer 3 verification/workflow outcome. Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -113,7 +113,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 30 | Attachment Risk | `DETECTOR_FUNCTION` | `core/precursor/attachment_classifier.py` + draft contract `4. Product_Roadmap/Attachment_Risk_Agent_Design_Contract_Deep_Dive.md` (pending §11 signature before wrapper code) | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | 10 | cycle13 |
+| 30 | Attachment Risk | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-08 `4. Product_Roadmap/Attachment_Risk_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/precursor/attachment_classifier.py` (immutable static detector, called read-only); governed wrapper `core/orchestrator/attachment_risk_agent.py` (`AttachmentRiskAgent`, committed `0f7fd56`, facts-only closed attachment indicator names, source-order dedupe, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |  | BREADTH | 10 | 0f7fd56 |
 | 31 | PDF Fingerprint | `DETECTOR_FUNCTION` | `core/scoring/document_metadata_detector.py` | 2 Detection | A |  | BREADTH | — | adoption |
 | 32 | Macro/Script Risk | `DETECTOR_FUNCTION` (partial) | `core/precursor/attachment_classifier.py` (class subset) | 2 Detection | A |  | BREADTH | — | adoption |
 | 33 | Payload Delivery | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
@@ -184,8 +184,8 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 ## Tally (execution-lane verified, file-level)
 
-- `GOVERNED_AGENT`: **5** (#10; #6 Header Analysis, #8 Ghost Thread, and #6A Email Authentication at Evidence Stage 1, §11-signed 2026-06-07; #27 Link Inspection at Evidence Stage 1, §11-signed 2026-06-08).
-- `DETECTOR_FUNCTION`: **~25** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces; #6 and #8 promoted out of this bucket on 2026-06-07, #27 on 2026-06-08).
+- `GOVERNED_AGENT`: **6** (#10; #6 Header Analysis, #8 Ghost Thread, and #6A Email Authentication at Evidence Stage 1, §11-signed 2026-06-07; #27 Link Inspection and #30 Attachment Risk at Evidence Stage 1, §11-signed 2026-06-08).
+- `DETECTOR_FUNCTION`: **~24** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces; #6 and #8 promoted out of this bucket on 2026-06-07, #27 and #30 on 2026-06-08).
 - `GOVERNANCE_DOC_ONLY`: **7** (#4, #5, #51, #53, #65, #66, #70-partial).
 - `SPEC_ONLY`: **7** (#19, #21, #43, #50, #55, #56, #57, #60 — note #21 has metadata but no code).
 - `NOT_STARTED`: **~22** (the net-new detection + orchestration + memory/health agents).

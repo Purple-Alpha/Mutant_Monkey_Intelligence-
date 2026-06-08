@@ -71,9 +71,16 @@ CYCLE 13 — 2026-06-08T19:50Z   [type: TACTICAL]
                  authorizes no code until signed, pins facts-only Layer 2 output,
                  forbids execution/detonation/network behavior, and preserves
                  attachment classifier immutability.
-  EXECUTED AT:   2026-06-08T19:50Z
-  AUDIT VERDICT: PENDING
-  SURPRISES:     PENDING
+  EXECUTED AT:   2026-06-08T20:12Z
+  AUDIT VERDICT: PASS — contract draft + tracker slices gate clean 0/0 (banked
+                 `e0e8788`); §11 signature gate clean 0/0 (`6cc5658`); Stage 1
+                 wrapper `AttachmentRiskAgent` + 15 focused tests gate clean 0/0,
+                 full runtime suite 1275 passed (`0f7fd56`); scoreboard step 6.5
+                 promotion. #30 is now GOVERNED_AGENT at Evidence Stage 1;
+                 breadth runway 5 -> 6.
+  SURPRISES:     None. Clean reuse of the #27 Link Inspection wrapper pattern;
+                 only difference is per-attachment iteration with source-order
+                 dedupe. Static-only no-network/no-subprocess guard added per D8.
 
 CYCLE 12 — 2026-06-08T19:20Z   [type: TACTICAL]
   OBSERVE: Build Sequencer is live; breadth is the open runway toward the full
