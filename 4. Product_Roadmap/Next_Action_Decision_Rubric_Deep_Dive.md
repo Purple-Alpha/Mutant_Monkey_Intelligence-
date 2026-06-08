@@ -1,9 +1,9 @@
 # Next-Action Decision Rubric — Spec-First Deep Dive
 
-**Status:** §11 SIGNED 2026-06-04 by Matt Nichol (Zebra-Comet). Authored 2026-05-27 by Matt Nichol after the 2026-05-26 evening "Next-Action Build System v1" design. All 7 §10 open questions resolved and locked as D13–D19 (see §10.R and §11). Gate audit clean: grok-4, 0 blocking / 0 warnings, packet `3805524a…`, 2026-06-04T06:23:34Z.
+**Status:** §11 SIGNED 2026-06-04 by Matt Nichol (Zebra-Comet). **§12 REVISION PENDING RE-SIGN (2026-06-08):** D13 revised for Build Sequencer adoption (Option B, `_Build_Sequencer_Adoption_Consequence_Matrix.md`). Queue ordering authority retired; scoreboard is canonical candidate generator. Re-sign required before the revision is live authority.
 **Date:** 2026-05-27
 **Owner:** Matt Nichol
-**Source-of-truth links:** `think_sheet.md` (existing project-idea rubric — distinct artifact), `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (existing email-explanation rubric — distinct artifact), `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §1.1 (rubrics-are-advisory supersession; this spec inherits and respects that doctrine), `PROJECT_BUILD_AND_AUDIT_QUEUE.md` (canonical for ordering — relationship locked in §10 Q1), `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (operating mode under which this rubric is exercised).
+**Source-of-truth links:** `think_sheet.md` (existing project-idea rubric — distinct artifact), `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` (existing email-explanation rubric — distinct artifact), `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §1.1 (rubrics-are-advisory supersession; this spec inherits and respects that doctrine), `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (canonical candidate generator per D13-rev / §12), `PROJECT_HANDSHAKE.md` (today's one-screen view), `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` (operating mode under which this rubric is exercised). `PROJECT_BUILD_AND_AUDIT_QUEUE.md` **retired** as ordering authority 2026-06-08 (historical read-only).
 
 This document is the spec-first contract for a tactical-layer scoring engine that generates and ranks next-action candidates without deciding among them.
 
@@ -43,7 +43,7 @@ This is a **tactical execution layer**. It does not score project ideas (the `th
 
 - No replacement of `think_sheet.md` rubric or the Client-Facing email rubric.
 - No autonomous selection of the executed action (rubric ranks; human chooses).
-- No change to the canonical-authority chain (`PROJECT_BUILD_AND_AUDIT_QUEUE.md` for ordering, `PROJECT_HANDSHAKE.md` for current focus, operator's current instruction overrides both).
+- No change to the canonical-authority chain (`agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` for candidate generation per D13-rev, `PROJECT_HANDSHAKE.md` for current focus, operator's current instruction overrides both). `PROJECT_BUILD_AND_AUDIT_QUEUE.md` is retired as ordering authority (historical read-only).
 - No new persistence surface unless §10 Q3 resolves to add one.
 - No automatic Grok-audit firing inside the loop unless §10 Q5 resolves to add one.
 - No client-facing surface; this rubric is internal operator tooling.
@@ -297,7 +297,8 @@ SURPRISES:       <free-text notes; empty if none>
 |---|---|---|---|
 | `think_sheet.md` 5-axis rubric | Strategic / idea-level | Whether a project idea promotes, parks, or retires | Distinct. This rubric does not score project ideas. |
 | Client-Facing 5-Axis Email Scoring Rubric | Buyer-facing / email-level | How an email's risk is explained to MSP / SMB clients | Distinct. This rubric is internal tooling, never client-facing. |
-| `PROJECT_BUILD_AND_AUDIT_QUEUE.md` | Operational / ordering | Default order of build + audit items when no operator override | Relationship governed by §10 Q1. Until resolved: queue's canonical-ordering claim is preserved. |
+| `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` | Operational / candidate generation | Actionable-now swarm-map nodes + dependency/blocker state for the Build Sequencer | Canonical candidate source per D13-rev (§12). Generator only — never build authority (Rule 4). |
+| `PROJECT_BUILD_AND_AUDIT_QUEUE.md` | Historical / retired | Was default build order (retired 2026-06-08) | **RETIRED** as ordering authority. Read-only audit trail. Superseded by scoreboard + this rubric. |
 | `PROJECT_HANDSHAKE.md` | Operational / current focus | The single active build target and resume point | Compatible. This rubric does not modify handshake state; it can be invoked while the handshake is set on any active focus. |
 | `Operating_Doctrine_14_Day_Trial.md` | Governance / mode | How the operator runs the project during the trial window | This rubric is a candidate operator tool inside that doctrine. Its trial-period use is itself signal for the §10 Q4 calibration cadence. |
 | `Compliance_and_Trend_Watch_Process.md` §1.1 | Governance / authority | Rubrics are advisory only | This rubric inherits the supersession verbatim. D2 ratifies it. |
@@ -410,7 +411,7 @@ Signed by Matt Nichol (Zebra-Comet) on 2026-06-04 after a clean gate audit (grok
 
 | # | Decision | Locked value |
 |---|---|---|
-| D13 | Source of options (Q1) | **Hybrid.** `PROJECT_BUILD_AND_AUDIT_QUEUE.md` is the default candidate source; conversational candidates may be added when the queue is stale or does not fit the current session. The queue retains its canonical-ordering claim. |
+| D13 | Source of options (Q1) | **Scoreboard-generated hybrid.** `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (Build Sequencer) is the canonical candidate generator: rows with empty `BLOCKERS`, respecting `TRACK`, build order (Q5), and dependency gates, produce the default 3–7 candidates. Conversational or operator-supplied candidates may be added when the scoreboard does not fit the session. The rubric ranks; Matt selects (D2). `PROJECT_BUILD_AND_AUDIT_QUEUE.md` is **retired** as ordering authority (historical read-only). |
 | D14 | Mode formalization (Q2) | **Informal operator intent.** `stability` / `learning` / `experiment` are labels the operator may state as context; they are NOT thresholds the rubric enforces. No mode mechanically selects an action (preserves D2). |
 | D15 | Cycle-log persistence (Q3) | **New dedicated artifact** `decision_cycles_log.md`. Durable and greppable for D6 calibration review; keeps `PROJECT_ACTIVITY_LOG.md` clean; logs operator-decided vs rubric-ranked separately (mitigates FM vii). |
 | D16 | Calibration cadence (Q4) | **14-day Operating Doctrine retro (baseline) plus a streak trigger** at ≥3 consecutive PARTIAL or FAIL Step-8 verdicts, which prompts an earlier mismatch-log review. |
@@ -435,7 +436,7 @@ Signing this spec:
 Signing does **not**:
 
 - Authorize the rubric to make decisions on its own. D2 stands regardless of signature.
-- Override `PROJECT_BUILD_AND_AUDIT_QUEUE.md`'s canonical-ordering claim. Per D13 (hybrid), the queue stays authoritative for default ordering; the rubric operates beside it, not over it.
+- Retain `PROJECT_BUILD_AND_AUDIT_QUEUE.md` as canonical ordering authority. Per D13-rev (§12), the queue is retired; the scoreboard generates candidates; this rubric ranks them.
 - Reduce or modify the seven non-negotiables in `VISION.md`.
 
 ---
@@ -446,11 +447,37 @@ Signing does **not**:
 - `think_sheet.md` — sibling rubric, strategic / idea-level. Distinct.
 - `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` — sibling rubric, buyer-facing / email-level. Distinct.
 - `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §1.1 — supersession that this rubric inherits.
-- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` — canonical for ordering; relationship governed by §10 Q1.
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` — canonical candidate generator (Build Sequencer); D13-rev.
+- `PROJECT_BUILD_AND_AUDIT_QUEUE.md` — **RETIRED** historical ordering record (superseded 2026-06-08).
 - `PROJECT_HANDSHAKE.md` — canonical for current focus; compatible.
 - `4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md` — operating mode under which this rubric is exercised.
 - `audit_tools/complete_gate.py` — gate that audits this spec at §11 sign-off and on any future structural revision.
 
 ---
 
-**End of draft. Pre-§11. No use authorization granted by this document until §11 signature lands.**
+## §12 Spec Revision — Build Sequencer Adoption (2026-06-08, pending §11 re-sign)
+
+**Trigger:** Butterfly Hard-Stop (AGENTS.md §7.1) — changes canonical next-action authority chain and D13 substance. Consequence Matrix: `4. Product_Roadmap/_Build_Sequencer_Adoption_Consequence_Matrix.md`. Operator selected **Option B** (2026-06-08).
+
+### Revised locked decision
+
+| # | Decision | Revised locked value |
+|---|---|---|
+| D13-rev | Source of options | Replaces D13 (2026-06-04) in full. Scoreboard-generated hybrid per the D13 row in §11 above. Queue retired as ordering authority. |
+
+### What re-sign authorizes
+
+1. Makes D13-rev live authority (scoreboard generates, rubric ranks, Matt selects).
+2. Retires queue ordering claim across project artifacts that reference D13.
+3. Does **not** authorize individual agent builds (scoreboard Rule 4 stands).
+4. Does **not** authorize gate automation for scoreboard freshness (doctrine Steps 0.5 / 6.5 only until a separate gate-code slice).
+
+### §11 re-sign placeholder
+
+> [Matt Nichol — Build Sequencer D13 revision — date]
+
+Per Authorship Rule: operator-authored signature only.
+
+---
+
+**End of spec. D13 revision pending §12 re-sign for live authority.**
