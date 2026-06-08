@@ -21,10 +21,11 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1128 tests passing, 1 skipped** (verified 2026-06-05, after the buyer-brand boundary revision slice) from
+**1247 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after the Layer 5 Aggregate Challenge Pass Section 2 rewire and the first Layer 5 Challenge agent — the Aggregate Corroboration Agent — landed at Evidence Stage 1 Synthetic) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
-## Current State (2026-06-03)
+## Current State (latest reconcile 2026-06-08)
+- **LAYER 5 AGGREGATE CHALLENGE PASS + FIRST CHALLENGE AGENT LANDED (2026-06-08).** Section 2 of the signed Layer 5 Aggregate Challenge Pass spec is wired (`Agent.challenge()` now takes the aggregate `AgentContribution` tuple; the Commander invokes challenge agents once per case over the aggregate set). The first Layer 5 Challenge agent — the **Aggregate Corroboration Agent** — is §11-signed, built, gated clean, and committed at **Evidence Stage 1 (Synthetic)**: facts-only, not in `build_default_registry`, no production dispatch, no autonomy; three-class test suite (expected-pass / adversarial / known-gap xfail KG-001 + KG-002). Two governance rules added to `AGENTS.md`: **§2.1.1.B** operator sign-off scope, and **§3.1 rule 11 + §12 failure mode** banning "cheap" as a decision criterion (best-in-class only). Baseline 1247 / 1 skipped / 4 xfailed.
 - **OPERATOR #1 TARGET (2026-06-07): the full 70-agent blue-team swarm.** Matt declared the complete 70-agent swarm (the ten-team / six-layer map in `agent_concepts/`) his number-one target — the terminal goal the rest of the project exists to reach, and **not to be reduced** ("we are not discussing less than"; not the 14-agent V1 subset, not a trimmed version). Nothing else is sacrificed to get there: the disciplined spec-first -> gate -> sign path continues unchanged, now aimed at the swarm, with the cyber-insurance / evidence / revenue work as the instrumental track that funds and proves the project on the way. **Next-session first action:** build the consolidated **70-agent swarm scoreboard** — one tracker listing all 70 agents with build status *verified against current code* (done / partial / not-started), dependency/build order, and a per-agent "done = a governed agent, not just a detector function" definition — reconciling the 70-agent SPARK (`agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md`) and the 6-layer Design Tree (`agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md`) into that single scoreboard. The deliberate VISION.md top-level re-ranking wording is intentionally deferred to a fresh session (path-setting framing change, not a late-night edit).
 - **Butterfly Hard-Stop ADOPTED (2026-06-07; Option A).** AGENTS.md gains **§7.1 Butterfly Hard-Stop Protocol**: on a path-setting (revenue / architecture / legal-insurance / trust / product-identity / signed-spec-substance / autonomy / projected-outcome) trigger, the agent STOPs the irreversible action, names the trigger, pre-scores options on the unmodified Next-Action Decision Rubric, drafts the Consequence Matrix unasked, and lists external questions; the stop lifts only when independent intel is in hand and Matt records the decision. `Consequence_Matrix_Process.md` flipped from opt-in to **mandatory-on-trigger** (§2/§3/§6). Guards: anti-paralysis (stop is on building not thinking; has a completion criterion) + anti-over-trigger (Bin-1 reversible work never trips it). "Product identity" defined. The decision was itself run through the protocol — two independent external overviews converged on A and confirmed the rubric axes (`leverage / risk_reduction / evidence_strength / future_cost / reversibility`); a reviewer's RICE/WSJF rescale was declined as calibration drift; the rubric was NOT modified. D9 plan got two lean review refinements (baseline source-version/immutability; §3 coverage precondition).
 - **Environment (2026-06-06): git freeze cleared; Linux-native committed.** The git "freeze" (no-exit-status commands forcing manual relays) is dead — verified by running git directly in the Linux terminal. The Windows copy is now **cold-backup-only; editing it is abandoned.** Linux (`/home/socialarchitect/northstar`) is the sole development surface. The freeze is logged as environment friction (not a lane-structure failure) and is excluded from the 2026-06-09 lane-trial review. See `PROJECT_ACTIVITY_LOG.md` and `CURRENT_STATE_MAP.md` Development-surface entry.
@@ -44,8 +45,65 @@ backup / reference only. If the two ever diverge, stop and reconcile by commit h
 - **Next-Action Decision Rubric: §11 SIGNED 2026-06-04** (Matt, Zebra-Comet). All 7 §10 questions locked as D13–D19; gate audit clean (grok-4, 0 blocking / 0 warnings, `audit_outputs/next_action_decision_rubric_signoff_20260604T062334Z.md`). `decision_cycles_log.md` created (D15). The rubric is now the live tactical decision engine: it ranks candidates on 5 axes; Matt selects; cycles log to `decision_cycles_log.md`.
 - **AGENTS.md decision-calibration guardrail added 2026-06-04:** §3.1.2 now grades escalation by substance + reversibility (not "touches a signed file"); §3.1.8 + §12 "trivia-escalation / decision-inversion" failure mode added. Fixes the inversion of heavy-guardrailing trivia (e.g. an internal name change) while dumping real decisions raw.
 
-## Current Next Step (single live action)
-**ACTIVE TRACK: the full 70-agent swarm build (Matt's #1 target).** The DER/shared interface, Swarm Commander Stage A case loop, first real detector wrapper proof (Header Divergence), Agent Design Contract Template §11.A evidence-stage revision, Layer 5 challenge pass wiring (`5d70040`), and #6 Header Analysis formal promotion (`8f0a89f`, `GOVERNED_AGENT` at Evidence Stage 1) are built/gated. **Most recent completed slice:** #8 Ghost Thread Agent Design Contract is §11 SIGNED 2026-06-07 and committed `275475b` — #8 is now a `GOVERNED_AGENT` at Evidence Stage 1 (Synthetic), the second full per-agent signed contract. It governs the existing `GhostThreadAgent` wrapper around the immutable `score_ghost_thread` detector (fake thread continuity: Re/Fw/Fwd subject prefix + missing `In-Reply-To`/`References`; NOT Reply-To divergence, which is #6's). Facts-only `ghost_thread_subject`, no score emitted, not in `build_default_registry`, no production dispatch, no autonomy. Signed-spec gate clean 0 warnings; focused pytest 59 passed. The scoreboard #8 was renamed "Reply-To Mismatch" -> "Ghost Thread Agent" (§10 Q1). The Commander still assembles the DER in memory (no Commander DER persistence). Stage B autonomy remains parked behind a separate signed authorization. **Next swarm step:** wrap the next existing detector via the proven analyze -> contribution -> challenge path, or resolve §10 open questions before any Stage 2 promotion.
+## Current Next Step — TODAY'S MILESTONE LIST (persisted; READ this, don't ask)
+**This list is the answer to "what's next." It lives here on disk, not in chat, and is regenerated at the end of every build cycle so the question never has to be re-asked.** **Candidate source:** `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (Build Sequencer header + actionable-now rows). **Engine:** the §11-signed Next-Action Decision Rubric (D13-rev pending §12 re-sign). Scored 0-2 per axis, max 10. The rubric ranks; **Matt selects** (D2). Queue is **retired** (historical only).
+
+**OBSERVE (true current state):** #1 target = the full 70-agent governed swarm (not reducible). Spine built + gated: DER/shared interface, Stage A Commander case loop, Layer 5 *aggregate* challenge pass (Section 2 rewire), and 4 detector agents promoted to `GOVERNED_AGENT` at Evidence Stage 1 Synthetic (#6 Header, #6A Email Auth, #8 Ghost Thread, #10 Lookalike). Newest slice: the first Layer 5 *Challenge* agent — the Aggregate Corroboration Agent — built/gated/committed at Evidence Stage 1. Baseline 1247 / 1 skipped / 4 xfailed.
+
+**Critical-path truth (the map must keep this visible):** TWO axes. (1) *Breadth* — wrapping detector functions into governed agents at Stage 1 — is **UNBLOCKED**; it is the live runway toward "70 governed agents" (~26 detector functions exist as candidates; ~22 are net-new). (2) *Depth* — maturing any agent past Evidence Stage 1 (Stage 2 Supervised / Stage 3 Production) — needs **real-data intake**, gated behind the signed-but-unstarted Production Evidence Store + real-data controls + a separate operator authorization. Stage B autonomy agents (e.g. #38 Containment) are gated behind a separate signed Stage B authorization. Breadth moves now; depth is a butterfly/operator decision.
+
+**Ranked candidates (rubric output — Matt picks one; selection logs to `decision_cycles_log.md` per D15):**
+
+```
+ACTION A — Wrap the next existing detector into a governed agent (Stage 1, synthetic) via the proven
+           analyze->contribution->challenge path (candidates: #7 Sender Identity, #18 Callback
+           Verification, #27 Link Inspection, #30 Attachment Risk)
+  Leverage:      1
+  Risk:          1
+  Evidence:      2
+  Future Cost:   1
+  Reversibility: 2
+  TOTAL:         7
+
+ACTION B — Build the second Layer 5 Challenge agent (cross-arbitration between challenge agents;
+           closes the Aggregate Corroboration Agent's KG-002 known-gap xfail)
+  Leverage:      1
+  Risk:          1
+  Evidence:      2
+  Future Cost:   1
+  Reversibility: 2
+  TOTAL:         7
+
+ACTION C — Build the dictating "what's next" map: elevate the 70-agent scoreboard into a
+           dependency-aware, self-maintaining critical-path engine that every slice updates, so
+           "what's next" is always READ here, never asked (governance design -> routes to Claude
+           per AGENTS §2.1.2)
+  Leverage:      2
+  Risk:          2
+  Evidence:      2
+  Future Cost:   2
+  Reversibility: 2
+  TOTAL:         10
+
+ACTION D — Open the real-data intake path (unblocks ALL Evidence Stage 2+ promotions; butterfly /
+           operator-authority; gated behind Production Evidence Store infra + controls activation)
+  Leverage:      2
+  Risk:          0
+  Evidence:      1
+  Future Cost:   0
+  Reversibility: 0
+  TOTAL:         3
+
+ACTION E — Do nothing this cycle (reference baseline)
+  Leverage:      0
+  Risk:          1
+  Evidence:      0
+  Future Cost:   1
+  Reversibility: 2
+  TOTAL:         4
+```
+
+SELECTED: **ACTION C** (Matt, 2026-06-08). **Option B adopted:** retire queue ordering; scoreboard = Build Sequencer; rubric D13-rev drafted. Governance slice gated pending Matt §12 re-sign on rubric. After sign-off, circle back to today's build (wrap next detector or second L5 Challenge agent).
 
 **Operator scheduling is NOT an agent agenda item (per AGENTS §3, 2026-06-07).** Do not raise, prep for, or re-surface any of Matt's appointments/meetings unless Matt raises it first. The anchor card at `1. Business_Operations/Client_Documents/Todd_Tuesday_MSP_Call_Anchor_Card.md` exists as Matt's own personal notes; it is finished and is not a build deliverable.
 
