@@ -17,9 +17,9 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **#1 TARGET:** full 70-agent governed blue-team swarm (non-reducible).
 
-**BREADTH RUNWAY:** **4** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10.
+**BREADTH RUNWAY:** **5** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10, #27.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** wrap candidates include **#7 Sender Identity, #11 Known-Good Contact, #30 Attachment Risk** (DETECTOR_FUNCTION rows with empty blockers). **#27 Link Inspection** now has a contract draft and waits on §11 signature before runtime implementation. **#18 Callback Verification** is paused for a contract split decision: detector-only TOAD evidence is not the same as a Layer 3 verification/workflow outcome. Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** wrap candidates include **#11 Known-Good Contact, #30 Attachment Risk** (DETECTOR_FUNCTION rows with empty blockers). **#27 Link Inspection** is now `GOVERNED_AGENT` (Evidence Stage 1, §11-signed 2026-06-08, wrapper `463cb4e`); its next gate is the Stage 2 promotion bar (≥3 real samples + signed promotion record). **#7 Sender Identity** needs a clean detector surface before a wrapper (current evidence is a broad LLM scoring field, not a standalone detector). **#18 Callback Verification** is paused for a contract split decision: detector-only TOAD evidence is not the same as a Layer 3 verification/workflow outcome. Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -105,7 +105,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 24 | MFA Manipulation | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (mfa-fatigue signals) | 2 Detection | A |  | BREADTH | — | adoption |
 | 25 | Session Theft | `DETECTOR_FUNCTION` (adjacent) | `core/scoring/prompt_injection_detector.py` (adjacent only) | 2 Detection | A |  | BREADTH | — | adoption |
 | 26 | QR Phishing | `NOT_STARTED` | none (flagged in Frontier Intake) | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 27 | Link Inspection | `DETECTOR_FUNCTION` | `core/precursor/url_obfuscation_detector.py` + draft contract `4. Product_Roadmap/Link_Inspection_Agent_Design_Contract_Deep_Dive.md` (`eca513e`; pending §11 signature before wrapper code) | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | 9 | eca513e |
+| 27 | Link Inspection | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-08 `4. Product_Roadmap/Link_Inspection_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/precursor/url_obfuscation_detector.py` (immutable, called read-only); governed wrapper `core/orchestrator/link_inspection_agent.py` (`LinkInspectionAgent`, committed `463cb4e`, facts-only closed URL indicator names, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |  | BREADTH | 9 | 463cb4e |
 | 28 | Brand Impersonation | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 29 | Form Abuse | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
@@ -184,8 +184,8 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 ## Tally (execution-lane verified, file-level)
 
-- `GOVERNED_AGENT`: **4** (#10; #6 Header Analysis, #8 Ghost Thread, and #6A Email Authentication at Evidence Stage 1, §11-signed 2026-06-07).
-- `DETECTOR_FUNCTION`: **~26** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces; #6 and #8 promoted out of this bucket on 2026-06-07).
+- `GOVERNED_AGENT`: **5** (#10; #6 Header Analysis, #8 Ghost Thread, and #6A Email Authentication at Evidence Stage 1, §11-signed 2026-06-07; #27 Link Inspection at Evidence Stage 1, §11-signed 2026-06-08).
+- `DETECTOR_FUNCTION`: **~25** (the scoring/precursor/vendor-baseline/evidence/sandbox/blackboard surfaces; #6 and #8 promoted out of this bucket on 2026-06-07, #27 on 2026-06-08).
 - `GOVERNANCE_DOC_ONLY`: **7** (#4, #5, #51, #53, #65, #66, #70-partial).
 - `SPEC_ONLY`: **7** (#19, #21, #43, #50, #55, #56, #57, #60 — note #21 has metadata but no code).
 - `NOT_STARTED`: **~22** (the net-new detection + orchestration + memory/health agents).
