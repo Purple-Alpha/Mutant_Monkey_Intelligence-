@@ -45,6 +45,54 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 14 — 2026-06-08T20:40Z   [type: TACTICAL]
+  OBSERVE: CYCLE 13 closed with #30 Attachment Risk promoted to GOVERNED_AGENT
+           at Evidence Stage 1 (breadth runway 5 -> 6). No lock open. The
+           summary named #31 PDF Fingerprint as a candidate clean Layer 2 wrap;
+           pre-build review of `document_metadata_detector.py` was required
+           before drafting.
+  PRE-BUILD FINDING: #31 PDF Fingerprint is NOT a clean facts-only wrap.
+           `assess_document_metadata_fingerprint` calls vendor_baseline.check_signal
+           AND vendor_baseline.ingest_signal — running it MUTATES the per-tenant
+           Vendor Baseline Store and writes audit records, and it needs tenant_id +
+           vendor_domain + now (not just the email). That is a stateful Layer 2/
+           Layer 3 boundary problem (same class as #11 and #18) and needs a boundary
+           contract before code. Pivoted to the pure body-signal detectors.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   #23 Credential Phishing contract draft -> Stage 1 wrapper path
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: pure facts-only `score_credential_harvesting`; closed
+               PrecursorIndicator vocab (credential_reset_language,
+               account_verification_language); no state, no network; cleanest
+               unblocked breadth slice and the central phishing vector.
+    ACTION B   #31 PDF Fingerprint wrapper now
+               L2 R1 E1 FC0 Rv1   TOTAL 5
+               Note: blocked — stateful baseline mutation; needs a Layer 2/3
+               boundary contract split before any wrapper code.
+    ACTION C   #11 Known-Good Contact contract draft
+               L1 R1 E1 FC1 Rv1   TOTAL 5
+               Note: Layer 3/stateful verification over vendor baseline; tighter
+               contract split required first.
+    ACTION D   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A. Operator delegated next-candidate selection to the
+                 Build Sequencer (echoed the close-out summary as "go"); rubric
+                 ranks #23 highest and it is the cleanest unblocked breadth slice
+                 once #31 was found blocked.
+  EXPECTED:      Draft a §11-ready Credential Phishing Agent Design Contract that
+                 authorizes no code until signed, pins facts-only Layer 2 output
+                 of the closed credential-harvesting indicator vocabulary, forbids
+                 score/raw-phrase/body leakage and any baseline/network behavior,
+                 scopes out the sibling score_mfa_fatigue surface (#24), and
+                 preserves body-signal detector immutability.
+  EXECUTED AT:   2026-06-08T20:40Z (draft slice)
+  AUDIT VERDICT: PENDING — contract draft + tracker slices to gate; §11 signature
+                 then Stage 1 wrapper + focused tests in subsequent slices.
+  SURPRISES:     #31 blocked on pre-build review (stateful baseline mutation) —
+                 the second consecutive named-candidate found unsuitable for an
+                 immediate wrap (cf. #7/#18 in CYCLE 12), confirming the value of
+                 the Step-0.5 pre-build detector-surface review before drafting.
+
 CYCLE 13 — 2026-06-08T19:50Z   [type: TACTICAL]
   OBSERVE: CYCLE 12 closed with #27 Link Inspection promoted to GOVERNED_AGENT
            at Evidence Stage 1. Build Sequencer actionable-now breadth rows
