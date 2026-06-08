@@ -1,6 +1,6 @@
 # Ghost Thread Agent Design Contract - Spec-First Deep Dive
 
-**Status:** §11 SIGNED 2026-06-07 by Matt Nichol ("Matt Nichol June 7th 2026", placed verbatim at §11). Authored 2026-06-07 by Cursor on Matt Nichol's instruction, correcting the supplied #8 Ghost Thread / Reply-To Mismatch draft against the actual runtime code before signature. Signing promotes the implemented Ghost Thread wrapper from `DETECTOR_FUNCTION` to `GOVERNED_AGENT` at **Evidence Stage 1 (Synthetic)** and locks D1-D9 + the §4 Evidence Stage declaration. Signing authorizes **no** detector-logic change, **no** default-registry registration, **no** production dispatch, **no** scoring/rubric change, **no** buyer-facing claim, and **no** autonomous action. Evidence Stage 2/3 promotion is a separate, later, Matt-signed event per template §6.2. §11 signature is operator-only.
+**Status:** §11 SIGNED 2026-06-07 by Matt Nichol ("Matt Nichol June 7th 2026", placed verbatim at §11). Authored 2026-06-07 by Cursor on Matt Nichol's instruction, correcting the supplied #8 Ghost Thread / Reply-To Mismatch draft against the actual runtime code before signature. Signing promotes the implemented Ghost Thread wrapper from `DETECTOR_FUNCTION` to `GOVERNED_AGENT` at **Evidence Stage 1 (Synthetic)** and locks D1-D9 + the §4 Evidence Stage declaration. Signing authorizes **no** detector-logic change, **no** default-registry registration, **no** production dispatch, **no** scoring/rubric change, **no** buyer-facing claim, and **no** autonomous action. Evidence Stage 2/3 promotion is a separate, later, Matt-signed event per template §6.2. §11 signature is operator-only. **REVISION 2026-06-07 (§11.A SIGNED by Matt Nichol):** §10.A added, resolving all four §10 questions (Q1 resolved by the committed scoreboard rename; Q2 Option B — explicitly-wired until Stage 3; Q3 defer-with-boundary — Layer 2 never emits the numeric score; Q4 Option A — one composite fact). The revision records operator dispositions and pins the Stage 3 registry-entry point; it changes no detector logic, input surface, emitted facts, or Stage 1 behavior. In force as of the §11.A signature.
 
 **Owner:** Matt Nichol
 
@@ -152,10 +152,23 @@ Any audit packet must include the code-accuracy correction that Ghost Thread doe
 
 ## §10 Open Questions (operator-only)
 
+All four questions below are resolved in §10.A (operator-confirmed 2026-06-07); none remain open.
+
 - **Q1 — Scoreboard naming overlap.** #8 is named "Reply-To Mismatch" in the SPARK inventory / scoreboard, but the implemented and tested wrapper is Ghost Thread only. The actual firing condition is subject threading prefix plus missing non-empty `In-Reply-To` / `References`; it does **not** require or inspect Reply-To mismatch. From / Reply-To divergence belongs to Header Analysis (#6). Before Stage 2, should #8 be renamed/split in the scoreboard, or should the Reply-To-mismatch half be retired as already covered by #6?
 - **Q2 — Stage 2 registry posture.** When Ghost Thread is promoted to Evidence Stage 2, should it register in `build_default_registry` for supervised dispatch, or remain explicitly-wired until Stage 3? (Deferred to the Stage 2 promotion event.)
 - **Q3 — Score as a future Verification input.** Should the numeric ghost-thread score ever surface (as an interpretation) through a Layer 3 Verification agent rather than this Layer 2 agent? (Deferred to the Verification-layer spec; not authored here.)
 - **Q4 — Future indicator split.** Should `ghost_thread_subject` remain one composite fact, or should a future version split subject-prefix evidence from missing-threading-header evidence? Since the current detector fires only on their conjunction, one fact is acceptable for Stage 1; revisit only with real-case evidence or Stage 2 review.
+
+---
+
+## §10.A Resolutions (operator-confirmed 2026-06-07)
+
+All four §10 questions are resolved as below (Matt Nichol, 2026-06-07). With these, §10 carries no open questions.
+
+- **Q1 — RESOLVED.** Scoreboard #8 renamed "Reply-To Mismatch" -> "Ghost Thread Agent" (committed `fbdbe72`). Reply-To / From divergence is #6 Header Analysis's signal; #8 detects fake thread continuity only. No further action.
+- **Q2 — RESOLVED (Option B).** Ghost Thread stays explicitly-wired (no `build_default_registry` entry) through Evidence Stage 2 (Supervised); it enters the default registry / live Commander dispatch only at Evidence Stage 3 (Production). Stage 2 is human-supervised review, so auto-dispatch at Stage 2 would contradict the template's stage definitions; keeping the blast radius small until Stage 3 is earned is the intended discipline. Final confirmation still occurs at the Stage 2 and Stage 3 promotion signatures; this resolution pins the default and names Stage 3 as the registry-entry point.
+- **Q3 — RESOLVED (defer-with-boundary).** Layer 2 never emits the numeric score under any condition. Any future use of the score as a Verification-layer input is authored in the Verification-layer spec only and requires no amendment to this contract.
+- **Q4 — RESOLVED (Option A).** `ghost_thread_subject` remains one composite fact because the detector fires only on the conjunction of subject-prefix and missing threading headers; splitting into two facts would imply independent firing the code does not perform. A future detector version that separates the conditions is a contract revision at that time, not now.
 
 ---
 
@@ -164,3 +177,11 @@ Any audit packet must include the code-accuracy correction that Ghost Thread doe
 SIGNED. This promotes swarm agent #8 Ghost Thread to `GOVERNED_AGENT` at **Evidence Stage 1 (Synthetic)** and locks D1-D9 + the §4 Evidence Stage declaration as the Ghost Thread Agent Design Contract. Signing authorizes **no** detector-logic change, **no** default-registry registration, **no** production dispatch, **no** scoring/rubric change, and **no** autonomous action. Promotion to Evidence Stage 2/3 is a separate, later, Matt-signed event per template §6.2.
 
 > §11 SIGNATURE — Matt Nichol June 7th 2026
+
+---
+
+## §11.A Revision sign-off (2026-06-07 — §10.A resolutions)
+
+This revision adds §10.A, resolving all four §10 questions: Q1 resolved by the committed scoreboard rename (`fbdbe72`); Q2 Option B (explicitly-wired until Evidence Stage 3, default registry only at Production); Q3 defer-with-boundary (Layer 2 never emits the numeric score under any condition; any Verification-layer use is authored in the Verification-layer spec only and requires no amendment here); Q4 Option A (one composite `ghost_thread_subject` fact). The revision records operator dispositions and pins the Stage 3 registry-entry point. It changes no detector logic, no input surface, no emitted facts, and no Stage 1 behavior. In force on Matt's §11.A signature below.
+
+> §11.A SIGNATURE — Matt Nichol June 7th 2026
