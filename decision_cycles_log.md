@@ -361,3 +361,51 @@ CYCLE 10 — 2026-06-07T03:25Z
                  §11-signed with §10 explicitly closed (line 336). Parking there would reopen a signed
                  spec (§6 violation). Corrected: parked the ideas in PROJECT_ACTIVITY_LOG mapped onto the
                  spec's existing D10 deferral clause; no signed-spec edit. Intent preserved, mechanism fixed.
+
+CYCLE 11 — 2026-06-08T18:44Z   [type: TACTICAL]
+  OBSERVE: Operator named the recurring "what's next" question a project-killer and clarified the real
+           cause: the daily milestone list was mandated (handshake "set today's milestone list" ritual)
+           but only ever SPOKEN at session open, never PERSISTED to disk, so it evaporated and had to be
+           re-asked. Both "what's next" trackers stale: PROJECT_BUILD_AND_AUDIT_QUEUE.md is all
+           Cyber-Insurance (no #1-target swarm) and its §5 forbids scoring + autonomous edits;
+           PROJECT_HANDSHAKE baseline read 1128 vs true 1247. New operator rule, live for all lanes:
+           "cheap" forbidden as a decision criterion (best-in-class only; AGENTS §3.1 r11 + §12).
+           True state: #1 target = full 70-agent governed swarm; spine + Layer 5 aggregate challenge pass
+           + first Challenge agent (Aggregate Corroboration) at Evidence Stage 1; baseline 1247/1/4.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    A Wrap next existing detector -> governed agent (Stage 1, synthetic)          L1 R1 E2 FC1 Rv2  TOTAL 7
+    B Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002)     L1 R1 E2 FC1 Rv2  TOTAL 7
+    C Build the dictating "what's next" map (self-maintaining, dependency-aware)  L2 R2 E2 FC2 Rv2  TOTAL 10
+    D Open real-data intake path (butterfly; unblocks Stage 2+)                   L2 R0 E1 FC0 Rv0  TOTAL 3
+    E Do nothing this cycle                                                       L0 R1 E0 FC1 Rv2  TOTAL 4
+  SELECTED:      ACTION C (operator-chosen, not rubric-ranked: "lets get this map done while its fresh").
+  ROUTING:       C is governance design + pattern/map reconciliation -> HARD STOP to Claude advisory lane
+                 per AGENTS §2.1.2. The execution lane does NOT build it; it writes the design brief for
+                 Claude, Matt relays, the gate audits the resulting spec, Matt signs, THEN build.
+  EXPECTED:      A complete copy-pasteable Claude design brief is produced this turn (anti-paralysis:
+                 writing the handoff is framing, not building). Claude returns a map design that (1) is
+                 dependency-aware (encodes the breadth/depth split + the real-data and Stage B gates),
+                 (2) computes "next" via the existing §11-signed Next-Action Rubric (no new engine),
+                 (3) is self-maintaining (every build slice updates it), (4) unifies rather than adds to
+                 the handshake/queue/scoreboard fragmentation, and (5) never holds authority (ranks/shows;
+                 Matt selects — rubric D2 / scoreboard Rule 4).
+  EXECUTED AT:   pending — Claude design return + operator decision (§2.1.2 relay)
+  AUDIT VERDICT: pending
+  SURPRISES:     The rubric's own output ranked C highest (10): the highest-value next action is building
+                 the artifact that answers "what's next," matching the operator's long-standing push.
+                 Immediate relief already shipped execution-lane — today's milestone list is now PERSISTED
+                 in PROJECT_HANDSHAKE.md (no signature class); the self-maintaining engine is what C designs.
+
+FORK 2 — 2026-06-08T19:00Z   [type: STRATEGIC]
+  CONTEXT: Build Sequencer adoption — canonical next-action authority chain. Butterfly trigger:
+           signed-spec substance (rubric D13) + architecture/governance path. Consequence Matrix:
+           `4. Product_Roadmap/_Build_Sequencer_Adoption_Consequence_Matrix.md`.
+  OPTIONS + SCORES (Next-Action Rubric axes, advisory):
+    A Reconcile, keep queue authority                                          L1 R1 E2 FC0 Rv2  TOTAL 6
+    B Retire queue + revise D13 + scoreboard Build Sequencer                 L2 R2 E2 FC2 Rv1  TOTAL 9
+    C New fifth artifact                                                       L1 R0 E1 FC0 Rv1  TOTAL 3
+  SELECTED:  OPTION B. Matt's call. Rationale: scoring is a core backbone; dual-surface hand-sync
+             perpetuates the "what's next" trap; best-in-class fit toward #1 target.
+  OUTCOME:   Governance adoption slice implemented (queue RETIRED header, scoreboard v2 columns +
+             generator contract, AGENTS Steps 0.5/6.5, rubric §12 D13-rev draft). Rubric §12 re-sign
+             pending operator before D13-rev is live signed authority.

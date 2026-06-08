@@ -1,12 +1,20 @@
 # NorthStar — Project Build and Audit Queue
 
-**Status:** Operational queue artifact. Not a signed spec. Operator-maintained.
+> **RETIRED AS ORDERING AUTHORITY — 2026-06-08 (Build Sequencer adoption, Option B).**
+> This file is a **read-only historical record**. It does **not** list what to build next.
+> **Live candidate generation:** `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (Build Sequencer).
+> **Today's one-screen view:** `PROJECT_HANDSHAKE.md` (persisted milestone list).
+> **Ranking engine:** `4. Product_Roadmap/Next_Action_Decision_Rubric_Deep_Dive.md` (D13-rev, pending §12 re-sign).
+> **Decision record:** `4. Product_Roadmap/_Build_Sequencer_Adoption_Consequence_Matrix.md`.
+> Content below is preserved for audit trail only. Do not follow its build order.
+
+**Status:** RETIRED — historical queue artifact. Not a signed spec. Was operator-maintained; superseded 2026-06-08.
 **Authority:** Matt is the operator. This file lists what comes next; it does not authorize anything by itself. Spec-first discipline still applies — items below that say "draft" or "sign" are gated by the relevant deep-dive's §11.
 **Out of scope for this file:** scoring, implementation guidance, progress markers, completion claims. This file lives forward of the line; it does not record what shipped.
 
-> **Default operating rule.**
+> **Default operating rule (RETIRED 2026-06-08).**
 > 1. Matt's current instruction overrides everything.
-> 2. If no override, follow this queue in order.
+> 2. ~~If no override, follow this queue in order.~~ **Superseded:** read scoreboard + handshake + rubric.
 > 3. Every "ready / done / sign / ship" claim requires audit evidence.
 
 > **For the next assistant (handoff reading list).**
@@ -118,8 +126,8 @@ What must run cleanly before anything in §2 can be called done. Every "ready / 
 
 ## §5 Maintenance Rules
 
-- **Owner.** Matt. Edits land via operator instruction or Cursor revision pass; no autonomous edits.
-- **Canonical roles.** Queue is canonical for ordering. `PROJECT_HANDSHAKE.md` is canonical for current active focus. Matt's current instruction overrides both.
+- **Owner.** RETIRED 2026-06-08. No further ordering edits. Historical content preserved only.
+- **Canonical roles (superseded).** Queue ordering is **retired**. Live roles: scoreboard (candidate generation), handshake (today's view), rubric (ranking), Matt (selection).
 - **When to update.** Whenever (a) a Build or Audit item completes, (b) operator reorders or removes an item, (c) a new item is added by operator direction, or (d) a §11 signature changes what's blocking or unblocked. Updates are *removals and additions of queue items*, not historical log entries.
 - **No history layer.** This file does not record what shipped. `PROJECT_ACTIVITY_LOG.md` and `PROGRESS.md` carry historical state. This file is forward-only.
 - **No scoring.** Items are ordered by operator decision, not by rubric.
