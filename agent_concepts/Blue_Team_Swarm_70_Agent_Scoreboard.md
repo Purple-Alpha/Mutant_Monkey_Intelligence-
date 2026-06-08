@@ -1,11 +1,31 @@
-# Blue-Team Swarm — 70-Agent Build Scoreboard (v1)
+# Blue-Team Swarm — 70-Agent Build Scoreboard (v2 — Build Sequencer)
 
-**Status:** WORKING SCOREBOARD, pre-spec, unsigned, NOT §11, authority-free. Created 2026-06-07 by Cursor (execution lane) reconciling the two adopted swarm maps against the live runtime. **Builds nothing, authorizes nothing.** A row here is a status record, never a build authorization (see Rule 4 below). Does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec.
+**Status:** WORKING SCOREBOARD + **BUILD SEQUENCER** (candidate generator). Pre-spec amendment adopted 2026-06-08 (Option B, `_Build_Sequencer_Adoption_Consequence_Matrix.md`). Authority-free — **builds nothing, authorizes nothing.** A row is status + sequencing input, never build permission (Rule 4). Does not override `AGENTS.md`, the seven `VISION.md` non-negotiables, or any signed spec.
+
+**Authority chain (2026-06-08):** this file **generates** actionable-now candidates -> Next-Action Decision Rubric **ranks** -> Matt **selects** -> `decision_cycles_log.md` records. `PROJECT_HANDSHAKE.md` is today's one-screen derived view. `PROJECT_BUILD_AND_AUDIT_QUEUE.md` is **retired** (historical only).
 
 **Sources reconciled:**
 - `agent_concepts/_Blue_Team_Swarm_Architecture_Map_SPARK.md` — the canonical 70-agent / 10-team inventory (agent IDs #1-#70 come from here).
 - `agent_concepts/Mutant_Monkey_Blue_Team_Swarm_Design_Tree.md` — the adopted canonical 6-layer design shaping.
 - Live runtime: `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/` + `tests/`.
+
+---
+
+## Build Sequencer — critical path header (read this first)
+
+Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen answer to "what's next."**
+
+**#1 TARGET:** full 70-agent governed blue-team swarm (non-reducible).
+
+**BREADTH RUNWAY:** **4** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10.
+
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** wrap candidates include **#7 Sender Identity, #11 Known-Good Contact, #18 Callback Verification, #27 Link Inspection, #30 Attachment Risk** (DETECTOR_FUNCTION rows with empty blockers). Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
+
+**DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
+
+**STAGE_B GATE: CLOSED.** Autonomy agents (e.g. #38 Containment) blocked until signed Stage B authorization. `#38` carries `NEEDS_STAGE_B_AUTH`.
+
+**Generator -> Rubric -> Select:** scoreboard rows with empty `BLOCKERS` feed the rubric (3-7 candidates, include "do nothing" per D19). Rubric ranks; Matt selects. Scores are never decisions.
 
 ---
 
@@ -31,128 +51,134 @@
 
 **6 layers (Design Tree):** 1 Command | 2 Detection | 3 Verification | 4 Evidence | 5 Challenge/Red-Team | 6 Learning/Governance.
 
+**Build Sequencer columns (closed vocabulary):**
+- **`BLOCKERS`** — empty = actionable-now. Values: `NEEDS_SIGNED_CONTRACT`, `NEEDS_BUILD_AUTH`, `NEEDS_REAL_DATA`, `NEEDS_STAGE_B_AUTH`, `NEEDS_DRIFT_WATCH`, `DEPENDS_ON:[agent_id]`, `merged`.
+- **`TRACK`** — `BREADTH` (Stage 1 wrap / synthetic path, unblocked), `DEPTH` (Stage 2+ / real-data gate), `STAGE_B` (autonomy gate).
+- **`LAST_RUBRIC_SCORE`** — total from last rubric cycle when this row was a candidate (`—` if never).
+- **`LAST_UPDATED`** — commit hash when row last touched (`adoption` = backfilled 2026-06-08).
+
 ---
 
 ## Team 1 — Swarm command (SPARK #1-#5)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 1 | Swarm Commander Agent | `DETECTOR_FUNCTION` (partial spine) | `core/orchestrator/routes.py`, `registry.py`, `swarm_commander.py` (router + registry + Stage A case loop + in-memory DER assembly + Layer 5 challenge pass over real `AgentContribution` objects; not a formally promoted governed agent) | 1 Command | A |
-| 2 | Mission Context Agent | `NOT_STARTED` | none | 1 Command | A |
-| 3 | Risk Triage Agent | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` | 1 Command | A |
-| 4 | Human-in-the-Loop Agent | `GOVERNANCE_DOC_ONLY` | VISION non-negotiables 6/7; `core/operator_state/` kill-switch | 1 Command | A |
-| 5 | Decision Integrity Agent | `GOVERNANCE_DOC_ONLY` | AGENTS authority model; client-facing rubric contradiction guard | 6 Learning/Governance | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | Swarm Commander Agent | `DETECTOR_FUNCTION` (partial spine) | `core/orchestrator/routes.py`, `registry.py`, `swarm_commander.py` (router + registry + Stage A case loop + in-memory DER assembly + Layer 5 challenge pass over real `AgentContribution` objects; not a formally promoted governed agent) | 1 Command | A |  | BREADTH | — | adoption |
+| 2 | Mission Context Agent | `NOT_STARTED` | none | 1 Command | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 3 | Risk Triage Agent | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` | 1 Command | A |  | BREADTH | — | adoption |
+| 4 | Human-in-the-Loop Agent | `GOVERNANCE_DOC_ONLY` | VISION non-negotiables 6/7; `core/operator_state/` kill-switch | 1 Command | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 5 | Decision Integrity Agent | `GOVERNANCE_DOC_ONLY` | AGENTS authority model; client-facing rubric contradiction guard | 6 Learning/Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 2 — Email identity / sender (SPARK #6-#12)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 6 | Header Analysis | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Header_Analysis_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/header_divergence_detector.py`, `received_chain_parser.py`; governed wrapper `core/orchestrator/header_divergence_agent.py` (`HeaderDivergenceAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |
-| 6A | Email Authentication (SPF/DKIM/DMARC) — net-new governed agent, split from #6 code evidence at contract signing 2026-06-07 (§10 Q1; gateway authentication posture, NOT domain divergence) | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Email_Authentication_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/email_authentication_detector.py` (gateway SPF/DKIM/DMARC posture parsed from `Authentication-Results`; lift-only, never lowers risk on pass); governed wrapper `core/orchestrator/email_authentication_agent.py` (`EmailAuthenticationAgent`, committed `8e3df20`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER -> Layer 5 challenge pass) | 2 Detection | A |
-| 7 | Sender Identity | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (impersonation_analysis) | 2 Detection | A |
-| 8 | Ghost Thread Agent (renamed from "Reply-To Mismatch" 2026-06-07; Reply-To divergence is #6's signal, not #8's) | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Ghost_Thread_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/ghost_thread_detector.py` (fake thread continuity: Re/Fw/Fwd subject prefix + missing non-empty In-Reply-To/References — NOT Reply-To divergence); governed wrapper `core/orchestrator/ghost_thread_agent.py` (`GhostThreadAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER -> Layer 5 challenge pass) | 2 Detection | A |
-| 9 | Domain Reputation | `NOT_STARTED` | none | 2 Detection | A |
-| 10 | Lookalike Domain | `GOVERNED_AGENT` | `core/scoring/lookalike_domain_detector.py` + signed spec w/ Agent Design Contract wrapper | 2 Detection | A |
-| 11 | Known-Good Contact | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 3 Verification | A |
-| 12 | Compromised Mailbox Suspicion | `NOT_STARTED` | none | 2 Detection | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 6 | Header Analysis | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Header_Analysis_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/header_divergence_detector.py`, `received_chain_parser.py`; governed wrapper `core/orchestrator/header_divergence_agent.py` (`HeaderDivergenceAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER) | 2 Detection | A |  | BREADTH | — | 2cefbaf |
+| 6A | Email Authentication (SPF/DKIM/DMARC) — net-new governed agent, split from #6 code evidence at contract signing 2026-06-07 (§10 Q1; gateway authentication posture, NOT domain divergence) | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Email_Authentication_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/email_authentication_detector.py` (gateway SPF/DKIM/DMARC posture parsed from `Authentication-Results`; lift-only, never lowers risk on pass); governed wrapper `core/orchestrator/email_authentication_agent.py` (`EmailAuthenticationAgent`, committed `8e3df20`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER -> Layer 5 challenge pass) | 2 Detection | A |  | BREADTH | — | 2cefbaf |
+| 7 | Sender Identity | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (impersonation_analysis) | 2 Detection | A |  | BREADTH | — | adoption |
+| 8 | Ghost Thread Agent (renamed from "Reply-To Mismatch" 2026-06-07; Reply-To divergence is #6's signal, not #8's) | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract 2026-06-07 `4. Product_Roadmap/Ghost_Thread_Agent_Design_Contract_Deep_Dive.md`**; not in `build_default_registry` / no production dispatch at Stage 1) | `core/scoring/ghost_thread_detector.py` (fake thread continuity: Re/Fw/Fwd subject prefix + missing non-empty In-Reply-To/References — NOT Reply-To divergence); governed wrapper `core/orchestrator/ghost_thread_agent.py` (`GhostThreadAgent`, tested end-to-end through the Agent contract -> AgentContribution -> blackboard -> DER -> Layer 5 challenge pass) | 2 Detection | A |  | BREADTH | — | 2cefbaf |
+| 9 | Domain Reputation | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 10 | Lookalike Domain | `GOVERNED_AGENT` | `core/scoring/lookalike_domain_detector.py` + signed spec w/ Agent Design Contract wrapper | 2 Detection | A |  | BREADTH | — | 2cefbaf |
+| 11 | Known-Good Contact | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 3 Verification | A |  | BREADTH | — | adoption |
+| 12 | Compromised Mailbox Suspicion | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 3 — Vendor-payment / BEC (SPARK #13-#22)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 13 | Vendor Relationship Intelligence | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 2 Detection | A |
-| 14 | Payment Change Detection | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` | 2 Detection | A |
-| 15 | Invoice Fraud | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (invoice_authenticity_score) | 2 Detection | A |
-| 16 | Bank Detail Drift | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` + vendor baseline | 2 Detection | A |
-| 17 | Vendor Master Record | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 3 Verification | A |
-| 18 | Callback Verification | `DETECTOR_FUNCTION` | `core/scoring/callback_phishing_detector.py` + `core/workflows/two_channel_confirmation.py` | 3 Verification | A |
-| 19 | Dual-Approval | `SPEC_ONLY` | Vendor Payment Verification Workflow (draft) | 3 Verification | A |
-| 20 | Financial Exposure | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` | 2 Detection | A |
-| 21 | Executive Impersonation | `SPEC_ONLY` | signed spec + Agent Design Contract metadata; **no detector code** | 2 Detection | A |
-| 22 | Payroll Diversion | `NOT_STARTED` | none | 2 Detection | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 13 | Vendor Relationship Intelligence | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 14 | Payment Change Detection | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 15 | Invoice Fraud | `DETECTOR_FUNCTION` | `core/scoring/email_risk_scoring_agent.py` (invoice_authenticity_score) | 2 Detection | A |  | BREADTH | — | adoption |
+| 16 | Bank Detail Drift | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` + vendor baseline | 2 Detection | A |  | BREADTH | — | adoption |
+| 17 | Vendor Master Record | `DETECTOR_FUNCTION` | `core/production_state/vendor_baseline/store.py` | 3 Verification | A |  | BREADTH | — | adoption |
+| 18 | Callback Verification | `DETECTOR_FUNCTION` | `core/scoring/callback_phishing_detector.py` + `core/workflows/two_channel_confirmation.py` | 3 Verification | A |  | BREADTH | — | adoption |
+| 19 | Dual-Approval | `SPEC_ONLY` | Vendor Payment Verification Workflow (draft) | 3 Verification | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
+| 20 | Financial Exposure | `DETECTOR_FUNCTION` | `core/scoring/financial_state_ledger.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 21 | Executive Impersonation | `SPEC_ONLY` | signed spec + Agent Design Contract metadata; **no detector code** | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
+| 22 | Payroll Diversion | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 4 — Phishing / credential (SPARK #23-#29)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 23 | Credential Phishing | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (credential-harvest signals) | 2 Detection | A |
-| 24 | MFA Manipulation | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (mfa-fatigue signals) | 2 Detection | A |
-| 25 | Session Theft | `DETECTOR_FUNCTION` (adjacent) | `core/scoring/prompt_injection_detector.py` (adjacent only) | 2 Detection | A |
-| 26 | QR Phishing | `NOT_STARTED` | none (flagged in Frontier Intake) | 2 Detection | A |
-| 27 | Link Inspection | `DETECTOR_FUNCTION` | `core/precursor/url_obfuscation_detector.py` | 2 Detection | A |
-| 28 | Brand Impersonation | `NOT_STARTED` | none | 2 Detection | A |
-| 29 | Form Abuse | `NOT_STARTED` | none | 2 Detection | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 23 | Credential Phishing | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (credential-harvest signals) | 2 Detection | A |  | BREADTH | — | adoption |
+| 24 | MFA Manipulation | `DETECTOR_FUNCTION` | `core/precursor/body_signal_detector.py` (mfa-fatigue signals) | 2 Detection | A |  | BREADTH | — | adoption |
+| 25 | Session Theft | `DETECTOR_FUNCTION` (adjacent) | `core/scoring/prompt_injection_detector.py` (adjacent only) | 2 Detection | A |  | BREADTH | — | adoption |
+| 26 | QR Phishing | `NOT_STARTED` | none (flagged in Frontier Intake) | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 27 | Link Inspection | `DETECTOR_FUNCTION` | `core/precursor/url_obfuscation_detector.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 28 | Brand Impersonation | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 29 | Form Abuse | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 5 — Attachment / ransomware precursor (SPARK #30-#38)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 30 | Attachment Risk | `DETECTOR_FUNCTION` | `core/precursor/attachment_classifier.py` | 2 Detection | A |
-| 31 | PDF Fingerprint | `DETECTOR_FUNCTION` | `core/scoring/document_metadata_detector.py` | 2 Detection | A |
-| 32 | Macro/Script Risk | `DETECTOR_FUNCTION` (partial) | `core/precursor/attachment_classifier.py` (class subset) | 2 Detection | A |
-| 33 | Payload Delivery | `NOT_STARTED` | none | 2 Detection | A |
-| 34 | Remote Access Abuse | `NOT_STARTED` | none | 2 Detection | A |
-| 35 | Inbox Rule Abuse | `NOT_STARTED` | none | 2 Detection | A |
-| 36 | Account Takeover | `NOT_STARTED` | none | 2 Detection | A |
-| 37 | Ransomware Precursor | `DETECTOR_FUNCTION` | `core/precursor/analysis.py` (overlay builder) | 2 Detection | A |
-| 38 | Containment Recommendation | `NOT_STARTED` | none — **Stage B (autonomy-gated)** | 2 Detection | B |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 30 | Attachment Risk | `DETECTOR_FUNCTION` | `core/precursor/attachment_classifier.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 31 | PDF Fingerprint | `DETECTOR_FUNCTION` | `core/scoring/document_metadata_detector.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 32 | Macro/Script Risk | `DETECTOR_FUNCTION` (partial) | `core/precursor/attachment_classifier.py` (class subset) | 2 Detection | A |  | BREADTH | — | adoption |
+| 33 | Payload Delivery | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 34 | Remote Access Abuse | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 35 | Inbox Rule Abuse | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 36 | Account Takeover | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 37 | Ransomware Precursor | `DETECTOR_FUNCTION` | `core/precursor/analysis.py` (overlay builder) | 2 Detection | A |  | BREADTH | — | adoption |
+| 38 | Containment Recommendation | `NOT_STARTED` | none — **Stage B (autonomy-gated)** | 2 Detection | B | NEEDS_STAGE_B_AUTH | STAGE_B | — | adoption |
 
 ## Team 6 — Language / behavior / deception (SPARK #39-#45)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 39 | Language Pressure | `DETECTOR_FUNCTION` | `core/scoring/callback_phishing_detector.py` (TOAD vocabulary) | 2 Detection | A |
-| 40 | Tone Drift | `NOT_STARTED` | none | 2 Detection | A |
-| 41 | Behavioral Baseline | `NOT_STARTED` | none | 2 Detection | A |
-| 42 | Timing Anomaly | `NOT_STARTED` | none | 2 Detection | A |
-| 43 | Geo-Context | `SPEC_ONLY` | Sender Provenance / Geo-Velocity proof protocol; `received_chain_parser.py` foundation only | 2 Detection | A |
-| 44 | Social Engineering | `DETECTOR_FUNCTION` (partial) | `core/scoring/callback_phishing_detector.py` | 2 Detection | A |
-| 45 | Process Bypass | `NOT_STARTED` | none | 2 Detection | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 39 | Language Pressure | `DETECTOR_FUNCTION` | `core/scoring/callback_phishing_detector.py` (TOAD vocabulary) | 2 Detection | A |  | BREADTH | — | adoption |
+| 40 | Tone Drift | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 41 | Behavioral Baseline | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 42 | Timing Anomaly | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 43 | Geo-Context | `SPEC_ONLY` | Sender Provenance / Geo-Velocity proof protocol; `received_chain_parser.py` foundation only | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
+| 44 | Social Engineering | `DETECTOR_FUNCTION` (partial) | `core/scoring/callback_phishing_detector.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 45 | Process Bypass | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 7 — Evidence / audit (SPARK #46-#53)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 46 | Evidence Package | `DETECTOR_FUNCTION` | `core/evidence_package/package_generator.py` | 4 Evidence | A |
-| 47 | Case Timeline | `DETECTOR_FUNCTION` (partial) | Reaction Timing Log + `audit_trail` in evidence package | 4 Evidence | A |
-| 48 | Verification Outcome | `DETECTOR_FUNCTION` | `core/workflows/two_channel_confirmation.py` (outcome events) | 3 Verification | A |
-| 49 | Audit Trail | `DETECTOR_FUNCTION` | `core/blackboard/` append-only + `evidence_package/audit_packet.py` | 4 Evidence | A |
-| 50 | Evidence Strength | `SPEC_ONLY` | Email Security Testing framework (draft) | 4 Evidence | A |
-| 51 | Assumption Control | `GOVERNANCE_DOC_ONLY` | claim-boundary discipline; not a runtime module | 4 Evidence | A |
-| 52 | Plain-English Explanation | `DETECTOR_FUNCTION` | `core/scoring/client_facing_rubric.py` (signed 5-axis rubric, why_this_score) | 4 Evidence | A |
-| 53 | Safe Language | `GOVERNANCE_DOC_ONLY` | `Compliance_and_Trend_Watch_Process.md` §5 + `complete_gate.py` forbidden-language | 6 Governance | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 46 | Evidence Package | `DETECTOR_FUNCTION` | `core/evidence_package/package_generator.py` | 4 Evidence | A |  | BREADTH | — | adoption |
+| 47 | Case Timeline | `DETECTOR_FUNCTION` (partial) | Reaction Timing Log + `audit_trail` in evidence package | 4 Evidence | A |  | BREADTH | — | adoption |
+| 48 | Verification Outcome | `DETECTOR_FUNCTION` | `core/workflows/two_channel_confirmation.py` (outcome events) | 3 Verification | A |  | BREADTH | — | adoption |
+| 49 | Audit Trail | `DETECTOR_FUNCTION` | `core/blackboard/` append-only + `evidence_package/audit_packet.py` | 4 Evidence | A |  | BREADTH | — | adoption |
+| 50 | Evidence Strength | `SPEC_ONLY` | Email Security Testing framework (draft) | 4 Evidence | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
+| 51 | Assumption Control | `GOVERNANCE_DOC_ONLY` | claim-boundary discipline; not a runtime module | 4 Evidence | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 52 | Plain-English Explanation | `DETECTOR_FUNCTION` | `core/scoring/client_facing_rubric.py` (signed 5-axis rubric, why_this_score) | 4 Evidence | A |  | BREADTH | — | adoption |
+| 53 | Safe Language | `GOVERNANCE_DOC_ONLY` | `Compliance_and_Trend_Watch_Process.md` §5 + `complete_gate.py` forbidden-language | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 8 — Cyber insurance (SPARK #54-#60)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 54 | Cyber Insurance Evidence | `DETECTOR_FUNCTION` | `core/evidence_package/` (signed Cyber Insurance Evidence Package) | 4 Evidence | A |
-| 55 | Control Mapping | `SPEC_ONLY` | cyber-insurance spec partial | 4 Evidence | A |
-| 56 | Renewal Readiness | `SPEC_ONLY` | cyber-insurance spec partial | 4 Evidence | A |
-| 57 | Underwriter Summary | `SPEC_ONLY` | cyber-insurance spec partial | 4 Evidence | A |
-| 58 | Claim Support | `NOT_STARTED` | none | 4 Evidence | A |
-| 59 | Exception Tracking | `NOT_STARTED` | none | 4 Evidence | A |
-| 60 | Evidence Freshness | `SPEC_ONLY` | freshness policy in cyber-insurance spec §6.1 | 4 Evidence | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 54 | Cyber Insurance Evidence | `DETECTOR_FUNCTION` | `core/evidence_package/` (signed Cyber Insurance Evidence Package) | 4 Evidence | A | NEEDS_REAL_DATA | DEPTH | — | adoption |
+| 55 | Control Mapping | `SPEC_ONLY` | cyber-insurance spec partial | 4 Evidence | A | NEEDS_REAL_DATA | DEPTH | — | adoption |
+| 56 | Renewal Readiness | `SPEC_ONLY` | cyber-insurance spec partial | 4 Evidence | A | NEEDS_REAL_DATA | DEPTH | — | adoption |
+| 57 | Underwriter Summary | `SPEC_ONLY` | cyber-insurance spec partial | 4 Evidence | A | NEEDS_REAL_DATA | DEPTH | — | adoption |
+| 58 | Claim Support | `NOT_STARTED` | none | 4 Evidence | A | NEEDS_REAL_DATA | DEPTH | — | adoption |
+| 59 | Exception Tracking | `NOT_STARTED` | none | 4 Evidence | A | NEEDS_REAL_DATA | DEPTH | — | adoption |
+| 60 | Evidence Freshness | `SPEC_ONLY` | freshness policy in cyber-insurance spec §6.1 | 4 Evidence | A | NEEDS_REAL_DATA | DEPTH | — | adoption |
 
 ## Team 9 — Learning / testing (SPARK #61-#68)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 61 | Test Case Generator | `DETECTOR_FUNCTION` | `core/sandbox/red_agents/` (synthetic case generators) | 5 Challenge/Red-Team | A |
-| 62 | Regression Test | `DETECTOR_FUNCTION` | `tests/` pytest suite + cadence gate | 5 Challenge/Red-Team | A |
-| 63 | Adversarial Test | `DETECTOR_FUNCTION` | `core/sandbox/red_battery.py` | 5 Challenge/Red-Team | A |
-| 64 | Failure Classification | `SPEC_ONLY` | Email Security Testing failure cards (draft) | 5 Challenge/Red-Team | A |
-| 65 | Correction Evidence | `GOVERNANCE_DOC_ONLY` | CURRENT_STATE_MAP FP/FN correction loop | 6 Governance | A |
-| 66 | Drift Watch | `GOVERNANCE_DOC_ONLY` | `Compliance_and_Trend_Watch_Process.md` (signed) | 6 Governance | A |
-| 67 | Rule Improvement | `DETECTOR_FUNCTION` (sandbox) | `core/mutation/engine.py` (sandbox-only, signed promotion) | 6 Governance | A |
-| 68 | Swarm Memory | `NOT_STARTED` | none | 6 Governance | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 61 | Test Case Generator | `DETECTOR_FUNCTION` | `core/sandbox/red_agents/` (synthetic case generators) | 5 Challenge/Red-Team | A |  | BREADTH | — | adoption |
+| 62 | Regression Test | `DETECTOR_FUNCTION` | `tests/` pytest suite + cadence gate | 5 Challenge/Red-Team | A |  | BREADTH | — | adoption |
+| 63 | Adversarial Test | `DETECTOR_FUNCTION` | `core/sandbox/red_battery.py` | 5 Challenge/Red-Team | A |  | BREADTH | — | adoption |
+| 64 | Failure Classification | `SPEC_ONLY` | Email Security Testing failure cards (draft) | 5 Challenge/Red-Team | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
+| 65 | Correction Evidence | `GOVERNANCE_DOC_ONLY` | CURRENT_STATE_MAP FP/FN correction loop | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 66 | Drift Watch | `GOVERNANCE_DOC_ONLY` | `Compliance_and_Trend_Watch_Process.md` (signed) | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 67 | Rule Improvement | `DETECTOR_FUNCTION` (sandbox) | `core/mutation/engine.py` (sandbox-only, signed promotion) | 6 Governance | A |  | BREADTH | — | adoption |
+| 68 | Swarm Memory | `NOT_STARTED` | none | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 10 — Review / decision integrity (SPARK #69-#70)
 
-| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage |
-|---|---|---|---|---|---|
-| 69 | Swarm Health | `NOT_STARTED` | none | 6 Governance | A |
-| 70 | Final Review Agent | `GOVERNANCE_DOC_ONLY` (partial) | `complete_gate.py` + `core/evidence_package/package_auditor.py` | 6 Learning/Governance | A |
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 69 | Swarm Health | `NOT_STARTED` | none | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 70 | Final Review Agent | `GOVERNANCE_DOC_ONLY` (partial) | `complete_gate.py` + `core/evidence_package/package_auditor.py` | 6 Learning/Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ---
 
@@ -215,3 +241,22 @@ A detector function becomes a `GOVERNED_AGENT` only when it clears the bar for i
 **Spine drift trap (watch during build):** the Swarm Commander case loop must be built as a **router, not a decision-maker.** It routes to Risk Triage; Risk Triage scores and routes to Detection. If the Commander starts absorbing Risk Triage's function, a Command agent is making detection-level decisions — the first drift trap.
 
 **Authority note:** these pins resolve the SPARK↔Design-Tree ambiguity; they do not create or expand signed scope, and they do not authorize any agent build (Rule 4). The per-agent Rubric → spec → gate → sign path still governs each promotion.
+
+---
+
+## Build Sequencer amendment — locked decisions (adopted 2026-06-08)
+
+Governance rules for this file as canonical candidate generator. Rubric D13-rev pending §12 re-sign on `Next_Action_Decision_Rubric_Deep_Dive.md`.
+
+| # | Decision | Locked value |
+|---|---|---|
+| BS-D1 | Four columns | `BLOCKERS`, `TRACK`, `LAST_RUBRIC_SCORE`, `LAST_UPDATED` — closed vocabularies per Legend above. |
+| BS-D2 | Critical-path header | Header section above updated every session at Build Loop Step 6.5. |
+| BS-D3 | Generator rule | (1) Rows with empty `BLOCKERS` are actionable-now. (2) Exclude rows whose `DEPENDS_ON:[id]` dependency is not `GOVERNED_AGENT`. (3) `TRACK=DEPTH` candidates only when depth gate explicitly open (operator butterfly decision logged). (4) `TRACK=STAGE_B` only after signed Stage B authorization. (5) Trim to 3-7 by layer order (Command -> Detection -> Verification -> Evidence -> Challenge -> Learning) per Q5 build order. (6) Always allow "do nothing" as a rubric candidate (D19). |
+| BS-D4 | Queue retirement | `PROJECT_BUILD_AND_AUDIT_QUEUE.md` retired as ordering authority; historical read-only. |
+| BS-D5 | Build Loop integration | AGENTS.md §3.2 Steps 0.5 (freshness check) and 6.5 (row update) mandatory for swarm-map slices. Doctrine-enforced; gate automation deferred. |
+| BS-D6 | Authority-free | Generator output is never build permission. Rule 4 extended to new columns. Matt selects; rubric ranks. |
+
+**Row additions** require operator scope decision or signed scoreboard amendment. **Row updates** within adoption are execution-lane under §2.1.1.B when gated clean.
+
+**Open for operator:** §12 re-sign on rubric D13-rev to make this amendment live across signed specs.
