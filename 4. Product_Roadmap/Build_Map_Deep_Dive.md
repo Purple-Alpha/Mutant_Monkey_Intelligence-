@@ -1,6 +1,6 @@
 # Build Map — Spec-First Deep Dive
 
-**Status:** DRAFT 2026-06-08. Authored from the Claude design-lane proposal (Build Map state machine) with six operator-approved fixes folded in (2026-06-08). This draft is **not signed** and authorizes **no code**, **no `complete_gate.py` amendment**, **no new write path**, and **no runtime change**. §11 signature is operator-only. Adopting this Map is itself a path-setting (butterfly) decision per §4 and requires Matt's §11 signature to become live authority.
+**Status:** §11 SIGNED 2026-06-08 by Matt Nichol ("Matt Nichol june 8th 2026", placed verbatim in §11). LIVE build authority. Adoption confirms D1–D10 and §3–§9 as the deterministic build-decision controller. The signature authorizes **no code**, **no `complete_gate.py` amendment**, and **no new write path**: the two §10 dependencies (Q1 gate header-freshness enforcement, Q2 triage-decision logging) remain **UNAUTHORIZED** and require their own separate Build Authorization before implementation. Authored from the Claude design-lane proposal with six operator-approved fixes folded in (2026-06-08).
 
 **Date:** 2026-06-08
 
@@ -252,6 +252,6 @@ A cold future session opens `PROJECT_HANDSHAKE.md`, reads ~10 lines, and knows t
 
 ## §11 Sign-off
 
-PENDING. Operator-authored signature required before the Map becomes live build authority. Signing adopts D1–D10 and §3–§9; it does **not** authorize the §10 Q1 gate amendment or the §10 Q2 triage-logging write path.
+SIGNED. The Map is LIVE build authority. Adopts D1–D10 and §3–§9 as the deterministic build-decision controller. Does **not** authorize the §10 Q1 gate amendment or the §10 Q2 triage-logging write path; both remain unauthorized until their own signed Build Authorization.
 
-> [Matt Nichol — Build Map — date]
+> Matt Nichol june 8th 2026
