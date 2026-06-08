@@ -26,6 +26,23 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - CYCLE 13: Attachment Risk Agent contract draft
+**Actor:** Matt (continued governed breadth path: "alright lets go") + Cursor execution lane (Build Sequencer scoring, #30 contract draft, tracker sync).
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Attachment_Risk_Agent_Design_Contract_Deep_Dive.md` (new draft; pending §11 signature)
+- `PROJECT_ACTIVITY_LOG.md` (this entry)
+
+**Reason:** The live Build Sequencer presented #11 Known-Good Contact, #30 Attachment Risk, and #27 Stage 2. #27 Stage 2 is blocked by the real-sample promotion gate. #11 is valuable but stateful / Layer 3 verification-oriented. #30 is the cleanest immediate breadth candidate: deterministic static attachment metadata detector, Layer 2 facts-only wrapper path, no runtime mutation, no real-data gate for Stage 1.
+
+**Verification:** Contract draft, scoreboard/decision, master-index, and handoff/progress tracker slices were gated separately to stay under the audit packet cap. This entry records the CYCLE 13 work without re-declaring those files as touched in this single-file activity-log slice. Runtime code not touched.
+
+**Next Step:** Matt §11 signature on `4. Product_Roadmap/Attachment_Risk_Agent_Design_Contract_Deep_Dive.md`; after signature, build the Stage 1 wrapper + focused tests.
+
+---
+
 ## 2026-06-08 - CYCLE 12 closed: #27 Link Inspection GOVERNED_AGENT (Evidence Stage 1)
 **Actor:** Matt (§11 signature "Matt Nichol June 8th 2026") + Cursor execution lane (signature placement, Stage 1 wrapper build, focused tests, gates, commits, step 6.5 + tracker sync).
 

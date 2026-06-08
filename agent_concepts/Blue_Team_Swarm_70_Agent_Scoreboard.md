@@ -19,7 +19,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **BREADTH RUNWAY:** **5** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10, #27.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** wrap candidates include **#11 Known-Good Contact, #30 Attachment Risk** (DETECTOR_FUNCTION rows with empty blockers). **#27 Link Inspection** is now `GOVERNED_AGENT` (Evidence Stage 1, §11-signed 2026-06-08, wrapper `463cb4e`); its next gate is the Stage 2 promotion bar (≥3 real samples + signed promotion record). **#7 Sender Identity** needs a clean detector surface before a wrapper (current evidence is a broad LLM scoring field, not a standalone detector). **#18 Callback Verification** is paused for a contract split decision: detector-only TOAD evidence is not the same as a Layer 3 verification/workflow outcome. Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **#30 Attachment Risk** is selected for CYCLE 13 and has a contract draft awaiting §11 signature before runtime implementation. Remaining clean wrap candidate: **#11 Known-Good Contact**. **#27 Link Inspection** is `GOVERNED_AGENT` (Evidence Stage 1, §11-signed 2026-06-08, wrapper `463cb4e`); its next gate is the Stage 2 promotion bar (≥3 real samples + signed promotion record). **#7 Sender Identity** needs a clean detector surface before a wrapper (current evidence is a broad LLM scoring field, not a standalone detector). **#18 Callback Verification** is paused for a contract split decision: detector-only TOAD evidence is not the same as a Layer 3 verification/workflow outcome. Spine slices (e.g. second Layer 5 Challenge agent) are session-level candidates when not tied to a single row.
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -113,7 +113,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 30 | Attachment Risk | `DETECTOR_FUNCTION` | `core/precursor/attachment_classifier.py` | 2 Detection | A |  | BREADTH | — | adoption |
+| 30 | Attachment Risk | `DETECTOR_FUNCTION` | `core/precursor/attachment_classifier.py` + draft contract `4. Product_Roadmap/Attachment_Risk_Agent_Design_Contract_Deep_Dive.md` (pending §11 signature before wrapper code) | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | 10 | cycle13 |
 | 31 | PDF Fingerprint | `DETECTOR_FUNCTION` | `core/scoring/document_metadata_detector.py` | 2 Detection | A |  | BREADTH | — | adoption |
 | 32 | Macro/Script Risk | `DETECTOR_FUNCTION` (partial) | `core/precursor/attachment_classifier.py` (class subset) | 2 Detection | A |  | BREADTH | — | adoption |
 | 33 | Payload Delivery | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |

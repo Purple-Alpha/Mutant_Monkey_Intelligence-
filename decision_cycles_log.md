@@ -45,6 +45,36 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 13 — 2026-06-08T19:50Z   [type: TACTICAL]
+  OBSERVE: CYCLE 12 closed with #27 Link Inspection promoted to GOVERNED_AGENT
+           at Evidence Stage 1. Build Sequencer actionable-now breadth rows
+           are #11 Known-Good Contact and #30 Attachment Risk. #27 Stage 2 is
+           blocked by the real-sample gate (>=3 samples + signed promotion).
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   #30 Attachment Risk contract draft -> Stage 1 wrapper path
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: deterministic static metadata detector; clean Layer 2
+               facts-only wrapper path; no real-data gate for Stage 1.
+    ACTION B   #11 Known-Good Contact contract draft
+               L1 R1 E1 FC1 Rv1   TOTAL 5
+               Note: valuable but Layer 3/stateful verification over vendor
+               baseline storage; needs tighter contract split before code.
+    ACTION C   #27 Link Inspection Stage 2 promotion
+               L2 R2 E0 FC0 Rv0   TOTAL 4
+               Note: blocked until >=3 real samples and a signed promotion record.
+    ACTION D   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A. Matt said "alright lets go" after the sequencer
+                 listed #11, #30, and #27 Stage 2; rubric ranks #30 highest
+                 and it is the cleanest unblocked breadth slice.
+  EXPECTED:      Draft a §11-ready Attachment Risk Agent Design Contract that
+                 authorizes no code until signed, pins facts-only Layer 2 output,
+                 forbids execution/detonation/network behavior, and preserves
+                 attachment classifier immutability.
+  EXECUTED AT:   2026-06-08T19:50Z
+  AUDIT VERDICT: PENDING
+  SURPRISES:     PENDING
+
 CYCLE 12 — 2026-06-08T19:20Z   [type: TACTICAL]
   OBSERVE: Build Sequencer is live; breadth is the open runway toward the full
            70-agent governed swarm. Current governed agents: #6, #6A, #8, #10,
