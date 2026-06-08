@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - CYCLE 13 closed: #30 Attachment Risk GOVERNED_AGENT (Evidence Stage 1)
+**Actor:** Matt (§11 signature "Matt Nichol June 8th 2026") + Cursor execution lane (draft banked, signature placement, Stage 1 wrapper build, focused tests, gates, commits, step 6.5 + tracker sync).
+
+**Action:** Created / Updated
+
+**Files Changed:**
+- `4. Product_Roadmap/Attachment_Risk_Agent_Design_Contract_Deep_Dive.md` (DRAFT -> §11 SIGNED; banked `e0e8788`, signed `6cc5658`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/attachment_risk_agent.py` (new `AttachmentRiskAgent` wrapper; committed `0f7fd56`)
+- `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_attachment_risk_agent.py` (15 focused synthetic tests; committed `0f7fd56`)
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (step 6.5 promotion #30 -> GOVERNED_AGENT; this slice)
+- `MASTER_INDEX.md` / `PROJECT_HANDSHAKE.md` / `PROGRESS.md` / `decision_cycles_log.md` / `PROJECT_ACTIVITY_LOG.md` (this slice)
+
+**Reason:** Matt signed the #30 Agent Design Contract, authorizing the Evidence Stage 1 wrapper. The wrapper reuses the proven #27 Link Inspection pattern: reads one EMAIL_INBOUND record, scores each attachment with the immutable static `score_attachment_risk` detector read-only, and emits facts-only closed attachment-risk indicator names (source-order dedupe; no numeric score, no classification, no raw filename/hash/MIME). Not registered in `build_default_registry`; no production dispatch; no autonomy; static-only (no network/subprocess) guard added per contract D8.
+
+**Verification:** Draft+tracker banked gate clean 0/0 (prior cycle). Signature gate clean 0/0 (`attachment_risk_contract_signature_20260608_*`). Wrapper build gate clean 0/0 (`attachment_risk_agent_stage1_build_20260608_*`); focused suite 15/15; full runtime suite 1275 passed, 1 skipped, 4 xfailed.
+
+**Next Step:** Next Build Loop cycle selects the next scoreboard candidate (clean Layer 2 wraps remaining e.g. #31 PDF Fingerprint; #11 Known-Good Contact needs a stateful/Layer 3 boundary contract), or a Stage 2 promotion for #27 / #30 once ≥3 real samples + a signed promotion record exist.
+
+---
+
 ## 2026-06-08 - CYCLE 13: Attachment Risk Agent contract draft
 **Actor:** Matt (continued governed breadth path: "alright lets go") + Cursor execution lane (Build Sequencer scoring, #30 contract draft, tracker sync).
 
