@@ -26,6 +26,26 @@ What should happen next.
 
 ---
 
+## 2026-06-08 - CYCLE 14 opened: #31 blocked on pre-build review, #23 Credential Phishing contract DRAFTED
+**Actor:** Cursor execution lane (Build Sequencer pre-build review, rubric scoring, contract draft, tracker sync). Operator delegated next-candidate selection by echoing the CYCLE 13 close-out summary as "go." No §11 signature yet.
+
+**Action:** Reviewed / Created / Updated
+
+**Files Changed (this narrative entry records work committed across separate gated slices; this entry modifies only itself):**
+- 4. Product_Roadmap/Credential_Phishing_Agent_Design_Contract_Deep_Dive.md (new DRAFT — separate slice)
+- agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md (row #23 + actionable-now header — separate slice)
+- decision_cycles_log.md (CYCLE 14 entry — separate slice)
+- MASTER_INDEX.md, PROJECT_HANDSHAKE.md, PROGRESS.md (index/handoff sync — separate slice)
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+CYCLE 13 closed with #30 Attachment Risk at `GOVERNED_AGENT` and no lock open. The close-out summary named #31 PDF Fingerprint as a candidate clean Layer 2 wrap. Build Loop Step 0.5 pre-build review of `core/scoring/document_metadata_detector.py` found #31 is **not** a clean facts-only wrap: `assess_document_metadata_fingerprint` calls `vendor_baseline.check_signal` **and** `vendor_baseline.ingest_signal`, so running it mutates the per-tenant Vendor Baseline Store and writes audit records, and it requires `tenant_id` + `vendor_domain` + `now` rather than just the email record. That is a stateful Layer 2/Layer 3 boundary problem (same class as #11 and #18) and needs a boundary contract before any wrapper code. Pivoted to the pure body-signal detectors; the Next-Action Decision Rubric ranked **#23 Credential Phishing at 10** as the cleanest unblocked breadth slice (pure `score_credential_harvesting`, closed `PrecursorIndicator` vocab, no state, no network). Drafted the §11-ready Agent Design Contract (authorizes no code), scoped out the sibling `score_mfa_fatigue` (#24), and synced the scoreboard / decision log / index / handoff / progress trackers.
+
+**Next Step:**
+Matt §11 signature on `4. Product_Roadmap/Credential_Phishing_Agent_Design_Contract_Deep_Dive.md` → then the Stage 1 `CredentialPhishingAgent` wrapper + focused tests can begin. Runtime baseline unchanged at 1275 passing (no code this slice).
+
+---
+
 ## 2026-06-08 - CYCLE 13 closed: #30 Attachment Risk GOVERNED_AGENT (Evidence Stage 1)
 **Actor:** Matt (§11 signature "Matt Nichol June 8th 2026") + Cursor execution lane (draft banked, signature placement, Stage 1 wrapper build, focused tests, gates, commits, step 6.5 + tracker sync).
 
