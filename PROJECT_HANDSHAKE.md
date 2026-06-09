@@ -3,28 +3,27 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 19b253d)
+CURRENT NEXT ACTION (as of 4987da6)
 ═══════════════════════════════════════════════
-STATE: IDLE (COMMIT_UPDATE complete — Build Map §11 SIGNED / LIVE)
+STATE: IDLE (COMMIT_UPDATE complete — CYCLE 17 #39 Language Pressure)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  Run the first live Build Map TRIAGE cycle (Build_Map_Deep_Dive.md §5) on the
-  BREADTH track to select the next governed-agent candidate.
+  Run the next Build Map TRIAGE cycle on the BREADTH track to pull the next
+  clean Layer 2 governed-agent wrap (post-#39; #25 stays RECLASSIFY).
 
 IF BLOCKED:
-  No open §11 lock. (Build Map §10 Q1/Q2 remain UNAUTHORIZED — not in scope until
-  each gets its own Build Authorization.)
+  No open §11 lock. (Build Map §10 Q1/Q2 remain UNAUTHORIZED.)
 
 CANDIDATE QUEUE (post-triage, ranked):
-  - PENDING first live triage pass. Known input from prior cycles:
-    · #24 MFA Manipulation — GOVERNED_AGENT (done, Evidence Stage 1).
-    · #25 Session Theft — RECLASSIFY: its listed detector is the prompt-injection
-      detector (a different agent); no standalone session-theft detector exists.
-    · #23/#24/#27/#30 — GOVERNED_AGENT awaiting Stage 2 promotion (depth gate CLOSED).
+  1. #39 Language Pressure — GOVERNED_AGENT (done, Evidence Stage 1, rubric 10).
+  2. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
+  3. #44 Social Engineering — likely RECLASSIFY/merge (same detector as #39).
+  4. #31 PDF Fingerprint — UNBLOCK blocked (NEEDS_SIGNED_CONTRACT, stateful).
+  5. #23/#24/#27/#30/#39 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
 
-LAST UPDATED: 19b253d 2026-06-08
+LAST UPDATED: 4987da6 2026-06-08
 ═══════════════════════════════════════════════
 ```
 
@@ -48,7 +47,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1247 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after the Layer 5 Aggregate Challenge Pass Section 2 rewire and the first Layer 5 Challenge agent — the Aggregate Corroboration Agent — landed at Evidence Stage 1 Synthetic) from
+**1328 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after CYCLE 17 #39 Language Pressure `LanguagePressureAgent` landed at Evidence Stage 1 Synthetic; +18 from prior 1310 baseline) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (latest reconcile 2026-06-08)
