@@ -3,29 +3,30 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of df031fd)
+CURRENT NEXT ACTION (as of 8e2b787)
 ═══════════════════════════════════════════════
-STATE: IDLE (CYCLE 24 — #14 Payment Change Detection GOVERNED_AGENT at Evidence Stage 1)
+STATE: OPERATOR_LOCK (CYCLE 25 — #48 Verification Outcome boundary contract DRAFTED, awaiting §11 signature)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  Run the next Build Map TRIAGE cycle on BREADTH to pull the next
-  governed-agent candidate.
+  BLOCKED ON §11 SIGNATURE — place Matt's signature on
+  `4. Product_Roadmap/Verification_Outcome_Agent_Design_Contract_Deep_Dive.md`
+  to authorize the Evidence Stage 1 (Synthetic) VerificationOutcomeAgent
+  wrapper build + focused tests. No wrapper code lands until signed.
 
 IF BLOCKED:
-  None. #13/#16/#17/#20 remain stateful Vendor-Baseline/Financial-State-Ledger
-  boundary candidates (separate boundary contracts, like #14/#31); #7/#15/#25/#37
-  remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED for Stage 2 promotion.
+  Awaiting operator §11 signature only. CYCLE 25 triage annotated #13/#15/#17/#20
+  as RECLASSIFY, #16 as merged into #14, and #47 as DEPENDS_ON:#48. #7/#25/#37
+  remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED.
 
 CANDIDATE QUEUE (post-triage, ranked):
-  1. Next Build Map TRIAGE output — pending cycle.
-  2. #13/#16/#17/#20 — stateful Vendor-Baseline/FSL boundary (UNBLOCK via contract).
-  3. #7/#15 Sender Identity / Invoice Fraud — RECLASSIFY (broad LLM-score surface).
-  4. #25 Session Theft / #37 Ransomware Precursor — RECLASSIFY.
-  5. GOVERNED_AGENT rows awaiting Stage 2 (depth gate CLOSED).
+  1. #48 Verification Outcome — SPEC_ONLY, NEEDS_SIGNED_CONTRACT (current lock).
+  2. #47 Case Timeline — DEPENDS_ON:#48.
+  3. #49/#52/#61/#62/#63/#67 — pending later BREADTH triage.
+  4. GOVERNED_AGENT rows awaiting Stage 2 (depth gate CLOSED).
 
-LAST UPDATED: df031fd 2026-06-09
+LAST UPDATED: 8e2b787 2026-06-09
 ═══════════════════════════════════════════════
 ```
 

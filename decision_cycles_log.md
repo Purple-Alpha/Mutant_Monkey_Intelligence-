@@ -47,6 +47,65 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 25 — 2026-06-09T04:18Z   [type: TACTICAL]
+  OBSERVE: CYCLE 24 closed at IDLE with #14 Payment Change Detection promoted
+           to GOVERNED_AGENT (breadth runway 13; runtime baseline 1410 passed).
+           Operator instruction: "Run the next Build Map TRIAGE cycle on
+           BREADTH." Depth gate CLOSED, so TRACK stays BREADTH. Build Map §5
+           row-order triage found:
+             - #13 Vendor Relationship Intelligence -> RECLASSIFY. Its cited
+               surface is the raw Vendor Baseline Store primitive, not a
+               standalone detector/agent; safe boundaries are already governed by
+               #11/#14/#31.
+             - #15 Invoice Fraud -> RECLASSIFY. `invoice_authenticity_score` is
+               a broad LLM scoring-cycle field, not a standalone detector.
+             - #16 Bank Detail Drift -> merged into #14. Same signed FSL payment
+               destination delta surface now governed by PaymentChangeDetectionAgent.
+             - #17 Vendor Master Record -> RECLASSIFY. It is a Layer 3 reference
+               substrate over the raw baseline store, not an independent agent;
+               #11 governs the safe read-only verification boundary.
+             - #20 Financial Exposure -> RECLASSIFY. The cited FSL surface is
+               governed by #14 and does not estimate amount/exposure.
+             - #47 Case Timeline -> DEPENDS_ON:#48. It needs a governed
+               verification-outcome input before it is a clean Evidence-layer
+               timeline candidate.
+           First actionable boundary: #48 Verification Outcome over the
+           §11-signed Two-Channel Confirmation workflow
+           (`summarize_confirmation_status` / `ConfirmationRecord`).
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   Draft #48 Verification Outcome boundary contract
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: first actionable post-triage target; unlocks a Layer 3
+               read-only workflow-state projection and gives #47 Case Timeline a
+               governed input.
+    ACTION B   Continue past #48 to later Evidence/Challenge rows
+               L1 R0 E1 FC0 Rv1   TOTAL 3
+               Note: would skip the first actionable row and leave #47 blocked.
+    ACTION C   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A (AUTO-DECIDE per Build Map: routine row-order triage +
+                 first actionable boundary contract). The contract's §11
+                 signature is the OPERATOR-LOCK.
+  EXPECTED:      Draft
+                 `Verification_Outcome_Agent_Design_Contract_Deep_Dive.md`
+                 governing a future Evidence Stage 1 (Synthetic)
+                 `VerificationOutcomeAgent`: read-only call to
+                 `summarize_confirmation_status`, closed two-channel workflow
+                 facts plus Layer 3 `verification_source` / `verification_outcome`,
+                 no workflow writes, no contact execution, no payment decision,
+                 no risk-floor lowering, no default registry; gate clean; set
+                 OPERATOR_LOCK pending §11.
+  EXECUTED AT:   2026-06-09T04:18Z (draft slice `8e2b787`).
+  AUDIT VERDICT: PASS — gate clean 0 blocking / 0 warning
+                 (audit_outputs/verification_outcome_contract_draft_20260609T041744Z.md).
+                 #48 set to SPEC_ONLY / NEEDS_SIGNED_CONTRACT; #47 set
+                 DEPENDS_ON:#48; #13/#15/#17/#20 RECLASSIFY; #16 merged into #14;
+                 handshake -> OPERATOR_LOCK; breadth runway remains 13 until
+                 signed + built.
+  SURPRISES:     None. The safe #48 wrapper scope is read-only summary
+                 projection, not the operator write path; `confirmed` remains
+                 evidence only and never lowers risk or authorizes payment.
+
 CYCLE 24 — 2026-06-09T03:03Z   [type: TACTICAL]
   OBSERVE: CYCLE 23 left #14 Payment Change Detection at OPERATOR_LOCK with a
            drafted boundary contract (`edd44a6`) awaiting Matt §11 signature.
