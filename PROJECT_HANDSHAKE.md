@@ -3,28 +3,31 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of ee7049b)
+CURRENT NEXT ACTION (as of edd44a6)
 ═══════════════════════════════════════════════
-STATE: IDLE (CYCLE 22 — #11 Known-Good Contact GOVERNED_AGENT at Evidence Stage 1)
+STATE: OPERATOR_LOCK (CYCLE 23 — #14 Payment Change Detection boundary contract DRAFTED, awaiting §11 signature)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  Run the next Build Map TRIAGE cycle on BREADTH to pull the next
-  governed-agent candidate.
+  BLOCKED ON §11 SIGNATURE — place Matt's signature on
+  `4. Product_Roadmap/Payment_Change_Detection_Agent_Design_Contract_Deep_Dive.md`
+  to authorize the Evidence Stage 1 (Synthetic) PaymentChangeDetectionAgent
+  wrapper build + focused tests. No wrapper code lands until signed.
+
+WHY LOCKED:
+  Build Map BREADTH triage (CYCLE 23) found no remaining clean pure-detector
+  wrap. #14 wraps the §11-signed `assess_financial_state_delta` detector, which
+  mutates the per-tenant Vendor Baseline Store via check_signal -> ingest_signal
+  (same stateful pattern as signed #31 PDF Fingerprint) — so it needs a boundary
+  contract before it can become a governed agent. Draft gated clean 0/0 (edd44a6).
 
 IF BLOCKED:
-  None. #7/#25/#37 remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED
-  for Stage 2 promotion on existing GOVERNED_AGENT rows.
+  Awaiting operator §11 signature only. #13/#16/#17/#20 remain stateful
+  Vendor-Baseline/Financial-State-Ledger boundary candidates (separate contracts);
+  #7/#15/#25/#37 remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED.
 
-CANDIDATE QUEUE (post-triage, ranked):
-  1. Next Build Map TRIAGE output — pending cycle.
-  2. #7 Sender Identity — RECLASSIFY (broad risk-scoring output, not standalone detector).
-  3. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
-  4. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
-  5. #11/#23/#24/#27/#30/#31/#39/#46 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
-
-LAST UPDATED: ee7049b 2026-06-08
+LAST UPDATED: edd44a6 2026-06-09
 ═══════════════════════════════════════════════
 ```
 
