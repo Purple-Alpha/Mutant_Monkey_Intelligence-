@@ -47,6 +47,13 @@ $RECYCLE.BIN/
 ~$*
 *.tmp
 
+# Generated pitch/marketing binaries — re-created from the tracked generator
+# script (6. Internal_Strategy/Pitch/build_pitch_assets.py). Source-of-truth is
+# the script; large binaries live in the operator's own Documents, not the repo.
+6. Internal_Strategy/Pitch/*.pptx
+6. Internal_Strategy/Pitch/*.pdf
+6. Internal_Strategy/Pitch/*.png
+
 # Tenant-local runtime state created by detectors (vendor baselines, etc.)
 # These are per-deployment SQLite stores, not source. Re-created at runtime.
 # Note: the SOURCE package "core/production_state/" must remain tracked —
