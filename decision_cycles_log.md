@@ -45,6 +45,44 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+---
+
+CYCLE 17 — 2026-06-09T00:38Z   [type: TACTICAL]
+  OBSERVE: CYCLE 15 closed with #24 MFA Manipulation promoted to GOVERNED_AGENT
+           at Evidence Stage 1 (breadth runway 8). No lock open.
+  PRE-BUILD FINDING: #39 Language Pressure is a clean facts-only wrap candidate.
+           `detect_callback_phishing` is a pure body-language scanner in
+           `callback_phishing_detector.py`. It reads body_plain only (TOAD v1 D14),
+           returns closed category names, and performs no network, baseline, or
+           phone-number handling.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   #39 Language Pressure contract draft -> Stage 1 wrapper path
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: pure facts-only TOAD category wrap; same proven wrapper/test
+               shape as #23/#24; cleanest unblocked breadth slice.
+    ACTION B   #31 PDF Fingerprint boundary contract
+               L2 R1 E1 FC0 Rv1   TOTAL 5
+               Note: blocked — stateful baseline mutation; needs Layer 2/3
+               boundary contract first.
+    ACTION C   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A. Matt §11-signed the contract ("Matt Nichol June 8th 2026").
+  EXPECTED:      Draft a §11-ready Language Pressure Agent Design Contract that
+                 authorizes no code until signed, pins facts-only Layer 2 output of
+                 the closed TOAD v1 category vocabulary, forbids risk-floor/score/
+                 phrase/phone leakage, scopes out #18 callback-verification workflow,
+                 and preserves callback-phishing detector immutability.
+  EXECUTED AT:   2026-06-09T00:28Z (contract draft); §11 signature slice `1499777`;
+                 wrapper + tests slice `4987da6` (separate gated commits).
+  AUDIT VERDICT: PASS (recorded post-build). Matt §11-signed the contract
+                 ("Matt Nichol June 8th 2026"). Wrapper build landed in prior
+                 gated slice `4987da6` (`LanguagePressureAgent` +
+                 18 focused synthetic tests). #39 promoted to GOVERNED_AGENT at
+                 Evidence Stage 1 (breadth runway 8 -> 9). Focused 18 passed;
+                 full suite 1328 passed.
+  SURPRISES:     None. #39 reused the proven body-signal/callback wrapper/test
+                 pattern exactly.
+
 CYCLE 15 — 2026-06-08T22:05Z   [type: TACTICAL]
   OBSERVE: CYCLE 14 closed with #23 Credential Phishing promoted to GOVERNED_AGENT
            at Evidence Stage 1 (breadth runway 6 -> 7). No lock open. The
