@@ -3,28 +3,28 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of fdac7db)
+CURRENT NEXT ACTION (as of 863eb93)
 ═══════════════════════════════════════════════
-STATE: IDLE (COMMIT_UPDATE complete — CYCLE 18 #46 Evidence Package)
+STATE: OPERATOR_LOCK (CYCLE 19 — #31 PDF Fingerprint boundary contract drafted)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  Run the next Build Map TRIAGE cycle on the BREADTH track to pull the next
-  clean governed-agent wrap (post-#46; #25/#37 stay RECLASSIFY; #32/#44 merged).
+  BLOCKED ON §11 SIGNATURE — PDF_Fingerprint_Agent_Design_Contract_Deep_Dive.md.
 
 IF BLOCKED:
-  No open §11 lock. (Build Map §10 Q1/Q2 remain UNAUTHORIZED.)
+  Matt signature required. Signing authorizes Stage 1 synthetic #31 wrapper +
+  focused tests only; no detector/store behavior change, no PDF-byte parsing,
+  no raw metadata/hash/filename leakage, no default registry, no real data.
 
 CANDIDATE QUEUE (post-triage, ranked):
-  1. #46 Evidence Package — GOVERNED_AGENT (done, Evidence Stage 1, rubric 10;
-     first Layer 4 Evidence agent).
-  2. #31 PDF Fingerprint — UNBLOCK blocked (NEEDS_SIGNED_CONTRACT, stateful).
+  1. #31 PDF Fingerprint — SPEC_ONLY; §11 pending; rubric 10.
+  2. Clean pure-wrap runway — exhausted.
   3. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
   4. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
   5. #23/#24/#27/#30/#39/#46 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
 
-LAST UPDATED: fdac7db 2026-06-08
+LAST UPDATED: 863eb93 2026-06-08
 ═══════════════════════════════════════════════
 ```
 
