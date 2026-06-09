@@ -47,6 +47,47 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 18 — 2026-06-09T01:04Z   [type: TACTICAL]
+  OBSERVE: CYCLE 17 closed with #39 Language Pressure promoted to GOVERNED_AGENT
+           at Evidence Stage 1 (breadth runway 9). No lock open.
+           `generate_package_from_test_plan` exists in `core/evidence_package/`
+           as the signed Pass 1 internal package assembler; it returns
+           `is_done=False` at Pass 1 and runs the nine package gates.
+           `core/orchestrator/agent_contract.py` already names the Evidence
+           Package Agent as the Decision Evidence Record assembler with
+           builder/auditor separation. No governed Layer 4 Evidence agent
+           exists yet.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   #46 Evidence Package contract draft -> Stage 1 wrapper path
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: opens the Evidence layer on the proven Agent ->
+               AgentContribution -> DER path; generator immutability + builder/
+               auditor separation keep risk low; facts-only metadata contribution.
+    ACTION B   #31 PDF Fingerprint boundary contract
+               L2 R1 E1 FC0 Rv1   TOTAL 5
+               Note: still blocked — stateful Vendor Baseline Store mutation;
+               needs a Layer 2/3 boundary contract first.
+    ACTION C   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A. Matt §11-signed the contract ("Matt Nichol June 8th 2026").
+  EXPECTED:      Draft a §11-ready Evidence Package Agent Design Contract that
+                 authorizes no code until signed, governs a Layer 4 wrapper around
+                 the existing generator, preserves package-generation behavior and
+                 builder/auditor separation, pins facts-only package metadata
+                 output, forbids Grok/PDF/done-declaration/buyer-release/real-data,
+                 and excludes the agent from the default registry at Stage 1.
+  EXECUTED AT:   2026-06-09T00:49Z (contract draft `626295f`); §11 signature slice
+                 `5add29f`; wrapper + tests slice `fdac7db` (separate gated commits).
+  AUDIT VERDICT: PASS (recorded post-build). Matt §11-signed the contract
+                 ("Matt Nichol June 8th 2026"). `EvidencePackageAgent`
+                 (`core/orchestrator/evidence_package_agent.py`) + 16 focused
+                 synthetic tests landed in `fdac7db`. #46 promoted to
+                 GOVERNED_AGENT at Evidence Stage 1 — the swarm's first governed
+                 Layer 4 Evidence agent (breadth runway 9 -> 10). Focused 16
+                 passed; full suite 1344 passed.
+  SURPRISES:     None. #46 fit the proven wrapper/test shape and the DER-assembler
+                 role already declared in `agent_contract.py`.
+
 CYCLE 17 — 2026-06-09T00:38Z   [type: TACTICAL]
   OBSERVE: CYCLE 15 closed with #24 MFA Manipulation promoted to GOVERNED_AGENT
            at Evidence Stage 1 (breadth runway 8). No lock open.
