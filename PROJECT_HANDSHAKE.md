@@ -3,27 +3,27 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 4987da6)
+CURRENT NEXT ACTION (as of 626295f)
 ═══════════════════════════════════════════════
-STATE: IDLE (COMMIT_UPDATE complete — CYCLE 17 #39 Language Pressure)
+STATE: OPERATOR_LOCK (CYCLE 18 — #46 Evidence Package contract drafted)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  Run the next Build Map TRIAGE cycle on the BREADTH track to pull the next
-  clean Layer 2 governed-agent wrap (post-#39; #25 stays RECLASSIFY).
+  BLOCKED ON §11 SIGNATURE — Evidence_Package_Agent_Design_Contract_Deep_Dive.md.
 
 IF BLOCKED:
-  No open §11 lock. (Build Map §10 Q1/Q2 remain UNAUTHORIZED.)
+  Matt signature required. Signing authorizes Stage 1 synthetic #46 wrapper +
+  focused tests only; no Grok/PDF/done declaration/buyer release/real data.
 
 CANDIDATE QUEUE (post-triage, ranked):
-  1. #39 Language Pressure — GOVERNED_AGENT (done, Evidence Stage 1, rubric 10).
-  2. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
-  3. #44 Social Engineering — likely RECLASSIFY/merge (same detector as #39).
-  4. #31 PDF Fingerprint — UNBLOCK blocked (NEEDS_SIGNED_CONTRACT, stateful).
-  5. #23/#24/#27/#30/#39 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
+  1. #46 Evidence Package — SPEC_ONLY; §11 pending; rubric 10.
+  2. #44 Social Engineering — merged into #39 Language Pressure.
+  3. #32 Macro/Script Risk — merged into #30 Attachment Risk.
+  4. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
+  5. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
 
-LAST UPDATED: 4987da6 2026-06-08
+LAST UPDATED: 626295f 2026-06-08
 ═══════════════════════════════════════════════
 ```
 
