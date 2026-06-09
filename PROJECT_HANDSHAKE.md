@@ -3,31 +3,29 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of edd44a6)
+CURRENT NEXT ACTION (as of df031fd)
 ═══════════════════════════════════════════════
-STATE: OPERATOR_LOCK (CYCLE 23 — #14 Payment Change Detection boundary contract DRAFTED, awaiting §11 signature)
+STATE: IDLE (CYCLE 24 — #14 Payment Change Detection GOVERNED_AGENT at Evidence Stage 1)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  BLOCKED ON §11 SIGNATURE — place Matt's signature on
-  `4. Product_Roadmap/Payment_Change_Detection_Agent_Design_Contract_Deep_Dive.md`
-  to authorize the Evidence Stage 1 (Synthetic) PaymentChangeDetectionAgent
-  wrapper build + focused tests. No wrapper code lands until signed.
-
-WHY LOCKED:
-  Build Map BREADTH triage (CYCLE 23) found no remaining clean pure-detector
-  wrap. #14 wraps the §11-signed `assess_financial_state_delta` detector, which
-  mutates the per-tenant Vendor Baseline Store via check_signal -> ingest_signal
-  (same stateful pattern as signed #31 PDF Fingerprint) — so it needs a boundary
-  contract before it can become a governed agent. Draft gated clean 0/0 (edd44a6).
+  Run the next Build Map TRIAGE cycle on BREADTH to pull the next
+  governed-agent candidate.
 
 IF BLOCKED:
-  Awaiting operator §11 signature only. #13/#16/#17/#20 remain stateful
-  Vendor-Baseline/Financial-State-Ledger boundary candidates (separate contracts);
-  #7/#15/#25/#37 remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED.
+  None. #13/#16/#17/#20 remain stateful Vendor-Baseline/Financial-State-Ledger
+  boundary candidates (separate boundary contracts, like #14/#31); #7/#15/#25/#37
+  remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED for Stage 2 promotion.
 
-LAST UPDATED: edd44a6 2026-06-09
+CANDIDATE QUEUE (post-triage, ranked):
+  1. Next Build Map TRIAGE output — pending cycle.
+  2. #13/#16/#17/#20 — stateful Vendor-Baseline/FSL boundary (UNBLOCK via contract).
+  3. #7/#15 Sender Identity / Invoice Fraud — RECLASSIFY (broad LLM-score surface).
+  4. #25 Session Theft / #37 Ransomware Precursor — RECLASSIFY.
+  5. GOVERNED_AGENT rows awaiting Stage 2 (depth gate CLOSED).
+
+LAST UPDATED: df031fd 2026-06-09
 ═══════════════════════════════════════════════
 ```
 
@@ -51,7 +49,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1387 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after CYCLE 22 #11 Known-Good Contact `KnownGoodContactAgent` landed at Evidence Stage 1 Synthetic — first Layer 3 Verification agent; +20 from prior 1367 baseline) from
+**1410 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-09, after CYCLE 24 #14 Payment Change Detection `PaymentChangeDetectionAgent` landed at Evidence Stage 1 Synthetic — stateful Layer 2 Detection wrap of the §11-signed `assess_financial_state_delta`; +23 from prior 1387 baseline) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (latest reconcile 2026-06-08)

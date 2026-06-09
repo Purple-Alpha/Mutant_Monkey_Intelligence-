@@ -47,6 +47,46 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 24 — 2026-06-09T03:03Z   [type: TACTICAL]
+  OBSERVE: CYCLE 23 left #14 Payment Change Detection at OPERATOR_LOCK with a
+           drafted boundary contract (`edd44a6`) awaiting Matt §11 signature.
+           Matt placed his §11 signature ("Matt Nichol June 8th 2026") on
+           `Payment_Change_Detection_Agent_Design_Contract_Deep_Dive.md`
+           (signature slice `9813d5f`), authorizing only the Evidence Stage 1
+           synthetic wrapper build + focused tests around the already-§11-signed
+           `assess_financial_state_delta` detector.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   Execute authorized #14 Stage 1 wrapper build + tests
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: signature closed the lock; contract D1-D10 pin the stateful
+               boundary (check-before-ingest stays inside the signed detector),
+               facts-only Layer 2 contribution, no risk-floor/raw/hash leakage,
+               no payment decision, and no default registry at Stage 1.
+    ACTION B   Do nothing / defer build despite signature
+               L0 R0 E0 FC1 Rv2   TOTAL 3
+  SELECTED:      ACTION A. Matt §11 signature closed the CYCLE 23 lock.
+  EXPECTED:      Build `PaymentChangeDetectionAgent` wrapping
+                 `assess_financial_state_delta` (injected/read-only from the
+                 wrapper); emit facts-only closed payment-destination indicators +
+                 `payment_signal_type:*` facts + bounded counts; 23 focused
+                 synthetic tests covering contract §6; promote #14 to
+                 GOVERNED_AGENT at Evidence Stage 1; breadth runway 12 -> 13.
+  EXECUTED AT:   2026-06-09T03:03Z (signature slice `9813d5f`; wrapper + tests
+                 slice `df031fd`).
+  AUDIT VERDICT: PASS. `PaymentChangeDetectionAgent`
+                 (`core/orchestrator/payment_change_detection_agent.py`) + 23
+                 focused synthetic tests landed in `df031fd`; build gate clean
+                 0/0 (payment_change_detection_build_20260609T030328Z.md). #14
+                 promoted to GOVERNED_AGENT at Evidence Stage 1 (breadth runway
+                 12 -> 13). Focused 23 passed; full suite 1410 passed, 1 skipped,
+                 4 xfailed.
+  SURPRISES:     None. The check-before-ingest mutation stayed inside the signed
+                 detector; the wrapper never calls check_signal/ingest_signal and
+                 emits no risk floor (85), recommended action, or raw financial
+                 string. The store's tz-aware `now` guard only fires once a signal
+                 is extracted, so the naive-now fail-closed test seeds a real
+                 routing number to reach the store path.
+
 CYCLE 23 — 2026-06-09T02:47Z   [type: TACTICAL]
   OBSERVE: CYCLE 22 closed at IDLE with #11 Known-Good Contact a GOVERNED_AGENT
            (breadth runway 12). Operator instruction: "Map TRIAGE cycle on
