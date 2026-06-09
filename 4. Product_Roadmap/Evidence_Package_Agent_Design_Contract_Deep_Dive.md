@@ -1,6 +1,6 @@
 # Evidence Package Agent Design Contract — Spec-First Deep Dive
 
-**Status:** DRAFT 2026-06-08. Authored by the LIVE Build Map TRIAGE cycle after #44 Social Engineering merged into #39 Language Pressure and the duplicate/aggregate Layer 2 surfaces (#32 / #37) were rejected as clean wraps. This draft authorizes **no code**, **no package-generation behavior change**, **no buyer-facing package release**, **no real-customer-data handling**, **no Grok submission**, **no done declaration**, **no default-registry registration**, **no production dispatch**, **no Evidence Stage 2/3 promotion**, and **no autonomous action**. §11 signature is operator-only.
+**Status:** §11 SIGNED 2026-06-08 by Matt Nichol. Authored by the LIVE Build Map TRIAGE cycle after #44 Social Engineering merged into #39 Language Pressure and the duplicate/aggregate Layer 2 surfaces (#32 / #37) were rejected as clean wraps. Signing locks D1-D10 and authorizes the Evidence Stage 1 (Synthetic) `EvidencePackageAgent` wrapper build + focused tests **only**. It authorizes **no package-generation behavior change**, **no buyer-facing package release**, **no real-customer-data handling**, **no Grok submission**, **no PDF render**, **no done declaration**, **no default-registry registration**, **no production dispatch**, **no Evidence Stage 2/3 promotion**, **no runtime detector/scoring change**, **no self-audit**, and **no autonomous action**.
 
 **Owner:** Matt Nichol
 
@@ -176,6 +176,6 @@ No design fork is open in this draft. §11 signature confirms D1-D10 and authori
 
 ## §11 Sign-off
 
-PENDING. Operator-authored signature required before any runtime build. Signing will lock D1-D10 and authorize the Evidence Stage 1 (Synthetic) `EvidencePackageAgent` wrapper build + focused tests only; no package-generation behavior change, no buyer-facing package release, no real-customer-data handling, no Grok submission, no PDF render, no done declaration, no default-registry registration, no production dispatch, no Evidence Stage 2/3 promotion, no runtime detector/scoring change, no self-audit, no autonomy.
+SIGNED. This signature locks D1-D10 and authorizes the Evidence Stage 1 (Synthetic) `EvidencePackageAgent` wrapper build + focused tests only; no package-generation behavior change, no buyer-facing package release, no real-customer-data handling, no Grok submission, no PDF render, no done declaration, no default-registry registration, no production dispatch, no Evidence Stage 2/3 promotion, no runtime detector/scoring change, no self-audit, no autonomy.
 
-> [Matt Nichol — Evidence Package Agent — date]
+> Matt Nichol June 8th 2026
