@@ -47,6 +47,43 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+CYCLE 21 — 2026-06-09T02:06Z   [type: TACTICAL]
+  OBSERVE: CYCLE 20 closed with #31 PDF Fingerprint promoted to GOVERNED_AGENT
+           at Evidence Stage 1 (breadth runway 11). No lock open. Depth gate
+           remains CLOSED, so the Build Map selected BREADTH triage. The first
+           ungoverned row inspected was #7 Sender Identity; its cited surface is
+           `core/scoring/email_risk_scoring_agent.py` / `impersonation_analysis`,
+           a broad LLM scoring-cycle output rather than a clean standalone
+           detector. Per Build Map §5, #7 routes to RECLASSIFY. The next boundary
+           candidate is #11 Known-Good Contact, a Layer 3 Verification row citing
+           the stateful Vendor Baseline Store.
+  OPTIONS + SCORES (Leverage / Risk / Evidence / FutureCost / Reversibility, 0-2 each):
+    ACTION A   #11 Known-Good Contact boundary contract
+               L2 R2 E2 FC2 Rv2   TOTAL 10
+               Note: first specific unblock action after #7 RECLASSIFY; pins
+               read-only `check_signal` verification, no `ingest_signal`, no
+               contact registry, no store/schema change, facts-only Layer 3
+               contribution.
+    ACTION B   #13 Vendor Relationship Intelligence boundary contract
+               L2 R1 E1 FC1 Rv1   TOTAL 6
+               Note: also Vendor Baseline Store stateful, but lower scoreboard
+               row and still needs its own boundary.
+    ACTION C   Do nothing / defer
+               L0 R1 E0 FC1 Rv2   TOTAL 4
+  SELECTED:      ACTION A. Build Map auto-selected the named unblock action.
+  EXPECTED:      Draft a §11-ready Known-Good Contact Agent Design Contract that
+                 authorizes no code until signed, governs a Layer 3 wrapper
+                 around read-only Vendor Baseline Store `check_signal`, forbids
+                 `ingest_signal`, store/schema/enum mutation, contact-registry
+                 creation, raw signal/hash/contact leakage, production dispatch,
+                 real-data handling, and autonomy.
+  EXECUTED AT:   2026-06-09T02:06Z (contract draft `6a3faa7`).
+  AUDIT VERDICT: PASS (recorded at draft). Draft gate clean 0/0:
+                 `known_good_contact_contract_draft_20260608_20260609T020650Z.md`.
+                 State is OPERATOR_LOCK pending §11 signature.
+  SURPRISES:     #7's label is broader than its current code surface; it is a
+                 scoring-output/synthesis candidate, not a clean detector wrap.
+
 CYCLE 20 — 2026-06-09T01:52Z   [type: TACTICAL]
   OBSERVE: CYCLE 19 left #31 PDF Fingerprint at OPERATOR_LOCK with a drafted
            boundary contract (`863eb93`) awaiting Matt §11 signature. The clean
