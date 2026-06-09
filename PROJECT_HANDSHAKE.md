@@ -3,27 +3,28 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 626295f)
+CURRENT NEXT ACTION (as of fdac7db)
 ═══════════════════════════════════════════════
-STATE: OPERATOR_LOCK (CYCLE 18 — #46 Evidence Package contract drafted)
+STATE: IDLE (COMMIT_UPDATE complete — CYCLE 18 #46 Evidence Package)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  BLOCKED ON §11 SIGNATURE — Evidence_Package_Agent_Design_Contract_Deep_Dive.md.
+  Run the next Build Map TRIAGE cycle on the BREADTH track to pull the next
+  clean governed-agent wrap (post-#46; #25/#37 stay RECLASSIFY; #32/#44 merged).
 
 IF BLOCKED:
-  Matt signature required. Signing authorizes Stage 1 synthetic #46 wrapper +
-  focused tests only; no Grok/PDF/done declaration/buyer release/real data.
+  No open §11 lock. (Build Map §10 Q1/Q2 remain UNAUTHORIZED.)
 
 CANDIDATE QUEUE (post-triage, ranked):
-  1. #46 Evidence Package — SPEC_ONLY; §11 pending; rubric 10.
-  2. #44 Social Engineering — merged into #39 Language Pressure.
-  3. #32 Macro/Script Risk — merged into #30 Attachment Risk.
-  4. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
-  5. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
+  1. #46 Evidence Package — GOVERNED_AGENT (done, Evidence Stage 1, rubric 10;
+     first Layer 4 Evidence agent).
+  2. #31 PDF Fingerprint — UNBLOCK blocked (NEEDS_SIGNED_CONTRACT, stateful).
+  3. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
+  4. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
+  5. #23/#24/#27/#30/#39/#46 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
 
-LAST UPDATED: 626295f 2026-06-08
+LAST UPDATED: fdac7db 2026-06-08
 ═══════════════════════════════════════════════
 ```
 
@@ -47,7 +48,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1328 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after CYCLE 17 #39 Language Pressure `LanguagePressureAgent` landed at Evidence Stage 1 Synthetic; +18 from prior 1310 baseline) from
+**1344 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after CYCLE 18 #46 Evidence Package `EvidencePackageAgent` landed at Evidence Stage 1 Synthetic — first Layer 4 Evidence agent; +16 from prior 1328 baseline) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (latest reconcile 2026-06-08)
