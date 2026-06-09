@@ -1,6 +1,6 @@
 # PDF Fingerprint Agent Design Contract — Boundary / Unblock Deep Dive
 
-**Status:** DRAFT 2026-06-08. Authored by the LIVE Build Map after the clean pure-wrap BREADTH runway was exhausted. This is the named UNBLOCK action for swarm #31 PDF Fingerprint: the existing `assess_document_metadata_fingerprint` detector is useful and already signed, but it mutates the per-tenant Vendor Baseline Store (`check_signal` -> `ingest_signal`) and therefore requires an explicit boundary contract before it can become a governed swarm agent. This draft authorizes **no code**, **no detector-logic change**, **no Vendor Baseline Store change**, **no production dispatch**, **no default-registry registration**, **no real-customer-data handling**, **no Evidence Stage 2/3 promotion**, and **no autonomous action**. §11 signature is operator-only.
+**Status:** §11 SIGNED 2026-06-08 by Matt Nichol. Authored by the LIVE Build Map after the clean pure-wrap BREADTH runway was exhausted; this is the named UNBLOCK action for swarm #31 PDF Fingerprint. The existing `assess_document_metadata_fingerprint` detector is useful and already signed, but it mutates the per-tenant Vendor Baseline Store (`check_signal` -> `ingest_signal`) and therefore required an explicit boundary contract before becoming a governed swarm agent. Signing locks D1-D10 and authorizes the Evidence Stage 1 (Synthetic) `PDFFingerprintAgent` wrapper build + focused tests **only**. It authorizes **no detector-logic change**, **no Vendor Baseline Store change**, **no new signal type**, **no production dispatch**, **no default-registry registration**, **no real-customer-data handling**, **no Evidence Stage 2/3 promotion**, **no scoring/rubric change**, **no PDF byte parsing**, and **no autonomous action**.
 
 **Owner:** Matt Nichol
 
@@ -178,6 +178,6 @@ No design fork is open in this draft. §11 signature confirms D1-D10 and authori
 
 ## §11 Sign-off
 
-PENDING. Operator-authored signature required before any runtime build. Signing will lock D1-D10 and authorize the Evidence Stage 1 (Synthetic) `PDFFingerprintAgent` wrapper build + focused tests only; no detector-logic change, no Vendor Baseline Store change, no new signal type, no default-registry registration, no production dispatch, no real-customer-data handling, no Evidence Stage 2/3 promotion, no scoring/rubric change, no PDF byte parsing, no autonomous action.
+SIGNED. This signature locks D1-D10 and authorizes the Evidence Stage 1 (Synthetic) `PDFFingerprintAgent` wrapper build + focused tests only; no detector-logic change, no Vendor Baseline Store change, no new signal type, no default-registry registration, no production dispatch, no real-customer-data handling, no Evidence Stage 2/3 promotion, no scoring/rubric change, no PDF byte parsing, no autonomous action.
 
-> [Matt Nichol — PDF Fingerprint Agent — date]
+> Matt Nichol June 8th 2026
