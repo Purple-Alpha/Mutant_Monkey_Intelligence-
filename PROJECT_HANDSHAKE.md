@@ -3,27 +3,28 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of c473099)
+CURRENT NEXT ACTION (as of 6a3faa7)
 ═══════════════════════════════════════════════
-STATE: IDLE (CYCLE 20 — #31 PDF Fingerprint GOVERNED_AGENT at Evidence Stage 1)
+STATE: OPERATOR_LOCK (CYCLE 21 — #11 Known-Good Contact boundary contract drafted)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  Run the next Build Map TRIAGE cycle on BREADTH to pull the next
-  governed-agent candidate.
+  BLOCKED ON §11 SIGNATURE — Known_Good_Contact_Agent_Design_Contract_Deep_Dive.md.
 
 IF BLOCKED:
-  None. #25/#37 remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED
-  for Stage 2 promotion on existing GOVERNED_AGENT rows.
+  Matt signature required. Signing authorizes Stage 1 synthetic #11 wrapper +
+  focused tests only; no Vendor Baseline Store behavior change, no ingest_signal,
+  no new signal type, no contact registry, no default registry, no real data.
 
 CANDIDATE QUEUE (post-triage, ranked):
-  1. Next Build Map TRIAGE output — pending cycle.
-  2. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
-  3. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
-  4. #23/#24/#27/#30/#31/#39/#46 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
+  1. #11 Known-Good Contact — SPEC_ONLY; §11 pending; rubric 10.
+  2. #7 Sender Identity — RECLASSIFY (broad risk-scoring output, not standalone detector).
+  3. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
+  4. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
+  5. #23/#24/#27/#30/#31/#39/#46 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
 
-LAST UPDATED: c473099 2026-06-08
+LAST UPDATED: 6a3faa7 2026-06-08
 ═══════════════════════════════════════════════
 ```
 
