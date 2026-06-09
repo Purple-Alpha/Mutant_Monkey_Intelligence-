@@ -3,28 +3,28 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 6a3faa7)
+CURRENT NEXT ACTION (as of ee7049b)
 ═══════════════════════════════════════════════
-STATE: OPERATOR_LOCK (CYCLE 21 — #11 Known-Good Contact boundary contract drafted)
+STATE: IDLE (CYCLE 22 — #11 Known-Good Contact GOVERNED_AGENT at Evidence Stage 1)
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
 
 NEXT ACTION:
-  BLOCKED ON §11 SIGNATURE — Known_Good_Contact_Agent_Design_Contract_Deep_Dive.md.
+  Run the next Build Map TRIAGE cycle on BREADTH to pull the next
+  governed-agent candidate.
 
 IF BLOCKED:
-  Matt signature required. Signing authorizes Stage 1 synthetic #11 wrapper +
-  focused tests only; no Vendor Baseline Store behavior change, no ingest_signal,
-  no new signal type, no contact registry, no default registry, no real data.
+  None. #7/#25/#37 remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED
+  for Stage 2 promotion on existing GOVERNED_AGENT rows.
 
 CANDIDATE QUEUE (post-triage, ranked):
-  1. #11 Known-Good Contact — SPEC_ONLY; §11 pending; rubric 10.
+  1. Next Build Map TRIAGE output — pending cycle.
   2. #7 Sender Identity — RECLASSIFY (broad risk-scoring output, not standalone detector).
   3. #25 Session Theft — RECLASSIFY (prompt-injection detector mislabel).
   4. #37 Ransomware Precursor — RECLASSIFY aggregate/boundary.
-  5. #23/#24/#27/#30/#31/#39/#46 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
+  5. #11/#23/#24/#27/#30/#31/#39/#46 — GOVERNED_AGENT awaiting Stage 2 (depth gate CLOSED).
 
-LAST UPDATED: 6a3faa7 2026-06-08
+LAST UPDATED: ee7049b 2026-06-08
 ═══════════════════════════════════════════════
 ```
 
@@ -48,7 +48,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1367 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after CYCLE 20 #31 PDF Fingerprint `PDFFingerprintAgent` landed at Evidence Stage 1 Synthetic — first stateful Detection wrap with Vendor Baseline Store boundary; +23 from prior 1344 baseline) from
+**1387 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-08, after CYCLE 22 #11 Known-Good Contact `KnownGoodContactAgent` landed at Evidence Stage 1 Synthetic — first Layer 3 Verification agent; +20 from prior 1367 baseline) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (latest reconcile 2026-06-08)
