@@ -47,6 +47,35 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
+  EVENT: Agent Health Score Phase 1 §11 SIGNED by Matt Nichol (spec
+         `4. Product_Roadmap/Agent_Health_Score_Deep_Dive.md`, draft d84388c).
+         7-component blend (Stage 20 / Governance 20 / Test-pass 15 / Scope 15 /
+         Demotion 15 / Integration 10 / Validation-age 5). Manual Phase 1: an
+         Agent Health Score Board (BS-D7) added near the top of the scoreboard;
+         updated by hand at Build Loop Step 6.5; every change logged here.
+         Authority-free (Rule 4) — not build permission, not promotion/demotion
+         authority. ES1 caps scores at ~87 until Stage 2/3.
+  SEED SCORES (13 governed agents, baseline 2026-06-08):
+    #6  Header Analysis ............ 87
+    #6A Email Authentication ....... 87
+    #8  Ghost Thread ............... 87
+    #10 Lookalike Domain ........... 80   (metadata-only retrofit governance)
+    #11 Known-Good Contact ......... 87
+    #14 Payment Change Detection ... 87
+    #23 Credential Phishing ........ 87
+    #24 MFA Manipulation ........... 87
+    #27 Link Inspection ............ 87
+    #30 Attachment Risk ............ 87
+    #31 PDF Fingerprint ............ 87
+    #39 Language Pressure .......... 87
+    #46 Evidence Package ........... 86   (first Layer 4; chain tested to blackboard)
+  WATCH: #10 weakest-governed (give it a full per-agent contract); #46 first-of-layer.
+  NEXT:  heavy manual testing window — push agents to max/min pressure; tweak
+         weights/scales as evidence accrues (Phase 2 dial-in after ~10 cycles).
+
+---
+
 CYCLE 25 — 2026-06-09T04:18Z   [type: TACTICAL]
   OBSERVE: CYCLE 24 closed at IDLE with #14 Payment Change Detection promoted
            to GOVERNED_AGENT (breadth runway 13; runtime baseline 1410 passed).

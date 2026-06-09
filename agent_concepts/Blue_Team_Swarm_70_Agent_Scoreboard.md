@@ -29,6 +29,30 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 ---
 
+## Agent Health Score Board (Phase 1 — manual, LIVE 2026-06-08)
+
+**§11 SIGNED 2026-06-08 (Matt Nichol)** — spec `4. Product_Roadmap/Agent_Health_Score_Deep_Dive.md` (BS-D7). A standing **0–100 confidence score per governed agent** (7-component blend: Stage 20 / Governance 20 / Test-pass 15 / Scope discipline 15 / Demotion history 15 / Integration 10 / Validation age 5). Updated by hand at Build Loop Step 6.5; every change logged in `decision_cycles_log.md`. **Authority-free (Rule 4)** — not build permission, not promotion/demotion authority. ES1 caps scores at ~87 until Stage 2/3. This is the standing per-agent grade; `LAST_RUBRIC_SCORE` below is a separate per-cycle selection input.
+
+| # | Agent | Layer | Stage | SCORE | Last change |
+|---|-------|-------|-------|-------|-------------|
+| 6 | Header Analysis | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 6A | Email Authentication | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 8 | Ghost Thread | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 10 | Lookalike Domain | 2 | ES1 | 80 | baseline 2026-06-08 — metadata-only retrofit governance |
+| 11 | Known-Good Contact | 3 | ES1 | 87 | baseline 2026-06-08 |
+| 14 | Payment Change Detection | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 23 | Credential Phishing | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 24 | MFA Manipulation | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 27 | Link Inspection | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 30 | Attachment Risk | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 31 | PDF Fingerprint | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 39 | Language Pressure | 2 | ES1 | 87 | baseline 2026-06-08 |
+| 46 | Evidence Package | 4 | ES1 | 86 | baseline 2026-06-08 — first Layer 4; chain tested to blackboard |
+
+**Watch list (Phase 1):** #10 (80) is the weakest-governed agent — give it a full per-agent contract to reach parity. #46 (86) sits one low as first-of-layer. The rest cluster at the ES1 ceiling (87); the score earns its keep as agents diverge under testing.
+
+---
+
 ## Legend + reconciliation rules
 
 **Runtime status (execution-lane verified against code):**
@@ -256,6 +280,7 @@ Governance rules for this file as canonical candidate generator. Rubric D13-rev 
 | BS-D4 | Queue retirement | `PROJECT_BUILD_AND_AUDIT_QUEUE.md` retired as ordering authority; historical read-only. |
 | BS-D5 | Build Loop integration | AGENTS.md §3.2 Steps 0.5 (freshness check) and 6.5 (row update) mandatory for swarm-map slices. Doctrine-enforced; gate automation deferred. |
 | BS-D6 | Authority-free | Generator output is never build permission. Rule 4 extended to new columns. Matt selects; rubric ranks. |
+| BS-D7 | Agent Health Score (Phase 1 manual) | A `0–100` Health Score is recorded for every governed agent on the **Agent Health Score Board** near the top of this file, computed from the 7-component blend in `Agent_Health_Score_Deep_Dive.md` §2 (§11 SIGNED 2026-06-08). Updated by the execution lane at Build Loop Step 6.5; every change logged in `decision_cycles_log.md`. Authority-free (Rule 4) — never build permission, never promotion/demotion authority. Inline per-row column and automation deferred to later phases under separate signature. |
 
 **Row additions** require operator scope decision or signed scoreboard amendment. **Row updates** within adoption are execution-lane under §2.1.1.B when gated clean.
 

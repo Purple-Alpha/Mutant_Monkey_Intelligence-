@@ -1,6 +1,6 @@
 # Agent Health Score — §11 Spec (Phase 1: Manual)
 
-**Status:** DRAFT — UNSIGNED. Awaiting Matt §11 signature. Nothing is written to the scoreboard until this is signed.
+**Status:** §11 SIGNED 2026-06-08 by Matt Nichol (draft `d84388c`). Phase 1 LIVE.
 **Authored:** 2026-06-08 (Mutant Monkey). Origin: operator request for a visible, permanent per-agent confidence score on top of the Evidence Stage ladder.
 **Scope of this signature:** Phase 1 only — add a manual `SCORE` column to the Build Sequencer scoreboard, update it by hand at Build Loop Step 6.5, and log every change in `decision_cycles_log.md`. **No automation, no gate condition, no promotion/demotion authority** in this phase.
 
@@ -75,7 +75,7 @@ Computed from current repo state. ES1 caps everyone below ~87 by design — you 
 
 ## 4. Where the score lives + how it's updated (Phase 1)
 
-- **Scoreboard column:** add `SCORE` to each agent row in `Blue_Team_Swarm_70_Agent_Scoreboard.md`, alongside `LAST_RUBRIC_SCORE` (different thing — rubric score is a per-cycle selection input; Health Score is a standing per-agent grade).
+- **Scoreboard surface:** a dedicated **Agent Health Score Board** near the top of `Blue_Team_Swarm_70_Agent_Scoreboard.md` lists every governed agent with its current `SCORE`. (Phase-1 implementation choice: one consolidated board — easier to update by hand and read at a glance during heavy testing — rather than a `SCORE` cell scattered across all 70 rows. An inline per-row column is a Phase-2 option once the formula stabilizes.) This is distinct from `LAST_RUBRIC_SCORE`, which is a per-cycle selection input; the Health Score is a standing per-agent grade.
 - **Update cadence:** the execution lane recomputes the affected agent's SCORE by hand as part of **Build Loop Step 6.5** (AGENTS.md §3.2), the same step that already updates row status after a gated change.
 - **Permanent record:** every SCORE change gets a timestamped line in `decision_cycles_log.md` — the same ledger that already records promotions and demotions — stating the old value, new value, and which component moved and why. Nothing is overwritten silently.
 
@@ -103,12 +103,12 @@ Computed from current repo state. ES1 caps everyone below ~87 by design — you 
 
 On signature, add to the Build Sequencer locked-decisions table:
 
-> **BS-D7 — Agent Health Score (Phase 1 manual).** A `0–100` `SCORE` column is added to every governed-agent row, computed from the 7-component blend in `Agent_Health_Score_Deep_Dive.md` §2. Updated by the execution lane at Build Loop Step 6.5; every change logged in `decision_cycles_log.md`. Authority-free (Rule 4) — never build permission, never promotion/demotion authority. Automation deferred to Phase 3 under separate signature.
+> **BS-D7 — Agent Health Score (Phase 1 manual).** A `0–100` Health Score is recorded for every governed agent on a dedicated **Agent Health Score Board** near the top of this file, computed from the 7-component blend in `Agent_Health_Score_Deep_Dive.md` §2. Updated by the execution lane at Build Loop Step 6.5; every change logged in `decision_cycles_log.md`. Authority-free (Rule 4) — never build permission, never promotion/demotion authority. Inline per-row column and automation deferred to later phases under separate signature.
 
 ---
 
 ## §11 — Lockdown signature
 
-UNSIGNED — awaiting operator. Signing authorizes Phase 1 only: the `SCORE` column, the manual Step 6.5 update procedure, the permanent-log rule, BS-D7, and seeding the 13 scores in §3 above. No automation, no gate condition, no promotion/demotion authority. Weights and scales are frozen for Phase 1 and revisited at Phase 2.
+SIGNED. This signature authorizes Phase 1 only: the Agent Health Score Board, the manual Step 6.5 update procedure, the permanent-log rule, BS-D7, and seeding the 13 scores in §3 above. No automation, no gate condition, no promotion/demotion authority. Weights and scales are frozen for Phase 1 and revisited at Phase 2.
 
-> _Operator signature pending: _____________________________
+> Matt Nichol June 8th 2026
