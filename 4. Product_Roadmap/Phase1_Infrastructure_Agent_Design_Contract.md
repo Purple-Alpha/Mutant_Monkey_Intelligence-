@@ -237,7 +237,7 @@ Three test classes required for every Phase 1 component per AGENTS.md §5:
 
 ## §11 — Operator Sign-Off
 
-This contract is DRAFT. No build authorization is granted until signed.
+This contract is §11 SIGNED — see the Status line at the top and the signature block below. Build authorization is granted per the scope in §1 / §3 (and bounded by §4).
 
 By signing below, Matt Nichol authorizes:
 - Formalisation of `core/blackboard/` as the Canonical Evidence Ledger per §3 Component 1

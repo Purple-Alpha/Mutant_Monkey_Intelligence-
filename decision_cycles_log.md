@@ -47,6 +47,33 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+PHASE 1 INFRASTRUCTURE CONTRACT — SIGNED   2026-06-09   [type: INFRASTRUCTURE_CONTRACT]
+  CONTRACT:   `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md`
+  STATUS:     §11 SIGNED — Matt Nichol, June 9th 2026.
+  COMMIT:     fe355da (contract + competitive-intel session committed by operator).
+  AUTHORIZED: Matt Nichol (sole signing authority).
+  SCOPE (in): (1) Formalise `core/blackboard/` as the Canonical Evidence Ledger
+              (P1-D1..D3, §3 Component 1); (2) Formalise Role Separation
+              Controller (P1-D4, §3 Component 2); (3) Build Token Usage Tracker
+              (P1-D5/D6, §3 Component 3, scoreboard row #71); (4) Layer Model
+              Reconciliation Table as permanent mapping authority (§3 Component 4).
+  OUT OF SCOPE: any detection agent, ReconciliationAgent, the Lung, Collective
+              Immune System (DEPTH GATE CLOSED), mutation-engine extension,
+              Stage B autonomy (STAGE_B GATE CLOSED), any change to
+              `core/evidence_package/` or any §11-signed spec.
+  STEP 6.5 HOUSEKEEPING (this entry): scoreboard row #71 Token Usage Tracker
+              added (`GOVERNANCE_DOC_ONLY | 6 Learning/Governance | A |
+              NEEDS_SIGNED_CONTRACT | BREADTH`); row #49 Audit Trail BLOCKERS
+              += NEEDS_SIGNED_CONTRACT (per §9 Open-Q1 — #49 needs its own
+              per-agent contract, not auto-promoted by this infra contract).
+  DOC NOTE:   contract §11 still carries a stale "This contract is DRAFT" line
+              above the filled signature; flagged for housekeeping cleanup
+              (status line, signature block, and commit message all read SIGNED).
+  NEXT:       Build Loop Step 0 — Phase 1 Component 1 (Evidence Ledger
+              formalisation) under the signed contract; gate to 0/0 before close.
+
+---
+
 AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
   EVENT: Agent Health Score Phase 1 §11 SIGNED by Matt Nichol (spec
          `4. Product_Roadmap/Agent_Health_Score_Deep_Dive.md`, draft d84388c).
