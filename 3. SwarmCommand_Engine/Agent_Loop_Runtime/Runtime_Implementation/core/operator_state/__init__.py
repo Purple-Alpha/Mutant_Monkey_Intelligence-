@@ -29,6 +29,15 @@ from .gate import (
     engage_kill_switch,
     is_kill_switch_engaged,
 )
+from .role_separation import (
+    OPERATOR_IDENTITY,
+    Capability,
+    Role,
+    RoleSeparationController,
+    RoleSeparationError,
+    capabilities_for,
+    role_allows,
+)
 from .state import (
     KillSwitchEngaged,
     KillSwitchScope,
@@ -55,6 +64,13 @@ from .security_profile import (
 )
 
 __all__ = [
+    "OPERATOR_IDENTITY",
+    "Capability",
+    "Role",
+    "RoleSeparationController",
+    "RoleSeparationError",
+    "capabilities_for",
+    "role_allows",
     "KillSwitchEngaged",
     "KillSwitchScope",
     "DEFAULT_SECURITY_PROFILE",
