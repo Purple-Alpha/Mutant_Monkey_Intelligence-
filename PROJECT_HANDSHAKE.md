@@ -3,31 +3,39 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of f34cc4f)
+CURRENT NEXT ACTION (as of aa64e29)
 ═══════════════════════════════════════════════
-STATE: IDLE — #48 Verification Outcome boundary contract §11 SIGNED (CYCLE 26, Matt Nichol 2026-06-08); Stage 1 wrapper build AUTHORIZED but not yet executed (deferred to next session — night close-out)
+STATE: Phase 1 Infrastructure COMPLETE — all buildable scope of `Phase1_Infrastructure_Agent_Design_Contract.md` (§11 SIGNED 2026-06-09) is built, gate-clean, and committed:
+       C1 Canonical Evidence Ledger ........ ce934f4 (core/blackboard/canonical_ledger.py)
+       C2 Role Separation Controller ....... f080a6f (core/operator_state/role_separation.py)
+       C3 Token Usage Tracker (#71) ........ aa64e29 (core/blackboard/token_usage_tracker.py)
+       C4 Layer Model Reconciliation Table is in-contract doc, no code.
 TRACK: BREADTH
 DEPTH GATE: CLOSED (real-data intake not open)
+NOT PUSHED: all three commits are local only — push remains Matt's explicit call.
 
 NEXT ACTION:
-  Execute the authorized Evidence Stage 1 (Synthetic) VerificationOutcomeAgent
-  wrapper build + focused tests around `summarize_confirmation_status`
-  (read-only Layer 3 projection over two_channel_confirmation.py).
-  Then promote #48 to GOVERNED_AGENT and run Step 6.5 tracker sync.
-  Verification baseline to beat: 1410 passed, 1 skipped.
+  AT THE EDGE OF SIGNED AUTHORITY. Phase 2+ (Layer 0 knowledge agents,
+  detection agents, ReconciliationAgent, the Lung, Collective Immune System)
+  is NOT authorized — each needs its own §11-signed contract before any code.
+  So the next action is operator/advisory, not execution:
+    1. Matt: decide push vs. hold for ce934f4 / f080a6f / aa64e29.
+    2. Bring Claude's updated game plan back; draft Phase 2 (or the new
+       concepts: Ghost Agent / PSA OAuth identity binding / Agent Fission)
+       as their own signed specs, in dependency order, before any build.
 
 IF BLOCKED:
-  Not blocked — signature already in hand (f34cc4f). CYCLE 25 triage annotated
-  #13/#15/#17/#20 as RECLASSIFY, #16 as merged into #14, and #47 as DEPENDS_ON:#48.
-  #7/#25/#37 remain RECLASSIFY; #32/#44 remain merged; depth gate CLOSED.
+  Not blocked — Phase 1 is closed cleanly. Waiting on signed authorization
+  for the next phase. Do not build unsigned scope.
 
-CANDIDATE QUEUE (post-triage, ranked):
-  1. #48 Verification Outcome — SPEC_ONLY, NEEDS_SIGNED_CONTRACT (current lock).
-  2. #47 Case Timeline — DEPENDS_ON:#48.
-  3. #49/#52/#61/#62/#63/#67 — pending later BREADTH triage.
-  4. GOVERNED_AGENT rows awaiting Stage 2 (depth gate CLOSED).
+OPEN HOUSEKEEPING (operator-authored, NOT done by execution lane):
+  - CURRENT_STATE_MAP.md settled-doctrine entry for Phase 1 infrastructure
+    (contract §8 item 3) — that file is operator-authored only; flagged for Matt.
+  - #48 Verification Outcome §11 SIGNED earlier (f34cc4f); its Stage 1
+    VerificationOutcomeAgent wrapper build remains authorized-but-unbuilt and
+    is the natural BREADTH resume point once Matt re-opens execution.
 
-LAST UPDATED: f34cc4f 2026-06-09 (night close-out)
+LAST UPDATED: aa64e29 2026-06-10 (Phase 1 infra C1/C2/C3 closed, blank-check work window)
 ═══════════════════════════════════════════════
 ```
 
@@ -51,7 +59,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1410 tests passing, 1 skipped, 4 xfailed** (verified 2026-06-09, after CYCLE 24 #14 Payment Change Detection `PaymentChangeDetectionAgent` landed at Evidence Stage 1 Synthetic — stateful Layer 2 Detection wrap of the §11-signed `assess_financial_state_delta`; +23 from prior 1387 baseline) from
+**1447 tests passing, 1 skipped, 7 xfailed** (verified 2026-06-10, after Phase 1 Infrastructure C1/C2/C3 landed — Canonical Evidence Ledger, Role Separation Controller, Token Usage Tracker; +37 from the 1410 baseline) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (latest reconcile 2026-06-08)
