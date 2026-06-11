@@ -231,6 +231,23 @@ Six Layer 0 threat-intelligence agents authorized by `4. Product_Roadmap/Phase2_
 
 ---
 
+## Phase 3 — Detection Swarm (Layer 1 / Detection) — SIGNED, NOT YET BUILT
+
+Six Layer 1 Detection Agents authorized by `4. Product_Roadmap/Phase3_Detection_Swarm_Agent_Design_Contract.md` (§11 SIGNED 2026-06-10, Matt Nichol; depends on Phase 1 `fe355da` + Phase 2 `43b5511`). **Contract signed; no code yet** — these rows are `SIGNED_UNBUILT` and flip to `GOVERNED_AGENT` only when implemented. Each produces a structured evidence contribution to `core/blackboard/` (Phase 1 schema) — **no verdict field, ever** (P3-D1); closed evidence type per agent (P3-D2); Layer 0 briefing is mandatory input (P3-D3); cloud-side only, no client compute (P3-D4); tenant isolation on every write (P3-D5). **Gate target: ELITE 85+ on the signed Agent Health Score Rubric for every agent (P3-D6); ES2 minimum at build (P3-D8).** AttachmentSandbox zero-day candidate flag feeds the mutation-engine tracker only and never auto-deploys.
+
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 78 | SenderHistoryAgent | `SIGNED_UNBUILT` (§11-signed Phase 3 contract 2026-06-10; build authorized, not yet built; target ELITE 85+ / ES2) | none — to be built at `core/detectors/sender_history_agent.py`; evidence type `sender_signal` (§3.1) | 2 Detection | ES2 (target) |  | BREADTH | — | 2026-06-10 (Phase 3 signed) |
+| 79 | GeoVelocityAgent | `SIGNED_UNBUILT` (§11-signed Phase 3 contract 2026-06-10; build authorized, not yet built; target ELITE 85+ / ES2) | none — to be built at `core/detectors/geo_velocity_agent.py`; evidence type `geo_signal` (§3.2); Layer 0 dep GeoIntelAgent | 2 Detection | ES2 (target) |  | BREADTH | — | 2026-06-10 (Phase 3 signed) |
+| 80 | ContentAnalyzer | `SIGNED_UNBUILT` (§11-signed Phase 3 contract 2026-06-10; build authorized, not yet built; target ELITE 85+ / ES2) | none — to be built at `core/detectors/content_analyzer.py`; evidence type `content_signal` (§3.3); Layer 0 deps PhishIntelAgent + BECIntelAgent | 2 Detection | ES2 (target) |  | BREADTH | — | 2026-06-10 (Phase 3 signed) |
+| 81 | URLReceptor | `SIGNED_UNBUILT` (§11-signed Phase 3 contract 2026-06-10; build authorized, not yet built; target ELITE 85+ / ES2) | none — to be built at `core/detectors/url_receptor.py`; evidence type `url_signal` (§3.4); Layer 0 dep PhishIntelAgent | 2 Detection | ES2 (target) |  | BREADTH | — | 2026-06-10 (Phase 3 signed) |
+| 82 | AttachmentSandbox | `SIGNED_UNBUILT` (§11-signed Phase 3 contract 2026-06-10; build authorized, not yet built; target ELITE 85+ / ES2) | none — to be built at `core/detectors/attachment_sandbox.py`; evidence type `attachment_signal` (§3.5); zero-day candidate flag feeds mutation tracker only, never auto-deploys | 2 Detection | ES2 (target) |  | BREADTH | — | 2026-06-10 (Phase 3 signed) |
+| 83 | ImageClassifier | `SIGNED_UNBUILT` (§11-signed Phase 3 contract 2026-06-10; build authorized, not yet built; target ELITE 85+ / ES2) | none — to be built at `core/detectors/image_classifier.py`; evidence type `image_signal` (§3.6); `spam_signal_only` must not route to fraud path | 2 Detection | ES2 (target) |  | BREADTH | — | 2026-06-10 (Phase 3 signed) |
+
+**Phase 3 build is authorized but NOT yet executed.** Rows flip `SIGNED_UNBUILT → GOVERNED_AGENT` per agent as each is built, tested (3 classes), and gate-clean. Phase 3 closes (per contract §10) only when all six score **85+ ELITE**, rows update to GATED, and Matt signs closure.
+
+---
+
 ## Tally (execution-lane verified, file-level)
 
 - `GOVERNED_AGENT`: **12** (#10; #6 Header Analysis, #8 Ghost Thread, and #6A Email Authentication at Evidence Stage 1, §11-signed 2026-06-07; #11 Known-Good Contact, #27 Link Inspection, #30 Attachment Risk, #23 Credential Phishing, #24 MFA Manipulation, #31 PDF Fingerprint, #39 Language Pressure, and #46 Evidence Package at Evidence Stage 1, §11-signed 2026-06-08; #11 is the first Layer 3 Verification agent; #46 is the first Layer 4 Evidence agent).
