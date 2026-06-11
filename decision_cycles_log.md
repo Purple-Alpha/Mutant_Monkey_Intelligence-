@@ -47,6 +47,35 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+PHASE 2 — KNOWLEDGE FOUNDATION CLOSURE   2026-06-10   [type: PHASE_CLOSURE]
+  PHASE:      Phase 2 — Layer 0 Knowledge Foundation (six threat-intel agents).
+  CONTRACT:   `4. Product_Roadmap/Phase2_Knowledge_Foundation_Agent_Design_Contract.md`
+              (§11 SIGNED 2026-06-10, Matt Nichol; depends on Phase 1 fe355da).
+  SIGNED OFF: Matt Nichol, June 10th 2026 (phase closure per contract §10).
+  BUILT:      #72 PhishIntelAgent, #73 RansomwareIntelAgent, #74 BECIntelAgent,
+              #75 TrojanDeliveryIntelAgent, #76 GeoIntelAgent, #77 AIGenContentIntelAgent
+              — all in `core/knowledge/`, brief-only (P2-D1), no blackboard writes
+              (P2-D7), immutable frozen briefings, static ES1 seed (P2-D4). COMMIT 43b5511.
+  CLOSURE CHECKLIST (contract §10):
+    - all six gate-clean 0/0 ........................ YES (43b5511)
+    - all six score 70+ on Agent Health Score Rubric  YES (72 HEALTHY each)
+    - scoreboard rows #72-77 updated to GATED ........ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 10th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes per agent (50 pass + 2 documented xfail);
+              full suite 1497 passed, 1 skipped, 9 xfailed.
+  FLAGS (operator, non-blocking): (1) the Agent Health Score Rubric is detection-shaped;
+              Layer 0 scoring required interpretation (ES1 cap per P2-D3; Integration
+              scored on schema integrity since P2-D7 forbids blackboard writes; Proof
+              mid-band, no reconciliation) — a Layer 0 rubric track may warrant a future
+              signature. (2) Two signed health-score specs coexist (7-component
+              Deep_Dive board vs 5-component Rubric); may want reconciling.
+  NEXT:       Phase 3 — Layer 1 detection agents. NOT authorized; needs its own signed
+              contract(s) before any build (§9 Q3 recommends individual per-agent contracts).
+  NOT PUSHED: all Phase 1/Phase 2 commits remain local — push is Matt's explicit call.
+
+---
+
 PHASE 1 INFRASTRUCTURE — BUILD EXECUTION (C1/C2/C3)   2026-06-10   [type: INFRASTRUCTURE_BUILD]
   CONTRACT:   `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md`
               (§11 SIGNED 2026-06-09, commit fe355da). Build authority only — no promotion.
@@ -1026,3 +1055,13 @@ FORK 2 — 2026-06-08T19:00Z   [type: STRATEGIC]
   OUTCOME:   Governance adoption slice implemented (queue RETIRED header, scoreboard v2 columns +
              generator contract, AGENTS Steps 0.5/6.5, rubric §12 D13-rev draft). Rubric §12 re-sign
              pending operator before D13-rev is live signed authority.
+
+## PHASE_CLOSURE — Phase 2 Knowledge Foundation
+Date: June 10th 2026
+Contract: Phase2_Knowledge_Foundation_Agent_Design_Contract.md
+Commit: 43b5511
+Agents: PhishIntelAgent, RansomwareIntelAgent, BECIntelAgent, TrojanDeliveryIntelAgent, GeoIntelAgent, AIGenContentIntelAgent
+Health scores: all six 72 HEALTHY
+Gate: 0/0
+Tests: 1497 passing, 1 skipped, 9 xfailed
+Signed: Matt Nichol June 10th 2026
