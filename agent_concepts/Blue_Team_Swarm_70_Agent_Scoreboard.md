@@ -210,7 +210,7 @@ Net-new foundational infrastructure components authorized by `4. Product_Roadmap
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 71 | Token Usage Tracker | `GOVERNANCE_DOC_ONLY` (pre-build) | none — net-new per `Phase1_Infrastructure_Agent_Design_Contract.md` §3 Component 3 | 6 Learning/Governance | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | fe355da |
+| 71 | Token Usage Tracker | `INFRASTRUCTURE_BUILT` (Phase 1 C3 — append-only, tenant-isolated, reporting-only; **not** promoted to `GOVERNED_AGENT`, still needs own per-component contract per section rule) | `core/blackboard/token_usage_tracker.py` (`TokenUsageTracker`, `TokenUsageRecord`, closed `TokenActionType`, per-tenant `aggregate_for_tenant` batch summary for the Playhouse cost-attribution dashboard; append-only JSONL, tenant isolation identical to evidence ledger, malformed writes rejected + logged to governance audit trail; reporting only — no gate/block/allow surface per P1-D6; 12 focused tests + 1 documented xfail). Authorized by `Phase1_Infrastructure_Agent_Design_Contract.md` §3 Component 3 / P1-D5, P1-D6, P1-D8. | 6 Learning/Governance | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | fe355da |
 
 ---
 

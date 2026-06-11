@@ -47,6 +47,39 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+PHASE 1 INFRASTRUCTURE — BUILD EXECUTION (C1/C2/C3)   2026-06-10   [type: INFRASTRUCTURE_BUILD]
+  CONTRACT:   `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md`
+              (§11 SIGNED 2026-06-09, commit fe355da). Build authority only — no promotion.
+  AUTHORIZED: Matt Nichol — "commit" + blank-check work window, signature
+              "Matt Nichol June 10th 2026". No push authorized (operator-only, not given).
+  COMPONENT 1 — Canonical Evidence Ledger (§3 Component 1, P1-D1..D3, P1-D8):
+              `core/blackboard/canonical_ledger.py` (CanonicalEvidenceLedger,
+              EvidenceLedgerEntry, closed EvidenceType/EvidenceStage). Append-only,
+              schema-enforced, tenant-isolated; malformed writes rejected + logged to
+              governance audit trail. COMMIT ce934f4 — gate 0/0 clean.
+  COMPONENT 2 — Role Separation Controller (§3 Component 2, P1-D4):
+              `core/operator_state/role_separation.py` (RoleSeparationController,
+              closed Role/Capability, four §3 separation rules). Pure in-process policy;
+              NO new authentication infrastructure (OAuth/identity-token binding kept OUT,
+              not in signed scope). 13 tests + 1 xfail. COMMIT f080a6f — gate 0/0 clean.
+  COMPONENT 3 — Token Usage Tracker (§3 Component 3, P1-D5/D6/D8, scoreboard #71):
+              `core/blackboard/token_usage_tracker.py` (TokenUsageTracker,
+              TokenUsageRecord, closed TokenActionType, per-tenant aggregate for the
+              Playhouse cost dashboard). Append-only, tenant-isolated, reporting-only
+              (no gate/block/allow surface). 12 tests + 1 documented xfail.
+  TESTS:      Full suite green — 1447 passed, 1 skipped, 7 xfailed. No regressions.
+  SCOPE HELD: No detection agent, no ReconciliationAgent, no Lung, no Collective Immune
+              System, no mutation-engine change, no `core/evidence_package/` edit, no new
+              `core/` namespace — all per contract OUT-OF-SCOPE. Ghost Agent / PSA OAuth /
+              Agent Fission deliberately NOT built (need their own signed specs).
+  STEP 6.5:   scoreboard row #71 updated to `INFRASTRUCTURE_BUILT` (code evidence + tests),
+              BLOCKERS kept = NEEDS_SIGNED_CONTRACT (build ≠ promotion, per section rule).
+  CONTRACT STATUS: Phase 1 Infrastructure buildable scope (C1/C2/C3) COMPLETE. Component 4
+              (Layer Model Reconciliation Table) is in-contract doc, no code. Phase 2+
+              (Layer 0 knowledge agents) requires its own signed authorization.
+
+---
+
 PHASE 1 INFRASTRUCTURE CONTRACT — SIGNED   2026-06-09   [type: INFRASTRUCTURE_CONTRACT]
   CONTRACT:   `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md`
   STATUS:     §11 SIGNED — Matt Nichol, June 9th 2026.
