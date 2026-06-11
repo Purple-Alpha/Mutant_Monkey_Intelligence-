@@ -214,6 +214,23 @@ Net-new foundational infrastructure components authorized by `4. Product_Roadmap
 
 ---
 
+## Phase 2 — Layer 0 Knowledge Foundation (net-new, beyond SPARK #1-#70)
+
+Six Layer 0 threat-intelligence agents authorized by `4. Product_Roadmap/Phase2_Knowledge_Foundation_Agent_Design_Contract.md` (§11 SIGNED 2026-06-10, Matt Nichol; depends on Phase 1 `fe355da`). **Brief only (P2-D1):** no detection, no scoring, no verdicts, no `AgentContribution`. **No blackboard writes (P2-D7)** — read-only references for Layer 1. Static seed at ES1 (P2-D4); no autonomous updates — mutation is Phase 5 (P2-D5). Every briefing object is immutable (frozen model + tuple fields) so a Layer 1 caller cannot modify it (§3). All six built in parallel (P2-D8), gate-clean, full suite 1497 passing.
+
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 72 | PhishIntelAgent | `GOVERNED_AGENT` (Phase 2 Layer 0, ES1 Synthetic, brief-only; §11-signed Phase 2 contract) | `core/knowledge/phish_intel_agent.py` (`PhishIntelAgent.brief()` → frozen `PhishBriefing`: known_phish_domains / lookalike_patterns / credential_harvest_urls / social_engineering_cues + confidence_floor; no detection/score/write surface; 3 test classes) | 6 Learning/Governance | ES1 |  | BREADTH | — | 2026-06-10 (Phase 2) |
+| 73 | RansomwareIntelAgent | `GOVERNED_AGENT` (Phase 2 Layer 0, ES1 Synthetic, brief-only; §11-signed Phase 2 contract) | `core/knowledge/ransomware_intel_agent.py` (`RansomwareIntelAgent.brief()` → frozen `RansomwareBriefing`: delivery_hashes / lure_language / c2_domains / file_extension_flags; brief-only; 3 test classes) | 6 Learning/Governance | ES1 |  | BREADTH | — | 2026-06-10 (Phase 2) |
+| 74 | BECIntelAgent | `GOVERNED_AGENT` (Phase 2 Layer 0, ES1 Synthetic, brief-only; §11-signed Phase 2 contract) | `core/knowledge/bec_intel_agent.py` (`BECIntelAgent.brief()` → frozen `BECBriefing`: ceo_impersonation / invoice_fraud / wire_transfer_triggers / vendor_redirect; brief-only; 3 test classes) | 6 Learning/Governance | ES1 |  | BREADTH | — | 2026-06-10 (Phase 2) |
+| 75 | TrojanDeliveryIntelAgent | `GOVERNED_AGENT` (Phase 2 Layer 0, ES1 Synthetic, brief-only; §11-signed Phase 2 contract) | `core/knowledge/trojan_delivery_intel_agent.py` (`TrojanDeliveryIntelAgent.brief()` → frozen `TrojanDeliveryBriefing`: weaponised_extensions / macro_triggers / delayed_payload_markers / dropper_hashes; brief-only; 3 test classes) | 6 Learning/Governance | ES1 |  | BREADTH | — | 2026-06-10 (Phase 2) |
+| 76 | GeoIntelAgent | `GOVERNED_AGENT` (Phase 2 Layer 0, ES1 Synthetic, brief-only; §11-signed Phase 2 contract) | `core/knowledge/geo_intel_agent.py` (`GeoIntelAgent.brief()` → frozen `GeoBriefing`: high_risk_ip_ranges / high_risk_countries / frozen `TimeAnomalyWindow` tuple / vpn_exit_nodes; RFC-5737 doc IP seeds; brief-only; 3 test classes) | 6 Learning/Governance | ES1 |  | BREADTH | — | 2026-06-10 (Phase 2) |
+| 77 | AIGenContentIntelAgent | `GOVERNED_AGENT` (Phase 2 Layer 0, ES1 Synthetic, brief-only; §11-signed Phase 2 contract) | `core/knowledge/ai_gen_content_intel_agent.py` (`AIGenContentIntelAgent.brief()` → frozen `AIGenContentBriefing`: ai_text_signatures / deepfake_image_markers / ai_phishing_templates / frozen `ImageRatioThresholds`; advisory thresholds not verdicts; brief-only; 3 test classes) | 6 Learning/Governance | ES1 |  | BREADTH | — | 2026-06-10 (Phase 2) |
+
+**Phase 2 closure (per contract §10):** rows update to GATED once Matt signs phase closure; all six must score 70+ on the Agent Health Score Rubric (computed below / in the rubric file). Layer 1 detection agents (Phase 3) need their own signed contract(s) before any build.
+
+---
+
 ## Tally (execution-lane verified, file-level)
 
 - `GOVERNED_AGENT`: **12** (#10; #6 Header Analysis, #8 Ghost Thread, and #6A Email Authentication at Evidence Stage 1, §11-signed 2026-06-07; #11 Known-Good Contact, #27 Link Inspection, #30 Attachment Risk, #23 Credential Phishing, #24 MFA Manipulation, #31 PDF Fingerprint, #39 Language Pressure, and #46 Evidence Package at Evidence Stage 1, §11-signed 2026-06-08; #11 is the first Layer 3 Verification agent; #46 is the first Layer 4 Evidence agent).
