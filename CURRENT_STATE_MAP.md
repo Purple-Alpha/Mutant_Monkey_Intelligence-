@@ -101,4 +101,21 @@ The expected pattern is:
 
 ---
 
+## Phase 1 Infrastructure — SETTLED DOCTRINE
+
+**Date:** June 10, 2026
+**Contract:** `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md`
+**Signed:** Matt Nichol June 9th 2026
+
+**Settled:**
+
+- `core/blackboard/` — canonical evidence ledger, append-only, tenant-isolated
+- `RoleSeparationController` — builder/auditor/operator separation enforced
+- `TokenUsageTracker` — scoreboard row #71, per-tenant cost attribution
+- Layer Model Reconciliation Table — Layer 0-6 mapped to signed Design Tree
+
+**Test baseline:** 1447 passing, 1 skipped, 7 xfailed
+
+---
+
 **End of current state map. New entries appended only on explicit operator capture; never auto-promoted from the assistant.**
