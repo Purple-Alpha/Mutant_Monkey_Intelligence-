@@ -32,6 +32,8 @@ from .gate import (
 from .role_separation import (
     OPERATOR_IDENTITY,
     Capability,
+    CIRTAuditEntry,
+    CIRTRegistry,
     Role,
     RoleSeparationController,
     RoleSeparationError,
@@ -66,6 +68,8 @@ from .security_profile import (
 __all__ = [
     "OPERATOR_IDENTITY",
     "Capability",
+    "CIRTAuditEntry",
+    "CIRTRegistry",
     "Role",
     "RoleSeparationController",
     "RoleSeparationError",

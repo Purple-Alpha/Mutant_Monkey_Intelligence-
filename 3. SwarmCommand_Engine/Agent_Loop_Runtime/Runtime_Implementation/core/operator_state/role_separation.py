@@ -29,11 +29,25 @@ require its own signed contract before any code lands.
 
 The three roles and their capabilities, and the four separation rules, are
 transcribed verbatim from §3 Component 2.
+
+Amendment — named CIRT role
+---------------------------
+``4. Product_Roadmap/RoleSeparationController_Amendment_CIRT.md`` — §11 SIGNED
+2026-06-11 (Matt Nichol). Additive only: it adds one role (``CIRT``), two
+tenant-scoped capabilities (``FREEZE_INCIDENT``, ``ADJUST_DIAL``), one capability
+map entry, and a tenant-binding check. The three existing roles, their
+capability sets, and the four separation rules are unchanged (§G). CIRT is a
+**named individual bound to a single tenant** (P4-D2): a CIRT actor for tenant A
+may not act on tenant B, and every CIRT action is recorded in the audit trail
+with the named actor and the bound ``tenant_id`` (§E). Consistent with the
+Component 2 boundary, no auth infrastructure is introduced — ``actor_id`` and
+``tenant_id`` remain opaque caller-supplied labels (§D).
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from enum import Enum
 
 from core.blackboard import GovernanceError
@@ -45,11 +59,15 @@ OPERATOR_IDENTITY = "matt_nichol"
 
 
 class Role(str, Enum):
-    """Closed role enum (§3 Component 2)."""
+    """Closed role enum (§3 Component 2 + CIRT amendment §B)."""
 
     BUILDER = "builder"
     AUDITOR = "auditor"
     OPERATOR = "operator"
+    # CIRT amendment §B: Computer Incident Response Team member — a named
+    # individual bound to a single tenant. Sits below OPERATOR; does NOT inherit
+    # BUILDER/AUDITOR/OPERATOR capabilities.
+    CIRT = "cirt"
 
 
 class Capability(str, Enum):
@@ -70,6 +88,10 @@ class Capability(str, Enum):
     PUSH = "push"
     OPEN_CLOSE_GATE = "open_close_gate"
     DEPLOY_MUTATION = "deploy_mutation"  # requires OPERATOR sign-off (rule 4)
+    # CIRT amendment §C: both CIRT-only and tenant-scoped. No existing role
+    # gains these; no existing capability changes owners.
+    FREEZE_INCIDENT = "freeze_incident"  # halt the bound tenant's mail flow
+    ADJUST_DIAL = "adjust_dial"  # Lung dial authority for the bound tenant
 
 
 # Verbatim capability map from §3 Component 2.
@@ -99,7 +121,25 @@ _ROLE_CAPABILITIES: dict[Role, frozenset[Capability]] = {
             Capability.DEPLOY_MUTATION,
         }
     ),
+    # CIRT amendment §C — exactly these two, nothing else.
+    Role.CIRT: frozenset(
+        {
+            Capability.FREEZE_INCIDENT,
+            Capability.ADJUST_DIAL,
+        }
+    ),
 }
+
+# CIRT-only, tenant-scoped capabilities (amendment §C/§D). Exercising either
+# requires the tenant-binding check in ``authorize_cirt_action`` — plain
+# ``authorize`` cannot grant them to any other role (the capability map above
+# already denies that) and never carries a tenant binding.
+_CIRT_CAPABILITIES: frozenset[Capability] = frozenset(
+    {
+        Capability.FREEZE_INCIDENT,
+        Capability.ADJUST_DIAL,
+    }
+)
 
 # Audit capabilities a builder must never exercise on a surface it built
 # (separation rules 1 and 3).
@@ -114,6 +154,56 @@ _AUDIT_CAPABILITIES: frozenset[Capability] = frozenset(
 
 class RoleSeparationError(GovernanceError):
     """Raised when an action violates builder-auditor-operator separation."""
+
+
+@dataclass(frozen=True)
+class CIRTAuditEntry:
+    """One non-anonymous CIRT action record (amendment §E).
+
+    Accountability is real: the named individual (``actor_id``) and the bound
+    ``tenant_id`` are on every decision they make. This is the MSP sales story —
+    "here is who is responsible for your security decisions, and here is the
+    audit trail proving it."
+    """
+
+    actor_id: str
+    tenant_id: str
+    capability: Capability
+    timestamp: datetime = field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
+
+
+@dataclass
+class CIRTRegistry:
+    """Per-tenant named-CIRT bindings (amendment §B/§D).
+
+    A single named individual is bound to a tenant at onboarding (P4-D2). The
+    binding is a recorded label, not an authenticated credential (§D, no auth
+    infrastructure). Binding is one-individual-per-tenant; rebinding requires an
+    explicit ``bind`` call (the onboarding/identity contract owns rotation).
+    """
+
+    _bindings: dict[str, str] = field(default_factory=dict)
+
+    def bind(self, *, tenant_id: str, actor_id: str) -> None:
+        """Bind ``actor_id`` as the named CIRT individual for ``tenant_id``."""
+
+        tenant_id = _require(tenant_id, "tenant_id")
+        actor_id = _require(actor_id, "actor_id")
+        self._bindings[tenant_id] = actor_id
+
+    def bound_actor(self, tenant_id: str) -> str | None:
+        """Return the named CIRT individual for ``tenant_id`` (or ``None``)."""
+
+        if not tenant_id:
+            return None
+        return self._bindings.get(tenant_id)
+
+    def is_bound(self, *, tenant_id: str, actor_id: str) -> bool:
+        """True iff ``actor_id`` is the bound CIRT individual for ``tenant_id``."""
+
+        return bool(tenant_id) and self._bindings.get(tenant_id) == actor_id
 
 
 def capabilities_for(role: Role) -> frozenset[Capability]:
@@ -143,6 +233,9 @@ class RoleSeparationController:
 
     # (actor_id, surface) pairs recorded via record_build during this run.
     _built_surfaces: set[tuple[str, str]] = field(default_factory=set)
+    # Append-only in-run CIRT action audit trail (amendment §E). In-memory only,
+    # consistent with the Component 2 "no persistence / no auth infra" boundary.
+    _cirt_audit_log: list[CIRTAuditEntry] = field(default_factory=list)
 
     def record_build(self, *, actor_id: str, surface: str) -> None:
         """Record that ``actor_id`` built ``surface`` in this run."""
@@ -189,6 +282,16 @@ class RoleSeparationController:
                 f"(actor_id={actor_id!r})"
             )
 
+        # CIRT amendment §D: FREEZE_INCIDENT / ADJUST_DIAL are tenant-scoped and
+        # cannot be granted through the tenant-less base path. Tenant binding is
+        # mandatory, so these route exclusively through authorize_cirt_action.
+        if capability in _CIRT_CAPABILITIES:
+            raise RoleSeparationError(
+                f"capability {capability.value!r} is CIRT-only and tenant-scoped; "
+                "use authorize_cirt_action(actor_id=..., tenant_id=...) so the "
+                "mandatory tenant binding (amendment §D) is enforced"
+            )
+
         if not role_allows(role, capability):
             raise RoleSeparationError(
                 f"role {role.value!r} is not permitted capability "
@@ -205,6 +308,61 @@ class RoleSeparationController:
                 f"{surface!r} this run and cannot also audit it "
                 f"({capability.value!r})"
             )
+
+    def authorize_cirt_action(
+        self,
+        *,
+        actor_id: str,
+        tenant_id: str,
+        capability: Capability,
+        registry: CIRTRegistry,
+    ) -> CIRTAuditEntry:
+        """Authorize a named CIRT individual to act on its bound tenant.
+
+        Enforces the amendment's tenant binding (§D): the action is permitted
+        only when ``actor_id`` is the named CIRT individual bound to
+        ``tenant_id`` in ``registry``. A CIRT member for tenant A acting on
+        tenant B raises ``RoleSeparationError``. On success the action is
+        recorded in the CIRT audit trail (§E) with the named actor and bound
+        tenant, and that record is returned.
+
+        Raises ``RoleSeparationError`` when:
+          - ``capability`` is not a CIRT capability (§C);
+          - ``actor_id`` is not the bound CIRT individual for ``tenant_id``
+            (unbound, wrong person, or cross-tenant — §D).
+        """
+
+        actor_id = _require(actor_id, "actor_id")
+        tenant_id = _require(tenant_id, "tenant_id")
+        if not isinstance(capability, Capability):
+            raise RoleSeparationError(f"unknown capability: {capability!r}")
+        if not isinstance(registry, CIRTRegistry):
+            raise RoleSeparationError(
+                "authorize_cirt_action requires a CIRTRegistry of named "
+                "per-tenant bindings (amendment §B/§D)"
+            )
+        if capability not in _CIRT_CAPABILITIES:
+            raise RoleSeparationError(
+                f"capability {capability.value!r} is not a CIRT capability; "
+                "CIRT holds exactly {FREEZE_INCIDENT, ADJUST_DIAL} (amendment §C)"
+            )
+        if not registry.is_bound(tenant_id=tenant_id, actor_id=actor_id):
+            raise RoleSeparationError(
+                f"CIRT actor {actor_id!r} is not the named individual bound to "
+                f"tenant {tenant_id!r}; CIRT authority is tenant-scoped and "
+                "cannot cross tenants (amendment §D)"
+            )
+
+        entry = CIRTAuditEntry(
+            actor_id=actor_id, tenant_id=tenant_id, capability=capability
+        )
+        self._cirt_audit_log.append(entry)
+        return entry
+
+    def cirt_audit_log(self) -> tuple[CIRTAuditEntry, ...]:
+        """Read-only view of CIRT actions recorded this run (amendment §E)."""
+
+        return tuple(self._cirt_audit_log)
 
     def assert_separate_assembler_and_auditor(
         self, *, assembler_actor: str, auditor_actor: str
@@ -233,6 +391,8 @@ __all__ = [
     "Role",
     "RoleSeparationController",
     "RoleSeparationError",
+    "CIRTAuditEntry",
+    "CIRTRegistry",
     "capabilities_for",
     "role_allows",
 ]
