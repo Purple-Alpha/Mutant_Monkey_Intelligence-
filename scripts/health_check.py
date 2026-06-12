@@ -60,7 +60,7 @@ PHASES = [
     (2, "Knowledge Foundation", "Phase2_Knowledge_Foundation_Agent_Design_Contract.md"),
     (3, "Detection Swarm", "Phase3_Detection_Swarm_Agent_Design_Contract.md"),
     (4, "Reconciliation", "Phase4_ReconciliationAgent_Contract.md"),
-    (5, "Mutation Engine", None),
+    (5, "Mutation Engine", "Phase5_MutationEngine_Contract.md"),
     (6, "Collective Immune System", None),
     (7, "The Lung", None),
     (8, "Governance Completion", None),
