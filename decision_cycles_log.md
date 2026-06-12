@@ -47,6 +47,42 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+PHASE 3 — DETECTION SWARM CLOSURE   2026-06-11   [type: PHASE_CLOSURE]
+  PHASE:      Phase 3 — Layer 1 Detection Swarm (six detection agents).
+  CONTRACT:   `4. Product_Roadmap/Phase3_Detection_Swarm_Agent_Design_Contract.md`
+              (§11 SIGNED 2026-06-10, Matt Nichol, c522292) + Amendment 1
+              (§11 SIGNED 2026-06-11, Matt Nichol, 56e8b33). Depends on Phase 1
+              (fe355da) and Phase 2 (43b5511).
+  SIGNED OFF: Matt Nichol, June 11th 2026 (phase closure per contract §10).
+  BUILT:      #78 SenderHistoryAgent, #79 GeoVelocityAgent, #80 ContentAnalyzer,
+              #81 URLReceptor, #82 AttachmentSandbox, #83 ImageClassifier — all in
+              `core/detectors/`. Structured evidence contributions only, no verdict
+              (P3-D1); closed evidence type per agent (P3-D2); mandatory Layer 0
+              briefing before every write (P3-D3); cloud-side only (P3-D4); tenant_id
+              on every write (P3-D5). sender_domain canonical normalization on #78/#79
+              (Amd §B); TokenUsageTracker per-tenant on #80/#82 only (Amd §C). COMMIT 6deffd9.
+  CLOSURE CHECKLIST (contract §10):
+    - all six gate-clean 0/0 ........................ YES (6deffd9; Grok gate clean)
+    - all six score 85+ on Agent Health Score Rubric  YES (86 ELITE each)
+    - scoreboard rows #78-83 updated to GATED ........ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 11th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes per agent (56 pass + 3 documented xfail) including
+              Amendment 1 assertions (sender_domain normalization, token attribution,
+              tenant-on-write); full suite 1553 passed, 1 skipped, 12 xfailed.
+  GOVERNANCE: AGENTS.md §2.1.1.B gained two standing rules this session (f5e4f04):
+              never ask for permission a signed contract already grants; never write
+              the operator mark outside the contract block it signs.
+  FLAGS (operator, non-blocking): (1) Layer 1 Proof Depth scored mid-band (14) —
+              reconciliation is Phase 4; (2) ES3 real-data signal testing deferred
+              (contract §5 Class 3 xfail) until first real tenant; (3) AttachmentSandbox
+              zero-day notification policy (contract §9 Q1) still open.
+  NEXT:       Phase 4 — ReconciliationAgent. NOT authorized; needs its own signed
+              contract before any build (design routes to advisory lane per §2.1.2).
+  NOT PUSHED: all Phase 1/2/3 commits remain local — push is Matt's explicit call.
+
+---
+
 PHASE 2 — KNOWLEDGE FOUNDATION CLOSURE   2026-06-10   [type: PHASE_CLOSURE]
   PHASE:      Phase 2 — Layer 0 Knowledge Foundation (six threat-intel agents).
   CONTRACT:   `4. Product_Roadmap/Phase2_Knowledge_Foundation_Agent_Design_Contract.md`
