@@ -1,8 +1,8 @@
 # Phase 4 — ReconciliationAgent Agent Design Contract
 ## Layer 4: The Verdict Agent (three-voter ensemble)
 
-**Document type:** Agent Design Contract (DRAFT — pre-§11, unsigned)
-**Status:** DRAFT — advisory/operator design captured by the execution lane for operator review. NO build authorization. Matt signs §14 before any code.
+**Document type:** Agent Design Contract
+**Status:** §11 SIGNED — Matt Nichol June 11th 2026. Build authorization granted per §11 scope.
 **Date drafted:** June 11 2026
 **Drafted by:** Cursor (execution lane), transcribing the operator-settled June 11 2026 session design per the agreed model (operator/advisory designs → execution lane writes to disk; signature reserved for the operator).
 **Authority:** Matt Nichol — sole signing authority
@@ -200,7 +200,7 @@ The Lung dial state is an **input** to the ReconciliationAgent (P4-D3), not buil
 
 ## §14 — Operator Sign-Off
 
-**Status:** DRAFT — UNSIGNED. No build authorization until this block is signed.
+**Status:** §11 SIGNED — build authorization granted per §11 scope.
 
-**Signed:** ____________________
-**Date:** ____________________
+**Signed:** Matt Nichol
+**Date:** June 11th 2026
