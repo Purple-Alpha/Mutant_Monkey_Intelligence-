@@ -115,8 +115,14 @@
 | TrojanDeliveryIntelAgent (#75) | 14 | 12 | 19 | 14 | 13 | 72 | HEALTHY |
 | GeoIntelAgent (#76) | 14 | 12 | 19 | 14 | 13 | 72 | HEALTHY |
 | AIGenContentIntelAgent (#77) | 14 | 12 | 19 | 14 | 13 | 72 | HEALTHY |
+| SenderHistoryAgent (#78) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
+| GeoVelocityAgent (#79) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
+| ContentAnalyzer (#80) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
+| URLReceptor (#81) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
+| AttachmentSandbox (#82) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
+| ImageClassifier (#83) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
 
-*The first four (detection/verification) rows remain estimates pending exact recompute. The six Layer 0 knowledge agents (#72-77) are **computed Phase 2 scores** (2026-06-10; build gate-clean, full suite 1497 passing, 3 test classes each). They are structurally identical, so they score identically. All six clear the 70+ phase-closure gate (contract §10).*
+*The first four (detection/verification) rows remain estimates pending exact recompute. The six Layer 0 knowledge agents (#72-77) are **computed Phase 2 scores** (2026-06-10; build gate-clean, full suite 1497 passing, 3 test classes each). They are structurally identical, so they score identically. All six clear the 70+ phase-closure gate (contract §10). The six Layer 1 detection agents (#78-83) are **computed Phase 3 scores** (2026-06-11; build gate-clean, full suite 1553 passing, 3 test classes each + Amendment 1 assertions). Structurally identical; all six score 86 ELITE (clears the 85+ phase-closure gate per contract §10).*
 
 **Layer 0 scoring interpretation (flagged for operator — possible rubric amendment):** this rubric is written for detection agents; two components needed interpretation for *brief-only* Layer 0 knowledge agents:
 1. **Evidence Stage (14):** capped at ES1 per the signed Phase 2 contract P2-D3 ("all six start at ES1"), even though they pass adversarial synthetic tests — which this rubric's Component 1 would otherwise read as ES2 (15-24). The signed contract wins.
@@ -124,6 +130,11 @@
 3. **Proof Depth (12):** each briefs 4 independent intel signal types but performs no reconciliation (that is Phase 4), so scored mid-band rather than the reconciliation-gated top band.
 
 A future signature could add an explicit Layer 0 scoring track so these don't require interpretation.
+
+**Layer 1 scoring interpretation (Phase 3 detection agents #78-83):**
+1. **Evidence Stage (22):** ES2 — adversarial synthetic tests pass including Amendment 1 assertions (sender_domain normalization, token attribution, tenant isolation).
+2. **Proof Depth (14):** each agent consumes a mandatory Layer 0 briefing (knowledge input) and writes one detection signal — a 2-type evidence chain per P3-D3, scored mid-band (11-16) rather than the reconciliation-gated top band (17-20, Phase 4).
+3. **Integration Health (15):** 100% schema-validation pass on `CanonicalEvidenceLedger` writes; tenant isolation confirmed on every write (P3-D5); Amendment §C token attribution verified for ContentAnalyzer and AttachmentSandbox.
 
 ---
 
