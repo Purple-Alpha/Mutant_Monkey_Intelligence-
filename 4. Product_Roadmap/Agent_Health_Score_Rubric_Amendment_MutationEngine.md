@@ -61,6 +61,17 @@ Five components, weighted to 100. Applied to the Mutation Engine ensemble (#88) 
 
 **Composite:** sum of the five (max 100). ELITE 85+ required for Phase 5 closure (P5-D9).
 
+### Achieved score — Mutation Engine ensemble (#88), Phase 5 build 2026-06-12
+
+| Component | Max | Achieved | Note |
+|---|---|---|---|
+| Confirmation Integrity | 25 | 25 | distinct email_id AND tenant_id enforced; repeat-email / single-tenant replay cannot reach 3 (P5-D2 tests pass) |
+| Validation Rigor | 20 | 18 | benign-stream FP gate across conservative cycles; −2 for caller-supplied benign-stream provenance (documented xfail) |
+| Sign-Off Enforcement | 25 | 25 | OPERATOR-only DEPLOY_MUTATION via RoleSeparationController; non-operator + unsigned deploy refused (P5-D4 tests pass) |
+| Rollback Safety | 15 | 14 | prior-state recorded before deploy, deterministic revert, conservative auto-rollback; −1 for restored-policy re-signing (documented xfail) |
+| Governance & Audit Completeness | 15 | 13 | append-only audit trail (no update/delete), zero-day→Matt only; −2 for stages 6-7 threshold-lock/amendment path being governance disciplines, not yet code-enforced (documented xfail) |
+| **Composite** | **100** | **95 ELITE** | Grok gate clean (0 warnings); full suite 1614 passed / 1 skipped / 23 xfailed |
+
 ---
 
 ## §C — Which track applies

@@ -47,6 +47,51 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+PHASE 5 — MUTATION ENGINE CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
+  PHASE:      Phase 5 — Layer 5 Mutation Engine (six-component ensemble, row #88).
+  CONTRACT:   `4. Product_Roadmap/Phase5_MutationEngine_Contract.md`
+              (§11 SIGNED 2026-06-12, Matt Nichol, faf963e) + Agent Health Score
+              Rubric Layer 5 track amendment
+              `Agent_Health_Score_Rubric_Amendment_MutationEngine.md`
+              (§11 SIGNED 2026-06-12, faf963e). Depends on Phase 1 (fe355da),
+              Phase 4 ReconciliationAgent verdict surface (closed 2026-06-11),
+              and the OPERATOR/DEPLOY_MUTATION separation surface.
+  SIGNED OFF: Matt Nichol, June 12th 2026 (phase closure per contract §10 / P5-D7).
+  BUILT:      #88 MutationEngine ensemble in `core/mutation/`. `engine.py` extended
+              (legacy Phase 1.4 sandbox-promotion logic untouched) with the §3.1
+              integration — `propose_mutation_to_pipeline` /
+              `run_mutation_cycle_with_pipeline` reuse `run_mutation_cycle` and route
+              promoted candidates through the pipeline to the OPERATOR sign-off gate.
+              Six components:
+                - `confirmation_tracker.py` — 3-shot, distinct email_id AND tenant_id (P5-D2)
+                - `validation_gate.py` — benign-stream FP gate, conservative cycles (P5-D3/D10)
+                - `sign_off_gate.py` — OPERATOR-only DEPLOY_MUTATION via RoleSeparation (P5-D4)
+                - `rollback.py` — prior-state record + conservative auto-rollback (P5-D5)
+                - `zero_day_capture.py` — zero_day_candidate routed to Matt only (P5-D11)
+                - `audit_trail.py` — append-only mutation history, no update/delete (P5-D6)
+              `mutation_ensemble.py` wires all six and walks the named Anomaly
+              Detection Pipeline (§3.3.1, 7 stages). Sandbox-only until human
+              sign-off; every deploy reversible by construction.
+  CLOSURE CHECKLIST (contract §10 / P5-D7):
+    - gate-clean 0/0 ................................ YES (Grok completion gate clean,
+                                                     0 warnings — two passes:
+                                                     phase5_mutation_engine_components +
+                                                     phase5_mutation_engine_extension,
+                                                     split for the 200KB packet cap)
+    - scores 85+ on Layer 5 rubric track ............. YES (95 ELITE)
+    - scoreboard row #88 updated to GATED ............ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 12th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes per component in
+              `tests/test_phase5_mutation_engine.py` (36 pass + 7 documented
+              xfail, one known-gap per component + the engine §3.1 bridge);
+              full suite 1614 passed, 1 skipped, 23 xfailed.
+  GOVERNANCE: Rule 1 — build straight through per signed contract; no permission
+              stops for work already authorized. Thresholds launch-conservative,
+              tunable only by signed amendment (P5-D10); never autonomously.
+
+---
+
 PHASE 4 — RECONCILIATION AGENT CLOSURE   2026-06-11   [type: PHASE_CLOSURE]
   PHASE:      Phase 4 — Layer 4 ReconciliationAgent (three-voter ensemble).
   CONTRACT:   `4. Product_Roadmap/Phase4_ReconciliationAgent_Contract.md`
