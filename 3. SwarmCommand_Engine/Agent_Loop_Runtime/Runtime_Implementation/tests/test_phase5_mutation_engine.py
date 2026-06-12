@@ -41,6 +41,10 @@ from core.mutation import (
     ZeroDayReferral,
     ZERO_DAY_ROUTING_TARGET,
 )
+from core.mutation.engine import (
+    MutationCandidate,
+    propose_mutation_to_pipeline,
+)
 from core.operator_state.role_separation import (
     OPERATOR_IDENTITY,
     RoleSeparationController,
@@ -534,3 +538,74 @@ class TestEnsembleKnownGap:
     )
     def test_xfail_threshold_lock_and_amendment_path_enforced_in_code(self):
         raise AssertionError("not implemented — threshold-lock amendment (P5-D10)")
+
+
+# ===========================================================================
+# Component 6b — engine.py integration bridge (§3.1: legacy cycle → pipeline)
+# ===========================================================================
+
+
+def _promoted_candidate(candidate_id: str = "cand_1") -> MutationCandidate:
+    return MutationCandidate(
+        candidate_agent_id=candidate_id,
+        baseline_agent_id="phase_1_3_blue_via:profile_x",
+        source_evaluation_id="eval_42",
+        mutation_kind="fraud_pattern_threshold",
+        baseline_confidence=0.10,
+        candidate_confidence=0.90,
+        promoted=True,
+    )
+
+
+class TestEngineBridgeExpectedPass:
+    def test_promoted_candidate_routed_to_sign_off(self, ensemble):
+        for conf in _three_independent():
+            ensemble.record_confirmation(conf)
+        result, proposal = propose_mutation_to_pipeline(
+            _promoted_candidate(),
+            ensemble,
+            tenant_scope="sandbox",
+            benign_stream=_clean_stream(0.01),
+        )
+        # Confidence lift 0.10 → 0.90 is a genuine outlier (default stddev=0).
+        assert result.stamped is True
+        assert proposal is not None
+        assert proposal.candidate_id == "cand_1"
+
+
+class TestEngineBridgeAdversarial:
+    def test_unconfirmed_candidate_yields_no_proposal(self, ensemble):
+        ensemble.record_confirmation(Confirmation("cand_1", "e1", "t1"))
+        result, proposal = propose_mutation_to_pipeline(
+            _promoted_candidate(),
+            ensemble,
+            tenant_scope="sandbox",
+            benign_stream=_clean_stream(0.01),
+        )
+        assert result.stamped is False
+        assert proposal is None
+
+    def test_validation_failure_yields_no_proposal(self, ensemble):
+        for conf in _three_independent():
+            ensemble.record_confirmation(conf)
+        result, proposal = propose_mutation_to_pipeline(
+            _promoted_candidate(),
+            ensemble,
+            tenant_scope="sandbox",
+            benign_stream=_spiking_stream(0.01, 0.5),
+        )
+        assert result.rejected is True
+        assert proposal is None
+
+
+class TestEngineBridgeKnownGap:
+    @pytest.mark.xfail(
+        reason=(
+            "run_mutation_cycle_with_pipeline end-to-end over a live RouteContext / "
+            "blackboard is exercised by integration, not this unit suite. Completion "
+            "path: Phase 5 sandbox-loop integration test once the loop wiring lands."
+        ),
+        strict=True,
+    )
+    def test_xfail_full_cycle_with_pipeline_integration(self):
+        raise AssertionError("not implemented — sandbox-loop integration test")

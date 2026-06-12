@@ -51,6 +51,23 @@ from core.orchestrator import RouteContext, RouteResult, submit_policy_update
 from core.orchestrator.routes import blackboard_path
 from core.policy.signing import SigningKey, default_signing_key, sign
 
+# -- Phase 5 (Layer 5) extension ------------------------------------------------
+# Per ``4. Product_Roadmap/Phase5_MutationEngine_Contract.md`` (§11 SIGNED
+# 2026-06-12, Matt Nichol), the engine is extended with the swarm-level Anomaly
+# Detection Pipeline ensemble (scoreboard row #88). The legacy Month 0 / Phase
+# 1.4 sandbox-promotion logic below is unchanged. The integration functions at
+# the bottom of this module (``propose_mutation_to_pipeline`` /
+# ``run_mutation_cycle_with_pipeline``, §3.1) consume the confirmed candidates
+# the legacy ``run_mutation_cycle`` already produces and route the validated
+# ones through the named pipeline (§3.3.1) to the HumanSignOffGate.
+from core.mutation.mutation_ensemble import (  # noqa: E402  (extension anchor)
+    AnomalyCandidate,
+    MutationEngineEnsemble,
+    MutationEnsembleError,
+    PipelineResult,
+)
+from core.mutation.sign_off_gate import MutationProposal  # noqa: E402
+
 
 # Phase 1.4 §2.3 / §5.3 — matching-axis Bucket E table. A
 # ``bucket_e_regression_probe`` case relaxes the improvement floor for
@@ -944,6 +961,99 @@ def _build_phase14_item(
     )
 
 
+# ---------------------------------------------------------------------------
+# Phase 5 (Layer 5) integration — legacy cycle → Anomaly Detection Pipeline
+# Contract §3.1 + §3.3.1. The legacy ``run_mutation_cycle`` decides *what*
+# improved (a promoted ``MutationCandidate``); the Phase 5 ensemble decides
+# whether that improvement is a genuine outlier, 3-shot confirmed, benign-stream
+# validated, signed-off, and reversible before it is allowed near production.
+# ---------------------------------------------------------------------------
+
+
+def propose_mutation_to_pipeline(
+    candidate: MutationCandidate,
+    ensemble: MutationEngineEnsemble,
+    *,
+    tenant_scope: str,
+    benign_stream,
+    baseline_stddev: float = 0.0,
+    baseline_fp_rate: float = 0.0,
+    prior_state: dict | None = None,
+) -> tuple[PipelineResult, MutationProposal | None]:
+    """Bridge one legacy ``MutationCandidate`` into the Phase 5 pipeline (§3.1).
+
+    Maps the candidate's confidence lift (baseline → candidate) onto an
+    ``AnomalyCandidate`` and walks the named Anomaly Detection Pipeline
+    (§3.3.1) via ``ensemble.run_pipeline``. When the candidate clears every
+    automatic gate (stages 1-4), it is *routed to the HumanSignOffGate*: a
+    ``MutationProposal`` is returned for the OPERATOR to sign off (stage 5).
+    Nothing here deploys — sign-off and deploy stay operator-initiated (P5-D4).
+    """
+
+    anomaly = AnomalyCandidate(
+        candidate_id=candidate.candidate_agent_id,
+        tenant_scope=tenant_scope,
+        anomaly_summary=(
+            f"{candidate.mutation_kind}: confidence "
+            f"{candidate.baseline_confidence:.3f} → "
+            f"{candidate.candidate_confidence:.3f} "
+            f"(source eval {candidate.source_evaluation_id})"
+        ),
+        observed_signal=candidate.candidate_confidence,
+        baseline_mean=candidate.baseline_confidence,
+        baseline_stddev=baseline_stddev,
+        baseline_fp_rate=baseline_fp_rate,
+        prior_state=prior_state or {},
+    )
+    result = ensemble.run_pipeline(anomaly, benign_stream=benign_stream)
+
+    proposal: MutationProposal | None = None
+    if result.stamped:
+        proposal = MutationProposal(
+            candidate_id=candidate.candidate_agent_id,
+            tenant_scope=tenant_scope,
+            validation_summary=result.reason,
+            evidence_chain=tuple(result.evidence_chain),
+        )
+    return result, proposal
+
+
+def run_mutation_cycle_with_pipeline(
+    context: RouteContext,
+    ensemble: MutationEngineEnsemble,
+    *,
+    tenant_scope: str,
+    benign_stream,
+    config: MutationEngineConfig | None = None,
+    baseline_stddev: float = 0.0,
+    baseline_fp_rate: float = 0.0,
+) -> tuple[MutationEngineResult, list[tuple[PipelineResult, MutationProposal | None]]]:
+    """Run one legacy sandbox cycle, then route promoted candidates to Phase 5.
+
+    Reuses ``run_mutation_cycle`` unchanged (§3.1: "reusing run_mutation_cycle")
+    and feeds each *promoted* candidate through ``propose_mutation_to_pipeline``.
+    Returns the legacy cycle result plus the per-candidate pipeline outcomes so
+    the operator review surface sees both what was promoted and what the Phase 5
+    pipeline did with it.
+    """
+
+    cycle = run_mutation_cycle(context, config=config)
+    routed: list[tuple[PipelineResult, MutationProposal | None]] = []
+    for item in cycle.item_results:
+        if item.candidate.promoted:
+            routed.append(
+                propose_mutation_to_pipeline(
+                    item.candidate,
+                    ensemble,
+                    tenant_scope=tenant_scope,
+                    benign_stream=benign_stream,
+                    baseline_stddev=baseline_stddev,
+                    baseline_fp_rate=baseline_fp_rate,
+                )
+            )
+    return cycle, routed
+
+
 __all__ = [
     "MAX_EVIDENCE_IDS_PER_PROMOTION",
     "MutationCandidate",
@@ -952,6 +1062,15 @@ __all__ = [
     "MutationEngineResult",
     "run_mutation_cycle",
     "select_mutation_kind",
+    # Phase 5 (Layer 5) extension — swarm-level ensemble surface (row #88).
+    "AnomalyCandidate",
+    "MutationEngineEnsemble",
+    "MutationEnsembleError",
+    "PipelineResult",
+    "MutationProposal",
+    # Phase 5 integration entry points (§3.1).
+    "propose_mutation_to_pipeline",
+    "run_mutation_cycle_with_pipeline",
 ]
 
 
