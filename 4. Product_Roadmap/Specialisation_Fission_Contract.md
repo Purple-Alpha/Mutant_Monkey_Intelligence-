@@ -3,7 +3,7 @@
 ## Agent Fission, Part 2: qualitative division when a problem space outgrows one specialist
 
 **Document type:** Agent Design Contract
-**Status:** DRAFT — UNSIGNED. No build authorization until §11 is signed. Matt must read this before signing; the signature certifies operator review of a Cursor-authored scope.
+**Status:** §11 SIGNED — Matt Nichol June 12th 2026. Build authorization granted per §11 scope.
 **Date drafted:** June 12 2026
 **Drafted by:** Cursor (execution lane), drafted against `4. Product_Roadmap/Agent_Fission_Concept_Doc.md` (CONCEPT, June 12 2026) plus the operator's locked answers from the June 12 2026 contract session.
 **Authority:** Matt Nichol — sole signing authority
@@ -201,7 +201,7 @@ Phase closes when all of the following are true:
 
 ## §11 — Operator Sign-Off
 
-**Status:** UNSIGNED DRAFT. Awaiting operator review and signature.
+**Status:** §11 SIGNED — Matt Nichol June 12th 2026. Build authorization granted per §11 scope.
 
-**Signed:** ____________________
-**Date:** ____________________
+**Signed:** Matt Nichol
+**Date:** June 12th 2026
