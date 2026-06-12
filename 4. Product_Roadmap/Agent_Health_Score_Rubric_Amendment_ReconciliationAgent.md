@@ -1,7 +1,7 @@
 # Agent Health Score Rubric — Amendment: ReconciliationAgent (Layer 4) track
 
 **Document type:** Rubric Amendment (DRAFT — pre-§11, unsigned)
-**Status:** DRAFT — UNSIGNED. No scoring authority until §11 is signed.
+**Status:** §11 SIGNED — Matt Nichol June 11th 2026. Scoring authority granted per §11 scope.
 **Date drafted:** June 11 2026
 **Drafted by:** Cursor (execution lane), transcribing the operator-settled June 11 2026 session design. Signature reserved for the operator.
 **Amends:** `4. Product_Roadmap/Agent_Health_Score_Rubric.md` — §11 SIGNED 2026-06-10 (Matt Nichol).
@@ -81,7 +81,7 @@ Five components, weighted to 100. Applied to the ReconciliationAgent (#84) in pl
 
 ## §11 — Operator Sign-Off
 
-**Status:** DRAFT — UNSIGNED. No scoring authority until this block is signed.
+**Status:** §11 SIGNED — scoring authority granted per §11 scope.
 
-**Signed:** ____________________
-**Date:** ____________________
+**Signed:** Matt Nichol
+**Date:** June 11th 2026

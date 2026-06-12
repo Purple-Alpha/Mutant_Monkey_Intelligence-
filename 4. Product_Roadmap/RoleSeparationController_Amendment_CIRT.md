@@ -1,7 +1,7 @@
 # RoleSeparationController — Amendment: named CIRT role
 
 **Document type:** Contract Amendment (DRAFT — pre-§11, unsigned)
-**Status:** DRAFT — UNSIGNED. No build authorization until §11 is signed.
+**Status:** §11 SIGNED — Matt Nichol June 11th 2026. Build authorization granted per §11 scope.
 **Date drafted:** June 11 2026
 **Drafted by:** Cursor (execution lane), transcribing the operator-settled June 11 2026 session design. Signature reserved for the operator.
 **Amends:** `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md` — §3 Component 2 (RoleSeparationController), §11 SIGNED 2026-06-09 (`fe355da`). Implementation surface: `core/operator_state/role_separation.py`.
@@ -86,7 +86,7 @@ Every CIRT action (`FREEZE_INCIDENT`, `ADJUST_DIAL`) is recorded in the audit tr
 
 ## §11 — Operator Sign-Off
 
-**Status:** DRAFT — UNSIGNED. No build authorization until this block is signed.
+**Status:** §11 SIGNED — build authorization granted per §11 scope.
 
-**Signed:** ____________________
-**Date:** ____________________
+**Signed:** Matt Nichol
+**Date:** June 11th 2026
