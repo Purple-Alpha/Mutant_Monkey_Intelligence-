@@ -5,9 +5,12 @@ Run from the repo root:
 
     python3 scripts/health_check.py
 
-Prints three sections:
+Prints four sections:
   1. Agent Health Scores — governed agents, current status, health score if
      available; flags any agent scoring below 70.
+  1b. Reserved / concept rows — scoreboard labels held for concept work with no
+     contract and no build authorization (e.g. the Watcher Agents #85-87).
+     Surfaced for visibility; never counted as governed, never health-flagged.
   2. Phase Gate Status — phases 1-9, current status (GATED / SIGNED / DRAFT /
      SIGNED_UNBUILT / BLOCKED) and the authorizing commit hash if applicable.
   3. Test baseline — the most recent recorded passing/skipped/xfailed counts.
@@ -39,10 +42,15 @@ STATUS_TOKENS = (
     "NEEDS_REAL_DATA",
     "NEEDS_STAGE_B_AUTH",
     "RECLASSIFY",
+    "RESERVED",
     "BLOCKED",
     "GOVERNED",
 )
 GOVERNED_STATUSES = {"GOVERNED_AGENT", "GATED", "GOVERNED"}
+# Reserved = a scoreboard label held for concept work with no contract and no
+# build authorization. Surfaced for visibility, never counted as governed and
+# never health-flagged (concept rows carry no score).
+RESERVED_STATUSES = {"RESERVED"}
 BAND_RE = re.compile(r"(\d{1,3})\s+(ELITE|HEALTHY|MARGINAL|AT RISK|DEMOTED)")
 AGENT_ROW_RE = re.compile(r"^\|\s*(\d+[A-Z]?)\s*\|")
 
@@ -197,6 +205,30 @@ def print_agent_health(text: str) -> None:
 
 
 # --------------------------------------------------------------------------
+# Section 1b — Reserved / concept rows (no contract, no build authorization)
+# --------------------------------------------------------------------------
+
+
+def print_reserved_concepts(text: str) -> None:
+    rows = [r for r in _parse_agent_rows(text) if r["status"] in RESERVED_STATUSES]
+    rows.sort(key=lambda r: _sort_key(r["id"]))
+    if not rows:
+        return
+
+    print("=" * 72)
+    print("1b. RESERVED / CONCEPT (no contract — not governed, not built)")
+    print("=" * 72)
+    print(f"  {'#':<5}{'AGENT':<34}{'STATUS':<12}{'NOTE':<19}")
+    print(f"  {'-'*4:<5}{'-'*33:<34}{'-'*11:<12}{'-'*18:<19}")
+    for r in rows:
+        name = r["name"][:33]
+        print(f"  {r['id']:<5}{name:<34}{r['status']:<12}{'concept doc only':<19}")
+    print()
+    print(f"  Reserved rows: {len(rows)} (advisory; contract required before build)")
+    print()
+
+
+# --------------------------------------------------------------------------
 # Section 2 — Phase Gate Status
 # --------------------------------------------------------------------------
 
@@ -282,6 +314,7 @@ def main() -> None:
         print(f"WARNING: scoreboard not readable at {SCOREBOARD}")
         print()
     print_agent_health(scoreboard_text)
+    print_reserved_concepts(scoreboard_text)
     print_phase_gates()
     print_test_baseline()
 
