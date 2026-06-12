@@ -2,7 +2,7 @@
 ## Control Plane: vendor-neutral blast-radius containment for the governed swarm
 
 **Document type:** Agent Design Contract
-**Status:** DRAFT — pre-§11, UNSIGNED. No build authorization. Operator must read and sign before any build.
+**Status:** §11 SIGNED — Matt Nichol June 12th 2026. Build authorization granted per §11 scope.
 **Date drafted:** June 12 2026
 **Drafted by:** Cursor (execution lane), drafted against `4. Product_Roadmap/Blast_Radius_Controller_Design_Plan.md` (CONCEPT, June 12 2026). The operator must read this before signing; the signature certifies operator review of a Cursor-authored scope.
 **Authority:** Matt Nichol — sole signing authority
@@ -60,7 +60,10 @@ This contract does **not** build the Mode Controller (Gate 4 consensus owner), t
 | BRC-D9 | Watcher hierarchy — blocking power bounded | Local watcher: opens breakers for **its tenant only**. Regional watcher: **proposals only** — cannot execute tool blocks unilaterally; regional blocks require Regional Tool Block Controller **and Matt sign-off**. Global watcher: **long-horizon analytics only**, no direct blocking power. |
 | BRC-D10 | Mode check — interface only | The gateway performs a **mode check** against the Mode Controller's current mode/epoch before dispatch. The gateway does **not** own mode transitions — that is the Mode Controller's job (separate contract). |
 | BRC-D11 | Health score target + new track | ELITE 85+ on the Agent Health Score Rubric. A **new Layer 6 / Control Plane rubric track** is added by amendment (mirroring the Layer 4 and Layer 5 precedents). Gate does not close below 85. |
-| BRC-D12 | Single scoreboard row | The Blast Radius Controller takes **one scoreboard row** for the ensemble; the eight components (GatewayController / BreakerStore / SessionBudgetStore / LoopDetector / TenantSegmentationController / PrivacyFilterInterface / RingController / AgentIdentityGateway) are internal. |
+| BRC-D12 | Single scoreboard row | The Blast Radius Controller takes **one scoreboard row, #89** (BRC-D12). Eight components internal. |
+| BRC-D13 | Trip-class-aware breaker recovery (Q4) | **Transient trip:** 30-second cooldown, **one probe**. Probe fails → reclassify as **sustained**. **Sustained trip:** 5-minute cooldown, **three successful probes** required. Any sustained probe failure **resets cooldown** and keeps breaker `OPEN`. **ReconciliationAgent defaults to sustained-trip recovery.** |
+| BRC-D14 | Role-tiered session budgets (Q5) | **Detection agents:** 50K tokens, 30 tool calls, 15 min. **ReconciliationAgent ensemble:** 150K tokens, 90 tool calls, 20 min — with **per-voter sub-budgets of 50K each** (R1/R2/R3); no voter borrows from another without controller approval. **Control plane components:** 25K tokens, 20 tool calls, 10 min. All **amendment-tunable** after Ring 0 synthetic and Ring 1 pilot baseline data. |
+| BRC-D15 | Budget exhaustion is not a pass (Q5) | Budget exhaustion produces **`incomplete_budget_exhausted` status**, not a normal pass. **No final reconciliation, blocking recommendation, or signed decision** may be issued from incomplete budget-exhausted output. Every exhaustion event **creates a governance record** (append-only). |
 
 ---
 
@@ -82,12 +85,30 @@ The gateway is the single entry point for every agent action. It orchestrates th
 - State transitions are append-only auditable.
 - Local watcher (#85 concept) may open breakers for its tenant only (BRC-D9); regional and global watchers have no direct breaker authority.
 
+**Trip-class-aware recovery (BRC-D13, Q4 resolved):**
+
+| Trip class | Cooldown | Probes required | On probe failure |
+|---|---|---|---|
+| **Transient** | 30 seconds | 1 | Reclassify as **sustained**; apply sustained rules |
+| **Sustained** | 5 minutes | 3 successful | **Reset cooldown**, keep breaker `OPEN` |
+
+- **ReconciliationAgent defaults to sustained-trip recovery** — a verdict-producing ensemble trip is always treated as sustained until three consecutive successful probes clear it.
+- Trip class is recorded on every `OPEN` transition (append-only audit).
+
 ### §3.3 — SessionBudgetStore + LoopDetector (Gate 1)
 
-**SessionBudgetStore (BRC-D2):**
-- Three budgets per session: max tokens, max tool calls, max wall clock.
-- Enforced at gateway before dispatch. Agent cannot read its own budget.
-- Budget exhaustion → deterministic reject + audit.
+**SessionBudgetStore (BRC-D2, BRC-D14, BRC-D15):**
+
+Role-tiered budgets enforced at gateway before dispatch. Agent cannot read its own budget.
+
+| Role tier | Max tokens | Max tool calls | Max wall clock | Notes |
+|---|---|---|---|---|
+| **Detection agents** (Layer 1) | 50,000 | 30 | 15 min | Per agent session |
+| **ReconciliationAgent ensemble** (Layer 4) | 150,000 | 90 | 20 min | Per-voter sub-budget: **50K tokens each** (R1/R2/R3). No voter borrows from another without **controller approval**. |
+| **Control plane components** (Layer 6) | 25,000 | 20 | 10 min | Gateway, breakers, segmentation, rings |
+
+- All tiers **amendment-tunable** after Ring 0 synthetic and Ring 1 pilot baseline data (Q5 resolved).
+- **Budget exhaustion rule (BRC-D15):** exhaustion produces **`incomplete_budget_exhausted` status** — **not** a normal pass. No final reconciliation, blocking recommendation, or signed decision may be issued from incomplete budget-exhausted output. Every exhaustion event creates an **append-only governance record**.
 
 **LoopDetector (BRC-D3):**
 - Detects identical-argument runs (same tool + same args hash within a window).
@@ -171,9 +192,9 @@ No signed Phase 1/2/3/4/5 surface is modified by this contract.
 
 | Row | Agent | Status at signing | Layer |
 |---|---|---|---|
-| TBD | Blast Radius Controller (ensemble) | `SIGNED_UNBUILT` → build → `GATED` | 6 Control Plane |
+| **#89** | Blast Radius Controller (ensemble) | `SIGNED_UNBUILT` → build → `GATED` | 6 Control Plane |
 
-One ensemble row (BRC-D12). Eight components internal. Scoreboard row number assigned at signing session.
+One ensemble row (BRC-D12, **#89**). Eight components internal.
 
 ---
 
@@ -184,7 +205,12 @@ Three test classes per AGENTS.md §5:
 **Class 1 — Expected pass**
 - Gateway lifecycle executes all gates in sequence for a valid request.
 - BreakerStore transitions `CLOSED` → `OPEN` → `HALF_OPEN` → `CLOSED` deterministically.
-- SessionBudgetStore rejects when any budget (tokens, tool calls, wall clock) is exhausted.
+- Transient trip: 30s cooldown, one probe succeeds → `CLOSED`.
+- Sustained trip: 5min cooldown, three successful probes → `CLOSED`; probe failure resets cooldown.
+- ReconciliationAgent trip defaults to sustained-trip recovery path.
+- SessionBudgetStore enforces role-tiered budgets (detection / reconciliation / control plane).
+- ReconciliationAgent per-voter sub-budget (50K each) enforced; cross-voter borrow without controller approval rejected.
+- Budget exhaustion → `incomplete_budget_exhausted` status + governance record; no pass issued.
 - TenantSegmentationController isolates per-tenant queues and rate limits.
 - PrivacyFilterInterface blocks broadcast when filter breaker is `OPEN`.
 - RingController assigns correct ring and rejects promotion without out-of-band verification.
@@ -199,6 +225,10 @@ Three test classes per AGENTS.md §5:
 - Gateway bypass attempt (internal path, direct tool call) → rejected; no shortcut exists (BRC-D8).
 - Regional watcher attempts unilateral tool block → rejected; requires Regional Tool Block Controller + Matt sign-off (BRC-D9).
 - Privacy filter breaker `OPEN` with segmentation healthy → nothing broadcasts (BRC-D5 independent failure domains).
+- Transient trip probe fails → reclassified as sustained; sustained rules apply (BRC-D13).
+- Sustained trip probe fails mid-sequence → cooldown reset, breaker stays `OPEN` (BRC-D13).
+- Budget-exhausted ReconciliationAgent output treated as pass → rejected; `incomplete_budget_exhausted` enforced (BRC-D15).
+- Voter attempts to borrow sub-budget from another voter without controller approval → rejected (BRC-D14).
 
 **Class 3 — Known-gap xfail**
 - Mode Controller live integration — deferred; separate signed contract required (BRC-D10). Completion path: Mode Controller contract signed and gated.
@@ -223,22 +253,28 @@ Three test classes per AGENTS.md §5:
 | Privacy filter breaker OPEN but broadcast proceeds | Class 1/2 | Immediate fail — BRC-D5 violated |
 | Segmentation failure cascades to privacy filter | Class 2 | Immediate fail — independent failure domains violated |
 | Regional watcher executes tool block unilaterally | Class 2 | Immediate fail — BRC-D9 violated |
+| Transient trip treated as sustained without reclassification | Class 2 | Immediate fail — BRC-D13 violated |
+| Sustained probe failure does not reset cooldown | Class 2 | Immediate fail — BRC-D13 violated |
+| Budget exhaustion treated as normal pass | Class 2 | Immediate fail — BRC-D15 violated; no verdict/decision from exhausted output |
+| Cross-voter sub-budget borrow without approval | Class 2 | Immediate fail — BRC-D14 violated |
 | Health score below 85 | Rubric | Phase does not close |
 
 ---
 
-## §8 — Open questions (for signing session)
+## §8 — Open questions — RESOLVED (operator, June 12 2026)
 
-| # | Question | Proposed default |
-|---|---|---|
-| Q1 | Scoreboard row number | Assign at signing session (BRC-D12: one ensemble row). |
-| Q2 | Rubric track | New Layer 6 / Control Plane rubric track by amendment (BRC-D11), mirroring Layer 4 and Layer 5 precedents. |
-| Q3 | Ring promotion thresholds | Launch-conservative static values; tunable by signed amendment after real-tenant baseline data (BRC-D6). |
-| Q4 | Breaker half-open probe count | Launch-conservative (e.g., 1 probe before re-open or re-trip). Tunable by signed amendment. |
-| Q5 | Session budget defaults | Launch-conservative (e.g., 100K tokens, 50 tool calls, 30 min wall clock). Tunable by signed amendment. |
-| Q6 | Mode Controller contract timing | Must be signed and gated **before** DEPTH GATE opens (design plan §5). Can be drafted in parallel with this contract but gates independently. |
-| Q7 | Privacy Filter service spec timing | Must be specified as separate service **before** DEPTH GATE opens (design plan §5). Can be drafted in parallel. |
-| Q8 | Watcher hierarchy wiring | Interface design only in this contract. Watcher Agents remain concept (#85-87). Separate contract when ready. |
+| Question | Resolution |
+|---|---|
+| Q1 — Scoreboard row number | **#89** (BRC-D12). One ensemble row; eight components internal. |
+| Q2 — Rubric track | **New Layer 6 / Control Plane rubric track** added by amendment (BRC-D11), mirroring Layer 4 and Layer 5 precedents. Amendment (`Agent_Health_Score_Rubric_Amendment_ControlPlane.md`) §11 SIGNED alongside this contract. |
+| Q3 — Ring promotion thresholds | **Launch-conservative static values**; tunable by signed amendment after real-tenant baseline data (BRC-D6). No autonomous re-tuning. |
+| Q4 — Breaker half-open probe count | **Trip-class-aware recovery (BRC-D13).** Transient: 30s cooldown, 1 probe — failure reclassifies as sustained. Sustained: 5min cooldown, 3 successful probes — any failure resets cooldown and keeps breaker `OPEN`. ReconciliationAgent defaults to sustained. |
+| Q5 — Session budget defaults | **Role-tiered budgets (BRC-D14).** Detection: 50K/30/15min. ReconciliationAgent ensemble: 150K/90/20min with 50K per-voter sub-budgets (no cross-voter borrow without controller approval). Control plane: 25K/20/10min. All amendment-tunable after Ring 0 + Ring 1 baseline. **Budget exhaustion rule (BRC-D15):** `incomplete_budget_exhausted` status — not a pass; no verdict/decision from exhausted output; governance record required. |
+| Q6 — Mode Controller contract timing | Must be signed and gated **before DEPTH GATE opens** (§9). May be drafted **in parallel** with this contract but gates independently. |
+| Q7 — Privacy Filter service spec timing | Must be specified as separate service **before DEPTH GATE opens** (§9). May be drafted **in parallel**. |
+| Q8 — Watcher hierarchy wiring | **Interface design only** in this contract. Watcher Agents (#85-87) remain `RESERVED` concept. Separate contract when ready. |
+
+A new Layer 6 Agent Health Score Rubric track (BRC-D11) is a pre-build amendment, to be drafted and signed alongside this contract — mirroring how the Layer 5 Mutation Engine track landed before the Phase 5 build.
 
 ---
 
@@ -269,7 +305,7 @@ Phase closes when all of the following are true:
 
 ## §14 — Operator Sign-Off
 
-**Status:** DRAFT — pre-§11, UNSIGNED. No build authorization.
+**Status:** §11 SIGNED — build authorization granted per §11 scope.
 
-**Signed:**
-**Date:**
+**Signed:** Matt Nichol
+**Date:** June 12th 2026
