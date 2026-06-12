@@ -33,7 +33,7 @@
 | Phase 3 — Detection Swarm | GATED `c522292` | 0/0 clean | Six Layer 1 detection agents built `6deffd9`; phase closed 2026-06-11 (`ce386f7`); 86 ELITE each |
 | Phase 4 — Reconciliation | GATED | — | ReconciliationAgent (#84) built; three-voter ensemble; 88 ELITE; CIRT amendment + verdict surface landed |
 | Phase 5 — Mutation Engine | GATED | — | MutationEngine ensemble (#88) built 2026-06-12; six components + named Anomaly Detection Pipeline; 95 ELITE; sandbox-only until operator sign-off; every deploy reversible |
-| Phase 6 — Collective Immune System | BLOCKED — DEPTH GATE CLOSED | — | Gate must open first; needs own signed contract |
+| Phase 6 — Control Plane (Blast Radius Controller) | GATED | — | Blast Radius Controller (#89) built 2026-06-12; eight components walk the §3.6 gateway lifecycle; five gates (breakers / segmentation / rings / graceful degradation iface / zero trust); all five metastasis tests pass; 95 ELITE on Layer 6 Control Plane rubric; Mode Controller + Privacy Filter remain separate signed contracts |
 | Phase 7 — The Lung | BLOCKED | — | Needs real tenant data to calibrate; needs own signed contract |
 | Phase 8 — Governance Completion | BLOCKED | — | Needs Phase 5 complete; needs own signed contract |
 | Phase 9 — The Playhouse | BLOCKED | — | Needs all phases complete; needs own signed contract |

@@ -47,6 +47,73 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+PHASE 6 — BLAST RADIUS CONTROLLER CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
+  PHASE:      Phase 6 — Layer 6 Control Plane / Blast Radius Controller
+              (eight-component ensemble, row #89).
+  CONTRACT:   `4. Product_Roadmap/Blast_Radius_Controller_Contract.md`
+              (§11 SIGNED 2026-06-12, Matt Nichol, d5ad4bf) + Agent Health Score
+              Rubric Layer 6 Control Plane track amendment
+              `Agent_Health_Score_Rubric_Amendment_ControlPlane.md`
+              (§11 SIGNED 2026-06-12, d5ad4bf). Concept lineage:
+              `Blast_Radius_Controller_Design_Plan.md` (5b7b89f, advisory lane).
+              Depends on Phase 1 (fe355da, RoleSeparation reuse), Phase 4 verdict
+              surface (d0cc849, BRC sits in front of it), Phase 5 (02a2252,
+              RingController promotion uses mutation regression outcomes).
+  SIGNED OFF: Matt Nichol, June 12th 2026 (phase closure per contract §10 / BRC-D12).
+  BUILT:      #89 Blast Radius Controller ensemble in `core/control_plane/`.
+              Eight components:
+                - `identity.py` — AgentIdentityGateway: identity/tenant/tool scope +
+                  revocation; cross-agent token rejected at gateway (Gate 5, BRC-D7)
+                - `breaker.py` — BreakerStore: CLOSED/OPEN/HALF_OPEN per
+                  tenant/agent/tool/session; trip-class-aware recovery
+                  (transient 30s/1 probe → sustained reclassification; sustained
+                  5min/3 probes, cooldown reset on failure; ReconciliationAgent
+                  defaults sustained) (Gate 1, BRC-D1/D13)
+                - `budget.py` — SessionBudgetStore: role-tiered (detection 50K /
+                  reconciliation 150K with 50K per-voter sub-budgets, no borrow
+                  without controller approval / control plane 25K); exhaustion →
+                  `incomplete_budget_exhausted` + governance record, never a pass
+                  (Gate 1, BRC-D2/D14/D15)
+                - `loop_detector.py` — LoopDetector: identical-arg runs +
+                  call-frequency only, no embeddings, no content (Gate 1, BRC-D3)
+                - `segmentation.py` — TenantSegmentationController: per-tenant
+                  queues/rate-limits/credentials; forged tenant_id rejected (Gate 2, BRC-D4)
+                - `privacy_filter.py` — PrivacyFilterInterface: own breaker key,
+                  OPEN → nothing broadcasts; independent failure domain (Gate 2, BRC-D5)
+                - `rings.py` — RingController: Ring 0-3; promotion requires
+                  independent out-of-band verification, agent telemetry insufficient
+                  (Gate 3, BRC-D6)
+              `gateway.py` — GatewayController wires all eight and walks the §3.6
+              lifecycle (identity→ring→budget→breaker→mode→dispatch→telemetry),
+              no shortcuts, no partial dispatch, fail-safe reject + audit (BRC-D8).
+              Vendor-neutral: defines control/security properties, not infra.
+              Mode Controller (quorum/epoch) and Privacy Filter service are
+              SEPARATE signed contracts — gateway-side interfaces only (BRC-D10).
+  METASTASIS: all five contract §6 Class-2 tests pass —
+                M1 argument-mutation loop bypass → caught by call-frequency (BRC-D3)
+                M2 forged tenant_id → rejected regardless of content (BRC-D4)
+                M3 forged telemetry health → promotion refused, no out-of-band (BRC-D6)
+                M4 unilateral ISOLATED mode trigger → mode read-only at gateway,
+                   no agent path to flip it; denying mode-check blocks dispatch (BRC-D10)
+                M5 cross-agent identity token → rejected at gateway (BRC-D7)
+  CLOSURE CHECKLIST (contract §10 / BRC-D12):
+    - gate-clean 0/0 ................................ YES (Grok completion gate clean)
+    - scores 85+ on Layer 6 Control Plane rubric ..... YES (95 ELITE)
+    - scoreboard row #89 updated to GATED ............ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 12th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes per component in
+              `tests/test_blast_radius_controller.py` (44 pass + 8 documented
+              xfail, one known-gap per component + gateway Mode Controller bridge);
+              full suite 1658 passed, 1 skipped, 31 xfailed.
+  GOVERNANCE: Rule 1 — build straight through per signed contract; no permission
+              stops for work already authorized. Thresholds launch-conservative,
+              tunable only by signed amendment after Ring 0/Ring 1 baseline data
+              (BRC-D6/D14); never autonomously. Watcher blocking power bounded
+              (BRC-D9): regional tool blocks require Matt sign-off.
+
+---
+
 PHASE 5 — MUTATION ENGINE CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
   PHASE:      Phase 5 — Layer 5 Mutation Engine (six-component ensemble, row #88).
   CONTRACT:   `4. Product_Roadmap/Phase5_MutationEngine_Contract.md`

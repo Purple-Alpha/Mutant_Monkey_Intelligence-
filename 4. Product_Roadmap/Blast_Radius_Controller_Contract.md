@@ -192,7 +192,7 @@ No signed Phase 1/2/3/4/5 surface is modified by this contract.
 
 | Row | Agent | Status at signing | Layer |
 |---|---|---|---|
-| **#89** | Blast Radius Controller (ensemble) | `SIGNED_UNBUILT` → build → `GATED` | 6 Control Plane |
+| **#89** | Blast Radius Controller (ensemble) | `GATED` (built 2026-06-12, 95 ELITE) | 6 Control Plane |
 
 One ensemble row (BRC-D12, **#89**). Eight components internal.
 
@@ -294,12 +294,12 @@ This contract satisfies pre-condition 1 when signed and built. Pre-conditions 2 
 
 Phase closes when all of the following are true:
 
-- [ ] Gate-clean 0/0 (Grok completion gate clean, 0 warnings)
-- [ ] Health score 85+ ELITE on the Layer 6 / Control Plane rubric track (BRC-D11)
-- [ ] Scoreboard row updated to `GATED`
-- [ ] Matt signs phase closure
-- [ ] `decision_cycles_log.md` PHASE_CLOSURE entry recorded
-- [ ] Three test classes per component pass (Class 1 + Class 2; Class 3 documented xfail)
+- [x] Gate-clean 0/0 (Grok completion gate clean, 0 warnings)
+- [x] Health score 85+ ELITE on the Layer 6 / Control Plane rubric track (BRC-D11) — **95 ELITE**
+- [x] Scoreboard row updated to `GATED` — **#89 GATED 2026-06-12**
+- [x] Matt signs phase closure — **Matt Nichol, June 12th 2026**
+- [x] `decision_cycles_log.md` PHASE_CLOSURE entry recorded
+- [x] Three test classes per component pass (Class 1 + Class 2; Class 3 documented xfail) — **44 pass + 8 xfail; full suite 1658/1/31**
 
 ---
 

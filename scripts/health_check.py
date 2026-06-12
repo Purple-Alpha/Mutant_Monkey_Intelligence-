@@ -61,7 +61,7 @@ PHASES = [
     (3, "Detection Swarm", "Phase3_Detection_Swarm_Agent_Design_Contract.md"),
     (4, "Reconciliation", "Phase4_ReconciliationAgent_Contract.md"),
     (5, "Mutation Engine", "Phase5_MutationEngine_Contract.md"),
-    (6, "Collective Immune System", None),
+    (6, "Control Plane (Blast Radius Controller)", "Blast_Radius_Controller_Contract.md"),
     (7, "The Lung", None),
     (8, "Governance Completion", None),
     (9, "The Playhouse", None),

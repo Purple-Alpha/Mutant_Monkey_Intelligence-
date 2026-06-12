@@ -65,6 +65,21 @@ Five components, weighted to 100. Applied to the Blast Radius Controller ensembl
 
 ---
 
+## §B.1 — Achieved score (Blast Radius Controller #89, 2026-06-12)
+
+Scored against this track on closure. Full suite **1658 passed / 1 skipped / 31 xfailed**; gate-clean 0/0; 3 test classes per component; all five metastasis tests pass.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | `GatewayController.handle()` walks the full §3.6 lifecycle in sequence; rejection at any gate raises before dispatch (`test_no_partial_dispatch_on_rejection`); fail-safe reject + audit on every gate. −1: live Mode Controller quorum is interface-only here (BRC-D10 xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Trip-class recovery proven (transient→sustained reclassification, sustained cooldown reset, ReconciliationAgent sustained default); role-tiered budgets + 50K per-voter sub-budget no-borrow; `incomplete_budget_exhausted` + governance record, sticky, blocks `may_issue_decision`. −1: wall-clock charged by caller-supplied elapsed, live timer deferred (xfail). |
+| 3 — Segmentation & Isolation (20) | 19 | Per-tenant queues/rate-limits/credentials with no cascade; forged `tenant_id` rejected; privacy filter independent failure domain (own breaker key, ordinary breaker trip does not block broadcast). −1: vault-managed credentials deferred (xfail). |
+| 4 — Zero Trust & Identity (15) | 14 | Cross-agent token, tenant-scope, tool-scope, and revocation all rejected at gateway regardless of payload; ring promotion requires out-of-band verification (forged telemetry refused). −1: cryptographic identity (mTLS/JWT/SPIFFE) deferred to hardening (xfail). |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only `ControlPlaneAuditTrail` on every gate transition, breaker trip, budget exhaustion, broadcast block, and ring promotion attempt; §11 contract + row #89 + 3 test classes/component + gate-clean; Mode Controller / Privacy Filter interfaces defined not built. −1: audit is in-process, persistence deferred (xfail). |
+| **Composite** | **95** | **ELITE** — clears the BRC-D11 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
