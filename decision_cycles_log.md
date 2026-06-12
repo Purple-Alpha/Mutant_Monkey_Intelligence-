@@ -47,6 +47,33 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+PHASE 4 — RECONCILIATION AGENT CLOSURE   2026-06-11   [type: PHASE_CLOSURE]
+  PHASE:      Phase 4 — Layer 4 ReconciliationAgent (three-voter ensemble).
+  CONTRACT:   `4. Product_Roadmap/Phase4_ReconciliationAgent_Contract.md`
+              (§11 SIGNED 2026-06-11, Matt Nichol, d0cc849). Pre-build amendments:
+              RoleSeparationController CIRT role + Agent Health Score Rubric Layer 4
+              track (§11 SIGNED 2026-06-11, f2219e3). Depends on Phase 1 (fe355da),
+              Phase 2 (43b5511), Phase 3 (6deffd9 / closed ce386f7).
+  SIGNED OFF: Matt Nichol, June 11th 2026 (phase closure per contract §10 / P4-D7).
+  BUILT:      #84 ReconciliationAgent ensemble in `core/reconciliation/` (R1 Signal
+              Weight / R2 Pattern Match / R3 Conflict Resolution voters); verdict
+              surface `core/blackboard/verdict_ledger.py`; CIRT role amendment in
+              `core/operator_state/role_separation.py`. Sole verdict producer (P4-D5);
+              independent voting (P4-D6); tenant-isolated reads/writes (P4-D8); P4-D3
+              deterministic lockdown; §8 special paths (spam_signal_only,
+              zero_day_referred).
+  CLOSURE CHECKLIST (contract §10 / P4-D7):
+    - gate-clean 0/0 ................................ YES (Grok gate clean)
+    - scores 85+ on Layer 4 rubric track ............. YES (88 ELITE)
+    - scoreboard row #84 updated to GATED ............ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 11th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes for ReconciliationAgent (21 pass + 3 documented
+              xfail) + CIRT amendment tests (7 pass + 1 xfail); full suite 1578
+              passed, 1 skipped, 16 xfailed.
+  GOVERNANCE: Rule 1 — build straight through per signed contract; no permission
+              stops for work already authorized.
+
 PHASE 3 — DETECTION SWARM CLOSURE   2026-06-11   [type: PHASE_CLOSURE]
   PHASE:      Phase 3 — Layer 1 Detection Swarm (six detection agents).
   CONTRACT:   `4. Product_Roadmap/Phase3_Detection_Swarm_Agent_Design_Contract.md`

@@ -31,7 +31,7 @@
 | Phase 1 — Infrastructure | §11 SIGNED `fe355da` | GATED | Contract signed June 9 2026; infra built C1/C2/C3; closure entry June 11 2026 |
 | Phase 2 — Knowledge Foundation | GATED `43b5511` | 0/0 clean | Six Layer 0 intel agents; phase closed 2026-06-10 (`f5bf3b7`) |
 | Phase 3 — Detection Swarm | GATED `c522292` | 0/0 clean | Six Layer 1 detection agents built `6deffd9`; phase closed 2026-06-11 (`ce386f7`); 86 ELITE each |
-| Phase 4 — Reconciliation | §11 SIGNED `d0cc849` | — | ReconciliationAgent contract + CIRT/rubric amendments signed (`f2219e3`); build not yet started |
+| Phase 4 — Reconciliation | GATED | — | ReconciliationAgent (#84) built; three-voter ensemble; 88 ELITE; CIRT amendment + verdict surface landed |
 | Phase 5 — Mutation Engine | BLOCKED | — | Needs own signed contract |
 | Phase 6 — Collective Immune System | BLOCKED — DEPTH GATE CLOSED | — | Gate must open first; needs own signed contract |
 | Phase 7 — The Lung | BLOCKED | — | Needs real tenant data to calibrate; needs own signed contract |

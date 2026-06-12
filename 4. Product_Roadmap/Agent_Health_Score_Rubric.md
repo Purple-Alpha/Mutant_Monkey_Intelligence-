@@ -122,7 +122,13 @@
 | AttachmentSandbox (#82) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
 | ImageClassifier (#83) | 22 | 14 | 20 | 15 | 15 | 86 | ELITE |
 
-*The first four (detection/verification) rows remain estimates pending exact recompute. The six Layer 0 knowledge agents (#72-77) are **computed Phase 2 scores** (2026-06-10; build gate-clean, full suite 1497 passing, 3 test classes each). They are structurally identical, so they score identically. All six clear the 70+ phase-closure gate (contract §10). The six Layer 1 detection agents (#78-83) are **computed Phase 3 scores** (2026-06-11; build gate-clean, full suite 1553 passing, 3 test classes each + Amendment 1 assertions). Structurally identical; all six score 86 ELITE (clears the 85+ phase-closure gate per contract §10).*
+### Layer 4 — ReconciliationAgent track (amendment §B; applies to #84 only)
+
+| Agent | Ensemble Integrity (25) | Evidence Chain (20) | Verdict Accuracy (25) | CIRT Routing (15) | Governance (15) | **Total** | **Band** |
+|---|---|---|---|---|---|---|---|
+| ReconciliationAgent (#84) | 23 | 18 | 22 | 12 | 13 | 88 | ELITE |
+
+*The first four (detection/verification) rows remain estimates pending exact recompute. The six Layer 0 knowledge agents (#72-77) are **computed Phase 2 scores** (2026-06-10; build gate-clean, full suite 1497 passing, 3 test classes each). They are structurally identical, so they score identically. All six clear the 70+ phase-closure gate (contract §10). The six Layer 1 detection agents (#78-83) are **computed Phase 3 scores** (2026-06-11; build gate-clean, full suite 1553 passing, 3 test classes each + Amendment 1 assertions). Structurally identical; all six score 86 ELITE (clears the 85+ phase-closure gate per contract §10). ReconciliationAgent (#84) is scored on the **Layer 4 amendment track** (2026-06-11; build gate-clean, full suite 1578 passing, 3 test classes + CIRT amendment tests; 88 ELITE clears the 85+ phase-closure gate per P4-D7).*
 
 **Layer 0 scoring interpretation (flagged for operator — possible rubric amendment):** this rubric is written for detection agents; two components needed interpretation for *brief-only* Layer 0 knowledge agents:
 1. **Evidence Stage (14):** capped at ES1 per the signed Phase 2 contract P2-D3 ("all six start at ES1"), even though they pass adversarial synthetic tests — which this rubric's Component 1 would otherwise read as ES2 (15-24). The signed contract wins.
@@ -135,6 +141,13 @@ A future signature could add an explicit Layer 0 scoring track so these don't re
 1. **Evidence Stage (22):** ES2 — adversarial synthetic tests pass including Amendment 1 assertions (sender_domain normalization, token attribution, tenant isolation).
 2. **Proof Depth (14):** each agent consumes a mandatory Layer 0 briefing (knowledge input) and writes one detection signal — a 2-type evidence chain per P3-D3, scored mid-band (11-16) rather than the reconciliation-gated top band (17-20, Phase 4).
 3. **Integration Health (15):** 100% schema-validation pass on `CanonicalEvidenceLedger` writes; tenant isolation confirmed on every write (P3-D5); Amendment §C token attribution verified for ContentAnalyzer and AttachmentSandbox.
+
+**Layer 4 scoring interpretation (ReconciliationAgent #84 — amendment track):**
+1. **Ensemble Integrity (23):** three voters provably independent (P4-D6 signature test); unanimous/majority/escalate resolution correct; minority logged on 2-of-3; all-disagree → ESCALATE.
+2. **Evidence Chain Quality (18):** plain-English chain on every verdict with all §7 required fields; operator-readable narrative, not a raw signal dump.
+3. **Verdict Accuracy (22):** adversarial synthetic corpus passes; closed enum enforced; §8 special paths correct (`spam_signal_only`→`DELIVERY_PROBLEM`; zero-day recorded without altering verdict); P4-D3 lockdown verified.
+4. **CIRT Routing (12):** ESCALATE routes to bound named CIRT individual; deterministic lockdown fires; **freeze-authority live wiring deferred** (contract §11 Class 3 xfail — completion path: onboarding integration).
+5. **Governance & Boundary (13):** §11-signed contract + amendments + scoreboard row + 3 test classes + gate clean; tenant-isolated verdict write on `VerdictLedger`; sole verdict surface (P4-D5).
 
 ---
 
