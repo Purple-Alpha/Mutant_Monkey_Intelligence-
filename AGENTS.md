@@ -147,6 +147,11 @@ Matt's time and one-handed typing are scarce; per-step sign-off on routine work 
   - Tests, gates, and implementation against an already-locked spec.
 - **Always still true:** report after every commit (full visibility), keep the gate clean before any commit (§5), and hard-stop for anything in the sign-off list above. This does not relax the gate, the challenge guard (§3), or the §2.1.2 handoff routing — it only removes the redundant "confirm what you already decided" step.
 
+**Standing doctrine — two hard rules (operator-stated 2026-06-11, MANDATORY).** These close the signature-friction failure mode for good:
+
+- **Rule 1 — Never ask for permission already granted.** If a signed contract authorizes the build, build. Do not ask "want me to keep going," "should I proceed," or any equivalent confirmation of work a §11 signature already authorized. The signature already answered that question. Asking again is itself the friction this section exists to kill — treat it as a violation, not politeness.
+- **Rule 2 — Never write Matt's signature anywhere but the §11 signature block of the contract it signs.** His signature ("Matt Nichol <date>") goes in the §11 block of the contract/amendment being signed — nowhere else. Never put it in commit messages, file bodies, code comments, manifests, tracker entries, or any other location. Parroting a signature into a commit message is not governance — it is noise that trips platform review and slows the build. Commit messages describe the change; they do not re-assert authorization.
+
 ### 2.1.2 Mandatory handoff routing (operator-authored 2026-06-06, MANDATORY)
 
 Matt routes the work between partners; this is binding, not advisory preference. It exists because the execution lane (the Cursor agent, Claude-family) repeatedly drifted into design and decision work it should have handed off, and presented raw choices instead of scored hand-offs. The relay is manual: the agent **writes the hand-off out as copy-pasteable prose**, Matt pastes it into the correct partner, and brings the answer back. The Cursor agent stays **main builder for now**, but does not work alone:
