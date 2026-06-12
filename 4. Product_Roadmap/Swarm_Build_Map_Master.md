@@ -28,15 +28,15 @@
 
 | Phase | Status | Gate | Notes |
 |---|---|---|---|
-| Phase 1 — Infrastructure | §11 SIGNED `fe355da` | Pending 0/0 | Contract signed June 9 2026 |
-| Phase 2 — Knowledge Foundation | BLOCKED | — | Needs Phase 1 gated |
-| Phase 3 — Detection Swarm | BLOCKED | — | Needs Phase 2 complete |
-| Phase 4 — Reconciliation | BLOCKED | — | Needs Phase 3 complete |
-| Phase 5 — Mutation Engine | BLOCKED | — | Needs Phase 2 complete |
-| Phase 6 — Collective Immune System | BLOCKED — DEPTH GATE CLOSED | — | Gate must open first |
-| Phase 7 — The Lung | BLOCKED | — | Needs real tenant data to calibrate |
-| Phase 8 — Governance Completion | BLOCKED | — | Needs Phase 5 complete |
-| Phase 9 — The Playhouse | BLOCKED | — | Needs all phases complete |
+| Phase 1 — Infrastructure | §11 SIGNED `fe355da` | GATED | Contract signed June 9 2026; infra built C1/C2/C3; closure entry June 11 2026 |
+| Phase 2 — Knowledge Foundation | GATED `43b5511` | 0/0 clean | Six Layer 0 intel agents; phase closed 2026-06-10 (`f5bf3b7`) |
+| Phase 3 — Detection Swarm | GATED `c522292` | 0/0 clean | Six Layer 1 detection agents built `6deffd9`; phase closed 2026-06-11 (`ce386f7`); 86 ELITE each |
+| Phase 4 — Reconciliation | §11 SIGNED `d0cc849` | — | ReconciliationAgent contract + CIRT/rubric amendments signed (`f2219e3`); build not yet started |
+| Phase 5 — Mutation Engine | BLOCKED | — | Needs own signed contract |
+| Phase 6 — Collective Immune System | BLOCKED — DEPTH GATE CLOSED | — | Gate must open first; needs own signed contract |
+| Phase 7 — The Lung | BLOCKED | — | Needs real tenant data to calibrate; needs own signed contract |
+| Phase 8 — Governance Completion | BLOCKED | — | Needs Phase 5 complete; needs own signed contract |
+| Phase 9 — The Playhouse | BLOCKED | — | Needs all phases complete; needs own signed contract |
 
 ---
 

@@ -112,6 +112,23 @@ PHASE 2 — KNOWLEDGE FOUNDATION CLOSURE   2026-06-10   [type: PHASE_CLOSURE]
 
 ---
 
+PHASE 1 — INFRASTRUCTURE CLOSURE   2026-06-09   [type: PHASE_CLOSURE]
+  PHASE:      Phase 1 — Infrastructure (Canonical Evidence Ledger, RoleSeparationController,
+              TokenUsageTracker).
+  CONTRACT:   `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md`
+              (§11 SIGNED 2026-06-09, Matt Nichol, commit fe355da).
+  SIGNED OFF: Matt Nichol, June 9th 2026 (phase signed; infrastructure built C1/C2/C3).
+  BUILT:      Component 1 Canonical Evidence Ledger (`ce934f4`), Component 2
+              RoleSeparationController, Component 3 TokenUsageTracker (#71) (`aa64e29`)
+              — all in `core/blackboard/` + `core/operator_state/`. Build authority only.
+  CLOSURE NOTE: recorded retroactively 2026-06-11 so the build-health snapshot reads
+              Phase 1 as GATED. Phase 1 was tracked at build time as INFRASTRUCTURE_BUILD
+              (see entry below); this entry formalizes the phase closure under the same
+              fe355da contract — no new build, no new authorization.
+  NOT PUSHED: all Phase 1 commits remain local — push is Matt's explicit call.
+
+---
+
 PHASE 1 INFRASTRUCTURE — BUILD EXECUTION (C1/C2/C3)   2026-06-10   [type: INFRASTRUCTURE_BUILD]
   CONTRACT:   `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md`
               (§11 SIGNED 2026-06-09, commit fe355da). Build authority only — no promotion.
