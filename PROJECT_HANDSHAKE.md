@@ -3,8 +3,65 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of aa64e29)
+CURRENT NEXT ACTION (as of 37431e3)
 ═══════════════════════════════════════════════
+AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the PRIMARY CODEBASE
+  (operator decision 2026-06-13; see CURRENT_STATE_MAP.md "Codebase authority state").
+  The Windows surface (`/mnt/c/Unified Folder Structure NorthStar + SwarmCommand Venture`)
+  is secondary/reference only. Do not merge/import this repo into Windows, do not delete
+  this repo, and do not treat the Windows master as primary unless the operator changes
+  authority later.
+
+BRANCH: safety/queue-drift-cleanup-20260528 — aligned with
+  github/safety/queue-drift-cleanup-20260528 (PUSHED, clean tree).
+HEAD: 37431e3 record wsl primary codebase authority (2026-06-13)
+
+STATE: Far past the prior Phase 1 snapshot. Repo history now contains gated milestones
+  through Phase 6 plus the newer concepts:
+       Phase 2 knowledge intel agents ............ GATED
+       Phase 3 detection swarm (six Layer 1) ..... GATED
+       Phase 4 ReconciliationAgent ensemble ...... GATED
+       Phase 5 Mutation Engine (Layer 5) ......... GATED
+       Phase 6 Control Plane / Blast Radius ...... GATED (f1c817e)
+       Load Fission #90 / Specialisation Fission #91 GATED (190002f / c7ef023)
+       Watcher Agents (Layer 6 Governance) ....... GATED (6da6284)
+       Shadow Watcher Swarm: concept (e7dc3a4) -> ten-layer contract (5320ba0) -> Layer 1 GATED (03cd7d2)
+       Dual LLM: DRAFT (53635dc) -> contract + rubric amendment (d68c70a) -> pattern GATED (696ee45)
+
+NAMING CLARIFICATION (read before any evaluation-matrix work):
+  - The new evaluation artifact is named: "Shadow Watcher Alarm-and-Fission Evaluation Matrix".
+    Use this exact name. Do NOT call it "the 5-axis rubric".
+  - "the 5-axis rubric" is AMBIGUOUS — it is not a single artifact. At least two existing
+    5-axis lineages already use that shorthand:
+      (a) Client-Facing 5-Axis Email Scoring Rubric — the product/client-facing email-risk
+          score (4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md +
+          core/scoring/client_facing_rubric.py).
+      (b) think_sheet.md strategic rubric — the five 0-2 axis idea-prioritization scoring
+          (the "a·b·c·d·e = N" rubric) used to score and promote ideas throughout
+          think_sheet.md.
+    Because the phrase is overloaded, never use "the 5-axis rubric" as a name; always use a
+    specific artifact name.
+  - The Dual LLM "rubric amendment" targets the Agent Health Score Rubric
+    (Agent_Health_Score_Rubric.md + ..._Amendment_DualLLM.md), NOT either 5-axis rubric.
+
+NEXT ACTION:
+  Shadow Watcher Swarm, Dual LLM, and Fission ALREADY EXIST in history. Do NOT recreate
+  them as new concepts. Treat next work as a clarification/amendment pass on existing
+  signed artifacts. No code, no build, no Phase execution until the operator authorizes a
+  specific §11-signed scope.
+
+IF BLOCKED:
+  Not blocked — tree is clean and pushed. Awaiting operator direction on the
+  clarification/amendment pass.
+
+LAST UPDATED: 37431e3 2026-06-13 (authority refresh: WSL primary, branch pushed/aligned,
+  Phases 2-6 + Shadow Watcher + Dual LLM + Fission gated, naming locked)
+═══════════════════════════════════════════════
+
+─────────────────────────────────────────────────
+SUPERSEDED SNAPSHOT — preserved for history (was the live block "as of aa64e29")
+─────────────────────────────────────────────────
+CURRENT NEXT ACTION (as of aa64e29)
 STATE: Phase 1 Infrastructure COMPLETE — all buildable scope of `Phase1_Infrastructure_Agent_Design_Contract.md` (§11 SIGNED 2026-06-09) is built, gate-clean, and committed:
        C1 Canonical Evidence Ledger ........ ce934f4 (core/blackboard/canonical_ledger.py)
        C2 Role Separation Controller ....... f080a6f (core/operator_state/role_separation.py)
