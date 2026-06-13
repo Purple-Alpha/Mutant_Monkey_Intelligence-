@@ -80,12 +80,28 @@ Scored against this track on closure. Full suite **1658 passed / 1 skipped / 31 
 
 ---
 
+## §B.2 — Achieved score (Watcher Agents #85-87, 2026-06-12)
+
+The three Watchers are scored as one Layer 6 Governance ensemble against this track (the control-plane track covers governance observers; the components map onto observation integrity, threat-classification consensus, isolation, and audit completeness). Full suite **1699 passed / 1 skipped / 39 xfailed**; gate-clean 0/0; 3 test classes per component; all four mandated adversarial tests pass.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | Watchers write only to the `ObservationLog`; the neutral-observer boundary is enforced actively (`write_blackboard` / `influence_verdict` / `message_agent` / `make_recommendation` all raise `WatcherBoundaryError`) and per-lane (a watcher cannot emit outside its allowed observation types). −1: gateway egress policy for watcher identities deferred (xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | `WatcherResourceController` holds disjoint watcher/agent quota pools with separate credentials; an agent exhausting its budget leaves watcher capacity intact (WA-D6 A4 test); agent credentials cannot draw the watcher pool. −1: physical separate-infrastructure provisioning deferred (xfail). |
+| 3 — Segmentation & Isolation (20) | 19 | IntegrityWatcher reports cross-tenant reads CRITICAL and writes-outside-assigned-type as schema violations; observes and reports only, never blocks or mutates the ledger. −1: deep N-cycle ledger-graph analysis deferred (xfail). |
+| 4 — Zero Trust & Identity (15) | 14 | `ThreatLevelClassifier` requires ≥2 independent watchers to escalate above ROUTINE (WA-D2), no single watcher forces a change (WA-D3), and only registered watcher ids may submit — agents have zero influence (WA-D8). −1: real-tenant threat-signal calibration deferred (xfail). |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only immutable `ObservationLog` separate from `core/blackboard/` (WA-D4, no update/delete API); closed observation enum; `EscalationRouter` routes INFO/WARNING/CRITICAL with CRITICAL direct to Matt, no queue/delay (WA-D5); §11 contract + rows #85-87 + 3 test classes/component + gate-clean. −1: live notification transport + durable store deferred (xfail). |
+| **Composite** | **95** | **ELITE** — clears the WA-D9 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
 - **ReconciliationAgent** (#84, Layer 4) — the Layer 4 amendment track.
 - **Mutation Engine** (#88, Layer 5) — the Layer 5 amendment track.
 - **Blast Radius Controller** (#89, Layer 6) — this track.
+- **Watcher Agents** (#85-87, Layer 6 Governance) — this track (scored as one governance-observer ensemble, §B.2).
 - Future control-plane agents may cite this track by amendment.
 
 ---

@@ -47,6 +47,71 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+WATCHER AGENTS CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
+  PHASE:      Layer 6 Governance — Watcher Agents (three observers, rows #85-87).
+  CONTRACT:   `4. Product_Roadmap/Watcher_Agents_Contract.md`
+              (§11 SIGNED 2026-06-12, Matt Nichol, `0d95662`) scored on the
+              Layer 6 Control Plane rubric track amendment
+              `Agent_Health_Score_Rubric_Amendment_ControlPlane.md` (§B.2).
+              Concept lineage: `Watcher_Agents_Concept_Doc.md`.
+              Depends on Blast Radius Controller (GATED #89, `f1c817e`) and the
+              Phase 1 governance audit-trail infrastructure (`fe355da`).
+  SIGNED OFF: Matt Nichol, June 12th 2026 (phase closure per contract §9).
+  BUILT:      #85-87 in `core/watchers/`. Neutral observers that watch the swarm
+              (not the emails) and report facts only — no verdict vote, no
+              evidence-chain access, no `core/blackboard/` writes, no
+              recommendations beyond threat-level classification.
+                - `observation.py` — `ObservationLog`: append-only, immutable,
+                  SEPARATE infrastructure from core/blackboard/ (WA-D4); closed
+                  8-member observation enum; no update/delete API
+                - `threat.py` — `ThreatLevelClassifier`: ROUTINE/ELEVATED/HIGH/
+                  CRITICAL; ≥2 independent watchers required to escalate above
+                  ROUTINE, no unilateral change (WA-D2/D3); only registered
+                  watcher ids may submit — agents have zero influence (WA-D8);
+                  Watchers are the sole legitimate fission trigger source (WA-D1)
+                - `isolation.py` — `WatcherResourceController`: disjoint watcher/
+                  agent quota pools + separate credentials; cannot be starved by
+                  agent resource exhaustion (WA-D6, non-negotiable)
+                - `base.py` — `BaseWatcher`: neutral-observer boundary enforced
+                  actively (write_blackboard/influence_verdict/message_agent/
+                  make_recommendation all raise) and per-lane
+                - `timing_watcher.py` (#85) — completion windows + identical-arg
+                  loop signatures + inactivity
+                - `drift_watcher.py` (#86) — running-mean confidence vs signed
+                  baseline range (gradual drift)
+                - `integrity_watcher.py` (#87) — ledger schema violations,
+                  unauthorized/out-of-type writes, cross-tenant reads, circular
+                  read patterns; observes and reports, never blocks
+                - `escalation.py` — `EscalationRouter`: INFO→audit; WARNING→
+                  Commander+audit; CRITICAL→Commander+Matt-direct+audit, no
+                  queue/delay (WA-D5)
+  ADVERSARIAL: all four mandated §6 Class-2 tests pass —
+                A1 watcher cannot write to core/blackboard/ (WA-D4/D7)
+                A2 watcher cannot influence a verdict (WA-D7)
+                A3 single watcher cannot force a threat-level change (WA-D2/D3)
+                A4 watcher cannot be starved by agent resource exhaustion (WA-D6)
+  CLOSURE CHECKLIST (contract §9):
+    - gate-clean 0/0 ................................ YES (Grok completion gate clean)
+    - scores 85+ on Layer 6 Control Plane rubric ..... YES (95 ELITE, §B.2)
+    - scoreboard rows #85-87 updated to GATED ........ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 12th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes per component in
+              `tests/test_watcher_agents.py` (41 pass + 8 documented xfail, one
+              known-gap per component); full suite 1699 passed, 1 skipped,
+              39 xfailed.
+  UNLOCKS:    Watchers are the only legitimate fission trigger source (WA-D1).
+              This closes the "Watcher Agents contract signed and gated"
+              pre-condition on both the §11-signed Load Fission (`74407...`) and
+              Specialisation Fission contracts. Remaining Fission pre-condition:
+              at least one real tenant onboarded for threshold calibration.
+  GOVERNANCE: Rule 1 — build straight through per signed contract. Thresholds
+              (baseline windows, drift ranges, threat-signal thresholds) launch
+              conservative, tunable only by signed amendment after real-tenant
+              baseline data (WA-D11); never autonomously.
+
+---
+
 PHASE 6 — BLAST RADIUS CONTROLLER CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
   PHASE:      Phase 6 — Layer 6 Control Plane / Blast Radius Controller
               (eight-component ensemble, row #89).
