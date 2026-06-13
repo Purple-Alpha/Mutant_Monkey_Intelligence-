@@ -3,7 +3,7 @@
 ## Layer 6 Governance: neutral observers of the swarm + sole fission trigger source
 
 **Document type:** Agent Design Contract
-**Status:** DRAFT — UNSIGNED. No build authorization until §11 is signed. Matt must read this before signing; the signature certifies operator review of a Cursor-authored scope.
+**Status:** §11 SIGNED — Matt Nichol June 12th 2026. Build authorization granted per §11 scope.
 **Date drafted:** June 12 2026
 **Drafted by:** Cursor (execution lane), drafted against the operator's June 12 2026 contract session. Covers all three watchers (#85-87), previously RESERVED concept (`Watcher_Agents_Concept_Doc.md`).
 **Authority:** Matt Nichol — sole signing authority
@@ -232,7 +232,7 @@ Three rows (WA-D10). Currently RESERVED concept; this contract moves them to `SI
 
 ## §11 — Operator Sign-Off
 
-**Status:** UNSIGNED DRAFT. Awaiting operator review and signature.
+**Status:** §11 SIGNED — Matt Nichol June 12th 2026. Build authorization granted per §11 scope.
 
-**Signed:** ____________________
-**Date:** ____________________
+**Signed:** Matt Nichol
+**Date:** June 12th 2026
