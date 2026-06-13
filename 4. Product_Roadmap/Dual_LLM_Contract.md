@@ -3,7 +3,7 @@
 ## Architectural law: the model that acts never reads, the model that reads never acts
 
 **Document type:** Agent Design Contract (architectural pattern, swarm-wide)
-**Status:** DRAFT — UNSIGNED. No build authorization until §11 is signed. Matt must read this before signing; the signature certifies operator review of a Cursor-authored scope.
+**Status:** SIGNED — §11 signed Matt Nichol June 12th 2026. Build authorized. The signature certifies operator review of a Cursor-authored scope.
 **Date drafted:** June 12 2026
 **Drafted by:** Cursor (execution lane), drafted against the June 12 2026 contract session.
 **Authority:** Matt Nichol — sole signing authority
@@ -164,7 +164,7 @@ No signed surface is modified by this contract; it adds an architectural constra
 
 ## §11 — Operator Sign-Off
 
-**Status:** UNSIGNED DRAFT. Awaiting operator review and signature.
+**Status:** SIGNED. Operator review complete; build authorized.
 
-**Signed:** ____________________
-**Date:** ____________________
+**Signed:** Matt Nichol
+**Date:** June 12th 2026

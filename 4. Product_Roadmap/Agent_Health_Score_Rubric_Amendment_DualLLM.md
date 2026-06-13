@@ -1,7 +1,7 @@
 # Agent Health Score Rubric — Amendment: Dual LLM track
 
 **Document type:** Rubric Amendment
-**Status:** DRAFT — UNSIGNED. No scoring authority until §11 is signed. Matt signs.
+**Status:** SIGNED — §11 signed Matt Nichol June 12th 2026. Scoring authority active.
 **Date drafted:** June 12 2026
 **Drafted by:** Cursor (execution lane), drafted against `4. Product_Roadmap/Dual_LLM_Contract.md` (DRAFT, June 12 2026).
 **Amends:** `4. Product_Roadmap/Agent_Health_Score_Rubric.md` — §11 SIGNED 2026-06-10 (Matt Nichol).
@@ -82,7 +82,7 @@ Five components, weighted to 100. The base rubric's composite bands (ELITE 85-10
 
 ## §11 — Operator Sign-Off
 
-**Status:** UNSIGNED DRAFT. Awaiting operator review and signature.
+**Status:** SIGNED. Operator review complete; scoring authority active.
 
-**Signed:** ____________________
-**Date:** ____________________
+**Signed:** Matt Nichol
+**Date:** June 12th 2026
