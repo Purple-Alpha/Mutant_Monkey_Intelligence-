@@ -47,6 +47,36 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+SHADOW WATCHER SWARM LAYER 1 CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
+  PHASE:      Shadow Watcher Swarm — Layer 1 Watch Layer.
+  CONTRACT:   `4. Product_Roadmap/Shadow_Watcher_Swarm_Contract.md`
+              (§11 SIGNED 2026-06-12, Matt Nichol, `5320ba0`), Layer 1 block.
+              Authority: observe only; classify candidate facts for alarm input;
+              explain evidence used; separate observed facts from inference.
+  SIGNED OFF: Matt Nichol, June 12th 2026 (Layer 1 authorization per §11).
+  BUILT:      `core/shadow_watchers/` package.
+                - `ShadowEmailEvent` — strict Q-class input model; may carry raw
+                  body text but output must remain raw-free.
+                - `ShadowObservationRecord` + `ShadowObservationLog` — append-only
+                  structured alarm-input fact store, separate from `core/blackboard/`.
+                - Six Q-class observe-only agents: SenderShadowWatcher,
+                  PaymentShadowWatcher, LanguageShadowWatcher,
+                  AttachmentShadowWatcher, GeoShadowWatcher,
+                  VendorHistoryShadowWatcher.
+                - `BaseShadowWatcher` hard boundaries reject tool requests,
+                  credentials, blackboard writes, blocks, final fraud claims, and
+                  recommendations.
+  TESTS:      `tests/test_shadow_watchers_layer1.py`: 9 passed / 4 xfailed.
+              Adjacent watcher + Dual LLM suites: 59 passed / 14 xfailed.
+              Full runtime suite: 1740 passed / 1 skipped / 49 xfailed /
+              1 third-party warning.
+  BOUNDARY:   Layer 1 emits candidate alarm facts only. It does not determine
+              guilt, write evidence-chain records, launch fission, block actions,
+              hold tools, hold credentials, or make recommendations.
+  GATE:       0/0 clean — `audit_outputs/shadow_watcher_layer1_20260613T052829Z.md`.
+  NEXT:       Stop for the night per operator instruction. Next guided build when
+              work resumes is Shadow Watcher Swarm Layer 2 — Alarm Layer.
+
 DUAL LLM PATTERN CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
   PHASE:      Swarm-wide Dual LLM architectural pattern (no new scoreboard row,
               DL-D6).

@@ -1,6 +1,6 @@
 # Mutant Monkey Inbox Shield — Swarm Build Map
 **Status:** Advisory lane — requires §11 signature before build authorization
-**Date:** June 12, 2026 (reconciled — Phases 5 & 6 closed; Watchers, Load/Specialisation Fission, and Dual LLM GATED)
+**Date:** June 12, 2026 (reconciled — Phases 5 & 6 closed; Watchers, Fission, Dual LLM, and Shadow Watcher Layer 1 GATED)
 **Authority:** Matt Nichol — sole signing authority
 **Purpose:** Master build order document. Replaces "what do you want to build next" permanently.
 **Companion doc:** `4. Product_Roadmap/The_Lung_Concept_Spec.md`
@@ -11,12 +11,12 @@
 
 This is the deterministic answer to "what now," derived from signed contracts + gated state. No one has to decide it; the state dictates it.
 
-**CURRENT BUILD STATE → Dual LLM pattern GATED.**
-- **What closed:** the signed Dual LLM pattern (`Dual_LLM_Contract.md`, §11 signed 2026-06-12 `d68c70a`) is now implemented as a deterministic Q-class / P-class / orchestrator boundary. Q-class readers see raw email and hold no tools; P-class ReconciliationAgent receives only the raw-free `EvidenceBundle` and reaches tools only through the Blast Radius Controller gateway.
-- **Verification:** three signed test classes landed, including sentinel, canary, garak/Augustus sample, tool-syntax, schema-valid corruption, P-class gateway-only tool routing, and fission child Q-class / no privileged inheritance. Full runtime suite: 1731 passed / 1 skipped / 45 xfailed / 1 third-party warning.
-- **Scoreboard:** no new row (DL-D6) — the pattern applies across existing #78-83 Q-class, #84 P-class, and #89 orchestrator surfaces.
+**CURRENT BUILD STATE → Shadow Watcher Swarm Layer 1 GATED.**
+- **What closed tonight:** the signed Shadow Watcher Swarm Layer 1 Watch Layer (`Shadow_Watcher_Swarm_Contract.md`, §11 signed 2026-06-12 `5320ba0`) is implemented in `core/shadow_watchers/` as six Q-class observe-only agents: SenderShadowWatcher, PaymentShadowWatcher, LanguageShadowWatcher, AttachmentShadowWatcher, GeoShadowWatcher, VendorHistoryShadowWatcher.
+- **Verification:** Layer 1 targeted suite 9 passed / 4 xfailed; adjacent watcher + Dual LLM suites 59 passed / 14 xfailed; full runtime suite 1740 passed / 1 skipped / 49 xfailed / 1 third-party warning.
+- **Boundary:** Layer 1 observes only, emits structured alarm-input facts, separates observed facts from inference, holds no tools/credentials, makes no final fraud claims, never blocks actions, and writes no blackboard evidence.
 
-**Next frontier is gated by real-tenant data and concept triage:** The Lung (Phase 7), the remaining Fission pre-condition (at least one real tenant onboarded), and the DEPTH GATE (Phase 6 collective-immune / Layer 4 broadcast) all need real baseline data + their own signed contracts. A concept-sheet realism pass should review every open concept and sort it into realistic-now / not-yet / not-realistic before more breadth is authorized.
+**Next guided build when work resumes:** Shadow Watcher Swarm Layer 2 — Alarm Layer. Stop point tonight is Layer 1 complete, per operator instruction.
 
 **Housekeeping, anytime:** all session commits from `09dac9a` → `d68c70a` are **local-only**; push to remote when a fresh token is ready.
 
@@ -53,6 +53,7 @@ This is the deterministic answer to "what now," derived from signed contracts + 
 | Layer 6 — Load Fission | GATED | — | LoadFissionController (#90) built 2026-06-12 in `core/fission/`; watcher-only trigger, Level 2 floor, max depth 1, ReconciliationAgent excluded; spawns exact parent copies, separate namespace, proposed-evidence-only; shared `FissionEventLog` landed here; 95 ELITE |
 | Layer 6 — Specialisation Fission | GATED | — | SpecialisationFissionController (#91) built 2026-06-12 in `core/fission/`; net-new types held at `NetNewTypeSignOffGate` until Matt sign-off, then enter Ring 0; reuses `FissionEventLog`; 95 ELITE |
 | Dual LLM pattern | GATED | 0/0 clean | Built 2026-06-12 across existing surfaces (no new row, DL-D6): deterministic `DualLLMOrchestrator`, raw-free `EvidenceBundle`, P-class `ReconciliationAgent.analyze_bundle`, P-class tools through BRC gateway only, Q-class no tools, fission children Q-class/no privileged inheritance; 95 ELITE on Dual LLM rubric track |
+| Shadow Watcher Swarm — Layer 1 Watch | GATED | 0/0 clean | Built 2026-06-12 under `Shadow_Watcher_Swarm_Contract.md` Layer 1: six Q-class observe-only watchers in `core/shadow_watchers/`; structured alarm-input facts only, raw text not emitted, no tools/credentials/actions, no blackboard writes, no final fraud claims |
 | Phase 7 — The Lung | BLOCKED | — | Needs real tenant data to calibrate; needs own signed contract |
 | Phase 8 — Governance Completion | BLOCKED | — | Needs Phase 5 complete (✓); needs own signed contract |
 | Phase 9 — The Playhouse | BLOCKED | — | Needs all phases complete; needs own signed contract |
