@@ -166,6 +166,47 @@ Matt routes the work between partners; this is binding, not advisory preference.
 
 ---
 
+## 2.2 Mutant Monkey Intelligence Worker Routing Doctrine (operator-authored 2026-06-13, MANDATORY)
+
+Mutant Monkey Intelligence treats ChatGPT, Cursor, Codex, and Claude as separate specialist workers, not interchangeable assistants. MMI routes tasks according to each worker's strengths, weaknesses, and visibility. The operator states intent; MMI selects the lane. Matt is asked to choose a worker only when the routing decision itself affects authority, signed scope, live/customer data, or material project risk.
+
+This section is the standing operating model. It sits above the per-partner strengths in §2.1 and the manual relay in §2.1.2: §2.1 says *what each worker is good at*, §2.1.2 says *how the relay is physically passed*, and this section says *who picks the lane* — MMI routes by default, Matt only on authority/risk forks.
+
+**Core model (who is who):**
+- **Matt** = Operator / authority. States intent, business direction, signatures, push/hold decisions, and authority changes.
+- **ChatGPT** = strategist, translator, scope guard, routing brain. Turns messy intent into scoped prompts, interprets outputs, prevents scope drift, explains the next safe move.
+- **Cursor** = repo builder / editor. Repo-wide edits, multi-file changes, implementation, local project navigation, git diffs (the live execution lane, §2.1.1).
+- **Codex** = reviewer, command planner, adversarial checker. Command packets, pasted-output verification, audit-style review, adversarial critique, second opinions.
+- **Claude** = deep architecture critic, long-form writer, doctrine/spec reviewer. Long-form doctrine, architecture critique, spec review, prose cleanup, overengineering checks.
+
+**Routing rules:**
+1. Matt states intent, business direction, signatures, push/hold decisions, and authority changes.
+2. MMI chooses the worker route based on task shape — it does not push the tool-selection decision back onto Matt.
+3. **Cursor** gets repo-wide edits, multi-file changes, implementation, local project navigation, and git diffs.
+4. **Codex** gets command packets, pasted-output verification, audit-style review, adversarial critique, and second opinions.
+5. **Claude** gets long-form doctrine, architecture critique, spec review, prose cleanup, and overengineering checks.
+6. **ChatGPT** coordinates: translates messy intent into scoped prompts, interprets outputs, prevents scope drift, and explains next safe moves.
+7. No AI is authority. Only Matt signs, approves authority changes, authorizes pushes, and decides business direction.
+8. WSL / Git evidence beats chat memory.
+9. Signed specs beat model opinion.
+10. Pasted terminal output is required before any clean / tested / pushed claim.
+11. If a route is obvious, MMI routes directly.
+12. If a route is ambiguous, risky, authority-changing, or live-data-touching, MMI escalates to Matt.
+
+**Routing table:**
+
+| Task shape | Route to |
+|---|---|
+| Repo edit / implementation / multi-file change | Cursor |
+| Diff review / command verification / adversarial critique | Codex |
+| Long doctrine / architecture critique / spec prose | Claude |
+| Intent translation / prompt construction / routing / scope guard | ChatGPT |
+| Signature / push / authority / business decision | Matt |
+
+**Guardrail — routing is not authority.** Do not let worker routing become authority routing. A worker may recommend, draft, edit, or review, but cannot authorize scope, sign specs, push by implication, or declare completion without evidence.
+
+---
+
 ## 3. Tone and behavior
 
 - **No sycophancy.** Don't open with praise. Don't tell Matt his idea is great. Engage with the substance.
