@@ -32,6 +32,7 @@ class FissionEventType(str, Enum):
     EXHALE = "exhale"
     REJECTED = "rejected"
     PROPOSED_EVIDENCE = "proposed_evidence"
+    SIGN_OFF = "sign_off"
 
 
 @dataclass(frozen=True)

@@ -178,11 +178,11 @@ Three test classes per AGENTS.md §5.
 ## §8 — Pre-conditions before build opens
 
 1. Blast Radius Controller GATED — **satisfied** (#89, `f1c817e`).
-2. Watcher Agents contract signed and gated — **open** (#85-87 RESERVED).
-3. At least one real tenant onboarded for threshold calibration — **open**.
+2. Watcher Agents contract signed and gated — **satisfied** (#85-87 GATED, `6da6284`).
+3. At least one real tenant onboarded for threshold calibration — **deferred as Class 3 xfail**; thresholds and child-count caps remain conservative and amendment-tunable after onboarding (SF-D12).
 4. This contract §11-signed.
 
-Pre-conditions 2 and 3 are tracked independently; the build does not open until all four hold. Recommended ordering: **Load Fission gated before Specialisation Fission builds**, so the shared `FissionEventLog` and child-lifecycle wiring land under the lower-risk contract first (advisory; confirm at signing).
+Pre-condition 2 is satisfied. Pre-condition 3 remains a calibration dependency, not a blocker for the ES2 synthetic build per operator authorization on 2026-06-12; the calibration gap is carried as a documented Class 3 xfail until the first tenant is onboarded. Recommended ordering satisfied: **Load Fission gated first** (`190002f`), so the shared `FissionEventLog` and child-lifecycle wiring landed under the lower-risk contract before this build.
 
 ---
 
@@ -190,12 +190,12 @@ Pre-conditions 2 and 3 are tracked independently; the build does not open until 
 
 Phase closes when all of the following are true:
 
-- [ ] Gate-clean 0/0 (Grok completion gate clean, 0 warnings)
-- [ ] Health score 85+ ELITE on the designated rubric track (SF-D14)
-- [ ] Scoreboard row updated to `GATED`
-- [ ] Matt signs phase closure
-- [ ] `decision_cycles_log.md` PHASE_CLOSURE entry recorded
-- [ ] Three test classes pass (Class 1 + Class 2; Class 3 documented xfail), including the net-new-type sign-off metastasis test (SF-D6)
+- [x] Gate-clean 0/0 (Grok completion gate clean, 0 warnings)
+- [x] Health score 85+ ELITE on the designated rubric track (SF-D14) — **95 ELITE**
+- [x] Scoreboard row updated to `GATED` — **#91 GATED 2026-06-12**
+- [x] Matt signs phase closure — **Matt Nichol, June 12th 2026**
+- [x] `decision_cycles_log.md` PHASE_CLOSURE entry recorded
+- [x] Three test classes pass (Class 1 + Class 2; Class 3 documented xfail), including the net-new-type sign-off metastasis test (SF-D6) — **13 pass + 2 xfail; full suite 1722/1/43**
 
 ---
 

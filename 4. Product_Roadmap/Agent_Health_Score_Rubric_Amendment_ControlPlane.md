@@ -110,6 +110,21 @@ Scored against this track on closure. Full suite **1709 passed / 1 skipped / 41 
 
 ---
 
+## §B.4 — Achieved score (Specialisation Fission Controller #91, 2026-06-12)
+
+Scored against this track on closure. Full suite **1722 passed / 1 skipped / 43 xfailed**; gate-clean 0/0; 3 test classes; net-new-type sign-off metastasis path passes.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | `SpecialisationFissionController.propose()` validates in order and fails safe: watcher-only trigger, Level 2/HIGH floor, max depth 1, ReconciliationAgent exclusion, and child-count cap; failure logs `REJECTED` and spawns nothing. −1: live Mode Controller threat feed deferred (xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Every activated child is born with BRC registration metadata: scoped token/tenant/tool scope, Ring 0, role-tiered budget, and per-child breaker key; children cannot fission. −1: live BRC service registration remains deferred integration. |
+| 3 — Segmentation & Isolation (20) | 19 | Each specialised child gets a separate namespace and can write only proposed evidence there; attempts to write parent namespace, verdict surface, or blocking recommendation are rejected. −1: live blackboard namespace provisioning deferred. |
+| 4 — Zero Trust & Identity (15) | 14 | Known sub-types spawn under gates; net-new types are held inert until Matt/OPERATOR sign-off via RoleSeparation, then activate at Ring 0 and enter the registry; registry cannot grow autonomously. −1: real-tenant divergence/cap calibration deferred (xfail). |
+| 5 — Governance & Audit Completeness (15) | 14 | Reuses shared append-only `FissionEventLog`; records spawn, sign-off hold/grant, exhale, and rejection; §11 contract + row #91 + 3 test classes + gate-clean. −1: durable shared event-log persistence deferred. |
+| **Composite** | **95** | **ELITE** — clears the SF-D14 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
@@ -118,6 +133,7 @@ Scored against this track on closure. Full suite **1709 passed / 1 skipped / 41 
 - **Blast Radius Controller** (#89, Layer 6) — this track.
 - **Watcher Agents** (#85-87, Layer 6 Governance) — this track (scored as one governance-observer ensemble, §B.2).
 - **Load Fission Controller** (#90, Layer 6 Control Plane) — this track (§B.3).
+- **Specialisation Fission Controller** (#91, Layer 6 Control Plane) — this track (§B.4).
 - Future control-plane agents may cite this track by amendment.
 
 ---

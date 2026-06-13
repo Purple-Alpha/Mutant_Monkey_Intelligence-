@@ -47,6 +47,55 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+SPECIALISATION FISSION CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
+  PHASE:      Layer 6 Control Plane — Specialisation Fission Controller (row #91).
+  CONTRACT:   `4. Product_Roadmap/Specialisation_Fission_Contract.md`
+              (§11 SIGNED 2026-06-12, Matt Nichol, `7440722`) scored on the
+              Layer 6 Control Plane rubric track amendment
+              `Agent_Health_Score_Rubric_Amendment_ControlPlane.md` (§B.4).
+              Depends on Blast Radius Controller (GATED #89, `f1c817e`),
+              Watcher Agents (GATED #85-87, `6da6284`), and Load Fission
+              (GATED #90, `190002f`) for shared event log / lifecycle wiring.
+  SIGNED OFF: Matt Nichol, June 12th 2026 (phase closure per contract §9).
+  BUILT:      #91 in `core/fission/specialisation.py`.
+                - `SubTypeRegistry` — deterministic known vs net-new type
+                  authority; cannot grow autonomously (SF-D6)
+                - `NetNewTypeSignOffGate` — holds net-new types inert until
+                  OPERATOR/Matt sign-off via RoleSeparation; logs hold/grant
+                  decisions (SF-D6/SF-D8)
+                - `SpecialisationFissionController` — validates watcher-only
+                  proposals (WA-D1/SF-D1), Level 2/HIGH floor for all agents
+                  including knowledge agents (SF-D3), max depth 1 generation
+                  (SF-D2), ReconciliationAgent exclusion (SF-D7), conservative
+                  child-count cap (SF-D12); spawns known sub-types immediately,
+                  holds net-new types until sign-off, activates signed net-new
+                  types at Ring 0 (SF-D11), gives children separate namespaces +
+                  proposed-evidence-only output (SF-D5), and automatically
+                  exhales active instances below Level 2 while signed-off type
+                  concepts persist (SF-D9).
+  ADVERSARIAL: contract §6 Class-2 tests pass — agent self-trigger rejected,
+              fission below Level 2 rejected including knowledge agents,
+              depth-2 child fission rejected, ReconciliationAgent fission
+              rejected, net-new type cannot activate without Matt sign-off,
+              registry cannot grow autonomously, net-new type born at Ring 0,
+              parent-namespace/verdict writes rejected, child-count cap rejected
+              with no partial spawn.
+  CLOSURE CHECKLIST (contract §9):
+    - gate-clean 0/0 ................................ YES (Grok completion gate clean)
+    - scores 85+ on Layer 6 Control Plane rubric ..... YES (95 ELITE, §B.4)
+    - scoreboard row #91 updated to GATED ............ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 12th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes in `tests/test_specialisation_fission.py`
+              (13 pass + 2 documented xfail); full suite 1722 passed, 1 skipped,
+              43 xfailed.
+  GOVERNANCE: Rule 1 — build straight through per signed contract and operator
+              authorization. Real-tenant complexity/divergence calibration
+              remains a documented Class-3 xfail and future signed amendment
+              (SF-D12). Net-new type creation remains OPERATOR/Matt-only (SF-D6).
+
+---
+
 LOAD FISSION CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
   PHASE:      Layer 6 Control Plane — Load Fission Controller (row #90).
   CONTRACT:   `4. Product_Roadmap/Load_Fission_Contract.md`

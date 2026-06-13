@@ -24,6 +24,17 @@ from .load import (
     LoadFissionProposal,
     ProposedEvidence,
 )
+from .specialisation import (
+    DEFAULT_MAX_SPECIALISATION_CHILDREN,
+    SPECIALISATION_THREAT_FLOOR,
+    HeldNetNewType,
+    NetNewTypeSignOffGate,
+    ProposedSpecialist,
+    SpecialisationFissionController,
+    SpecialisationFissionProposal,
+    SubTypeKind,
+    SubTypeRegistry,
+)
 
 __all__ = [
     "FissionEvent",
@@ -40,4 +51,13 @@ __all__ = [
     "LoadFissionController",
     "LoadFissionProposal",
     "ProposedEvidence",
+    "DEFAULT_MAX_SPECIALISATION_CHILDREN",
+    "SPECIALISATION_THREAT_FLOOR",
+    "HeldNetNewType",
+    "NetNewTypeSignOffGate",
+    "ProposedSpecialist",
+    "SpecialisationFissionController",
+    "SpecialisationFissionProposal",
+    "SubTypeKind",
+    "SubTypeRegistry",
 ]
