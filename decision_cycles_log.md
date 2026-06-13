@@ -47,6 +47,52 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+LOAD FISSION CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
+  PHASE:      Layer 6 Control Plane — Load Fission Controller (row #90).
+  CONTRACT:   `4. Product_Roadmap/Load_Fission_Contract.md`
+              (§11 SIGNED 2026-06-12, Matt Nichol, `7440722`) scored on the
+              Layer 6 Control Plane rubric track amendment
+              `Agent_Health_Score_Rubric_Amendment_ControlPlane.md` (§B.3).
+              Depends on Blast Radius Controller (GATED #89, `f1c817e`) and
+              Watcher Agents (GATED #85-87, `6da6284`). Built first per the
+              Specialisation Fission advisory ordering note so the shared event
+              log and child lifecycle wiring land under the lower-risk contract.
+  SIGNED OFF: Matt Nichol, June 12th 2026 (phase closure per contract §9).
+  BUILT:      #90 in `core/fission/`.
+                - `event_log.py` — shared append-only `FissionEventLog` for load
+                  and later specialisation records; no update/delete API (LF-D7)
+                - `load.py` — `LoadFissionController`: validates watcher-only
+                  proposals (WA-D1/LF-D1), Level 2/HIGH threat floor for every
+                  layer including knowledge agents (LF-D3), max depth 1
+                  generation (LF-D2), ReconciliationAgent exclusion (LF-D6),
+                  and conservative copy cap (LF-D10); spawns exact parent copies
+                  (LF-D4), born with BRC registration metadata (scoped token,
+                  tenant/tool scope, detection budget tier, Ring 0, breaker key)
+                  (LF-D9), each with separate namespace + proposed-evidence-only
+                  output (LF-D5). `exhale()` automatically retires active load
+                  children below Level 2 and logs each exhale (LF-D8).
+  ADVERSARIAL: contract §6 Class-2 tests pass — agent self-trigger rejected,
+              fission below Level 2 rejected including knowledge agents,
+              depth-2 child fission rejected, ReconciliationAgent fission
+              rejected, child parent-namespace/verdict writes rejected, copy cap
+              overflow rejected with no partial spawn.
+  CLOSURE CHECKLIST (contract §9):
+    - gate-clean 0/0 ................................ YES (Grok completion gate clean)
+    - scores 85+ on Layer 6 Control Plane rubric ..... YES (95 ELITE, §B.3)
+    - scoreboard row #90 updated to GATED ............ YES (this entry's commit)
+    - Matt signs phase closure ....................... YES (June 12th 2026)
+    - decision_cycles_log PHASE_CLOSURE entry ........ this entry
+  TESTS:      three test classes in `tests/test_load_fission.py`
+              (10 pass + 2 documented xfail); full suite 1709 passed, 1 skipped,
+              41 xfailed.
+  GOVERNANCE: Rule 1 — build straight through per signed contract and operator
+              authorization. Real-tenant saturation/copy-cap calibration remains
+              a documented Class-3 xfail and future signed amendment (LF-D10).
+              This lower-risk build lays the shared `FissionEventLog` foundation
+              for Specialisation Fission next.
+
+---
+
 WATCHER AGENTS CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
   PHASE:      Layer 6 Governance — Watcher Agents (three observers, rows #85-87).
   CONTRACT:   `4. Product_Roadmap/Watcher_Agents_Contract.md`

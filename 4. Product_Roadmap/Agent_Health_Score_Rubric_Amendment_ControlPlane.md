@@ -95,6 +95,21 @@ The three Watchers are scored as one Layer 6 Governance ensemble against this tr
 
 ---
 
+## §B.3 — Achieved score (Load Fission Controller #90, 2026-06-12)
+
+Scored against this track on closure. Full suite **1709 passed / 1 skipped / 41 xfailed**; gate-clean 0/0; 3 test classes; lower-risk Load Fission lands the shared event log and child lifecycle wiring first.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | `LoadFissionController.propose()` validates in order and fails safe: watcher-only trigger, Level 2/HIGH floor, max depth 1, ReconciliationAgent exclusion, conservative copy cap; failure logs `REJECTED` and spawns nothing. −1: live Mode Controller threat feed deferred (xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Every child is born with BRC registration metadata: scoped token/tenant/tool scope, `RoleTier.DETECTION`, Ring 0, and per-child `BreakerKey`; children cannot fission. −1: registration is metadata-level, not live BRC service mutation (by design, no BRC surface modified). |
+| 3 — Segmentation & Isolation (20) | 19 | Each child receives a separate namespace and can write only proposed evidence to that namespace; attempts to write parent namespace, verdict surface, or blocking recommendation are rejected. −1: live blackboard namespace provisioning deferred (xfail-equivalent integration boundary). |
+| 4 — Zero Trust & Identity (15) | 14 | Only registered watcher ids may trigger fission (WA-D1); agent self-trigger rejected; Level 2 floor applies to all layers including knowledge agents. −1: real-tenant saturation/copy-cap calibration deferred (xfail). |
+| 5 — Governance & Audit Completeness (15) | 14 | Shared append-only `FissionEventLog` records spawn, exhale, proposed-evidence, and rejection events; automatic exhale below Level 2 records each retired child; §11 contract + row #90 + 3 test classes + gate-clean. −1: durable shared event-log persistence deferred. |
+| **Composite** | **95** | **ELITE** — clears the LF-D12 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
@@ -102,6 +117,7 @@ The three Watchers are scored as one Layer 6 Governance ensemble against this tr
 - **Mutation Engine** (#88, Layer 5) — the Layer 5 amendment track.
 - **Blast Radius Controller** (#89, Layer 6) — this track.
 - **Watcher Agents** (#85-87, Layer 6 Governance) — this track (scored as one governance-observer ensemble, §B.2).
+- **Load Fission Controller** (#90, Layer 6 Control Plane) — this track (§B.3).
 - Future control-plane agents may cite this track by amendment.
 
 ---

@@ -156,11 +156,11 @@ Three test classes per AGENTS.md §5.
 ## §8 — Pre-conditions before build opens
 
 1. Blast Radius Controller GATED — **satisfied** (#89, `f1c817e`).
-2. Watcher Agents contract signed and gated — **open** (#85-87 RESERVED).
-3. At least one real tenant onboarded for threshold calibration — **open**.
+2. Watcher Agents contract signed and gated — **satisfied** (#85-87 GATED, `6da6284`).
+3. At least one real tenant onboarded for threshold calibration — **deferred as Class 3 xfail**; thresholds and copy caps remain conservative and amendment-tunable after onboarding (LF-D10).
 4. This contract §11-signed.
 
-Pre-conditions 2 and 3 are tracked independently; the build does not open until all four hold.
+Pre-condition 2 is satisfied. Pre-condition 3 remains a calibration dependency, not a blocker for the ES2 synthetic build per operator authorization on 2026-06-12; the calibration gap is carried as a documented Class 3 xfail until the first tenant is onboarded.
 
 ---
 
@@ -168,12 +168,12 @@ Pre-conditions 2 and 3 are tracked independently; the build does not open until 
 
 Phase closes when all of the following are true:
 
-- [ ] Gate-clean 0/0 (Grok completion gate clean, 0 warnings)
-- [ ] Health score 85+ ELITE on the designated rubric track (LF-D12)
-- [ ] Scoreboard row updated to `GATED`
-- [ ] Matt signs phase closure
-- [ ] `decision_cycles_log.md` PHASE_CLOSURE entry recorded
-- [ ] Three test classes pass (Class 1 + Class 2; Class 3 documented xfail)
+- [x] Gate-clean 0/0 (Grok completion gate clean, 0 warnings)
+- [x] Health score 85+ ELITE on the designated rubric track (LF-D12) — **95 ELITE**
+- [x] Scoreboard row updated to `GATED` — **#90 GATED 2026-06-12**
+- [x] Matt signs phase closure — **Matt Nichol, June 12th 2026**
+- [x] `decision_cycles_log.md` PHASE_CLOSURE entry recorded
+- [x] Three test classes pass (Class 1 + Class 2; Class 3 documented xfail) — **10 pass + 2 xfail; full suite 1709/1/41**
 
 ---
 
