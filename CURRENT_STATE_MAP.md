@@ -10,6 +10,24 @@
 
 ---
 
+## Codebase authority state (operator decision 2026-06-13)
+
+> **PRIMARY CODEBASE:** `/home/socialarchitect/northstar` (this repo) is the primary codebase going forward.
+>
+> **Primary remote (temporary):** `github` → `https://github.com/zebra-comet/-northstar-security-shild.git`, branch `safety/queue-drift-cleanup-20260528`. As of 2026-06-13, 195 local commits were successfully pushed to `github/safety/queue-drift-cleanup-20260528`. HEAD at decision time: `03cd7d2 feat: Shadow Watcher Swarm Layer 1 GATED`. This remote is the temporary primary remote for now.
+>
+> **Secondary / reference only:** `/mnt/c/Unified Folder Structure NorthStar + SwarmCommand Venture` (the Windows "active master" that holds Mutant Monkey Intelligence governance and the renamed `3. Mutant_Monkey_Intelligence_Engine` path) is now a **secondary/reference surface only**, not primary.
+>
+> **Authority guardrails (until the operator explicitly changes authority):**
+> - Do NOT merge this WSL repo into the Windows surface.
+> - Do NOT import this WSL repo into the Windows surface.
+> - Do NOT delete this WSL repo.
+> - Do NOT treat the Windows master as primary unless the operator explicitly changes authority later.
+>
+> Rationale: read-only reconciliation found this WSL repo holds 302 unique commits of unique product architecture (Shadow Watcher Swarm, Dual LLM, Control Plane, Fission, Watchers, Reconciliation, Mutation, evidence packages, tests, roadmap specs) that do not exist on the Windows surface. The operator designates this repo primary and pinned the protected remote above.
+
+---
+
 ## Alert-fatigue doctrine
 
 > **Alert-fatigue doctrine:** NorthStar reduces operator fatigue by batching risk into daily digests, tiering detection intensity by tenant plan/posture, escalating only on conservative high-signal triggers, explaining findings through action-first evidence, and allowing per-tenant tuning. Stage A is decision-support and evidence, not a per-email alert stream.

@@ -26,6 +26,27 @@ What should happen next.
 
 ---
 
+## 2026-06-13 - AUTHORITY CHANGE: this WSL repo designated PRIMARY CODEBASE
+**Actor:** Matt (operator decision) / Cursor (records only)
+
+**Action:** Updated
+
+**Files Changed:**
+- CURRENT_STATE_MAP.md (new "Codebase authority state" section)
+- PROJECT_ACTIVITY_LOG.md (this entry)
+
+**Reason:**
+Operator decision after a successful GitHub push. Authority state recorded:
+- `/home/socialarchitect/northstar` (this repo) = PRIMARY CODEBASE going forward.
+- `github` `https://github.com/zebra-comet/-northstar-security-shild.git`, branch `safety/queue-drift-cleanup-20260528` = temporary primary remote. 195 local commits were successfully pushed to `github/safety/queue-drift-cleanup-20260528`. HEAD at decision time: `03cd7d2 feat: Shadow Watcher Swarm Layer 1 GATED`.
+- `/mnt/c/Unified Folder Structure NorthStar + SwarmCommand Venture` (Windows "active master" with Mutant Monkey Intelligence governance + renamed `3. Mutant_Monkey_Intelligence_Engine`) = secondary/reference surface only.
+Guardrails until the operator explicitly changes authority: do not merge WSL into Windows, do not import WSL into Windows, do not delete WSL, do not treat the Windows master as primary. This change is driven by the read-only reconciliation finding that this repo holds 302 unique commits of unique architecture absent from the Windows surface.
+
+**Next Step:**
+Folder cleanup can resume with this repo as the source of truth. No push, merge, import, Windows sync, deletion, or folder cleanup was performed as part of recording this authority state.
+
+---
+
 ## 2026-06-08 - CYCLE 15 CLOSED: #24 MFA Manipulation -> GOVERNED_AGENT (Evidence Stage 1)
 **Actor:** Cursor execution lane (§11 signature placement, wrapper build, focused tests, Build Sequencer Step 6.5 sync). Matt provided the §11 signature ("Matt Nichol June 8th 2026").
 
