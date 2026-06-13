@@ -26,6 +26,7 @@ LOAD_FISSION_MAX_DEPTH = 1
 LOAD_FISSION_THREAT_FLOOR = ThreatLevel.HIGH
 DEFAULT_MAX_LOAD_CHILDREN = 3
 PROPOSED_EVIDENCE = "proposed_evidence"
+Q_CLASS_CHILD = "q_class"
 
 
 class FissionError(Exception):
@@ -66,6 +67,7 @@ class FissionChild:
     schema_id: str
     namespace: str
     registration: GatewayRegistration
+    agent_class: str = Q_CLASS_CHILD
     active: bool = True
     proposed_evidence: list[ProposedEvidence] = field(default_factory=list)
 
@@ -101,6 +103,9 @@ class FissionChild:
 
     def propose_fission(self, *args, **kwargs):  # noqa: ANN001, ANN002, ANN003
         raise FissionError("fission depth is capped at 1 generation (LF-D2)")
+
+    def inherit_privileged_status(self, *args, **kwargs):  # noqa: ANN001, ANN002, ANN003
+        raise FissionError("fission child cannot inherit Privileged status (Dual LLM §4)")
 
 
 @dataclass(frozen=True)
@@ -231,6 +236,7 @@ __all__ = [
     "LOAD_FISSION_THREAT_FLOOR",
     "DEFAULT_MAX_LOAD_CHILDREN",
     "PROPOSED_EVIDENCE",
+    "Q_CLASS_CHILD",
     "FissionError",
     "GatewayRegistration",
     "ProposedEvidence",

@@ -47,6 +47,50 @@ FORK <n> — <UTC timestamp>   [type: STRATEGIC]
 
 ---
 
+DUAL LLM PATTERN CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
+  PHASE:      Swarm-wide Dual LLM architectural pattern (no new scoreboard row,
+              DL-D6).
+  CONTRACT:   `4. Product_Roadmap/Dual_LLM_Contract.md`
+              (§11 signed 2026-06-12, Matt Nichol, `d68c70a`) + Dual LLM rubric
+              amendment `Agent_Health_Score_Rubric_Amendment_DualLLM.md`.
+              Depends on Phase 3 detection agents (#78-83), ReconciliationAgent
+              (#84), and Blast Radius Controller (#89), all GATED.
+  SIGNED OFF: Matt Nichol, June 12th 2026 (build authorization per contract §11).
+  BUILT:      Deterministic Q-class / P-class / orchestrator boundary across
+              existing surfaces.
+                - `core/orchestrator/dual_llm.py` — `DualLLMOrchestrator`,
+                  `EvidenceBundle`, `QClassRuntime`, Q/P class constants, raw
+                  text hashing and raw-text rejection.
+                - `core/reconciliation/reconciliation_agent.py` —
+                  `analyze_bundle()` P-class entry point; consumes only the
+                  raw-free EvidenceBundle and reuses the existing 2-of-3
+                  ReconciliationAgent voters.
+                - `core/fission/load.py` — fission children carry conservative
+                  `q_class` metadata and reject privileged inheritance.
+  TESTS:      `tests/test_dual_llm.py`: 9 passed / 2 xfailed.
+              Adjacent suites: 94 passed / 17 xfailed.
+              Full runtime suite: 1731 passed / 1 skipped / 45 xfailed /
+              1 third-party warning.
+  ADVERSARIAL:
+                - Sentinel string test: raw marker never reaches P-class prompt.
+                - Canary tool test: Q-class cannot fire/request a tool.
+                - garak/Augustus sample: 210 injection probes treated as inert
+                  data, not executable instructions.
+                - Tool syntax injection: Q-output tool syntax is not executed.
+                - Schema-valid corruption: adversarial detail fields cannot
+                  flip the verdict unilaterally; 2-of-3 voters still resolve.
+                - P-class tools: ReconciliationAgent reaches tools only through
+                  the Blast Radius Controller gateway.
+                - Fission: child touching raw-email lane is Q-class and cannot
+                  inherit Privileged status.
+  HEALTH:     95 ELITE on the Dual LLM rubric track (25/25 quarantine boundary,
+              25/25 privilege assignment, 20/20 schema validation coverage,
+              15/15 tool isolation, 10/15 data-flow corruption resistance
+              retained as conservative real-integration margin; total 95).
+  GATE:       0/0 clean — `audit_outputs/dual_llm_pattern_20260613T044817Z.md`.
+  SCOREBOARD: No new row created (DL-D6). Pattern applies across existing
+              Q-class #78-83, P-class #84, and orchestrator #89 surfaces.
+
 SPECIALISATION FISSION CLOSURE   2026-06-12   [type: PHASE_CLOSURE]
   PHASE:      Layer 6 Control Plane — Specialisation Fission Controller (row #91).
   CONTRACT:   `4. Product_Roadmap/Specialisation_Fission_Contract.md`

@@ -1,9 +1,24 @@
 # Mutant Monkey Inbox Shield — Swarm Build Map
 **Status:** Advisory lane — requires §11 signature before build authorization
-**Date:** June 9, 2026 (updated — dual dial + Agent Fission added)
+**Date:** June 12, 2026 (reconciled — Phases 5 & 6 closed; Watchers, Load/Specialisation Fission, and Dual LLM GATED)
 **Authority:** Matt Nichol — sole signing authority
 **Purpose:** Master build order document. Replaces "what do you want to build next" permanently.
 **Companion doc:** `4. Product_Roadmap/The_Lung_Concept_Spec.md`
+
+---
+
+## WHAT'S NEXT — read this first (one screen)
+
+This is the deterministic answer to "what now," derived from signed contracts + gated state. No one has to decide it; the state dictates it.
+
+**CURRENT BUILD STATE → Dual LLM pattern GATED.**
+- **What closed:** the signed Dual LLM pattern (`Dual_LLM_Contract.md`, §11 signed 2026-06-12 `d68c70a`) is now implemented as a deterministic Q-class / P-class / orchestrator boundary. Q-class readers see raw email and hold no tools; P-class ReconciliationAgent receives only the raw-free `EvidenceBundle` and reaches tools only through the Blast Radius Controller gateway.
+- **Verification:** three signed test classes landed, including sentinel, canary, garak/Augustus sample, tool-syntax, schema-valid corruption, P-class gateway-only tool routing, and fission child Q-class / no privileged inheritance. Full runtime suite: 1731 passed / 1 skipped / 45 xfailed / 1 third-party warning.
+- **Scoreboard:** no new row (DL-D6) — the pattern applies across existing #78-83 Q-class, #84 P-class, and #89 orchestrator surfaces.
+
+**Next frontier is gated by real-tenant data and concept triage:** The Lung (Phase 7), the remaining Fission pre-condition (at least one real tenant onboarded), and the DEPTH GATE (Phase 6 collective-immune / Layer 4 broadcast) all need real baseline data + their own signed contracts. A concept-sheet realism pass should review every open concept and sort it into realistic-now / not-yet / not-realistic before more breadth is authorized.
+
+**Housekeeping, anytime:** all session commits from `09dac9a` → `d68c70a` are **local-only**; push to remote when a fresh token is ready.
 
 ---
 
@@ -34,8 +49,12 @@
 | Phase 4 — Reconciliation | GATED | — | ReconciliationAgent (#84) built; three-voter ensemble; 88 ELITE; CIRT amendment + verdict surface landed |
 | Phase 5 — Mutation Engine | GATED | — | MutationEngine ensemble (#88) built 2026-06-12; six components + named Anomaly Detection Pipeline; 95 ELITE; sandbox-only until operator sign-off; every deploy reversible |
 | Phase 6 — Control Plane (Blast Radius Controller) | GATED | — | Blast Radius Controller (#89) built 2026-06-12; eight components walk the §3.6 gateway lifecycle; five gates (breakers / segmentation / rings / graceful degradation iface / zero trust); all five metastasis tests pass; 95 ELITE on Layer 6 Control Plane rubric; Mode Controller + Privacy Filter remain separate signed contracts |
+| Layer 6 — Watcher Agents | GATED | — | W1 TimingWatcher / W2 DriftWatcher / W3 IntegrityWatcher (#85-87) built 2026-06-12 in `core/watchers/`; neutral observers, facts only, no blackboard writes; sole legitimate fission trigger source (WA-D1); 2-of-N threat escalation; 95 ELITE |
+| Layer 6 — Load Fission | GATED | — | LoadFissionController (#90) built 2026-06-12 in `core/fission/`; watcher-only trigger, Level 2 floor, max depth 1, ReconciliationAgent excluded; spawns exact parent copies, separate namespace, proposed-evidence-only; shared `FissionEventLog` landed here; 95 ELITE |
+| Layer 6 — Specialisation Fission | GATED | — | SpecialisationFissionController (#91) built 2026-06-12 in `core/fission/`; net-new types held at `NetNewTypeSignOffGate` until Matt sign-off, then enter Ring 0; reuses `FissionEventLog`; 95 ELITE |
+| Dual LLM pattern | GATED | 0/0 clean | Built 2026-06-12 across existing surfaces (no new row, DL-D6): deterministic `DualLLMOrchestrator`, raw-free `EvidenceBundle`, P-class `ReconciliationAgent.analyze_bundle`, P-class tools through BRC gateway only, Q-class no tools, fission children Q-class/no privileged inheritance; 95 ELITE on Dual LLM rubric track |
 | Phase 7 — The Lung | BLOCKED | — | Needs real tenant data to calibrate; needs own signed contract |
-| Phase 8 — Governance Completion | BLOCKED | — | Needs Phase 5 complete; needs own signed contract |
+| Phase 8 — Governance Completion | BLOCKED | — | Needs Phase 5 complete (✓); needs own signed contract |
 | Phase 9 — The Playhouse | BLOCKED | — | Needs all phases complete; needs own signed contract |
 
 ---
@@ -160,7 +179,7 @@
 | HumanSignOffGate | NEW | ValidationGate | Matt signs every mutation deployment |
 | RollbackMechanism | NEW | HumanSignOffGate | Auto-rollback if false positive spike post-deployment |
 | ZeroDayCapture | NEW | MutationEngine + AttachmentSandbox | Unknown behaviour → candidate → 3-shot → proposed |
-| AgentFissionController | CONCEPT | MutationEngine + Lung contract signed | Governs agent division events — separate from pattern mutation |
+| AgentFissionController | GATED (split into two) | — | Superseded by LoadFissionController (#90) + SpecialisationFissionController (#91), both built 2026-06-12 in `core/fission/` under their own §11-signed contracts; watcher-triggered, max depth 1, ReconciliationAgent excluded; net-new types need Matt sign-off |
 
 ---
 
@@ -173,8 +192,10 @@
 | RoleSeparationController | §11 SIGNED | Phase 1 gate | Formalised in Phase 1 contract |
 | TokenUsageTracker (#71) | §11 SIGNED | Phase 1 gate | Net-new — Phase 1 contract |
 | OperatorOverrideLog | NEW | Playhouse | Every tech override — name, reason, timestamp |
-| MutationAuditTrail | NEW | MutationEngine | Full history every proposed and deployed mutation |
-| DriftDetectionMonitor | NEW | All agents operational | Agent confidence distribution monitoring |
+| MutationAuditTrail | GATED | — | Built as `core/mutation/audit_trail.py` within MutationEngine (#88); append-only history of every proposed/deployed mutation |
+| DriftDetectionMonitor | GATED (as W2 DriftWatcher #86) | — | Running-mean confidence vs signed baseline → `confidence_drift` / `baseline_deviation`; built 2026-06-12 in `core/watchers/` |
+| Watcher Agents (W1/W2/W3 #85-87) | GATED | — | Neutral observers; TimingWatcher / DriftWatcher / IntegrityWatcher; facts only, no blackboard writes; sole fission trigger source (WA-D1) |
+| Blast Radius Controller (#89) | GATED | — | Layer 6 control plane / gateway; eight components; five gates; 95 ELITE |
 
 ---
 

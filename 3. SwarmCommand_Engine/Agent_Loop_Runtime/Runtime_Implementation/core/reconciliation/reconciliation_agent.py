@@ -38,6 +38,7 @@ Deterministic lockdown (P4-D3): a resolved ``MEDIUM_RISK`` under Lung
 from __future__ import annotations
 
 from collections import Counter
+from typing import TYPE_CHECKING
 
 from core.blackboard import (
     CanonicalEvidenceLedger,
@@ -57,6 +58,9 @@ from .voters import (
     R3ConflictResolutionVoter,
     VoterVote,
 )
+
+if TYPE_CHECKING:
+    from core.orchestrator.dual_llm import EvidenceBundle
 
 # Verdicts a voter may cast (the risk ladder). DELIVERY_PROBLEM / ESCALATE are
 # ensemble-only outcomes (§4, §8), never an individual voter's cast.
@@ -179,6 +183,39 @@ class ReconciliationAgent:
             zero_day_referred=zero_day_referred,
         )
         return self._verdict_ledger.append(verdict)
+
+    def analyze_bundle(
+        self,
+        *,
+        bundle: "EvidenceBundle",
+        lung_state: LungState = LungState.NORMAL,
+    ) -> ReconciliationVerdict:
+        """P-class Dual LLM entry point.
+
+        The ReconciliationAgent receives only the deterministic
+        ``EvidenceBundle`` assembled by the orchestrator: structured
+        ``EvidenceLedgerEntry`` objects plus content hashes. It does not accept
+        or inspect raw email text here (Dual LLM Rule 1).
+        """
+
+        if bundle.raw_text_present:
+            raise ReconciliationError("EvidenceBundle may not contain raw email text")
+        if not bundle.evidence_entries:
+            raise ReconciliationError("EvidenceBundle has no evidence entries")
+
+        ledger_entries = self._evidence_ledger.read_for_tenant(bundle.tenant_id)
+        existing_ids = {entry.entry_id for entry in ledger_entries}
+        for entry in bundle.evidence_entries:
+            if entry.tenant_id != bundle.tenant_id or entry.email_id != bundle.email_id:
+                raise ReconciliationError("EvidenceBundle evidence identity mismatch")
+            if entry.entry_id not in existing_ids:
+                self._evidence_ledger.append(entry)
+
+        return self.analyze(
+            tenant_id=bundle.tenant_id,
+            email_id=bundle.email_id,
+            lung_state=lung_state,
+        )
 
     # ------------------------------------------------------------------ #
 
