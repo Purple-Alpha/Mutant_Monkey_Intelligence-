@@ -34,6 +34,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RUNTIME_DIR = REPO_ROOT / "3. SwarmCommand_Engine" / "Agent_Loop_Runtime" / "Runtime_Implementation"
+RUNTIME_PYTHON = RUNTIME_DIR / ".venv" / "bin" / "python"
 SCOREBOARD = REPO_ROOT / "agent_concepts" / "Blue_Team_Swarm_70_Agent_Scoreboard.md"
 DECISION_LOG = REPO_ROOT / "decision_cycles_log.md"
 HANDSHAKE = REPO_ROOT / "PROJECT_HANDSHAKE.md"
@@ -65,6 +66,13 @@ def run(cmd: list[str], cwd: Path | None = None, timeout: int = 600) -> tuple[in
         return 127, f"command not found: {exc}"
     except subprocess.TimeoutExpired:
         return 124, f"timed out after {timeout}s"
+
+
+def pytest_python() -> str:
+    """Use the runtime venv when present; system Python may not have pytest."""
+    if RUNTIME_PYTHON.exists():
+        return str(RUNTIME_PYTHON)
+    return sys.executable
 
 
 def _is_ancestor(commit: str) -> bool | None:
@@ -238,7 +246,7 @@ def check_tests(findings: list[Finding], log_baseline: int | None, mode: str) ->
         return
 
     if mode == "full":
-        rc, out = run([sys.executable, "-m", "pytest", "-q"], cwd=RUNTIME_DIR)
+        rc, out = run([pytest_python(), "-m", "pytest", "-q"], cwd=RUNTIME_DIR)
         passed = re.search(r"(\d+)\s+passed", out)
         if passed is None:
             findings.append(Finding("TEST_RUN", True, f"pytest --full produced no parseable summary (rc={rc})"))
@@ -252,7 +260,7 @@ def check_tests(findings: list[Finding], log_baseline: int | None, mode: str) ->
         return
 
     # default: collect-only -> real count of tests that exist in code
-    rc, out = run([sys.executable, "-m", "pytest", "--collect-only", "-q"], cwd=RUNTIME_DIR)
+    rc, out = run([pytest_python(), "-m", "pytest", "--collect-only", "-q"], cwd=RUNTIME_DIR)
     m = re.search(r"(\d+)\s+tests? collected", out) or re.search(r"collected\s+(\d+)\s+items?", out)
     if m is None:
         findings.append(Finding("TEST_RUN", True,
