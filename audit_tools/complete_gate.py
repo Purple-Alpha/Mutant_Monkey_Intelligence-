@@ -122,6 +122,7 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     # --pre-commit mode cannot false-pass them.
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/safe_stop/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/mode_controller/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/privacy_filter/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/watchers/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/",
