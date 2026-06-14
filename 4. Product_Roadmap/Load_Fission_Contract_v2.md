@@ -1,6 +1,6 @@
 # Load Fission Contract v2
 
-**Status:** DRAFT - unsigned.
+**Status:** SIGNED — Matt Nichol June 13th 2026.
 **Product surface:** Mutant Monkey Inbox Shield.
 **Authority:** This draft authorizes no code, no deployment, no policy change, no scoreboard status change, and no production fission behavior until Matt signs §11.
 **Relationship to prior contract:** This v2 draft is a proposed supersession of `Load_Fission_Contract.md`. Local repo evidence currently shows scoreboard row #90 as `GATED`, not `SIGNED_UNBUILT`; if Matt signs this v2 contract, it supersedes the prior Load Fission contract going forward without rewriting the historical gate record.
@@ -308,8 +308,9 @@ Any v2 implementation must prove:
 
 ## §13 Signature
 
-**Status:** UNSIGNED DRAFT.
+**Status:** SIGNED — Matt Nichol June 13th 2026. Build authorization granted per this contract's scope.
 
-Operator signature:
+**Signed:** Matt Nichol
+**Date:** June 13th 2026
 
 
