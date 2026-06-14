@@ -18,8 +18,13 @@ def get_signed_unbuilt():
         return []
     matches = []
     for line in scoreboard.splitlines():
-        if "SIGNED_UNBUILT" in line:
-            parts = [p.strip() for p in line.split("|")]
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 3:
+            continue
+        runtime_status = parts[2].strip("`")
+        if runtime_status.startswith("SIGNED_UNBUILT"):
             name = parts[1] if len(parts) > 1 else line[:60]
             matches.append(name.strip())
     return matches
