@@ -261,6 +261,18 @@ Six Layer 1 Detection Agents authorized by `4. Product_Roadmap/Phase3_Detection_
 
 ---
 
+## Control Plane — Signed, Unbuilt (net-new, beyond SPARK #1-#70)
+
+Layer 6 Control Plane contracts that are **§11/§14/§15 SIGNED with build authorized** but **not yet built**. These rows exist so the dispatcher (`scripts/mmi_dispatch.py` `get_signed_unbuilt()`) can route the next authorized build to the execution lane. **Authority-free (Rule 4)** — a `SIGNED_UNBUILT` row records signed-build status + sequencing, it is never itself the authorization; the signature in each contract is. These are **signed direct-build rows, not rubric candidates** (so the `TRACK=DEPTH` rubric-exclusion in BS-D3 does not apply to them). Row order here is the build order the dispatcher will emit (`unbuilt[0]` first).
+
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 94 | Safe-Stop State Machine | `SIGNED_UNBUILT` (§11 SIGNED 2026-06-14 Matt Nichol — `4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md`; build authorized, not yet built) | none yet — contract only | 6 Control Plane | ES2 |  | DEPTH | — | 2026-06-14 (row added) |
+| 92 | Mode Controller | `SIGNED_UNBUILT` (§14 SIGNED 2026-06-13 Matt Nichol — `4. Product_Roadmap/Mode_Controller_Contract.md`; build authorized, not yet built; header status line still reads DRAFT/UNSIGNED — doc-hygiene mismatch to reconcile) | none yet — contract only; gateway-side interface exists in `core/control_plane/` (BRC-D10), the quorum/epoch service itself is unbuilt | 6 Control Plane | ES2 |  | DEPTH | — | 2026-06-14 (row added) |
+| 93 | Privacy Filter | `SIGNED_UNBUILT` (§15 SIGNED 2026-06-14 Matt Nichol — `4. Product_Roadmap/Privacy_Filter_Contract.md`; build authorized, not yet built) | none yet — contract only; `PrivacyFilterInterface` broadcast-guard shim exists in `core/control_plane/privacy_filter.py` (BRC-D5), the independent validation service is unbuilt | 6 Control Plane | ES2 |  | DEPTH | — | 2026-06-14 (row added) |
+
+---
+
 ## Tally (execution-lane verified, file-level)
 
 - `GOVERNED_AGENT`: **13** (#10; #6 Header Analysis, #8 Ghost Thread, and #6A Email Authentication at Evidence Stage 1, §11-signed 2026-06-07; #11 Known-Good Contact, #14 Payment Change Detection, #27 Link Inspection, #30 Attachment Risk, #23 Credential Phishing, #24 MFA Manipulation, #31 PDF Fingerprint, #39 Language Pressure, and #46 Evidence Package at Evidence Stage 1, §11-signed 2026-06-08; #11 is the first Layer 3 Verification agent; #46 is the first Layer 4 Evidence agent).
