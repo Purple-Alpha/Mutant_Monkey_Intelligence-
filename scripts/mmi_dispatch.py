@@ -154,6 +154,17 @@ def get_collective_immune_design_task():
         return "Draft Collective Immune System concept doc / design contract"
     return None
 
+def get_cortex_immune_interface_design_task():
+    """Next organism gap after CIS is gated.
+
+    ORGANISM_DOCTRINE_GAP_LIST.md lists Gap 3 as the next dependency after CIS
+    and Safe-Stop: the cross-organ interface contract. When CIS row #95 is
+    gated, generic research is no longer the actionable next state.
+    """
+    if _scoreboard_row_status("95").startswith("GATED"):
+        return "Draft Cortex / Immune Interface concept doc / contract"
+    return None
+
 def check_drift():
     verifier = os.path.join(REPO, "scripts/verify_build_truth.py")
     if not os.path.exists(verifier):
@@ -173,6 +184,7 @@ unbuilt = get_signed_unbuilt()
 concept = get_next_concept_without_contract()
 pending_questions = get_pending_operator_questions()
 cis_design_task = get_collective_immune_design_task()
+cortex_immune_task = get_cortex_immune_interface_design_task()
 
 print("=" * 60)
 if drifted:
@@ -236,6 +248,14 @@ elif cis_design_task:
     print("ASSIGNED_TO: Claude")
     print("NEXT_PROMPT_GOES_TO: Claude")
     print("BLOCKED_UNTIL: Matt signs section 11 before any CIS build")
+    print("OPERATOR_ACTION_REQUIRED: NO")
+    print("NEXT_GATE: concept/contract committed, then §11 signature before build")
+elif cortex_immune_task:
+    print("MODE: DESIGN")
+    print(f"AUTHORIZED_TASK: {cortex_immune_task}")
+    print("ASSIGNED_TO: Claude")
+    print("NEXT_PROMPT_GOES_TO: Claude")
+    print("BLOCKED_UNTIL: Matt signs section 11 before any interface build")
     print("OPERATOR_ACTION_REQUIRED: NO")
     print("NEXT_GATE: concept/contract committed, then §11 signature before build")
 else:
