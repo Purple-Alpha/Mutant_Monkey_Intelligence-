@@ -1,6 +1,6 @@
 # Mutant Monkey Inbox Shield — Thread Handoff
 **Date:** June 14 2026
-**Reason:** Living document — updated with corrected model lanes, dual-research rule, MMI update discipline.
+**Reason:** Living document — updated after Collective Immune System §11 signature and build routing.
 **Authority:** Matt Nichol — sole signing authority
 
 ---
@@ -21,6 +21,9 @@
 | Dual LLM Pattern | GATED | 696ee45 |
 | Shadow Watcher Swarm Layer 1 | GATED | 03cd7d2 |
 | Safe-Stop State Machine #94 | GATED 95 ELITE + Amendment 01 signed | cf3f273 |
+| Mode Controller #92 | GATED 95 ELITE | 85b455f |
+| Privacy Filter #93 | GATED 95 ELITE | 85b455f |
+| Collective Immune System #95 | SIGNED — build pending | — |
 
 **Test baseline:** 1722 passed, 1 skipped, 43 xfailed
 
@@ -30,8 +33,7 @@
 
 - Load Fission v2 Contract — SIGNED, supersedes #90
 - Specialisation Fission v2 Contract — SIGNED, supersedes #91
-- Mode Controller Contract — SIGNED, not yet built
-- Privacy Filter Contract — SIGNED, not yet built
+- Collective Immune System Contract — §11 SIGNED June 14th 2026, build authorized
 
 ---
 
@@ -41,12 +43,11 @@
 |---|---|
 | Blast Radius Controller gated | DONE |
 | Watcher Agents gated | DONE |
-| Mode Controller signed and gated | SIGNED, not yet gated |
-| Privacy Filter signed and gated | SIGNED, not yet gated |
+| Mode Controller signed and gated | DONE |
+| Privacy Filter signed and gated | DONE |
 | Real tenant onboarded | July 20 — Reatan X8 arrives |
 
-DEPTH GATE opens when Mode Controller and Privacy Filter are both GATED.
-Collective Immune System contract is next after that.
+DEPTH GATE is open. Collective Immune System contract is §11 SIGNED and routed to Cursor build.
 
 ---
 
@@ -122,6 +123,7 @@ Codex never builds. Cursor never reviews. They do not swap lanes.
 - 4. Product_Roadmap/Safe_Stop_State_Machine_Concept_Doc.md — concept doc, June 14 2026
 - 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md — SIGNED June 14th 2026
 - 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract_Amendment_01.md — SIGNED June 14th 2026
+- 4. Product_Roadmap/Collective_Immune_System_Design_Contract.md — SIGNED June 14th 2026
 
 ---
 
@@ -144,9 +146,9 @@ None.
 ## Next Authorized Tasks In Order
 
 1. Run `python3 scripts/mmi_dispatch.py` to confirm current dispatch
-2. Build Mode Controller — contract is signed
-3. Build Privacy Filter — contract is signed
-4. CIS research → concept doc → contract → §11 → Cursor builds (DEPTH GATE opens after Mode Controller and Privacy Filter gated)
+2. Build Collective Immune System #95 — contract is §11 SIGNED and scoreboard row is `SIGNED_UNBUILT`
+3. Codex reviews after Cursor build; gaps return to Cursor, over-scope gets stripped
+4. Run `complete_gate.py` 0/0 and gate
 5. Phase 3 sender_domain amendment — sign before Phase 3 builds
 
 ---
