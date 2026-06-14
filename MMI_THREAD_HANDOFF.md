@@ -1,6 +1,6 @@
 # Mutant Monkey Inbox Shield — Thread Handoff
 **Date:** June 14 2026
-**Reason:** Living document — updated after Safe-Stop State Machine §11 signature.
+**Reason:** Living document — updated after OQ-4/OQ-5 locked and auto-push rule set.
 **Authority:** Matt Nichol — sole signing authority
 
 ---
@@ -20,6 +20,7 @@
 | Specialisation Fission #91 | GATED 95 ELITE | c7ef023 |
 | Dual LLM Pattern | GATED | 696ee45 |
 | Shadow Watcher Swarm Layer 1 | GATED | 03cd7d2 |
+| Safe-Stop State Machine #94 | GATED 95 ELITE + Amendment 01 signed | cf3f273 |
 
 **Test baseline:** 1722 passed, 1 skipped, 43 xfailed
 
@@ -31,7 +32,6 @@
 - Specialisation Fission v2 Contract — SIGNED, supersedes #91
 - Mode Controller Contract — SIGNED, not yet built
 - Privacy Filter Contract — SIGNED, not yet built
-- **Safe-Stop State Machine Contract — SIGNED June 14th 2026, not yet built**
 
 ---
 
@@ -50,6 +50,12 @@ Collective Immune System contract is next after that.
 
 ---
 
+## Push Rule
+
+**AUTO-PUSH IS ON.** Cursor pushes every commit to remote immediately after committing. No hold. No manual push gate.
+
+---
+
 ## Governance Documents Committed
 
 - MUTANT_MONKEY_ORGANISM_DOCTRINE_v1.md — 21 hard invariants, organ boundaries
@@ -62,6 +68,7 @@ Collective Immune System contract is next after that.
 - PROJECT_ACTIVITY_LOG.md — bootstrap and activation entries
 - 4. Product_Roadmap/Safe_Stop_State_Machine_Concept_Doc.md — concept doc, June 14 2026
 - 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md — SIGNED June 14th 2026
+- 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract_Amendment_01.md — SIGNED June 14th 2026
 
 ---
 
@@ -72,12 +79,12 @@ Collective Immune System contract is next after that.
 | OQ-1 | Safe-stop timeout for Mode Controller quorum loss | 120 seconds | YES — in signed contract |
 | OQ-2 | Recovery window for two simultaneous CRITICAL watcher events | 300 seconds | YES — in signed contract |
 | OQ-3 | Who exits safe-stop | Matt Nichol only | YES — in signed contract |
-| OQ-4 | Does Homeostasis stay inside Mode Controller or become a separate contract? | Stays inside Mode Controller. No separate Homeostasis Engine contract this phase. | YES — locked in MMI_CURRENT_STATE.md June 14th 2026 |
-| OQ-5 | Does baseline ingestion after a closed threat event require operator approval every time or only above a defined risk threshold? | Only above the defined risk threshold. Seven high-impact triggers (any one) require operator approval; below-threshold events may enter governed ingestion only after passing all validation gates. | YES — locked in MMI_CURRENT_STATE.md June 14th 2026 |
+| OQ-4 | Does Homeostasis stay inside Mode Controller or become a separate contract? | Stays inside Mode Controller. No separate Homeostasis Engine contract this phase. | YES — locked June 14th 2026 |
+| OQ-5 | Does baseline ingestion after a closed threat event require operator approval every time or only above a defined risk threshold? | Only above the defined risk threshold. Seven high-impact triggers require approval; below-threshold events go through governed ingestion only after passing all validation gates. | YES — locked June 14th 2026 |
 
 ## Open Questions Still Pending
 
-None. All operator questions through OQ-5 are answered and locked.
+None.
 
 ---
 
@@ -86,10 +93,8 @@ None. All operator questions through OQ-5 are answered and locked.
 1. Run `python3 scripts/mmi_dispatch.py` to confirm current dispatch
 2. Build Mode Controller — contract is signed
 3. Build Privacy Filter — contract is signed
-4. **Build Safe-Stop State Machine — contract SIGNED June 14th 2026**
-5. ~~Answer OQ-4 and OQ-5~~ — DONE, locked June 14th 2026
-6. Draft Collective Immune System contract once Mode Controller and Privacy Filter are GATED
-7. Phase 3 sender_domain amendment — sign before Phase 3 builds
+4. CIS research → concept doc → contract → §11 → Cursor builds (DEPTH GATE opens after Mode Controller and Privacy Filter gated)
+5. Phase 3 sender_domain amendment — sign before Phase 3 builds
 
 ---
 
@@ -113,7 +118,7 @@ Leave on top shelf — parked, protected, separate.
 ## Lane Rules
 
 - Claude — advisory lane only. Design, governance, spec. Never builds.
-- Cursor — execution lane. Builds against signed contracts only.
+- Cursor — execution lane. Builds against signed contracts only. Auto-pushes every commit.
 - Codex — review and verification lane.
 - ChatGPT / Gemini / Copilot — research inputs only. Sponge rule applies.
 - Matt Nichol — sole signing authority. Nothing builds without his signature.
