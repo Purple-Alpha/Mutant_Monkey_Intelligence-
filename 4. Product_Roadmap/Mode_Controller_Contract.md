@@ -264,7 +264,7 @@ This contract closes when:
 
 ## §14 — Operator Sign-Off
 
-**Status:** UNSIGNED DRAFT.
+**Status:** §14 SIGNED — Matt Nichol June 13th 2026. Build authorization granted per this contract's scope.
 
-**Signed:** ________________________
-**Date:** ________________________
+**Signed:** Matt Nichol
+**Date:** June 13th 2026
