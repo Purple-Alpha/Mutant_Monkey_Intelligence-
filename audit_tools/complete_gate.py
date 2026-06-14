@@ -116,6 +116,16 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     # home. Added 2026-06-04 (loop-review Fix B) so this code path actually
     # auto-fires the gate and --pre-commit mode cannot false-pass it.
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/evidence_package/",
+    # Layer 6 Control Plane + governed-ensemble build homes. Added 2026-06-14
+    # so control-plane builds (Safe-Stop, Mode Controller, Privacy Filter,
+    # Watchers, Fission, Mutation, Reconciliation) auto-fire the gate and
+    # --pre-commit mode cannot false-pass them.
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/safe_stop/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/watchers/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/mutation/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/reconciliation/",
     "production_state/",
     "1. Business_Operations/Client_Documents/",
 )
@@ -129,6 +139,11 @@ AUDIT_TOOLS_PREFIX = "audit_tools/"
 # string near the top of the file (matches pre_ship_audit.py).
 SIGNED_SPEC_MARKER_PRIMARY = "§11 SIGNED"
 SIGNED_SPEC_MARKER_SECONDARY = "LOCKED BY"
+# Some signed contracts state the status as "SIGNED — §11 ..." (dash form)
+# rather than the canonical "§11 SIGNED" token. Accept that phrasing too so a
+# signed contract is not mis-read as unsigned by the gate. The em dash is the
+# one used in the contract status lines.
+SIGNED_SPEC_MARKER_DASH = "SIGNED — §11"
 SIGNED_SPEC_HEAD_BYTES = 1500
 
 # Canonical forbidden-language list — enforcement form.
@@ -575,6 +590,8 @@ def _is_signed_spec(path: Path) -> bool:
     except OSError:
         return False
     if SIGNED_SPEC_MARKER_PRIMARY in head:
+        return True
+    if SIGNED_SPEC_MARKER_DASH in head:
         return True
     if SIGNED_SPEC_MARKER_SECONDARY in head and "SIGNED" in head:
         return True

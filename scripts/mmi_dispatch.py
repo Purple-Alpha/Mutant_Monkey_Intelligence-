@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import re
 import subprocess
 import sys
 
@@ -54,6 +55,33 @@ def get_signed_unbuilt():
             matches.append(name.strip())
     return matches
 
+def get_awaiting_audit():
+    """Rows whose runtime status starts AWAITING_AUDIT: built + tested, not yet
+    gated. This is the lifecycle state between SIGNED_UNBUILT and GATED — the
+    point at which MMI routes the work to the Grok completion gate.
+    """
+    scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md")
+    if not scoreboard:
+        return []
+    matches = []
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 3:
+            continue
+        runtime_status = parts[2].strip("`")
+        if runtime_status.startswith("AWAITING_AUDIT"):
+            name = parts[1] if len(parts) > 1 else line[:60]
+            matches.append(name.strip())
+    return matches
+
+def audit_task_slug(name):
+    """Stable task id for the Grok gate manifest, derived from the row name.
+    e.g. 'Safe-Stop State Machine' -> 'safe_stop_state_machine'.
+    """
+    return re.sub(r"[^a-z0-9]+", "_", name.strip().lower()).strip("_")
+
 def get_next_concept_without_contract():
     roadmap = os.path.join(REPO, "4. Product_Roadmap")
     if not os.path.exists(roadmap):
@@ -85,6 +113,7 @@ def check_drift():
     return "DRIFT" in result.stdout and result.returncode != 0
 
 drifted = check_drift()
+awaiting = get_awaiting_audit()
 unbuilt = get_signed_unbuilt()
 concept = get_next_concept_without_contract()
 
@@ -95,6 +124,29 @@ if drifted:
     print("NEXT_PROMPT_GOES_TO: Matt - fix drift before anything else")
     print("OPERATOR_ACTION_REQUIRED: YES")
     print("IF YES: Run verify_build_truth.py and fix flagged items")
+elif awaiting:
+    # A build is implemented + tested but not yet gated. Route it to the Grok
+    # completion gate before starting any new build. The exact command is
+    # emitted so the audit step is not tribal memory.
+    name = awaiting[0]
+    slug = audit_task_slug(name)
+    manifest_rel = f"audit_outputs/pending/{slug}.manifest.json"
+    manifest_ok = os.path.exists(os.path.join(REPO, manifest_rel))
+    print("MODE: AUDIT")
+    print(f"AUTHORIZED_TASK: Run Grok completion gate for {name}")
+    print("ASSIGNED_TO: Grok (negative-feedback auditor)")
+    print("NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits")
+    print("OPERATOR_ACTION_REQUIRED: NO  (Grok activation is standing; no per-run permission)")
+    print(
+        f"RUN: python3 audit_tools/complete_gate.py --pre-commit "
+        f'--task {slug} --claim "{name} build implemented + tested; ready for audit"'
+    )
+    print(
+        f"MANIFEST: {manifest_rel} "
+        f"({'present' if manifest_ok else 'MISSING - create before gate'})"
+    )
+    print("BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed")
+    print("NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit")
 elif unbuilt:
     print("MODE: BUILD")
     print(f"AUTHORIZED_TASK: Build {unbuilt[0]}")
