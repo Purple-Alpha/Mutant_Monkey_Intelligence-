@@ -2,7 +2,7 @@
 ## The Autonomic Nervous System of the Mutant Monkey Organism
 
 **Document type:** Agent Design Contract (pre-§11)
-**Status:** DRAFT — UNSIGNED. Advisory lane only. No build authorization until §13 signed.
+**Status:** DRAFT — UNSIGNED. Advisory lane only. No build authorization until §14 signed.
 **Date drafted:** June 13, 2026
 **Drafted by:** Claude (advisory lane) — per AGENTS.md §2.1
 **Authority:** Matt Nichol — sole signing authority
@@ -202,7 +202,42 @@ Three test classes. ELITE 85+ target.
 
 ---
 
-## §10 — Scoreboard
+## §10 — Canadian Legal Alignment
+
+The Mode Controller produces evidence of system state, not decisions.
+
+Legal and buyer-facing boundaries:
+
+- The Mode Controller produces evidence of system operating state, not decisions.
+- Human authority retains final authority over all actions taken in response to any mode transition.
+- Mutant Monkey Inbox Shield does not guarantee system uptime.
+- Mutant Monkey Inbox Shield does not guarantee fraud prevention.
+- Mode transitions are governed signals; the operational response to them remains a human-owned decision.
+
+### §10.1 — Shared Responsibility Matrix
+
+| Party | Responsibility |
+|---|---|
+| Mutant Monkey Inbox Shield | Owns mode governance, epoch authority, quorum enforcement, and append-only mode-transition logging. |
+| MSP | Owns the response actions taken based on mode state, including operational decisions during DEGRADED, ISOLATED, and RECOVERING. |
+| Client | Maintains business process controls and final approval for sensitive actions. |
+| Infrastructure provider | Provides underlying platform availability and account controls. |
+
+### §10.2 — Audit Log Retention
+
+Mode-transition audit logs are retained per MSP contract requirements. Retention commitments must be documented before buyer-facing release.
+
+### §10.3 — Design Basis References
+
+This control design aligns with the following as design basis:
+
+- NIST AI Risk Management Framework (AI RMF)
+- OWASP agentic security guidance
+- CSA red teaming guidance
+
+---
+
+## §11 — Scoreboard
 
 | Row | Component | Status | Layer | Priority |
 |---|---|---|---|---|
@@ -210,13 +245,13 @@ Three test classes. ELITE 85+ target.
 
 ---
 
-## §11 — Pre-Condition Statement
+## §12 — Pre-Condition Statement
 
 This contract must be signed and gated before the DEPTH GATE opens. The Collective Immune System cannot be built until the Mode Controller is operational. This is a hard pre-condition — not optional.
 
 ---
 
-## §12 — Phase Gate Requirement
+## §13 — Phase Gate Requirement
 
 This contract closes when:
 - Mode Controller gate-clean at 0/0
@@ -227,7 +262,7 @@ This contract closes when:
 
 ---
 
-## §13 — Operator Sign-Off
+## §14 — Operator Sign-Off
 
 **Status:** UNSIGNED DRAFT.
 
