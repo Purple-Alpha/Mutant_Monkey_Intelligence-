@@ -21,6 +21,7 @@ import dataclasses
 import pytest
 
 from core.safe_stop import (
+    BoundaryViolationSubtype,
     DefaultRecoveryBroadcaster,
     EntryCondition,
     ForbiddenAction,
@@ -145,7 +146,13 @@ class TestEntryExpectedPass:
 
     def test_ss2_privacy_breaker_enters(self):
         m = _machine()
-        cond = m.trigger_privacy_breaker_unrecoverable(epoch=5, active_tenant_ids=("t1",))
+        cond = m.trigger_privacy_boundary_failure(
+            breaker_unrecoverable=True,
+            cross_tenant_safety_proven=False,
+            path_safely_isolated=False,
+            epoch=5,
+            active_tenant_ids=("t1",),
+        )
         assert cond is EntryCondition.SS2_PRIVACY_BREAKER
         assert m.state is SafeStopState.SAFE_STOP
 
@@ -157,7 +164,11 @@ class TestEntryExpectedPass:
 
     def test_ss4_uncontained_enters(self):
         m = _machine()
-        cond = m.trigger_boundary_violation(contained=False, epoch=5)
+        cond = m.trigger_boundary_violation(
+            subtype=BoundaryViolationSubtype.SS4A_BLAST_RADIUS_LIFECYCLE,
+            containment_proven=False,
+            epoch=5,
+        )
         assert cond is EntryCondition.SS4_BOUNDARY_VIOLATION
         assert m.is_active() is True
 
@@ -167,8 +178,12 @@ class TestEntryAdversarial:
         """SS-INV-1: entry is logged immediately with condition, epoch, detecting
         component, and all active tenant IDs — before any other action."""
         m = _machine()
-        m.trigger_privacy_breaker_unrecoverable(
-            epoch=9, active_tenant_ids=("t1", "t2", "t3")
+        m.trigger_privacy_boundary_failure(
+            breaker_unrecoverable=True,
+            cross_tenant_safety_proven=False,
+            path_safely_isolated=False,
+            epoch=9,
+            active_tenant_ids=("t1", "t2", "t3"),
         )
         records = m.log.entries()
         assert records, "an entry record must exist (proof of entry)"
@@ -189,7 +204,11 @@ class TestEntryAdversarial:
     def test_ss4_contained_does_not_enter(self):
         """A boundary violation with proven containment does not fire (§ SS-4)."""
         m = _machine()
-        cond = m.trigger_boundary_violation(contained=True, epoch=5)
+        cond = m.trigger_boundary_violation(
+            subtype=BoundaryViolationSubtype.SS4A_BLAST_RADIUS_LIFECYCLE,
+            containment_proven=True,
+            epoch=5,
+        )
         assert cond is None
         assert m.state is SafeStopState.RUNNING
         assert m.log.entry_records() == ()
@@ -198,7 +217,12 @@ class TestEntryAdversarial:
         """§ Five Named Entry Conditions: the first condition detected fires; a
         later trigger is a no-op and does not overwrite or re-log."""
         m = _machine()
-        m.trigger_privacy_breaker_unrecoverable(epoch=1)
+        m.trigger_privacy_boundary_failure(
+            breaker_unrecoverable=True,
+            cross_tenant_safety_proven=False,
+            path_safely_isolated=False,
+            epoch=1,
+        )
         again = m.trigger_unresolvable_conflict(epoch=1)
         assert again is EntryCondition.SS2_PRIVACY_BREAKER
         assert m.entry_condition is EntryCondition.SS2_PRIVACY_BREAKER
@@ -230,7 +254,7 @@ class TestEntryAdversarial:
         """SS-INV-10: SS-3 fires at exactly 300s of two unresolved CRITICALs."""
         clock = _Clock()
         m = _machine(clock)
-        m.note_dual_critical_unresolved()
+        m.note_dual_critical_unresolved(correlation_keys=("tenant:t1",))
         clock.advance(SS3_DUAL_CRITICAL_WINDOW_SECONDS - 0.1)
         assert m.poll(epoch=2) is None
         clock.advance(0.1)
@@ -239,12 +263,149 @@ class TestEntryAdversarial:
     def test_ss3_resolution_cancels_timer(self):
         clock = _Clock()
         m = _machine(clock)
-        m.note_dual_critical_unresolved()
+        m.note_dual_critical_unresolved(correlation_keys=("subsystem:mode",))
         clock.advance(200.0)
         m.note_critical_resolved()
         clock.advance(200.0)
         assert m.poll(epoch=2) is None
         assert m.state is SafeStopState.RUNNING
+
+    def test_amendment01_ss_inv_10b_uncorrelated_criticals_do_not_trigger(self):
+        """SS-INV-10B: two uncorrelated global CRITICAL watcher events do not
+        trigger SAFE-STOP; they are logged for operator review."""
+        clock = _Clock()
+        m = _machine(clock)
+        m.note_dual_critical_unresolved(correlation_keys=())
+        clock.advance(SS3_DUAL_CRITICAL_WINDOW_SECONDS)
+        assert m.poll(epoch=2) is None
+        assert m.state is SafeStopState.RUNNING
+        review = m.log.for_kind(SafeStopRecordKind.REVIEW_EVIDENCE)
+        assert len(review) == 1
+        assert review[0].detecting_component == "watcher_agents"
+
+    def test_amendment01_ss_inv_ss2_recoverable_trip_does_not_fire(self):
+        """SS-INV-SS2: recoverable Privacy Filter trips fail closed locally and
+        do not automatically enter SAFE-STOP."""
+        m = _machine()
+        cond = m.trigger_privacy_boundary_failure(
+            breaker_unrecoverable=False,
+            cross_tenant_safety_proven=False,
+            path_safely_isolated=False,
+            epoch=5,
+        )
+        assert cond is None
+        assert m.state is SafeStopState.RUNNING
+        assert m.log.entry_records() == ()
+
+    def test_amendment01_ss_inv_ss2b_requires_all_three_conditions(self):
+        """SS-INV-SS2B: SS-2 fires only when breaker unrecoverable AND
+        cross-tenant safety is unprovable AND the path cannot be safely isolated."""
+        for kwargs in (
+            dict(
+                breaker_unrecoverable=True,
+                cross_tenant_safety_proven=True,
+                path_safely_isolated=False,
+            ),
+            dict(
+                breaker_unrecoverable=True,
+                cross_tenant_safety_proven=False,
+                path_safely_isolated=True,
+            ),
+            dict(
+                breaker_unrecoverable=False,
+                cross_tenant_safety_proven=True,
+                path_safely_isolated=True,
+            ),
+        ):
+            m = _machine()
+            assert m.trigger_privacy_boundary_failure(epoch=5, **kwargs) is None
+            assert m.state is SafeStopState.RUNNING
+
+        m = _machine()
+        assert (
+            m.trigger_privacy_boundary_failure(
+                breaker_unrecoverable=True,
+                cross_tenant_safety_proven=False,
+                path_safely_isolated=False,
+                epoch=5,
+            )
+            is EntryCondition.SS2_PRIVACY_BREAKER
+        )
+
+    def test_amendment01_ss_inv_3d_ss4a_lifecycle_violation(self):
+        """SS-INV-3D: SS-4A fires when a Blast Radius lifecycle step cannot be
+        verified and containment cannot be proven."""
+        m = _machine()
+        cond = m.trigger_boundary_violation(
+            subtype=BoundaryViolationSubtype.SS4A_BLAST_RADIUS_LIFECYCLE,
+            containment_proven=False,
+            epoch=8,
+            detail="mode gate skipped; containment cannot be proven",
+        )
+        assert cond is EntryCondition.SS4_BOUNDARY_VIOLATION
+        rec = m.log.entry_records()[0]
+        assert rec.detecting_component == "blast_radius_controller"
+        assert "mode gate skipped" in rec.detail
+
+    def test_amendment01_ss_inv_3b_ss4b_fission_boundary_violation(self):
+        """SS-INV-3B: SS-4B fires when fission violates max-depth 1 and
+        containment cannot be proven."""
+        m = _machine()
+        cond = m.trigger_boundary_violation(
+            subtype=BoundaryViolationSubtype.SS4B_FISSION_BOUNDARY,
+            containment_proven=False,
+            epoch=8,
+            detail="depth-2 fission attempted; containment cannot be proven",
+        )
+        assert cond is EntryCondition.SS4_BOUNDARY_VIOLATION
+        rec = m.log.entry_records()[0]
+        assert rec.detecting_component == "fission_controller"
+        assert "depth-2 fission" in rec.detail
+
+    def test_amendment01_ss_inv_3c_ss4c_mutation_boundary_violation(self):
+        """SS-INV-3C: SS-4C fires when mutation is non-sandbox, irreversible,
+        unsigned, or containment cannot be proven."""
+        m = _machine()
+        cond = m.trigger_boundary_violation(
+            subtype=BoundaryViolationSubtype.SS4C_MUTATION_BOUNDARY,
+            containment_proven=False,
+            epoch=8,
+            detail="non-sandbox mutation attempted; containment cannot be proven",
+        )
+        assert cond is EntryCondition.SS4_BOUNDARY_VIOLATION
+        rec = m.log.entry_records()[0]
+        assert rec.detecting_component == "mutation_engine"
+        assert "non-sandbox mutation" in rec.detail
+
+    def test_amendment01_ss4d_dispatch_containment_violation(self):
+        """SS-4D: dispatch path exceeding tenant/ring/budget/breaker/mode
+        authority enters SAFE-STOP only when containment cannot be proven."""
+        m = _machine()
+        cond = m.trigger_boundary_violation(
+            subtype=BoundaryViolationSubtype.SS4D_DISPATCH_CONTAINMENT,
+            containment_proven=False,
+            epoch=8,
+            detail="dispatch exceeded tenant authority; containment cannot be proven",
+        )
+        assert cond is EntryCondition.SS4_BOUNDARY_VIOLATION
+        rec = m.log.entry_records()[0]
+        assert rec.detecting_component == "blast_radius_controller"
+
+    def test_amendment01_proven_containment_blocks_all_ss4_subtypes(self):
+        """Amendment 01: a boundary violation with proven containment does not
+        trigger SAFE-STOP for any SS-4 subtype."""
+        for subtype in BoundaryViolationSubtype:
+            m = _machine()
+            assert (
+                m.trigger_boundary_violation(
+                    subtype=subtype,
+                    containment_proven=True,
+                    epoch=8,
+                )
+                is None
+            )
+            assert m.state is SafeStopState.RUNNING
+            assert m.log.entry_records() == ()
 
 
 class TestEntryKnownGap:

@@ -15,6 +15,7 @@ from core.safe_stop.state import (
     SAFE_STOP_EXIT_AUTHORITY,
     SS1_QUORUM_LOSS_TIMEOUT_SECONDS,
     SS3_DUAL_CRITICAL_WINDOW_SECONDS,
+    BoundaryViolationSubtype,
     EntryCondition,
     ForbiddenAction,
     PermittedAction,
@@ -44,6 +45,7 @@ __all__ = [
     "RECONCILIATION_GRACE_SECONDS",
     "SafeStopState",
     "EntryCondition",
+    "BoundaryViolationSubtype",
     "ForbiddenAction",
     "PermittedAction",
     # log

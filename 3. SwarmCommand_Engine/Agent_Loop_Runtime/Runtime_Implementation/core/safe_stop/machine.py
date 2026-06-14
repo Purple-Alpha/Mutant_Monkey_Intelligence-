@@ -37,6 +37,7 @@ from core.safe_stop.state import (
     SAFE_STOP_EXIT_AUTHORITY,
     SS1_QUORUM_LOSS_TIMEOUT_SECONDS,
     SS3_DUAL_CRITICAL_WINDOW_SECONDS,
+    BoundaryViolationSubtype,
     EntryCondition,
     ForbiddenAction,
     PermittedAction,
@@ -112,6 +113,7 @@ class SafeStopStateMachine:
     # Timer arming state for the two timed conditions.
     _quorum_loss_started_at: float | None = None
     _dual_critical_started_at: float | None = None
+    _dual_critical_correlation_keys: tuple[str, ...] = ()
 
     # --- inspection ---------------------------------------------------------
 
@@ -145,13 +147,37 @@ class SafeStopStateMachine:
 
         self._quorum_loss_started_at = None
 
-    # --- SS-3 timer (two simultaneous CRITICAL watcher events) --------------
+    # --- SS-3 timer (correlated dual-CRITICAL watcher events) ---------------
 
-    def note_dual_critical_unresolved(self) -> None:
-        """Start the SS-3 timer when the second CRITICAL event is logged."""
+    def note_dual_critical_unresolved(
+        self,
+        *,
+        correlation_keys: Iterable[str],
+        review_detail: str = "",
+    ) -> None:
+        """Start SS-3 only for correlated dual-CRITICAL watcher events.
+
+        Amendment 01 narrows SS-3: two or more CRITICAL watcher events must be
+        correlated by at least one named key (same tenant, subsystem, ring,
+        control-plane path, or failure signature). Uncorrelated global CRITICALs
+        do **not** arm the SAFE-STOP timer; they are logged for operator review.
+        """
+
+        keys = tuple(k for k in correlation_keys if k.strip())
+        if not keys:
+            self.log.record(
+                kind=SafeStopRecordKind.REVIEW_EVIDENCE,
+                detail=(
+                    review_detail
+                    or "uncorrelated global CRITICAL watcher events; review only"
+                ),
+                detecting_component="watcher_agents",
+            )
+            return
 
         if self._state is SafeStopState.RUNNING and self._dual_critical_started_at is None:
             self._dual_critical_started_at = self.now()
+            self._dual_critical_correlation_keys = keys
 
     def note_critical_resolved(self) -> None:
         """A resolution path closed the dual-CRITICAL state — disarm SS-3.
@@ -163,6 +189,7 @@ class SafeStopStateMachine:
         """
 
         self._dual_critical_started_at = None
+        self._dual_critical_correlation_keys = ()
 
     # --- timed-condition poll -----------------------------------------------
 
@@ -201,7 +228,8 @@ class SafeStopStateMachine:
                 return self._enter(
                     EntryCondition.SS3_DUAL_CRITICAL,
                     detail=(
-                        f"two simultaneous CRITICAL watcher events unresolved for "
+                        f"correlated CRITICAL watcher events "
+                        f"{self._dual_critical_correlation_keys} unresolved for "
                         f"{elapsed:.0f}s (>= {SS3_DUAL_CRITICAL_WINDOW_SECONDS:.0f}s)"
                     ),
                     detecting_component="watcher_agents",
@@ -213,18 +241,37 @@ class SafeStopStateMachine:
 
     # --- immediate (state-based) conditions ---------------------------------
 
-    def trigger_privacy_breaker_unrecoverable(
+    def trigger_privacy_boundary_failure(
         self,
         *,
+        breaker_unrecoverable: bool,
+        cross_tenant_safety_proven: bool,
+        path_safely_isolated: bool,
         epoch: int,
         active_tenant_ids: Iterable[str] = (),
         detail: str = "",
     ) -> EntryCondition | None:
-        """SS-2: Privacy Filter independent breaker is unrecoverably OPEN."""
+        """SS-2: unrecoverable privacy boundary failure (Amendment 01).
 
+        SAFE-STOP fires only when all three amendment conditions are true:
+        breaker unrecoverable/exceeded recovery window, cross-tenant safety cannot
+        be proven, and the affected path cannot be safely isolated. Recoverable
+        trips fail closed locally and do not enter SAFE-STOP.
+        """
+
+        if (
+            not breaker_unrecoverable
+            or cross_tenant_safety_proven
+            or path_safely_isolated
+        ):
+            return None
         return self._enter(
             EntryCondition.SS2_PRIVACY_BREAKER,
-            detail=detail or "privacy filter breaker unrecoverable",
+            detail=(
+                detail
+                or "privacy breaker unrecoverable; cross-tenant safety unproven; "
+                "path cannot be safely isolated"
+            ),
             detecting_component="privacy_filter",
             epoch=epoch,
             active_tenant_ids=active_tenant_ids,
@@ -233,23 +280,41 @@ class SafeStopStateMachine:
     def trigger_boundary_violation(
         self,
         *,
-        contained: bool,
+        subtype: BoundaryViolationSubtype,
+        containment_proven: bool,
         epoch: int,
         active_tenant_ids: Iterable[str] = (),
         detail: str = "",
     ) -> EntryCondition | None:
-        """SS-4: signed-boundary violation with unproven containment.
+        """SS-4: bounded signed control-plane boundary violation.
 
-        A boundary violation **with proven containment does not trigger
-        safe-stop** (§ SS-4) — only the uncontained case fires.
+        Amendment 01 replaces the former broad SS-4 with four named subtypes
+        (SS-4A..SS-4D). Both elements must be present: the named boundary
+        violation and inability to prove containment. Proven containment does not
+        trigger SAFE-STOP; the owning component logs/alerts locally.
         """
 
-        if contained:
+        if not isinstance(subtype, BoundaryViolationSubtype):
+            raise SafeStopError("subtype must be a BoundaryViolationSubtype")
+        if containment_proven:
             return None
         return self._enter(
             EntryCondition.SS4_BOUNDARY_VIOLATION,
-            detail=detail or "signed boundary violation; containment not proven",
-            detecting_component="blast_radius_controller",
+            detail=(
+                detail
+                or f"{subtype.value} signed control-plane boundary violation; "
+                "containment cannot be proven"
+            ),
+            detecting_component={
+                BoundaryViolationSubtype.SS4A_BLAST_RADIUS_LIFECYCLE: (
+                    "blast_radius_controller"
+                ),
+                BoundaryViolationSubtype.SS4B_FISSION_BOUNDARY: "fission_controller",
+                BoundaryViolationSubtype.SS4C_MUTATION_BOUNDARY: "mutation_engine",
+                BoundaryViolationSubtype.SS4D_DISPATCH_CONTAINMENT: (
+                    "blast_radius_controller"
+                ),
+            }[subtype],
             epoch=epoch,
             active_tenant_ids=active_tenant_ids,
         )
@@ -492,6 +557,7 @@ class SafeStopStateMachine:
         self._safety_proof_logged = False
         self._quorum_loss_started_at = None
         self._dual_critical_started_at = None
+        self._dual_critical_correlation_keys = ()
         return new_epoch
 
 

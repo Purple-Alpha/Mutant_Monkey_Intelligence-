@@ -29,6 +29,7 @@ class SafeStopRecordKind(str, Enum):
     """Closed set of safe-stop record kinds. No kind outside this set."""
 
     ENTRY = "entry"
+    REVIEW_EVIDENCE = "review_evidence"
     ACTION_BLOCKED = "action_blocked"
     SAFETY_PROOF = "safety_proof"
     OPERATOR_AUTHORIZATION = "operator_authorization"

@@ -3,7 +3,9 @@
 Governing contract
 ------------------
 ``4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md`` — §11 SIGNED
-2026-06-14 (Matt Nichol). Scoreboard row #94 (Layer 6 Control Plane).
+2026-06-14 (Matt Nichol), amended by
+``Safe_Stop_State_Machine_Design_Contract_Amendment_01.md`` — §11 SIGNED
+2026-06-14. Scoreboard row #94 (Layer 6 Control Plane).
 
 Safe-stop is a **named, controlled mode state** the organism enters when a core
 safety guarantee can no longer be trusted. It is distinct from DEGRADED and
@@ -52,6 +54,20 @@ class EntryCondition(str, Enum):
     SS5_UNRESOLVABLE_CONFLICT = "SS-5"
 
 
+class BoundaryViolationSubtype(str, Enum):
+    """Bounded SS-4 subtypes locked by Amendment 01.
+
+    SS-4 is no longer a catch-all. A SAFE-STOP review is triggered only for one
+    of these named signed control-plane boundary violations AND only when
+    containment cannot be proven.
+    """
+
+    SS4A_BLAST_RADIUS_LIFECYCLE = "SS-4A"
+    SS4B_FISSION_BOUNDARY = "SS-4B"
+    SS4C_MUTATION_BOUNDARY = "SS-4C"
+    SS4D_DISPATCH_CONTAINMENT = "SS-4D"
+
+
 class ForbiddenAction(str, Enum):
     """Actions forbidden inside safe-stop (§ Behavior Inside Safe-Stop)."""
 
@@ -82,6 +98,7 @@ __all__ = [
     "RECONCILIATION_GRACE_SECONDS",
     "SafeStopState",
     "EntryCondition",
+    "BoundaryViolationSubtype",
     "ForbiddenAction",
     "PermittedAction",
 ]
