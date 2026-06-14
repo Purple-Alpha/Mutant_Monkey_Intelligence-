@@ -231,9 +231,9 @@ Six Layer 0 threat-intelligence agents authorized by `4. Product_Roadmap/Phase2_
 
 ---
 
-## Phase 3 — Detection Swarm (Layer 1 / Detection) — SIGNED, NOT YET BUILT
+## Phase 3 — Detection Swarm (Layer 1 / Detection) — BUILT / CLOSED / GATED
 
-Six Layer 1 Detection Agents authorized by `4. Product_Roadmap/Phase3_Detection_Swarm_Agent_Design_Contract.md` (§11 SIGNED 2026-06-10, Matt Nichol; depends on Phase 1 `fe355da` + Phase 2 `43b5511`). **Contract signed; no code yet** — these rows are `SIGNED_UNBUILT` and flip to `GOVERNED_AGENT` only when implemented. Each produces a structured evidence contribution to `core/blackboard/` (Phase 1 schema) — **no verdict field, ever** (P3-D1); closed evidence type per agent (P3-D2); Layer 0 briefing is mandatory input (P3-D3); cloud-side only, no client compute (P3-D4); tenant isolation on every write (P3-D5). **Gate target: ELITE 85+ on the signed Agent Health Score Rubric for every agent (P3-D6); ES2 minimum at build (P3-D8).** AttachmentSandbox zero-day candidate flag feeds the mutation-engine tracker only and never auto-deploys.
+Six Layer 1 Detection Agents authorized by `4. Product_Roadmap/Phase3_Detection_Swarm_Agent_Design_Contract.md` (§11 SIGNED 2026-06-10, Matt Nichol; depends on Phase 1 `fe355da` + Phase 2 `43b5511`). **Contract §11-signed 2026-06-10 before build; now BUILT and CLOSED** — rows #78-83 were `SIGNED_UNBUILT` at signing and flipped to `GATED` on implementation (built `6deffd9`, phase closure `ce386f7`, 2026-06-11 Matt Nichol, 86 ELITE, gate-clean 0/0; see the Phase 3 closure note below). Each produces a structured evidence contribution to `core/blackboard/` (Phase 1 schema) — **no verdict field, ever** (P3-D1); closed evidence type per agent (P3-D2); Layer 0 briefing is mandatory input (P3-D3); cloud-side only, no client compute (P3-D4); tenant isolation on every write (P3-D5). **Gate target: ELITE 85+ on the signed Agent Health Score Rubric for every agent (P3-D6); ES2 minimum at build (P3-D8).** AttachmentSandbox zero-day candidate flag feeds the mutation-engine tracker only and never auto-deploys.
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
