@@ -1491,3 +1491,33 @@ Health scores: all six 72 HEALTHY
 Gate: 0/0
 Tests: 1497 passing, 1 skipped, 9 xfailed
 Signed: Matt Nichol June 10th 2026
+
+## PHASE_CLOSURE — Safe-Stop State Machine (#94)
+Date: June 14th 2026
+Contract: Safe_Stop_State_Machine_Design_Contract.md (§11 SIGNED)
+Commit: d76c78f (build), 52ac030 (scoreboard GATED)
+Agent: Safe-Stop State Machine — core/safe_stop/
+Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubric_Amendment_ControlPlane.md §B.5)
+Gate: 0/0 (Grok comprehensive — audit_outputs/safe_stop_state_machine_20260614T202334Z.md)
+Tests: 1776 passed, 1 skipped, 54 xfailed
+Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13/§14 sign-off)
+
+## PHASE_CLOSURE — Mode Controller (#92)
+Date: June 14th 2026
+Contract: Mode_Controller_Contract.md (§14 SIGNED)
+Commit: 251982b (build), 51e5a89 (scoreboard GATED)
+Agent: Mode Controller — core/mode_controller/
+Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubric_Amendment_ControlPlane.md §B.6)
+Gate: 0/0 (Grok comprehensive — audit_outputs/mode_controller_20260614T204601Z.md)
+Tests: 1796 passed, 1 skipped, 57 xfailed
+Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)
+
+## PHASE_CLOSURE — Privacy Filter (#93)
+Date: June 14th 2026
+Contract: Privacy_Filter_Contract.md (§15 SIGNED)
+Commit: pending build commit; scoreboard GATED to follow
+Agent: Privacy Filter Service — core/privacy_filter/
+Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubric_Amendment_ControlPlane.md §B.7)
+Gate: 0/0 target (Grok completion gate — re-audit after health score recorded)
+Tests: 1813 passed, 1 skipped, 60 xfailed
+Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §14 sign-off)

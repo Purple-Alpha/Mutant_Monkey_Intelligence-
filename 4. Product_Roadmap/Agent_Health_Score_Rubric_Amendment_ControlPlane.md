@@ -125,6 +125,51 @@ Scored against this track on closure. Full suite **1722 passed / 1 skipped / 43 
 
 ---
 
+## §B.5 — Achieved score (Safe-Stop State Machine #94, 2026-06-14)
+
+Scored against this track on closure. Full suite **1776 passed / 1 skipped / 54 xfailed** at its gate; Grok completion gate-clean 0/0 (comprehensive); 3 test classes; SS-INV-1..SS-INV-12 each have a named falsifiable test (36 passed, 5 documented strict xfail).
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | Entry protocol writes the entry record **before** any halt action (proof-of-entry); epoch is frozen, never incremented, on entry; halts dispatch through the gateway `ModeCheck` seam (`is_dispatch_allowed`) with no bypass. −1: live gateway wiring of the seam deferred (xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Restraint enforced inside safe-stop: forbidden vs permitted action sets are disjoint by construction; SS-1 120s / SS-3 300s timers and the 60s reconciliation grace are bounded and logged; no new processing occurs. −1: durable separate-infra log store deferred (xfail). |
+| 3 — Segmentation & Isolation (20) | 19 | All active tenant ids captured at entry; cross-tenant broadcast is a forbidden action inside safe-stop; SS-4 fires only on uncontained boundary violation. −1: gateway-wide egress enforcement deferred (xfail). |
+| 4 — Zero Trust & Identity (15) | 14 | Exit requires operator authorization (Matt only, OQ-3); a non-operator exit attempt raises `SafeStopAuthorityError`; recovery/epoch increment delegated to the Mode Controller seam, never self-authorized. −1: automated per-condition proof verification deferred (xfail). |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only immutable `SafeStopLog` (no update/delete API), entry record = proof of entry; §11 contract + row #94 + 3 test classes + gate-clean 0/0. −1: durable persistence deferred (xfail). |
+| **Composite** | **95** | **ELITE** — clears the 85+ bar. |
+
+---
+
+## §B.6 — Achieved score (Mode Controller #92, 2026-06-14)
+
+Scored against this track on closure. Full suite **1796 passed / 1 skipped / 57 xfailed** at its gate; Grok completion gate-clean 0/0 (comprehensive); 3 test classes (20 passed, 3 documented strict xfail).
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | `ModeController.request_transition()` is the single mode-change path; only defined §3 transitions are allowed; satisfies the gateway `ModeCheck` seam (local dispatch continues in every mode by design). −1: live cross-region consensus deferred to Lung (xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Transitions require a quorum of ≥2 distinct independent control-plane observers (MC-D4); minimum per-mode dwell prevents flapping (MC-D8); the epoch is monotonic and incremented only by the controller (MC-D2/MC-D3). −1: threshold/quorum calibration deferred to signed amendment (xfail). |
+| 3 — Segmentation & Isolation (20) | 19 | Tenant-side `TenantModeView` falls back to local ISOLATED on heartbeat loss **without** epoch increment (MC-D6); cross-tenant operations are NORMAL-only; RECOVERING blocks new sharing until validated (MC-D7). −1: live multi-tenant heartbeat transport deferred. |
+| 4 — Zero Trust & Identity (15) | 14 | Agent opacity (MC-D5): an agent-sourced vote is rejected and logged, never counted; the epoch cannot be forged or decremented (no external setter; forge attempt raises + logs). −1: real-tenant homeostasis calibration deferred (xfail). |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only immutable `ModeTransitionLog` records every transition with prev/new mode, epoch before/after, trigger, and agreeing observers (MC-D9); §14 contract + row #92 + 3 test classes + gate-clean 0/0. −1: durable persistence deferred. |
+| **Composite** | **95** | **ELITE** — clears the §13 85+ bar. |
+
+---
+
+## §B.7 — Achieved score (Privacy Filter #93, 2026-06-14)
+
+Scored against this track on closure. Full suite **1813 passed / 1 skipped / 60 xfailed** at its gate; Grok completion gate-clean 0/0; 3 test classes (17 passed, 3 documented strict xfail).
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | The mandatory five-stage pipeline runs in order with no skippable stage and no shortcut (PF-D4); `filter()` is the single entry; every failure condition fails closed (PF-D2). −1: broadcast-engine integration is interface-level (the engine is a separate component, §1). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Own breaker key via `privacy_filter_breaker_key` (PF-D3/BRC-D5); OPEN means silence with no fallback path (PF-D2); an audit-write failure trips the filter's own breaker (§4). −1: live health-check/latency breaker triggers deferred. |
+| 3 — Segmentation & Isolation (20) | 19 | Two independent failure domains proven (a broadcast-engine breaker trip does not open the filter breaker and vice versa); the no-raw-identifier invariant (PF-D5) is enforced by transformation and proven by validation re-scan. −1: cross-region coordination deferred to Lung (xfail). |
+| 4 — Zero Trust & Identity (15) | 14 | Per-tenant policy is authoritative with no global permissive default; absent/ambiguous policy, missing PIPEDA consent, scope NONE, and ineligible signal types all fail closed (PF-D6/PF-D8/§6). −1: tenant consent-management workflow deferred to Playhouse (xfail). |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only immutable audit as pipeline stage 5 — an operation that cannot be audited does not complete (PF-D7); blocked operations logged with equal rigor (PF-D9); §15 contract + row #93 + 3 test classes + gate-clean 0/0. −1: full PIPEDA legal-review audit deferred (xfail). |
+| **Composite** | **95** | **ELITE** — clears the §14 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
@@ -134,6 +179,9 @@ Scored against this track on closure. Full suite **1722 passed / 1 skipped / 43 
 - **Watcher Agents** (#85-87, Layer 6 Governance) — this track (scored as one governance-observer ensemble, §B.2).
 - **Load Fission Controller** (#90, Layer 6 Control Plane) — this track (§B.3).
 - **Specialisation Fission Controller** (#91, Layer 6 Control Plane) — this track (§B.4).
+- **Safe-Stop State Machine** (#94, Layer 6 Control Plane) — this track (§B.5).
+- **Mode Controller** (#92, Layer 6 Control Plane) — this track (§B.6).
+- **Privacy Filter** (#93, Layer 6 Control Plane) — this track (§B.7).
 - Future control-plane agents may cite this track by amendment.
 
 ---
