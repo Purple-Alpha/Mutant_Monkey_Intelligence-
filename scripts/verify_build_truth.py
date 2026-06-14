@@ -110,8 +110,16 @@ def check_governed_count(findings: list[Finding]) -> None:
     if not sb:
         findings.append(Finding("GOVERNED_COUNT", True, "scoreboard not found/readable"))
         return
-    # reality: count table rows whose status cell contains GOVERNED_AGENT
-    rows = re.findall(r"(?m)^\|\s*#?\d+[A-Za-z]?\s*\|.*GOVERNED_AGENT", sb)
+    # reality: count table rows whose *Runtime status* cell contains GOVERNED_AGENT.
+    # Do not count prose mentions in later cells, e.g. "becomes GOVERNED_AGENT"
+    # or "not promoted to GOVERNED_AGENT".
+    rows = []
+    for line in sb.splitlines():
+        if not re.match(r"^\|\s*#?\d+[A-Za-z]?\s*\|", line):
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if len(cells) >= 3 and cells[2].startswith("`GOVERNED_AGENT`"):
+            rows.append(line)
     real = len(rows)
     # claim: the BREADTH RUNWAY header number
     m = re.search(r"BREADTH RUNWAY[^\d]*(\d+)\s*(?:\*\*)?\s*of\s*70", sb)

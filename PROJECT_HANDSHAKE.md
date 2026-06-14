@@ -3,7 +3,7 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 37431e3)
+CURRENT NEXT ACTION (as of 786ef7a)
 ═══════════════════════════════════════════════
 AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the PRIMARY CODEBASE
   (operator decision 2026-06-13; see CURRENT_STATE_MAP.md "Codebase authority state").
@@ -14,7 +14,7 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the PRIMARY CODE
 
 BRANCH: safety/queue-drift-cleanup-20260528 — aligned with
   github/safety/queue-drift-cleanup-20260528 (PUSHED, clean tree).
-HEAD: 37431e3 record wsl primary codebase authority (2026-06-13)
+HEAD: 786ef7a feat: build truth verifier — catches tracker drift, exits non-zero on disagreement (2026-06-13)
 
 STATE: Far past the prior Phase 1 snapshot. Repo history now contains gated milestones
   through Phase 6 plus the newer concepts:
@@ -54,7 +54,7 @@ IF BLOCKED:
   Not blocked — tree is clean and pushed. Awaiting operator direction on the
   clarification/amendment pass.
 
-LAST UPDATED: 37431e3 2026-06-13 (authority refresh: WSL primary, branch pushed/aligned,
+LAST UPDATED: 786ef7a 2026-06-13 (authority refresh: WSL primary, branch pushed/aligned,
   Phases 2-6 + Shadow Watcher + Dual LLM + Fission gated, naming locked)
 ═══════════════════════════════════════════════
 
@@ -116,7 +116,7 @@ WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The
 backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
 
 ## Verification Baseline
-**1447 tests passing, 1 skipped, 7 xfailed** (verified 2026-06-10, after Phase 1 Infrastructure C1/C2/C3 landed — Canonical Evidence Ledger, Role Separation Controller, Token Usage Tracker; +37 from the 1410 baseline) from
+**1740 tests passing, 1 skipped, 49 xfailed** (verified 2026-06-12, after Shadow Watcher Swarm Layer 1 landed; newest committed full-runtime baseline in `decision_cycles_log.md`) from
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation`.
 
 ## Current State (latest reconcile 2026-06-08)
