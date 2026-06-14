@@ -5,12 +5,37 @@ import sys
 
 REPO = "/home/socialarchitect/northstar"
 
+# Supersession rules: a concept doc is considered satisfied when every mapped
+# contract filename exists AND is SIGNED, even if no single contract filename
+# contains the concept's literal name string. This covers concepts that were
+# split across multiple signed contracts (e.g. Agent Fission -> Load + Specialisation).
+CONCEPT_SUPERSESSION = {
+    "Agent_Fission_Concept_Doc.md": [
+        "Load_Fission_Contract_v2.md",
+        "Specialisation_Fission_Contract_v2.md",
+    ],
+}
+
 def read_file(path):
     full = os.path.join(REPO, path)
     if not os.path.exists(full):
         return None
     with open(full, encoding="utf-8") as f:
         return f.read()
+
+def is_contract_signed(filename):
+    """A contract counts as signed when a **Status:** line says SIGNED and not UNSIGNED/DRAFT."""
+    content = read_file(os.path.join("4. Product_Roadmap", filename))
+    if not content:
+        return False
+    for line in content.splitlines():
+        if "**Status:**" not in line:
+            continue
+        if "UNSIGNED" in line or "DRAFT - unsigned" in line:
+            continue
+        if "SIGNED" in line:
+            return True
+    return False
 
 def get_signed_unbuilt():
     scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md")
@@ -36,6 +61,11 @@ def get_next_concept_without_contract():
     concepts = [f for f in os.listdir(roadmap) if "Concept_Doc" in f]
     contracts = [f for f in os.listdir(roadmap) if "Contract" in f]
     for concept in sorted(concepts):
+        superseding = CONCEPT_SUPERSESSION.get(concept)
+        if superseding and all(
+            c in contracts and is_contract_signed(c) for c in superseding
+        ):
+            continue
         name = concept.replace("_Concept_Doc.md", "").replace("_", "")
         if not any(name in contract.replace("_", "") for contract in contracts):
             return concept
