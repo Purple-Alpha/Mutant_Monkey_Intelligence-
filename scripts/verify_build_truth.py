@@ -67,12 +67,33 @@ def run(cmd: list[str], cwd: Path | None = None, timeout: int = 600) -> tuple[in
         return 124, f"timed out after {timeout}s"
 
 
-def hashes_match(a: str, b: str) -> bool:
-    n = min(len(a), len(b))
-    return n >= 6 and a[:n] == b[:n]
+def _is_ancestor(commit: str) -> bool | None:
+    """True if `commit` is an ancestor of HEAD (a commit is its own ancestor);
+    False if `commit` is a known object but not on this branch; None if `commit`
+    is not a known object."""
+    rc, _ = run(["git", "-C", str(REPO_ROOT), "merge-base", "--is-ancestor", commit, "HEAD"])
+    if rc == 0:
+        return True
+    if rc == 1:
+        return False
+    return None
+
+
+def _commits_behind_remote() -> int | None:
+    """Commits the upstream has that HEAD does not (0 = not behind). None if no
+    upstream is configured. Being ahead (unpushed local commits) is not behind."""
+    rc, out = run(["git", "-C", str(REPO_ROOT), "rev-list", "--count", "HEAD..@{upstream}"])
+    if rc == 0 and out.strip().isdigit():
+        return int(out.strip())
+    return None
 
 
 # --- check 1: HEAD --------------------------------------------------------------
+# Rule (locked 2026-06-13): a doc hash is OK if it is an ancestor of real HEAD on
+# the current branch. It FAILS only if the hash is not on the branch at all, or if
+# the branch is behind its remote. Being a few commits behind on a fast-moving
+# branch is normal and is not drift. This kills the self-referential refresh loop:
+# committing a HEAD-refresh advances HEAD, which previously re-broke an exact match.
 
 def check_head(findings: list[Finding]) -> None:
     rc, out = run(["git", "-C", str(REPO_ROOT), "rev-parse", "--short", "HEAD"])
@@ -80,6 +101,7 @@ def check_head(findings: list[Finding]) -> None:
         findings.append(Finding("HEAD", True, f"could not read git HEAD: {out.strip()}"))
         return
     real = out.strip()
+
     claims: list[tuple[str, str]] = []
     hs = read(HANDSHAKE)
     m = re.search(r"as of\s+([0-9a-f]{6,40})", hs)
@@ -92,15 +114,27 @@ def check_head(findings: list[Finding]) -> None:
     if m:
         claims.append(("MMI_CURRENT_STATE.md 'As of HEAD'", m.group(1)))
 
-    if not claims:
-        findings.append(Finding("HEAD", True, f"real HEAD={real}; no tracker stated a HEAD to verify"))
-        return
-    bad = [(src, val) for src, val in claims if not hashes_match(val, real)]
-    if bad:
-        lines = "; ".join(f"{src} says {val}" for src, val in bad)
-        findings.append(Finding("HEAD", True, f"real HEAD={real}; STALE: {lines}"))
+    problems: list[str] = []
+    for src, val in claims:
+        anc = _is_ancestor(val)
+        if anc is True:
+            continue
+        if anc is False:
+            problems.append(f"{src} says {val} which is NOT on this branch (not an ancestor of HEAD)")
+        else:
+            problems.append(f"{src} says {val} which is not a known commit")
+
+    behind = _commits_behind_remote()
+    if behind is not None and behind > 0:
+        problems.append(f"branch is BEHIND its remote by {behind} commit(s)")
+
+    if problems:
+        findings.append(Finding("HEAD", True, f"real HEAD={real}; " + "; ".join(problems)))
     else:
-        findings.append(Finding("HEAD", False, f"real HEAD={real}; all {len(claims)} tracker(s) agree"))
+        note = f"real HEAD={real}; {len(claims)} doc hash(es) are ancestors of HEAD"
+        if behind == 0:
+            note += "; branch not behind remote"
+        findings.append(Finding("HEAD", False, note))
 
 
 # --- check 2: governed agent count (rows, not header) ---------------------------
