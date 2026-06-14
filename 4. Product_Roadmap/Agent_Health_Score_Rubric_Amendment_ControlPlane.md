@@ -170,6 +170,21 @@ Scored against this track on closure. Full suite **1813 passed / 1 skipped / 60 
 
 ---
 
+## §B.8 — Achieved score (Collective Immune System #95, 2026-06-14)
+
+Scored against this track on closure. Related control-plane suites **156 passed / 20 xfailed** before Grok gate; CIS focused suite **32 passed / 1 xfailed**; Codex post-build review found no discrete correctness issue after the review loop fixes.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | `CollectiveImmuneSystemCoordinator.coordinate()` enforces the four signed escalation levels and their trigger preconditions; L1 has no cross-component notification; L2 requires two correlated components or a ReconciliationAgent named conflict; L3 requires cross-tenant/systemic/control-plane/degraded-mode proof; L4 requires SS-1..SS-5. −1: live BRC receipt proof is caller-supplied, deferred to the cross-organ telemetry standard (xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | CIS cannot initiate fission, authorize mutation, increment epoch, or produce verdicts; mutation suspension is emitted only at L3+ as a coordination action; watcher-triggered fission is acknowledged only with Watcher evidence. −1: live component calls are not wired by this contract. |
+| 3 — Segmentation & Isolation (20) | 19 | Every evidence handoff requires non-empty tenant scope; payloads are immutable copies; raw tenant identifiers are rejected in payload keys and values; L2 rejects multi-tenant scope. −1: tenant-scope proof is structural in the request, not cryptographic. |
+| 4 — Zero Trust & Identity (15) | 14 | Authorized handoff paths are closed over source, target, and escalation level; unlisted paths and wrong-level endpoint pairs are blocked and logged; BRC lifecycle verification is opt-in and missing proof fails closed. −1: signed component identities are enum-level, not mTLS/JWT-backed. |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only immutable `CollectiveImmuneSystemLog`; level transition logs precede component notifications; durable JSONL write succeeds before in-memory append; after Safe-Stop handoff CIS produces no further records. §11 contract + row #95 + 3 test classes. −1: durable cross-process log store deferred. |
+| **Composite** | **95** | **ELITE** — clears the 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
@@ -182,6 +197,7 @@ Scored against this track on closure. Full suite **1813 passed / 1 skipped / 60 
 - **Safe-Stop State Machine** (#94, Layer 6 Control Plane) — this track (§B.5).
 - **Mode Controller** (#92, Layer 6 Control Plane) — this track (§B.6).
 - **Privacy Filter** (#93, Layer 6 Control Plane) — this track (§B.7).
+- **Collective Immune System** (#95, Layer 6 Control Plane) — this track (§B.8).
 - Future control-plane agents may cite this track by amendment.
 
 ---

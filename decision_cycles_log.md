@@ -1521,3 +1521,14 @@ Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubri
 Gate: 0/0 target (Grok completion gate — re-audit after health score recorded)
 Tests: 1813 passed, 1 skipped, 60 xfailed
 Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §14 sign-off)
+
+## PHASE_CLOSURE — Collective Immune System (#95)
+Date: June 14th 2026
+Contract: Collective_Immune_System_Design_Contract.md (§11 SIGNED)
+Commit: pending build commit; scoreboard GATED to follow
+Agent: Collective Immune System — core/collective_immune_system/
+Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubric_Amendment_ControlPlane.md §B.8)
+Codex review: clean after review-loop fixes; no discrete correctness issue found
+Gate: 0/0 target (Grok completion gate — audit after health score recorded)
+Tests: 156 passed, 20 xfailed across CIS + related control-plane suites
+Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)

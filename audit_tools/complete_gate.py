@@ -118,11 +118,12 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/evidence_package/",
     # Layer 6 Control Plane + governed-ensemble build homes. Added 2026-06-14
     # so control-plane builds (Safe-Stop, Mode Controller, Privacy Filter,
-    # Watchers, Fission, Mutation, Reconciliation) auto-fire the gate and
+    # CIS, Watchers, Fission, Mutation, Reconciliation) auto-fire the gate and
     # --pre-commit mode cannot false-pass them.
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/safe_stop/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/mode_controller/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/privacy_filter/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/collective_immune_system/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/watchers/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/",
