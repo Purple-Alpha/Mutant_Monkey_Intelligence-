@@ -4,7 +4,7 @@
 
 This file is derived ONLY from committed files (git history + tracked docs). It invents nothing from chat memory. Every claim cites its committed source. If a field below disagrees with a committed source, the committed source wins and this file is stale — refresh it (see "How to refresh").
 
-- **As of HEAD:** `786ef7a` (2026-06-13, `feat: build truth verifier — catches tracker drift, exits non-zero on disagreement`)
+- **As of HEAD:** `50b58a8` (2026-06-13, `docs: reconcile MMI build-truth drift checks`)
 - **Branch:** `safety/queue-drift-cleanup-20260528`
 - **Primary remote:** `github/safety/queue-drift-cleanup-20260528` (per `CURRENT_STATE_MAP.md` lines 13-27)
 - **Repo authority:** `/home/socialarchitect/northstar` is the PRIMARY CODEBASE; Windows surface is secondary/reference only (`CURRENT_STATE_MAP.md` lines 13-27)

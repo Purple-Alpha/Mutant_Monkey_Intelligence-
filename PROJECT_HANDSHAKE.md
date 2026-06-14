@@ -3,7 +3,7 @@ NorthStar + SwarmCommand Venture
 
 ```
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 786ef7a)
+CURRENT NEXT ACTION (as of 50b58a8)
 ═══════════════════════════════════════════════
 AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the PRIMARY CODEBASE
   (operator decision 2026-06-13; see CURRENT_STATE_MAP.md "Codebase authority state").
@@ -14,7 +14,7 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the PRIMARY CODE
 
 BRANCH: safety/queue-drift-cleanup-20260528 — aligned with
   github/safety/queue-drift-cleanup-20260528 (PUSHED, clean tree).
-HEAD: 786ef7a feat: build truth verifier — catches tracker drift, exits non-zero on disagreement (2026-06-13)
+HEAD: 50b58a8 docs: reconcile MMI build-truth drift checks (2026-06-13)
 
 STATE: Far past the prior Phase 1 snapshot. Repo history now contains gated milestones
   through Phase 6 plus the newer concepts:
@@ -54,7 +54,7 @@ IF BLOCKED:
   Not blocked — tree is clean and pushed. Awaiting operator direction on the
   clarification/amendment pass.
 
-LAST UPDATED: 786ef7a 2026-06-13 (authority refresh: WSL primary, branch pushed/aligned,
+LAST UPDATED: 50b58a8 2026-06-13 (authority refresh: WSL primary, branch pushed/aligned,
   Phases 2-6 + Shadow Watcher + Dual LLM + Fission gated, naming locked)
 ═══════════════════════════════════════════════
 
