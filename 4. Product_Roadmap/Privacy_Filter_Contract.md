@@ -2,7 +2,7 @@
 ## Separate Service: Cross-Tenant Broadcast Safety Gate
 
 **Document type:** Agent Design Contract — Service Specification (pre-§11)
-**Status:** DRAFT — UNSIGNED. Advisory lane only. No build authorization until §11 signed.
+**Status:** SIGNED — Matt Nichol June 14th 2026 (§15). Build authorization granted per this contract's scope.
 **Date drafted:** June 13, 2026
 **Drafted by:** Claude (advisory lane) — per AGENTS.md §2.1
 **Authority:** Matt Nichol — sole signing authority
@@ -321,5 +321,7 @@ This contract closes when:
 
 ## §15 — Operator Sign-Off
 
-**Signed:** ___________________________
-**Date:** ___________________________
+**Status:** §15 SIGNED — Matt Nichol June 14th 2026. Build authorization granted per this contract's scope.
+
+**Signed:** Matt Nichol
+**Date:** June 14th 2026
