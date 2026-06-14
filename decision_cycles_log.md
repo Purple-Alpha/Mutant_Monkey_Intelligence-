@@ -1532,3 +1532,14 @@ Codex review: clean after review-loop fixes; no discrete correctness issue found
 Gate: 0/0 target (Grok completion gate — audit after health score recorded)
 Tests: 156 passed, 20 xfailed across CIS + related control-plane suites
 Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)
+
+## PHASE_CLOSURE — Cortex / Immune Interface (#96)
+Date: June 14th 2026
+Contract: Cortex_Immune_Interface_Design_Contract.md (§11 SIGNED)
+Commit: 656b282 (runtime build); final scoreboard GATED commit to follow
+Agent: Cortex / Immune Interface — core/cortex_immune_interface/
+Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubric_Amendment_ControlPlane.md §B.9)
+Codex review: clean after review-loop fixes; no discrete actionable bugs found
+Gate: 0/0 split Grok completion gate — audit_outputs/cortex_immune_interface_core_20260614T235451Z.md + audit_outputs/cortex_immune_interface_tests_meta_20260614T235605Z.md
+Tests: 176 passed, 21 xfailed across Cortex / Immune Interface + related boundary suites
+Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)

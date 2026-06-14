@@ -1,6 +1,6 @@
 # Mutant Monkey Inbox Shield — Thread Handoff
 **Date:** June 14 2026
-**Reason:** Living document — updated after Collective Immune System build, Codex review, gate, and push.
+**Reason:** Living document — updated after Cortex / Immune Interface build, Codex review, split Grok gate, and push.
 **Authority:** Matt Nichol — sole signing authority
 
 ---
@@ -24,8 +24,9 @@
 | Mode Controller #92 | GATED 95 ELITE | 85b455f |
 | Privacy Filter #93 | GATED 95 ELITE | 85b455f |
 | Collective Immune System #95 | GATED 95 ELITE | f888ede |
+| Cortex / Immune Interface #96 | GATED 95 ELITE | 656b282 |
 
-**Test evidence:** CIS focused suite 32 passed / 1 xfailed; related control-plane suites 156 passed / 20 xfailed.
+**Test evidence:** Cortex / Immune Interface focused suite 22 passed / 1 xfailed; related boundary suites 176 passed / 21 xfailed.
 
 ---
 
@@ -46,7 +47,7 @@
 | Privacy Filter signed and gated | DONE |
 | Real tenant onboarded | July 20 — Reatan X8 arrives |
 
-DEPTH GATE is open. Collective Immune System #95 is built, Codex reviewed, Grok-gated 0/0, health-scored 95 ELITE, and pushed.
+DEPTH GATE is open. Collective Immune System #95 and Cortex / Immune Interface #96 are built, Codex reviewed, Grok-gated 0/0, health-scored 95 ELITE, and pushed.
 
 ---
 
@@ -123,6 +124,7 @@ Codex never builds. Cursor never reviews. They do not swap lanes.
 - 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md — SIGNED June 14th 2026
 - 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract_Amendment_01.md — SIGNED June 14th 2026
 - 4. Product_Roadmap/Collective_Immune_System_Design_Contract.md — SIGNED June 14th 2026
+- 4. Product_Roadmap/Cortex_Immune_Interface_Design_Contract.md — SIGNED June 14th 2026
 
 ---
 

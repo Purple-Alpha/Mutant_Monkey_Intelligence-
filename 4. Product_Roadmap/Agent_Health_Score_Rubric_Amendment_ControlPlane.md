@@ -185,6 +185,21 @@ Scored against this track on closure. Related control-plane suites **156 passed 
 
 ---
 
+## §B.9 — Achieved score (Cortex / Immune Interface #96, 2026-06-14)
+
+Scored against this track on closure. Related boundary suites **176 passed / 21 xfailed** before final gate; Cortex / Immune Interface focused suite **22 passed / 1 xfailed**; Codex post-build review found no discrete correctness issue after the review-loop fixes.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | `CortexImmuneInterface` enforces the closed legal Cortex-to-Immune and Immune-to-Cortex signal paths; direct Cortex writes to verdict ledger, immune component targets, and hidden channels are rejected and logged. −1: whole-repo static direct-call receipt is deferred to a future signed static-analysis receipt contract (strict xfail). |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Safe-Stop active state halts Cortex output; only Safe-Stop state or Mode Controller recovery broadcast may cross during Safe-Stop; forged recovery broadcasts are rejected. −1: live Safe-Stop/Mode Controller transport integration remains outside this interface contract. |
+| 3 — Segmentation & Isolation (20) | 19 | Cortex signals require tenant scope and reject cross-tenant payloads; governed baseline updates require matching tenant target and cannot alter another tenant baseline. −1: tenant identity proof is structural at the interface, not cryptographic. |
+| 4 — Zero Trust & Identity (15) | 14 | Closed enums identify legal organ components and handoff points; immune signals that modify cortex logic, send enforcement instructions, bypass handoff points, or cross tenant scope fail closed. −1: component identities are enum-level, not mTLS/JWT-backed. |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only immutable `CortexImmuneInterfaceLog`; every allowed crossing, blocked crossing, hidden-channel violation, baseline update, and Safe-Stop state transition is recorded; §11 contract + row #96 + CI-INV-1..CI-INV-12 tests + split Grok gate 0/0. −1: durable cross-process log store deferred. |
+| **Composite** | **95** | **ELITE** — clears the 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
@@ -198,6 +213,7 @@ Scored against this track on closure. Related control-plane suites **156 passed 
 - **Mode Controller** (#92, Layer 6 Control Plane) — this track (§B.6).
 - **Privacy Filter** (#93, Layer 6 Control Plane) — this track (§B.7).
 - **Collective Immune System** (#95, Layer 6 Control Plane) — this track (§B.8).
+- **Cortex / Immune Interface** (#96, Layer 6 Control Plane) — this track (§B.9).
 - Future control-plane agents may cite this track by amendment.
 
 ---
