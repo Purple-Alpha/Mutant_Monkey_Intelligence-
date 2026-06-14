@@ -99,6 +99,28 @@ def get_next_concept_without_contract():
             return concept
     return None
 
+def get_pending_operator_questions():
+    """Return pending operator questions from the handoff.
+
+    When all signed/build/audit/design queues are empty, the next action should
+    not fall through to generic research if the handoff already records concrete
+    operator questions. Those are authority-bearing design forks, so they route
+    to Matt before any new concept/contract work.
+    """
+    handoff = read_file("MMI_THREAD_HANDOFF.md") or ""
+    if "## Open Questions Still Pending" not in handoff:
+        return []
+    section = handoff.split("## Open Questions Still Pending", 1)[1]
+    section = section.split("\n---", 1)[0]
+    questions = []
+    for line in section.splitlines():
+        if not line.startswith("| OQ-"):
+            continue
+        parts = [part.strip() for part in line.strip().strip("|").split("|")]
+        if len(parts) >= 2:
+            questions.append(f"{parts[0]}: {parts[1]}")
+    return questions
+
 def check_drift():
     verifier = os.path.join(REPO, "scripts/verify_build_truth.py")
     if not os.path.exists(verifier):
@@ -116,6 +138,7 @@ drifted = check_drift()
 awaiting = get_awaiting_audit()
 unbuilt = get_signed_unbuilt()
 concept = get_next_concept_without_contract()
+pending_questions = get_pending_operator_questions()
 
 print("=" * 60)
 if drifted:
@@ -164,6 +187,15 @@ elif concept:
     print("BLOCKED_UNTIL: Matt signs section 11")
     print("OPERATOR_ACTION_REQUIRED: NO")
     print("NEXT_GATE: section 11 signed + build authorized")
+elif pending_questions:
+    print("MODE: OPERATOR_LOCK")
+    print("AUTHORIZED_TASK: Resolve pending operator questions before next contract")
+    print("ASSIGNED_TO: Matt")
+    print("NEXT_PROMPT_GOES_TO: Matt")
+    print("BLOCKED_UNTIL: OQ-4/OQ-5 answered or explicitly deferred")
+    print("OPERATOR_ACTION_REQUIRED: YES")
+    print("QUESTIONS: " + " | ".join(pending_questions))
+    print("NEXT_GATE: answers recorded, then Claude drafts the next signed contract")
 else:
     print("MODE: RESEARCH")
     print("AUTHORIZED_TASK: Research next phase requirements")
