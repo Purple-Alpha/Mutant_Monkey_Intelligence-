@@ -1,6 +1,6 @@
 # Mutant Monkey Inbox Shield — Thread Handoff
 **Date:** June 14 2026
-**Reason:** Living document — updated after OQ-4/OQ-5 locked and auto-push rule set.
+**Reason:** Living document — updated with corrected model lanes, dual-research rule, MMI update discipline.
 **Authority:** Matt Nichol — sole signing authority
 
 ---
@@ -53,6 +53,59 @@ Collective Immune System contract is next after that.
 ## Push Rule
 
 **AUTO-PUSH IS ON.** Cursor pushes every commit to remote immediately after committing. No hold. No manual push gate.
+
+---
+
+## MMI Update Discipline — MANDATORY
+
+Every session must end with the following before any commit:
+
+1. Cursor writes current state to `MMI_CURRENT_STATE.md`
+2. Cursor writes current state to `MMI_THREAD_HANDOFF.md`
+3. Both files are included in the final commit of every session
+4. If either file is not updated, the session is not complete
+
+Failure to update MMI files = dispatcher drift = wasted build time. This is not optional.
+
+---
+
+## Model Lane Rules
+
+### Research Lane — Dual Model Required
+
+Single-model research is not accepted. Every research pass requires two models so drift can be detected by comparison.
+
+| Step | Model | Role |
+|---|---|---|
+| Research pass 1 | ChatGPT | First pass — requirements, gap analysis, candidate ranking |
+| Research pass 2 | Gemini | Cross-reference ChatGPT output — flag gaps, contradictions, and drift |
+| Synthesis | Claude | Receives both outputs, drafts concept doc |
+
+Research loop rule: ChatGPT researches → Gemini cross-references and flags drift → combined output comes to Claude → Claude drafts concept doc. Claude does not draft until both research passes are returned.
+
+### Build Lane — Cursor Builds, Codex Reviews
+
+| Model | Strength | Weakness | Role |
+|---|---|---|---|
+| Cursor | Strict contract adherence | Under-builds — stays too narrow, misses implied scope | Primary builder — executes the signed contract exactly as written |
+| Codex | Broad coverage, catches gaps | Over-builds — adds unrequested scope beyond the contract | Post-build reviewer only — finds what Cursor missed, flags what exceeds contract scope |
+
+Build loop rule: Cursor builds → Codex reviews → anything Codex flags as missing goes back to Cursor to add → anything Codex added beyond contract scope gets stripped before gate.
+
+Codex never builds. Cursor never reviews. They do not swap lanes.
+
+### Design Lane — Claude Only
+
+| Model | Role |
+|---|---|
+| Claude | Concept docs, contract drafting, governance, spec. Never builds. Never executes. |
+
+### Authority Lane — Matt Nichol Only
+
+- Sole signing authority
+- Nothing is built without §11 signature
+- Nothing is pushed without commit (auto-push handles the push after commit)
+- All operator decisions are Matt's — no model recommends, models inform
 
 ---
 
@@ -112,16 +165,6 @@ Completely separate project at C:\Architectapp_clean\intelligence\
 Nothing to do with Mutant Monkey.
 Do not mix. Do not reference in Mutant Monkey threads.
 Leave on top shelf — parked, protected, separate.
-
----
-
-## Lane Rules
-
-- Claude — advisory lane only. Design, governance, spec. Never builds.
-- Cursor — execution lane. Builds against signed contracts only. Auto-pushes every commit.
-- Codex — review and verification lane.
-- ChatGPT / Gemini / Copilot — research inputs only. Sponge rule applies.
-- Matt Nichol — sole signing authority. Nothing builds without his signature.
 
 ---
 
