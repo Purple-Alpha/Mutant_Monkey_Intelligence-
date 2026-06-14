@@ -121,6 +121,39 @@ def get_pending_operator_questions():
             questions.append(f"{parts[0]}: {parts[1]}")
     return questions
 
+def _scoreboard_row_status(row_id):
+    scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md") or ""
+    prefix = f"| {row_id} |"
+    for line in scoreboard.splitlines():
+        if not line.startswith(prefix):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) >= 3:
+            return parts[2].strip("`")
+    return ""
+
+def _all_rows_gated(row_ids):
+    return all(_scoreboard_row_status(row_id).startswith("GATED") for row_id in row_ids)
+
+def _operator_decisions_locked():
+    state = read_file("MMI_CURRENT_STATE.md") or ""
+    return (
+        "OQ-4: Homeostasis remains inside Mode Controller" in state
+        and "OQ-5: Tenant baseline ingestion does not require operator approval for every closed threat event" in state
+    )
+
+def get_collective_immune_design_task():
+    """Depth-gate follow-on once control-plane prerequisites are done.
+
+    The CIS path is the first organism gap after Mode Controller, Privacy
+    Filter, and Safe-Stop are gated and OQ-4/OQ-5 are locked. At that point the
+    research lane is no longer the next blocker; the design lane should draft
+    the next CIS artifact.
+    """
+    if _all_rows_gated(("92", "93", "94")) and _operator_decisions_locked():
+        return "Draft Collective Immune System concept doc / design contract"
+    return None
+
 def check_drift():
     verifier = os.path.join(REPO, "scripts/verify_build_truth.py")
     if not os.path.exists(verifier):
@@ -139,6 +172,7 @@ awaiting = get_awaiting_audit()
 unbuilt = get_signed_unbuilt()
 concept = get_next_concept_without_contract()
 pending_questions = get_pending_operator_questions()
+cis_design_task = get_collective_immune_design_task()
 
 print("=" * 60)
 if drifted:
@@ -196,6 +230,14 @@ elif pending_questions:
     print("OPERATOR_ACTION_REQUIRED: YES")
     print("QUESTIONS: " + " | ".join(pending_questions))
     print("NEXT_GATE: answers recorded, then Claude drafts the next signed contract")
+elif cis_design_task:
+    print("MODE: DESIGN")
+    print(f"AUTHORIZED_TASK: {cis_design_task}")
+    print("ASSIGNED_TO: Claude")
+    print("NEXT_PROMPT_GOES_TO: Claude")
+    print("BLOCKED_UNTIL: Matt signs section 11 before any CIS build")
+    print("OPERATOR_ACTION_REQUIRED: NO")
+    print("NEXT_GATE: concept/contract committed, then §11 signature before build")
 else:
     print("MODE: RESEARCH")
     print("AUTHORIZED_TASK: Research next phase requirements")
