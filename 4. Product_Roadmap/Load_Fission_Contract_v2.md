@@ -2,8 +2,8 @@
 
 **Status:** SIGNED — Matt Nichol June 13th 2026.
 **Product surface:** Mutant Monkey Inbox Shield.
-**Authority:** This draft authorizes no code, no deployment, no policy change, no scoreboard status change, and no production fission behavior until Matt signs §11.
-**Relationship to prior contract:** This v2 draft is a proposed supersession of `Load_Fission_Contract.md`. Local repo evidence currently shows scoreboard row #90 as `GATED`, not `SIGNED_UNBUILT`; if Matt signs this v2 contract, it supersedes the prior Load Fission contract going forward without rewriting the historical gate record.
+**Authority:** Signed by Matt Nichol June 13th 2026 (§13) — build authorization granted per this contract's scope. Signing does not by itself change any scoreboard row, deploy code, or rewrite historical gate records.
+**Relationship to prior contract:** This v2 contract supersedes `Load_Fission_Contract.md` going forward, effective on signing (Matt Nichol June 13th 2026). Local repo evidence shows scoreboard row #90 as `GATED` from the prior 2026-06-12 build; this supersession does not rewrite that historical gate record.
 
 ---
 
@@ -288,7 +288,7 @@ Expected result: permission intersection model blocks the action and logs the at
 
 ## §12 Implementation Gate
 
-This draft authorizes no implementation until §11 is signed.
+This contract is signed (§13). Implementation of the v2 scope is authorized and must still satisfy every requirement below before closure.
 
 Any v2 implementation must prove:
 
