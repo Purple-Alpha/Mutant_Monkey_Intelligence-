@@ -55,7 +55,7 @@ This component must be specified as a separate service before the Phase 6 DEPTH 
 | PF-D8 | PIPEDA compliance | Canadian PIPEDA compliance is a hard design constraint not a best practice. Any conflict between "share more signal" and "PIPEDA compliance" resolves in favour of compliance every time. |
 | PF-D9 | Blocked operations are logged | Blocked operations — breaker OPEN, validation failure, policy-conservative refusal — are logged with the same rigor as permitted operations. A refusal to broadcast is a governance event. |
 | PF-D10 | Consistency with Mode Controller | During RECOVERING the Mode Controller restricts cross-tenant uploads to pattern hashes and anomaly counts only. The Privacy Filter enforces the same class of constraint on the NORMAL-mode broadcast path. Same rule, two enforcement points. |
-| PF-D11 | Linux-primary path | All files at /home/socialarchitect/northstar/core/privacy_filter/. No Windows paths. |
+| PF-D11 | Linux-primary path | All files under the Linux-primary runtime core package `core/privacy_filter/` — repo path `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/privacy_filter/`, the established home for every Layer 6 control-plane component (Blast Radius `core/control_plane/`, Safe-Stop #94 `core/safe_stop/`, Mode Controller #92 `core/mode_controller/`). No Windows paths. |
 
 ---
 
