@@ -1,6 +1,6 @@
 # Mutant Monkey Inbox Shield — Thread Handoff
 **Date:** June 14 2026
-**Reason:** Living document — updated after Collective Immune System §11 signature and build routing.
+**Reason:** Living document — updated after Collective Immune System build, Codex review, gate, and push.
 **Authority:** Matt Nichol — sole signing authority
 
 ---
@@ -23,9 +23,9 @@
 | Safe-Stop State Machine #94 | GATED 95 ELITE + Amendment 01 signed | cf3f273 |
 | Mode Controller #92 | GATED 95 ELITE | 85b455f |
 | Privacy Filter #93 | GATED 95 ELITE | 85b455f |
-| Collective Immune System #95 | SIGNED — build pending | — |
+| Collective Immune System #95 | GATED 95 ELITE | f888ede |
 
-**Test baseline:** 1722 passed, 1 skipped, 43 xfailed
+**Test evidence:** CIS focused suite 32 passed / 1 xfailed; related control-plane suites 156 passed / 20 xfailed.
 
 ---
 
@@ -33,7 +33,6 @@
 
 - Load Fission v2 Contract — SIGNED, supersedes #90
 - Specialisation Fission v2 Contract — SIGNED, supersedes #91
-- Collective Immune System Contract — §11 SIGNED June 14th 2026, build authorized
 
 ---
 
@@ -47,7 +46,7 @@
 | Privacy Filter signed and gated | DONE |
 | Real tenant onboarded | July 20 — Reatan X8 arrives |
 
-DEPTH GATE is open. Collective Immune System contract is §11 SIGNED and routed to Cursor build.
+DEPTH GATE is open. Collective Immune System #95 is built, Codex reviewed, Grok-gated 0/0, health-scored 95 ELITE, and pushed.
 
 ---
 
@@ -146,10 +145,8 @@ None.
 ## Next Authorized Tasks In Order
 
 1. Run `python3 scripts/mmi_dispatch.py` to confirm current dispatch
-2. Build Collective Immune System #95 — contract is §11 SIGNED and scoreboard row is `SIGNED_UNBUILT`
-3. Codex reviews after Cursor build; gaps return to Cursor, over-scope gets stripped
-4. Run `complete_gate.py` 0/0 and gate
-5. Phase 3 sender_domain amendment — sign before Phase 3 builds
+2. Phase 3 sender_domain amendment — sign before Phase 3 builds
+3. If no signed/build/audit/design item exists, dispatcher routes RESEARCH for the next concept cycle
 
 ---
 
