@@ -121,6 +121,7 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     # Watchers, Fission, Mutation, Reconciliation) auto-fire the gate and
     # --pre-commit mode cannot false-pass them.
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/safe_stop/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/mode_controller/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/watchers/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/",
@@ -135,15 +136,15 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
 PRODUCT_ROADMAP_PREFIX = "4. Product_Roadmap/"
 AUDIT_TOOLS_PREFIX = "audit_tools/"
 
-# §11 SIGNED marker convention: a signed spec includes this exact
-# string near the top of the file (matches pre_ship_audit.py).
-SIGNED_SPEC_MARKER_PRIMARY = "§11 SIGNED"
+# §NN SIGNED marker convention: a signed spec includes a "§<n> SIGNED" token
+# near the top of the file (matches pre_ship_audit.py). The signing section
+# differs per contract — §11 for most, §14 (Mode Controller), §15 (Privacy
+# Filter) — so the marker is recognized by section-agnostic pattern, in either
+# the canonical "§14 SIGNED" form or the dash "SIGNED — §14" status-line form
+# (em dash, as written in the contract headers). This prevents a genuinely
+# signed contract from being mis-read as unsigned merely because of its section.
 SIGNED_SPEC_MARKER_SECONDARY = "LOCKED BY"
-# Some signed contracts state the status as "SIGNED — §11 ..." (dash form)
-# rather than the canonical "§11 SIGNED" token. Accept that phrasing too so a
-# signed contract is not mis-read as unsigned by the gate. The em dash is the
-# one used in the contract status lines.
-SIGNED_SPEC_MARKER_DASH = "SIGNED — §11"
+SIGNED_SPEC_SIGNED_PATTERN = re.compile(r"§\s*\d+\s*SIGNED|SIGNED\s*[—-]\s*§\s*\d+")
 SIGNED_SPEC_HEAD_BYTES = 1500
 
 # Canonical forbidden-language list — enforcement form.
@@ -583,15 +584,13 @@ def extract_vision_non_negotiables() -> str:
 
 
 def _is_signed_spec(path: Path) -> bool:
-    """Return True if ``path`` carries a §11-signed marker near its top."""
+    """Return True if ``path`` carries a §NN-signed marker near its top."""
 
     try:
         head = path.read_text(encoding="utf-8")[:SIGNED_SPEC_HEAD_BYTES]
     except OSError:
         return False
-    if SIGNED_SPEC_MARKER_PRIMARY in head:
-        return True
-    if SIGNED_SPEC_MARKER_DASH in head:
+    if SIGNED_SPEC_SIGNED_PATTERN.search(head):
         return True
     if SIGNED_SPEC_MARKER_SECONDARY in head and "SIGNED" in head:
         return True

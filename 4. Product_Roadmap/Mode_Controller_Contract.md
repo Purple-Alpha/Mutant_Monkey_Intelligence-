@@ -1,8 +1,8 @@
 # Mode Controller — Agent Design Contract
 ## The Autonomic Nervous System of the Mutant Monkey Organism
 
-**Document type:** Agent Design Contract (pre-§11)
-**Status:** DRAFT — UNSIGNED. Advisory lane only. No build authorization until §14 signed.
+**Document type:** Agent Design Contract
+**Status:** SIGNED — §14 SIGNED by Matt Nichol June 13th 2026 (see §14). Build authorization granted per this contract's scope.
 **Date drafted:** June 13, 2026
 **Drafted by:** Claude (advisory lane) — per AGENTS.md §2.1
 **Authority:** Matt Nichol — sole signing authority
