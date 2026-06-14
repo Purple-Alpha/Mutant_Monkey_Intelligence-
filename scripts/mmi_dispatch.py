@@ -161,7 +161,10 @@ def get_cortex_immune_interface_design_task():
     and Safe-Stop: the cross-organ interface contract. When CIS row #95 is
     gated, generic research is no longer the actionable next state.
     """
-    if _scoreboard_row_status("95").startswith("GATED"):
+    if (
+        _scoreboard_row_status("95").startswith("GATED")
+        and not is_contract_signed("Cortex_Immune_Interface_Design_Contract.md")
+    ):
         return "Draft Cortex / Immune Interface concept doc / contract"
     return None
 
