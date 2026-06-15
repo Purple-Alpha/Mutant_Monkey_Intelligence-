@@ -101,14 +101,14 @@ def test_compliant_item_runs_all_five_stages_and_broadcasts():
     assert rec.policy_applied.startswith("v1/")
 
 
-def test_raw_tenant_identifier_is_stripped_and_absent_from_output():
+def test_raw_tenant_identifier_is_blocked_before_broadcast():
     pipe = _pipeline(_policy(granularity=Granularity.GENERALIZED))
     result = pipe.filter(
         _candidate(tenant_id="acme-co", origin="acme-co internal note")
     )
-    assert result.broadcast is True
-    # No output value contains the raw tenant id.
-    assert all("acme-co" not in v for v in (result.output or {}).values())
+    assert result.broadcast is False
+    assert result.block_reason is BlockReason.VALIDATION_RAW_IDENTIFIER
+    assert result.output is None
     assert EntityKind.TENANT_ID in result.record.entity_findings
 
 
@@ -214,13 +214,14 @@ def test_raw_email_content_is_flagged_and_blocked():
     )
     assert result.broadcast is False
     assert result.block_reason is BlockReason.VALIDATION_RAW_IDENTIFIER
-    # default (non-leaky) transform strips it and broadcasts safely.
+    # default (non-leaky) path now blocks raw never-eligible content before broadcast.
     pipe2 = _pipeline(_policy())
     ok = pipe2.filter(
         BroadcastCandidate("wf-e2", "acme-co", EligibleSignalType.GENERALIZED_INDICATOR,
                            {"body": "From: victim@bank.com Subject: invoice"})
     )
-    assert ok.broadcast is True
+    assert ok.broadcast is False
+    assert ok.block_reason is BlockReason.VALIDATION_RAW_IDENTIFIER
 
 
 def test_privacy_filter_failure_halts_broadcast_no_fallback():

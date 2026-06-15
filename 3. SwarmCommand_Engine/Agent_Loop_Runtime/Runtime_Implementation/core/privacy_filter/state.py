@@ -83,6 +83,7 @@ NEVER_RAW_IN_OUTPUT: frozenset[EntityKind] = frozenset(
         EntityKind.ACCOUNT_NUMBER,
         EntityKind.NAME,
         EntityKind.ADDRESS,
+        EntityKind.INFRA_FINGERPRINT,
         EntityKind.RAW_EMAIL_CONTENT,
     }
 )

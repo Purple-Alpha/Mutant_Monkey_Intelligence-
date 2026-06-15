@@ -22,11 +22,16 @@ any tenant/agent/tool breaker.
 
 from __future__ import annotations
 
+import base64
+import binascii
 import hashlib
+import html
 import json
 import re
+import unicodedata
 from dataclasses import dataclass, field
 from typing import Callable
+from urllib.parse import unquote
 
 from core.control_plane.breaker import BreakerStore, TripClass
 from core.control_plane.privacy_filter import privacy_filter_breaker_key
@@ -56,13 +61,72 @@ GEN_PREFIX = "g:"
 _EMAIL_RE = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
 _IP_RE = re.compile(r"\b(?:\d{1,3}\.){3}\d{1,3}\b")
 _ACCT_RE = re.compile(r"\b\d{6,}\b")
+_ZERO_WIDTH_RE = re.compile(r"[\u200b-\u200f\ufeff\x00]")
+_GEO_RE = re.compile(r"\b-?\d{1,3}\.\d{4,}\s*,\s*-?\d{1,3}\.\d{4,}\b")
+_EXACT_TS_RE = re.compile(r"\b20\d{2}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:?\d{2})?\b")
+_TENANT_HINT_RE = re.compile(
+    r"(tenant|client|vendor|account|routing|iban|bank|invoice|mailbox|"
+    r"embedding|baseline|allowlist|suppression|debug|trace|correlation|"
+    r"partition|topic|queue|cache|tooltip|breadcrumb|sentry|apm|blob|"
+    r"filename|path|backfill|training|model|vector|token|receipt|ack|"
+    r"authorization)",
+    re.IGNORECASE,
+)
+_OPAQUE_HINT_RE = re.compile(r"(compressed|encrypted|signed_blob|opaque|base64_blob)")
 _RAW_EMAIL_FIELDS = frozenset(
     {"raw_email", "email_body", "headers", "subject", "body", "raw_content"}
+)
+_SAFE_FIELD_NAMES = frozenset(
+    {
+        "indicator",
+        "pattern",
+        "category",
+        "count",
+        "cohort_size",
+        "event_type",
+        "signal",
+        "confidence",
+        "reason",
+        "summary",
+    }
 )
 
 
 def _hash(value: str) -> str:
     return HASH_PREFIX + hashlib.sha256(value.encode("utf-8")).hexdigest()[:24]
+
+
+def _canonical_forms(value: object) -> tuple[str, ...]:
+    if isinstance(value, (dict, list, tuple, set)):
+        raw = json.dumps(value, sort_keys=True, default=str)
+    else:
+        raw = str(value)
+    forms: set[str] = {raw}
+    normalized = unicodedata.normalize("NFKC", raw)
+    forms.add(normalized)
+    forms.add(_ZERO_WIDTH_RE.sub("", normalized))
+    forms.add(unquote(normalized))
+    forms.add(html.unescape(normalized))
+    try:
+        forms.add(normalized.encode("ascii").decode("idna"))
+    except (UnicodeError, ValueError):
+        pass
+    try:
+        decoded = base64.b64decode(normalized, validate=True).decode("utf-8")
+        forms.add(decoded)
+        forms.add(unicodedata.normalize("NFKC", decoded))
+    except (binascii.Error, UnicodeDecodeError, ValueError):
+        pass
+    return tuple(forms)
+
+
+def _contains_tenant_marker(value: object, tenant_id: str) -> bool:
+    tenant_forms = {f.lower() for f in _canonical_forms(tenant_id)}
+    for form in _canonical_forms(value):
+        lowered = form.lower()
+        if any(marker and marker in lowered for marker in tenant_forms):
+            return True
+    return False
 
 
 def detect_entities(content: dict[str, str], tenant_id: str) -> list[DetectedEntity]:
@@ -71,16 +135,28 @@ def detect_entities(content: dict[str, str], tenant_id: str) -> list[DetectedEnt
     privacy-safe by construction and are not flagged."""
 
     found: list[DetectedEntity] = []
+    aggregate_value = ""
     for fname, raw in content.items():
+        aggregate_value += "".join(_canonical_forms(raw))
         value = str(raw)
-        if value.startswith((HASH_PREFIX, GEN_PREFIX)):
-            continue
+        forms = _canonical_forms(raw)
+        key_forms = _canonical_forms(fname)
         lf = fname.lower()
-        if tenant_id and tenant_id in value:
+        if (
+            value.startswith((HASH_PREFIX, GEN_PREFIX))
+            and lf in _SAFE_FIELD_NAMES
+            and not _contains_tenant_marker(fname, tenant_id)
+        ):
+            continue
+        joined_forms = "\n".join(forms + key_forms)
+        if tenant_id and (
+            _contains_tenant_marker(raw, tenant_id)
+            or _contains_tenant_marker(fname, tenant_id)
+        ):
             found.append(DetectedEntity(EntityKind.TENANT_ID, fname, value))
-        if _EMAIL_RE.search(value):
+        if _EMAIL_RE.search(joined_forms):
             found.append(DetectedEntity(EntityKind.EMAIL, fname, value))
-        if _IP_RE.search(value):
+        if _IP_RE.search(joined_forms):
             found.append(DetectedEntity(EntityKind.IP_ADDRESS, fname, value))
         if "name" in lf:
             found.append(DetectedEntity(EntityKind.NAME, fname, value))
@@ -88,8 +164,19 @@ def detect_entities(content: dict[str, str], tenant_id: str) -> list[DetectedEnt
             found.append(DetectedEntity(EntityKind.ADDRESS, fname, value))
         if lf in _RAW_EMAIL_FIELDS:
             found.append(DetectedEntity(EntityKind.RAW_EMAIL_CONTENT, fname, value))
-        if _ACCT_RE.search(value) and not _IP_RE.search(value):
+        if _ACCT_RE.search(joined_forms) and not _IP_RE.search(joined_forms):
             found.append(DetectedEntity(EntityKind.ACCOUNT_NUMBER, fname, value))
+        if _GEO_RE.search(joined_forms) or _EXACT_TS_RE.search(joined_forms):
+            found.append(DetectedEntity(EntityKind.INFRA_FINGERPRINT, fname, value))
+        if (
+            lf not in _SAFE_FIELD_NAMES
+            and _TENANT_HINT_RE.search(lf)
+        ):
+            found.append(DetectedEntity(EntityKind.INFRA_FINGERPRINT, fname, value))
+        if _OPAQUE_HINT_RE.search(lf) or _OPAQUE_HINT_RE.search(value):
+            found.append(DetectedEntity(EntityKind.INFRA_FINGERPRINT, fname, value))
+    if tenant_id and _contains_tenant_marker(aggregate_value, tenant_id):
+        found.append(DetectedEntity(EntityKind.TENANT_ID, "__aggregate__", aggregate_value))
     return found
 
 
@@ -219,6 +306,15 @@ class PrivacyFilterPipeline:
 
         # --- Stage 1: entity detection (§3.1) -------------------------------
         entities = detect_entities(candidate.content, candidate.tenant_id)
+        if any(e.kind in NEVER_RAW_IN_OUTPUT for e in entities):
+            return self._blocked(
+                candidate,
+                entry_ts,
+                entities,
+                "n/a",
+                (),
+                BlockReason.VALIDATION_RAW_IDENTIFIER,
+            )
 
         # --- Stage 2: policy lookup (§3.2, PF-D6) ---------------------------
         try:
