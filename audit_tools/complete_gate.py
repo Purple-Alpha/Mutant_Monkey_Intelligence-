@@ -125,6 +125,7 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/privacy_filter/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/collective_immune_system/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/cortex_immune_interface/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/tenant_baseline_ingestion/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/watchers/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/",
