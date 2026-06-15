@@ -89,15 +89,37 @@ FINDINGS (from live run, 2026-06-14)
 ------------------------------------------------------------
 REQUIRED RETESTS
 ------------------------------------------------------------
-- RT-1: Add a contract->agent alias map to D2, re-run, confirm gated historical
-  contracts drop out, leaving only genuine signed-but-unrowed drift.
+- RT-1: COMPLETE 2026-06-14. Added a contract->agent alias/exemption map to D2,
+  re-ran `python3 scripts/detect_drift.py`, and confirmed gated historical
+  contracts dropped out. D2 now reports one remaining BLOCK-candidate:
+  `Safe_Stop_Adversarial_Test_Suite_Contract.md`.
 - RT-2: Operator triage of the 6 untracked roadmap docs (track / delete / ignore);
   re-run D1.
-- RT-3: Confirm Threat_Intelligence_Daemon_Design_Contract.md is intentionally
-  external and add a documented D2 exemption; investigate
-  Safe_Stop_Adversarial_Test_Suite_Contract.md for a missing scoreboard row.
+- RT-3: PARTIAL 2026-06-14. `Threat_Intelligence_Daemon_Design_Contract.md` is
+  now a documented D2 exemption because it is intentionally external to
+  Northstar. Still investigate `Safe_Stop_Adversarial_Test_Suite_Contract.md`
+  for a missing scoreboard row.
 - RT-4: Do NOT promote any check from BLOCK-candidate to BLOCK until RT-1 lands and
   D2 is clean; promotion is a recorded operator act (HR-2).
+
+------------------------------------------------------------
+RT-1 RETEST RESULT (2026-06-14)
+------------------------------------------------------------
+Command:
+  python3 scripts/detect_drift.py
+
+Result:
+  - D2 reduced from 11 BLOCK-candidates to 1 BLOCK-candidate.
+  - Remaining D2 candidate: `Safe_Stop_Adversarial_Test_Suite_Contract.md`
+    (signed contract, no scoreboard row found).
+  - D3 remained clean: 29 GATED rows checked; all cited audit evidence present.
+  - D6 remained clean inside the control-plane governance table.
+  - Detector still exits 0 because no checks are promoted (HR-2).
+
+Governance implication:
+  RT-1 is complete enough to make the detector believable as an advisory tool.
+  D2 is still not promotable until the Safe-Stop adversarial row question is
+  resolved and Matt explicitly promotes the check.
 
 ------------------------------------------------------------
 FINAL LAB VERDICT

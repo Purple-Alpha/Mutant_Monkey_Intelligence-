@@ -183,6 +183,50 @@ def check_d1(findings: list[Finding]) -> None:
 # deep-dives), so they are out of D2 scope even though "Contract" is in the name.
 _D2_NON_CONTRACT_MARKERS = ("Template", "Deep_Dive")
 
+# Historical contracts are often represented in the scoreboard by governed agent
+# names rather than by contract filename. These aliases keep D2 focused on real
+# signed-without-row drift instead of refighting already-gated history.
+_D2_SCOREBOARD_ALIASES: dict[str, tuple[str, ...]] = {
+    "Blast_Radius_Controller_Contract.md": ("Blast Radius Controller",),
+    "Dual_LLM_Contract.md": ("Dual-LLM", "Dual LLM"),
+    "Load_Fission_Contract_v2.md": ("Load Fission",),
+    "Phase3_Detection_Swarm_Contract_Amendment_1.md": (
+        "Phase 3 contract + Amendment 1",
+        "Credential Phishing Agent",
+        "Payment Change Detection Agent",
+        "MFA Manipulation Agent",
+        "Verification Outcome Agent",
+    ),
+    "Phase4_ReconciliationAgent_Contract.md": ("ReconciliationAgent",),
+    "Phase5_MutationEngine_Contract.md": ("MutationEngine", "Mutation Engine"),
+    "Shadow_Watcher_Swarm_Contract.md": ("Shadow Watcher Swarm",),
+    "Specialisation_Fission_Contract_v2.md": ("Specialisation Fission",),
+    "Watcher_Agents_Contract.md": ("TimingWatcher", "DriftWatcher", "IntegrityWatcher"),
+}
+
+# Signed contracts intentionally governed outside the Northstar scoreboard.
+_D2_EXEMPTIONS: dict[str, str] = {
+    "Dual_LLM_Contract.md": (
+        "architectural law / orchestrator contract; tracked through decision log "
+        "and runtime DualLLM tests rather than a standalone scoreboard lifecycle row"
+    ),
+    "Shadow_Watcher_Swarm_Contract.md": (
+        "closed in Swarm Build Map / decision log as Shadow Watcher Swarm Layer 1; "
+        "not a direct control-plane scoreboard row"
+    ),
+    "Threat_Intelligence_Daemon_Design_Contract.md": (
+        "external component built under /home/socialarchitect/mutant_monkey_intel/; "
+        "tracked as provisionally complete pending independent review/gate"
+    ),
+}
+
+
+def _contract_has_scoreboard_row(filename: str, scoreboard: str) -> bool:
+    if filename in scoreboard:
+        return True
+    aliases = _D2_SCOREBOARD_ALIASES.get(filename, ())
+    return any(alias in scoreboard for alias in aliases)
+
 
 def check_d2(findings: list[Finding]) -> None:
     sb = _read(SCOREBOARD)
@@ -196,6 +240,7 @@ def check_d2(findings: list[Finding]) -> None:
         f for f in os.listdir(ROADMAP) if "Contract" in f and f.endswith(".md")
     }
     missing: list[str] = []
+    exempted: list[str] = []
     signed_total = 0
     for f in sorted(contract_files):
         if any(marker in f for marker in _D2_NON_CONTRACT_MARKERS):
@@ -207,17 +252,19 @@ def check_d2(findings: list[Finding]) -> None:
         if not _is_contract_signed(ROADMAP / f):
             continue
         signed_total += 1
-        # known if the filename appears anywhere in the scoreboard text.
-        # NOTE (v0 limitation): the board references many historical contracts by
-        # AGENT NAME, not filename, so D2 over-reports those until an explicit
-        # contract->agent alias map is added. Tracked as a lab required-retest.
-        if f not in sb:
+        if f in _D2_EXEMPTIONS:
+            exempted.append(f)
+            continue
+        if not _contract_has_scoreboard_row(f, sb):
             missing.append(f)
     if not missing:
         findings.append(Finding(
             "D2", INFO,
-            f"all {signed_total} signed contract(s) referenced in scoreboard",
+            f"all {signed_total - len(exempted)} in-scope signed contract(s) "
+            f"referenced in scoreboard; {len(exempted)} documented exemption(s)",
         ))
+        for f in exempted:
+            findings.append(Finding("D2", INFO, f"exempted signed contract '{f}': {_D2_EXEMPTIONS[f]}"))
         return
     for f in missing:
         findings.append(Finding(
