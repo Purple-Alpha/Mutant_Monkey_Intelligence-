@@ -168,17 +168,36 @@ def get_cortex_immune_interface_design_task():
         return "Draft Cortex / Immune Interface concept doc / contract"
     return None
 
+MC_ADVERSARIAL_CONTRACT = "Mode_Controller_Adversarial_Test_Suite_Contract.md"
+
+
+def _contract_path(filename: str) -> str:
+    return os.path.join(REPO, "4. Product_Roadmap", filename)
+
+
+def get_mode_controller_adversarial_sign_task():
+    """Mode Controller adversarial suite drafted but not yet §11 signed."""
+    if not _scoreboard_row_status("98").startswith("GATED"):
+        return None
+    if not os.path.exists(_contract_path(MC_ADVERSARIAL_CONTRACT)):
+        return None
+    if is_contract_signed(MC_ADVERSARIAL_CONTRACT):
+        return None
+    return MC_ADVERSARIAL_CONTRACT
+
+
 def get_mode_controller_adversarial_task():
     """Next retroactive adversarial suite after Privacy Filter is hardened."""
-    if (
-        _scoreboard_row_status("98").startswith("GATED")
-        and not is_contract_signed("Mode_Controller_Adversarial_Test_Suite_Contract.md")
-    ):
-        return (
-            "Send Mode Controller signed contract to Gemini with the adversarial "
-            "attack prompt"
-        )
-    return None
+    if not _scoreboard_row_status("98").startswith("GATED"):
+        return None
+    if is_contract_signed(MC_ADVERSARIAL_CONTRACT):
+        return None
+    if os.path.exists(_contract_path(MC_ADVERSARIAL_CONTRACT)):
+        return None  # draft exists — route to Matt signature, not Gemini
+    return (
+        "Send Mode Controller signed contract to Gemini with the adversarial "
+        "attack prompt"
+    )
 
 def get_next_research_task():
     """Explicit research target after the current gated organism work.
@@ -195,7 +214,10 @@ def get_next_research_task():
             "evidence-to-baseline promotion rules, required evidence fields, "
             "operator-approval thresholds, rollback/reversibility, and audit schema"
         )
-    if _scoreboard_row_status("98").startswith("GATED"):
+    if (
+        _scoreboard_row_status("98").startswith("GATED")
+        and not os.path.exists(_contract_path(MC_ADVERSARIAL_CONTRACT))
+    ):
         return (
             "Send Mode Controller signed contract to Gemini with the adversarial "
             "attack prompt"
@@ -223,6 +245,7 @@ pending_questions = get_pending_operator_questions()
 cis_design_task = get_collective_immune_design_task()
 cortex_immune_task = get_cortex_immune_interface_design_task()
 mode_controller_adversarial_task = get_mode_controller_adversarial_task()
+mode_controller_adversarial_sign = get_mode_controller_adversarial_sign_task()
 research_task = get_next_research_task()
 
 print("=" * 60)
@@ -263,6 +286,14 @@ elif unbuilt:
     print("BLOCKED_UNTIL: NONE")
     print("OPERATOR_ACTION_REQUIRED: NO")
     print("NEXT_GATE: gate 0/0 + health score 85+ + hash reported")
+elif mode_controller_adversarial_sign:
+    print("MODE: AWAITING §11 SIGNATURE")
+    print(f"AUTHORIZED_TASK: Sign {mode_controller_adversarial_sign.replace('_', ' ').replace('.md', '')}")
+    print("ASSIGNED_TO: Matt")
+    print("NEXT_PROMPT_GOES_TO: Cursor (after §11 signed)")
+    print("BLOCKED_UNTIL: Matt signs §11")
+    print("OPERATOR_ACTION_REQUIRED: YES — §11 signature required")
+    print("NEXT_GATE: §11 signed → Cursor implements Mode Controller adversarial test families")
 elif mode_controller_adversarial_task:
     print("MODE: RESEARCH")
     print(f"AUTHORIZED_TASK: {mode_controller_adversarial_task}")
