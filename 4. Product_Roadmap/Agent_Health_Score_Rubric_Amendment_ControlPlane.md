@@ -215,6 +215,21 @@ Scored against this track on closure. Related baseline/boundary suites **167 pas
 
 ---
 
+## §B.11 — Achieved score (Privacy Filter Adversarial Test Suite #98, 2026-06-14)
+
+Scored against this track on adversarial hardening closure. Privacy/adversarial focused suite **112 passed / 3 xfailed**; related privacy/boundary suites **209 passed / 10 xfailed**; Grok completion gate-clean 0/0. Codex review was attempted but blocked by usage limit until 8:54 PM, so no Codex-clean claim is made.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | Every signed PF-ADV test ID across all 10 families is represented and executed; `PrivacyFilterPipeline.filter()` remains the single path and now blocks raw never-eligible findings before broadcast. −1: integration with live broadcast engine remains outside this suite. |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Breaker OPEN, audit failure, malformed/unknown proceed paths, degraded states, and token reuse attacks all fail closed; validation-token and receipt metadata cannot authorize broadcast. −1: live breaker heartbeat spoofing is simulated structurally, not against a network service. |
+| 3 — Segmentation & Isolation (20) | 19 | Canonical inspection covers unicode, URL, HTML, base64, IDNA, nested structures, map keys, aggregate fragments, transport metadata, cache/blob/search/UI fields, and model/baseline leakage markers. −1: natural-language code-word detection is pattern-level, not multilingual NLP. |
+| 4 — Zero Trust & Identity (15) | 14 | Spoofed sanitized/privacy-checked flags, MSP parent umbrella claims, reviewer cross-tenant claims, forged acknowledgements, fake audit entries, and reused payload refs do not bypass the filter. −1: origin proof is local data-level, not cryptographic signatures. |
+| 5 — Governance & Audit Completeness (15) | 14 | New adversarial suite records every PF-ADV ID, existing privacy tests updated to adversarial block-before-broadcast behavior, and Grok audit records `privacy_filter_adversarial_20260615T011743Z.md`. −1: Codex review unavailable due external usage limit. |
+| **Composite** | **95** | **ELITE** — clears the 85+ bar and marks Privacy Filter #93 **ADVERSARIALLY HARDENED**. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
@@ -227,6 +242,7 @@ Scored against this track on closure. Related baseline/boundary suites **167 pas
 - **Safe-Stop State Machine** (#94, Layer 6 Control Plane) — this track (§B.5).
 - **Mode Controller** (#92, Layer 6 Control Plane) — this track (§B.6).
 - **Privacy Filter** (#93, Layer 6 Control Plane) — this track (§B.7).
+- **Privacy Filter Adversarial Test Suite** (#98, Layer 6 Control Plane hardening) — this track (§B.11).
 - **Collective Immune System** (#95, Layer 6 Control Plane) — this track (§B.8).
 - **Cortex / Immune Interface** (#96, Layer 6 Control Plane) — this track (§B.9).
 - **Memory Consolidation / Tenant Baseline Ingestion** (#97, Layer 6 Control Plane) — this track (§B.10).

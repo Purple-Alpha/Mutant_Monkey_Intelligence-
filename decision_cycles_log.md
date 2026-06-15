@@ -1554,3 +1554,14 @@ Codex review: in-scope findings patched with regression tests; final rerun after
 Gate: 0/0 split Grok completion gate — audit_outputs/tenant_baseline_ingestion_core_20260615T010105Z.md + audit_outputs/tenant_baseline_ingestion_tests_20260615T010459Z.md + audit_outputs/tenant_baseline_ingestion_score_meta_20260615T010629Z.md
 Tests: 167 passed, 1 skipped, 10 xfailed across Tenant Baseline Ingestion + related baseline/boundary suites
 Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)
+
+## PHASE_CLOSURE — Privacy Filter Adversarial Test Suite (#98)
+Date: June 14th 2026
+Contract: Privacy_Filter_Adversarial_Test_Suite_Contract.md (§11 SIGNED)
+Commit: 47b33dd (adversarial build); final scoreboard GATED commit to follow
+Agent: Privacy Filter adversarial hardening — core/privacy_filter/ + tests/test_privacy_filter_adversarial.py
+Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubric_Amendment_ControlPlane.md §B.11)
+Codex review: attempted; blocked by Codex usage limit until 8:54 PM
+Gate: 0/0 Grok completion gate — audit_outputs/privacy_filter_adversarial_20260615T011743Z.md
+Tests: 112 passed, 3 xfailed across Privacy Filter focused/adversarial suite; 209 passed, 10 xfailed across related privacy/boundary suites
+Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)
