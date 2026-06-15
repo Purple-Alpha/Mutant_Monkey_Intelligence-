@@ -122,6 +122,7 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     # --pre-commit mode cannot false-pass them.
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/safe_stop/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/mode_controller/",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_mode_controller_adversarial.py",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/privacy_filter/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_privacy_filter_adversarial.py",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/collective_immune_system/",
