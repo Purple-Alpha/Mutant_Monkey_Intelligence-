@@ -200,6 +200,21 @@ Scored against this track on closure. Related boundary suites **176 passed / 21 
 
 ---
 
+## §B.10 — Achieved score (Memory Consolidation / Tenant Baseline Ingestion #97, 2026-06-14)
+
+Scored against this track on closure. Related baseline/boundary suites **167 passed / 1 skipped / 10 xfailed** before final gate; Tenant Baseline Ingestion focused suite **30 passed / 1 xfailed**; Codex post-build review found contract-boundary issues and Cursor patched each in-scope finding with regression coverage before Grok.
+
+| Component | Score | Evidence |
+|---|---:|---|
+| 1 — Gateway Integrity (25) | 24 | `TenantBaselineIngestionPipeline` enforces the signed 11-step evidence-to-baseline promotion lifecycle: required payload validation, reproducible score check, hard gates, risk-tier thresholds, lockout handling, snapshot-before-write, and no baseline write on rejection. −1: durable baseline storage remains an in-memory test harness, not a production persistence adapter. |
+| 2 — Breaker & Budget Enforcement (25) | 24 | Permanent auto-promotion lockouts cover money movement, IAM, alert suppression, security policy, executive authority, privileged access, detector threshold, and coverage-reducing allowlist keys; low-risk auto misses route to operator review; locked keys require dual-operator manual promotion. −1: no live operator directory integration. |
+| 3 — Segmentation & Isolation (20) | 19 | Evidence requires tenant scope and baseline writes are keyed by `(tenant_id, baseline_key)`; rollback and replay operate inside that tenant/key scope; no cross-tenant aggregation path exists. −1: tenant identity is structural, not cryptographic. |
+| 4 — Zero Trust & Identity (15) | 14 | Approval rules reject requester/implementer/evidence-source self-approval, duplicate dual approvers, and non-operator approvers; critical risk supports tenant-admin approval as signed. −1: actor identities are enum/data-level, not backed by signed identity tokens. |
+| 5 — Governance & Audit Completeness (15) | 14 | Append-only `BaselineAuditLog` hash-chains every promotion/rejection/quarantine/rollback with evidence IDs, versions, approval identity context, rollback status, and persisted chain reload validation; rollback freezes keys and assigns in-window outcomes. −1: one strict xfail documents deferred durable cross-process baseline store. |
+| **Composite** | **95** | **ELITE** — clears the 85+ bar. |
+
+---
+
 ## §C — Which track applies
 
 - **Detection / verification agents** (Layer 1-3, e.g. #78-83) — the original five-component detection track, unchanged.
@@ -214,6 +229,7 @@ Scored against this track on closure. Related boundary suites **176 passed / 21 
 - **Privacy Filter** (#93, Layer 6 Control Plane) — this track (§B.7).
 - **Collective Immune System** (#95, Layer 6 Control Plane) — this track (§B.8).
 - **Cortex / Immune Interface** (#96, Layer 6 Control Plane) — this track (§B.9).
+- **Memory Consolidation / Tenant Baseline Ingestion** (#97, Layer 6 Control Plane) — this track (§B.10).
 - Future control-plane agents may cite this track by amendment.
 
 ---

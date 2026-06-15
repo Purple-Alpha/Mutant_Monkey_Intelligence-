@@ -1543,3 +1543,14 @@ Codex review: clean after review-loop fixes; no discrete actionable bugs found
 Gate: 0/0 split Grok completion gate — audit_outputs/cortex_immune_interface_core_20260614T235451Z.md + audit_outputs/cortex_immune_interface_tests_meta_20260614T235605Z.md
 Tests: 176 passed, 21 xfailed across Cortex / Immune Interface + related boundary suites
 Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)
+
+## PHASE_CLOSURE — Memory Consolidation / Tenant Baseline Ingestion (#97)
+Date: June 14th 2026
+Contract: Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md (§11 SIGNED)
+Commit: 8554f6e (runtime build); final scoreboard GATED commit to follow
+Agent: Memory Consolidation / Tenant Baseline Ingestion — core/tenant_baseline_ingestion/
+Health score: 95 ELITE (Layer 6 Control Plane track — Agent_Health_Score_Rubric_Amendment_ControlPlane.md §B.10)
+Codex review: in-scope findings patched with regression tests; final rerun after last lineage fix unavailable due Codex usage limit
+Gate: 0/0 split Grok completion gate — audit_outputs/tenant_baseline_ingestion_core_20260615T010105Z.md + audit_outputs/tenant_baseline_ingestion_tests_20260615T010459Z.md + audit_outputs/tenant_baseline_ingestion_score_meta_20260615T010629Z.md
+Tests: 167 passed, 1 skipped, 10 xfailed across Tenant Baseline Ingestion + related baseline/boundary suites
+Signed: PENDING — operator phase-closure signature (gate 0/0 + health score recorded; awaiting Matt §13 sign-off)
