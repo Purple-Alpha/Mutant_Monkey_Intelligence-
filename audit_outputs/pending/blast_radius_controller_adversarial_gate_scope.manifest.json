@@ -1,0 +1,25 @@
+{
+  "task_id": "blast_radius_controller_adversarial_gate_scope",
+  "completion_claim": "Gate-scope metadata update for Blast Radius Controller Adversarial Test Suite #101. This change adds the full path 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_blast_radius_controller_adversarial.py to complete_gate.py HOOK_SCOPE_PREFIXES_ALWAYS so future staged changes to the BRC adversarial suite automatically fire the Grok pre-commit gate. No runtime behavior, BRC logic, tests, dispatcher routing, or scoreboard status is changed in this slice.",
+  "files_created": [
+    "audit_outputs/pending/blast_radius_controller_adversarial_gate_scope.manifest.json"
+  ],
+  "files_modified": [
+    "audit_tools/complete_gate.py"
+  ],
+  "files_read": [
+    "audit_tools/complete_gate.py",
+    "4. Product_Roadmap/Blast_Radius_Controller_Adversarial_Test_Suite_Contract.md"
+  ],
+  "commands_run": [
+    "Read complete_gate.py hook scope and BRC adversarial contract",
+    "Prepared metadata-only hook scope update so test slice can be gated in --pre-commit mode without pulling unrelated untracked roadmap drafts into the audit packet"
+  ],
+  "known_unresolved_questions": [
+    "This is a metadata/gate-scope slice only. The BRC adversarial test file is gated separately after this scope path exists.",
+    "No hardening claim is made by this gate-scope slice."
+  ],
+  "relevant_contracts": [
+    "4. Product_Roadmap/Blast_Radius_Controller_Adversarial_Test_Suite_Contract.md"
+  ]
+}
