@@ -109,6 +109,8 @@ class ReconciliationAgent:
             raise ReconciliationError("tenant_id is required")
         if not email_id:
             raise ReconciliationError("email_id is required")
+        if not isinstance(lung_state, LungState):
+            raise ReconciliationError("lung_state must be a LungState enum")
 
         # P4-D8: tenant-isolated read; cross-tenant contributions are never seen.
         tenant_entries = self._evidence_ledger.read_for_tenant(tenant_id)
