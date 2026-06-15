@@ -168,6 +168,21 @@ def get_cortex_immune_interface_design_task():
         return "Draft Cortex / Immune Interface concept doc / contract"
     return None
 
+def get_next_research_task():
+    """Explicit research target after the current gated organism work.
+
+    Gap 4 (Homeostasis Engine Policy) is deferred by OQ-4: Homeostasis remains
+    inside Mode Controller this phase. The next active dependency is Gap 5,
+    which needs dual-model research before Claude drafts a concept/contract.
+    """
+    if _scoreboard_row_status("96").startswith("GATED"):
+        return (
+            "Research Gap 5 — Memory Consolidation / Tenant Baseline Ingestion: "
+            "evidence-to-baseline promotion rules, required evidence fields, "
+            "operator-approval thresholds, rollback/reversibility, and audit schema"
+        )
+    return "Research next phase requirements"
+
 def check_drift():
     verifier = os.path.join(REPO, "scripts/verify_build_truth.py")
     if not os.path.exists(verifier):
@@ -188,6 +203,7 @@ concept = get_next_concept_without_contract()
 pending_questions = get_pending_operator_questions()
 cis_design_task = get_collective_immune_design_task()
 cortex_immune_task = get_cortex_immune_interface_design_task()
+research_task = get_next_research_task()
 
 print("=" * 60)
 if drifted:
@@ -263,10 +279,10 @@ elif cortex_immune_task:
     print("NEXT_GATE: concept/contract committed, then §11 signature before build")
 else:
     print("MODE: RESEARCH")
-    print("AUTHORIZED_TASK: Research next phase requirements")
+    print(f"AUTHORIZED_TASK: {research_task}")
     print("ASSIGNED_TO: ChatGPT")
     print("NEXT_PROMPT_GOES_TO: ChatGPT")
-    print("BLOCKED_UNTIL: Research returned and Claude drafts concept doc")
+    print("BLOCKED_UNTIL: ChatGPT research + Gemini cross-check returned; Claude drafts concept doc")
     print("OPERATOR_ACTION_REQUIRED: NO")
-    print("NEXT_GATE: Concept doc committed")
+    print("NEXT_GATE: dual-model research packet committed, then concept doc committed")
 print("=" * 60)

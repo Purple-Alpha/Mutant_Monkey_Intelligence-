@@ -147,8 +147,9 @@ None.
 ## Next Authorized Tasks In Order
 
 1. Run `python3 scripts/mmi_dispatch.py` to confirm current dispatch
-2. Phase 3 sender_domain amendment — sign before Phase 3 builds
-3. If no signed/build/audit/design item exists, dispatcher routes RESEARCH for the next concept cycle
+2. Research Gap 5 — Memory Consolidation / Tenant Baseline Ingestion: evidence-to-baseline promotion rules, required evidence fields, operator-approval thresholds, rollback/reversibility, and audit schema.
+3. Gemini cross-checks the ChatGPT research output for gaps, contradictions, and drift.
+4. Claude drafts the concept doc only after both research passes are returned.
 
 ---
 
