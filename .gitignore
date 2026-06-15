@@ -6,6 +6,10 @@
 # Commit selectively when an audit is worth preserving in the repo.
 audit_outputs/
 
+# Runtime instrumentation generated outputs — local-only telemetry/corpus data.
+# Source code and config under instrumentation/ remain tracked.
+instrumentation/telemetry/
+
 # Python build / cache artifacts
 __pycache__/
 *.py[cod]
