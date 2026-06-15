@@ -94,9 +94,11 @@ detector exits 0.
 
 ### D1 — Untracked files that influence routing  — WARN BY DEFAULT
 - **Reality source:** `git status --porcelain` (untracked entries).
-- **Why:** `get_next_concept_without_contract()` does a raw `os.listdir()` of
-  `4. Product_Roadmap/`, so untracked `*Concept_Doc*` / `*Contract*` files are live
-  dispatcher inputs.
+- **Why:** older dispatcher behavior used a raw `os.listdir()` of
+  `4. Product_Roadmap/`, so untracked `*Concept_Doc*` / `*Contract*` files could
+  become live dispatcher inputs. The dispatcher now filters generic concept
+  routing to git-tracked roadmap files only, but D1 remains as visibility for
+  parked drafts and untracked authority attempts.
 - **Rule:** list untracked files under paths the dispatcher reads by directory listing.
 - **Parallel-draft rule:** parallel roadmap drafts may exist untracked, but they
   cannot become authoritative while untracked. An untracked concept/doctrine draft

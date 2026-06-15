@@ -17,12 +17,37 @@ CONCEPT_SUPERSESSION = {
     ],
 }
 
+# Governance utility specs are tracked for build discipline, but they are not
+# product concept lanes that should automatically route to Claude for a design
+# contract.
+CONCEPT_ROUTING_EXCLUSIONS = {
+    "Project_Drift_Detector_Concept_Doc.md",
+}
+
 def read_file(path):
     full = os.path.join(REPO, path)
     if not os.path.exists(full):
         return None
     with open(full, encoding="utf-8") as f:
         return f.read()
+
+
+def is_git_tracked(path):
+    """True only when a repo-relative path is already committed/tracked.
+
+    Parallel sessions may leave roadmap drafts on disk. Those files are visible
+    to drift detection, but they are not routing-authoritative until git tracks
+    them.
+    """
+
+    result = subprocess.run(
+        ["git", "-C", REPO, "ls-files", "--error-unmatch", path],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return result.returncode == 0
+
 
 def is_contract_signed(filename):
     """A contract counts as signed when a **Status:** line says SIGNED and not UNSIGNED/DRAFT."""
@@ -86,9 +111,17 @@ def get_next_concept_without_contract():
     roadmap = os.path.join(REPO, "4. Product_Roadmap")
     if not os.path.exists(roadmap):
         return None
-    concepts = [f for f in os.listdir(roadmap) if "Concept_Doc" in f]
-    contracts = [f for f in os.listdir(roadmap) if "Contract" in f]
+    concepts = [
+        f for f in os.listdir(roadmap)
+        if "Concept_Doc" in f and is_git_tracked(os.path.join("4. Product_Roadmap", f))
+    ]
+    contracts = [
+        f for f in os.listdir(roadmap)
+        if "Contract" in f and is_git_tracked(os.path.join("4. Product_Roadmap", f))
+    ]
     for concept in sorted(concepts):
+        if concept in CONCEPT_ROUTING_EXCLUSIONS:
+            continue
         superseding = CONCEPT_SUPERSESSION.get(concept)
         if superseding and all(
             c in contracts and is_contract_signed(c) for c in superseding

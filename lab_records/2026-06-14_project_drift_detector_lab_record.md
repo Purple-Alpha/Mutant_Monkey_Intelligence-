@@ -99,6 +99,11 @@ REQUIRED RETESTS
   untracked roadmap drafts may exist as WARN if they explicitly remain
   non-authoritative, but untracked files that claim signed/build/gated/dispatcher
   authority become BLOCK-candidate.
+- RT-2B: COMPLETE 2026-06-14. Patched `scripts/mmi_dispatch.py` so generic
+  concept routing only considers git-tracked roadmap docs/contracts, and excludes
+  `Project_Drift_Detector_Concept_Doc.md` as a governance utility spec rather
+  than a product build lane. Parked untracked drafts stay visible in D1, but no
+  longer become MMI direction.
 - RT-3: PARTIAL 2026-06-14. `Threat_Intelligence_Daemon_Design_Contract.md` is
   now a documented D2 exemption because it is intentionally external to
   Northstar. Still investigate `Safe_Stop_Adversarial_Test_Suite_Contract.md`
