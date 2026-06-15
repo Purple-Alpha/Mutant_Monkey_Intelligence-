@@ -1,8 +1,11 @@
-MODE: RESEARCH
-AUTHORIZED_TASK: Send Mode Controller signed contract to Gemini with the adversarial attack prompt
-ASSIGNED_TO: Gemini
-NEXT_PROMPT_GOES_TO: Gemini
-BLOCKED_UNTIL: Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract
+MODE: BUILD READY
+AUTHORIZED_TASK: Build Threat Intelligence Ingestion Daemon against signed contract
+ASSIGNED_TO: Cursor
+NEXT_PROMPT_GOES_TO: Cursor
+BLOCKED_UNTIL: nothing — contract is signed, build is authorized
 OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature
-LAST_COMPLETED: Privacy Filter Adversarial Test Suite #98 — build 47b33dd — Grok 0/0 — 112 passed / 3 xfailed focused — 209 passed / 10 xfailed related — health score 95 ELITE — Privacy Filter #93 ADVERSARIALLY HARDENED
+NEXT_GATE: All 12 invariants pass, Codex reviews, daemon committed to /home/socialarchitect/mutant_monkey_intel/
+SIGNED_CONTRACT: 4. Product_Roadmap/Threat_Intelligence_Daemon_Design_Contract.md
+SIGNED_BY: Matt Nichol June 14th 2026
+BUILD_PATH: /home/socialarchitect/mutant_monkey_intel/ — NOT the Northstar repo
+LAST_COMPLETED: Privacy Filter Adversarial Test Suite — §11 signed June 14th 2026
