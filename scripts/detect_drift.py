@@ -68,6 +68,24 @@ ROUTING_AUTHORITY_FILES = {
     "scripts/mmi_dispatch.py",
 }
 
+_UNTRACKED_AUTHORITY_PATTERNS = (
+    re.compile(
+        r"\*\*Status:\*\*\s*(?:§\d+\s+)?SIGNED\b|\*\*Status:\*\*.*SIGNED_UNBUILT",
+        re.IGNORECASE,
+    ),
+    re.compile(r"\*\*Status:\*\*.*\bGATED\b", re.IGNORECASE),
+    re.compile(r"\bBUILD READY\b", re.IGNORECASE),
+    re.compile(r"\bSIGNED_UNBUILT\b"),
+    re.compile(r"\bAWAITING_AUDIT\b"),
+    re.compile(r"^AUTHORIZED_TASK:", re.MULTILINE),
+    re.compile(r"^LAB_VERDICT:\s*(ACCEPT|REVISE|PARK|REJECT|HOLD)", re.MULTILINE),
+)
+
+_PARKED_DRAFT_PATTERNS = (
+    re.compile(r"\*\*Status:\*\*\s*CONCEPT\b", re.IGNORECASE),
+    re.compile(r"\bno build authorization\b", re.IGNORECASE),
+)
+
 
 class Finding:
     def __init__(self, check: str, severity: str, message: str) -> None:
@@ -131,6 +149,21 @@ def _is_contract_signed(path: Path) -> bool:
     return False
 
 
+def _untracked_authority_claims(path: Path) -> list[str]:
+    content = _read(path)
+    claims: list[str] = []
+    for pattern in _UNTRACKED_AUTHORITY_PATTERNS:
+        match = pattern.search(content)
+        if match:
+            claims.append(match.group(0).strip())
+    return claims
+
+
+def _is_parked_draft(path: Path) -> bool:
+    content = _read(path)
+    return any(pattern.search(content) for pattern in _PARKED_DRAFT_PATTERNS)
+
+
 def _scoreboard_rows(text: str) -> list[list[str]]:
     rows: list[list[str]] = []
     for line in text.splitlines():
@@ -146,6 +179,8 @@ def _scoreboard_rows(text: str) -> list[list[str]]:
 def check_d1(findings: list[Finding]) -> None:
     untracked = [p for (xy, p) in _porcelain() if xy == "??"]
     routing_hits: list[str] = []
+    parked_drafts: list[str] = []
+    authority_claims: list[tuple[str, list[str]]] = []
     for p in untracked:
         abs = (REPO_ROOT / p)
         for rdir in ROUTING_DIRS:
@@ -155,6 +190,11 @@ def check_d1(findings: list[Finding]) -> None:
                 abs_resolved = abs
             if str(abs_resolved).startswith(str(rdir.resolve())):
                 routing_hits.append(p)
+                claims = _untracked_authority_claims(abs)
+                if claims:
+                    authority_claims.append((p, claims))
+                elif _is_parked_draft(abs):
+                    parked_drafts.append(p)
                 break
     if not routing_hits:
         findings.append(Finding("D1", INFO, "no untracked routing-input files"))
@@ -169,6 +209,18 @@ def check_d1(findings: list[Finding]) -> None:
         f"{len(routing_hits)} untracked routing-input file(s) in 4. Product_Roadmap/ "
         f"(parallel-session normal): " + ", ".join(os.path.basename(p) for p in routing_hits),
     ))
+    if parked_drafts:
+        findings.append(Finding(
+            "D1", INFO,
+            f"{len(parked_drafts)} parked untracked draft(s) explicitly say concept/no build authorization: "
+            + ", ".join(os.path.basename(p) for p in parked_drafts),
+        ))
+    for p, claims in authority_claims:
+        findings.append(Finding(
+            "D1", BLOCK_CANDIDATE,
+            f"untracked roadmap file claims authority: '{p}' ({'; '.join(claims)}) "
+            f"-- parallel drafts may exist untracked, but untracked authority is not acceptable",
+        ))
     for p in signed_untracked:
         findings.append(Finding(
             "D1", BLOCK_CANDIDATE,

@@ -98,10 +98,17 @@ detector exits 0.
   `4. Product_Roadmap/`, so untracked `*Concept_Doc*` / `*Contract*` files are live
   dispatcher inputs.
 - **Rule:** list untracked files under paths the dispatcher reads by directory listing.
+- **Parallel-draft rule:** parallel roadmap drafts may exist untracked, but they
+  cannot become authoritative while untracked. An untracked concept/doctrine draft
+  is acceptable only while it explicitly remains non-authoritative (for example,
+  `CONCEPT — no build authorization`). If an untracked file claims signed status,
+  build readiness, gated status, dispatcher authority, lab verdict authority, or
+  evidence authority, it becomes a BLOCK-candidate.
 - **Severity:** `WARN` for concept docs (parallel sessions create these on purpose —
   treating them as blockers would punish the workflow the project depends on).
   Escalates to `BLOCK-candidate` only when an untracked file is a `*Contract*` that is
-  `§11 SIGNED` on disk (a signed-but-untracked contract = the #88/#89/#92/#99 failure).
+  `§11 SIGNED` on disk or any roadmap file claims authority while untracked
+  (a signed/build-ready/gated-but-untracked artifact = the #88/#89/#92/#99 failure).
 
 ### D4 — Dirty working tree on tracked files  — WARN, NARROW ESCALATION
 - **Reality source:** `git status --porcelain` (modified/staged tracked entries).

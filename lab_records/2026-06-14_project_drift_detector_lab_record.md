@@ -93,8 +93,12 @@ REQUIRED RETESTS
   re-ran `python3 scripts/detect_drift.py`, and confirmed gated historical
   contracts dropped out. D2 now reports one remaining BLOCK-candidate:
   `Safe_Stop_Adversarial_Test_Suite_Contract.md`.
-- RT-2: Operator triage of the 6 untracked roadmap docs (track / delete / ignore);
+- RT-2: Operator triage of the 4 untracked roadmap docs (track / delete / ignore);
   re-run D1.
+- RT-2A: COMPLETE 2026-06-14. Added the parked-parallel-draft rule to D1:
+  untracked roadmap drafts may exist as WARN if they explicitly remain
+  non-authoritative, but untracked files that claim signed/build/gated/dispatcher
+  authority become BLOCK-candidate.
 - RT-3: PARTIAL 2026-06-14. `Threat_Intelligence_Daemon_Design_Contract.md` is
   now a documented D2 exemption because it is intentionally external to
   Northstar. Still investigate `Safe_Stop_Adversarial_Test_Suite_Contract.md`
@@ -112,6 +116,9 @@ Result:
   - D2 reduced from 11 BLOCK-candidates to 1 BLOCK-candidate.
   - Remaining D2 candidate: `Safe_Stop_Adversarial_Test_Suite_Contract.md`
     (signed contract, no scoreboard row found).
+  - D1 now reports the four current parallel-session roadmap files as WARN and
+    also confirms them as INFO parked drafts because they explicitly say
+    concept/no build authorization.
   - D3 remained clean: 29 GATED rows checked; all cited audit evidence present.
   - D6 remained clean inside the control-plane governance table.
   - Detector still exits 0 because no checks are promoted (HR-2).
