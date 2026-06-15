@@ -175,7 +175,9 @@ def get_next_research_task():
     inside Mode Controller this phase. The next active dependency is Gap 5,
     which needs dual-model research before Claude drafts a concept/contract.
     """
-    if _scoreboard_row_status("96").startswith("GATED"):
+    if _scoreboard_row_status("96").startswith("GATED") and not is_contract_signed(
+        "Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md"
+    ):
         return (
             "Research Gap 5 — Memory Consolidation / Tenant Baseline Ingestion: "
             "evidence-to-baseline promotion rules, required evidence fields, "
