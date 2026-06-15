@@ -1,0 +1,26 @@
+{
+  "task_id": "tenant_baseline_ingestion_tests",
+  "completion_claim": "Gap 5 Tenant Baseline Ingestion focused test suite added. It covers TBI-INV-1 through TBI-INV-15 and Codex regression cases for payload validation, rollback windows, approval boundaries, lockout manual promotion, tenant-admin critical approval, persisted audit chains, missing rollback versions, low-risk auto-miss review, and shared-lineage penalty enforcement. Runtime package already passed tenant_baseline_ingestion_core Grok gate 0/0.",
+  "files_created": [
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_tenant_baseline_ingestion.py",
+    "audit_outputs/pending/tenant_baseline_ingestion_tests.manifest.json"
+  ],
+  "files_modified": [
+    "audit_tools/complete_gate.py"
+  ],
+  "files_read": [
+    "4. Product_Roadmap/Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md",
+    "audit_outputs/tenant_baseline_ingestion_core_20260615T010105Z.md"
+  ],
+  "commands_run": [
+    "/home/socialarchitect/northstar/.venv/bin/python -m pytest tests/test_tenant_baseline_ingestion.py",
+    "/home/socialarchitect/northstar/.venv/bin/python -m pytest tests/test_tenant_baseline_ingestion.py tests/test_vendor_baseline_store.py tests/test_vendor_baseline_isolation_boundary.py tests/test_cortex_immune_interface.py tests/test_reconciliation_agent.py tests/test_safe_stop_state_machine.py"
+  ],
+  "known_unresolved_questions": [
+    "One strict xfail remains for durable cross-process baseline storage, explicitly deferred outside this contract slice.",
+    "Closure metadata is audited separately in tenant_baseline_ingestion_meta to stay below the 200KB gate cap."
+  ],
+  "relevant_contracts": [
+    "4. Product_Roadmap/Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md"
+  ]
+}
