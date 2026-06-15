@@ -1,0 +1,33 @@
+{
+  "task_id": "blast_radius_controller_adversarial_runtime",
+  "completion_claim": "Blast Radius Controller adversarial runtime patch slice for #101. Adversarial tests first proved three BRC vulnerabilities: unsafe tenant routing keys were accepted; agent-controlled payload args could carry forged control-plane authority claims and still dispatch; malformed explicit estimated_max_tokens pre-dispatch lock requests were not rejected. This slice patches only those proven vulnerabilities in core/control_plane: TenantSegmentationController now rejects unsafe routing-key syntax at ingress; GatewayController rejects agent payloads that claim control-plane authority; GatewayController rejects malformed explicit estimated_max_tokens locks and charges valid explicit locks before dispatch. Test evidence before gating: BRC adversarial + existing BRC regression 97 passed / 8 xfailed; related control-plane sweep 231 passed / 21 xfailed. Hardening claim withheld pending the separate adversarial test slice, independent review, and final Grok gate/metadata.",
+  "files_created": [
+    "audit_outputs/pending/blast_radius_controller_adversarial_runtime.manifest.json"
+  ],
+  "files_modified": [
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/gateway.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/segmentation.py"
+  ],
+  "files_read": [
+    "4. Product_Roadmap/Blast_Radius_Controller_Adversarial_Test_Suite_Contract.md",
+    "4. Product_Roadmap/Blast_Radius_Controller_Contract.md",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/gateway.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/segmentation.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_blast_radius_controller.py"
+  ],
+  "commands_run": [
+    "./.venv/bin/python -m pytest -q tests/test_blast_radius_controller_adversarial.py  (initial run: 30 passed, 23 failed; three proven vulnerabilities plus one test path bug)",
+    "./.venv/bin/python -m pytest -q tests/test_blast_radius_controller_adversarial.py tests/test_blast_radius_controller.py  (97 passed, 8 xfailed)",
+    "./.venv/bin/python -m pytest -q tests/test_blast_radius_controller_adversarial.py tests/test_blast_radius_controller.py tests/test_collective_immune_system.py tests/test_cortex_immune_interface.py tests/test_safe_stop_state_machine.py tests/test_mode_controller.py tests/test_privacy_filter.py  (231 passed, 21 xfailed)",
+    "ReadLints on core/control_plane/gateway.py and core/control_plane/segmentation.py (no linter errors)"
+  ],
+  "known_unresolved_questions": [
+    "This is the runtime patch slice only. The adversarial test file is intentionally gated separately to stay below Grok packet size limits.",
+    "Independent review still required before Blast Radius Controller #89 may be marked ADVERSARIALLY HARDENED.",
+    "Infrastructure cryptography/PID/mTLS/challenge-response specifics remain separate-contract controls. Runtime patch rejects agent-controlled payload claims of such authority instead of accepting them as dispatchable input."
+  ],
+  "relevant_contracts": [
+    "4. Product_Roadmap/Blast_Radius_Controller_Adversarial_Test_Suite_Contract.md",
+    "4. Product_Roadmap/Blast_Radius_Controller_Contract.md"
+  ]
+}

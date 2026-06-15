@@ -20,10 +20,30 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass, field
+import re
 
 
 class SegmentationError(Exception):
     """Raised on a cross-tenant violation or unknown tenant (fail-safe)."""
+
+
+_TENANT_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
+
+
+def _validate_tenant_id(tenant_id: str) -> None:
+    """Reject routing-key delimiters/control/path syntax at ingress.
+
+    Tenant IDs are routing keys, not free text. Hyphen/underscore are retained
+    for the repo's existing tenant naming convention; delimiter/path/control
+    characters are fail-closed rather than normalized.
+    """
+
+    if not isinstance(tenant_id, str) or not tenant_id:
+        raise SegmentationError("tenant_id is required")
+    if not _TENANT_ID_RE.fullmatch(tenant_id):
+        raise SegmentationError(f"invalid tenant_id routing key {tenant_id!r}")
+    if "--" in tenant_id:
+        raise SegmentationError(f"invalid tenant_id routing key {tenant_id!r}")
 
 
 @dataclass
@@ -43,7 +63,8 @@ class TenantSegmentationController:
     def register_tenant(
         self, tenant_id: str, *, credential: str, rate_limit_per_window: int = 100
     ) -> None:
-        if not tenant_id or not credential:
+        _validate_tenant_id(tenant_id)
+        if not credential:
             raise SegmentationError("tenant registration requires tenant_id + credential")
         self._segments[tenant_id] = _TenantSegment(
             credential=credential,
@@ -51,6 +72,7 @@ class TenantSegmentationController:
         )
 
     def _segment(self, tenant_id: str) -> _TenantSegment:
+        _validate_tenant_id(tenant_id)
         seg = self._segments.get(tenant_id)
         if seg is None:
             raise SegmentationError(f"unknown tenant segment {tenant_id!r}")
@@ -64,6 +86,8 @@ class TenantSegmentationController:
         must all agree — content is never consulted.
         """
 
+        _validate_tenant_id(resolved_tenant_id)
+        _validate_tenant_id(claimed_tenant_id)
         if resolved_tenant_id != claimed_tenant_id:
             raise SegmentationError(
                 f"forged tenant_id: identity resolved {resolved_tenant_id!r} but "

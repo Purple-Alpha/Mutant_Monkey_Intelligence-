@@ -28,7 +28,7 @@ transitions, epochs, or quorum — that is the separate Mode Controller contract
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Protocol
+from typing import Any, ClassVar, Protocol
 
 from core.control_plane.audit import ControlPlaneAuditTrail, ControlPlaneEvent
 from core.control_plane.breaker import BreakerKey, BreakerStore, TripClass
@@ -103,6 +103,47 @@ class GatewayController:
     audit: ControlPlaneAuditTrail
     mode_check: ModeCheck = field(default_factory=AllowAllModeCheck)
 
+    _CONTROL_AUTHORITY_KEYS: ClassVar[frozenset[str]] = frozenset(
+        {
+            "bypass",
+            "direct_tool_invocation",
+            "entrypoint_signed_by_gateway",
+            "epoch",
+            "gate_failure",
+            "gateway_pid_signature",
+            "identity_verified",
+            "ipc_channel",
+            "mode",
+            "mode_config",
+            "mode_epoch",
+            "previous_signal",
+            "signed_by",
+            "state_hash",
+            "suppress_telemetry",
+            "telemetry_frame",
+            "telemetry_replay",
+            "thread_fork",
+        }
+    )
+
+    def _contains_control_authority_claim(self, value: Any) -> bool:
+        """Agent payloads may not assert control-plane authority.
+
+        The gateway owns lifecycle authority. Payloads that carry forged PID,
+        epoch/mode, bypass, or telemetry-control fields are rejected before any
+        downstream dispatch rather than ignored as harmless content.
+        """
+
+        if isinstance(value, dict):
+            for key, nested in value.items():
+                if str(key) in self._CONTROL_AUTHORITY_KEYS:
+                    return True
+                if self._contains_control_authority_claim(nested):
+                    return True
+        elif isinstance(value, (list, tuple, set)):
+            return any(self._contains_control_authority_claim(item) for item in value)
+        return False
+
     def handle(self, request: GatewayRequest) -> GatewayDecision:
         """Walk the full lifecycle. Returns a dispatched decision, or raises
         ``GatewayRejected`` at the first failing gate — never partial dispatch.
@@ -124,6 +165,16 @@ class GatewayController:
                 agent_id=request.claimed_agent_id,
             )
             raise GatewayRejected("identity", str(exc)) from exc
+
+        if self._contains_control_authority_claim(request.args):
+            reason = "agent payload claims control-plane authority"
+            self.audit.record(
+                ControlPlaneEvent.GATEWAY_REJECTED,
+                reason,
+                tenant_id=resolved.tenant_id,
+                agent_id=resolved.agent_id,
+            )
+            raise GatewayRejected("authority_payload", reason)
 
         # Forged-tenant guard (BRC-D4): resolved tenant must match the segment
         # binding when a credential is presented.
@@ -160,6 +211,27 @@ class GatewayController:
                 agent_id=resolved.agent_id,
             )
             raise GatewayRejected("budget", reason)
+
+        if isinstance(request.args, dict) and "estimated_max_tokens" in request.args:
+            estimated = request.args["estimated_max_tokens"]
+            if not isinstance(estimated, int) or estimated <= 0:
+                reason = "invalid estimated_max_tokens pre-dispatch lock"
+                self.audit.record(
+                    ControlPlaneEvent.GATEWAY_REJECTED,
+                    reason,
+                    tenant_id=resolved.tenant_id,
+                    agent_id=resolved.agent_id,
+                )
+                raise GatewayRejected("budget", reason)
+            if not self.budgets.charge(request.session_id, tokens=estimated):
+                reason = "pre-dispatch token budget lock failed"
+                self.audit.record(
+                    ControlPlaneEvent.GATEWAY_REJECTED,
+                    reason,
+                    tenant_id=resolved.tenant_id,
+                    agent_id=resolved.agent_id,
+                )
+                raise GatewayRejected("budget", reason)
 
         # --- Gate 1b: breaker check (+ behavioral loop detection) -----------
         key = BreakerKey(
