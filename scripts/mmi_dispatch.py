@@ -168,6 +168,18 @@ def get_cortex_immune_interface_design_task():
         return "Draft Cortex / Immune Interface concept doc / contract"
     return None
 
+def get_mode_controller_adversarial_task():
+    """Next retroactive adversarial suite after Privacy Filter is hardened."""
+    if (
+        _scoreboard_row_status("98").startswith("GATED")
+        and not is_contract_signed("Mode_Controller_Adversarial_Test_Suite_Contract.md")
+    ):
+        return (
+            "Send Mode Controller signed contract to Gemini with the adversarial "
+            "attack prompt"
+        )
+    return None
+
 def get_next_research_task():
     """Explicit research target after the current gated organism work.
 
@@ -182,6 +194,11 @@ def get_next_research_task():
             "Research Gap 5 — Memory Consolidation / Tenant Baseline Ingestion: "
             "evidence-to-baseline promotion rules, required evidence fields, "
             "operator-approval thresholds, rollback/reversibility, and audit schema"
+        )
+    if _scoreboard_row_status("98").startswith("GATED"):
+        return (
+            "Send Mode Controller signed contract to Gemini with the adversarial "
+            "attack prompt"
         )
     return "Research next phase requirements"
 
@@ -205,6 +222,7 @@ concept = get_next_concept_without_contract()
 pending_questions = get_pending_operator_questions()
 cis_design_task = get_collective_immune_design_task()
 cortex_immune_task = get_cortex_immune_interface_design_task()
+mode_controller_adversarial_task = get_mode_controller_adversarial_task()
 research_task = get_next_research_task()
 
 print("=" * 60)
@@ -245,6 +263,14 @@ elif unbuilt:
     print("BLOCKED_UNTIL: NONE")
     print("OPERATOR_ACTION_REQUIRED: NO")
     print("NEXT_GATE: gate 0/0 + health score 85+ + hash reported")
+elif mode_controller_adversarial_task:
+    print("MODE: RESEARCH")
+    print(f"AUTHORIZED_TASK: {mode_controller_adversarial_task}")
+    print("ASSIGNED_TO: Gemini")
+    print("NEXT_PROMPT_GOES_TO: Gemini")
+    print("BLOCKED_UNTIL: Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract")
+    print("OPERATOR_ACTION_REQUIRED: NO")
+    print("NEXT_GATE: Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature")
 elif concept:
     name = concept.replace("_Concept_Doc.md", "").replace("_", " ")
     print("MODE: DESIGN")
@@ -282,9 +308,16 @@ elif cortex_immune_task:
 else:
     print("MODE: RESEARCH")
     print(f"AUTHORIZED_TASK: {research_task}")
-    print("ASSIGNED_TO: ChatGPT")
-    print("NEXT_PROMPT_GOES_TO: ChatGPT")
-    print("BLOCKED_UNTIL: ChatGPT research + Gemini cross-check returned; Claude drafts concept doc")
-    print("OPERATOR_ACTION_REQUIRED: NO")
-    print("NEXT_GATE: dual-model research packet committed, then concept doc committed")
+    if research_task.startswith("Send Mode Controller signed contract to Gemini"):
+        print("ASSIGNED_TO: Gemini")
+        print("NEXT_PROMPT_GOES_TO: Gemini")
+        print("BLOCKED_UNTIL: Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract")
+        print("OPERATOR_ACTION_REQUIRED: NO")
+        print("NEXT_GATE: Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature")
+    else:
+        print("ASSIGNED_TO: ChatGPT")
+        print("NEXT_PROMPT_GOES_TO: ChatGPT")
+        print("BLOCKED_UNTIL: ChatGPT research + Gemini cross-check returned; Claude drafts concept doc")
+        print("OPERATOR_ACTION_REQUIRED: NO")
+        print("NEXT_GATE: dual-model research packet committed, then concept doc committed")
 print("=" * 60)

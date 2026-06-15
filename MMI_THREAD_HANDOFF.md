@@ -21,13 +21,14 @@
 | Dual LLM Pattern | GATED | NOT YET RUN | 696ee45 |
 | Shadow Watcher Swarm Layer 1 | GATED | NOT YET RUN | 03cd7d2 |
 | Safe-Stop State Machine #94 | GATED 95 ELITE + Amendment 01 SIGNED | NOT YET RUN | cf3f273 |
-| Mode Controller #92 | GATED 95 ELITE | NOT YET RUN | 85b455f |
-| Privacy Filter #93 | GATED 95 ELITE | NOT YET RUN | 85b455f |
+| Mode Controller #92 | GATED 95 ELITE | NEXT | 85b455f |
+| Privacy Filter #93 | GATED 95 ELITE / ADVERSARIALLY HARDENED | PASSED 0/0 via #98 | 47b33dd |
+| Privacy Filter Adversarial Test Suite #98 | GATED 95 ELITE | PASSED 0/0 | 47b33dd |
 | Collective Immune System #95 | GATED 95 ELITE | NOT YET RUN | f888ede |
 | Cortex / Immune Interface #96 | GATED 95 ELITE | NOT YET RUN | 656b282 |
 | Memory Consolidation / Tenant Baseline Ingestion #97 | GATED 95 ELITE | NOT YET RUN | e102965 |
 
-**Test evidence:** Gap 5 Tenant Baseline Ingestion focused suite 30 passed / 1 xfailed; related baseline/boundary suites 167 passed / 1 skipped / 10 xfailed.
+**Test evidence:** Privacy Filter focused/adversarial suite 112 passed / 3 xfailed; related privacy/boundary suites 209 passed / 10 xfailed; Grok gate 0/0 (`audit_outputs/privacy_filter_adversarial_20260615T011743Z.md`).
 
 ---
 
@@ -193,6 +194,7 @@ All previously signed concept docs also need adversarial passes. Priority:
 - 4. Product_Roadmap/Cortex_Immune_Interface_Design_Contract.md — SIGNED June 14th 2026
 - 4. Product_Roadmap/Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Concept_Doc.md
 - 4. Product_Roadmap/Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md — SIGNED June 14th 2026
+- 4. Product_Roadmap/Privacy_Filter_Adversarial_Test_Suite_Contract.md — SIGNED June 14th 2026 — BUILT/GATED 0/0
 
 ---
 
@@ -215,10 +217,12 @@ None.
 ## Next Authorized Tasks In Order
 
 1. Run `python3 scripts/mmi_dispatch.py` to confirm current dispatch
-2. **IMMEDIATE: Start retroactive adversarial stress test queue — Privacy Filter first**
-3. Build Load Fission v2 — contract SIGNED
-4. Build Specialisation Fission v2 — contract SIGNED
-5. Continue gap contract cycle for remaining gaps (6, 7, 8, 9, 10)
+2. **IMMEDIATE: Send Mode Controller #92 signed contract to Gemini with the adversarial attack prompt**
+3. Claude drafts Mode Controller adversarial test suite contract after Gemini returns
+4. Matt signs before Cursor builds
+5. Build Load Fission v2 — contract SIGNED
+6. Build Specialisation Fission v2 — contract SIGNED
+7. Continue gap contract cycle for remaining gaps (6, 7, 8, 9, 10)
 
 ---
 
