@@ -1,7 +1,24 @@
 # Mutant Monkey Inbox Shield — Thread Handoff
 **Date:** June 14 2026
-**Reason:** Living document — adversarial testing loop added, retroactive stress test queue opened.
+**Reason:** Living document — MMI credit-free rule added, TI Daemon signed, adversarial loop locked.
 **Authority:** Matt Nichol — sole signing authority
+
+---
+
+## CRITICAL — MMI CREDIT-FREE RULE
+
+**Claude never reads MMI files via MCP. Claude never writes MMI files via MCP.**
+
+The correct flow is:
+
+1. Run `python3 scripts/mmi_dispatch.py` locally — it reads all MMI files and prints current state
+2. Paste the dispatcher output into the Claude chat at the start of each session
+3. Claude reads it as conversation text — zero MCP calls, zero credits burned on file reads
+4. When Claude produces updated MMI content, it outputs the text in chat
+5. You paste that text to Cursor — Cursor writes it to disk
+6. Cursor commits and pushes
+
+Claude touching MMI files directly via MCP = wasted credits on a text file. This rule is permanent.
 
 ---
 
@@ -21,21 +38,20 @@
 | Dual LLM Pattern | GATED | NOT YET RUN | 696ee45 |
 | Shadow Watcher Swarm Layer 1 | GATED | NOT YET RUN | 03cd7d2 |
 | Safe-Stop State Machine #94 | GATED 95 ELITE + Amendment 01 SIGNED | NOT YET RUN | cf3f273 |
-| Mode Controller #92 | GATED 95 ELITE | NEXT | 85b455f |
-| Privacy Filter #93 | GATED 95 ELITE / ADVERSARIALLY HARDENED | PASSED 0/0 via #98 | 47b33dd |
-| Privacy Filter Adversarial Test Suite #98 | GATED 95 ELITE | PASSED 0/0 | 47b33dd |
+| Mode Controller #92 | GATED 95 ELITE | NEXT IN ADVERSARIAL QUEUE | 85b455f |
+| Privacy Filter #93 | GATED 95 ELITE — ADVERSARIALLY HARDENED | PASSED 0/0 | 47b33dd |
+| Privacy Filter Adversarial Suite #98 | GATED 95 ELITE | PASSED 0/0 | 47b33dd |
 | Collective Immune System #95 | GATED 95 ELITE | NOT YET RUN | f888ede |
 | Cortex / Immune Interface #96 | GATED 95 ELITE | NOT YET RUN | 656b282 |
-| Memory Consolidation / Tenant Baseline Ingestion #97 | GATED 95 ELITE | NOT YET RUN | e102965 |
-
-**Test evidence:** Privacy Filter focused/adversarial suite 112 passed / 3 xfailed; related privacy/boundary suites 209 passed / 10 xfailed; Grok gate 0/0 (`audit_outputs/privacy_filter_adversarial_20260615T011743Z.md`).
+| Memory Consolidation #97 | GATED 95 ELITE | NOT YET RUN | e102965 |
 
 ---
 
 ## Signed Contracts Waiting For Build
 
-- Load Fission v2 Contract — SIGNED, supersedes #90
-- Specialisation Fission v2 Contract — SIGNED, supersedes #91
+- Load Fission v2 — SIGNED, supersedes #90
+- Specialisation Fission v2 — SIGNED, supersedes #91
+- Threat Intelligence Daemon — SIGNED June 14th 2026 — builds to `/home/socialarchitect/mutant_monkey_intel/`
 
 ---
 
@@ -47,133 +63,84 @@ DEPTH GATE is open. Mode Controller and Privacy Filter both gated.
 
 ## Push Rule
 
-**AUTO-PUSH IS ON.** Cursor pushes every commit to remote immediately after committing. No hold. No manual push gate.
+**AUTO-PUSH IS ON.** Cursor pushes every commit immediately after committing.
 
 ---
 
 ## MMI Update Discipline — MANDATORY
 
-Every session must end with the following before any commit:
-
+Every session must end with:
 1. Cursor writes current state to `MMI_CURRENT_STATE.md`
 2. Cursor writes current state to `MMI_THREAD_HANDOFF.md`
-3. Both files are included in the final commit of every session
-4. If either file is not updated, the session is not complete
-
-Failure to update MMI files = dispatcher drift = wasted build time. This is not optional.
+3. Both files included in final commit
+4. If either file not updated, session is not complete
 
 ---
 
 ## Model Lane Rules
 
-### Research Lane — Dual Model Required
-
-Single-model research is not accepted. Every research pass requires two models.
+### Research Lane — Three Passes Required
 
 | Step | Model | Role |
 |---|---|---|
 | Research pass 1 | ChatGPT | First pass — requirements, gap analysis, candidate ranking |
-| Research pass 2 | Gemini | Cross-reference ChatGPT output — flag gaps, contradictions, drift |
-| Concept red-team | Gemini | Second Gemini pass with adversarial prompt — attack the concept, find bypasses, poisoning vectors, doctrine drift, blind spots |
-| Synthesis | Claude | Receives all three outputs, drafts concept doc. Does not draft until research and red-team passes are both returned. |
+| Research pass 2 | Gemini | Cross-reference ChatGPT — flag gaps, contradictions, drift |
+| Concept red-team | Gemini | Adversarial pass — attack the concept, find bypasses, poisoning vectors, blind spots |
+| Synthesis | Claude | Drafts concept doc only after all three passes returned |
 
-### Build Lane — Cursor Builds, Codex Reviews, Adversarial Suite Gates
-
-| Model | Strength | Weakness | Role |
-|---|---|---|---|
-| Cursor | Strict contract adherence | Under-builds — misses implied scope | Primary builder — executes signed contract exactly |
-| Codex | Broad coverage, catches gaps | Over-builds — adds unrequested scope | Post-build reviewer only — finds gaps, flags over-scope |
-
-Build loop rule:
-1. Cursor builds against signed contract
-2. Codex reviews — gaps go back to Cursor, over-scope stripped
-3. Adversarial test suite runs — finds bypasses, poisoning vectors, weaknesses
-4. Any adversarial failures go back to Cursor
-5. `complete_gate.py 0/0` on both functional tests AND adversarial suite
-6. Component is GATED only when both pass
-
-**A component cannot be GATED without a passing adversarial test suite. No exceptions.**
-
-### Design Lane — Claude Only
+### Build Lane
 
 | Model | Role |
 |---|---|
-| Claude | Concept docs, contract drafting, governance, spec. Never builds. Never executes. |
+| Cursor | Primary builder — executes signed contract exactly |
+| Codex | Post-build reviewer — finds gaps, flags over-scope. Never builds. |
 
-### Authority Lane — Matt Nichol Only
+Build loop: Cursor builds → Codex reviews → adversarial suite runs → failures patched → `complete_gate.py 0/0` on functional AND adversarial → GATED.
 
-- Sole signing authority
-- All operator decisions are Matt's — no model recommends, models inform
+**No component is GATED without a passing adversarial suite.**
 
----
+### Design Lane
 
-## Adversarial Test Suite Rules
-
-Every adversarial suite asks exactly three questions against its component:
-
-1. **What does this component trust — and can that trust be abused?**
-   Test every input, signal, and assumption the component depends on. Inject poisoned inputs. Spoof trusted sources. Exceed stated limits.
-
-2. **What does this component block — and can that block be bypassed?**
-   Attempt every forbidden action from every angle. Try legitimate-looking payloads that smuggle forbidden content. Try timing attacks. Try partial compliance.
-
-3. **What does this component produce — and can that output be poisoned or spoofed?**
-   Verify that outputs cannot be forged. Verify that a compromised upstream cannot produce outputs that look valid. Verify that high-confidence outputs on poisoned inputs are caught.
-
-Each adversarial suite must include at minimum:
-- Boundary violation attempts (every hard invariant tested from the attacker side)
-- Poisoned input injection
-- Trust assumption abuse
-- Bypass attempts on every forbidden action
-- Output spoofing attempts
-- Cascade failure simulation (what happens if this component is compromised)
-
----
-
-## Retroactive Adversarial Stress Test Queue
-
-All previously gated components need adversarial suites run against them immediately. Priority order is by attack surface and downstream blast radius if compromised.
-
-| Priority | Component | Why first |
-|---|---|---|
-| 1 | Privacy Filter #93 | Cross-tenant data leak is the highest blast radius failure |
-| 2 | Mode Controller #92 | Epoch/mode authority — compromise creates split-brain or false NORMAL state |
-| 3 | ReconciliationAgent #88 | Sole verdict producer — poisoned verdict poisons all downstream decisions |
-| 4 | Blast Radius Controller #89 | Gateway lifecycle — bypass means uncontained dispatch |
-| 5 | Safe-Stop State Machine #94 | If safe-stop can be prevented or faked, organism cannot halt safely |
-| 6 | Collective Immune System #95 | Coordination layer — compromise means immune components work against each other |
-| 7 | Cortex / Immune Interface #96 | Hidden channel creation bypasses organ boundary |
-| 8 | Watcher Agents #85-87 | False CRITICAL or suppressed CRITICAL both cause downstream failures |
-| 9 | Fission v2 #90/#91 | Unauthorized fission = uncontrolled child spawning |
-| 10 | Mutation Engine #95 | Unauthorized mutation = uncontrolled runtime change |
-| 11 | Phase 1 Infrastructure | Foundation — compromise undermines everything above |
-| 12 | Phase 2 Knowledge Agents | Evidence poisoning at source layer |
-| 13 | Shadow Watcher Swarm Layer 1 | Observation suppression or false escalation |
-| 14 | Dual LLM Pattern | False agreement between models |
-| 15 | Gap 5 Baseline Ingestion | Evidence-to-baseline poisoning — covered extensively in contract but needs red-team |
-
-### Retroactive Adversarial Process
-
-For each component in the queue:
-1. Gemini receives the signed contract and the built code summary
-2. Gemini prompt: "Attack this component. Find every way it fails, gets bypassed, gets poisoned, produces false outputs, or makes Mutant Monkey blind. Do not find design improvements. Find attack surfaces."
-3. Gemini output comes to Claude
-4. Claude drafts the adversarial test suite as a signed addendum to the component's contract
-5. Matt signs
-6. Cursor implements the adversarial tests
-7. Tests run — any failure is a real vulnerability, not a test failure
-8. Vulnerabilities patched before component is considered adversarially hardened
-
-### Concept Validation Red-Team
-
-All previously signed concept docs also need adversarial passes. Priority:
-
-| Priority | Concept Doc |
+| Model | Role |
 |---|---|
-| 1 | Gap 5 Memory Consolidation — baseline poisoning is the highest risk |
-| 2 | Collective Immune System — coordination layer failures |
-| 3 | Cortex / Immune Interface — hidden channel risks |
-| 4 | Safe-Stop State Machine — safe-stop prevention or bypass |
+| Claude | Concept docs, contracts, governance, spec. Never builds. Never reads/writes MMI via MCP. |
+
+### Authority Lane
+
+Matt Nichol — sole signing authority. All decisions are Matt's.
+
+---
+
+## Adversarial Suite Rules
+
+Three questions every suite must answer:
+1. What does this component trust — and can that trust be abused?
+2. What does this component block — and can those blocks be bypassed?
+3. What does this component produce — and can that output be spoofed?
+
+Every test must be able to fail. A test that cannot fail is not a test.
+
+---
+
+## Retroactive Adversarial Queue
+
+| Priority | Component | Status |
+|---|---|---|
+| 1 | Privacy Filter #93 | DONE — HARDENED |
+| 2 | Mode Controller #92 | NEXT — send contract to Gemini |
+| 3 | ReconciliationAgent #88 | PENDING |
+| 4 | Blast Radius Controller #89 | PENDING |
+| 5 | Safe-Stop State Machine #94 | PENDING |
+| 6 | Collective Immune System #95 | PENDING |
+| 7 | Cortex / Immune Interface #96 | PENDING |
+| 8 | Watcher Agents #85-87 | PENDING |
+| 9 | Fission v2 #90/#91 | PENDING |
+| 10 | Mutation Engine | PENDING |
+| 11 | Phase 1 Infrastructure | PENDING |
+| 12 | Phase 2 Knowledge Agents | PENDING |
+| 13 | Shadow Watcher Swarm Layer 1 | PENDING |
+| 14 | Dual LLM Pattern | PENDING |
+| 15 | Memory Consolidation #97 | PENDING |
 
 ---
 
@@ -181,48 +148,37 @@ All previously signed concept docs also need adversarial passes. Priority:
 
 - MUTANT_MONKEY_ORGANISM_DOCTRINE_v1.md
 - ORGANISM_DOCTRINE_GAP_LIST.md
-- MMI_CURRENT_STATE.md
-- scripts/mmi_dispatch.py
-- scripts/verify_build_truth.py
-- SWARM_COMMAND_CENTER_PROTOCOL.md — ACTIVE v1.0
-- PROJECT_OPERATOR_DELEGATIONS.md
-- PROJECT_ACTIVITY_LOG.md
-- 4. Product_Roadmap/Safe_Stop_State_Machine_Concept_Doc.md
-- 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md — SIGNED June 14th 2026
-- 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract_Amendment_01.md — SIGNED June 14th 2026
-- 4. Product_Roadmap/Collective_Immune_System_Design_Contract.md — SIGNED June 14th 2026
-- 4. Product_Roadmap/Cortex_Immune_Interface_Design_Contract.md — SIGNED June 14th 2026
+- MMI_CURRENT_STATE.md + MMI_THREAD_HANDOFF.md
+- scripts/mmi_dispatch.py + scripts/verify_build_truth.py
+- SWARM_COMMAND_CENTER_PROTOCOL.md v1.0
+- 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md — SIGNED
+- 4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract_Amendment_01.md — SIGNED
+- 4. Product_Roadmap/Collective_Immune_System_Design_Contract.md — SIGNED
+- 4. Product_Roadmap/Cortex_Immune_Interface_Design_Contract.md — SIGNED
 - 4. Product_Roadmap/Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Concept_Doc.md
-- 4. Product_Roadmap/Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md — SIGNED June 14th 2026
-- 4. Product_Roadmap/Privacy_Filter_Adversarial_Test_Suite_Contract.md — SIGNED June 14th 2026 — BUILT/GATED 0/0
+- 4. Product_Roadmap/Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md — SIGNED
+- 4. Product_Roadmap/Privacy_Filter_Adversarial_Test_Suite_Contract.md — SIGNED — GATED 0/0
+- 4. Product_Roadmap/Threat_Intelligence_Daemon_Concept_Doc.md
+- 4. Product_Roadmap/Threat_Intelligence_Daemon_Design_Contract.md — SIGNED June 14th 2026
 
 ---
 
-## Open Questions Matt Has Answered
+## Open Questions
 
-| # | Question | Answer | Locked |
-|---|---|---|---|
-| OQ-1 | Safe-stop timeout for Mode Controller quorum loss | 120 seconds | YES |
-| OQ-2 | Recovery window for two simultaneous CRITICAL watcher events | 300 seconds | YES |
-| OQ-3 | Who exits safe-stop | Matt Nichol only | YES |
-| OQ-4 | Does Homeostasis stay inside Mode Controller or become a separate contract? | Stays inside Mode Controller | YES |
-| OQ-5 | Baseline ingestion operator approval threshold | Only above defined risk threshold — seven triggers | YES |
-
-## Open Questions Still Pending
-
-None.
+All answered and locked. None pending.
 
 ---
 
 ## Next Authorized Tasks In Order
 
-1. Run `python3 scripts/mmi_dispatch.py` to confirm current dispatch
-2. **IMMEDIATE: Send Mode Controller #92 signed contract to Gemini with the adversarial attack prompt**
-3. Claude drafts Mode Controller adversarial test suite contract after Gemini returns
-4. Matt signs before Cursor builds
-5. Build Load Fission v2 — contract SIGNED
-6. Build Specialisation Fission v2 — contract SIGNED
-7. Continue gap contract cycle for remaining gaps (6, 7, 8, 9, 10)
+1. Paste `mmi_dispatch.py` output at session start — do not read via MCP
+2. Send Mode Controller #92 signed contract to Gemini with adversarial attack prompt
+3. Claude drafts Mode Controller adversarial test suite after Gemini returns
+4. Matt signs — Cursor builds — Codex reviews — gate
+5. Build Threat Intelligence Daemon to `/home/socialarchitect/mutant_monkey_intel/`
+6. Build Load Fission v2 — SIGNED
+7. Build Specialisation Fission v2 — SIGNED
+8. Continue gap contracts — gaps 6, 7, 8, 9, 10
 
 ---
 
@@ -232,20 +188,21 @@ WSL: /home/socialarchitect/northstar
 Branch: safety/queue-drift-cleanup-20260528
 GitHub: https://github.com/Purple-Alpha/Mutant_Monkey_Intelligence-.git
 
+TI Daemon: /home/socialarchitect/mutant_monkey_intel/ — separate, not committed to Northstar
+
 ---
 
 ## Social Architect Project
 
-Completely separate project at C:\Architectapp_clean\intelligence\
-Nothing to do with Mutant Monkey. Do not mix.
+Separate project at C:\Architectapp_clean\intelligence\
+Do not mix with Mutant Monkey. Ever.
 
 ---
 
 ## How To Start The New Thread
 
-Paste this into the new Claude thread to pick up exactly where we left off:
+Paste this into the new Claude thread:
 
 I am continuing the Mutant Monkey Inbox Shield build session.
-The full project context is in the repo at /home/socialarchitect/northstar
-Read MMI_THREAD_HANDOFF.md from the repo root and confirm current state before we proceed.
+Run python3 scripts/mmi_dispatch.py and paste the output here so Claude can read state without burning credits on MCP file reads.
 The Social Architect project at C:\Architectapp_clean is a completely separate project — do not mix it with Mutant Monkey under any circumstances.
