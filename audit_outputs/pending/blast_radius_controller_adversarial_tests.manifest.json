@@ -1,0 +1,29 @@
+{
+  "task_id": "blast_radius_controller_adversarial_tests",
+  "completion_claim": "BRC adversarial test slice #101 covers all 12 families and all 47 BRC-ADV IDs against the real BRC surfaces after the separately gated runtime patch slice. Evidence: BRC adversarial + existing BRC regression 97 passed / 8 xfailed; related sweep 231 passed / 21 xfailed. No hardening claim is made.",
+  "files_created": [
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_blast_radius_controller_adversarial.py",
+    "audit_outputs/pending/blast_radius_controller_adversarial_tests.manifest.json"
+  ],
+  "files_modified": [],
+  "files_read": [
+    "4. Product_Roadmap/Blast_Radius_Controller_Adversarial_Test_Suite_Contract.md",
+    "4. Product_Roadmap/Blast_Radius_Controller_Contract.md",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_blast_radius_controller.py"
+  ],
+  "commands_run": [
+    "./.venv/bin/python -m pytest -q tests/test_blast_radius_controller_adversarial.py  (initial run before runtime patch: 30 passed, 23 failed; proved three vulnerabilities plus one test path bug)",
+    "./.venv/bin/python -m pytest -q tests/test_blast_radius_controller_adversarial.py tests/test_blast_radius_controller.py  (97 passed, 8 xfailed after runtime patch)",
+    "./.venv/bin/python -m pytest -q tests/test_blast_radius_controller_adversarial.py tests/test_blast_radius_controller.py tests/test_collective_immune_system.py tests/test_cortex_immune_interface.py tests/test_safe_stop_state_machine.py tests/test_mode_controller.py tests/test_privacy_filter.py  (231 passed, 21 xfailed)",
+    "ReadLints on tests/test_blast_radius_controller_adversarial.py (no linter errors)"
+  ],
+  "known_unresolved_questions": [
+    "Independent review still required before Blast Radius Controller #89 may be marked ADVERSARIALLY HARDENED.",
+    "Runtime vulnerability patches were gated and committed separately in commit ace6673 because the combined Grok packet exceeded the 200KB cap.",
+    "Infrastructure cryptography/PID/mTLS/challenge-response specifics remain separate-contract controls; the test suite verifies that the current gateway rejects agent-controlled payload claims of such authority rather than dispatching them."
+  ],
+  "relevant_contracts": [
+    "4. Product_Roadmap/Blast_Radius_Controller_Adversarial_Test_Suite_Contract.md",
+    "4. Product_Roadmap/Blast_Radius_Controller_Contract.md"
+  ]
+}
