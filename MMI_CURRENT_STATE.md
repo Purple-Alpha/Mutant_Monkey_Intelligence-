@@ -1,10 +1,10 @@
-MODE: REVIEW
-AUTHORIZED_TASK: Matt review of pending evidence — Runtime Instrumentation telemetry output + adversarial suites #99 / #100 / #101 (hardening claims withheld until accepted)
+MODE: READY_FOR_NEXT_AUTHORIZATION
+AUTHORIZED_TASK: Await Matt's next MMI authorization after acceptance of Runtime Instrumentation telemetry and adversarial suites #99 / #100 / #101
 ASSIGNED_TO: Matt
 NEXT_PROMPT_GOES_TO: Matt
-BLOCKED_UNTIL: Matt accepts or returns each pending-evidence item
-OPERATOR_ACTION_REQUIRED: YES — review the pending evidence below, then accept (grant hardening) or return for fixes
-NEXT_GATE: per item — Matt accepts evidence → that hardening claim may be granted, or the next build is authorized
+BLOCKED_UNTIL: Matt authorizes the next build, review, research, or instrumentation task
+OPERATOR_ACTION_REQUIRED: YES — choose the next MMI task; accepted hardening claims have been recorded
+NEXT_GATE: next explicit Matt authorization
 
 LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built against
   the §11 signed contract; all 97 SS-ADV IDs across the 8 families executed against
@@ -20,19 +20,21 @@ LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built ag
   #102 evidence and signed off scoreboard row #102 on June 15th 2026. #94 is still
   not marked ADVERSARIALLY HARDENED unless separately authorized.
 
-REVIEW_PENDING_ITEMS:
-  - Blast Radius Controller Adversarial #101 evidence — review pending; #89 hardening claim withheld
-  - Runtime Instrumentation telemetry output — Matt review pending
+REVIEW_ACCEPTED_ITEMS:
+  - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
+  - ReconciliationAgent Adversarial #100 evidence accepted June 15th 2026 with disclosed LungState guard warning; #84 marked ADVERSARIALLY HARDENED
+  - Blast Radius Controller Adversarial #101 evidence accepted June 15th 2026; #89 marked ADVERSARIALLY HARDENED
+  - Runtime Instrumentation telemetry output accepted June 15th 2026
 
 ADVERSARIAL QUEUE STATUS:
-  #99  Mode Controller Adversarial      GATED (gate-scope clean re-run 20260616T032356Z; independent review pending)
-  #100 ReconciliationAgent Adversarial  GATED (Codex review pending)
-  #101 BRC Adversarial                  GATED (review pending)
+  #99  Mode Controller Adversarial      GATED (Matt accepted June 15th 2026; #92 hardened claim granted)
+  #100 ReconciliationAgent Adversarial  GATED (Matt accepted June 15th 2026; #84 hardened claim granted)
+  #101 BRC Adversarial                  GATED (Matt accepted June 15th 2026; #89 hardened claim granted)
   #102 Safe-Stop Adversarial            GATED (Matt row sign-off recorded June 15th 2026)
 
 INSTRUMENTATION STATUS:
   Runtime_Instrumentation_Runbook.md signed June 16 2026
-  Awaiting Cursor build output — still open
+  Runtime instrumentation Grok output accepted June 15th 2026
 
 PARKED DRAFTS (untracked, parallel-session; not authoritative):
   4. Product_Roadmap/Builder_Radar_Concept_Doc.md

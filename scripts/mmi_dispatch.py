@@ -260,6 +260,36 @@ def _contract_path(filename: str) -> str:
     return os.path.join(REPO, "4. Product_Roadmap", filename)
 
 
+def get_independent_review_pending_task():
+    """Return the first gated adversarial suite still waiting on review.
+
+    GATED adversarial suites can still withhold the parent component's
+    ADVERSARIALLY HARDENED claim until the review lane has checked the evidence.
+    That is actionable MMI state and must not fall through to generic research.
+    """
+    scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md") or ""
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 7:
+            continue
+        row_id, name = parts[0], parts[1]
+        runtime_status = parts[2].strip("`")
+        blockers = parts[6]
+        if (
+            runtime_status.startswith("GATED")
+            and "Adversarial Test Suite" in name
+            and (
+                "Independent review pending" in blockers
+                or "review pending" in blockers
+            )
+        ):
+            parent = blockers.split(" before ", 1)[1] if " before " in blockers else blockers
+            return row_id, name, parent
+    return None
+
+
 def get_mode_controller_adversarial_sign_task():
     """Mode Controller adversarial suite drafted but not yet §11 signed."""
     if not _scoreboard_row_status("98").startswith("GATED"):
@@ -332,6 +362,7 @@ cis_design_task = get_collective_immune_design_task()
 cortex_immune_task = get_cortex_immune_interface_design_task()
 mode_controller_adversarial_task = get_mode_controller_adversarial_task()
 mode_controller_adversarial_sign = get_mode_controller_adversarial_sign_task()
+independent_review_task = get_independent_review_pending_task()
 research_task = get_next_research_task()
 
 print("=" * 60)
@@ -390,6 +421,15 @@ elif mode_controller_adversarial_task:
     print("BLOCKED_UNTIL: Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract")
     print("OPERATOR_ACTION_REQUIRED: NO")
     print("NEXT_GATE: Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature")
+elif independent_review_task:
+    row_id, name, parent = independent_review_task
+    print("MODE: REVIEW")
+    print(f"AUTHORIZED_TASK: Independent review {name} #{row_id}")
+    print("ASSIGNED_TO: Matt / independent reviewer")
+    print("NEXT_PROMPT_GOES_TO: Matt")
+    print(f"BLOCKED_UNTIL: review returns findings/clearance before {parent}")
+    print("OPERATOR_ACTION_REQUIRED: YES — choose reviewer or accept/return the evidence")
+    print("NEXT_GATE: review result recorded; only then update the parent hardened claim if review clears it")
 elif concept:
     name = concept.replace("_Concept_Doc.md", "").replace("_", " ")
     print("MODE: DESIGN")
