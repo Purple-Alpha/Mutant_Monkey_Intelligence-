@@ -1,41 +1,41 @@
-MODE: RESEARCH
-AUTHORIZED_TASK: Research next phase requirements
-ASSIGNED_TO: ChatGPT
-NEXT_PROMPT_GOES_TO: ChatGPT
-BLOCKED_UNTIL: ChatGPT research + Gemini cross-check returned; Claude drafts concept doc
-OPERATOR_ACTION_REQUIRED: NO
+MODE: REVIEW
+AUTHORIZED_TASK: Matt review of #102 evidence + sign-off on scoreboard row #102
+ASSIGNED_TO: Matt
+NEXT_PROMPT_GOES_TO: Matt
+BLOCKED_UNTIL: Matt accepts #102 evidence and authorizes the row addition
+OPERATOR_ACTION_REQUIRED: YES — review #102, then confirm row #102 sign-off
+NEXT_GATE: Matt sign-off → (optional) independent review → only then may #94 be marked ADVERSARIALLY HARDENED
 
-INSTRUMENTATION SCOPE (strictly enforced):
-  - Timing wrappers around existing agent calls
-  - Token count capture from existing LLM response objects
-  - Memory snapshots via tracemalloc or psutil
-  - Event counters on existing exception paths only
-  - PipelineTelemetryRecord written per email (separate from blackboard)
-  - TelemetryAggregateReport after corpus run
-  - Worst-case timeline trace for highest-latency email per category
-  - CLI: run_instrumentation.py
-  - Output: instrumentation/ directory (gitignored)
-
-FORBIDDEN (build fails contract if any of these appear):
-  - Modifying any existing agent logic
-  - Modifying AgentContribution, EvidenceBundle, or any blackboard model
-  - Adding new LLM calls
-  - Touching production tenant data or production blackboard
-  - New external dependencies unless no stdlib alternative exists
-  - Publishing telemetry to any external service
-
-NEXT_GATE: dual-model research packet committed, then concept doc committed
+LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built against
+  the §11 signed contract; all 97 SS-ADV IDs across the 8 families executed against
+  the real SafeStopStateMachine/SafeStopLog surfaces (100 passed incl. 2 falsifiability
+  demos + coverage assertion); NO runtime change — zero vulnerabilities proven by a
+  failing test, so no patch applied and Safe-Stop behavior not broadened; Safe-Stop
+  regression + adversarial 144 passed / 5 xfailed; related control-plane sweep 381
+  passed / 21 xfailed; split Grok completion gates 0/0
+  (audit_outputs/safe_stop_adversarial_gate_scope_20260616T023345Z.md commit 52737a3,
+  audit_outputs/safe_stop_adversarial_tests_20260616T023420Z.md commit ee6b1f4);
+  health snapshot: Safe-Stop #94 remains 95 ELITE. Lab record:
+  lab_records/2026-06-15_safe_stop_adversarial_lab_record.md
 
 REVIEW_PENDING_ITEMS:
-  - Runtime Instrumentation telemetry output and worst-case timeline trace — Matt review pending
+  - Safe-Stop Adversarial #102 evidence — Matt review pending; #94 hardening claim withheld
+  - Scoreboard row #102 added as GATED but flagged for Matt sign-off (recorded, not self-authorized)
   - Blast Radius Controller Adversarial #101 evidence — review pending; #89 hardening claim withheld
+  - Runtime Instrumentation telemetry output — Matt review pending
 
-ADVERSARIAL_QUEUE (not blocked — runs in parallel):
-  #101 BRC Adversarial     GATED — review pending, hardening claim withheld
+ADVERSARIAL QUEUE STATUS:
+  #99  Mode Controller Adversarial      GATED (Codex review pending)
+  #100 ReconciliationAgent Adversarial  GATED (Codex review pending)
+  #101 BRC Adversarial                  GATED (review pending)
+  #102 Safe-Stop Adversarial            GATED (review + Matt row sign-off pending)
 
-NOTE: Instrumentation build takes priority. BRC Adversarial after instrumentation is
-gated or if Cursor has a separate session available.
+INSTRUMENTATION STATUS:
+  Runtime_Instrumentation_Runbook.md signed June 16 2026
+  Awaiting Cursor build output — still open
 
-LAST_COMPLETED: Runtime Instrumentation build — focused tests 4 passed; related instrumentation / DualLLM / Reconciliation suites 31 passed / 5 xfailed; high-complexity §6 worst-case trace generated at instrumentation/telemetry/runs/high_complexity_adversarial-20260615T034529Z-5f9385d1/worst_case_traces/high_complexity_adversarial_worst_case.txt; no existing agent schema changes; no new LLM calls
-
-LAST_COMPLETED: Blast Radius Controller Adversarial Test Suite #101 — built against §11 signed contract; all 47 BRC-ADV IDs across 12 families executed; three proven vulnerabilities patched only after failing tests (unsafe tenant routing keys, forged control-plane authority payloads, malformed/failed explicit pre-dispatch token locks); BRC adversarial + existing BRC regression 97 passed / 8 xfailed; related control-plane sweep 231 passed / 21 xfailed; split Grok gates 0/0 (`audit_outputs/blast_radius_controller_adversarial_runtime_20260615T051019Z.md`, `audit_outputs/blast_radius_controller_adversarial_gate_scope_20260615T051129Z.md`, `audit_outputs/blast_radius_controller_adversarial_tests_20260615T051227Z.md`); Blast Radius Controller #89 remains 95 ELITE but is NOT marked ADVERSARIALLY HARDENED until independent review
+PARKED DRAFTS (untracked, parallel-session; not authoritative):
+  4. Product_Roadmap/Builder_Radar_Concept_Doc.md
+  4. Product_Roadmap/Honeypot_Deception_Concept_Doc.md
+  4. Product_Roadmap/Mutant_Monkey_Radar_Concept_Doc.md
+  4. Product_Roadmap/Purple_Team_Attacker_Cost_Doctrine.md
