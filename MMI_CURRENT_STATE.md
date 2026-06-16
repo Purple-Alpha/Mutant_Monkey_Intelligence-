@@ -1,10 +1,10 @@
-MODE: RESEARCH
-AUTHORIZED_TASK: Research next phase requirements
-ASSIGNED_TO: ChatGPT
-NEXT_PROMPT_GOES_TO: ChatGPT
-BLOCKED_UNTIL: ChatGPT research + Gemini cross-check returned; Claude drafts concept doc
-OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: dual-model research packet committed, then concept doc committed
+MODE: REVIEW
+AUTHORIZED_TASK: Matt review of pending evidence — Runtime Instrumentation telemetry output + adversarial suites #99 / #100 / #101 (hardening claims withheld until accepted)
+ASSIGNED_TO: Matt
+NEXT_PROMPT_GOES_TO: Matt
+BLOCKED_UNTIL: Matt accepts or returns each pending-evidence item
+OPERATOR_ACTION_REQUIRED: YES — review the pending evidence below, then accept (grant hardening) or return for fixes
+NEXT_GATE: per item — Matt accepts evidence → that hardening claim may be granted, or the next build is authorized
 
 LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built against
   the §11 signed contract; all 97 SS-ADV IDs across the 8 families executed against
