@@ -382,6 +382,120 @@ def check_drift():
     )
     return "DRIFT" in result.stdout and result.returncode != 0
 
+ROUTING_AUTHORITY_FILES = (
+    "MMI_CURRENT_STATE.md",
+    "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md",
+    "scripts/mmi_dispatch.py",
+)
+
+DRIFT_SUMMARY_RE = re.compile(
+    r"SUMMARY:\s*(\d+)\s*BLOCK,\s*(\d+)\s*BLOCK-candidate,\s*(\d+)\s*WARN"
+)
+
+
+def _run_script(relpath):
+    """Run a repo script with the repo interpreter; return CompletedProcess or None."""
+    path = os.path.join(REPO, relpath)
+    if not os.path.exists(path):
+        return None
+    return subprocess.run(
+        [sys.executable, path],
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+        check=False,
+    )
+
+
+def _uncommitted_routing_files():
+    """Routing-authority files with uncommitted changes (work not yet recorded)."""
+    result = subprocess.run(
+        ["git", "-C", REPO, "status", "--porcelain"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    dirty = []
+    for line in result.stdout.splitlines():
+        path = line[3:].strip().strip('"')
+        if " -> " in path:
+            path = path.split(" -> ", 1)[1].strip().strip('"')
+        if path in ROUTING_AUTHORITY_FILES:
+            dirty.append(path)
+    return dirty
+
+
+def run_verify():
+    """Confirm the current MMI state was done properly.
+
+    This is the dispatcher's other half: it gives the next task, and --verify
+    proves the work behind the current state is actually complete and
+    consistent — routing block in sync, routing-authority files committed,
+    build truth verified, and no drift BLOCKs — before anything advances.
+    Returns 0 on PASS, 1 on FAIL.
+    """
+    _, lines = build_route_lines()
+    pairs = dict(lines)
+    print("=" * 60)
+    print("MMI VERIFY — was the work done properly?")
+    print(f"current task: MODE: {pairs.get('MODE', '')}")
+    print(f"              {pairs.get('AUTHORIZED_TASK', '')}")
+    print("-" * 60)
+
+    checks = []
+
+    stale = routing_block_is_stale(lines)
+    checks.append((
+        not stale,
+        "MMI_CURRENT_STATE.md routing block in sync with derived state"
+        + ("" if not stale else " — run: python3 scripts/mmi_dispatch.py --sync"),
+    ))
+
+    dirty = _uncommitted_routing_files()
+    checks.append((
+        not dirty,
+        "routing-authority files committed"
+        + ("" if not dirty else f" — uncommitted: {', '.join(dirty)}"),
+    ))
+
+    bt = _run_script("scripts/verify_build_truth.py")
+    if bt is None:
+        checks.append((False, "build-truth verifier present (scripts/verify_build_truth.py)"))
+    else:
+        ok = bt.returncode == 0 and "BUILD TRUTH VERIFIED" in bt.stdout
+        checks.append((
+            ok,
+            "build truth verified (docs agree with code+git)"
+            + ("" if ok else " — DRIFT; see verify_build_truth.py output"),
+        ))
+
+    dd = _run_script("scripts/detect_drift.py")
+    if dd is None:
+        checks.append((False, "drift detector present (scripts/detect_drift.py)"))
+    else:
+        match = DRIFT_SUMMARY_RE.search(dd.stdout)
+        if not match:
+            checks.append((False, "drift detector summary parseable"))
+        else:
+            nblock, ncand, nwarn = (int(match.group(i)) for i in (1, 2, 3))
+            checks.append((
+                nblock == 0,
+                f"drift: {nblock} BLOCK, {ncand} BLOCK-candidate, {nwarn} WARN "
+                "(BLOCK must be 0)",
+            ))
+
+    for ok, label in checks:
+        print(f"[ {('ok' if ok else 'FAIL'):>4} ] {label}")
+    print("-" * 60)
+    passed = all(ok for ok, _ in checks)
+    if passed:
+        print("VERDICT: PASS — current state is properly done and consistent.")
+    else:
+        print("VERDICT: FAIL — resolve the FAIL line(s) above before advancing.")
+    print("=" * 60)
+    return 0 if passed else 1
+
+
 def build_route_lines():
     """Derive the routing block from the scoreboard/contract graph.
 
@@ -561,6 +675,10 @@ def build_route_lines():
 
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
+
+    if "--verify" in argv:
+        return run_verify()
+
     do_sync = "--sync" in argv
 
     pin = get_manual_pin()
@@ -588,6 +706,12 @@ def main(argv=None):
         print(
             "NOTE: MMI_CURRENT_STATE.md routing block is stale vs derived state. "
             "Run: python3 scripts/mmi_dispatch.py --sync"
+        )
+
+    if not do_sync:
+        print(
+            "DONE_CHECK: confirm the work behind this state was done properly → "
+            "python3 scripts/mmi_dispatch.py --verify"
         )
 
     return 0
