@@ -6,6 +6,12 @@ BLOCKED_UNTIL: Matt names the next phase target (build, research, or design)
 OPERATOR_ACTION_REQUIRED: YES — choose the next MMI task
 NEXT_GATE: next explicit Matt authorization
 
+AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
+  and must remain as emitted (MODE: ALL_CLEAR). Current source-of-truth authority for
+  component/gate status is mmi/MMI_GATE_REGISTRY.md and mmi/MMI_DECISION_LOG.md; consistency
+  is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
+  anything marked SUPERSEDED is historical only and is NOT routing authority.
+
 LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built against
   the §11 signed contract; all 97 SS-ADV IDs across the 8 families executed against
   the real SafeStopStateMachine/SafeStopLog surfaces (100 passed incl. 2 falsifiability
@@ -17,8 +23,13 @@ LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built ag
   audit_outputs/safe_stop_adversarial_tests_20260616T023420Z.md commit ee6b1f4);
   health snapshot: Safe-Stop #94 remains 95 ELITE. Lab record:
   lab_records/2026-06-15_safe_stop_adversarial_lab_record.md. Matt Nichol accepted
-  #102 evidence and signed off scoreboard row #102 on June 15th 2026. #94 is still
-  not marked ADVERSARIALLY HARDENED unless separately authorized.
+  #102 evidence and signed off scoreboard row #102 on June 15th 2026.
+  [SUPERSEDED 2026-06-16] An earlier version of this note ended with "#94 is still not
+  marked ADVERSARIALLY HARDENED unless separately authorized." That reflected the state at
+  #102 sign-off only. #94 Safe-Stop State Machine was subsequently marked ADVERSARIALLY
+  HARDENED via #102 — see REVIEW_ACCEPTED_ITEMS and ADVERSARIAL QUEUE STATUS below,
+  mmi/MMI_GATE_REGISTRY.md, and mmi/MMI_DECISION_LOG.md. This historical line is retained
+  for audit trail only and is not current routing authority.
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
