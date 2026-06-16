@@ -25,7 +25,7 @@ REVIEW_PENDING_ITEMS:
   - Runtime Instrumentation telemetry output — Matt review pending
 
 ADVERSARIAL QUEUE STATUS:
-  #99  Mode Controller Adversarial      GATED (Codex review pending)
+  #99  Mode Controller Adversarial      GATED (gate-scope clean re-run 20260616T032356Z; independent review pending)
   #100 ReconciliationAgent Adversarial  GATED (Codex review pending)
   #101 BRC Adversarial                  GATED (review pending)
   #102 Safe-Stop Adversarial            GATED (Matt row sign-off recorded June 15th 2026)
