@@ -15,6 +15,9 @@ CONCEPT_SUPERSESSION = {
         "Load_Fission_Contract_v2.md",
         "Specialisation_Fission_Contract_v2.md",
     ],
+    "Gap5_Tenant_Baseline_Ingestion_Concept_Doc.md": [
+        "Gap5_Memory_Consolidation_Tenant_Baseline_Ingestion_Design_Contract.md",
+    ],
 }
 
 # Governance utility specs are tracked for build discipline, but they are not
