@@ -526,6 +526,19 @@ def build_route_lines():
         ]
 
     research_task = get_next_research_task()
+    if research_task == "Research next phase requirements":
+        # Genuine all-clear: no awaiting-audit, unbuilt, sign, review, concept,
+        # operator-question, or design work is queued. This is an explicit
+        # terminal state, not the old misleading generic-RESEARCH fallback.
+        return derived, [
+            ("MODE", "ALL_CLEAR"),
+            ("AUTHORIZED_TASK", "All queued control-plane work is built, gated, and hardened — no pending build/audit/review/design item. Awaiting Matt's next-phase authorization."),
+            ("ASSIGNED_TO", "Matt"),
+            ("NEXT_PROMPT_GOES_TO", "Matt"),
+            ("BLOCKED_UNTIL", "Matt names the next phase target (build, research, or design)"),
+            ("OPERATOR_ACTION_REQUIRED", "YES — choose the next MMI task"),
+            ("NEXT_GATE", "next explicit Matt authorization"),
+        ]
     lines = [("MODE", "RESEARCH"), ("AUTHORIZED_TASK", research_task)]
     if research_task.startswith("Send Mode Controller signed contract to Gemini"):
         lines += [
