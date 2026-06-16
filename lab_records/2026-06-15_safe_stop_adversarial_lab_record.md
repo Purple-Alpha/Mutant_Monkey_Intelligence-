@@ -30,8 +30,6 @@ FINDINGS
 [WARN]
   - Independent review is still required before Safe-Stop State Machine #94 can
     be marked ADVERSARIALLY HARDENED. The claim is withheld.
-  - Scoreboard row #102 was added as GATED but row addition is flagged for Matt
-    sign-off — recorded as an operator act, not self-authorized.
   - Upstream-provenance and infrastructure vectors remain separate-contract
     controls: Mode Controller quorum truth, Privacy Filter breaker truth, Watcher
     classification integrity, ReconciliationAgent conflict/resolution provenance,
@@ -82,7 +80,8 @@ FINDINGS
 
 REQUIRED RETESTS
   - Independent review of #102 before any hardening claim on #94.
-  - Matt sign-off on scoreboard row #102 addition.
+  - Matt sign-off on scoreboard row #102 addition: RECORDED — Matt Nichol,
+    June 15th 2026.
   - Do not mark Safe-Stop State Machine #94 ADVERSARIALLY HARDENED until review is
     complete and Matt accepts the evidence.
 
