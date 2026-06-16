@@ -131,6 +131,7 @@ HOOK_SCOPE_PREFIXES_ALWAYS: tuple[str, ...] = (
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_tenant_baseline_ingestion.py",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_reconciliation_agent_adversarial.py",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_blast_radius_controller_adversarial.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_safe_stop_state_machine_adversarial.py",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/control_plane/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/watchers/",
     "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/",
