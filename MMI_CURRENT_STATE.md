@@ -1,10 +1,10 @@
-MODE: READY_FOR_NEXT_AUTHORIZATION
-AUTHORIZED_TASK: Await Matt's next MMI authorization after acceptance of Runtime Instrumentation telemetry and adversarial suites #99 / #100 / #101
-ASSIGNED_TO: Matt
+MODE: REVIEW
+AUTHORIZED_TASK: Independent review Safe-Stop State Machine Adversarial Test Suite #102
+ASSIGNED_TO: Matt / independent reviewer
 NEXT_PROMPT_GOES_TO: Matt
-BLOCKED_UNTIL: Matt authorizes the next build, review, research, or instrumentation task
-OPERATOR_ACTION_REQUIRED: YES — choose the next MMI task; accepted hardening claims have been recorded
-NEXT_GATE: next explicit Matt authorization
+BLOCKED_UNTIL: review returns findings/clearance before Safe-Stop adversarial hardening claim
+OPERATOR_ACTION_REQUIRED: YES — choose reviewer or accept/return the evidence
+NEXT_GATE: review result recorded; only then update the parent hardened claim if review clears it
 
 LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built against
   the §11 signed contract; all 97 SS-ADV IDs across the 8 families executed against

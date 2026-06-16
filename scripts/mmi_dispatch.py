@@ -35,53 +35,83 @@ def read_file(path):
         return f.read()
 
 
-MMI_STATE_KEYS = (
-    "MODE",
-    "AUTHORIZED_TASK",
-    "ASSIGNED_TO",
-    "NEXT_PROMPT_GOES_TO",
-    "BLOCKED_UNTIL",
-    "OPERATOR_ACTION_REQUIRED",
-    "NEXT_GATE",
-)
+STATE_FILE = "MMI_CURRENT_STATE.md"
+PIN_RE = re.compile(r"\s*PIN\s*:\s*(on|true|yes)\s*$", re.IGNORECASE)
 
 
-def get_current_state_override():
-    """Return the operator-facing MMI state file when it names an active state.
+def _read_routing_block():
+    """Return the routing block of the state file as a list of raw lines.
 
-    The scoreboard/contract graph is the normal queue source, but Matt can write
-    the live session state into MMI_CURRENT_STATE.md. The dispatcher must surface
-    that state instead of falling through to generic RESEARCH, otherwise the
-    operator sees a stale route even when the MMI handoff is explicit.
+    The routing block is everything above the first blank line. The sections
+    below the blank line (LAST_COMPLETED, queue notes, parked drafts) are
+    human-authored context and are never parsed for routing.
     """
 
-    content = read_file("MMI_CURRENT_STATE.md") or ""
-    state = {}
+    content = read_file(STATE_FILE) or ""
+    block = []
     for raw_line in content.splitlines():
         if not raw_line.strip():
             break
+        block.append(raw_line)
+    return block
+
+
+def _block_to_pairs(block):
+    pairs = []
+    for raw_line in block:
         if ":" not in raw_line:
             continue
         key, value = raw_line.split(":", 1)
-        key = key.strip()
-        if key in MMI_STATE_KEYS:
-            state[key] = value.strip()
+        pairs.append((key.strip(), value.strip()))
+    return pairs
 
-    mode = state.get("MODE", "")
-    task = state.get("AUTHORIZED_TASK", "")
-    if not mode or not task:
+
+def get_manual_pin():
+    """Honor an explicit operator pin in MMI_CURRENT_STATE.md.
+
+    When the routing block contains a ``PIN: ON`` (or true/yes) line, the
+    hand-written block is authoritative and the derived route is suppressed.
+    This is the manual escape hatch for when Matt wants to freeze the
+    dispatcher on a specific instruction. Without a PIN the dispatcher derives
+    its route from the scoreboard automatically, so completed work is reflected
+    the moment the scoreboard row changes — no hand-editing of this file.
+    """
+
+    block = _read_routing_block()
+    if not any(PIN_RE.match(line) for line in block):
         return None
-    if mode == "RESEARCH" and task == "Research next phase requirements":
-        return None
-    return state
+    pairs = [(k, v) for k, v in _block_to_pairs(block) if k.upper() != "PIN"]
+    return pairs or None
 
 
-def print_current_state_override(state):
-    for key in MMI_STATE_KEYS:
-        value = state.get(key)
-        if value:
-            print(f"{key}: {value}")
-    print("SOURCE: MMI_CURRENT_STATE.md")
+def sync_state_file(lines):
+    """Rewrite the routing block of the state file from the derived route.
+
+    Everything from the first blank line down (the human-authored notes) is
+    preserved verbatim. Returns True if the file content actually changed.
+    """
+
+    path = os.path.join(REPO, STATE_FILE)
+    new_block = "\n".join(f"{key}: {value}" for key, value in lines)
+    existing = ""
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            existing = f.read()
+    boundary = existing.find("\n\n")
+    tail = existing[boundary:] if boundary != -1 else "\n"
+    new_content = new_block + tail
+    if new_content == existing:
+        return False
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(new_content)
+    return True
+
+
+def routing_block_is_stale(lines):
+    """True when the state file's routing block disagrees with the derived route."""
+
+    current = _block_to_pairs(_read_routing_block())
+    return current != [(key, value) for key, value in lines]
 
 
 def is_git_tracked(path):
@@ -352,131 +382,203 @@ def check_drift():
     )
     return "DRIFT" in result.stdout and result.returncode != 0
 
-drifted = check_drift()
-current_state_override = get_current_state_override()
-awaiting = get_awaiting_audit()
-unbuilt = get_signed_unbuilt()
-concept = get_next_concept_without_contract()
-pending_questions = get_pending_operator_questions()
-cis_design_task = get_collective_immune_design_task()
-cortex_immune_task = get_cortex_immune_interface_design_task()
-mode_controller_adversarial_task = get_mode_controller_adversarial_task()
-mode_controller_adversarial_sign = get_mode_controller_adversarial_sign_task()
-independent_review_task = get_independent_review_pending_task()
-research_task = get_next_research_task()
+def build_route_lines():
+    """Derive the routing block from the scoreboard/contract graph.
 
-print("=" * 60)
-if drifted:
-    print("STOP: DRIFT DETECTED")
-    print("ASSIGNED_TO: Matt")
-    print("NEXT_PROMPT_GOES_TO: Matt - fix drift before anything else")
-    print("OPERATOR_ACTION_REQUIRED: YES")
-    print("IF YES: Run verify_build_truth.py and fix flagged items")
-elif current_state_override:
-    print_current_state_override(current_state_override)
-elif awaiting:
-    # A build is implemented + tested but not yet gated. Route it to the Grok
-    # completion gate before starting any new build. The exact command is
-    # emitted so the audit step is not tribal memory.
-    name = awaiting[0]
-    slug = audit_task_slug(name)
-    manifest_rel = f"audit_outputs/pending/{slug}.manifest.json"
-    manifest_ok = os.path.exists(os.path.join(REPO, manifest_rel))
-    print("MODE: AUDIT")
-    print(f"AUTHORIZED_TASK: Run Grok completion gate for {name}")
-    print("ASSIGNED_TO: Grok (negative-feedback auditor)")
-    print("NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits")
-    print("OPERATOR_ACTION_REQUIRED: NO  (Grok activation is standing; no per-run permission)")
-    print(
-        f"RUN: python3 audit_tools/complete_gate.py --pre-commit "
-        f'--task {slug} --claim "{name} build implemented + tested; ready for audit"'
-    )
-    print(
-        f"MANIFEST: {manifest_rel} "
-        f"({'present' if manifest_ok else 'MISSING - create before gate'})"
-    )
-    print("BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed")
-    print("NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit")
-elif unbuilt:
-    print("MODE: BUILD")
-    print(f"AUTHORIZED_TASK: Build {unbuilt[0]}")
-    print("ASSIGNED_TO: Cursor")
-    print("NEXT_PROMPT_GOES_TO: Cursor")
-    print("BLOCKED_UNTIL: NONE")
-    print("OPERATOR_ACTION_REQUIRED: NO")
-    print("NEXT_GATE: gate 0/0 + health score 85+ + hash reported")
-elif mode_controller_adversarial_sign:
-    print("MODE: AWAITING §11 SIGNATURE")
-    print(f"AUTHORIZED_TASK: Sign {mode_controller_adversarial_sign.replace('_', ' ').replace('.md', '')}")
-    print("ASSIGNED_TO: Matt")
-    print("NEXT_PROMPT_GOES_TO: Cursor (after §11 signed)")
-    print("BLOCKED_UNTIL: Matt signs §11")
-    print("OPERATOR_ACTION_REQUIRED: YES — §11 signature required")
-    print("NEXT_GATE: §11 signed → Cursor implements Mode Controller adversarial test families")
-elif mode_controller_adversarial_task:
-    print("MODE: RESEARCH")
-    print(f"AUTHORIZED_TASK: {mode_controller_adversarial_task}")
-    print("ASSIGNED_TO: Gemini")
-    print("NEXT_PROMPT_GOES_TO: Gemini")
-    print("BLOCKED_UNTIL: Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract")
-    print("OPERATOR_ACTION_REQUIRED: NO")
-    print("NEXT_GATE: Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature")
-elif independent_review_task:
-    row_id, name, parent = independent_review_task
-    print("MODE: REVIEW")
-    print(f"AUTHORIZED_TASK: Independent review {name} #{row_id}")
-    print("ASSIGNED_TO: Matt / independent reviewer")
-    print("NEXT_PROMPT_GOES_TO: Matt")
-    print(f"BLOCKED_UNTIL: review returns findings/clearance before {parent}")
-    print("OPERATOR_ACTION_REQUIRED: YES — choose reviewer or accept/return the evidence")
-    print("NEXT_GATE: review result recorded; only then update the parent hardened claim if review clears it")
-elif concept:
-    name = concept.replace("_Concept_Doc.md", "").replace("_", " ")
-    print("MODE: DESIGN")
-    print(f"AUTHORIZED_TASK: Draft contract for {name}")
-    print("ASSIGNED_TO: Claude")
-    print("NEXT_PROMPT_GOES_TO: Claude")
-    print("BLOCKED_UNTIL: Matt signs section 11")
-    print("OPERATOR_ACTION_REQUIRED: NO")
-    print("NEXT_GATE: section 11 signed + build authorized")
-elif pending_questions:
-    print("MODE: OPERATOR_LOCK")
-    print("AUTHORIZED_TASK: Resolve pending operator questions before next contract")
-    print("ASSIGNED_TO: Matt")
-    print("NEXT_PROMPT_GOES_TO: Matt")
-    print("BLOCKED_UNTIL: OQ-4/OQ-5 answered or explicitly deferred")
-    print("OPERATOR_ACTION_REQUIRED: YES")
-    print("QUESTIONS: " + " | ".join(pending_questions))
-    print("NEXT_GATE: answers recorded, then Claude drafts the next signed contract")
-elif cis_design_task:
-    print("MODE: DESIGN")
-    print(f"AUTHORIZED_TASK: {cis_design_task}")
-    print("ASSIGNED_TO: Claude")
-    print("NEXT_PROMPT_GOES_TO: Claude")
-    print("BLOCKED_UNTIL: Matt signs section 11 before any CIS build")
-    print("OPERATOR_ACTION_REQUIRED: NO")
-    print("NEXT_GATE: concept/contract committed, then §11 signature before build")
-elif cortex_immune_task:
-    print("MODE: DESIGN")
-    print(f"AUTHORIZED_TASK: {cortex_immune_task}")
-    print("ASSIGNED_TO: Claude")
-    print("NEXT_PROMPT_GOES_TO: Claude")
-    print("BLOCKED_UNTIL: Matt signs section 11 before any interface build")
-    print("OPERATOR_ACTION_REQUIRED: NO")
-    print("NEXT_GATE: concept/contract committed, then §11 signature before build")
-else:
-    print("MODE: RESEARCH")
-    print(f"AUTHORIZED_TASK: {research_task}")
+    This is the single derived source of truth. Returns ``(source, lines)``
+    where ``lines`` is an ordered list of ``(key, value)`` pairs. The state
+    file is only a generated mirror of this (see ``sync_state_file``) plus an
+    optional manual ``PIN`` (see ``get_manual_pin``). Because the route is
+    recomputed on every run, completed work shows up the moment the scoreboard
+    row changes — there is no separate state file to hand-edit.
+    """
+
+    if check_drift():
+        return "drift", [
+            ("STOP", "DRIFT DETECTED"),
+            ("ASSIGNED_TO", "Matt"),
+            ("NEXT_PROMPT_GOES_TO", "Matt - fix drift before anything else"),
+            ("OPERATOR_ACTION_REQUIRED", "YES"),
+            ("IF YES", "Run verify_build_truth.py and fix flagged items"),
+        ]
+
+    derived = "derived from scoreboard"
+
+    awaiting = get_awaiting_audit()
+    if awaiting:
+        # A build is implemented + tested but not yet gated. Route it to the
+        # Grok completion gate before starting any new build. The exact command
+        # is emitted so the audit step is not tribal memory.
+        name = awaiting[0]
+        slug = audit_task_slug(name)
+        manifest_rel = f"audit_outputs/pending/{slug}.manifest.json"
+        manifest_ok = os.path.exists(os.path.join(REPO, manifest_rel))
+        return derived, [
+            ("MODE", "AUDIT"),
+            ("AUTHORIZED_TASK", f"Run Grok completion gate for {name}"),
+            ("ASSIGNED_TO", "Grok (negative-feedback auditor)"),
+            ("NEXT_PROMPT_GOES_TO", "Cursor stages the build, runs the gate, then commits"),
+            ("OPERATOR_ACTION_REQUIRED", "NO  (Grok activation is standing; no per-run permission)"),
+            ("RUN", f'python3 audit_tools/complete_gate.py --pre-commit --task {slug} --claim "{name} build implemented + tested; ready for audit"'),
+            ("MANIFEST", f"{manifest_rel} ({'present' if manifest_ok else 'MISSING - create before gate'})"),
+            ("BLOCKED_UNTIL", "complete_gate.py reports blocking=0 (0/0) AND build committed"),
+            ("NEXT_GATE", "flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit"),
+        ]
+
+    unbuilt = get_signed_unbuilt()
+    if unbuilt:
+        return derived, [
+            ("MODE", "BUILD"),
+            ("AUTHORIZED_TASK", f"Build {unbuilt[0]}"),
+            ("ASSIGNED_TO", "Cursor"),
+            ("NEXT_PROMPT_GOES_TO", "Cursor"),
+            ("BLOCKED_UNTIL", "NONE"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("NEXT_GATE", "gate 0/0 + health score 85+ + hash reported"),
+        ]
+
+    mode_controller_adversarial_sign = get_mode_controller_adversarial_sign_task()
+    if mode_controller_adversarial_sign:
+        label = mode_controller_adversarial_sign.replace('_', ' ').replace('.md', '')
+        return derived, [
+            ("MODE", "AWAITING §11 SIGNATURE"),
+            ("AUTHORIZED_TASK", f"Sign {label}"),
+            ("ASSIGNED_TO", "Matt"),
+            ("NEXT_PROMPT_GOES_TO", "Cursor (after §11 signed)"),
+            ("BLOCKED_UNTIL", "Matt signs §11"),
+            ("OPERATOR_ACTION_REQUIRED", "YES — §11 signature required"),
+            ("NEXT_GATE", "§11 signed → Cursor implements Mode Controller adversarial test families"),
+        ]
+
+    mode_controller_adversarial_task = get_mode_controller_adversarial_task()
+    if mode_controller_adversarial_task:
+        return derived, [
+            ("MODE", "RESEARCH"),
+            ("AUTHORIZED_TASK", mode_controller_adversarial_task),
+            ("ASSIGNED_TO", "Gemini"),
+            ("NEXT_PROMPT_GOES_TO", "Gemini"),
+            ("BLOCKED_UNTIL", "Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("NEXT_GATE", "Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature"),
+        ]
+
+    independent_review_task = get_independent_review_pending_task()
+    if independent_review_task:
+        row_id, name, parent = independent_review_task
+        return derived, [
+            ("MODE", "REVIEW"),
+            ("AUTHORIZED_TASK", f"Independent review {name} #{row_id}"),
+            ("ASSIGNED_TO", "Matt / independent reviewer"),
+            ("NEXT_PROMPT_GOES_TO", "Matt"),
+            ("BLOCKED_UNTIL", f"review returns findings/clearance before {parent}"),
+            ("OPERATOR_ACTION_REQUIRED", "YES — choose reviewer or accept/return the evidence"),
+            ("NEXT_GATE", "review result recorded; only then update the parent hardened claim if review clears it"),
+        ]
+
+    concept = get_next_concept_without_contract()
+    if concept:
+        name = concept.replace("_Concept_Doc.md", "").replace("_", " ")
+        return derived, [
+            ("MODE", "DESIGN"),
+            ("AUTHORIZED_TASK", f"Draft contract for {name}"),
+            ("ASSIGNED_TO", "Claude"),
+            ("NEXT_PROMPT_GOES_TO", "Claude"),
+            ("BLOCKED_UNTIL", "Matt signs section 11"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("NEXT_GATE", "section 11 signed + build authorized"),
+        ]
+
+    pending_questions = get_pending_operator_questions()
+    if pending_questions:
+        return derived, [
+            ("MODE", "OPERATOR_LOCK"),
+            ("AUTHORIZED_TASK", "Resolve pending operator questions before next contract"),
+            ("ASSIGNED_TO", "Matt"),
+            ("NEXT_PROMPT_GOES_TO", "Matt"),
+            ("BLOCKED_UNTIL", "OQ-4/OQ-5 answered or explicitly deferred"),
+            ("OPERATOR_ACTION_REQUIRED", "YES"),
+            ("QUESTIONS", " | ".join(pending_questions)),
+            ("NEXT_GATE", "answers recorded, then Claude drafts the next signed contract"),
+        ]
+
+    cis_design_task = get_collective_immune_design_task()
+    if cis_design_task:
+        return derived, [
+            ("MODE", "DESIGN"),
+            ("AUTHORIZED_TASK", cis_design_task),
+            ("ASSIGNED_TO", "Claude"),
+            ("NEXT_PROMPT_GOES_TO", "Claude"),
+            ("BLOCKED_UNTIL", "Matt signs section 11 before any CIS build"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("NEXT_GATE", "concept/contract committed, then §11 signature before build"),
+        ]
+
+    cortex_immune_task = get_cortex_immune_interface_design_task()
+    if cortex_immune_task:
+        return derived, [
+            ("MODE", "DESIGN"),
+            ("AUTHORIZED_TASK", cortex_immune_task),
+            ("ASSIGNED_TO", "Claude"),
+            ("NEXT_PROMPT_GOES_TO", "Claude"),
+            ("BLOCKED_UNTIL", "Matt signs section 11 before any interface build"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("NEXT_GATE", "concept/contract committed, then §11 signature before build"),
+        ]
+
+    research_task = get_next_research_task()
+    lines = [("MODE", "RESEARCH"), ("AUTHORIZED_TASK", research_task)]
     if research_task.startswith("Send Mode Controller signed contract to Gemini"):
-        print("ASSIGNED_TO: Gemini")
-        print("NEXT_PROMPT_GOES_TO: Gemini")
-        print("BLOCKED_UNTIL: Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract")
-        print("OPERATOR_ACTION_REQUIRED: NO")
-        print("NEXT_GATE: Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature")
+        lines += [
+            ("ASSIGNED_TO", "Gemini"),
+            ("NEXT_PROMPT_GOES_TO", "Gemini"),
+            ("BLOCKED_UNTIL", "Gemini returns Mode Controller adversarial red-team output; Claude drafts the adversarial suite contract"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("NEXT_GATE", "Gemini red-team packet returned, then Claude drafts Mode Controller adversarial test suite contract for Matt signature"),
+        ]
     else:
-        print("ASSIGNED_TO: ChatGPT")
-        print("NEXT_PROMPT_GOES_TO: ChatGPT")
-        print("BLOCKED_UNTIL: ChatGPT research + Gemini cross-check returned; Claude drafts concept doc")
-        print("OPERATOR_ACTION_REQUIRED: NO")
-        print("NEXT_GATE: dual-model research packet committed, then concept doc committed")
-print("=" * 60)
+        lines += [
+            ("ASSIGNED_TO", "ChatGPT"),
+            ("NEXT_PROMPT_GOES_TO", "ChatGPT"),
+            ("BLOCKED_UNTIL", "ChatGPT research + Gemini cross-check returned; Claude drafts concept doc"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("NEXT_GATE", "dual-model research packet committed, then concept doc committed"),
+        ]
+    return derived, lines
+
+
+def main(argv=None):
+    argv = sys.argv[1:] if argv is None else argv
+    do_sync = "--sync" in argv
+
+    pin = get_manual_pin()
+    if pin is not None:
+        source, lines = "MMI_CURRENT_STATE.md (manual PIN)", pin
+    else:
+        source, lines = build_route_lines()
+
+    print("=" * 60)
+    for key, value in lines:
+        print(f"{key}: {value}")
+    print(f"SOURCE: {source}")
+    print("=" * 60)
+
+    if do_sync:
+        if pin is not None:
+            print("--sync skipped: MMI_CURRENT_STATE.md is PIN-locked (manual override).")
+        else:
+            changed = sync_state_file(lines)
+            print(
+                "--sync: MMI_CURRENT_STATE.md routing block "
+                + ("updated to match derived state." if changed else "already current.")
+            )
+    elif pin is None and routing_block_is_stale(lines):
+        print(
+            "NOTE: MMI_CURRENT_STATE.md routing block is stale vs derived state. "
+            "Run: python3 scripts/mmi_dispatch.py --sync"
+        )
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
