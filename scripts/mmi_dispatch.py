@@ -35,6 +35,55 @@ def read_file(path):
         return f.read()
 
 
+MMI_STATE_KEYS = (
+    "MODE",
+    "AUTHORIZED_TASK",
+    "ASSIGNED_TO",
+    "NEXT_PROMPT_GOES_TO",
+    "BLOCKED_UNTIL",
+    "OPERATOR_ACTION_REQUIRED",
+    "NEXT_GATE",
+)
+
+
+def get_current_state_override():
+    """Return the operator-facing MMI state file when it names an active state.
+
+    The scoreboard/contract graph is the normal queue source, but Matt can write
+    the live session state into MMI_CURRENT_STATE.md. The dispatcher must surface
+    that state instead of falling through to generic RESEARCH, otherwise the
+    operator sees a stale route even when the MMI handoff is explicit.
+    """
+
+    content = read_file("MMI_CURRENT_STATE.md") or ""
+    state = {}
+    for raw_line in content.splitlines():
+        if not raw_line.strip():
+            break
+        if ":" not in raw_line:
+            continue
+        key, value = raw_line.split(":", 1)
+        key = key.strip()
+        if key in MMI_STATE_KEYS:
+            state[key] = value.strip()
+
+    mode = state.get("MODE", "")
+    task = state.get("AUTHORIZED_TASK", "")
+    if not mode or not task:
+        return None
+    if mode == "RESEARCH" and task == "Research next phase requirements":
+        return None
+    return state
+
+
+def print_current_state_override(state):
+    for key in MMI_STATE_KEYS:
+        value = state.get(key)
+        if value:
+            print(f"{key}: {value}")
+    print("SOURCE: MMI_CURRENT_STATE.md")
+
+
 def is_git_tracked(path):
     """True only when a repo-relative path is already committed/tracked.
 
@@ -274,6 +323,7 @@ def check_drift():
     return "DRIFT" in result.stdout and result.returncode != 0
 
 drifted = check_drift()
+current_state_override = get_current_state_override()
 awaiting = get_awaiting_audit()
 unbuilt = get_signed_unbuilt()
 concept = get_next_concept_without_contract()
@@ -291,6 +341,8 @@ if drifted:
     print("NEXT_PROMPT_GOES_TO: Matt - fix drift before anything else")
     print("OPERATOR_ACTION_REQUIRED: YES")
     print("IF YES: Run verify_build_truth.py and fix flagged items")
+elif current_state_override:
+    print_current_state_override(current_state_override)
 elif awaiting:
     # A build is implemented + tested but not yet gated. Route it to the Grok
     # completion gate before starting any new build. The exact command is
