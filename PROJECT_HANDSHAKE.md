@@ -28,6 +28,16 @@ STATE: Far past the prior Phase 1 snapshot. Repo history now contains gated mile
        Shadow Watcher Swarm: concept (e7dc3a4) -> ten-layer contract (5320ba0) -> Layer 1 GATED (03cd7d2)
        Dual LLM: DRAFT (53635dc) -> contract + rubric amendment (d68c70a) -> pattern GATED (696ee45)
 
+MMI GOVERNANCE CENTER (file-based; documentation/governance only — already exists, do NOT rebuild):
+  - `mmi/` created abfebb3 — initial eight-file governance structure
+    (MMI_PROTOCOL, MMI_AUTHORITY_MATRIX, MMI_ROUTING_RULES, MMI_INTAKE_RECORDS,
+     MMI_DECISION_LOG, MMI_AUDIT_REVIEW_TEMPLATE, MMI_GATE_REGISTRY, MMI_HEALTH_STATE).
+  - 5711b62 reconciled the MMI seed decision/gate records to the current scoreboard.
+  - MMI status: ACTIVE for documentation/governance only.
+  - Runtime authority: NOT active.
+  - Dispatcher integration: NOT active.
+  - Automation: NOT active.
+
 NAMING CLARIFICATION (read before any evaluation-matrix work):
   - The new evaluation artifact is named: "Shadow Watcher Alarm-and-Fission Evaluation Matrix".
     Use this exact name. Do NOT call it "the 5-axis rubric".
