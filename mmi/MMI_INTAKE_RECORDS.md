@@ -34,4 +34,13 @@ Request: Build MMI governance folder and files
 Assigned to: Cursor
 Authority: Build only — files defined by Claude design session June 16 2026
 Matt approval required: Yes — review after build
+
+INTAKE-2026-06-16-002
+Component: MMI dispatcher / routing doctrine
+Request: Classify session history on lane-selection doctrine becoming executable
+Source: Cursor/Matt MMI routing-status history (evidence only)
+Classification: NEEDS_MMI_REVIEW / BUILT_NEEDS_VERIFICATION
+Record: mmi/history_intake/MMI_DISPATCHER_ROUTING_DOCTRINE_INTAKE.md
+Golden candidate: "Matt names the authorized target; MMI assigns the lane."
+Matt approval required: Yes — review golden doctrine; authorize commit of dispatcher/routing changes
 ```
