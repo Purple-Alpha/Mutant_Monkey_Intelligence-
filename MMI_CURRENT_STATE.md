@@ -1,9 +1,15 @@
 MODE: ALL_CLEAR
 AUTHORIZED_TASK: All queued control-plane work is built, gated, and hardened — no pending build/audit/review/design item. Awaiting Matt's next-phase authorization.
+OPERATOR_NAMES_TARGET: Matt
+MMI_ASSIGNS_LANE: YES
+LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
+BUILD_AUTHORIZATION_IMPLIED: NO unless Matt explicitly authorizes build target
 ASSIGNED_TO: Matt
 NEXT_PROMPT_GOES_TO: Matt
 BLOCKED_UNTIL: Matt names the next phase target (build, research, or design)
-OPERATOR_ACTION_REQUIRED: YES — choose the next MMI task
+OPERATOR_ACTION_REQUIRED: YES — Matt names the next target (MMI assigns lane after)
+CANDIDATES_NOT_AUTHORIZATION: YES — surfaced candidates are not build/research/design authorization
+CANDIDATES: [BUILD] Load Fission v2 | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Load_Fission_Contract_v2.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [BUILD] Specialisation Fission v2 | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Specialisation_Fission_Contract_v2.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [BUILD] Threat Intelligence Daemon | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Threat_Intelligence_Daemon_Design_Contract.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Builder_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Honeypot_Deception_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Mutant_Monkey_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED
 NEXT_GATE: next explicit Matt authorization
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py

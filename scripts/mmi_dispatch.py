@@ -369,6 +369,235 @@ def get_next_research_task():
         )
     return "Research next phase requirements"
 
+LANE_ESCALATION_DEFAULT = (
+    "only on authority/scope/live-data/material-risk fork"
+)
+REVIEW_ESCALATION = (
+    "only if Codex flags authority, scope, live-data, material-risk, or hardening-claim decision"
+)
+
+
+def _contract_display_name(filename):
+    """Human label from a roadmap contract filename."""
+    base = filename.replace(".md", "")
+    for suffix in (
+        "_Adversarial_Test_Suite_Contract",
+        "_Design_Contract",
+        "_Contract_v2",
+        "_Contract",
+    ):
+        if base.endswith(suffix):
+            base = base[: -len(suffix)]
+            break
+    return base.replace("_", " ").strip()
+
+
+def iter_signed_contract_files():
+    """Yield signed §11 contract filenames under 4. Product_Roadmap/."""
+    roadmap = os.path.join(REPO, "4. Product_Roadmap")
+    if not os.path.exists(roadmap):
+        return
+    for filename in sorted(os.listdir(roadmap)):
+        if "Contract" not in filename or not filename.endswith(".md"):
+            continue
+        if is_contract_signed(filename):
+            yield filename
+
+
+def _contract_scoreboard_build_state(contract_file, scoreboard_text):
+    """Classify how a signed contract relates to the scoreboard build lifecycle."""
+    for line in scoreboard_text.splitlines():
+        if not line.startswith("|"):
+            continue
+        if contract_file not in line:
+            continue
+        if "SIGNED_UNBUILT" in line:
+            return "scoreboard_unbuilt"
+        if "AWAITING_AUDIT" in line or "GATED" in line:
+            return "built_or_in_progress"
+    return "off_scoreboard"
+
+
+# Signed build targets recorded in MMI_THREAD_HANDOFF as waiting (not scoreboard rows).
+HANDOFF_WAITING_BUILD_CONTRACTS = {
+    "Load Fission v2": "Load_Fission_Contract_v2.md",
+    "Specialisation Fission v2": "Specialisation_Fission_Contract_v2.md",
+    "Threat Intelligence Daemon": "Threat_Intelligence_Daemon_Design_Contract.md",
+}
+
+
+def get_off_scoreboard_signed_contracts():
+    """Handoff-recorded signed builds that lack a scoreboard lifecycle row (drift)."""
+    scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md") or ""
+    drift = []
+    for display_name, contract_file in HANDOFF_WAITING_BUILD_CONTRACTS.items():
+        if not is_contract_signed(contract_file):
+            continue
+        if _contract_scoreboard_build_state(contract_file, scoreboard) == "off_scoreboard":
+            drift.append((display_name, contract_file))
+    return drift
+
+
+def get_parked_untracked_concept_drafts():
+    """Untracked concept docs visible in git status (PARKED_DRAFT only)."""
+    result = subprocess.run(
+        ["git", "-C", REPO, "status", "--porcelain", "4. Product_Roadmap"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    drafts = []
+    for line in result.stdout.splitlines():
+        if not line.startswith("??"):
+            continue
+        path = line[3:].strip().strip('"')
+        basename = os.path.basename(path)
+        if "Concept_Doc" in basename:
+            drafts.append(basename)
+    return sorted(drafts)
+
+
+def _format_candidate(phase, name, classification, **fields):
+    """Single-line candidate entry for ALL_CLEAR CANDIDATES output."""
+    parts = [f"[{phase}] {name}", f"Classification: {classification}"]
+    for key, value in fields.items():
+        parts.append(f"{key}: {value}")
+    parts.append("NOT_AUTHORIZED")
+    return " | ".join(parts)
+
+
+def collect_all_clear_candidates():
+    """Next-direction candidates for ALL_CLEAR (compass only — not authorization)."""
+    candidates = []
+
+    for name in get_signed_unbuilt():
+        candidates.append(_format_candidate(
+            "BUILD",
+            name,
+            "SCOREBOARD_READY",
+            Source="scoreboard SIGNED_UNBUILT row",
+            **{"Build implied": "NO", "Authorization required": "YES — Matt names target"},
+        ))
+
+    for display_name, contract_file in get_off_scoreboard_signed_contracts():
+        candidates.append(_format_candidate(
+            "BUILD",
+            display_name,
+            "NEEDS_SCOREBOARD_ROW",
+            Source=f"signed contract on disk ({contract_file})",
+            **{
+                "Scoreboard status": "MISSING SIGNED_UNBUILT ROW",
+                "Authorization required": "YES",
+                "Build implied": "NO",
+            },
+        ))
+
+    concept = get_next_concept_without_contract()
+    if concept:
+        label = concept.replace("_Concept_Doc.md", "").replace("_", " ")
+        candidates.append(_format_candidate(
+            "DESIGN",
+            label,
+            "NEEDS_MMI_REVIEW",
+            Source="concept without contract",
+            **{"Authorization required": "YES", "Build implied": "NO"},
+        ))
+
+    for task, phase in (
+        (get_collective_immune_design_task(), "DESIGN"),
+        (get_cortex_immune_interface_design_task(), "DESIGN"),
+    ):
+        if task:
+            candidates.append(_format_candidate(
+                phase,
+                task,
+                "NEEDS_MMI_REVIEW",
+                Source="organism gap design lane",
+                **{"Authorization required": "YES", "Build implied": "NO"},
+            ))
+
+    research_task = get_next_research_task()
+    if research_task != "Research next phase requirements":
+        candidates.append(_format_candidate(
+            "RESEARCH",
+            research_task,
+            "NEEDS_MMI_REVIEW",
+            Source="research discovery function",
+            **{"Authorization required": "YES", "Build implied": "NO"},
+        ))
+
+    for draft in get_parked_untracked_concept_drafts():
+        candidates.append(_format_candidate(
+            "CONCEPT",
+            draft,
+            "PARKED_DRAFT",
+            Source="untracked roadmap file",
+            **{"Authorization required": "YES", "Build implied": "NO"},
+        ))
+
+    return candidates
+
+
+def _lane_doctrine_fields(
+    *,
+    operator_names_target="Matt",
+    mmi_assigns_lane="YES",
+    lane_escalation=LANE_ESCALATION_DEFAULT,
+    build_authorization_implied=None,
+):
+    """Standard Matt-target / MMI-lane output labels (Decision 2)."""
+    fields = [
+        ("OPERATOR_NAMES_TARGET", operator_names_target),
+        ("MMI_ASSIGNS_LANE", mmi_assigns_lane),
+        ("LANE_ESCALATION_TO_MATT", lane_escalation),
+    ]
+    if build_authorization_implied is not None:
+        fields.append(("BUILD_AUTHORIZATION_IMPLIED", build_authorization_implied))
+    return fields
+
+
+def _append_lane_doctrine(lines, **kwargs):
+    """Insert lane-doctrine fields after AUTHORIZED_TASK when present."""
+    doctrine = _lane_doctrine_fields(**kwargs)
+    insert_at = 1
+    for idx, (key, _) in enumerate(lines):
+        if key == "AUTHORIZED_TASK":
+            insert_at = idx + 1
+            break
+    return lines[:insert_at] + doctrine + lines[insert_at:]
+
+
+def _build_all_clear_lines(derived):
+    """ALL_CLEAR route with concrete candidates (Decision 1)."""
+    candidates = collect_all_clear_candidates()
+    lines = [
+        ("MODE", "ALL_CLEAR"),
+        ("AUTHORIZED_TASK", (
+            "All queued control-plane work is built, gated, and hardened — no pending "
+            "build/audit/review/design item. Awaiting Matt's next-phase authorization."
+        )),
+    ]
+    lines = _append_lane_doctrine(
+        lines,
+        build_authorization_implied="NO unless Matt explicitly authorizes build target",
+    )
+    lines += [
+        ("ASSIGNED_TO", "Matt"),
+        ("NEXT_PROMPT_GOES_TO", "Matt"),
+        ("BLOCKED_UNTIL", "Matt names the next phase target (build, research, or design)"),
+        ("OPERATOR_ACTION_REQUIRED", "YES — Matt names the next target (MMI assigns lane after)"),
+        ("CANDIDATES_NOT_AUTHORIZATION", (
+            "YES — surfaced candidates are not build/research/design authorization"
+        )),
+        (
+            "CANDIDATES",
+            " || ".join(candidates) if candidates else "(none surfaced from scoreboard/contracts/parked drafts)",
+        ),
+        ("NEXT_GATE", "next explicit Matt authorization"),
+    ]
+    return derived, lines
+
+
 def check_drift():
     verifier = os.path.join(REPO, "scripts/verify_build_truth.py")
     if not os.path.exists(verifier):
@@ -423,6 +652,113 @@ def _uncommitted_routing_files():
         if path in ROUTING_AUTHORITY_FILES:
             dirty.append(path)
     return dirty
+
+
+def _pairs_from_route(lines):
+    return dict(lines)
+
+
+def _synthetic_build_route():
+    """BUILD route shape for doctrine verification (no scoreboard mutation)."""
+    lines = [
+        ("MODE", "BUILD"),
+        ("AUTHORIZED_TASK", "Build Example Component"),
+        ("ASSIGNED_TO", "Cursor → Codex → Cursor"),
+        ("PRE_BUILD_REVIEW", "Codex"),
+        ("NEXT_PROMPT_GOES_TO", "Cursor (draft plan) → Codex (review) → Cursor (build)"),
+        ("BLOCKED_UNTIL", "Codex clears build plan"),
+        ("OPERATOR_ACTION_REQUIRED", "NO"),
+    ]
+    return _append_lane_doctrine(
+        lines,
+        build_authorization_implied="YES — §11 signed on scoreboard SIGNED_UNBUILT row",
+    )
+
+
+def _synthetic_review_route():
+    """REVIEW route shape for doctrine verification."""
+    lines = [
+        ("MODE", "REVIEW"),
+        ("AUTHORIZED_TASK", "Independent review Example #0"),
+        ("ASSIGNED_TO", "Codex"),
+        ("NEXT_PROMPT_GOES_TO", "Codex"),
+        ("OPERATOR_ACTION_REQUIRED", "NO"),
+        ("BLOCKED_UNTIL", "Codex review returns findings or clearance"),
+    ]
+    return _append_lane_doctrine(
+        lines,
+        lane_escalation=REVIEW_ESCALATION,
+        build_authorization_implied="NO",
+    )
+
+
+def run_doctrine_checks():
+    """Routing-doctrine compliance checks (Decision 5)."""
+    checks = []
+    routing_rules = read_file("mmi/MMI_ROUTING_RULES.md") or ""
+    authority = read_file("mmi/MMI_AUTHORITY_MATRIX.md") or ""
+    protocol = read_file("mmi/MMI_PROTOCOL.md") or ""
+
+    checks.append((
+        "Codex" in routing_rules and "MMI assigns the lane" in routing_rules,
+        "Codex and lane doctrine in mmi/MMI_ROUTING_RULES.md",
+    ))
+    checks.append((
+        "Codex" in authority and "Pre-build plan review" in authority,
+        "Codex and pre-build review in mmi/MMI_AUTHORITY_MATRIX.md",
+    ))
+    checks.append((
+        "Matt names the authorized target" in protocol
+        and "MMI assigns the lane" in protocol,
+        "Matt-target / MMI-lane split in mmi/MMI_PROTOCOL.md",
+    ))
+
+    _, all_clear_lines = _build_all_clear_lines("doctrine-check")
+    all_clear = _pairs_from_route(all_clear_lines)
+    checks.append((
+        "CANDIDATES" in all_clear and "CANDIDATES_NOT_AUTHORIZATION" in all_clear,
+        "ALL_CLEAR emits CANDIDATES with NOT_AUTHORIZATION guard",
+    ))
+
+    off_board = get_off_scoreboard_signed_contracts()
+    if off_board:
+        candidates_text = all_clear.get("CANDIDATES", "")
+        checks.append((
+            "NEEDS_SCOREBOARD_ROW" in candidates_text
+            and "Build implied: NO" in candidates_text,
+            "off-scoreboard signed contracts labeled NEEDS_SCOREBOARD_ROW (not build-ready)",
+        ))
+    else:
+        checks.append((True, "off-scoreboard signed contract labeling (no drift contracts surfaced)"))
+
+    build_pairs = _pairs_from_route(_synthetic_build_route())
+    checks.append((
+        build_pairs.get("PRE_BUILD_REVIEW") == "Codex"
+        and "Codex" in build_pairs.get("ASSIGNED_TO", ""),
+        "BUILD route models Cursor → Codex pre-build → Cursor",
+    ))
+
+    review_pairs = _pairs_from_route(_synthetic_review_route())
+    checks.append((
+        review_pairs.get("ASSIGNED_TO") == "Codex"
+        and review_pairs.get("OPERATOR_ACTION_REQUIRED") == "NO",
+        "REVIEW route assigns Codex with OPERATOR_ACTION_REQUIRED: NO",
+    ))
+
+    checks.append((
+        all_clear.get("MMI_ASSIGNS_LANE") == "YES"
+        and all_clear.get("OPERATOR_NAMES_TARGET") == "Matt",
+        "ALL_CLEAR includes OPERATOR_NAMES_TARGET / MMI_ASSIGNS_LANE labels",
+    ))
+
+    dispatch_src = read_file("scripts/mmi_dispatch.py") or ""
+    checks.append((
+        "def run_doctrine_checks" in dispatch_src
+        and "PRE_BUILD_REVIEW" in dispatch_src,
+        "dispatcher source includes doctrine verify and BUILD pre-build fields",
+    ))
+
+    return checks
 
 
 def run_verify():
@@ -484,6 +820,9 @@ def run_verify():
                 "(BLOCK must be 0)",
             ))
 
+    for ok, label in run_doctrine_checks():
+        checks.append((ok, f"doctrine: {label}"))
+
     for ok, label in checks:
         print(f"[ {('ok' if ok else 'FAIL'):>4} ] {label}")
     print("-" * 60)
@@ -541,15 +880,21 @@ def build_route_lines():
 
     unbuilt = get_signed_unbuilt()
     if unbuilt:
-        return derived, [
+        lines = [
             ("MODE", "BUILD"),
             ("AUTHORIZED_TASK", f"Build {unbuilt[0]}"),
-            ("ASSIGNED_TO", "Cursor"),
-            ("NEXT_PROMPT_GOES_TO", "Cursor"),
-            ("BLOCKED_UNTIL", "NONE"),
+            ("ASSIGNED_TO", "Cursor → Codex → Cursor"),
+            ("PRE_BUILD_REVIEW", "Codex"),
+            ("NEXT_PROMPT_GOES_TO", "Cursor (draft plan) → Codex (review) → Cursor (build)"),
+            ("BLOCKED_UNTIL", "Codex clears build plan; then implementation + tests complete"),
             ("OPERATOR_ACTION_REQUIRED", "NO"),
-            ("NEXT_GATE", "gate 0/0 + health score 85+ + hash reported"),
+            ("NEXT_GATE", "Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported"),
         ]
+        lines = _append_lane_doctrine(
+            lines,
+            build_authorization_implied="YES — §11 signed on scoreboard SIGNED_UNBUILT row",
+        )
+        return derived, lines
 
     mode_controller_adversarial_sign = get_mode_controller_adversarial_sign_task()
     if mode_controller_adversarial_sign:
@@ -579,15 +924,22 @@ def build_route_lines():
     independent_review_task = get_independent_review_pending_task()
     if independent_review_task:
         row_id, name, parent = independent_review_task
-        return derived, [
+        lines = [
             ("MODE", "REVIEW"),
             ("AUTHORIZED_TASK", f"Independent review {name} #{row_id}"),
-            ("ASSIGNED_TO", "Matt / independent reviewer"),
-            ("NEXT_PROMPT_GOES_TO", "Matt"),
-            ("BLOCKED_UNTIL", f"review returns findings/clearance before {parent}"),
-            ("OPERATOR_ACTION_REQUIRED", "YES — choose reviewer or accept/return the evidence"),
-            ("NEXT_GATE", "review result recorded; only then update the parent hardened claim if review clears it"),
+            ("ASSIGNED_TO", "Codex"),
+            ("NEXT_PROMPT_GOES_TO", "Codex"),
+            ("BLOCKED_UNTIL", f"Codex review returns findings or clearance before {parent}"),
+            ("OPERATOR_ACTION_REQUIRED", "NO"),
+            ("HARDENING_CLAIM", "Matt only — Codex may recommend; may not grant ADVERSARIALLY HARDENED"),
+            ("NEXT_GATE", "review result recorded; Matt grants hardened claim if review clears it"),
         ]
+        lines = _append_lane_doctrine(
+            lines,
+            lane_escalation=REVIEW_ESCALATION,
+            build_authorization_implied="NO",
+        )
+        return derived, lines
 
     concept = get_next_concept_without_contract()
     if concept:
@@ -641,18 +993,7 @@ def build_route_lines():
 
     research_task = get_next_research_task()
     if research_task == "Research next phase requirements":
-        # Genuine all-clear: no awaiting-audit, unbuilt, sign, review, concept,
-        # operator-question, or design work is queued. This is an explicit
-        # terminal state, not the old misleading generic-RESEARCH fallback.
-        return derived, [
-            ("MODE", "ALL_CLEAR"),
-            ("AUTHORIZED_TASK", "All queued control-plane work is built, gated, and hardened — no pending build/audit/review/design item. Awaiting Matt's next-phase authorization."),
-            ("ASSIGNED_TO", "Matt"),
-            ("NEXT_PROMPT_GOES_TO", "Matt"),
-            ("BLOCKED_UNTIL", "Matt names the next phase target (build, research, or design)"),
-            ("OPERATOR_ACTION_REQUIRED", "YES — choose the next MMI task"),
-            ("NEXT_GATE", "next explicit Matt authorization"),
-        ]
+        return _build_all_clear_lines(derived)
     lines = [("MODE", "RESEARCH"), ("AUTHORIZED_TASK", research_task)]
     if research_task.startswith("Send Mode Controller signed contract to Gemini"):
         lines += [

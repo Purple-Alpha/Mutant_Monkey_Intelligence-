@@ -22,7 +22,7 @@ MMI controls:
 | Area | What MMI does |
 |---|---|
 | Intake | Receives tasks, findings, audit packages, build requests |
-| Routing | Decides whether work goes to ChatGPT, Gemini, Claude, Cursor, or Grok |
+| Routing | Decides whether work goes to ChatGPT, Gemini, Claude, Cursor, Codex, or Grok |
 | Authority | Checks whether the work is allowed under signed specs |
 | Gatekeeping | Decides ACCEPT / REVISE / REJECT / PARK / VERIFY / ESCALATE |
 | Evidence | Requires proof before anything is accepted |
@@ -114,3 +114,6 @@ These actions **always** require Matt and may never be performed autonomously:
 | Safe-stop override | Yes |
 
 **Routing is not authority. MMI helps Matt decide. MMI does not become Matt.**
+
+Matt names the authorized target. MMI assigns the lane by task shape. Matt only picks the
+worker when routing affects authority, scope, live data, or material risk (`AGENTS.md` §2.2).

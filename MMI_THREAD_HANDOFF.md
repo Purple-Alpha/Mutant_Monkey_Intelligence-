@@ -92,12 +92,21 @@ Every session must end with:
 
 | Model | Role |
 |---|---|
-| Cursor | Primary builder — executes signed contract exactly |
-| Codex | Post-build reviewer — finds gaps, flags over-scope. Never builds. |
+| Cursor | Primary builder — drafts implementation plan, executes signed contract exactly |
+| Codex | Pre-build plan reviewer + post-build reviewer — finds gaps, flags over-scope. Never builds. |
 
-Build loop: Cursor builds → Codex reviews → adversarial suite runs → failures patched → `complete_gate.py 0/0` on functional AND adversarial → GATED.
+Build loop:
+
+```text
+Cursor drafts build plan → Codex pre-build review → Cursor builds
+→ Codex post-build review (where required) → adversarial suite (when required)
+→ complete_gate.py 0/0 → GATED
+```
 
 **No component is GATED without a passing adversarial suite.**
+
+Pre-build Codex review is mandatory before implementation starts (`AGENTS.md` §2.1.2).
+Post-build Codex review and Grok gate remain separate stages.
 
 ### Design Lane
 
