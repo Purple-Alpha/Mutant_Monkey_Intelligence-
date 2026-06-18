@@ -1,19 +1,22 @@
-MODE: ALL_CLEAR
-AUTHORIZED_TASK: All queued control-plane work is built, gated, and hardened — no pending build/audit/review/design item. Awaiting Matt's next-phase authorization.
+MODE: BUILD
+AUTHORIZED_TASK: Build Load Fission Controller v2
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: NO unless Matt explicitly authorizes build target
-ASSIGNED_TO: Matt
-NEXT_PROMPT_GOES_TO: Matt
-BLOCKED_UNTIL: Matt names the next phase target (build, research, or design)
-OPERATOR_ACTION_REQUIRED: YES — Matt names the next target (MMI assigns lane after)
-CANDIDATES_NOT_AUTHORIZATION: YES — surfaced candidates are not build/research/design authorization
-CANDIDATES: [BUILD] Load Fission v2 | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Load_Fission_Contract_v2.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [BUILD] Specialisation Fission v2 | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Specialisation_Fission_Contract_v2.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [BUILD] Threat Intelligence Daemon | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Threat_Intelligence_Daemon_Design_Contract.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Builder_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Honeypot_Deception_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Mutant_Monkey_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED
-NEXT_GATE: next explicit Matt authorization
+BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
+ASSIGNED_TO: Cursor → Codex → Cursor
+PRE_BUILD_REVIEW: Codex
+NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
+BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
+OPERATOR_ACTION_REQUIRED: NO
+NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
-  and must remain as emitted (MODE: ALL_CLEAR). Current source-of-truth authority for
+  and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
+  next item (#103 first); it does NOT mean Matt has authorized Cursor to begin implementation.
+  Matt must still explicitly name the build target. Rows #103/#104 state lifecycle tracking is
+  not build authorization. `BUILD_AUTHORIZATION_IMPLIED` in the routing block is mechanical
+  sequencer language, not operator build authorization. Current source-of-truth authority for
   component/gate status is mmi/MMI_GATE_REGISTRY.md and mmi/MMI_DECISION_LOG.md; consistency
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
