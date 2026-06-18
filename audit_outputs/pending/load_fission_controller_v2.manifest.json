@@ -1,0 +1,34 @@
+{
+  "task_id": "load_fission_controller_v2",
+  "completion_claim": "Load Fission Controller v2 (#103) built per §13-signed Load_Fission_Contract_v2.md (2026-06-13 Matt Nichol). v2 amendment implements policy-as-code (load_policy.py), governance artifacts and quotas (load_governance.py), governed ingestion, fallback mode, permission intersection, non-semantic triggers, and Class 2 adversarial tests (test_load_fission_v2.py — 10 passed). Full suite 2254 passed / 1 skipped / 63 xfailed. Scoreboard #103 AWAITING_AUDIT. v1 lineage #90 GATED preserved. Legal/underwriter checklist in lab_records/2026-06-18_load_fission_v2_legal_underwriter_docs.md.",
+  "files_created": [],
+  "files_modified": [],
+  "files_read": [
+    "4. Product_Roadmap/Load_Fission_Contract_v2.md",
+    "4. Product_Roadmap/Load_Fission_Contract.md",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/load.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/load_policy.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/load_governance.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/event_log.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/fission/__init__.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_load_fission.py",
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_load_fission_v2.py",
+    "lab_records/2026-06-18_load_fission_v2_legal_underwriter_docs.md",
+    "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md"
+  ],
+  "commands_run": [
+    "PYTHONPATH=. .venv/bin/pytest tests/test_load_fission.py tests/test_load_fission_v2.py tests/test_specialisation_fission.py -q",
+    "PYTHONPATH=. .venv/bin/pytest tests/ -q"
+  ],
+  "known_unresolved_questions": [
+    "KG-LF2-1: Real-tenant saturation thresholds remain Class 3 xfail from v1 (LF2-D10 calibration deferred).",
+    "KG-LF2-2: Live Mode Controller threat-level feed deferred; ThreatLevel enum used in tests.",
+    "KG-LF2-3: Grok completion gate 0/0 is the external audit step (this run).",
+    "KG-LF2-4: Load_Fission_Contract_v2.md uses §13 signature block; gate signed-spec detector matches v1 contract header for relevant_contracts."
+  ],
+  "relevant_contracts": [
+    "4. Product_Roadmap/Load_Fission_Contract.md",
+    "4. Product_Roadmap/Watcher_Agents_Contract.md",
+    "4. Product_Roadmap/Blast_Radius_Controller_Contract.md"
+  ]
+}
