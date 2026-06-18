@@ -16,9 +16,14 @@ from core.fission import (
     FissionError,
     FissionEventLog,
     FissionEventType,
+    LifecycleEventKind,
     LoadFissionController,
+    LoadFissionPolicy,
+    LoadFissionPolicyStore,
     LoadFissionProposal,
+    LoadTriggerKind,
     PROPOSED_EVIDENCE,
+    SpawnQuotaTracker,
 )
 from core.watchers import ThreatLevel
 
@@ -29,12 +34,15 @@ def _proposal(**overrides) -> LoadFissionProposal:
         parent_id="detector_parent",
         parent_type="header_analysis_agent",
         layer="detection",
-        observed_saturation=0.91,
+        trigger_kind=LoadTriggerKind.QUEUE_DEPTH,
+        trigger_value=0.91,
         threat_level=ThreatLevel.HIGH,
         requested_copies=2,
         schema_id="header_schema_v1",
         tenant_id="tenant_a",
+        parent_workflow_id="wf-detector-001",
         tool_scope=frozenset({"scan"}),
+        child_capabilities=frozenset({"scan"}),
     )
     base.update(overrides)
     return LoadFissionProposal(**base)
@@ -136,9 +144,11 @@ class TestLoadFissionAdversarial:
             child.write_parent_namespace()
 
     def test_requested_copies_above_cap_rejected_without_partial_spawn(self):
-        controller = LoadFissionController(max_children=2)
-        with pytest.raises(FissionError, match="conservative cap"):
-            controller.propose(_proposal(requested_copies=3))
+        store = LoadFissionPolicyStore()
+        store.register(LoadFissionPolicy(version="lf2-cap-2", max_children=2))
+        controller = LoadFissionController(policy_store=store)
+        with pytest.raises(FissionError, match="policy cap"):
+            controller.propose(_proposal(requested_copies=3, policy_version="lf2-cap-2"))
         assert controller.children() == ()
         assert controller.event_log.for_type(FissionEventType.REJECTED)
 

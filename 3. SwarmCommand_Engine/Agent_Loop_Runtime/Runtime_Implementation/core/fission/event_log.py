@@ -2,8 +2,8 @@
 
 Governing contracts
 -------------------
-``4. Product_Roadmap/Load_Fission_Contract.md`` — §11 SIGNED 2026-06-12
-(Matt Nichol) — LF-D7.
+``4. Product_Roadmap/Load_Fission_Contract_v2.md`` — §13 SIGNED 2026-06-13
+(Matt Nichol) — LF2-D7; v1 history under ``Load_Fission_Contract.md``.
 
 ``4. Product_Roadmap/Specialisation_Fission_Contract.md`` — §11 SIGNED
 2026-06-12 (Matt Nichol) — SF-D8.
