@@ -33,10 +33,10 @@ MMI GOVERNANCE CENTER (file-based; documentation/governance only — already exi
     (MMI_PROTOCOL, MMI_AUTHORITY_MATRIX, MMI_ROUTING_RULES, MMI_INTAKE_RECORDS,
      MMI_DECISION_LOG, MMI_AUDIT_REVIEW_TEMPLATE, MMI_GATE_REGISTRY, MMI_HEALTH_STATE).
   - 5711b62 reconciled the MMI seed decision/gate records to the current scoreboard.
-  - MMI status: ACTIVE for documentation/governance only.
-  - Runtime authority: NOT active.
-  - Dispatcher integration: NOT active.
-  - Automation: NOT active.
+  - MMI governance/docs: ACTIVE (`mmi/` folder, history intake, reviews, concepts).
+  - Dispatcher Stage 1: ACTIVE — file-based, scoreboard-derived (`scripts/mmi_dispatch.py`).
+  - Runtime MMI integration: NOT active (no live wiring, no always-on MMI process).
+  - Automation: NOT active (no watcher/hook auto-runs dispatcher or changes state).
 
 NAMING CLARIFICATION (read before any evaluation-matrix work):
   - The new evaluation artifact is named: "Shadow Watcher Alarm-and-Fission Evaluation Matrix".
