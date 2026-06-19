@@ -5,6 +5,28 @@
 
 ---
 
+## Repo identity guard (workers)
+
+Read before any build, routing, or repo edit.
+
+| Label | Value |
+|---|---|
+| **Project identity** | Mutant Monkey Security |
+| **Central brain** | Mutant Monkey Intelligence (MMI) |
+| **Authority repo path** | `/home/socialarchitect/northstar` (legacy filesystem path only) |
+| **Separate app repo** | Architectapp — `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean` — **not** the governed swarm / MMI build surface |
+
+**Rules:**
+
+- Do **not** call the active project "NorthStar."
+- Do **not** implement governed swarm agents under Architectapp `ops/` or similar.
+- `#48 Verification Outcome Agent` wrapper belongs **only** at:
+  `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/verification_outcome_agent.py`
+  under the authority repo above.
+- Historical "NorthStar" in signed specs = internal codename (rebrand Option B), not current project identity.
+
+---
+
 ## Purpose
 
 MMI is the **governed intelligence center** for Mutant Monkey Security. It answers one question:
@@ -127,3 +149,28 @@ scope, live data, or material risk (`AGENTS.md` §2.2).
 After any worker completes work, MMI must be updated first: evidence record →
 `LAST_COMPLETED` → `python3 scripts/mmi_dispatch.py --sync` → commit routing files →
 `--verify`.
+
+## Active Project Identity Guard
+
+Active project identity: **Mutant Monkey Security**.
+
+Central project brain: **Mutant Monkey Intelligence (MMI)**.
+
+Legacy filesystem path: `/home/socialarchitect/northstar`.
+
+The word `northstar` may appear as a legacy folder path, commit history, or historical reference only. It must not be used as the current active project identity.
+
+Separate app repo surfaces such as `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean` are not the governed MMI / swarm runtime authority surface.
+
+For governed MMI / swarm runtime work, use:
+
+- Project: Mutant Monkey Security
+- Brain: Mutant Monkey Intelligence / MMI
+- Authority repo path: `/home/socialarchitect/northstar`
+
+#48 Verification Outcome Agent belongs only in:
+
+`/home/socialarchitect/northstar/core/orchestrator/verification_outcome_agent.py`
+
+Do not build governed MMI / swarm runtime artifacts in Architectapp.
+

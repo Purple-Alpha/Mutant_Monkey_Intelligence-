@@ -5,6 +5,18 @@
 
 ---
 
+## REPO IDENTITY GUARD (workers)
+
+| | |
+|---|---|
+| **Project** | Mutant Monkey Security |
+| **Brain** | Mutant Monkey Intelligence (MMI) |
+| **Authority repo** | `/home/socialarchitect/northstar` (legacy path — do not call active project "NorthStar") |
+| **Architectapp** | `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean` — separate app; **not** governed swarm runtime |
+| **#48 build surface** | `.../northstar/core/orchestrator/verification_outcome_agent.py` only |
+
+---
+
 ## CRITICAL — MMI CREDIT-FREE RULE
 
 **Claude never reads MMI files via MCP. Claude never writes MMI files via MCP.**
@@ -51,7 +63,7 @@ Claude touching MMI files directly via MCP = wasted credits on a text file. This
 
 - Load Fission v2 — GATED (#103, 2026-06-18)
 - Specialisation Fission v2 — GATED (#104, 2026-06-18)
-- Threat Intelligence Daemon — SIGNED June 14th 2026 — external lane builds to `/home/socialarchitect/mutant_monkey_intel/` (not a Northstar scoreboard row)
+- Threat Intelligence Daemon — SIGNED June 14th 2026 — external lane builds to `/home/socialarchitect/mutant_monkey_intel/` (not an authority-repo scoreboard row)
 
 ---
 
@@ -193,18 +205,19 @@ All answered and locked. None pending.
 
 ## Repo Location
 
-WSL: /home/socialarchitect/northstar
+**Mutant Monkey Security authority repo** (legacy path): /home/socialarchitect/northstar
 Branch: safety/queue-drift-cleanup-20260528
 GitHub: https://github.com/Purple-Alpha/Mutant_Monkey_Intelligence-.git
 
-TI Daemon: /home/socialarchitect/mutant_monkey_intel/ — separate, not committed to Northstar
+TI Daemon: /home/socialarchitect/mutant_monkey_intel/ — separate external lane, not committed to authority repo
 
 ---
 
-## Social Architect Project
+## Architectapp (separate — not MMI / not governed swarm)
 
-Separate project at C:\Architectapp_clean\intelligence\
-Do not mix with Mutant Monkey. Ever.
+Paths: `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean`
+Do not mix with Mutant Monkey Security authority-repo builds. Ever.
+Do not implement #48 or other swarm agents under Architectapp `ops/`.
 
 ---
 
@@ -214,4 +227,30 @@ Paste this into the new Claude thread:
 
 I am continuing the Mutant Monkey Inbox Shield build session.
 Run python3 scripts/mmi_dispatch.py and paste the output here so Claude can read state without burning credits on MCP file reads.
-The Social Architect project at C:\Architectapp_clean is a completely separate project — do not mix it with Mutant Monkey under any circumstances.
+The Social Architect / Architectapp project at `/home/socialarchitect/projects/Architectapp_clean` (or `/mnt/c/Architectapp_clean`) is a completely separate app repo — do not mix it with Mutant Monkey Security under any circumstances.
+Governed swarm builds (#48 Verification Outcome, etc.) belong only in `/home/socialarchitect/northstar/core/orchestrator/`.
+
+## Active Project Identity Guard
+
+Active project identity: **Mutant Monkey Security**.
+
+Central project brain: **Mutant Monkey Intelligence (MMI)**.
+
+Legacy filesystem path: `/home/socialarchitect/northstar`.
+
+The word `northstar` may appear as a legacy folder path, commit history, or historical reference only. It must not be used as the current active project identity.
+
+Separate app repo surfaces such as `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean` are not the governed MMI / swarm runtime authority surface.
+
+For governed MMI / swarm runtime work, use:
+
+- Project: Mutant Monkey Security
+- Brain: Mutant Monkey Intelligence / MMI
+- Authority repo path: `/home/socialarchitect/northstar`
+
+#48 Verification Outcome Agent belongs only in:
+
+`/home/socialarchitect/northstar/core/orchestrator/verification_outcome_agent.py`
+
+Do not build governed MMI / swarm runtime artifacts in Architectapp.
+

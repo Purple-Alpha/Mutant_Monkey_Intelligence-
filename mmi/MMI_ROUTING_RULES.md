@@ -5,6 +5,9 @@
 MMI selects the lane. Matt authorizes phase, scope, and signatures — not routine tool choice.
 `AGENTS.md` §2.2 remains the higher-level orientation source if wording conflicts.
 
+**Active project:** Mutant Monkey Security. **Brain:** Mutant Monkey Intelligence (MMI).
+**Authority repo:** `/home/socialarchitect/northstar` (legacy path). **Not** Architectapp.
+
 ---
 
 | Model/tool | Role |
@@ -120,3 +123,28 @@ context only — not authorization.
 > No model gets to both design, build, approve, and audit the same thing.
 
 Routing assigns a task to exactly one lane at a time. A task that has been built by Cursor is audited by Grok and accepted by Matt — never re-approved by the lane that produced it.
+
+## Active Project Identity Guard
+
+Active project identity: **Mutant Monkey Security**.
+
+Central project brain: **Mutant Monkey Intelligence (MMI)**.
+
+Legacy filesystem path: `/home/socialarchitect/northstar`.
+
+The word `northstar` may appear as a legacy folder path, commit history, or historical reference only. It must not be used as the current active project identity.
+
+Separate app repo surfaces such as `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean` are not the governed MMI / swarm runtime authority surface.
+
+For governed MMI / swarm runtime work, use:
+
+- Project: Mutant Monkey Security
+- Brain: Mutant Monkey Intelligence / MMI
+- Authority repo path: `/home/socialarchitect/northstar`
+
+#48 Verification Outcome Agent belongs only in:
+
+`/home/socialarchitect/northstar/core/orchestrator/verification_outcome_agent.py`
+
+Do not build governed MMI / swarm runtime artifacts in Architectapp.
+

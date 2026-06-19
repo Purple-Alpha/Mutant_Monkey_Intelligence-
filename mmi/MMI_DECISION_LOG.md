@@ -42,4 +42,31 @@ MMI-DEC-006 | 2026-06-18 | MMI delegation restore | scripts/mmi_dispatch.py coll
 MMI-DEC-007 | 2026-06-18 | MMI project-direction research/scoring | scripts/mmi_dispatch.py collect_project_direction_candidates + MODE:PROJECT_DIRECTION_RESEARCH; mmi/MMI_ROUTING_RULES.md; mmi/MMI_PROTOCOL.md; tests/test_mmi_dispatch_routing.py | ACCEPT | Empty delegation queue now triggers 10-axis direction scoring and owner-ready recommendation instead of "Matt supplies next evidence"; ALL_CLEAR reserved for genuinely missing repo evidence | Scoreboard #48 row still drifts vs signed contract — reconcile on build start | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_PROJECT_DIRECTION_RESEARCH_AND_SCORING only)
 
 MMI-DEC-008 | 2026-06-18 | #48 scoreboard lifecycle reconcile | agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #48 row; contract 4. Product_Roadmap/Verification_Outcome_Agent_Design_Contract_Deep_Dive.md §11 SIGNED f34cc4f | ACCEPT | #48 flipped SPEC_ONLY/NEEDS_SIGNED_CONTRACT -> SIGNED_UNBUILT with empty BLOCKERS; MMI can route MODE:BUILD; no wrapper implementation | #47 remains DEPENDS_ON:#48 until #48 becomes GOVERNED_AGENT | Delegate build lane on operator confirm | Matt Nichol (authorize MMI_RECOMMENDED_48_SCOREBOARD_RECONCILE only)
+
+MMI-DEC-009 | 2026-06-18 | MMI naming authority correction | PROJECT_HANDSHAKE.md; MMI_THREAD_HANDOFF.md; mmi/MMI_PROTOCOL.md; mmi/MMI_ROUTING_RULES.md; mmi/MMI_AUTHORITY_MATRIX.md; scripts/mmi_dispatch.py output labels | ACCEPT | Active project identity locked to Mutant Monkey Security / MMI; legacy path /home/socialarchitect/northstar documented; Architectapp separation + #48 build-surface guard added for workers | Historical NorthStar internal-codename refs in signed specs preserved | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_NAMING_AUTHORITY_CORRECTION only)
 ```
+
+## Active Project Identity Guard
+
+Active project identity: **Mutant Monkey Security**.
+
+Central project brain: **Mutant Monkey Intelligence (MMI)**.
+
+Legacy filesystem path: `/home/socialarchitect/northstar`.
+
+The word `northstar` may appear as a legacy folder path, commit history, or historical reference only. It must not be used as the current active project identity.
+
+Separate app repo surfaces such as `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean` are not the governed MMI / swarm runtime authority surface.
+
+For governed MMI / swarm runtime work, use:
+
+- Project: Mutant Monkey Security
+- Brain: Mutant Monkey Intelligence / MMI
+- Authority repo path: `/home/socialarchitect/northstar`
+
+#48 Verification Outcome Agent belongs only in:
+
+`/home/socialarchitect/northstar/core/orchestrator/verification_outcome_agent.py`
+
+Do not build governed MMI / swarm runtime artifacts in Architectapp.
+

@@ -1,12 +1,34 @@
 # Project Handshake
-NorthStar + SwarmCommand Venture
+**Mutant Monkey Security** — governed swarm / MMI authority repo
 
 ```
 ═══════════════════════════════════════════════
+REPO IDENTITY GUARD (workers — read before acting)
+═══════════════════════════════════════════════
+Project identity:     Mutant Monkey Security
+Central brain:        Mutant Monkey Intelligence (MMI)
+Authority repo path:  /home/socialarchitect/northstar  (legacy filesystem path only)
+
+Do NOT call the active project "NorthStar."
+Do NOT build governed swarm agents in Architectapp:
+  - /home/socialarchitect/projects/Architectapp_clean
+  - /mnt/c/Architectapp_clean
+Architectapp is a separate app repo — not the MMI/governed swarm build surface.
+
+#48 Verification Outcome wrapper belongs ONLY at:
+  /home/socialarchitect/northstar/core/orchestrator/verification_outcome_agent.py
+  (full path under SwarmCommand runtime — see signed contract)
+
+Historical "NorthStar" / "NorthStar Inbox Shield" references in signed specs =
+  internal codename per rebrand Option B — not the active project name.
+═══════════════════════════════════════════════
+
+═══════════════════════════════════════════════
 CURRENT NEXT ACTION (as of 50b58a8)
 ═══════════════════════════════════════════════
-AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the PRIMARY CODEBASE
-  (operator decision 2026-06-13; see CURRENT_STATE_MAP.md "Codebase authority state").
+AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Monkey
+  Security authority repo** — PRIMARY CODEBASE (operator decision 2026-06-13; see
+  CURRENT_STATE_MAP.md "Codebase authority state").
   The Windows surface (`/mnt/c/Unified Folder Structure NorthStar + SwarmCommand Venture`)
   is secondary/reference only. Do not merge/import this repo into Windows, do not delete
   this repo, and do not treat the Windows master as primary unless the operator changes
@@ -120,12 +142,16 @@ The old append-style handshake (235 lines of stale "next step" bullets) is what 
 drift; do not recreate it.
 
 ## Current Active Build Track
-Email fraud + inbox-layer MDR for SMBs via MSPs (Stage A). NorthStar Inbox Shield +
-SwarmCommand Agent Loop Runtime + Fraud / Ransomware specialization.
+Email fraud + inbox-layer MDR for SMBs via MSPs (Stage A). **Mutant Monkey Inbox Shield**
+(SwarmCommand Agent Loop Runtime) + Fraud / Ransomware specialization.
+Internal codename in some signed specs: NorthStar Inbox Shield (Option B — not active project name).
 
 ## Current Development Surface
-WSL2 Ubuntu at `/home/socialarchitect/northstar` (primary since 2026-06-01). The Windows path is
-backup / reference only. If the two ever diverge, stop and reconcile by commit hash before editing.
+WSL2 Ubuntu at `/home/socialarchitect/northstar` — **Mutant Monkey Security authority repo**
+(legacy path; primary since 2026-06-01). The Windows path is backup / reference only.
+If the two ever diverge, stop and reconcile by commit hash before editing.
+Separate app repo (NOT this surface): Architectapp at
+`/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean`.
 
 ## Verification Baseline
 **1740 tests passing, 1 skipped, 49 xfailed** (verified 2026-06-12, after Shadow Watcher Swarm Layer 1 landed; newest committed full-runtime baseline in `decision_cycles_log.md`) from
@@ -294,3 +320,28 @@ shared cross-lane rules. Banked and pushed as part of the `be6d8df` remote-align
 immutability boundary + Q7 v1-map-inventory-only confirmation folded into the signed text). Canonical design
 adoption banked through `01e12ee`; signed-spec and tracker/lane slices banked through `be6d8df`. No code,
 runtime enforcement, retrofits, or new agent behavior authorized.
+
+## Active Project Identity Guard
+
+Active project identity: **Mutant Monkey Security**.
+
+Central project brain: **Mutant Monkey Intelligence (MMI)**.
+
+Legacy filesystem path: `/home/socialarchitect/northstar`.
+
+The word `northstar` may appear as a legacy folder path, commit history, or historical reference only. It must not be used as the current active project identity.
+
+Separate app repo surfaces such as `/home/socialarchitect/projects/Architectapp_clean` or `/mnt/c/Architectapp_clean` are not the governed MMI / swarm runtime authority surface.
+
+For governed MMI / swarm runtime work, use:
+
+- Project: Mutant Monkey Security
+- Brain: Mutant Monkey Intelligence / MMI
+- Authority repo path: `/home/socialarchitect/northstar`
+
+#48 Verification Outcome Agent belongs only in:
+
+`/home/socialarchitect/northstar/core/orchestrator/verification_outcome_agent.py`
+
+Do not build governed MMI / swarm runtime artifacts in Architectapp.
+
