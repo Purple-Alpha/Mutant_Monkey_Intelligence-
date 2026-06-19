@@ -49,9 +49,9 @@ Claude touching MMI files directly via MCP = wasted credits on a text file. This
 
 ## Signed Contracts Waiting For Build
 
-- Load Fission v2 — SIGNED, supersedes #90
-- Specialisation Fission v2 — SIGNED, supersedes #91
-- Threat Intelligence Daemon — SIGNED June 14th 2026 — builds to `/home/socialarchitect/mutant_monkey_intel/`
+- Load Fission v2 — GATED (#103, 2026-06-18)
+- Specialisation Fission v2 — GATED (#104, 2026-06-18)
+- Threat Intelligence Daemon — SIGNED June 14th 2026 — external lane builds to `/home/socialarchitect/mutant_monkey_intel/` (not a Northstar scoreboard row)
 
 ---
 

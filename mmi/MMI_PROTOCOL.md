@@ -113,7 +113,14 @@ These actions **always** require Matt and may never be performed autonomously:
 | Blast radius expansion | Yes |
 | Safe-stop override | Yes |
 
-**Routing is not authority. MMI helps Matt decide. MMI does not become Matt.**
+**Routing is not authority. MMI delegates evidence-backed next tasks and assigns lanes.
+Matt remains final authority for signatures, scope forks, and material-risk decisions.
+MMI does not become Matt.**
 
-Matt names the authorized target. MMI assigns the lane by task shape. Matt only picks the
-worker when routing affects authority, scope, live data, or material risk (`AGENTS.md` §2.2).
+Matt authorizes scope, signatures, and authority forks. MMI delegates the next
+evidence-backed task and assigns the lane by task shape. Matt only picks the worker
+when routing affects authority, scope, live data, or material risk (`AGENTS.md` §2.2).
+
+After any worker completes work, MMI must be updated first: evidence record →
+`LAST_COMPLETED` → `python3 scripts/mmi_dispatch.py --sync` → commit routing files →
+`--verify`.

@@ -19,16 +19,19 @@ MMI selects the lane. Matt authorizes phase, scope, and signatures — not routi
 
 ---
 
-## Matt target vs MMI lane (operator decisions 2026-06-16)
+## Matt target vs MMI lane (operator decisions 2026-06-16; delegation restore 2026-06-18)
 
 ```text
-Matt names the authorized target.
-MMI assigns the lane by task shape.
-Matt only picks the worker when routing affects authority, scope, live data, or material risk.
+Matt authorizes scope, signatures, and authority forks.
+MMI delegates the next evidence-backed task and assigns the lane by task shape.
+MMI scores/ranks candidates and explains why the top task wins.
+Matt only intervenes when routing affects authority, scope, live data, or material risk.
 ```
 
 Dispatcher output labels: `OPERATOR_NAMES_TARGET`, `MMI_ASSIGNS_LANE`,
-`LANE_ESCALATION_TO_MATT`, `BUILD_AUTHORIZATION_IMPLIED`.
+`LANE_ESCALATION_TO_MATT`, `BUILD_AUTHORIZATION_IMPLIED`, `CURRENT_PROJECT_TRUTH`,
+`TASK_SCOREBOARD`, `NEXT_DELEGATED_TASK`, `TASK_SCORE`, `WHY_THIS_TASK`,
+`LOWER_SCORE_ALTERNATIVES`, `SOURCE_EVIDENCE`, `REQUIRED_UPDATE_AFTER_COMPLETION`.
 
 ---
 
@@ -45,10 +48,41 @@ Dispatcher output labels: `OPERATOR_NAMES_TARGET`, `MMI_ASSIGNS_LANE`,
 | Cross-check / red-team packet (pre-contract) | Gemini |
 | Completion gate (0/0 blocking) | Grok (Cursor stages manifest + runs gate) |
 | Signature / push / authority / business decision | Matt |
-| Next phase when queue is empty (ALL_CLEAR) | Matt names target; MMI surfaces `CANDIDATES` |
+| Queue empty of build/audit/review lanes (`MODE: DELEGATE`) | MMI delegates highest-scored evidence-backed task |
 
 **Escalate to Matt only when** the routing decision itself affects authority, signed scope,
 live/customer data, or material project risk — not for routine Cursor vs Codex assignment.
+
+---
+
+## Delegation scoring (`MODE: DELEGATE`)
+
+When no BUILD/AUDIT/REVIEW/DESIGN lane is active, MMI scores repo evidence and delegates:
+
+| Classification | Score | Typical worker |
+|---|---|---|
+| `SCOREBOARD_READY` | 100 | Cursor → Codex → Cursor |
+| `NEEDS_SCOREBOARD_ROW` | 88 | Cursor (tracker) |
+| `INTAKE_CLASSIFY_BATCH` | 72 | Cursor (classify parked drafts) |
+| `EXTERNAL_LANE` | 68 | Cursor (external repo) |
+| `NEEDS_MMI_REVIEW` | 65 | Claude |
+| `RESEARCH` | 58 | ChatGPT / Gemini |
+| `PARKED_DRAFT` | 25 | Cursor (single-file classify) |
+
+`MODE: ALL_CLEAR` only when **no** evidence-backed task exists. It does **not** mean
+"Matt must manually name the next target" when delegable evidence exists.
+
+---
+
+## Worker completion → MMI update first
+
+After Cursor, Codex, Claude, ChatGPT, Gemini, or Grok completes work:
+
+1. Append evidence to the relevant MMI record (`MMI_INTAKE_RECORDS.md`, gate registry, or decision log).
+2. Update `MMI_CURRENT_STATE.md` `LAST_COMPLETED` prose.
+3. Run `python3 scripts/mmi_dispatch.py --sync`.
+4. Commit routing-authority files.
+5. Run `python3 scripts/mmi_dispatch.py --verify`.
 
 ---
 
@@ -62,11 +96,15 @@ live/customer data, or material project risk — not for routine Cursor vs Codex
 
 ---
 
-## ALL_CLEAR candidates
+## ALL_CLEAR vs DELEGATE
 
-When `MODE: ALL_CLEAR`, MMI emits concrete next-direction candidates labeled:
-`SCOREBOARD_READY`, `NEEDS_SCOREBOARD_ROW`, `NEEDS_MMI_REVIEW`, `PARKED_DRAFT`,
-`NOT_AUTHORIZED`. Candidates are a routing compass — **not authorization**.
+- **`MODE: DELEGATE`** — MMI scored repo evidence and delegated the top task. Matt is not
+  required to manually name the next target unless `OPERATOR_ACTION_REQUIRED: YES`.
+- **`MODE: ALL_CLEAR`** — no evidence-backed task surfaced. Matt must supply new evidence
+  (signed contract, scoreboard row, or intake).
+
+Lower-scored alternatives appear in `LOWER_SCORE_ALTERNATIVES` and `CANDIDATES` for
+context only — not authorization.
 
 ---
 

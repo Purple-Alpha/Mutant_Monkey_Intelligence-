@@ -17,7 +17,9 @@ BRANCH: safety/queue-drift-cleanup-20260528 — aligned with
 HEAD: 50b58a8 docs: reconcile MMI build-truth drift checks (2026-06-13)
 
 STATE: Far past the prior Phase 1 snapshot. Repo history now contains gated milestones
-  through Phase 6 plus the newer concepts:
+  through Phase 6 plus the newer concepts. **Next action:** run
+  `python3 scripts/mmi_dispatch.py` — MMI delegates the highest-scored evidence-backed
+  task (`MODE: DELEGATE`); do not treat surfaced candidates as build authorization.
        Phase 2 knowledge intel agents ............ GATED
        Phase 3 detection swarm (six Layer 1) ..... GATED
        Phase 4 ReconciliationAgent ensemble ...... GATED

@@ -418,16 +418,39 @@ def _contract_scoreboard_build_state(contract_file, scoreboard_text):
     return "off_scoreboard"
 
 
-# Signed build targets recorded in MMI_THREAD_HANDOFF as waiting (not scoreboard rows).
-HANDOFF_WAITING_BUILD_CONTRACTS = {
-    "Load Fission v2": "Load_Fission_Contract_v2.md",
-    "Specialisation Fission v2": "Specialisation_Fission_Contract_v2.md",
-    "Threat Intelligence Daemon": "Threat_Intelligence_Daemon_Design_Contract.md",
+# Northstar signed builds that lack a scoreboard lifecycle row (drift).
+# Completed v2 rows (#103/#104) removed — gated 2026-06-18.
+HANDOFF_WAITING_BUILD_CONTRACTS: dict[str, str] = {}
+
+# Signed contracts in external repos/lanes (not Northstar scoreboard rows).
+EXTERNAL_LANE_CONTRACTS: dict[str, tuple[str, str]] = {
+    "Threat Intelligence Daemon": (
+        "Threat_Intelligence_Daemon_Design_Contract.md",
+        "/home/socialarchitect/mutant_monkey_intel/",
+    ),
 }
+
+# Evidence-based delegation scores (higher = delegate first).
+DELEGATION_SCORES: dict[str, int] = {
+    "SCOREBOARD_READY": 100,
+    "NEEDS_SCOREBOARD_ROW": 88,
+    "INTAKE_CLASSIFY_BATCH": 72,
+    "EXTERNAL_LANE": 68,
+    "NEEDS_MMI_REVIEW": 65,
+    "RESEARCH": 58,
+    "PARKED_DRAFT": 25,
+}
+
+WORKER_COMPLETION_UPDATE = (
+    "MMI first after any worker completion: append evidence to the relevant MMI "
+    "record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md "
+    "LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit "
+    "routing-authority files, then python3 scripts/mmi_dispatch.py --verify"
+)
 
 
 def get_off_scoreboard_signed_contracts():
-    """Handoff-recorded signed builds that lack a scoreboard lifecycle row (drift)."""
+    """Handoff-recorded signed Northstar builds that lack a scoreboard lifecycle row."""
     scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md") or ""
     drift = []
     for display_name, contract_file in HANDOFF_WAITING_BUILD_CONTRACTS.items():
@@ -438,8 +461,8 @@ def get_off_scoreboard_signed_contracts():
     return drift
 
 
-def get_parked_untracked_concept_drafts():
-    """Untracked concept docs visible in git status (PARKED_DRAFT only)."""
+def get_parked_untracked_roadmap_drafts():
+    """Untracked roadmap files visible in git status (PARKED_DRAFT)."""
     result = subprocess.run(
         ["git", "-C", REPO, "status", "--porcelain", "4. Product_Roadmap"],
         capture_output=True,
@@ -451,91 +474,294 @@ def get_parked_untracked_concept_drafts():
         if not line.startswith("??"):
             continue
         path = line[3:].strip().strip('"')
-        basename = os.path.basename(path)
-        if "Concept_Doc" in basename:
-            drafts.append(basename)
+        drafts.append(os.path.basename(path))
     return sorted(drafts)
 
 
-def _format_candidate(phase, name, classification, **fields):
-    """Single-line candidate entry for ALL_CLEAR CANDIDATES output."""
-    parts = [f"[{phase}] {name}", f"Classification: {classification}"]
-    for key, value in fields.items():
-        parts.append(f"{key}: {value}")
-    parts.append("NOT_AUTHORIZED")
-    return " | ".join(parts)
+def get_parked_untracked_concept_drafts():
+    """Untracked concept docs visible in git status (subset of parked drafts)."""
+    return [d for d in get_parked_untracked_roadmap_drafts() if "Concept_Doc" in d]
 
 
-def collect_all_clear_candidates():
-    """Next-direction candidates for ALL_CLEAR (compass only — not authorization)."""
-    candidates = []
+def _delegation_task(
+    *,
+    phase,
+    name,
+    classification,
+    source_evidence,
+    why,
+    assigned_worker,
+    matt_action_required=False,
+    extra=None,
+):
+    """Structured delegation task with evidence-based score."""
+    score = DELEGATION_SCORES.get(classification, 0)
+    return {
+        "phase": phase,
+        "name": name,
+        "classification": classification,
+        "score": score,
+        "source_evidence": source_evidence,
+        "why": why,
+        "assigned_worker": assigned_worker,
+        "matt_action_required": matt_action_required,
+        "extra": extra or {},
+    }
+
+
+def collect_delegation_tasks():
+    """Evidence-backed tasks MMI may delegate (sorted by score descending)."""
+    tasks = []
 
     for name in get_signed_unbuilt():
-        candidates.append(_format_candidate(
-            "BUILD",
-            name,
-            "SCOREBOARD_READY",
-            Source="scoreboard SIGNED_UNBUILT row",
-            **{"Build implied": "NO", "Authorization required": "YES — Matt names target"},
+        tasks.append(_delegation_task(
+            phase="BUILD",
+            name=name,
+            classification="SCOREBOARD_READY",
+            source_evidence="agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md SIGNED_UNBUILT row",
+            why="Signed scoreboard row is build-ready; highest-priority mechanical lane",
+            assigned_worker="Cursor → Codex → Cursor",
         ))
 
     for display_name, contract_file in get_off_scoreboard_signed_contracts():
-        candidates.append(_format_candidate(
-            "BUILD",
-            display_name,
-            "NEEDS_SCOREBOARD_ROW",
-            Source=f"signed contract on disk ({contract_file})",
-            **{
-                "Scoreboard status": "MISSING SIGNED_UNBUILT ROW",
-                "Authorization required": "YES",
-                "Build implied": "NO",
-            },
+        tasks.append(_delegation_task(
+            phase="BUILD",
+            name=f"Add scoreboard SIGNED_UNBUILT row for {display_name}",
+            classification="NEEDS_SCOREBOARD_ROW",
+            source_evidence=f"4. Product_Roadmap/{contract_file} signed; no lifecycle row",
+            why="Signed Northstar contract without scoreboard row blocks BUILD routing",
+            assigned_worker="Cursor",
+        ))
+
+    parked = get_parked_untracked_roadmap_drafts()
+    if parked:
+        file_list = ", ".join(parked)
+        tasks.append(_delegation_task(
+            phase="INTAKE",
+            name=f"Classify parked roadmap drafts ({len(parked)} files)",
+            classification="INTAKE_CLASSIFY_BATCH",
+            source_evidence=f"git status untracked: {file_list}",
+            why=(
+                "Untracked parallel-session drafts need MMI intake classification "
+                "before any promotion; batch review is the actionable unblock"
+            ),
+            assigned_worker="Cursor",
+            extra={"files": parked},
+        ))
+
+    for display_name, (contract_file, build_root) in EXTERNAL_LANE_CONTRACTS.items():
+        if not is_contract_signed(contract_file):
+            continue
+        tasks.append(_delegation_task(
+            phase="EXTERNAL",
+            name=f"Build {display_name} (external lane)",
+            classification="EXTERNAL_LANE",
+            source_evidence=(
+                f"4. Product_Roadmap/{contract_file} §11 signed; "
+                f"external root {build_root}"
+            ),
+            why=(
+                "Contract is signed and scoped to an external repo lane — "
+                "not a Northstar scoreboard row; delegate build to external surface"
+            ),
+            assigned_worker="Cursor",
+            extra={"build_root": build_root, "contract_file": contract_file},
         ))
 
     concept = get_next_concept_without_contract()
     if concept:
         label = concept.replace("_Concept_Doc.md", "").replace("_", " ")
-        candidates.append(_format_candidate(
-            "DESIGN",
-            label,
-            "NEEDS_MMI_REVIEW",
-            Source="concept without contract",
-            **{"Authorization required": "YES", "Build implied": "NO"},
+        tasks.append(_delegation_task(
+            phase="DESIGN",
+            name=f"Draft contract for {label}",
+            classification="NEEDS_MMI_REVIEW",
+            source_evidence=f"4. Product_Roadmap/{concept} tracked without contract",
+            why="Tracked concept doc lacks a matching signed contract",
+            assigned_worker="Claude",
         ))
 
-    for task, phase in (
+    for task_name, phase in (
         (get_collective_immune_design_task(), "DESIGN"),
         (get_cortex_immune_interface_design_task(), "DESIGN"),
     ):
-        if task:
-            candidates.append(_format_candidate(
-                phase,
-                task,
-                "NEEDS_MMI_REVIEW",
-                Source="organism gap design lane",
-                **{"Authorization required": "YES", "Build implied": "NO"},
+        if task_name:
+            tasks.append(_delegation_task(
+                phase=phase,
+                name=task_name,
+                classification="NEEDS_MMI_REVIEW",
+                source_evidence="organism gap design lane (scoreboard + OQ state)",
+                why="Prerequisite control-plane rows gated; next organism design artifact",
+                assigned_worker="Claude",
             ))
 
     research_task = get_next_research_task()
     if research_task != "Research next phase requirements":
-        candidates.append(_format_candidate(
-            "RESEARCH",
-            research_task,
-            "NEEDS_MMI_REVIEW",
-            Source="research discovery function",
-            **{"Authorization required": "YES", "Build implied": "NO"},
+        worker = (
+            "Gemini"
+            if research_task.startswith("Send Mode Controller signed contract to Gemini")
+            else "ChatGPT → Gemini"
+        )
+        tasks.append(_delegation_task(
+            phase="RESEARCH",
+            name=research_task,
+            classification="RESEARCH",
+            source_evidence="get_next_research_task()",
+            why="Specific research target surfaced from gated organism state",
+            assigned_worker=worker,
         ))
 
-    for draft in get_parked_untracked_concept_drafts():
-        candidates.append(_format_candidate(
-            "CONCEPT",
-            draft,
-            "PARKED_DRAFT",
-            Source="untracked roadmap file",
-            **{"Authorization required": "YES", "Build implied": "NO"},
+    for draft in get_parked_untracked_roadmap_drafts():
+        if any(draft in (t.get("extra", {}).get("files") or []) for t in tasks
+               if t["classification"] == "INTAKE_CLASSIFY_BATCH"):
+            continue
+        tasks.append(_delegation_task(
+            phase="CONCEPT",
+            name=draft,
+            classification="PARKED_DRAFT",
+            source_evidence=f"git status untracked 4. Product_Roadmap/{draft}",
+            why="Single parked draft — lower priority than batch intake classification",
+            assigned_worker="Cursor",
         ))
 
-    return candidates
+    tasks.sort(key=lambda t: (-t["score"], t["name"]))
+    return tasks
+
+
+def _format_candidate_from_task(task):
+    """Legacy single-line candidate entry (compass / audit trail)."""
+    parts = [
+        f"[{task['phase']}] {task['name']}",
+        f"Classification: {task['classification']}",
+        f"Score: {task['score']}",
+        f"Source: {task['source_evidence']}",
+        f"Worker: {task['assigned_worker']}",
+    ]
+    if task["matt_action_required"]:
+        parts.append("Matt action: YES")
+    else:
+        parts.append("Matt action: NO")
+    return " | ".join(parts)
+
+
+def collect_all_clear_candidates():
+    """Delegated-task compass (backward-compatible name)."""
+    return [_format_candidate_from_task(t) for t in collect_delegation_tasks()]
+
+
+def _scoreboard_queue_counts():
+    """Compact scoreboard lifecycle counts for CURRENT_PROJECT_TRUTH."""
+    scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md") or ""
+    counts = {"SIGNED_UNBUILT": 0, "AWAITING_AUDIT": 0, "GATED": 0}
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 3:
+            continue
+        status = parts[2].strip("`")
+        for key in counts:
+            if status.startswith(key):
+                counts[key] += 1
+                break
+    return counts
+
+
+def _derive_current_project_truth():
+    counts = _scoreboard_queue_counts()
+    parked = len(get_parked_untracked_roadmap_drafts())
+    return (
+        f"Northstar control-plane queue: {counts['SIGNED_UNBUILT']} SIGNED_UNBUILT, "
+        f"{counts['AWAITING_AUDIT']} AWAITING_AUDIT, {counts['GATED']} GATED rows; "
+        f"{parked} untracked roadmap draft(s) in git status"
+    )
+
+
+def _format_task_scoreboard(tasks):
+    if not tasks:
+        return "(no evidence-backed tasks surfaced)"
+    return " || ".join(
+        f"{t['name']} [{t['classification']} score={t['score']}]"
+        for t in tasks
+    )
+
+
+def _format_lower_alternatives(tasks, top):
+    alts = [t for t in tasks if t is not top][:5]
+    if not alts:
+        return "(none)"
+    return " || ".join(f"{t['name']} (score={t['score']})" for t in alts)
+
+
+def _build_delegation_lines(derived):
+    """Delegate the highest-scored evidence-backed task (project-brain mode)."""
+    tasks = collect_delegation_tasks()
+    truth = _derive_current_project_truth()
+
+    if not tasks:
+        lines = [
+            ("MODE", "ALL_CLEAR"),
+            ("AUTHORIZED_TASK", "No evidence-backed next task surfaced from repo state"),
+            ("CURRENT_PROJECT_TRUTH", truth),
+            ("TASK_SCOREBOARD", "(empty)"),
+        ]
+        lines = _append_lane_doctrine(
+            lines,
+            build_authorization_implied="NO",
+        )
+        lines += [
+            ("ASSIGNED_TO", "Matt"),
+            ("NEXT_PROMPT_GOES_TO", "Matt"),
+            ("OPERATOR_ACTION_REQUIRED", "YES — no delegable task from current evidence"),
+            ("NEXT_GATE", "new signed contract, scoreboard row, or intake evidence"),
+        ]
+        return derived, lines
+
+    top = tasks[0]
+    lines = [
+        ("MODE", "DELEGATE"),
+        ("AUTHORIZED_TASK", top["name"]),
+        ("CURRENT_PROJECT_TRUTH", truth),
+        ("TASK_SCOREBOARD", _format_task_scoreboard(tasks)),
+        ("NEXT_DELEGATED_TASK", top["name"]),
+        ("ASSIGNED_WORKER", top["assigned_worker"]),
+        ("ASSIGNED_TO", top["assigned_worker"]),
+        ("WHY_THIS_TASK", top["why"]),
+        ("TASK_SCORE", str(top["score"])),
+        ("LOWER_SCORE_ALTERNATIVES", _format_lower_alternatives(tasks, top)),
+        ("SOURCE_EVIDENCE", top["source_evidence"]),
+        ("REQUIRED_UPDATE_AFTER_COMPLETION", WORKER_COMPLETION_UPDATE),
+    ]
+    lines = _append_lane_doctrine(
+        lines,
+        build_authorization_implied=(
+            "YES — delegated from repo evidence"
+            if top["classification"] in ("SCOREBOARD_READY", "EXTERNAL_LANE")
+            else "NO — delegated intake/design/research lane"
+        ),
+    )
+    op_required = (
+        "YES — authority/scope/signature fork"
+        if top["matt_action_required"]
+        else "NO"
+    )
+    lines += [
+        ("NEXT_PROMPT_GOES_TO", top["assigned_worker"]),
+        ("BLOCKED_UNTIL", f"{top['assigned_worker']} completes delegated task and MMI update"),
+        ("OPERATOR_ACTION_REQUIRED", op_required),
+        ("CANDIDATES_NOT_AUTHORIZATION", (
+            "YES — lower-scored alternatives are context only; delegation is evidence-based"
+        )),
+        ("CANDIDATES", " || ".join(collect_all_clear_candidates())),
+        ("NEXT_GATE", "worker completion → MMI update first → --verify PASS"),
+    ]
+    if top["classification"] == "SCOREBOARD_READY":
+        lines.insert(6, ("PRE_BUILD_REVIEW", "Codex"))
+    return derived, lines
+
+
+def _build_all_clear_lines(derived):
+    """Backward-compatible entry: delegates when evidence exists."""
+    return _build_delegation_lines(derived)
 
 
 def _lane_doctrine_fields(
@@ -565,37 +791,6 @@ def _append_lane_doctrine(lines, **kwargs):
             insert_at = idx + 1
             break
     return lines[:insert_at] + doctrine + lines[insert_at:]
-
-
-def _build_all_clear_lines(derived):
-    """ALL_CLEAR route with concrete candidates (Decision 1)."""
-    candidates = collect_all_clear_candidates()
-    lines = [
-        ("MODE", "ALL_CLEAR"),
-        ("AUTHORIZED_TASK", (
-            "All queued control-plane work is built, gated, and hardened — no pending "
-            "build/audit/review/design item. Awaiting Matt's next-phase authorization."
-        )),
-    ]
-    lines = _append_lane_doctrine(
-        lines,
-        build_authorization_implied="NO unless Matt explicitly authorizes build target",
-    )
-    lines += [
-        ("ASSIGNED_TO", "Matt"),
-        ("NEXT_PROMPT_GOES_TO", "Matt"),
-        ("BLOCKED_UNTIL", "Matt names the next phase target (build, research, or design)"),
-        ("OPERATOR_ACTION_REQUIRED", "YES — Matt names the next target (MMI assigns lane after)"),
-        ("CANDIDATES_NOT_AUTHORIZATION", (
-            "YES — surfaced candidates are not build/research/design authorization"
-        )),
-        (
-            "CANDIDATES",
-            " || ".join(candidates) if candidates else "(none surfaced from scoreboard/contracts/parked drafts)",
-        ),
-        ("NEXT_GATE", "next explicit Matt authorization"),
-    ]
-    return derived, lines
 
 
 def check_drift():
@@ -700,7 +895,7 @@ def run_doctrine_checks():
     protocol = read_file("mmi/MMI_PROTOCOL.md") or ""
 
     checks.append((
-        "Codex" in routing_rules and "MMI assigns the lane" in routing_rules,
+        "Codex" in routing_rules and "assigns the lane" in routing_rules,
         "Codex and lane doctrine in mmi/MMI_ROUTING_RULES.md",
     ))
     checks.append((
@@ -708,28 +903,41 @@ def run_doctrine_checks():
         "Codex and pre-build review in mmi/MMI_AUTHORITY_MATRIX.md",
     ))
     checks.append((
-        "Matt names the authorized target" in protocol
-        and "MMI assigns the lane" in protocol,
+        "MMI delegates" in protocol and "assigns the lane" in protocol,
         "Matt-target / MMI-lane split in mmi/MMI_PROTOCOL.md",
     ))
 
-    _, all_clear_lines = _build_all_clear_lines("doctrine-check")
-    all_clear = _pairs_from_route(all_clear_lines)
+    _, delegate_lines = _build_delegation_lines("doctrine-check")
+    delegate = _pairs_from_route(delegate_lines)
     checks.append((
-        "CANDIDATES" in all_clear and "CANDIDATES_NOT_AUTHORIZATION" in all_clear,
-        "ALL_CLEAR emits CANDIDATES with NOT_AUTHORIZATION guard",
+        delegate.get("MODE") in ("DELEGATE", "ALL_CLEAR")
+        and "TASK_SCOREBOARD" in delegate
+        and (
+            "NEXT_DELEGATED_TASK" in delegate
+            or delegate.get("MODE") == "ALL_CLEAR"
+        )
+        and "CANDIDATES_NOT_AUTHORIZATION" in delegate,
+        "DELEGATE emits scored taskboard with NOT_AUTHORIZATION guard",
     ))
 
     off_board = get_off_scoreboard_signed_contracts()
     if off_board:
-        candidates_text = all_clear.get("CANDIDATES", "")
+        scoreboard_text = delegate.get("TASK_SCOREBOARD", "")
         checks.append((
-            "NEEDS_SCOREBOARD_ROW" in candidates_text
-            and "Build implied: NO" in candidates_text,
-            "off-scoreboard signed contracts labeled NEEDS_SCOREBOARD_ROW (not build-ready)",
+            "NEEDS_SCOREBOARD_ROW" in scoreboard_text,
+            "off-scoreboard signed contracts labeled NEEDS_SCOREBOARD_ROW",
         ))
     else:
         checks.append((True, "off-scoreboard signed contract labeling (no drift contracts surfaced)"))
+
+    tasks = collect_delegation_tasks()
+    if tasks:
+        checks.append((
+            tasks[0]["score"] >= (tasks[1]["score"] if len(tasks) > 1 else 0),
+            "delegation tasks sorted by score descending",
+        ))
+    else:
+        checks.append((True, "delegation task scoring (no tasks in this snapshot)"))
 
     build_pairs = _pairs_from_route(_synthetic_build_route())
     checks.append((
@@ -746,16 +954,17 @@ def run_doctrine_checks():
     ))
 
     checks.append((
-        all_clear.get("MMI_ASSIGNS_LANE") == "YES"
-        and all_clear.get("OPERATOR_NAMES_TARGET") == "Matt",
-        "ALL_CLEAR includes OPERATOR_NAMES_TARGET / MMI_ASSIGNS_LANE labels",
+        delegate.get("MMI_ASSIGNS_LANE") == "YES"
+        and delegate.get("OPERATOR_NAMES_TARGET") == "Matt",
+        "DELEGATE includes OPERATOR_NAMES_TARGET / MMI_ASSIGNS_LANE labels",
     ))
 
     dispatch_src = read_file("scripts/mmi_dispatch.py") or ""
     checks.append((
         "def run_doctrine_checks" in dispatch_src
+        and "collect_delegation_tasks" in dispatch_src
         and "PRE_BUILD_REVIEW" in dispatch_src,
-        "dispatcher source includes doctrine verify and BUILD pre-build fields",
+        "dispatcher source includes doctrine verify and delegation scoring",
     ))
 
     return checks

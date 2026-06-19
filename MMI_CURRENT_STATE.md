@@ -1,16 +1,25 @@
-MODE: ALL_CLEAR
-AUTHORIZED_TASK: All queued control-plane work is built, gated, and hardened — no pending build/audit/review/design item. Awaiting Matt's next-phase authorization.
+MODE: DELEGATE
+AUTHORIZED_TASK: Classify parked roadmap drafts (4 files)
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: NO unless Matt explicitly authorizes build target
-ASSIGNED_TO: Matt
-NEXT_PROMPT_GOES_TO: Matt
-BLOCKED_UNTIL: Matt names the next phase target (build, research, or design)
-OPERATOR_ACTION_REQUIRED: YES — Matt names the next target (MMI assigns lane after)
-CANDIDATES_NOT_AUTHORIZATION: YES — surfaced candidates are not build/research/design authorization
-CANDIDATES: [BUILD] Threat Intelligence Daemon | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Threat_Intelligence_Daemon_Design_Contract.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Builder_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Honeypot_Deception_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Mutant_Monkey_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED
-NEXT_GATE: next explicit Matt authorization
+BUILD_AUTHORIZATION_IMPLIED: NO — delegated intake/design/research lane
+CURRENT_PROJECT_TRUTH: Northstar control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 33 GATED rows; 4 untracked roadmap draft(s) in git status
+TASK_SCOREBOARD: Classify parked roadmap drafts (4 files) [INTAKE_CLASSIFY_BATCH score=72] || Build Threat Intelligence Daemon (external lane) [EXTERNAL_LANE score=68]
+NEXT_DELEGATED_TASK: Classify parked roadmap drafts (4 files)
+ASSIGNED_WORKER: Cursor
+ASSIGNED_TO: Cursor
+WHY_THIS_TASK: Untracked parallel-session drafts need MMI intake classification before any promotion; batch review is the actionable unblock
+TASK_SCORE: 72
+LOWER_SCORE_ALTERNATIVES: Build Threat Intelligence Daemon (external lane) (score=68)
+SOURCE_EVIDENCE: git status untracked: Builder_Radar_Concept_Doc.md, Honeypot_Deception_Concept_Doc.md, Mutant_Monkey_Radar_Concept_Doc.md, Purple_Team_Attacker_Cost_Doctrine.md
+REQUIRED_UPDATE_AFTER_COMPLETION: MMI first after any worker completion: append evidence to the relevant MMI record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit routing-authority files, then python3 scripts/mmi_dispatch.py --verify
+NEXT_PROMPT_GOES_TO: Cursor
+BLOCKED_UNTIL: Cursor completes delegated task and MMI update
+OPERATOR_ACTION_REQUIRED: NO
+CANDIDATES_NOT_AUTHORIZATION: YES — lower-scored alternatives are context only; delegation is evidence-based
+CANDIDATES: [INTAKE] Classify parked roadmap drafts (4 files) | Classification: INTAKE_CLASSIFY_BATCH | Score: 72 | Source: git status untracked: Builder_Radar_Concept_Doc.md, Honeypot_Deception_Concept_Doc.md, Mutant_Monkey_Radar_Concept_Doc.md, Purple_Team_Attacker_Cost_Doctrine.md | Worker: Cursor | Matt action: NO || [EXTERNAL] Build Threat Intelligence Daemon (external lane) | Classification: EXTERNAL_LANE | Score: 68 | Source: 4. Product_Roadmap/Threat_Intelligence_Daemon_Design_Contract.md §11 signed; external root /home/socialarchitect/mutant_monkey_intel/ | Worker: Cursor | Matt action: NO
+NEXT_GATE: worker completion → MMI update first → --verify PASS
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
