@@ -1,19 +1,12 @@
-MODE: BUILD
-AUTHORIZED_TASK: Build Verification Outcome
-OPERATOR_NAMES_TARGET: Matt
-MMI_ASSIGNS_LANE: YES
-LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
-PROJECT_IDENTITY: Mutant Monkey Security
-MMI_BRAIN: Mutant Monkey Intelligence (MMI)
-AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
-BUILD_SURFACE: /home/socialarchitect/northstar/3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/verification_outcome_agent.py (not Architectapp; not ops/)
-ASSIGNED_TO: Cursor → Codex → Cursor
-PRE_BUILD_REVIEW: Codex
-NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
-BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
-OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
+MODE: AUDIT
+AUTHORIZED_TASK: Run Grok completion gate for Verification Outcome
+ASSIGNED_TO: Grok (negative-feedback auditor)
+NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits
+OPERATOR_ACTION_REQUIRED: NO  (Grok activation is standing; no per-run permission)
+RUN: python3 audit_tools/complete_gate.py --pre-commit --task verification_outcome --claim "Verification Outcome build implemented + tested; ready for audit"
+MANIFEST: audit_outputs/pending/verification_outcome.manifest.json (MISSING - create before gate)
+BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed
+NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -25,13 +18,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Threat Intelligence Daemon external lane — verified against
-  §11-signed `Threat_Intelligence_Daemon_Design_Contract.md` at
-  `/home/socialarchitect/mutant_monkey_intel/`; layout + tiering + notification +
-  Mutant Monkey Security authority-repo write guard present; `test_monkey_intel_daemon.py` 11 passed (offline
-  TI-INV suite); registry `mmi/EXTERNAL_LANE_STATUS.md` marked COMPLETE; lab record
-  `lab_records/2026-06-18_threat_intelligence_daemon_external_lane.md`. Prior:
-  parked draft intake INTAKE-2026-06-18-004.
+LAST_COMPLETED: #48 Verification Outcome Agent — Evidence Stage 1 wrapper built at
+  `core/orchestrator/verification_outcome_agent.py` (commit `e1afc56`); 21 focused tests
+  passed (`tests/test_verification_outcome_agent.py`); scoreboard #48 -> `AWAITING_AUDIT`;
+  MMI manifest `audit_outputs/pending/verification_outcome_agent.manifest.json` present.
+  Prior: Threat Intelligence Daemon external lane (2026-06-18).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
