@@ -4,7 +4,7 @@ OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
 BUILD_AUTHORIZATION_IMPLIED: YES — top direction has signed contract or explicit build path
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 34 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 33 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
 WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
 DIRECTION_SCOREBOARD: Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002) [total=13 axes: revenue_market=1,product_foundation=2,security_evidence=2,dependency_unlock=1,drift_reduction=1,build_readiness=1,risk_ambiguity=1,owner_time=1,mmi_alignment=2,demo_customer=1] || Stage 1 breadth — wrap #52 Plain-English Explanation detector [total=13 axes: revenue_market=2,product_foundation=1,security_evidence=1,dependency_unlock=1,drift_reduction=1,build_readiness=1,risk_ambiguity=2,owner_time=1,mmi_alignment=1,demo_customer=2] || Stabilize — hold new builds; verify and document only [total=9 axes: revenue_market=0,product_foundation=0,security_evidence=1,dependency_unlock=0,drift_reduction=1,build_readiness=2,risk_ambiguity=2,owner_time=2,mmi_alignment=1,demo_customer=0] || Real-data intake path (Evidence Stage 2 promotion) [total=6 axes: revenue_market=1,product_foundation=1,security_evidence=1,dependency_unlock=0,drift_reduction=0,build_readiness=0,risk_ambiguity=1,owner_time=0,mmi_alignment=1,demo_customer=1]
 RECOMMENDED_DIRECTION: Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002)
@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #48 Verification Outcome Agent — Grok completion gate clean 0/0
-  (`audit_outputs/verification_outcome_20260619T032930Z.md`); scoreboard #48 ->
-  `GATED` (build `e1afc56`, 21 focused tests). Prior: Stage 1 wrapper built at
-  `core/orchestrator/verification_outcome_agent.py` (commit `e1afc56`).
+LAST_COMPLETED: #48 Verification Outcome Agent — promoted to `GOVERNED_AGENT` at
+  Evidence Stage 1 (Synthetic) after promotion review (`ea6ad92` gate lane +
+  `MMI_48_GOVERNED_AGENT_PROMOTION_REVIEW`); build `e1afc56`; Grok 0/0
+  `verification_outcome_20260619T032930Z.md`; health score 87; breadth runway 14.
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

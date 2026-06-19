@@ -49,6 +49,8 @@ MMI-DEC-010 | 2026-06-19 | #48 Verification Outcome build + AWAITING_AUDIT lane 
 
 MMI-DEC-011 | 2026-06-19 | #48 Verification Outcome Grok gate + GATED promotion | audit_outputs/verification_outcome_20260619T032930Z.md (0/0); scoreboard #48 row | ACCEPT | Post-commit Grok gate clean 0/0 on authority-repo build; scoreboard #48 AWAITING_AUDIT -> GATED; parked drafts excluded from packet via .git/info/exclude | #47 remains DEPENDS_ON:#48 until GOVERNED_AGENT promotion | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize Grok gate run + GATED flip)
 
+MMI-DEC-012 | 2026-06-19 | #48 GOVERNED_AGENT promotion review | scoreboard #48 row; decision_cycles_log CYCLE 26; health score board | ACCEPT | Repo evidence supports promotion: §11 contract, build e1afc56, 21 tests, Grok 0/0, L3 bar cleared; #48 GATED -> GOVERNED_AGENT; breadth runway 14; #47 dependency satisfied for re-triage only | No #47 build or Layer 5 direction started | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_48_GOVERNED_AGENT_PROMOTION_REVIEW only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
