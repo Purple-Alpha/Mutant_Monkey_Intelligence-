@@ -1,6 +1,6 @@
 # External Lane Status Registry
 
-**Authority:** MMI — external builds outside Northstar scoreboard lifecycle
+**Authority:** MMI — external builds outside Mutant Monkey Security authority-repo scoreboard lifecycle
 
 ---
 

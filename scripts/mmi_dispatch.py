@@ -6,6 +6,15 @@ import sys
 
 REPO = "/home/socialarchitect/northstar"
 
+# Active project identity (Matt rebrand 2026-06). REPO is the legacy filesystem path only.
+PROJECT_IDENTITY = "Mutant Monkey Security"
+MMI_BRAIN_LABEL = "Mutant Monkey Intelligence (MMI)"
+LEGACY_AUTHORITY_REPO_PATH = "/home/socialarchitect/northstar"
+ARCHITECTAPP_PATHS = (
+    "/home/socialarchitect/projects/Architectapp_clean",
+    "/mnt/c/Architectapp_clean",
+)
+
 # Supersession rules: a concept doc is considered satisfied when every mapped
 # contract filename exists AND is SIGNED, even if no single contract filename
 # contains the concept's literal name string. This covers concepts that were
@@ -418,11 +427,11 @@ def _contract_scoreboard_build_state(contract_file, scoreboard_text):
     return "off_scoreboard"
 
 
-# Northstar signed builds that lack a scoreboard lifecycle row (drift).
+# MMS authority-repo signed builds that lack a scoreboard lifecycle row (drift).
 # Completed v2 rows (#103/#104) removed — gated 2026-06-18.
 HANDOFF_WAITING_BUILD_CONTRACTS: dict[str, str] = {}
 
-# Signed contracts in external repos/lanes (not Northstar scoreboard rows).
+# Signed contracts in external repos/lanes (not authority-repo scoreboard rows).
 EXTERNAL_LANE_CONTRACTS: dict[str, tuple[str, str]] = {
     "Threat Intelligence Daemon": (
         "Threat_Intelligence_Daemon_Design_Contract.md",
@@ -469,7 +478,7 @@ WORKER_COMPLETION_UPDATE = (
 
 
 def get_off_scoreboard_signed_contracts():
-    """Handoff-recorded signed Northstar builds that lack a scoreboard lifecycle row."""
+    """Handoff-recorded signed authority-repo builds that lack a scoreboard lifecycle row."""
     scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md") or ""
     drift = []
     for display_name, contract_file in HANDOFF_WAITING_BUILD_CONTRACTS.items():
@@ -570,7 +579,7 @@ def collect_delegation_tasks():
             name=f"Add scoreboard SIGNED_UNBUILT row for {display_name}",
             classification="NEEDS_SCOREBOARD_ROW",
             source_evidence=f"4. Product_Roadmap/{contract_file} signed; no lifecycle row",
-            why="Signed Northstar contract without scoreboard row blocks BUILD routing",
+            why="Signed Mutant Monkey Security authority-repo contract without scoreboard row blocks BUILD routing",
             assigned_worker="Cursor",
         ))
 
@@ -605,7 +614,7 @@ def collect_delegation_tasks():
             ),
             why=(
                 "Contract is signed and scoped to an external repo lane — "
-                "not a Northstar scoreboard row; delegate build to external surface"
+                "not an authority-repo scoreboard row; delegate build to external surface"
             ),
             assigned_worker="Cursor",
             extra={"build_root": build_root, "contract_file": contract_file},
@@ -741,7 +750,7 @@ def _derive_why_queue_is_empty():
     if not get_unclassified_parked_drafts():
         parts.append("parked roadmap drafts already classified (PARK — not delegable)")
     if not get_off_scoreboard_signed_contracts():
-        parts.append("no off-scoreboard signed Northstar contracts")
+        parts.append("no off-scoreboard signed authority-repo contracts")
     ext_open = [
         name for name in EXTERNAL_LANE_CONTRACTS
         if is_contract_signed(EXTERNAL_LANE_CONTRACTS[name][0])
@@ -1069,9 +1078,10 @@ def _derive_current_project_truth():
     counts = _scoreboard_queue_counts()
     parked = len(get_parked_untracked_roadmap_drafts())
     return (
-        f"Northstar control-plane queue: {counts['SIGNED_UNBUILT']} SIGNED_UNBUILT, "
+        f"{PROJECT_IDENTITY} authority-repo control-plane queue: {counts['SIGNED_UNBUILT']} SIGNED_UNBUILT, "
         f"{counts['AWAITING_AUDIT']} AWAITING_AUDIT, {counts['GATED']} GATED rows; "
-        f"{parked} untracked roadmap draft(s) in git status"
+        f"{parked} untracked roadmap draft(s) in git status; "
+        f"legacy path {LEGACY_AUTHORITY_REPO_PATH}"
     )
 
 
@@ -1479,9 +1489,13 @@ def build_route_lines():
 
     unbuilt = get_signed_unbuilt()
     if unbuilt:
+        name = unbuilt[0]
         lines = [
             ("MODE", "BUILD"),
-            ("AUTHORIZED_TASK", f"Build {unbuilt[0]}"),
+            ("AUTHORIZED_TASK", f"Build {name}"),
+            ("PROJECT_IDENTITY", PROJECT_IDENTITY),
+            ("MMI_BRAIN", MMI_BRAIN_LABEL),
+            ("AUTHORITY_REPO", f"{PROJECT_IDENTITY} authority repo (legacy path {LEGACY_AUTHORITY_REPO_PATH})"),
             ("ASSIGNED_TO", "Cursor → Codex → Cursor"),
             ("PRE_BUILD_REVIEW", "Codex"),
             ("NEXT_PROMPT_GOES_TO", "Cursor (draft plan) → Codex (review) → Cursor (build)"),
@@ -1489,6 +1503,15 @@ def build_route_lines():
             ("OPERATOR_ACTION_REQUIRED", "NO"),
             ("NEXT_GATE", "Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported"),
         ]
+        if "Verification Outcome" in name:
+            lines.insert(
+                5,
+                (
+                    "BUILD_SURFACE",
+                    f"{LEGACY_AUTHORITY_REPO_PATH}/{VERIFICATION_OUTCOME_AGENT} "
+                    "(not Architectapp; not ops/)",
+                ),
+            )
         lines = _append_lane_doctrine(
             lines,
             build_authorization_implied="YES — §11 signed on scoreboard SIGNED_UNBUILT row",
