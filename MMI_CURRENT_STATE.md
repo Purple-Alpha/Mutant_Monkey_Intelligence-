@@ -4,7 +4,7 @@ ASSIGNED_TO: Grok (negative-feedback auditor)
 NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits
 OPERATOR_ACTION_REQUIRED: NO  (Grok activation is standing; no per-run permission)
 RUN: python3 audit_tools/complete_gate.py --pre-commit --task verification_outcome --claim "Verification Outcome build implemented + tested; ready for audit"
-MANIFEST: audit_outputs/pending/verification_outcome.manifest.json (MISSING - create before gate)
+MANIFEST: audit_outputs/pending/verification_outcome.manifest.json (present)
 BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed
 NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit
 
