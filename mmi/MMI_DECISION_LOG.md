@@ -51,6 +51,8 @@ MMI-DEC-011 | 2026-06-19 | #48 Verification Outcome Grok gate + GATED promotion 
 
 MMI-DEC-012 | 2026-06-19 | #48 GOVERNED_AGENT promotion review | scoreboard #48 row; decision_cycles_log CYCLE 26; health score board | ACCEPT | Repo evidence supports promotion: §11 contract, build e1afc56, 21 tests, Grok 0/0, L3 bar cleared; #48 GATED -> GOVERNED_AGENT; breadth runway 14; #47 dependency satisfied for re-triage only | No #47 build or Layer 5 direction started | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_48_GOVERNED_AGENT_PROMOTION_REVIEW only)
 
+MMI-DEC-013 | 2026-06-19 | #47 Case Timeline dependency re-triage after #48 | scoreboard #47 row; decision_cycles_log CYCLE 27 | ACCEPT | DEPENDS_ON:#48 cleared; #48 GOVERNED_AGENT is governed verification-outcome input; no §11 Case Timeline contract in repo; #47 remains DETECTOR_FUNCTION partial with NEEDS_SIGNED_CONTRACT; not build-ready | Contract draft + Matt §11 required before SIGNED_UNBUILT | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_47_DEPENDENCY_RETRIAGE_AFTER_48 only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

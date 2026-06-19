@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #48 Verification Outcome Agent — promoted to `GOVERNED_AGENT` at
-  Evidence Stage 1 (Synthetic) after promotion review (`ea6ad92` gate lane +
-  `MMI_48_GOVERNED_AGENT_PROMOTION_REVIEW`); build `e1afc56`; Grok 0/0
-  `verification_outcome_20260619T032930Z.md`; health score 87; breadth runway 14.
+LAST_COMPLETED: #47 Case Timeline — dependency re-triage after #48
+  GOVERNED_AGENT (`MMI_47_DEPENDENCY_RETRIAGE_AFTER_48`); `DEPENDS_ON:#48` cleared;
+  blocker -> `NEEDS_SIGNED_CONTRACT`; not build-ready (no §11 contract in repo).
+  Prior: #48 promoted GOVERNED_AGENT (`6799978`).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

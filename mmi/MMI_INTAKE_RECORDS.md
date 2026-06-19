@@ -142,3 +142,12 @@ Evidence: 21 focused tests; DER chain via SwarmCommander.run_case; health score 
 Classification: GOVERNED_AGENT — scoreboard #48 lifecycle promotion at Evidence Stage 1
 Routing outcome: breadth runway 13 -> 14; #47 DEPENDS_ON:#48 satisfied for re-triage only
 Matt approval required: YES — operator authorized MMI_48_GOVERNED_AGENT_PROMOTION_REVIEW only
+
+INTAKE-2026-06-19-004
+Component: #47 Case Timeline Agent (dependency re-triage after #48)
+Request: MMI_47_DEPENDENCY_RETRIAGE_AFTER_48 — reconcile lifecycle from repo evidence only
+Source: scoreboard #47 row; #48 GOVERNED_AGENT `6799978`; CYCLE 25 triage notes; no Case Timeline contract in 4. Product_Roadmap/
+Evidence: partial infra only (REACTION_TIMING_TEST_LOG.md, DecisionTimestamps, audit_trail); #48 VerificationOutcomeAgent governed input available
+Classification: RETRIAGED — DEPENDS_ON:#48 cleared; NEEDS_SIGNED_CONTRACT remains
+Routing outcome: not SIGNED_UNBUILT; not build-ready; contract draft + Matt §11 required next
+Matt approval required: YES — operator authorized MMI_47_DEPENDENCY_RETRIAGE_AFTER_48 only; separate authorization required for contract draft/build
