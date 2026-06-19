@@ -98,4 +98,18 @@ Evidence: lab_records/2026-06-18_threat_intelligence_daemon_external_lane.md;
   mmi/EXTERNAL_LANE_STATUS.md; test_monkey_intel_daemon.py (11 passed)
 Tests: 11 passed offline (TI-INV-2/3/4/5/6/7/8/9/10/11 + layout)
 Matt approval required: NO for build verification; YES before intel enters Northstar build loop
+
+INTAKE-2026-06-18-006
+Component: #48 Verification Outcome Agent (scoreboard lifecycle)
+Request: Reconcile scoreboard row per MMI PROJECT_DIRECTION_RESEARCH recommendation (54df32e)
+Source: 4. Product_Roadmap/Verification_Outcome_Agent_Design_Contract_Deep_Dive.md
+  **Status:** §11 SIGNED 2026-06-08 by Matt Nichol (draft 8e2b787; signature f34cc4f)
+  §11 Lockdown Signature: Matt Nichol June 8th 2026
+Assigned to: Cursor (scoreboard reconcile only — no build)
+Authority: Lifecycle visibility only; contract §11 is build authority
+Classification: SCOREBOARD_RECONCILE — SPEC_ONLY/NEEDS_SIGNED_CONTRACT -> SIGNED_UNBUILT
+Evidence: agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #48 row updated;
+  no core/orchestrator/verification_outcome_agent.py (wrapper not built)
+Routing outcome: MODE:BUILD eligible via get_signed_unbuilt()
+Matt approval required: YES before wrapper build starts (separate authorization)
 ```
