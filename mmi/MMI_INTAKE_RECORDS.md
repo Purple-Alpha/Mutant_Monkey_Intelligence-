@@ -86,4 +86,16 @@ Classification summary (record: mmi/PARKED_DRAFT_CLASSIFICATIONS.md):
   - Purple_Team_Attacker_Cost_Doctrine.md → PARKED_DRAFT / DOCTRINE_ADVISORY → PARK
 Routing outcome: NOT_AUTHORIZED for build or scoreboard; remain untracked until Matt promotes
 Matt approval required: YES before any file is git-tracked, contracted, or built
+
+INTAKE-2026-06-18-005
+Component: Threat Intelligence Daemon (external lane)
+Request: Build delegated external lane per MODE:DELEGATE TASK_SCORE=68
+Source: 4. Product_Roadmap/Threat_Intelligence_Daemon_Design_Contract.md §11 signed
+Assigned to: Cursor
+Authority: External build at /home/socialarchitect/mutant_monkey_intel/ only — TI-R2 Northstar isolation
+Classification: EXTERNAL_LANE COMPLETE — not a Northstar scoreboard row
+Evidence: lab_records/2026-06-18_threat_intelligence_daemon_external_lane.md;
+  mmi/EXTERNAL_LANE_STATUS.md; test_monkey_intel_daemon.py (11 passed)
+Tests: 11 passed offline (TI-INV-2/3/4/5/6/7/8/9/10/11 + layout)
+Matt approval required: NO for build verification; YES before intel enters Northstar build loop
 ```

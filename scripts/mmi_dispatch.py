@@ -441,6 +441,25 @@ DELEGATION_SCORES: dict[str, int] = {
     "PARKED_DRAFT": 25,
 }
 
+EXTERNAL_LANE_STATUS_FILE = "mmi/EXTERNAL_LANE_STATUS.md"
+
+
+def get_completed_external_lanes():
+    """External lanes marked COMPLETE in the status registry."""
+    content = read_file(EXTERNAL_LANE_STATUS_FILE) or ""
+    completed = []
+    for line in content.splitlines():
+        if line.startswith("- ") and "COMPLETE" in line:
+            name = line[2:].split(":", 1)[0].strip()
+            if name:
+                completed.append(name)
+    return completed
+
+
+def is_external_lane_complete(display_name: str) -> bool:
+    return display_name in get_completed_external_lanes()
+
+
 WORKER_COMPLETION_UPDATE = (
     "MMI first after any worker completion: append evidence to the relevant MMI "
     "record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md "
@@ -573,6 +592,8 @@ def collect_delegation_tasks():
 
     for display_name, (contract_file, build_root) in EXTERNAL_LANE_CONTRACTS.items():
         if not is_contract_signed(contract_file):
+            continue
+        if is_external_lane_complete(display_name):
             continue
         tasks.append(_delegation_task(
             phase="EXTERNAL",
@@ -733,7 +754,10 @@ def _build_delegation_lines(derived):
         lines += [
             ("ASSIGNED_TO", "Matt"),
             ("NEXT_PROMPT_GOES_TO", "Matt"),
+            ("REQUIRED_UPDATE_AFTER_COMPLETION", WORKER_COMPLETION_UPDATE),
             ("OPERATOR_ACTION_REQUIRED", "YES — no delegable task from current evidence"),
+            ("CANDIDATES_NOT_AUTHORIZATION", "YES — queue empty; Matt supplies next evidence"),
+            ("CANDIDATES", "(none — external lanes complete, no scoreboard BUILD/AUDIT queue)"),
             ("NEXT_GATE", "new signed contract, scoreboard row, or intake evidence"),
         ]
         return derived, lines
