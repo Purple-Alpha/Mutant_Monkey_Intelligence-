@@ -1,15 +1,16 @@
-MODE: BUILD
-AUTHORIZED_TASK: Build Specialisation Fission Controller v2
+MODE: ALL_CLEAR
+AUTHORIZED_TASK: All queued control-plane work is built, gated, and hardened — no pending build/audit/review/design item. Awaiting Matt's next-phase authorization.
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
-ASSIGNED_TO: Cursor → Codex → Cursor
-PRE_BUILD_REVIEW: Codex
-NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
-BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
-OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
+BUILD_AUTHORIZATION_IMPLIED: NO unless Matt explicitly authorizes build target
+ASSIGNED_TO: Matt
+NEXT_PROMPT_GOES_TO: Matt
+BLOCKED_UNTIL: Matt names the next phase target (build, research, or design)
+OPERATOR_ACTION_REQUIRED: YES — Matt names the next target (MMI assigns lane after)
+CANDIDATES_NOT_AUTHORIZATION: YES — surfaced candidates are not build/research/design authorization
+CANDIDATES: [BUILD] Threat Intelligence Daemon | Classification: NEEDS_SCOREBOARD_ROW | Source: signed contract on disk (Threat_Intelligence_Daemon_Design_Contract.md) | Scoreboard status: MISSING SIGNED_UNBUILT ROW | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Builder_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Honeypot_Deception_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED || [CONCEPT] Mutant_Monkey_Radar_Concept_Doc.md | Classification: PARKED_DRAFT | Source: untracked roadmap file | Authorization required: YES | Build implied: NO | NOT_AUTHORIZED
+NEXT_GATE: next explicit Matt authorization
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -21,24 +22,16 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Safe-Stop State Machine Adversarial Test Suite #102 — built against
-  the §11 signed contract; all 97 SS-ADV IDs across the 8 families executed against
-  the real SafeStopStateMachine/SafeStopLog surfaces (100 passed incl. 2 falsifiability
-  demos + coverage assertion); NO runtime change — zero vulnerabilities proven by a
-  failing test, so no patch applied and Safe-Stop behavior not broadened; Safe-Stop
-  regression + adversarial 144 passed / 5 xfailed; related control-plane sweep 381
-  passed / 21 xfailed; split Grok completion gates 0/0
-  (audit_outputs/safe_stop_adversarial_gate_scope_20260616T023345Z.md commit 52737a3,
-  audit_outputs/safe_stop_adversarial_tests_20260616T023420Z.md commit ee6b1f4);
-  health snapshot: Safe-Stop #94 remains 95 ELITE. Lab record:
-  lab_records/2026-06-15_safe_stop_adversarial_lab_record.md. Matt Nichol accepted
-  #102 evidence and signed off scoreboard row #102 on June 15th 2026.
-  [SUPERSEDED 2026-06-16] An earlier version of this note ended with "#94 is still not
-  marked ADVERSARIALLY HARDENED unless separately authorized." That reflected the state at
-  #102 sign-off only. #94 Safe-Stop State Machine was subsequently marked ADVERSARIALLY
-  HARDENED via #102 — see REVIEW_ACCEPTED_ITEMS and ADVERSARIAL QUEUE STATUS below,
-  mmi/MMI_GATE_REGISTRY.md, and mmi/MMI_DECISION_LOG.md. This historical line is retained
-  for audit trail only and is not current routing authority.
+LAST_COMPLETED: Specialisation Fission Controller v2 #104 — built against the
+  §18-signed `Specialisation_Fission_Contract_v2.md`; Purple Fission Curriculum,
+  Light/Normal/Deep intensity, twelve fixed schemas, Red/Blue boundaries,
+  governed ingestion + scenario lock, Load v2 controls incorporated, net-new
+  type gate preserved; `tests/test_specialisation_fission.py` + `tests/test_specialisation_fission_v2.py`
+  27 passed / 2 xfailed (v1 known gaps); v2 slice 14 passed; full suite 2268 passed /
+  1 skipped / 63 xfailed; Grok completion gate 0/0
+  (`audit_outputs/specialisation_fission_controller_v2_20260618_20260619T003909Z.md`);
+  lab record `lab_records/2026-06-18_specialisation_fission_v2_legal_underwriter_docs.md`.
+  Scoreboard row #104 flipped SIGNED_UNBUILT → GATED 2026-06-18. v1 lineage #91 preserved.
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
