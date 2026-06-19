@@ -123,4 +123,13 @@ Classification: BUILT_AWAITING_AUDIT — scoreboard #48 lifecycle advance
 Routing outcome: MODE:AUDIT via get_awaiting_audit()
 Gate manifest: audit_outputs/pending/verification_outcome.manifest.json
 Matt approval required: NO for audit lane routing; YES for GATED promotion after gate
-```
+
+INTAKE-2026-06-19-002
+Component: #48 Verification Outcome Agent (Grok gate + GATED)
+Request: Run Grok completion gate on clean worktree; flip scoreboard AWAITING_AUDIT -> GATED
+Source: audit_outputs/verification_outcome_20260619T032930Z.md (Grok 0/0 comprehensive)
+Build commit: e1afc56
+Gate evidence: blocking=0 warnings=0; packet hash 3c576411377255e6e473cc2f9afe68844169e7b0fdb16acfbc1d36cce990f43d
+Classification: GATED — scoreboard #48 lifecycle advance post-audit
+Routing outcome: exit MODE:AUDIT; next promotion GATED -> GOVERNED_AGENT on operator authorization
+Matt approval required: NO for gate run (standing Grok activation); promotion to GOVERNED_AGENT is separate
