@@ -245,16 +245,39 @@ def get_pending_operator_questions():
             questions.append(f"{parts[0]}: {parts[1]}")
     return questions
 
-def _scoreboard_row_status(row_id):
+def _scoreboard_main_row_parts(row_id):
+    """Return parsed cells for a main 70-agent table row (not Health Score Board)."""
     scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md") or ""
     prefix = f"| {row_id} |"
     for line in scoreboard.splitlines():
         if not line.startswith(prefix):
             continue
         parts = [p.strip() for p in line.strip().strip("|").split("|")]
-        if len(parts) >= 3:
-            return parts[2].strip("`")
-    return ""
+        if len(parts) >= 10:
+            return parts
+    return None
+
+
+def _scoreboard_row_status(row_id):
+    parts = _scoreboard_main_row_parts(row_id)
+    if parts is None:
+        return ""
+    return parts[2].strip("`")
+
+
+def _scoreboard_row_blockers(row_id):
+    parts = _scoreboard_main_row_parts(row_id)
+    if parts is None:
+        return ""
+    return parts[6].strip()
+
+
+def _case_timeline_contract_direction_eligible():
+    """#47 re-triaged after #48 GOVERNED_AGENT: contract draft is the next gate."""
+    if "NEEDS_SIGNED_CONTRACT" not in _scoreboard_row_blockers("47"):
+        return False
+    return _scoreboard_row_status("48").startswith("GOVERNED_AGENT")
+
 
 def _all_rows_gated(row_ids):
     return all(_scoreboard_row_status(row_id).startswith("GATED") for row_id in row_ids)
@@ -811,6 +834,43 @@ def collect_project_direction_candidates():
             ),
         ))
 
+    if _case_timeline_contract_direction_eligible():
+        directions.append(_project_direction(
+            name="Draft #47 Case Timeline Agent Design Contract",
+            recommended_next_action=(
+                "Claude drafts Case Timeline Agent Design Contract "
+                "-> Matt §11 sign -> scoreboard reconcile to SIGNED_UNBUILT if signed"
+            ),
+            assigned_worker_or_lane="Claude -> Matt (§11)",
+            why=(
+                "CYCLE 25/27 #47 re-triage: DEPENDS_ON:#48 satisfied by #48 "
+                "GOVERNED_AGENT; Layer 4 Evidence timeline needs a signed boundary "
+                "before SIGNED_UNBUILT/build; partial infra exists "
+                "(REACTION_TIMING_TEST_LOG, DecisionTimestamps, package audit_trail)"
+            ),
+            source_evidence=(
+                "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #47/#48; "
+                "decision_cycles_log.md CYCLE 25/CYCLE 27; REACTION_TIMING_TEST_LOG.md; "
+                "core/orchestrator/agent_contract.py DecisionTimestamps; "
+                "mmi/MMI_DECISION_LOG.md MMI-DEC-013"
+            ),
+            axis_scores={
+                "revenue_market": 1,
+                "product_foundation": 2,
+                "security_evidence": 2,
+                "dependency_unlock": 2,
+                "drift_reduction": 2,
+                "build_readiness": 1,
+                "risk_ambiguity": 1,
+                "owner_time": 2,
+                "mmi_alignment": 2,
+                "demo_customer": 1,
+            },
+            owner_decision_needed=(
+                "YES — Matt §11 signature required before SIGNED_UNBUILT/build"
+            ),
+        ))
+
     directions.append(_project_direction(
         name="Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002)",
         recommended_next_action=(
@@ -851,7 +911,7 @@ def collect_project_direction_candidates():
         assigned_worker_or_lane="Claude -> Matt (§11) -> Cursor -> Codex -> Cursor",
         why=(
             "Scoreboard #52 DETECTOR_FUNCTION with empty BLOCKERS; proven Stage 1 "
-            "breadth pattern (13/70 GOVERNED_AGENT runway); client-facing evidence layer"
+            "breadth pattern (14/70 GOVERNED_AGENT runway); client-facing evidence layer"
         ),
         source_evidence=(
             "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #52; "

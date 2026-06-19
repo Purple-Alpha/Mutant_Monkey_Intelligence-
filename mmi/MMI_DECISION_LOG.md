@@ -53,6 +53,8 @@ MMI-DEC-012 | 2026-06-19 | #48 GOVERNED_AGENT promotion review | scoreboard #48 
 
 MMI-DEC-013 | 2026-06-19 | #47 Case Timeline dependency re-triage after #48 | scoreboard #47 row; decision_cycles_log CYCLE 27 | ACCEPT | DEPENDS_ON:#48 cleared; #48 GOVERNED_AGENT is governed verification-outcome input; no §11 Case Timeline contract in repo; #47 remains DETECTOR_FUNCTION partial with NEEDS_SIGNED_CONTRACT; not build-ready | Contract draft + Matt §11 required before SIGNED_UNBUILT | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_47_DEPENDENCY_RETRIAGE_AFTER_48 only)
 
+MMI-DEC-014 | 2026-06-19 | MMI project-direction scoring include #47 | scripts/mmi_dispatch.py collect_project_direction_candidates | ACCEPT | #47 Case Timeline contract-draft direction added to 10-axis rubric when NEEDS_SIGNED_CONTRACT + #48 GOVERNED_AGENT; rubric ranks; no SIGNED_UNBUILT flip | Contract draft not started | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_PROJECT_DIRECTION_SCOREBOARD_INCLUDE_47 only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

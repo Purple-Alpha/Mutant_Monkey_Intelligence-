@@ -64,11 +64,24 @@ class MmiDispatchRoutingTests(unittest.TestCase):
         self.assertGreaterEqual(len(directions), 3)
         top = directions[0]
         self.assertGreater(self.mmi._direction_total(top["axis_scores"]), 0)
-        self.assertIn("Verification Outcome", top["name"])
+        names = [d["name"] for d in directions]
+        if self.mmi._case_timeline_contract_direction_eligible():
+            self.assertIn("Draft #47 Case Timeline Agent Design Contract", names)
+            self.assertIn("#47", top["name"])
         _, lines = self.mmi._build_delegation_lines("test")
         pairs = dict(lines)
         self.assertEqual(pairs["MODE"], "PROJECT_DIRECTION_RESEARCH")
         self.assertNotIn("Matt supplies next evidence", pairs.get("CANDIDATES_NOT_AUTHORIZATION", ""))
+
+    def test_case_timeline_contract_direction_scored_when_unblocked(self):
+        if not self.mmi._case_timeline_contract_direction_eligible():
+            self.skipTest("#47 not in NEEDS_SIGNED_CONTRACT / #48 not GOVERNED_AGENT")
+        directions = self.mmi.collect_project_direction_candidates()
+        case_timeline = next(
+            d for d in directions if d["name"].startswith("Draft #47 Case Timeline")
+        )
+        self.assertEqual(self.mmi._direction_total(case_timeline["axis_scores"]), 16)
+        self.assertEqual(len(case_timeline["axis_scores"]), 10)
 
     def test_direction_rubric_has_ten_axes(self):
         self.assertEqual(len(self.mmi.DIRECTION_RUBRIC_AXES), 10)
