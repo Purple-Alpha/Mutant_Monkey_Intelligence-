@@ -24,18 +24,57 @@ class MmiDispatchRoutingTests(unittest.TestCase):
     def test_delegate_mode_includes_scoring_fields(self):
         _, lines = self.mmi._build_delegation_lines("test")
         pairs = dict(lines)
-        self.assertIn(pairs["MODE"], ("DELEGATE", "ALL_CLEAR"))
-        self.assertIn("TASK_SCOREBOARD", pairs)
+        self.assertIn(
+            pairs["MODE"],
+            ("DELEGATE", "PROJECT_DIRECTION_RESEARCH", "ALL_CLEAR"),
+        )
         self.assertIn("CURRENT_PROJECT_TRUTH", pairs)
         self.assertIn("REQUIRED_UPDATE_AFTER_COMPLETION", pairs)
         self.assertEqual(pairs["OPERATOR_NAMES_TARGET"], "Matt")
         self.assertEqual(pairs["MMI_ASSIGNS_LANE"], "YES")
         if pairs["MODE"] == "DELEGATE":
+            self.assertIn("TASK_SCOREBOARD", pairs)
             self.assertIn("NEXT_DELEGATED_TASK", pairs)
             self.assertIn("TASK_SCORE", pairs)
             self.assertIn("WHY_THIS_TASK", pairs)
             self.assertIn("LOWER_SCORE_ALTERNATIVES", pairs)
             self.assertNotEqual(pairs["ASSIGNED_TO"], "Matt")
+        elif pairs["MODE"] == "PROJECT_DIRECTION_RESEARCH":
+            for field in (
+                "WHY_QUEUE_IS_EMPTY",
+                "DIRECTION_SCOREBOARD",
+                "RECOMMENDED_DIRECTION",
+                "RECOMMENDED_NEXT_ACTION",
+                "ASSIGNED_WORKER_OR_LANE",
+                "WHY_THIS_DIRECTION",
+                "DECISION_SCORE",
+                "LOWER_SCORE_ALTERNATIVES",
+                "SCORE_RUBRIC",
+                "SOURCE_EVIDENCE",
+                "OWNER_DECISION_NEEDED",
+                "NEXT_GATE",
+            ):
+                self.assertIn(field, pairs, msg=f"missing {field}")
+
+    def test_project_direction_scoring_when_queue_empty(self):
+        tasks = self.mmi.collect_delegation_tasks()
+        if tasks:
+            self.skipTest("delegation queue not empty in this snapshot")
+        directions = self.mmi.collect_project_direction_candidates()
+        self.assertGreaterEqual(len(directions), 3)
+        top = directions[0]
+        self.assertGreater(self.mmi._direction_total(top["axis_scores"]), 0)
+        self.assertIn("Verification Outcome", top["name"])
+        _, lines = self.mmi._build_delegation_lines("test")
+        pairs = dict(lines)
+        self.assertEqual(pairs["MODE"], "PROJECT_DIRECTION_RESEARCH")
+        self.assertNotIn("Matt supplies next evidence", pairs.get("CANDIDATES_NOT_AUTHORIZATION", ""))
+
+    def test_direction_rubric_has_ten_axes(self):
+        self.assertEqual(len(self.mmi.DIRECTION_RUBRIC_AXES), 10)
+        sample = self.mmi.collect_project_direction_candidates()[0]["axis_scores"]
+        self.assertEqual(len(sample), 10)
+        self.assertLessEqual(self.mmi._direction_total(sample), 20)
 
     def test_intake_batch_ranks_above_external_lane(self):
         tasks = self.mmi.collect_delegation_tasks()

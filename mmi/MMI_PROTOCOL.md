@@ -118,8 +118,11 @@ Matt remains final authority for signatures, scope forks, and material-risk deci
 MMI does not become Matt.**
 
 Matt authorizes scope, signatures, and authority forks. MMI delegates the next
-evidence-backed task and assigns the lane by task shape. Matt only picks the worker
-when routing affects authority, scope, live data, or material risk (`AGENTS.md` §2.2).
+evidence-backed task and assigns the lane by task shape. When the delegation queue is empty,
+MMI performs repo-grounded project-direction research and scoring (`MODE: PROJECT_DIRECTION_RESEARCH`)
+and presents an owner-ready recommendation — Matt does not have to read the full blueprint or
+compare raw repo files manually. Matt only picks the worker when routing affects authority,
+scope, live data, or material risk (`AGENTS.md` §2.2).
 
 After any worker completes work, MMI must be updated first: evidence record →
 `LAST_COMPLETED` → `python3 scripts/mmi_dispatch.py --sync` → commit routing files →

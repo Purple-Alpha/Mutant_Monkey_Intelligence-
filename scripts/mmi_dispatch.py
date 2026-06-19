@@ -670,6 +670,362 @@ def collect_delegation_tasks():
     return tasks
 
 
+VERIFICATION_OUTCOME_AGENT = (
+    "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+    "core/orchestrator/verification_outcome_agent.py"
+)
+VERIFICATION_OUTCOME_CONTRACT = "Verification_Outcome_Agent_Design_Contract_Deep_Dive.md"
+
+# Project-direction scoring when the delegation queue is empty (0-2 per axis, max 20).
+DIRECTION_RUBRIC_AXES = (
+    ("revenue_market", "Revenue/market validation impact"),
+    ("product_foundation", "Product foundation impact"),
+    ("security_evidence", "Security/evidence-engine impact"),
+    ("dependency_unlock", "Dependency unlock value"),
+    ("drift_reduction", "Drift-reduction value"),
+    ("build_readiness", "Build readiness"),
+    ("risk_ambiguity", "Risk/ambiguity penalty (inverse — 2=low risk)"),
+    ("owner_time", "Owner time required (inverse — 2=low burden)"),
+    ("mmi_alignment", "MMI/governance alignment"),
+    ("demo_customer", "Near-term demo/customer usefulness"),
+)
+
+DIRECTION_RUBRIC_DESCRIPTION = (
+    "MMI project-direction rubric: 0-2 per axis, max total 20. "
+    "0=negligible, 1=moderate, 2=strong. "
+    "risk_ambiguity and owner_time are inverse penalties (2=low risk/burden). "
+    "Recommendation ranks directions; Matt selects."
+)
+
+
+def _direction_total(axis_scores):
+    return sum(axis_scores.values())
+
+
+def _format_axis_scores(axis_scores):
+    return ",".join(f"{key}={axis_scores[key]}" for key, _ in DIRECTION_RUBRIC_AXES)
+
+
+def _project_direction(
+    *,
+    name,
+    recommended_next_action,
+    assigned_worker_or_lane,
+    why,
+    source_evidence,
+    axis_scores,
+    owner_decision_needed,
+):
+    return {
+        "name": name,
+        "recommended_next_action": recommended_next_action,
+        "assigned_worker_or_lane": assigned_worker_or_lane,
+        "why": why,
+        "source_evidence": source_evidence,
+        "axis_scores": axis_scores,
+        "owner_decision_needed": owner_decision_needed,
+    }
+
+
+def _verification_outcome_wrapper_built():
+    return os.path.exists(os.path.join(REPO, VERIFICATION_OUTCOME_AGENT))
+
+
+def _derive_why_queue_is_empty():
+    """Explain why collect_delegation_tasks() returned no delegable work."""
+    parts = []
+    if not get_signed_unbuilt():
+        parts.append("0 SIGNED_UNBUILT scoreboard rows")
+    if not get_awaiting_audit():
+        parts.append("0 AWAITING_AUDIT rows")
+    if not get_unclassified_parked_drafts():
+        parts.append("parked roadmap drafts already classified (PARK — not delegable)")
+    if not get_off_scoreboard_signed_contracts():
+        parts.append("no off-scoreboard signed Northstar contracts")
+    ext_open = [
+        name for name in EXTERNAL_LANE_CONTRACTS
+        if is_contract_signed(EXTERNAL_LANE_CONTRACTS[name][0])
+        and not is_external_lane_complete(name)
+    ]
+    if not ext_open:
+        parts.append("external lanes complete or unsigned")
+    if get_next_research_task() == "Research next phase requirements":
+        parts.append("no specific research target beyond generic placeholder")
+    return "; ".join(parts) if parts else "delegation classifier found no evidence-backed task"
+
+
+def collect_project_direction_candidates():
+    """Repo-grounded strategic directions when the task queue is empty."""
+    directions = []
+
+    if (
+        is_contract_signed(VERIFICATION_OUTCOME_CONTRACT)
+        and not _verification_outcome_wrapper_built()
+    ):
+        scoreboard_note = (
+            "scoreboard row #48 still SPEC_ONLY/UNSIGNED — drift vs signed contract"
+        )
+        directions.append(_project_direction(
+            name="Build #48 Verification Outcome Agent (Stage 1 Synthetic wrapper)",
+            recommended_next_action=(
+                "Reconcile scoreboard #48 to SIGNED_UNBUILT, then Cursor build plan "
+                "-> Codex pre-build review -> implement VerificationOutcomeAgent + "
+                "focused tests -> gate 0/0"
+            ),
+            assigned_worker_or_lane="Cursor -> Codex -> Cursor",
+            why=(
+                "Build Sequencer CYCLE 25 UNBLOCK; §11-signed boundary contract; "
+                "read-only Layer 3 projection over two_channel_confirmation; "
+                "unblocks #47 Case Timeline and vendor-payment verification frontier"
+            ),
+            source_evidence=(
+                f"4. Product_Roadmap/{VERIFICATION_OUTCOME_CONTRACT} (§11 SIGNED); "
+                "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #48/#47; "
+                "PROJECT_HANDSHAKE.md; decision_cycles_log.md CYCLE 25; "
+                f"{scoreboard_note}"
+            ),
+            axis_scores={
+                "revenue_market": 2,
+                "product_foundation": 2,
+                "security_evidence": 2,
+                "dependency_unlock": 2,
+                "drift_reduction": 2,
+                "build_readiness": 2,
+                "risk_ambiguity": 2,
+                "owner_time": 2,
+                "mmi_alignment": 2,
+                "demo_customer": 1,
+            },
+            owner_decision_needed=(
+                "YES — confirm this direction; contract §11 already signed; "
+                "scoreboard reconcile + build start need operator acknowledgment"
+            ),
+        ))
+
+    directions.append(_project_direction(
+        name="Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002)",
+        recommended_next_action=(
+            "Claude drafts Agent Design Contract for cross-arbitration Challenge agent "
+            "-> Matt §11 sign -> Cursor build at Evidence Stage 1 Synthetic"
+        ),
+        assigned_worker_or_lane="Claude -> Matt (§11) -> Cursor -> Codex -> Cursor",
+        why=(
+            "PROJECT_HANDSHAKE ACTION B; Aggregate Corroboration Agent KG-002 xfail "
+            "defers multi-Challenge cross-arbitration; Layer 5 spine Section 2 built"
+        ),
+        source_evidence=(
+            "PROJECT_HANDSHAKE.md ACTION B; "
+            "4. Product_Roadmap/Aggregate_Corroboration_Agent_Design_Contract_Deep_Dive.md "
+            "§10 Q1; 4. Product_Roadmap/Layer_5_Aggregate_Challenge_Pass_Deep_Dive.md"
+        ),
+        axis_scores={
+            "revenue_market": 1,
+            "product_foundation": 2,
+            "security_evidence": 2,
+            "dependency_unlock": 1,
+            "drift_reduction": 1,
+            "build_readiness": 1,
+            "risk_ambiguity": 1,
+            "owner_time": 1,
+            "mmi_alignment": 2,
+            "demo_customer": 1,
+        },
+        owner_decision_needed="YES — new §11 contract required before build",
+    ))
+
+    directions.append(_project_direction(
+        name="Stage 1 breadth — wrap #52 Plain-English Explanation detector",
+        recommended_next_action=(
+            "Claude drafts per-agent Agent Design Contract for Plain-English Explanation "
+            "-> Matt §11 sign -> Cursor wrapper over client_facing_rubric.py"
+        ),
+        assigned_worker_or_lane="Claude -> Matt (§11) -> Cursor -> Codex -> Cursor",
+        why=(
+            "Scoreboard #52 DETECTOR_FUNCTION with empty BLOCKERS; proven Stage 1 "
+            "breadth pattern (13/70 GOVERNED_AGENT runway); client-facing evidence layer"
+        ),
+        source_evidence=(
+            "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #52; "
+            "core/scoring/client_facing_rubric.py"
+        ),
+        axis_scores={
+            "revenue_market": 2,
+            "product_foundation": 1,
+            "security_evidence": 1,
+            "dependency_unlock": 1,
+            "drift_reduction": 1,
+            "build_readiness": 1,
+            "risk_ambiguity": 2,
+            "owner_time": 1,
+            "mmi_alignment": 1,
+            "demo_customer": 2,
+        },
+        owner_decision_needed="YES — new §11 contract required before build",
+    ))
+
+    if get_parked_untracked_roadmap_drafts():
+        directions.append(_project_direction(
+            name="Promote parked roadmap concept drafts to tracked build",
+            recommended_next_action="Do not promote — drafts classified PARK/NOT_AUTHORIZED",
+            assigned_worker_or_lane="N/A — parked",
+            why=(
+                "Four untracked drafts classified PARK in mmi/PARKED_DRAFT_CLASSIFICATIONS.md; "
+                "high ambiguity and no operator promotion authorization"
+            ),
+            source_evidence="mmi/PARKED_DRAFT_CLASSIFICATIONS.md; git status untracked drafts",
+            axis_scores={
+                "revenue_market": 0,
+                "product_foundation": 0,
+                "security_evidence": 0,
+                "dependency_unlock": 0,
+                "drift_reduction": 0,
+                "build_readiness": 0,
+                "risk_ambiguity": 0,
+                "owner_time": 0,
+                "mmi_alignment": 0,
+                "demo_customer": 0,
+            },
+            owner_decision_needed="YES — explicit promotion authority required (currently denied)",
+        ))
+
+    directions.append(_project_direction(
+        name="Real-data intake path (Evidence Stage 2 promotion)",
+        recommended_next_action="Defer — NEEDS_REAL_DATA blockers dominate DEPTH track rows",
+        assigned_worker_or_lane="Matt (scope fork) before any Stage 2 work",
+        why=(
+            "Cyber-insurance and several DEPTH rows carry NEEDS_REAL_DATA; "
+            "PROJECT_HANDSHAKE ACTION D scored low (3) for premature real-data intake"
+        ),
+        source_evidence=(
+            "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md DEPTH rows; "
+            "PROJECT_HANDSHAKE.md ACTION D"
+        ),
+        axis_scores={
+            "revenue_market": 1,
+            "product_foundation": 1,
+            "security_evidence": 1,
+            "dependency_unlock": 0,
+            "drift_reduction": 0,
+            "build_readiness": 0,
+            "risk_ambiguity": 1,
+            "owner_time": 0,
+            "mmi_alignment": 1,
+            "demo_customer": 1,
+        },
+        owner_decision_needed="YES — live/customer data scope fork",
+    ))
+
+    directions.append(_project_direction(
+        name="Stabilize — hold new builds; verify and document only",
+        recommended_next_action="Run --verify PASS, refresh handshake prose, no new build slice",
+        assigned_worker_or_lane="Cursor (docs/verify only)",
+        why=(
+            "Valid when operator fatigue or drift risk dominates; "
+            "PROJECT_HANDSHAKE ACTION E baseline score 4"
+        ),
+        source_evidence="PROJECT_HANDSHAKE.md ACTION E; mmi/MMI_HEALTH_STATE.md",
+        axis_scores={
+            "revenue_market": 0,
+            "product_foundation": 0,
+            "security_evidence": 1,
+            "dependency_unlock": 0,
+            "drift_reduction": 1,
+            "build_readiness": 2,
+            "risk_ambiguity": 2,
+            "owner_time": 2,
+            "mmi_alignment": 1,
+            "demo_customer": 0,
+        },
+        owner_decision_needed="NO — safe default if Matt wants a pause",
+    ))
+
+    directions.sort(key=lambda d: (-_direction_total(d["axis_scores"]), d["name"]))
+    return directions
+
+
+def _format_direction_scoreboard(directions):
+    if not directions:
+        return "(no repo-grounded directions scored)"
+    return " || ".join(
+        f"{d['name']} [total={_direction_total(d['axis_scores'])} "
+        f"axes: {_format_axis_scores(d['axis_scores'])}]"
+        for d in directions
+    )
+
+
+def _format_direction_alternatives(directions, top):
+    alts = [d for d in directions if d is not top][:5]
+    if not alts:
+        return "(none)"
+    return " || ".join(
+        f"{d['name']} (score={_direction_total(d['axis_scores'])})"
+        for d in alts
+    )
+
+
+def _build_project_direction_lines(derived, truth):
+    """Owner-ready strategic recommendation when delegation queue is empty."""
+    directions = collect_project_direction_candidates()
+    why_empty = _derive_why_queue_is_empty()
+
+    if not directions:
+        lines = [
+            ("MODE", "ALL_CLEAR"),
+            ("AUTHORIZED_TASK", "No repo evidence available to score project directions"),
+            ("CURRENT_PROJECT_TRUTH", truth),
+            ("WHY_QUEUE_IS_EMPTY", why_empty),
+        ]
+        lines = _append_lane_doctrine(lines, build_authorization_implied="NO")
+        lines += [
+            ("ASSIGNED_TO", "Matt"),
+            ("NEXT_PROMPT_GOES_TO", "Matt"),
+            ("OPERATOR_ACTION_REQUIRED", "YES — supply new evidence (signed contract, scoreboard row, intake)"),
+            ("REQUIRED_UPDATE_AFTER_COMPLETION", WORKER_COMPLETION_UPDATE),
+            ("NEXT_GATE", "new signed contract, scoreboard row, or intake evidence"),
+        ]
+        return derived, lines
+
+    top = directions[0]
+    total = _direction_total(top["axis_scores"])
+    lines = [
+        ("MODE", "PROJECT_DIRECTION_RESEARCH"),
+        ("AUTHORIZED_TASK", "Score repo-grounded project directions; recommend best next direction"),
+        ("CURRENT_PROJECT_TRUTH", truth),
+        ("WHY_QUEUE_IS_EMPTY", why_empty),
+        ("DIRECTION_SCOREBOARD", _format_direction_scoreboard(directions)),
+        ("RECOMMENDED_DIRECTION", top["name"]),
+        ("RECOMMENDED_NEXT_ACTION", top["recommended_next_action"]),
+        ("ASSIGNED_WORKER_OR_LANE", top["assigned_worker_or_lane"]),
+        ("WHY_THIS_DIRECTION", top["why"]),
+        ("DECISION_SCORE", f"{total}/20 ({_format_axis_scores(top['axis_scores'])})"),
+        ("LOWER_SCORE_ALTERNATIVES", _format_direction_alternatives(directions, top)),
+        ("SCORE_RUBRIC", DIRECTION_RUBRIC_DESCRIPTION),
+        ("SOURCE_EVIDENCE", top["source_evidence"]),
+        ("OWNER_DECISION_NEEDED", top["owner_decision_needed"]),
+        ("REQUIRED_UPDATE_AFTER_COMPLETION", WORKER_COMPLETION_UPDATE),
+    ]
+    lines = _append_lane_doctrine(
+        lines,
+        build_authorization_implied=(
+            "YES — top direction has signed contract or explicit build path"
+            if "§11" in top["recommended_next_action"] or "SIGNED" in top["source_evidence"]
+            else "NO — direction selection only until Matt confirms"
+        ),
+    )
+    lines += [
+        ("ASSIGNED_TO", "Matt (direction selection) -> " + top["assigned_worker_or_lane"]),
+        ("NEXT_PROMPT_GOES_TO", "Matt confirms direction, then " + top["assigned_worker_or_lane"].split("->")[0].strip()),
+        ("OPERATOR_ACTION_REQUIRED", "YES — Matt selects among scored directions (recommendation is not authorization)"),
+        ("CANDIDATES_NOT_AUTHORIZATION", (
+            "YES — scored directions rank options; Matt selects; lower scores are context only"
+        )),
+        ("CANDIDATES", _format_direction_scoreboard(directions)),
+        ("NEXT_GATE", "Matt confirms direction -> delegate build/design lane -> worker completion -> MMI update -> --verify PASS"),
+        ("TASK_SCOREBOARD", "(empty — queue has no delegable tasks)"),
+    ]
+    return derived, lines
+
+
 def _format_candidate_from_task(task):
     """Legacy single-line candidate entry (compass / audit trail)."""
     parts = [
@@ -741,26 +1097,7 @@ def _build_delegation_lines(derived):
     truth = _derive_current_project_truth()
 
     if not tasks:
-        lines = [
-            ("MODE", "ALL_CLEAR"),
-            ("AUTHORIZED_TASK", "No evidence-backed next task surfaced from repo state"),
-            ("CURRENT_PROJECT_TRUTH", truth),
-            ("TASK_SCOREBOARD", "(empty)"),
-        ]
-        lines = _append_lane_doctrine(
-            lines,
-            build_authorization_implied="NO",
-        )
-        lines += [
-            ("ASSIGNED_TO", "Matt"),
-            ("NEXT_PROMPT_GOES_TO", "Matt"),
-            ("REQUIRED_UPDATE_AFTER_COMPLETION", WORKER_COMPLETION_UPDATE),
-            ("OPERATOR_ACTION_REQUIRED", "YES — no delegable task from current evidence"),
-            ("CANDIDATES_NOT_AUTHORIZATION", "YES — queue empty; Matt supplies next evidence"),
-            ("CANDIDATES", "(none — external lanes complete, no scoreboard BUILD/AUDIT queue)"),
-            ("NEXT_GATE", "new signed contract, scoreboard row, or intake evidence"),
-        ]
-        return derived, lines
+        return _build_project_direction_lines(derived, truth)
 
     top = tasks[0]
     lines = [
@@ -955,15 +1292,21 @@ def run_doctrine_checks():
 
     _, delegate_lines = _build_delegation_lines("doctrine-check")
     delegate = _pairs_from_route(delegate_lines)
+    mode = delegate.get("MODE")
     checks.append((
-        delegate.get("MODE") in ("DELEGATE", "ALL_CLEAR")
-        and "TASK_SCOREBOARD" in delegate
+        mode in ("DELEGATE", "PROJECT_DIRECTION_RESEARCH", "ALL_CLEAR")
+        and "CANDIDATES_NOT_AUTHORIZATION" in delegate
         and (
-            "NEXT_DELEGATED_TASK" in delegate
-            or delegate.get("MODE") == "ALL_CLEAR"
-        )
-        and "CANDIDATES_NOT_AUTHORIZATION" in delegate,
-        "DELEGATE emits scored taskboard with NOT_AUTHORIZATION guard",
+            (mode == "DELEGATE" and "TASK_SCOREBOARD" in delegate and "NEXT_DELEGATED_TASK" in delegate)
+            or (
+                mode == "PROJECT_DIRECTION_RESEARCH"
+                and "DIRECTION_SCOREBOARD" in delegate
+                and "RECOMMENDED_DIRECTION" in delegate
+                and "DECISION_SCORE" in delegate
+            )
+            or (mode == "ALL_CLEAR")
+        ),
+        "DELEGATE or PROJECT_DIRECTION_RESEARCH emits scored output with NOT_AUTHORIZATION guard",
     ))
 
     off_board = get_off_scoreboard_signed_contracts()
@@ -1009,8 +1352,9 @@ def run_doctrine_checks():
     checks.append((
         "def run_doctrine_checks" in dispatch_src
         and "collect_delegation_tasks" in dispatch_src
+        and "collect_project_direction_candidates" in dispatch_src
         and "PRE_BUILD_REVIEW" in dispatch_src,
-        "dispatcher source includes doctrine verify and delegation scoring",
+        "dispatcher source includes doctrine verify, delegation scoring, and project-direction research",
     ))
 
     return checks

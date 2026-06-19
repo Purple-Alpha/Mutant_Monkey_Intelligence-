@@ -31,7 +31,9 @@ Matt only intervenes when routing affects authority, scope, live data, or materi
 Dispatcher output labels: `OPERATOR_NAMES_TARGET`, `MMI_ASSIGNS_LANE`,
 `LANE_ESCALATION_TO_MATT`, `BUILD_AUTHORIZATION_IMPLIED`, `CURRENT_PROJECT_TRUTH`,
 `TASK_SCOREBOARD`, `NEXT_DELEGATED_TASK`, `TASK_SCORE`, `WHY_THIS_TASK`,
-`LOWER_SCORE_ALTERNATIVES`, `SOURCE_EVIDENCE`, `REQUIRED_UPDATE_AFTER_COMPLETION`.
+`LOWER_SCORE_ALTERNATIVES`, `SOURCE_EVIDENCE`, `REQUIRED_UPDATE_AFTER_COMPLETION`,
+`DIRECTION_SCOREBOARD`, `RECOMMENDED_DIRECTION`, `RECOMMENDED_NEXT_ACTION`,
+`DECISION_SCORE`, `WHY_QUEUE_IS_EMPTY`, `OWNER_DECISION_NEEDED`, `SCORE_RUBRIC`.
 
 ---
 
@@ -69,8 +71,9 @@ When no BUILD/AUDIT/REVIEW/DESIGN lane is active, MMI scores repo evidence and d
 | `RESEARCH` | 58 | ChatGPT / Gemini |
 | `PARKED_DRAFT` | 25 | Cursor (single-file classify) |
 
-`MODE: ALL_CLEAR` only when **no** evidence-backed task exists. It does **not** mean
-"Matt must manually name the next target" when delegable evidence exists.
+`MODE: ALL_CLEAR` only when **no** repo evidence exists to score directions or delegate.
+When the queue is empty but repo evidence exists, MMI enters **`MODE: PROJECT_DIRECTION_RESEARCH`**
+and scores strategic directions — it does **not** hand the problem back with "Matt supplies next evidence."
 
 ---
 
@@ -96,12 +99,16 @@ After Cursor, Codex, Claude, ChatGPT, Gemini, or Grok completes work:
 
 ---
 
-## ALL_CLEAR vs DELEGATE
+## ALL_CLEAR vs DELEGATE vs PROJECT_DIRECTION_RESEARCH
 
 - **`MODE: DELEGATE`** — MMI scored repo evidence and delegated the top task. Matt is not
   required to manually name the next target unless `OPERATOR_ACTION_REQUIRED: YES`.
-- **`MODE: ALL_CLEAR`** — no evidence-backed task surfaced. Matt must supply new evidence
-  (signed contract, scoreboard row, or intake).
+- **`MODE: PROJECT_DIRECTION_RESEARCH`** — delegation queue empty but repo evidence exists.
+  MMI scores 3–7 strategic directions on the 10-axis project-direction rubric (0–2 per axis,
+  max 20), recommends the top direction, and explains lower-scored alternatives. Matt selects;
+  the recommendation is not authorization.
+- **`MODE: ALL_CLEAR`** — genuinely no repo evidence to score or delegate. Matt must supply
+  new evidence (signed contract, scoreboard row, or intake).
 
 Lower-scored alternatives appear in `LOWER_SCORE_ALTERNATIVES` and `CANDIDATES` for
 context only — not authorization.
