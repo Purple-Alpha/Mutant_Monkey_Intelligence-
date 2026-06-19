@@ -55,6 +55,8 @@ MMI-DEC-013 | 2026-06-19 | #47 Case Timeline dependency re-triage after #48 | sc
 
 MMI-DEC-014 | 2026-06-19 | MMI project-direction scoring include #47 | scripts/mmi_dispatch.py collect_project_direction_candidates | ACCEPT | #47 Case Timeline contract-draft direction added to 10-axis rubric when NEEDS_SIGNED_CONTRACT + #48 GOVERNED_AGENT; rubric ranks; no SIGNED_UNBUILT flip | Contract draft not started | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_PROJECT_DIRECTION_SCOREBOARD_INCLUDE_47 only)
 
+MMI-DEC-015 | 2026-06-19 | #47 Case Timeline Agent Design Contract draft | 4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md | ACCEPT | Draft authored from scoreboard #47, CYCLE 25/27, DecisionTimestamps, REACTION_TIMING_TEST_LOG, #48 GOVERNED_AGENT input rule; §11 UNSIGNED; no build/scoreboard flip | Grok draft gate + Matt §11 required before SIGNED_UNBUILT | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_RECOMMENDED_47_CASE_TIMELINE_CONTRACT_DRAFT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

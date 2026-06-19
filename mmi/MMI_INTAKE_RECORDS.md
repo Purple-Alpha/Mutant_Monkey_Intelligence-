@@ -151,3 +151,12 @@ Evidence: partial infra only (REACTION_TIMING_TEST_LOG.md, DecisionTimestamps, a
 Classification: RETRIAGED — DEPENDS_ON:#48 cleared; NEEDS_SIGNED_CONTRACT remains
 Routing outcome: not SIGNED_UNBUILT; not build-ready; contract draft + Matt §11 required next
 Matt approval required: YES — operator authorized MMI_47_DEPENDENCY_RETRIAGE_AFTER_48 only; separate authorization required for contract draft/build
+
+INTAKE-2026-06-19-005
+Component: #47 Case Timeline Agent Design Contract (draft)
+Request: MMI_RECOMMENDED_47_CASE_TIMELINE_CONTRACT_DRAFT — draft only, no build
+Source: MMI direction score 16/20; scoreboard #47/#48; CYCLE 25/27; agent_contract.py DecisionTimestamps; REACTION_TIMING_TEST_LOG.md; #48 Verification_Outcome_Agent_Design_Contract_Deep_Dive.md
+Artifact: 4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md (DRAFT UNSIGNED)
+Classification: CONTRACT_DRAFT — §11 signature pending; scoreboard remains NEEDS_SIGNED_CONTRACT
+Routing outcome: next gate Grok draft gate 0/0 + Matt §11 sign; then SIGNED_UNBUILT reconcile if signed
+Matt approval required: YES for §11 signature before build; draft commit authorized by MMI_RECOMMENDED_47_CASE_TIMELINE_CONTRACT_DRAFT only
