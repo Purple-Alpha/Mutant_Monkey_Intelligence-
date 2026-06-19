@@ -478,6 +478,28 @@ def get_parked_untracked_roadmap_drafts():
     return sorted(drafts)
 
 
+def get_intake_classified_parked_drafts():
+    """Filenames listed under '## Classified files' in the intake registry."""
+    content = read_file("mmi/PARKED_DRAFT_CLASSIFICATIONS.md") or ""
+    if "## Classified files" not in content:
+        return []
+    section = content.split("## Classified files", 1)[1]
+    section = section.split("\n---", 1)[0]
+    classified = []
+    for line in section.splitlines():
+        stripped = line.strip()
+        if stripped.startswith("- ") and stripped.endswith(".md"):
+            classified.append(stripped[2:].strip())
+    return sorted(classified)
+
+
+def get_unclassified_parked_drafts():
+    """Parked drafts still needing batch intake classification."""
+    parked = get_parked_untracked_roadmap_drafts()
+    classified = set(get_intake_classified_parked_drafts())
+    return [name for name in parked if name not in classified]
+
+
 def get_parked_untracked_concept_drafts():
     """Untracked concept docs visible in git status (subset of parked drafts)."""
     return [d for d in get_parked_untracked_roadmap_drafts() if "Concept_Doc" in d]
@@ -533,7 +555,7 @@ def collect_delegation_tasks():
             assigned_worker="Cursor",
         ))
 
-    parked = get_parked_untracked_roadmap_drafts()
+    parked = get_unclassified_parked_drafts()
     if parked:
         file_list = ", ".join(parked)
         tasks.append(_delegation_task(
@@ -610,7 +632,7 @@ def collect_delegation_tasks():
             assigned_worker=worker,
         ))
 
-    for draft in get_parked_untracked_roadmap_drafts():
+    for draft in get_unclassified_parked_drafts():
         if any(draft in (t.get("extra", {}).get("files") or []) for t in tasks
                if t["classification"] == "INTAKE_CLASSIFY_BATCH"):
             continue

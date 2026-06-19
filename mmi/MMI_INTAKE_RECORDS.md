@@ -72,4 +72,18 @@ Authority bleed: PREVENTED (intake separated from dispatcher implementation)
 Origin rejection: remote-drift / Windows-surface warning only — not in scope for this lane
 No next phase authorized: no build, research, design, dispatcher implementation,
   routing alignment patch, or automation
+
+INTAKE-2026-06-18-004
+Component: Parked roadmap drafts (parallel-session untracked)
+Request: Classify parked roadmap drafts (4 files) — MMI DELEGATE score=72
+Source: git status ?? in 4. Product_Roadmap/; MODE: DELEGATE 2026-06-18
+Assigned to: Cursor (intake lane)
+Authority: Classification only — no git add, no promotion, no build
+Classification summary (record: mmi/PARKED_DRAFT_CLASSIFICATIONS.md):
+  - Builder_Radar_Concept_Doc.md → PARKED_DRAFT / CONCEPT_ADVISORY → PARK
+  - Honeypot_Deception_Concept_Doc.md → PARKED_DRAFT / CONCEPT_ADVISORY / LEGAL_GATE → PARK
+  - Mutant_Monkey_Radar_Concept_Doc.md → PARKED_DRAFT / CONCEPT_ADVISORY → PARK
+  - Purple_Team_Attacker_Cost_Doctrine.md → PARKED_DRAFT / DOCTRINE_ADVISORY → PARK
+Routing outcome: NOT_AUTHORIZED for build or scoreboard; remain untracked until Matt promotes
+Matt approval required: YES before any file is git-tracked, contracted, or built
 ```
