@@ -62,6 +62,10 @@ class MmiDispatchRoutingTests(unittest.TestCase):
         tasks = self.mmi.collect_delegation_tasks()
         if tasks:
             self.skipTest("delegation queue not empty in this snapshot")
+        if self.mmi.get_awaiting_audit() or self.mmi.get_signed_unbuilt():
+            self.skipTest(
+                "scoreboard has SIGNED_UNBUILT/AWAITING_AUDIT lifecycle feedstock"
+            )
         _, lines = self.mmi.build_route_lines()
         pairs = dict(lines)
         self.assertEqual(pairs["MODE"], "ALL_CLEAR")

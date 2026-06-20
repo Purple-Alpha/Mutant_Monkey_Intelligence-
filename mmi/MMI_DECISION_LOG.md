@@ -119,6 +119,8 @@ MMI-DEC-045 | 2026-06-20 | Estimator buildability gate amendment closeout | mmi/
 
 MMI-DEC-046 | 2026-06-20 | #47 Case Timeline scoreboard lifecycle reconcile | agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #47 row; contract `4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED `4eec76a`; formal gate `audit_outputs/case_timeline_signed_contract_20260620T225343Z.md` 0/0; Architect candidate-specific evidence patch `04a39d5` | ACCEPT | #47 flipped `DETECTOR_FUNCTION`/`NEEDS_SIGNED_CONTRACT` -> `SIGNED_UNBUILT` with empty BLOCKERS; dispatcher can route MODE:BUILD as lifecycle feedstock; contract states BUILD NOT AUTHORIZED; no wrapper/tests on disk | Separate operator build authorization required before implementation | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_47_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY)
 
+MMI-DEC-047 | 2026-06-20 | #47 CaseTimelineAgent Mode A implementation + AWAITING_AUDIT reconcile | `core/orchestrator/case_timeline_agent.py`; `tests/test_case_timeline_agent.py`; agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #47 row | ACCEPT | Mode A `CaseTimelineAgent` wrapper + 22 pytest tests committed at `4d7fba2`; lifecycle reconciled `SIGNED_UNBUILT` -> `AWAITING_AUDIT`; dispatcher routes MODE:AUDIT pending Grok completion gate; **not GATED**, **not GOVERNED_AGENT**, not production-dispatched, not in `build_default_registry` | Grok `complete_gate.py` on implementation slice before GATED flip | Run mmi_dispatch.py --sync after reconcile commit | Matt Nichol (authorize MMI_47_BUILD_COMMIT_AND_AWAITING_AUDIT_RECONCILE)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
