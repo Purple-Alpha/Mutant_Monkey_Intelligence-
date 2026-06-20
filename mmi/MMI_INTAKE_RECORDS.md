@@ -197,3 +197,11 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md (wording p
 Classification: CONTRACT_DRAFT — T1-T1/§7 alignment, F2/F4 precision, §4 AUTH split, §7 I15 packet; not implementation
 Routing outcome: Matt §11 + separate build authorization before F1–F5 creation
 Matt approval required: YES for §11 and Tier 1 build; wording patch commit only
+
+INTAKE-2026-06-18-010
+Component: MMI Autonomous Brain Tier 1 contract (§11 signature)
+Request: Tier 1 contract signature update only — Matt reviewed `f7ac7f2`
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md (§11 SIGNED 2026-06-18)
+Classification: SIGNED_CONTRACT — F1–F5 passive artifacts authorized only upon separate explicit build authorization; not implemented
+Routing outcome: operator must authorize Tier 1 build before F1–F5 creation
+Matt approval required: YES for Tier 1 build slice; §11 signature recorded by operator authorization

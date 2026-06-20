@@ -1,8 +1,8 @@
 # MMI Autonomous Brain — Tier 1 Foundation Implementation Contract (Draft)
 
-**Status:** `DRAFT — NOT SIGNED — NOT IMPLEMENTATION AUTHORIZATION`
+**Status:** §11 SIGNED 2026-06-18 by Matt Nichol. Signing authorizes **only** creating the five passive Tier 1 artifacts (F1–F5) upon separate explicit operator build authorization. Signing alone is **not** Tier 1 implementation and does not authorize dispatcher edits, registry population, automation, or F1–F5 creation without that build authorization.
 
-**Classification:** `NEEDS_MMI_REVIEW` · `CONTRACT_DRAFT` · Tier 1 passive foundation only
+**Classification:** `SIGNED_CONTRACT` · Tier 1 passive foundation only · not implemented
 
 **Owner:** Matt Nichol
 
@@ -188,16 +188,16 @@ Post-implementation (only after §11 signature + separate build authorization):
 
 ---
 
-## 11. Sign-off (unsigned)
+## 11. Sign-off
 
-**UNSIGNED — NOT IMPLEMENTATION AUTHORIZATION.**
+**§11 SIGNED — Matt Nichol 2026-06-18.**
 
-Signing would authorize **only** creating the five passive Tier 1 artifacts listed in §2. Signing would authorize **no** dispatcher edits, registry population, write automation, prompts, contradiction tooling, dashboard, autonomy, hooks, scoreboard changes, #47/#48 work, or Architectapp work.
+Signing authorizes **only** creating the five passive Tier 1 artifacts listed in §2, upon separate explicit operator build authorization. Signing authorizes **no** dispatcher edits, registry population, write automation, prompts, contradiction tooling, dashboard, autonomy, hooks, scoreboard changes, #47/#48 work, or Architectapp work.
 
 Tier 2 tooling requires Tier 1 stable + separate AUTH gates per review material §2.
 
-> Matt Nichol ____________________  Date __________
+> Matt Nichol June 18th 2026
 
 ---
 
-**End of Tier 1 contract draft. This file does not authorize implementation.**
+**End of Tier 1 contract. §11 signed; F1–F5 implementation requires separate build authorization.**
