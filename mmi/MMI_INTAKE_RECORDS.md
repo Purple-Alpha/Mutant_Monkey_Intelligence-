@@ -214,3 +214,12 @@ Artifacts: mmi/MMI_REPO_SURFACE_REGISTRY.md (F1); mmi/MMI_TASK_REGISTRY_SCHEMA.m
 Classification: TIER1_FOUNDATION — passive only; no dispatcher edit; no live registry; no automation
 Routing outcome: F1–F5 complete; Tier 2/Tier 3 blocked; AUTH-5 not authorized
 Matt approval required: NO for this passive slice (explicit build authorization granted); YES for any Tier 2 gate or AUTH-5
+
+INTAKE-2026-06-18-012
+Component: MMI Autonomous Brain Tier 2A Worker Packet Intake (contract draft)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2A_CONTRACT_DRAFT_PLACEMENT — draft only, no implementation
+Source: Tier 1 complete (MMI-DEC-021); F3 worker completion packet template; review material I15 / lifecycle §7
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md (DRAFT UNSIGNED)
+Classification: CONTRACT_DRAFT — §11 signature approves contract only, not implementation; Mode A default / Mode B config only
+Routing outcome: adversarial review + Matt §11 + separate build authorization before `scripts/mmi_packet_intake.py`
+Matt approval required: YES for §11 and Tier 2A implementation; draft placement only authorized by this intake

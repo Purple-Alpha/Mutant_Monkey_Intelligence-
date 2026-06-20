@@ -35,12 +35,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Tier 1 MMI Autonomous Brain foundation F1–F5 passive artifacts
-  (MMI-DEC-021; INTAKE-2026-06-18-011). F1 repo surface registry; F2 task registry schema
-  (schema-only, no live tasks); F3 worker completion packet template; F4 decision audit appendix
-  schema (schema-only, no live history); F5 Stage 1 gaps. No dispatcher/code/runtime/scoreboard
-  change; no live registry; Tier 2/AUTH-5 blocked.
-  Prior: Tier 1 contract §11 signed (`1972df7`, MMI-DEC-020).
+LAST_COMPLETED: Tier 2A Worker Packet Intake contract draft placed
+  (MMI-DEC-022; INTAKE-2026-06-18-012). DRAFT UNSIGNED — not implementation;
+  `mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md`.
+  Default build mode in draft: Mode A (stdout-only). Tier 2A implementation blocked.
+  Prior: Tier 1 F1–F5 complete + F1 cosmetic (`38e89c4`).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

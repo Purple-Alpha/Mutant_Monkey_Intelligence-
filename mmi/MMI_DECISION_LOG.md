@@ -69,6 +69,8 @@ MMI-DEC-020 | 2026-06-18 | Tier 1 MMI Autonomous Brain contract §11 signature |
 
 MMI-DEC-021 | 2026-06-18 | Tier 1 MMI Autonomous Brain foundation build (F1–F5) | mmi/MMI_REPO_SURFACE_REGISTRY.md; mmi/MMI_TASK_REGISTRY_SCHEMA.md; mmi/MMI_WORKER_COMPLETION_PACKET_TEMPLATE.md; mmi/MMI_DECISION_AUDIT_APPENDIX_SCHEMA.md; mmi/MMI_AUTONOMOUS_BRAIN_STAGE1_GAPS.md | ACCEPT | Passive Tier 1 foundation artifacts F1–F5 created per signed contract `1972df7`; schema-only F2/F4; no dispatcher/code/runtime/scoreboard change; no live registry; no automation | Tier 2 tooling and AUTH-5 remain blocked until separate gates | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_BUILD only)
 
+MMI-DEC-022 | 2026-06-18 | Tier 2A Worker Packet Intake contract draft placement | mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md | ACCEPT | DRAFT UNSIGNED placement only; §11 hardened — signature approves contract only, not implementation; Mode A default / Mode B config only; no `scripts/mmi_packet_intake.py`; implementation blocked | Matt §11 + separate build authorization before Tier 2A code | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2A_CONTRACT_DRAFT_PLACEMENT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
