@@ -28,6 +28,7 @@ Closed registry of **in-scope evidence surfaces** MMI workers and intake may cit
 | `scripts/mmi_dispatch.py` | Derives MODE, scoreboards, `--verify` | Read source; run `--sync` / `--verify` for live output | **Output governs routing state only** | **Yes** (when synced into `MMI_CURRENT_STATE.md`) | Re-run dispatcher after routing-authority commits |
 | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` | Build sequencer; `BLOCKERS`; lifecycle | Read file in repo | No | No | Direct authority for build truth; reconcile with dispatcher |
 | `4. Product_Roadmap/*` (§11-signed contracts only) | Signed build/contract authority | Read signed file at cited commit | No | No | Cite commit hash when claiming sign-off |
+| `mmi/*CONTRACT*.md` (§11-signed only; e.g. `mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md`) | Signed MMI contract evidence — scope and gate definitions only; **not** implementation authority without separate explicit build authorization; **not** dispatcher input; does **not** authorize automation, registry-fed routing, AUTH-5 autonomy, or dispatcher edits | Direct file read + commit hash reference + §11 signature line | No | No | Cite commit hash at sign-off; post-§11 revision requires operator gate per contract |
 | `scripts/verify_build_truth.py` | Drift / build-truth checks | Run script; paste output in packet | No | No | Output valid at run timestamp |
 | `git status`, `git log`, `git diff` | Working tree and commit evidence | Run git; paste output in packet | No | No | Point-in-time; must be fresh at packet submission |
 
