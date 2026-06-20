@@ -123,6 +123,8 @@ MMI-DEC-047 | 2026-06-20 | #47 CaseTimelineAgent Mode A implementation + AWAITIN
 
 MMI-DEC-048 | 2026-06-20 | #47 post-signature authority trail reconciled | `4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md` §12; mmi/MMI_DECISION_LOG.md | ACCEPT | Records that §11 did not itself authorize build, but Matt later separately authorized SIGNED_UNBUILT reconcile (`a99e541`), Mode A build (`4d7fba2`), and AWAITING_AUDIT reconcile (`d3db956`) through named lanes and commits. Contract §12 supersedes signature-time BUILD NOT AUTHORIZED only for those recorded actions. | Grok completion gate re-run with §12 in packet | No GATED/GOVERNED promotion, registry/default dispatch, production dispatch, AUTH-5, push, or further autonomous action | Matt Nichol (authorize MMI_47_POST_SIGNATURE_AUTHORITY_ADDENDUM_ONLY)
 
+MMI-DEC-049 | 2026-06-20 | #47 CaseTimelineAgent Mode A reconciled to GATED | agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #47 row | ACCEPT | Completion gate rerun clean with 0 blocking / 0 warnings at `audit_outputs/case_timeline_20260620T233212Z.md`; lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing, not push. | No GOVERNED_AGENT promotion without separate authorization | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_47_GATED_RECONCILE_ONLY)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
