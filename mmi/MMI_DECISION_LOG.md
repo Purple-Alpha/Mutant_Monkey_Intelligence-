@@ -71,6 +71,8 @@ MMI-DEC-021 | 2026-06-18 | Tier 1 MMI Autonomous Brain foundation build (F1–F5
 
 MMI-DEC-022 | 2026-06-18 | Tier 2A Worker Packet Intake contract draft placement | mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md | ACCEPT | DRAFT UNSIGNED placement only; §11 hardened — signature approves contract only, not implementation; Mode A default / Mode B config only; no `scripts/mmi_packet_intake.py`; implementation blocked | Matt §11 + separate build authorization before Tier 2A code | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2A_CONTRACT_DRAFT_PLACEMENT only)
 
+MMI-DEC-023 | 2026-06-18 | Tier 2A Worker Packet Intake contract wording patch | mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md | ACCEPT | Review PASS WITH CHANGES applied: locked stdout vocabulary (`ACCEPT_FOR_MMI_REVIEW` / `REJECT_INCOMPLETE_PACKET`), structural-only validation, exit-code semantics, rollback/demotion, Mode B parked, acceptance tests T2A-T8–T12; contract wording only; not §11 signed; not implementation | Matt §11 + separate build authorization before Tier 2A code | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2A_CONTRACT_WORDING_PATCH only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

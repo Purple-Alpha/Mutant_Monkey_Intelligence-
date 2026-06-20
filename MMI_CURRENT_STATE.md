@@ -35,11 +35,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Tier 2A Worker Packet Intake contract draft placed
-  (MMI-DEC-022; INTAKE-2026-06-18-012). DRAFT UNSIGNED — not implementation;
-  `mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md`.
-  Default build mode in draft: Mode A (stdout-only). Tier 2A implementation blocked.
-  Prior: Tier 1 F1–F5 complete + F1 cosmetic (`38e89c4`).
+LAST_COMPLETED: Tier 2A Worker Packet Intake contract wording patch
+  (MMI-DEC-023; INTAKE-2026-06-18-013). DRAFT UNSIGNED — locked vocabulary
+  (`ACCEPT_FOR_MMI_REVIEW` / `REJECT_INCOMPLETE_PACKET`), structural-only validation,
+  exit-code semantics, rollback/demotion, Mode A default, Mode B parked. Not implementation.
+  Prior: Tier 2A contract draft placed (`5999e74`, MMI-DEC-022).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
