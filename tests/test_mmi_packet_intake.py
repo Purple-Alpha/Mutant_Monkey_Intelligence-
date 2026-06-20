@@ -27,6 +27,8 @@ IMMUTABLE_PATHS = [
     "MMI_CURRENT_STATE.md",
     "mmi/MMI_DECISION_LOG.md",
     "mmi/MMI_INTAKE_RECORDS.md",
+    "mmi/MMI_GATE_REGISTRY.md",
+    "mmi/MMI_TASK_REGISTRY_SCHEMA.md",
     "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md",
     "scripts/mmi_dispatch.py",
 ]
@@ -106,9 +108,9 @@ class Tier2APacketIntakeTests(unittest.TestCase):
         self.assertIn("BLANK_DEVIATIONS_FROM_CONTRACT", out)
 
     def test_t2a_t4_deviations_none_accepted(self):
-        text = open(
-            os.path.join(FIXTURES, "valid_no_routing_files.md"), encoding="utf-8"
-        ).read()
+        fixture_path = os.path.join(FIXTURES, "valid_no_routing_files.md")
+        with open(fixture_path, encoding="utf-8") as handle:
+            text = handle.read()
         verdict, codes = self.mod.validate_packet_text(text)
         self.assertEqual(verdict, "ACCEPT_FOR_MMI_REVIEW")
         self.assertEqual(codes, [])

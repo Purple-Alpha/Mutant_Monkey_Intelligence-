@@ -44,7 +44,7 @@ Signing this contract (future §11) approves **contract terms only**. It does **
 
 | Item | Description |
 |---|---|
-| `scripts/mmi_packet_intake.py` | Single CLI script; stdin or file path input; no daemon/hook |
+| `scripts/mmi_packet_intake.py` | Single CLI script; file-path input only (Mode A); no stdin; no daemon/hook |
 | Packet validation | Closed field set from F3 / I15; structural-only (§4) |
 | Mode A (default) | Stdout-only `ACCEPT_FOR_MMI_REVIEW` or `REJECT_INCOMPLETE_PACKET`; **zero file-write authority** |
 | Mode B (parked) | Stdout + **narrow append** to `mmi/MMI_INTAKE_RECORDS.md` only — not first-build default |
