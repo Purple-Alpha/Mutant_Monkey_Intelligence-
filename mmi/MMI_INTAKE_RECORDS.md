@@ -179,3 +179,12 @@ Classification: ADVERSARIAL_REVIEW — documentation reconciliation only; no AUT
 Restored: AUTH-1 passive / AUTH-2 respect-only / AUTH-5 autonomous selection isolated / AUTH-6 owner brief; Tier 1/2/3; registry and dispatcher boundaries; Decision Audit Appendix; lifecycle chain; invariants; acceptance tests
 Routing outcome: adversarial review on reconciled text; separate Matt approvals for each AUTH gate
 Matt approval required: YES before any AUTH gate implementation or contract promotion
+
+INTAKE-2026-06-19-008
+Component: MMI Autonomous Brain Foundation (hardening + Tier 1 contract draft)
+Request: MMI_AUTONOMOUS_BRAIN_REVIEW_HARDENING_AND_TIER1_CONTRACT_DRAFT — documentation only
+Source: Adversarial review PASS WITH CHANGES on reconciled review material (`ddb0850`)
+Artifacts: mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md (hardened); mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md (DRAFT UNSIGNED)
+Classification: ADVERSARIAL_REVIEW + CONTRACT_DRAFT — AUTH-2-EDIT, I13–I16, T12–T16, §14 gaps; Tier 1 five-file scope defined; not implemented
+Routing outcome: Matt §11 on Tier 1 contract + separate build authorization before F1–F5 artifact creation
+Matt approval required: YES for Tier 1 implementation; draft commit authorized by this intake only

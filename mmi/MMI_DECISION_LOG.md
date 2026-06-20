@@ -61,6 +61,8 @@ MMI-DEC-016 | 2026-06-19 | MMI Autonomous Brain Foundation review material place
 
 MMI-DEC-017 | 2026-06-19 | MMI Autonomous Brain Foundation review material reconciliation patch | mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md | ACCEPT | Reconciled to external-reviewed AUTH-1–6 semantics, Tier 1/2/3, registry/dispatcher boundaries, Decision Audit Appendix, lifecycle ordering, invariants, acceptance tests; AUTH-5 = autonomous selection isolated; AUTH-2 = dispatcher respect-only; review material only | Adversarial review on reconciled text; no AUTH gate activation | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_RECONCILIATION_PATCH only)
 
+MMI-DEC-018 | 2026-06-19 | MMI Autonomous Brain review hardening + Tier 1 contract draft | mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md; mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md | ACCEPT | Adversarial PASS WITH CHANGES wording applied (AUTH-2-EDIT, I13–I16, T12–T16, §14 gaps); Tier 1 contract drafted UNSIGNED; no Tier 1 implementation | Matt §11 on Tier 1 contract + separate build auth before artifact creation | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_REVIEW_HARDENING_AND_TIER1_CONTRACT_DRAFT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
