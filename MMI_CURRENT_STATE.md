@@ -35,12 +35,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: MMI Autonomous Brain Foundation review material placed
-  (`mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md`, DRAFT FOR ADVERSARIAL
-  REVIEW — NOT SIGNED — NOT A CONTRACT; MMI-DEC-016 /
-  MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_PLACEMENT). Review material only; no dispatcher,
-  code, scoreboard, or implementation authorization.
-  Prior: #47 Case Timeline contract draft (`99dbe6f`).
+LAST_COMPLETED: MMI Autonomous Brain Foundation review material reconciled
+  (`mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md` patched per external-reviewed
+  AUTH structure; MMI-DEC-017 / MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_RECONCILIATION_PATCH).
+  Review material only — no dispatcher, code, scoreboard, or implementation authorization.
+  Prior: review material placement (`9b92368`).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

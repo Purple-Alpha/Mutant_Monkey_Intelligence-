@@ -59,6 +59,8 @@ MMI-DEC-015 | 2026-06-19 | #47 Case Timeline Agent Design Contract draft | 4. Pr
 
 MMI-DEC-016 | 2026-06-19 | MMI Autonomous Brain Foundation review material placement | mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md | ACCEPT | DRAFT adversarial review material placed; AUTH-3 split to AUTH-3A (registry format) + AUTH-3B (write mechanics); no dispatcher/code/scoreboard change | Adversarial review + separate AUTH gates before any implementation | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_PLACEMENT only)
 
+MMI-DEC-017 | 2026-06-19 | MMI Autonomous Brain Foundation review material reconciliation patch | mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md | ACCEPT | Reconciled to external-reviewed AUTH-1–6 semantics, Tier 1/2/3, registry/dispatcher boundaries, Decision Audit Appendix, lifecycle ordering, invariants, acceptance tests; AUTH-5 = autonomous selection isolated; AUTH-2 = dispatcher respect-only; review material only | Adversarial review on reconciled text; no AUTH gate activation | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_RECONCILIATION_PATCH only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

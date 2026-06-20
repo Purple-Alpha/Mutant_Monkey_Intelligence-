@@ -169,3 +169,13 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md (DRAFT FOR ADVE
 Classification: ADVERSARIAL_REVIEW — AUTH-1 placement only; AUTH-2 through AUTH-8 not authorized; AUTH-3 split AUTH-3A/3B
 Routing outcome: adversarial review lane; no dispatcher edit; no registry population; no implementation
 Matt approval required: YES before any AUTH-2+ gate or contract promotion
+
+INTAKE-2026-06-19-007
+Component: MMI Autonomous Brain Foundation (reconciliation patch)
+Request: MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_RECONCILIATION_PATCH — review material doctrine alignment only
+Source: MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_RECONCILIATION_CHECK report vs commit 9b92368
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md (reconciled DRAFT — NOT SIGNED — NOT A CONTRACT)
+Classification: ADVERSARIAL_REVIEW — documentation reconciliation only; no AUTH gate activation; no implementation
+Restored: AUTH-1 passive / AUTH-2 respect-only / AUTH-5 autonomous selection isolated / AUTH-6 owner brief; Tier 1/2/3; registry and dispatcher boundaries; Decision Audit Appendix; lifecycle chain; invariants; acceptance tests
+Routing outcome: adversarial review on reconciled text; separate Matt approvals for each AUTH gate
+Matt approval required: YES before any AUTH gate implementation or contract promotion
