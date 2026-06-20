@@ -202,6 +202,11 @@ Candidates failing any gate are **excluded** (not scored).
 | E9 | No `NEEDS_STAGE_B_AUTH` in blockers |
 | E10 | Registry tasks: status not `COMPLETE` |
 | E11 | No `NEEDS_BUILD_AUTH` in blockers |
+| E12 | Not already built — column-2 prefix in closed set (`GATED`, `GOVERNED_AGENT`, `INFRASTRUCTURE_BUILT`) |
+| E13 | Buildable lifecycle required — column-2 prefix in buildable set (`SIGNED_UNBUILT`, `AWAITING_AUDIT`) only |
+| E14 | Agent Design Contract resolvable on disk — mandatory exclude if absent (`BLOCKED_MISSING_CONTRACT`) |
+
+Buildability gates E12–E14 are defined in `mmi/MMI_ESTIMATOR_BUILDABILITY_GATE_AMENDMENT.md` (§11 signed 2026-06-20, MMI-DEC-045). Applied before scoring; excluded candidates are not scored low — they are excluded.
 
 ---
 
@@ -249,6 +254,18 @@ STATE_INCOMPLETE_CANNOT_SCORE
 missing_or_conflicting:
   - ...
 ```
+
+### Buildability additions (MMI-DEC-045)
+
+| Label | When emitted |
+|---|---|
+| `ADVISORY_ONLY: ...` | Prefix when verify-text shows `MODE: ALL_CLEAR` |
+| `NO_BUILDABLE_CANDIDATES` | E12–E14 exclude every candidate from next-build ranking |
+| `BUILDABILITY_EXCLUSIONS` | Telemetry block listing excluded candidates and reason codes |
+
+Exclusion reason codes: `EXCLUDED_ALREADY_BUILT` (E12), `EXCLUDED_NON_BUILDABLE_STATE` (E13), `BLOCKED_MISSING_CONTRACT` (E14).
+
+Primary scoring outcomes (`SCORED_CANDIDATES`, `STATE_INCOMPLETE_CANNOT_SCORE`) unchanged.
 
 ---
 
@@ -328,3 +345,10 @@ Estimator weights are **owner-defined scoring policy**, not implementation conve
 | T25 | Locked weights unchanged | Code `WEIGHTS` equals §10.1 / §11 signed record |
 | T26 | No negative missing-data penalty | Missing data never emits negative numeric factor values |
 | T27 | Deterministic NULL output | Same inputs → identical NULL/coverage/score/rank output |
+| T28 | Built excluded | No E12 closed-prefix row in next-build ranking |
+| T29 | Non-buildable state excluded | Non-buildable prefixes excluded with `EXCLUDED_NON_BUILDABLE_STATE` |
+| T30 | Missing contract caught | Missing Agent Design Contract → `BLOCKED_MISSING_CONTRACT`; not rank #1 |
+| T31 | ALL_CLEAR advisory | Verify-text with `MODE: ALL_CLEAR` → `ADVISORY_ONLY` prefix |
+| T32 | No buildable candidates | All excluded → `NO_BUILDABLE_CANDIDATES`; no ranked built/blocked rows |
+| T33 | Agreement check | Buildable set ⊆ E13 prefixes; no E12 closed prefix in buildable set |
+| T34 | Worth unchanged within buildable | Pre-gate weighted-sum order preserved among buildable candidates |
