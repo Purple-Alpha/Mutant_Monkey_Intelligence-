@@ -111,6 +111,8 @@ MMI-DEC-041 | 2026-06-20 | Architect Mode A build | scripts/mmi_architect.py; te
 
 MMI-DEC-042 | 2026-06-20 | Architect contract alignment patch | mmi/MMI_ARCHITECT_BLUEPRINT_CONTRACT.md | ACCEPT | Expanded signed Architect contract to match implemented Mode A behavior (scripts/mmi_architect.py + tests T1–T11): two-output envelope, Section 7 blueprint parts, cannot-blueprint triggers, #52 live gap documented, research exclusion, forbidden tokens, authority boundaries. No code behavior change. Live #52 still cannot-blueprint until Plain_English_Explanation_Agent_Design_Contract_Deep_Dive.md exists on disk. | Architect slice commit review remains operator decision | No #52 contract placement in this patch | Matt Nichol (authorize MMI_ARCHITECT_CONTRACT_ALIGNMENT_PATCH only)
 
+MMI-DEC-043 | 2026-06-20 | Estimator NULL recalibration | mmi/MMI_ESTIMATOR_SCORING_CONTRACT.md §5.3; scripts/mmi_estimator.py NULL semantics | ACCEPT | Measured zero stays numeric zero; missing/unavailable factor sources emit NULL(no_data: reason); NULL excluded from total_measured_score; coverage and dark-factor reporting added; ranking sorts by total_measured_score then coverage_count. Weights unchanged (F1=30 F2=25 F3=20 F4=10 F5=10 F6=5). No negative missing-data penalty. Research authority exclusion preserved. | Operator review before commit | No weight changes | Matt Nichol (authorize Estimator NULL recalibration dispatch 2026-06-20)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

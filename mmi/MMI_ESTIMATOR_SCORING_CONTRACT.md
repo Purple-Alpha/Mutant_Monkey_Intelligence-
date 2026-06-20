@@ -47,10 +47,13 @@ The **Estimator** is a read-only arithmetic engine that scores incomplete build 
 
 | ID | Decision |
 |---|---|
-| E-D1 | Scoring policy: **PURE WEIGHTED SUM** |
-| E-D2 | Factors F1–F6 are **0–10** integers before weighting |
+| E-D1 | Scoring policy: **PURE WEIGHTED SUM over measured factors only** |
+| E-D2 | Measured factors are **0–10** integers; missing/unavailable sources emit **`NULL(no_data: reason)`** — never numeric |
 | E-D3 | **Locked weights (§11):** W1=30, W2=25, W3=20, W4=10, W5=10, W6=5 (sum 100) — owner policy; not code-only tunables |
-| E-D4 | `total = sum(Fi * Wi) / 10` — maximum 100 when all Fi=10 |
+| E-D4 | `total_measured_score = sum(measured_Fi * Wi) / 10` — NULL factors excluded; maximum 100 when all six factors measured at 10 |
+| E-D4a | **Measured zero ≠ NULL:** a factor that reads real input and computes zero emits `0`; absent/empty/unresolved source emits `NULL` |
+| E-D4b | NULL is never converted to `0`, never a negative penalty, never hidden in weighted output |
+| E-D4c | Coverage reported separately: `coverage: N/6`, `coverage_status`, `dark_factors`, top-level dark-factor summary |
 | E-D5 | Eligibility gates E1–E11 **exclude** candidates; never score-low |
 | E-D6 | Agent Health Score is factor F6 only; **does not** dominate (W6=5 cap) |
 | E-D7 | Forbidden tool verdict tokens per §9 — never emitted |
@@ -63,11 +66,11 @@ The **Estimator** is a read-only arithmetic engine that scores incomplete build 
 | Factor | Name | Source | 0–10 rule |
 |---|---|---|---|
 | F1 | Readiness | Lifecycle + recorded scoreboard maturity fields | §5.1 formula (cap 10) |
-| F2 | Dependency unlock | Scoreboard `DEPENDS_ON` graph | `min(10, downstream_count)`; `0` with `downstream_deps=0_recorded` when absent |
-| F3 | Rubric | `LAST_RUBRIC_SCORE` | Numeric 0–10 as recorded; `—` → 0 |
-| F4 | Evidence completeness | Scoreboard row refs + DEC/INTAKE/indexed artifacts | §5.2 formula (cap 10); **excludes** `mmi/research/` |
-| F5 | Verify cleanliness | Manifest verify snapshot | **Run-hygiene gate only:** BLOCK present → cannot score; PASS/ABSENT → F5=0 for all (non-separating) |
-| F6 | Health (capped) | Agent Health Score Board | `min(10, health_score // 10)`; missing → 0 |
+| F2 | Dependency unlock | Scoreboard `DEPENDS_ON` graph | **Measured** when dependency graph populated: `min(10, downstream_count)`; measured `0` when graph populated and count=0; **NULL** when graph not populated or registry row |
+| F3 | Rubric | `LAST_RUBRIC_SCORE` | **Measured** numeric 0–10 when recorded; **NULL** when column absent, empty, or `—` |
+| F4 | Evidence completeness | Scoreboard row refs + DEC/INTAKE/indexed artifacts | §5.2 formula (cap 10); **excludes** `mmi/research/`; always measured for eligible rows |
+| F5 | Verify cleanliness | Manifest verify snapshot | **Run-hygiene gate only:** BLOCK present → cannot score run; PASS/ABSENT → measured `0` (non-separating) |
+| F6 | Health (capped) | Agent Health Score Board | **Measured** `min(10, health_score // 10)` when board present and row linked; **NULL** when board absent or row not linked |
 
 ---
 
@@ -113,13 +116,37 @@ Deterministic count from recorded refs only:
 
 Registry rows: count `source_evidence` list entries (cap 10).
 
-### 5.3 Tie-breakers (fixed order after total)
+### 5.3 NULL semantics and coverage (2026-06-20 recalibration)
 
-1. Higher F1
-2. Higher F4
-3. Higher F3
-4. Higher F2
-5. Lower lexicographic `candidate_id`
+| Rule | Requirement |
+|---|---|
+| N-1 | Measured zero is not missing data |
+| N-2 | NULL is not numeric; never coerced to `0` or negative penalty |
+| N-3 | NULL excluded from `total_measured_score` and per-candidate `weighted:` lines |
+| N-4 | Each NULL factor must name reason: `NULL(no_data: ...)` |
+| N-5 | Per candidate: `coverage: N/6`, `dark_factors:`, `coverage_status:` |
+| N-6 | Rankings with dark factors are provisional; output includes top-level dark-factor summary |
+| N-7 | Research-sourced-only inputs remain excluded; never scored as numeric |
+
+**Coverage status thresholds:**
+
+| Status | Rule |
+|---|---|
+| `FULL` | 6/6 factors measured |
+| `PARTIAL` | 4–5/6 factors measured |
+| `LOW_COVERAGE_PROVISIONAL` | ≤3/6 factors measured |
+
+NULL does not raise or lower score; it prevents silent full-measurement appearance.
+
+### 5.4 Tie-breakers (fixed order after total)
+
+1. Higher `total_measured_score`
+2. Higher `coverage_count` (measured factor count)
+3. Higher measured F1 (NULL sorts below any measured value)
+4. Higher measured F4
+5. Higher measured F3
+6. Higher measured F2
+7. Lower lexicographic `candidate_id`
 
 Output must include `separation:` line naming recorded inputs used.
 
@@ -186,15 +213,34 @@ Candidates failing any gate are **excluded** (not scored).
 SCORED_CANDIDATES
 candidate_count: N
 weights: F1=30 F2=25 F3=20 F4=10 F5=10 F6=5
+ranking computed with dark factors present
+factor_coverage_summary:
+  F1 measured: N / NULL: N
+  ...
+dark_factor_causes:
+  F2: dependency graph not populated for scoreboard rows
+  F3: LAST_RUBRIC_SCORE empty / placeholder
+  F6: health board absent or row not linked
 ---
 candidate_id: ...
 source: scoreboard|registry
-factors: F1=.. F2=.. F3=.. F4=.. F5=.. F6=..
-weighted: W1=.. W2=.. W3=.. W4=.. W5=.. W6=..
-total: ..
+factors:
+  F1=8
+  F2=NULL(no_data: dependency graph not populated for scoreboard rows)
+  F3=NULL(no_data: LAST_RUBRIC_SCORE empty)
+  F4=1
+  F5=0
+  F6=NULL(no_data: health row not linked)
+coverage: 3/6
+dark_factors: F2,F3,F6
+weighted: W1=24.00 W4=1.00 W5=0.00
+total_measured_score: 25.00
+coverage_status: LOW_COVERAGE_PROVISIONAL
+separation: ...
 tie_break: ...
-excluded_by: [gate ids if audit mode]
 ```
+
+Top-level dark-factor summary appears when any candidate has NULL factors.
 
 ### STATE_INCOMPLETE_CANNOT_SCORE
 
@@ -273,3 +319,12 @@ Estimator weights are **owner-defined scoring policy**, not implementation conve
 | T16 | Scoreboard F4 wired | Deterministic evidence count from scoreboard row fields |
 | T17 | Research excluded | `mmi/research/` paths contribute 0 to F1 code_surface and F4 |
 | T18 | Equivalent tie explained | Tied rows include `separation:` showing identical recorded inputs |
+| T19 | Measured zero preserved | Populated dependency graph with zero downstream deps → F2=`0`, not NULL |
+| T20 | Absent source → NULL | Missing dependency graph / rubric / health source → `NULL(no_data: ...)` |
+| T21 | NULL excluded from total | NULL factor contributes exactly 0 to `total_measured_score` |
+| T22 | Dark-factor report | Output names every NULL factor and reason; top-level summary when dark |
+| T23 | Coverage shown | Each candidate includes `coverage: N/6` |
+| T24 | Low-coverage provisional | ≤3/6 measured → `coverage_status: LOW_COVERAGE_PROVISIONAL` |
+| T25 | Locked weights unchanged | Code `WEIGHTS` equals §10.1 / §11 signed record |
+| T26 | No negative missing-data penalty | Missing data never emits negative numeric factor values |
+| T27 | Deterministic NULL output | Same inputs → identical NULL/coverage/score/rank output |

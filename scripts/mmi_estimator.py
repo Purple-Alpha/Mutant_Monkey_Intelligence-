@@ -9,12 +9,15 @@ Weight authority: Estimator weights are owner policy locked by
 ``WEIGHTS`` below must match the signed record. Weight changes require
 operator instruction plus contract revision or MMI-DEC entry — never silent
 code-only tuning.
+
+NULL recalibration (MMI-DEC-043): measured zero stays numeric; missing or
+unavailable factor sources emit ``NULL(no_data: reason)`` and are excluded from
+``total_measured_score``.
 """
 from __future__ import annotations
 
 import argparse
 import re
-import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -37,6 +40,8 @@ SIGNED_WEIGHTS_RECORD: dict[str, int] = {
 }
 
 WEIGHTS = dict(SIGNED_WEIGHTS_RECORD)
+
+FACTOR_IDS = tuple(f"F{i}" for i in range(1, 7))
 
 FORBIDDEN_TOOL_VERDICTS = frozenset(
     {
@@ -83,6 +88,24 @@ PRODUCT_ROADMAP_RE = re.compile(r"4\. Product_Roadmap/[\w./_-]+\.md")
 HEX40_RE = re.compile(r"\b[0-9a-fA-F]{40}\b")
 RESEARCH_PATH_RE = re.compile(r"mmi/research/", re.IGNORECASE)
 
+DARK_FACTOR_CAUSES = {
+    "F2": "dependency graph not populated for scoreboard rows",
+    "F3": "LAST_RUBRIC_SCORE empty / placeholder",
+    "F6": "health board absent or row not linked",
+}
+
+
+@dataclass(frozen=True)
+class FactorResult:
+    measured: bool
+    value: int | None = None
+    null_reason: str = ""
+
+    def display(self) -> str:
+        if self.measured:
+            return str(self.value)
+        return f"NULL(no_data: {self.null_reason})"
+
 
 @dataclass
 class Candidate:
@@ -94,6 +117,7 @@ class Candidate:
     track: str
     depends_on: list[str] = field(default_factory=list)
     last_rubric_score: int | None = None
+    has_rubric_column: bool = False
     registry_status: str = ""
     evidence_count: int = 0
     health_score: int | None = None
@@ -108,12 +132,27 @@ class Candidate:
 @dataclass
 class ScoredCandidate:
     candidate: Candidate
-    factors: dict[str, int]
+    factor_results: dict[str, FactorResult]
     weighted: dict[str, float]
-    total: float
+    total_measured_score: float
+    coverage_count: int
+    coverage_status: str
+    dark_factors: list[str]
     tie_break: str
     separation: str
     f2_note: str = ""
+
+    @property
+    def factors(self) -> dict[str, int]:
+        return {
+            key: result.value
+            for key, result in self.factor_results.items()
+            if result.measured and result.value is not None
+        }
+
+    @property
+    def total(self) -> float:
+        return self.total_measured_score
 
 
 def _repo_root() -> Path:
@@ -170,7 +209,7 @@ def _parse_rubric(cell: str) -> int | None:
         return None
 
 
-def _parse_health_board(scoreboard: str) -> dict[str, int]:
+def _parse_health_board(scoreboard: str) -> tuple[dict[str, int], bool]:
     scores: dict[str, int] = {}
     in_board = False
     for line in scoreboard.splitlines():
@@ -189,7 +228,7 @@ def _parse_health_board(scoreboard: str) -> dict[str, int]:
             scores[agent_id] = int(parts[4])
         except ValueError:
             continue
-    return scores
+    return scores, in_board
 
 
 def _governed_agent_ids(scoreboard: str) -> set[str]:
@@ -209,7 +248,10 @@ def _governed_agent_ids(scoreboard: str) -> set[str]:
     return done
 
 
-def _parse_scoreboard_rows(scoreboard: str, health: dict[str, int]) -> list[Candidate]:
+def _parse_scoreboard_rows(
+    scoreboard: str,
+    health: dict[str, int],
+) -> list[Candidate]:
     rows: list[Candidate] = []
     governed = _governed_agent_ids(scoreboard)
     for line in scoreboard.splitlines():
@@ -226,7 +268,8 @@ def _parse_scoreboard_rows(scoreboard: str, health: dict[str, int]) -> list[Cand
             continue
         blockers = parts[6] if len(parts) > 6 else ""
         track = parts[7] if len(parts) > 7 else ""
-        rubric = _parse_rubric(parts[8]) if len(parts) > 8 else None
+        has_rubric_column = len(parts) > 8
+        rubric = _parse_rubric(parts[8]) if has_rubric_column else None
         depends: list[str] = []
         for token in re.findall(r"DEPENDS_ON:#(\d+)", blockers):
             depends.append(token)
@@ -240,6 +283,7 @@ def _parse_scoreboard_rows(scoreboard: str, health: dict[str, int]) -> list[Cand
                 track=track,
                 depends_on=depends,
                 last_rubric_score=rubric,
+                has_rubric_column=has_rubric_column,
                 health_score=health.get(raw_id) or health.get(agent_id),
                 code_evidence=parts[3] if len(parts) > 3 else "",
                 layer=parts[4] if len(parts) > 4 else "",
@@ -353,6 +397,10 @@ def _downstream_unlock_count(agent_id: str, scoreboard: str) -> int:
     return sum(1 for line in scoreboard.splitlines() if needle in line)
 
 
+def _dependency_graph_populated(scoreboard: str) -> bool:
+    return "DEPENDS_ON:" in scoreboard
+
+
 def _apply_gates(
     candidates: list[Candidate],
     scoreboard: str,
@@ -393,40 +441,63 @@ def _apply_gates(
     return eligible, excluded
 
 
-def _f1_readiness(cand: Candidate) -> int:
+def _f1_readiness(cand: Candidate) -> FactorResult:
     if cand.source == "registry":
-        return READINESS_REGISTRY.get(cand.registry_status, 3)
+        return FactorResult(True, READINESS_REGISTRY.get(cand.registry_status, 3))
     base = READINESS_LIFECYCLE_BASE.get(cand.runtime_status, 3)
     if cand.runtime_status == "SPEC_ONLY" and "NEEDS_SIGNED_CONTRACT" in cand.blockers:
-        return 5
-    if cand.source != "scoreboard":
-        return min(10, base)
+        return FactorResult(True, 5)
     total = base
     total += _code_surface_count(cand.code_evidence)
     total += _signed_surface_bonus(cand.status_cell, cand.code_evidence)
     total -= _partial_penalty(cand.status_cell)
     total += _layer_breadth_bonus(cand.layer, cand.track)
-    return max(0, min(10, total))
+    return FactorResult(True, max(0, min(10, total)))
 
 
-def _f2_unlock(cand: Candidate, scoreboard: str) -> tuple[int, str]:
+def _f2_unlock(
+    cand: Candidate,
+    scoreboard: str,
+    graph_populated: bool,
+) -> tuple[FactorResult, str]:
     if cand.source != "scoreboard":
-        return 0, "downstream_deps=0_no_scoreboard_row"
+        return (
+            FactorResult(
+                False,
+                null_reason="no scoreboard dependency graph for registry row",
+            ),
+            "downstream_deps=NULL",
+        )
+    if not graph_populated:
+        return (
+            FactorResult(
+                False,
+                null_reason="dependency graph not populated for scoreboard rows",
+            ),
+            "downstream_deps=no_graph",
+        )
     agent_id = cand.candidate_id.lstrip("#")
     count = _downstream_unlock_count(agent_id, scoreboard)
     if count == 0:
-        return 0, "downstream_deps=0_recorded"
-    return min(10, count), f"downstream_deps={count}"
+        return FactorResult(True, 0), "downstream_deps=0_recorded"
+    return FactorResult(True, min(10, count)), f"downstream_deps={count}"
 
 
-def _f3_rubric(cand: Candidate) -> int:
+def _f3_rubric(cand: Candidate) -> FactorResult:
+    if cand.source == "registry":
+        return FactorResult(
+            False,
+            null_reason="LAST_RUBRIC_SCORE not present on registry tasks",
+        )
     if cand.last_rubric_score is not None:
-        return max(0, min(10, cand.last_rubric_score))
-    return 0
+        return FactorResult(True, max(0, min(10, cand.last_rubric_score)))
+    if cand.has_rubric_column:
+        return FactorResult(False, null_reason="LAST_RUBRIC_SCORE empty")
+    return FactorResult(False, null_reason="LAST_RUBRIC_SCORE column absent")
 
 
-def _f4_evidence(cand: Candidate) -> int:
-    return max(0, min(10, cand.evidence_count))
+def _f4_evidence(cand: Candidate) -> FactorResult:
+    return FactorResult(True, max(0, min(10, cand.evidence_count)))
 
 
 def _manifest_verify_gate(verify_text: str) -> tuple[bool, str]:
@@ -442,25 +513,40 @@ def _manifest_verify_gate(verify_text: str) -> tuple[bool, str]:
     return False, "UNREADABLE"
 
 
-def _f5_verify(manifest_verify: str) -> int:
-    """Run-hygiene only. Non-separating: 0 when manifest verify PASS/ABSENT."""
+def _f5_verify(manifest_verify: str) -> FactorResult:
     if manifest_verify in ("PASS", "ABSENT"):
-        return 0
-    return 0
+        return FactorResult(True, 0)
+    return FactorResult(True, 0)
 
 
-def _f6_health(cand: Candidate) -> int:
+def _f6_health(cand: Candidate, health_board_present: bool) -> FactorResult:
+    if not health_board_present:
+        return FactorResult(False, null_reason="health board absent")
     if cand.health_score is None:
-        return 0
-    return min(10, cand.health_score // 10)
+        return FactorResult(False, null_reason="health row not linked")
+    return FactorResult(True, min(10, cand.health_score // 10))
 
 
-def _separation_note(cand: Candidate, factors: dict[str, int], f2_note: str) -> str:
+def _coverage_status(count: int) -> str:
+    if count >= 6:
+        return "FULL"
+    if count >= 4:
+        return "PARTIAL"
+    return "LOW_COVERAGE_PROVISIONAL"
+
+
+def _separation_note(
+    cand: Candidate,
+    factor_results: dict[str, FactorResult],
+    f2_note: str,
+) -> str:
+    f3 = factor_results["F3"]
+    f3_text = str(f3.value) if f3.measured else "NULL"
     if cand.source == "registry":
         return (
             f"F1=registry_status:{cand.registry_status} "
             f"F4=registry_evidence_refs:{cand.evidence_count} "
-            f"{f2_note}"
+            f"F3={f3_text} {f2_note}"
         )
     return (
         f"F1=life:{cand.runtime_status}+code:{_code_surface_count(cand.code_evidence)}"
@@ -468,7 +554,7 @@ def _separation_note(cand: Candidate, factors: dict[str, int], f2_note: str) -> 
         f"-partial:{_partial_penalty(cand.status_cell)}"
         f"+layer:{_layer_breadth_bonus(cand.layer, cand.track)} "
         f"F4=recorded_refs:{cand.evidence_count} "
-        f"F3=rubric:{cand.last_rubric_score if cand.last_rubric_score is not None else 'none'} "
+        f"F3=rubric:{f3_text} "
         f"{f2_note}"
     )
 
@@ -477,38 +563,92 @@ def _score_candidate(
     cand: Candidate,
     scoreboard: str,
     manifest_verify: str,
+    *,
+    graph_populated: bool,
+    health_board_present: bool,
 ) -> ScoredCandidate:
-    f2, f2_note = _f2_unlock(cand, scoreboard)
-    factors = {
+    f2, f2_note = _f2_unlock(cand, scoreboard, graph_populated)
+    factor_results = {
         "F1": _f1_readiness(cand),
         "F2": f2,
         "F3": _f3_rubric(cand),
         "F4": _f4_evidence(cand),
         "F5": _f5_verify(manifest_verify),
-        "F6": _f6_health(cand),
+        "F6": _f6_health(cand, health_board_present),
     }
-    weighted = {f"W{i}": factors[f"F{i}"] * WEIGHTS[f"F{i}"] / 10 for i in range(1, 7)}
-    total = round(sum(weighted.values()), 2)
+    weighted: dict[str, float] = {}
+    total = 0.0
+    coverage_count = 0
+    dark_factors: list[str] = []
+    for idx, factor_id in enumerate(FACTOR_IDS, start=1):
+        result = factor_results[factor_id]
+        if result.measured and result.value is not None:
+            coverage_count += 1
+            contrib = result.value * WEIGHTS[factor_id] / 10
+            weighted[f"W{idx}"] = contrib
+            total += contrib
+        else:
+            dark_factors.append(factor_id)
+    total_measured_score = round(total, 2)
     tie_break = (
-        f"F1={factors['F1']},F4={factors['F4']},F3={factors['F3']},"
-        f"F2={factors['F2']},id={cand.candidate_id}"
+        f"total={total_measured_score},coverage={coverage_count},"
+        f"F1={factor_results['F1'].display()},F4={factor_results['F4'].display()},"
+        f"F3={factor_results['F3'].display()},F2={factor_results['F2'].display()},"
+        f"id={cand.candidate_id}"
     )
-    separation = _separation_note(cand, factors, f2_note)
-    return ScoredCandidate(cand, factors, weighted, total, tie_break, separation, f2_note)
+    separation = _separation_note(cand, factor_results, f2_note)
+    return ScoredCandidate(
+        candidate=cand,
+        factor_results=factor_results,
+        weighted=weighted,
+        total_measured_score=total_measured_score,
+        coverage_count=coverage_count,
+        coverage_status=_coverage_status(coverage_count),
+        dark_factors=dark_factors,
+        tie_break=tie_break,
+        separation=separation,
+        f2_note=f2_note,
+    )
+
+
+def _factor_sort_value(result: FactorResult) -> int:
+    if result.measured and result.value is not None:
+        return result.value
+    return -1
 
 
 def _sort_scored(scored: list[ScoredCandidate]) -> list[ScoredCandidate]:
     return sorted(
         scored,
         key=lambda s: (
-            -s.total,
-            -s.factors["F1"],
-            -s.factors["F4"],
-            -s.factors["F3"],
-            -s.factors["F2"],
+            -s.total_measured_score,
+            -s.coverage_count,
+            -_factor_sort_value(s.factor_results["F1"]),
+            -_factor_sort_value(s.factor_results["F4"]),
+            -_factor_sort_value(s.factor_results["F3"]),
+            -_factor_sort_value(s.factor_results["F2"]),
             s.candidate.candidate_id,
         ),
     )
+
+
+def _factor_coverage_summary(scored: list[ScoredCandidate]) -> dict[str, tuple[int, int]]:
+    summary: dict[str, tuple[int, int]] = {}
+    for factor_id in FACTOR_IDS:
+        measured = sum(1 for item in scored if item.factor_results[factor_id].measured)
+        null_count = len(scored) - measured
+        summary[factor_id] = (measured, null_count)
+    return summary
+
+
+def _collect_dark_causes(scored: list[ScoredCandidate]) -> dict[str, set[str]]:
+    causes: dict[str, set[str]] = {factor_id: set() for factor_id in FACTOR_IDS}
+    for item in scored:
+        for factor_id in item.dark_factors:
+            result = item.factor_results[factor_id]
+            if result.null_reason:
+                causes[factor_id].add(result.null_reason)
+    return causes
 
 
 def analyze(
@@ -537,7 +677,8 @@ def analyze(
         return [], errors, manifest_verify
 
     decision_text = _read_text(decision_path)
-    health = _parse_health_board(scoreboard)
+    health, health_board_present = _parse_health_board(scoreboard)
+    graph_populated = _dependency_graph_populated(scoreboard)
 
     candidates = _parse_scoreboard_rows(scoreboard, health)
     candidates.extend(_parse_registry_tasks(registry_text))
@@ -552,7 +693,16 @@ def analyze(
         return [], errors, manifest_verify
 
     eligible, _ = _apply_gates(candidates, scoreboard, active_track)
-    scored = [_score_candidate(c, scoreboard, manifest_verify) for c in eligible]
+    scored = [
+        _score_candidate(
+            c,
+            scoreboard,
+            manifest_verify,
+            graph_populated=graph_populated,
+            health_board_present=health_board_present,
+        )
+        for c in eligible
+    ]
     return _sort_scored(scored), [], manifest_verify
 
 
@@ -562,23 +712,41 @@ def format_scored(scored: list[ScoredCandidate], manifest_verify: str) -> str:
         f"candidate_count: {len(scored)}",
         "weights: F1=30 F2=25 F3=20 F4=10 F5=10 F6=5",
         f"manifest_verify: {manifest_verify}",
-        "f5_policy: run_hygiene_only (F5=0; non-separating)",
-        "---",
+        "f5_policy: run_hygiene_only (F5=0 measured; non-separating)",
     ]
+    summary = _factor_coverage_summary(scored)
+    dark_causes = _collect_dark_causes(scored)
+    has_dark = any(null_count for _, null_count in summary.values())
+    if has_dark:
+        lines.append("ranking computed with dark factors present")
+        lines.append("factor_coverage_summary:")
+        for factor_id in FACTOR_IDS:
+            measured, null_count = summary[factor_id]
+            lines.append(f"  {factor_id} measured: {measured} / NULL: {null_count}")
+        lines.append("dark_factor_causes:")
+        for factor_id in FACTOR_IDS:
+            reasons = sorted(dark_causes[factor_id])
+            if reasons:
+                lines.append(f"  {factor_id}: {'; '.join(reasons)}")
+            elif factor_id in DARK_FACTOR_CAUSES and summary[factor_id][1]:
+                lines.append(f"  {factor_id}: {DARK_FACTOR_CAUSES[factor_id]}")
+    lines.append("---")
     for item in scored:
         c = item.candidate
         lines.append(f"candidate_id: {c.candidate_id}")
         lines.append(f"source: {c.source}")
         lines.append(f"name: {c.name}")
-        lines.append(
-            "factors: "
-            + " ".join(f"{k}={v}" for k, v in sorted(item.factors.items()))
-        )
+        lines.append("factors:")
+        for factor_id in FACTOR_IDS:
+            lines.append(f"  {factor_id}={item.factor_results[factor_id].display()}")
+        lines.append(f"coverage: {item.coverage_count}/6")
+        lines.append(f"dark_factors: {','.join(item.dark_factors) if item.dark_factors else 'none'}")
         lines.append(
             "weighted: "
             + " ".join(f"{k}={item.weighted[k]:.2f}" for k in sorted(item.weighted))
         )
-        lines.append(f"total: {item.total:.2f}")
+        lines.append(f"total_measured_score: {item.total_measured_score:.2f}")
+        lines.append(f"coverage_status: {item.coverage_status}")
         lines.append(f"separation: {item.separation}")
         lines.append(f"tie_break: {item.tie_break}")
         lines.append("---")

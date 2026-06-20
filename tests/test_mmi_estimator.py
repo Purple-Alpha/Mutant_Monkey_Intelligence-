@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance tests T1–T13 for MMI Estimator Mode A."""
+"""Acceptance tests T1–T27 for MMI Estimator Mode A."""
 from __future__ import annotations
 
 import hashlib
@@ -122,14 +122,20 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertIn("conflicting_candidate_id", out)
 
     def test_t8_health_capped(self):
-        scored, errors, _ = self.mod.analyze(
-            self.mod.Path(os.path.join(FIXTURES, "clean")),
-            verify_text=VERIFY_PASS,
+        cand = self.mod.Candidate(
+            candidate_id="#99",
+            source="scoreboard",
+            name="Health Cap",
+            runtime_status="DETECTOR_FUNCTION",
+            blockers="",
+            track="BREADTH",
+            health_score=100,
         )
-        self.assertEqual(errors, [])
-        for item in scored:
-            f6_contrib = item.factors["F6"] * self.mod.WEIGHTS["F6"] / 10
-            self.assertLessEqual(f6_contrib, 5.0)
+        result = self.mod._f6_health(cand, health_board_present=True)
+        self.assertTrue(result.measured)
+        self.assertIsNotNone(result.value)
+        f6_contrib = result.value * self.mod.WEIGHTS["F6"] / 10
+        self.assertLessEqual(f6_contrib, 5.0)
 
     def test_t9_readiness_ordering(self):
         scored, _, _ = self.mod.analyze(
@@ -148,10 +154,15 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertTrue(scored)
         item = scored[0]
         expected = round(
-            sum(item.factors[f"F{i}"] * self.mod.WEIGHTS[f"F{i}"] / 10 for i in range(1, 7)),
+            sum(
+                item.factor_results[f"F{i}"].value * self.mod.WEIGHTS[f"F{i}"] / 10
+                for i in range(1, 7)
+                if item.factor_results[f"F{i}"].measured
+                and item.factor_results[f"F{i}"].value is not None
+            ),
             2,
         )
-        self.assertEqual(item.total, expected)
+        self.assertEqual(item.total_measured_score, expected)
 
     def test_t11_zero_writes(self):
         digests_before = {p: _file_digest(p) for p in IMMUTABLE_PATHS}
@@ -178,8 +189,8 @@ class EstimatorContractTests(unittest.TestCase):
             verify_text=VERIFY_PASS,
         )
         self.assertNotEqual(
-            [s.total for s in clean],
-            [s.total for s in refresh],
+            [s.total_measured_score for s in clean],
+            [s.total_measured_score for s in refresh],
         )
 
     def test_t13_verify_block_cannot_score(self):
@@ -214,6 +225,8 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertTrue(out.startswith("SCORED_CANDIDATES"))
         self.assertIn("separation:", out)
         self.assertIn("f5_policy: run_hygiene_only", out)
+        self.assertIn("total_measured_score:", out)
+        self.assertIn("factor_coverage_summary:", out)
 
     def test_t15_top_rows_not_collapsed(self):
         scored, errors, _ = self.mod.analyze(
@@ -222,7 +235,7 @@ class EstimatorContractTests(unittest.TestCase):
         )
         self.assertEqual(errors, [])
         self.assertGreaterEqual(len(scored), 5)
-        top_totals = [s.total for s in scored[:5]]
+        top_totals = [s.total_measured_score for s in scored[:5]]
         self.assertGreater(
             len(set(top_totals)),
             1,
@@ -230,7 +243,11 @@ class EstimatorContractTests(unittest.TestCase):
         )
         for item in scored[:5]:
             self.assertFalse(
-                item.factors["F1"] == 6 and item.factors["F5"] == 10 and item.factors["F4"] == 0,
+                item.factor_results["F1"].measured
+                and item.factor_results["F1"].value == 6
+                and item.factor_results["F4"].measured
+                and item.factor_results["F4"].value == 0
+                and item.total_measured_score == 28.0,
                 msg=f"{item.candidate.candidate_id} still on old collapse pattern",
             )
 
@@ -241,8 +258,8 @@ class EstimatorContractTests(unittest.TestCase):
         )
         self.assertEqual(errors, [])
         by_id = {s.candidate.candidate_id: s for s in scored}
-        self.assertGreater(by_id["#1"].factors["F4"], 0)
-        self.assertGreater(by_id["#52"].factors["F4"], 0)
+        self.assertGreater(by_id["#1"].factor_results["F4"].value, 0)
+        self.assertGreater(by_id["#52"].factor_results["F4"].value, 0)
 
     def test_t17_research_paths_excluded(self):
         scored, errors, _ = self.mod.analyze(
@@ -251,8 +268,8 @@ class EstimatorContractTests(unittest.TestCase):
         )
         self.assertEqual(errors, [])
         by_id = {s.candidate.candidate_id: s for s in scored}
-        self.assertEqual(by_id["#90"].factors["F4"], 0)
-        self.assertGreater(by_id["#91"].factors["F4"], 0)
+        self.assertEqual(by_id["#90"].factor_results["F4"].value, 0)
+        self.assertGreater(by_id["#91"].factor_results["F4"].value, 0)
 
     def test_t18_equivalent_tie_has_separation(self):
         scored, errors, _ = self.mod.analyze(
@@ -263,6 +280,85 @@ class EstimatorContractTests(unittest.TestCase):
         for item in scored:
             self.assertTrue(item.separation)
             self.assertIn("F1=", item.separation)
+
+    def test_t19_measured_zero_preserved(self):
+        scored, errors, _ = self.mod.analyze(
+            self.mod.Path(os.path.join(FIXTURES, "null_f2_measured_zero")),
+            verify_text=VERIFY_PASS,
+        )
+        self.assertEqual(errors, [])
+        item = next(s for s in scored if s.candidate.candidate_id == "#91")
+        f2 = item.factor_results["F2"]
+        self.assertTrue(f2.measured)
+        self.assertEqual(f2.value, 0)
+
+    def test_t20_absent_source_emits_null(self):
+        scored, errors, _ = self.mod.analyze(
+            self.mod.Path(os.path.join(FIXTURES, "null_f2_null")),
+            verify_text=VERIFY_PASS,
+        )
+        self.assertEqual(errors, [])
+        item = scored[0]
+        f2 = item.factor_results["F2"]
+        self.assertFalse(f2.measured)
+        self.assertIn("NULL(no_data:", f2.display())
+
+    def test_t21_null_excluded_from_total(self):
+        scored, errors, _ = self.mod.analyze(
+            self.mod.Path(os.path.join(FIXTURES, "clean")),
+            verify_text=VERIFY_PASS,
+        )
+        self.assertEqual(errors, [])
+        item = scored[0]
+        for factor_id, result in item.factor_results.items():
+            if not result.measured:
+                weight_key = f"W{factor_id[1]}"
+                self.assertNotIn(weight_key, item.weighted)
+        expected = round(sum(item.weighted.values()), 2)
+        self.assertEqual(item.total_measured_score, expected)
+
+    def test_t22_dark_factor_report_present(self):
+        _, out, _ = _run_estimator("clean", ["--verify-text", VERIFY_PASS])
+        self.assertIn("ranking computed with dark factors present", out)
+        self.assertIn("dark_factor_causes:", out)
+        self.assertIn("NULL(no_data:", out)
+
+    def test_t23_coverage_shown(self):
+        _, out, _ = _run_estimator("clean", ["--verify-text", VERIFY_PASS])
+        self.assertIn("coverage: ", out)
+        self.assertRegex(out, r"coverage: \d/6")
+
+    def test_t24_low_coverage_provisional(self):
+        scored, errors, _ = self.mod.analyze(
+            self.mod.Path(os.path.join(FIXTURES, "null_low_coverage")),
+            verify_text=VERIFY_PASS,
+        )
+        self.assertEqual(errors, [])
+        item = scored[0]
+        self.assertEqual(item.coverage_count, 3)
+        self.assertEqual(item.coverage_status, "LOW_COVERAGE_PROVISIONAL")
+
+    def test_t25_locked_weights_unchanged(self):
+        expected = {"F1": 30, "F2": 25, "F3": 20, "F4": 10, "F5": 10, "F6": 5}
+        self.assertEqual(self.mod.SIGNED_WEIGHTS_RECORD, expected)
+        self.assertEqual(self.mod.WEIGHTS, self.mod.SIGNED_WEIGHTS_RECORD)
+
+    def test_t26_no_negative_missing_data_penalty(self):
+        scored, errors, _ = self.mod.analyze(
+            self.mod.Path(os.path.join(FIXTURES, "clean")),
+            verify_text=VERIFY_PASS,
+        )
+        self.assertEqual(errors, [])
+        for item in scored:
+            for result in item.factor_results.values():
+                if result.measured and result.value is not None:
+                    self.assertGreaterEqual(result.value, 0)
+
+    def test_t27_deterministic_null_output(self):
+        out1 = _run_estimator("null_f2_null", ["--verify-text", VERIFY_PASS])[1]
+        out2 = _run_estimator("null_f2_null", ["--verify-text", VERIFY_PASS])[1]
+        self.assertEqual(out1, out2)
+        self.assertIn("NULL(no_data:", out1)
 
 
 if __name__ == "__main__":
