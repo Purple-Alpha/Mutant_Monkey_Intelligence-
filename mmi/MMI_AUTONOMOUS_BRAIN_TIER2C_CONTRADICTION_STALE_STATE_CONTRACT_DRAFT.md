@@ -26,6 +26,8 @@
 
 **Draft authorization:** `MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT` only
 
+**Wording patch:** 2026-06-19 — Tier 2C contract review PASS WITH CHANGES (dispatcher/verify citation boundary, forbidden-vocabulary scope, E-01 advisory wording, no-renaming authority). Contract wording only; not §11 signed; not implementation.
+
 ---
 
 ## 1. Executive summary
@@ -79,7 +81,7 @@ Signing this contract (future §11) approves **contract terms only**. It does **
 | Tier 2B | `mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md` | §11 SIGNED | Registry lifecycle vocabulary; Tier 2C reads registry; never writes |
 | Tier 2B impl | `mmi/MMI_TASK_REGISTRY.yaml` | Mode A built | Passive human-maintained rows; `dispatcher_reads: false` |
 | Tier 2B rules | `mmi/MMI_TASK_REGISTRY_UPDATE_RULES.md` | Procedural | Human edit rules; Tier 2C cites for mismatch context |
-| Routing | `scripts/mmi_dispatch.py` | Untouched by Tier 2C | Operational routing truth; Tier 2C may **cite** `--verify` output only |
+| Routing | `scripts/mmi_dispatch.py` | Untouched by Tier 2C | Operational routing truth; Tier 2C does **not** execute, import, or call dispatcher; human-supplied `--verify` text may be cited in evidence only |
 | Drift tools | `scripts/detect_drift.py`, `scripts/verify_build_truth.py` | Existing | Independent truth tools; Tier 2C does not replace or invoke for routing |
 | MMI records | `mmi/MMI_DECISION_LOG.md`, `mmi/MMI_INTAKE_RECORDS.md` | Human-maintained | Evidence cross-check surfaces; not replaced or appended by Tier 2C |
 | Current state | `MMI_CURRENT_STATE.md` | Routing-authority prose | Tier 2C reads; never writes routing block or prose |
@@ -135,7 +137,7 @@ Tier 2C closes the **report-only contradiction/stale-state detection** slice in 
 
 | Item | Rule |
 |---|---|
-| `scripts/mmi_dispatch.py` | No edits, wraps, subprocess calls for routing, or feeding dispatcher input (**AUTH-2-EDIT** not authorized) |
+| `scripts/mmi_dispatch.py` | No edits, wraps, imports, execution, subprocess calls, or feeding dispatcher input (**AUTH-2-EDIT** not authorized). Tier 2C tooling must **not** execute `mmi_dispatch.py`, must **not** import `mmi_dispatch.py`, and must **not** call `python3 scripts/mmi_dispatch.py --verify`. Human-supplied pasted verify output, human-provided captured text, or a human-provided read-only file path may be cited as evidence only — citation does not make Tier 2C a verifier |
 | Registry-fed routing | Tier 2C must not cause dispatcher to read registry or change routing |
 | AUTH-5 | Autonomous task selection **not** created or enabled |
 | AUTH-4 | Auto-prompt generation **not** authorized |
@@ -171,7 +173,9 @@ Tier 2C must **never**:
 9. Run in background, on hooks, or on file-watch triggers.
 10. Become AUTH-5 or a path to AUTH-5 bundling.
 11. Feed `scripts/mmi_dispatch.py` or become dispatcher input.
-12. Replace `python3 scripts/mmi_dispatch.py --verify`, `scripts/detect_drift.py`, or `scripts/verify_build_truth.py`.
+12. Execute, import, or call `scripts/mmi_dispatch.py` or `python3 scripts/mmi_dispatch.py --verify`.
+13. Replace `python3 scripts/mmi_dispatch.py --verify`, `scripts/detect_drift.py`, or `scripts/verify_build_truth.py`.
+14. Authorize renaming, bulk find-replace, automated text correction, or historical evidence rewrites (report-only detection only).
 
 ---
 
@@ -212,7 +216,7 @@ Tier 2C tooling may **read only** these surfaces unless a future contract revisi
 | `mmi/MMI_TASK_REGISTRY_SCHEMA.md` | Field vocabulary for structural mismatch context | **Never** |
 | `mmi/MMI_WORKER_COMPLETION_PACKET_TEMPLATE.md` | Closeout evidence field expectations | **Never** |
 | `mmi/*CONTRACT*.md` (§11-signed only) | Signed contract existence and status cross-check | **Never** |
-| `python3 scripts/mmi_dispatch.py --verify` output | **Independent verification reference only** — human-pasted or subprocess-captured at report run time; citation only; not verdict authority | **Never** (tool does not modify verify) |
+| Human-supplied dispatcher verify evidence | **Citation/reference only** — pasted text, human-provided captured output, or human-provided read-only file path supplied as input; Tier 2C does **not** execute, import, or call `mmi_dispatch.py` or `--verify` | **Never** (tool does not run or modify verify) |
 | `git log`, `git show`, `git cat-file` | Commit existence/hash validation for cited evidence | **Never** (read-only git queries only) |
 
 **Explicitly out of read scope for Tier 2C v1 (unless future revision):**
@@ -222,7 +226,7 @@ Tier 2C tooling may **read only** these surfaces unless a future contract revisi
 - Chat transcripts, session memory
 - Architectapp paths
 
-Tier 2C may note `DISPATCHER_REGISTRY_BOUNDARY_RISK` if registry content **appears** to claim routing authority, without reading dispatcher source beyond `--verify` citation checks.
+Tier 2C may note `DISPATCHER_REGISTRY_BOUNDARY_RISK` if registry content **appears** to claim routing authority. Tier 2C does not read or execute dispatcher source; it may compare registry/registry-evidence text against human-supplied verify citations only.
 
 ---
 
@@ -238,11 +242,13 @@ The report CLI stdout surface uses **only** these top-level tokens:
 | `NO_REPORTABLE_FINDINGS` | No findings matched configured rules in this run |
 | `REVIEW_REQUIRED` | Summary flag: at least one finding has severity `REVIEW`, `HIGH_REVIEW`, or `CRITICAL_REVIEW` — **human review suggested**; not authorization |
 
-**Forbidden stdout authority verdicts (never emitted by Tier 2C tooling):**
+**Forbidden authority verdicts (never emitted by Tier 2C tooling as its own conclusion):**
 
 `PASS`, `FAIL`, `BLOCK`, `APPROVED`, `VERIFIED`, `COMPLETE`, `BUILD_AUTHORIZED`, `SIGNED`, `PROMOTED`, `SELECTED`, `DELEGATED`, `GATED`, `ACCEPT`, `REJECT`, `NEXT_TASK`, `RECOMMENDED`, `AUTHORIZED`.
 
-Pasting `VERDICT: PASS` from `--verify` inside a finding **evidence cite** is **citation content only** — Tier 2C does not re-emit it as its own verdict.
+**Scope rule:** Forbidden tokens apply to Tier 2C tool-emitted **envelope**, **summary**, **result**, and **finding-verdict** lines only. They must not appear as Tier 2C's own verdict or conclusion.
+
+**Evidence citation exception:** `evidence` / `note` bodies inside finding records may quote external output verbatim — including strings such as `VERDICT: PASS` from human-supplied dispatcher verify captures — without constituting a Tier 2C tool verdict. Quoted text is cited evidence only; Tier 2C still must not emit authority verdicts as its own top-level output.
 
 ### 8.2 Finding record shape (stdout / optional Mode B file)
 
@@ -272,7 +278,7 @@ Closed enum for v1:
 | `REGISTRY_CURRENT_STATE_MISMATCH` | Registry row vs `MMI_CURRENT_STATE.md` prose claims disagree |
 | `REGISTRY_DECISION_LOG_MISMATCH` | Registry `status_evidence` vs `MMI-DEC-*` claims disagree |
 | `REGISTRY_INTAKE_RECORD_MISMATCH` | Registry cites vs `INTAKE-*` record disagree |
-| `SIGNED_CONTRACT_WITHOUT_REGISTRY_ROW` | §11-signed contract exists; no matching registry row when policy expects one |
+| `SIGNED_CONTRACT_WITHOUT_REGISTRY_ROW` | §11-signed MMI brain-slice contract exists; no matching registry row — **INFO advisory** unless a signed MMI rule explicitly requires a registry row for that slice |
 | `BUILD_COMMIT_WITHOUT_REGISTRY_UPDATE` | Cited build commit exists; registry status not advanced per Tier 2B transition rules |
 | `COMPLETE_WITHOUT_CLOSEOUT_EVIDENCE` | Registry `COMPLETE` without required `status_evidence` types |
 | `BUILD_AUTHORIZED_WITHOUT_MATT_AUTH` | `BUILD_AUTHORIZED` without `mmi_decision` or `operator_instruction` evidence |
@@ -352,6 +358,8 @@ Stale means **possibly out of date** — Tier 2C reports mismatch; it does not d
 
 **Principle:** Flag legacy naming in **active MMI governance** only. Preserve legacy wording in historical evidence, old commits, superseded sections, and quoted citations.
 
+**No-renaming authority:** Tier 2C does **not** authorize renaming, bulk find-replace, automated text correction, or historical evidence rewrites. It reports possible drift only; Matt or explicit `MMI-DEC-*` resolves wording.
+
 ### 13.1 Legacy terms (default list)
 
 | Term / pattern | Example contexts |
@@ -377,7 +385,7 @@ Stale means **possibly out of date** — Tier 2C reports mismatch; it does not d
 
 | Rule ID | Condition | Category | Default severity |
 |---|---|---|---|
-| E-01 | §11-signed contract on disk; no registry row when Tier 2B policy expects tracking for that brain slice | `SIGNED_CONTRACT_WITHOUT_REGISTRY_ROW` | `INFO` |
+| E-01 | §11-signed MMI brain-slice contract on disk; no matching registry row — emit `INFO` advisory only; not a defect unless a signed MMI rule (e.g. Tier 2B contract/registry update rules) explicitly requires a row for that slice | `SIGNED_CONTRACT_WITHOUT_REGISTRY_ROW` | `INFO` |
 | E-02 | `INTAKE-*` references `MMI-DEC-*` not present in decision log | `REGISTRY_INTAKE_RECORD_MISMATCH` | `HIGH_REVIEW` |
 | E-03 | Registry `status_evidence.ref` names `MMI-DEC-*` not found in decision log | `REGISTRY_DECISION_LOG_MISMATCH` | `HIGH_REVIEW` |
 | E-04 | Registry `status_evidence.ref` names `INTAKE-*` not found in intake records | `REGISTRY_INTAKE_RECORD_MISMATCH` | `HIGH_REVIEW` |
@@ -395,7 +403,7 @@ Stale means **possibly out of date** — Tier 2C reports mismatch; it does not d
 | **MMI decision log** | Read-only cross-check for `MMI-DEC-*`; does not append decisions |
 | **MMI intake records** | Read-only cross-check for `INTAKE-*`; does not append intake |
 | **MMI current state** | Read-only; compares prose to registry; does not run `--sync` or edit routing block |
-| **Dispatcher verify** | Independent authority check; Tier 2C may cite pasted `--verify` output as evidence reference only; does not replace verify |
+| **Dispatcher verify** | Independent authority check run by humans; Tier 2C does not execute/import/call dispatcher verify; may read human-supplied pasted or file-cited verify text as evidence reference only; does not replace verify |
 | **Repo surface registry (F1)** | Defines allowed read surfaces and forbidden inference; Tier 2C must stay within F1 boundaries |
 | **Stage 1 gaps (F5)** | Tier 2C closes **report-only** contradiction slice; does not claim full AUTH-7 halt or BLOCK enforcement |
 | **detect_drift.py** | Complementary; drift detector governs dispatcher-input integrity; Tier 2C governs registry/MMI-record alignment |
@@ -430,7 +438,7 @@ Stale means **possibly out of date** — Tier 2C reports mismatch; it does not d
 | **Report-as-complete** | `NO_REPORTABLE_FINDINGS` treated as closeout PASS | Forbidden vocabulary tests; training: only `--verify` PASS gates routing |
 | **Auto-halt creep** | Tool exits non-zero on `CRITICAL_REVIEW` | Exit code policy §10; tests lock `0` on findings |
 | **Registry writer creep** | Tool opens registry for write | Mode A digest tests; demotion §18 |
-| **Dispatcher coupling** | Tool imports or calls `mmi_dispatch.py` for routing | Import/call tests; demotion |
+| **Dispatcher coupling** | Tool imports, executes, or calls `mmi_dispatch.py` or `--verify` | T2C-T12; demotion §18 |
 | **Finding inflation** | Every naming mention flagged | Historical carve-out tests N-04/N-05 |
 | **Stale rule brittleness** | False positives on intentional retrospective rows | Fixture tests with hygiene-closed rows |
 | **Mode B scope creep** | Report files become input to routing | Mode B parked; report dir not dispatcher input |
@@ -452,7 +460,7 @@ Disable Tier 2C tooling if:
 
 - tool writes any file outside explicitly authorized Mode B report path
 - tool writes registry, `MMI_CURRENT_STATE.md`, decision log, or intake records
-- tool calls or modifies `scripts/mmi_dispatch.py`
+- tool imports, executes, calls, or modifies `scripts/mmi_dispatch.py` (including `--verify`)
 - tool emits forbidden authority vocabulary (§8)
 - tool emits next-task, worker assignment, or selection labels
 - tool runs on hooks, daemons, or file watchers
@@ -480,8 +488,8 @@ Locked vocabulary per §8. Tests use synthetic fixtures under `tests/fixtures/mm
 | T2C-T9 | No registry edit | `mmi/MMI_TASK_REGISTRY.yaml` digest unchanged after run |
 | T2C-T10 | No MMI record edit | Decision log and intake digests unchanged |
 | T2C-T11 | No current state edit | `MMI_CURRENT_STATE.md` digest unchanged |
-| T2C-T12 | No dispatcher call | No import/subprocess to `mmi_dispatch.py`; dispatcher file digest unchanged |
-| T2C-T13 | Forbidden vocabulary | Stdout never contains `PASS`, `FAIL`, `BLOCK`, `APPROVED`, `COMPLETE`, `SELECTED`, etc. |
+| T2C-T12 | No dispatcher execution | Tool does not import, execute, subprocess-call, or invoke `mmi_dispatch.py` or `--verify`; dispatcher file digest unchanged; human-supplied verify text may be read as input evidence only |
+| T2C-T13 | Forbidden vocabulary scope | Tool-emitted envelope/summary/result/finding-verdict lines never contain `PASS`, `FAIL`, `BLOCK`, `APPROVED`, `COMPLETE`, `SELECTED`, etc. as Tier 2C conclusions; evidence `note`/`evidence` bodies may quote `VERDICT: PASS` verbatim without being a tool verdict |
 | T2C-T14 | Exit code policy | Findings present including `CRITICAL_REVIEW` → exit `0`; parse error → exit `2` |
 | T2C-T15 | Retrospective row tolerance | Hygiene-closed Tier 1/2A/2B historical `COMPLETE` fixtures → no false `COMPLETE_WITHOUT_CLOSEOUT_EVIDENCE` |
 | T2C-T16 | Human verify after closeout | Human `mmi_dispatch.py --verify` PASS after Tier 2C routing-authority closeout (not report CLI) |
