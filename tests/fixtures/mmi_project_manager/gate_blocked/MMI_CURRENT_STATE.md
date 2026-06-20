@@ -1,0 +1,2 @@
+MODE: ALL_CLEAR
+AUTHORIZED_TASK: No delegable tasks
