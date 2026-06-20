@@ -95,6 +95,8 @@ MMI-DEC-033 | 2026-06-19 | APT29 / EnvyScout cyber security intelligence input i
 
 MMI-DEC-034 | 2026-06-19 | MMI success evolution roadmap concept intake | mmi/research/MMI_SUCCESS_EVOLUTION_ROADMAP_INTAKE.md | ACCEPT | MATT_CONCEPT_INPUT only; not signed; not doctrine; not success definition; not build authorization; not autonomous selection; candidate phased roadmap preserved; Phase 1/2/3/4 not authorized; AUTH-5 blocked | Future review before any phase promotion | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_SUCCESS_EVOLUTION_ROADMAP_INTAKE only)
 
+MMI-DEC-035 | 2026-06-19 | Adaptive cyber-intelligence organism concept intake | mmi/research/MMI_ADAPTIVE_CYBER_INTELLIGENCE_ORGANISM_CONCEPT_INTAKE.md | ACCEPT | SECOND_OPINION_INPUT + MATT_CONCEPT_INPUT + PROJECT_IDENTITY_EXPLORATION + ARTIFICIAL_LIFE_CYBER_INTELLIGENCE_CONCEPT_INPUT only; gate READY FOR CURSOR PLACEMENT; Capture ≠ adoption; skeptical review preserved; not authority; not doctrine; not success definition; not build authorization; not path selection; not product positioning; Phase 1/2/3/4 not authorized; AUTH-5 blocked | Future review before any identity or architecture promotion | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_ADAPTIVE_CYBER_INTELLIGENCE_ORGANISM_CONCEPT_INTAKE_PLACEMENT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: MMI research intakes captured — APT29/EnvyScout cyber intelligence input
-  and candidate success evolution roadmap (MMI-DEC-033/034; INTAKE-2026-06-19-013/014).
-  Research/input only; not doctrine; not build authorization; AUTH-5 blocked.
-  Prior: Tier 2C registry row (`437f463`, TASK-2026-06-19-003).
+LAST_COMPLETED: Adaptive cyber-intelligence organism concept intake captured
+  (MMI-DEC-035; INTAKE-2026-06-19-015). Second-opinion input only; Capture ≠ adoption;
+  not project identity; not build authorization; AUTH-5 blocked.
+  Prior: APT29 + success roadmap research intakes (`58e3a5f`).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
