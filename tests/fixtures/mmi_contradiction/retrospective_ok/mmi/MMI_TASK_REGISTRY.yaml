@@ -1,0 +1,25 @@
+registry_version: 1
+maintained_by: human
+dispatcher_reads: false
+autonomous_selection: false
+tasks:
+  - task_id: TASK-RETRO-001
+    title: RETROSPECTIVE_OK
+    status: COMPLETE
+    classification: TEST
+    task_or_contract_ref: test
+    source_evidence: []
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-070
+        recorded_at: 2026-06-19T12:00:00Z
+      - type: commit
+        ref: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+        recorded_at: 2026-06-19T12:00:00Z
+    notes: Historical completed row only; retrospective hygiene pattern
+    transition_log:
+      - from: BUILT_NEEDS_REVIEW
+        to: COMPLETE
+        at: 2026-06-19T20:00:00Z
+        evidence_ref: MMI-DEC-070; retrospective COMPLETE from MMI closeout (no ACCEPTED_FOR_REVIEW recorded; historical row only)
+        human_editor: Matt Nichol

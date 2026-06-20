@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Tier 2C Contradiction / Stale-State contract §11 signed
-  (MMI-DEC-031; INTAKE-2026-06-19-011). Mode A selected; Mode B parked;
-  implementation blocked. Prior: contract draft placed (`18f4c48`, MMI-DEC-030).
-  AUTH-5 blocked.
+LAST_COMPLETED: Tier 2C Mode A contradiction report built
+  (MMI-DEC-032; INTAKE-2026-06-19-012). Stdout-only read-only report CLI;
+  Mode B parked; no `mmi/reports/`. Prior: Tier 2C contract §11 signed
+  (`689edb5`, MMI-DEC-031). AUTH-5 blocked.
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

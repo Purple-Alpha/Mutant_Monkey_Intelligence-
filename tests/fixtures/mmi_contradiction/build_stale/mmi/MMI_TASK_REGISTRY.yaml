@@ -1,0 +1,16 @@
+registry_version: 1
+maintained_by: human
+dispatcher_reads: false
+autonomous_selection: false
+tasks:
+  - task_id: TASK-STALE-001
+    title: STALE_BUILD_ROW
+    status: SIGNED_CONTRACT
+    classification: TEST
+    task_or_contract_ref: mmi/MMI_FIXTURE_STALE_CONTRACT_DRAFT.md
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-050
+        recorded_at: 2026-06-19T12:00:00Z
+        note: build ACCEPT recorded
+    notes: fixture stale status after build decision

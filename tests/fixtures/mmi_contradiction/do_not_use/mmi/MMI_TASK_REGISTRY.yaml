@@ -1,0 +1,28 @@
+registry_version: 1
+maintained_by: human
+dispatcher_reads: false
+autonomous_selection: false
+tasks:
+  - task_id: TASK-DNU-001
+    title: DO_NOT_USE_ROW
+    status: DO_NOT_USE
+    classification: TEST
+    task_or_contract_ref: old
+    source_evidence: []
+    status_evidence: []
+    notes: deprecated
+  - task_id: TASK-DNU-002
+    title: CITES_DNU
+    status: COMPLETE
+    classification: TEST
+    task_or_contract_ref: test
+    source_evidence:
+      - TASK-DNU-001 DO_NOT_USE authority cite
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-060
+        recorded_at: 2026-06-19T12:00:00Z
+      - type: commit
+        ref: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        recorded_at: 2026-06-19T12:00:00Z
+    notes: cites DO_NOT_USE as authority

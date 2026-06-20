@@ -304,3 +304,12 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRA
 Classification: SIGNED_CONTRACT — contract approved only; Tier 2C implementation blocked; first build slice Mode A only if authorized; AUTH-5 blocked; registry-fed routing forbidden
 Routing outcome: separate explicit build authorization required before `scripts/mmi_contradiction_report.py` or tests
 Matt approval required: YES for Tier 2C Mode A build; §11 signature recorded by operator authorization
+
+INTAKE-2026-06-19-012
+Component: MMI Autonomous Brain Tier 2C Contradiction / Stale-State (Mode A build)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2C_MODE_A_BUILD — Mode A implementation only
+Source: Signed contract `689edb5`; operator build authorization
+Artifacts: scripts/mmi_contradiction_report.py; tests/test_mmi_contradiction_report.py; tests/fixtures/mmi_contradiction/*
+Classification: TIER2C_MODE_A — stdout-only read-only report CLI; no `mmi/reports/`; no registry mutation by tool; Mode B not built
+Routing outcome: report-only findings for human/MMI review; does not feed dispatcher or select tasks
+Matt approval required: NO for this build slice (explicit authorization granted)

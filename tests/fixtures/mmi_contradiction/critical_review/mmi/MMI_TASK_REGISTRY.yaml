@@ -1,0 +1,16 @@
+registry_version: 1
+maintained_by: human
+dispatcher_reads: false
+autonomous_selection: false
+tasks:
+  - task_id: TASK-CRIT-001
+    title: BUILD_AUTH_BAD
+    status: BUILD_AUTHORIZED
+    classification: TEST
+    task_or_contract_ref: test
+    source_evidence: []
+    status_evidence:
+      - type: other
+        ref: not authorization
+        recorded_at: 2026-06-19T12:00:00Z
+    notes: missing explicit build authorization evidence

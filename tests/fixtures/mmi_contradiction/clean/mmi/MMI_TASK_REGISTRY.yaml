@@ -1,0 +1,5 @@
+registry_version: 1
+maintained_by: human
+dispatcher_reads: false
+autonomous_selection: false
+tasks: []
