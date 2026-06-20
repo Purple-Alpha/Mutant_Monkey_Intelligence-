@@ -74,9 +74,10 @@ When no BUILD/AUDIT/REVIEW/DESIGN lane is active, MMI scores repo evidence and d
 | `RESEARCH` | 58 | ChatGPT / Gemini |
 | `PARKED_DRAFT` | 25 | Cursor (single-file classify) |
 
-`MODE: ALL_CLEAR` only when **no** repo evidence exists to score directions or delegate.
-When the queue is empty but repo evidence exists, MMI enters **`MODE: PROJECT_DIRECTION_RESEARCH`**
-and scores strategic directions — it does **not** hand the problem back with "Matt supplies next evidence."
+`MODE: ALL_CLEAR` when the delegation queue is empty and no higher-priority route
+(BUILD, AUDIT, REVIEW, DESIGN, etc.) applies. Matt supplies next evidence or runs
+Estimator Mode A for read-only candidate ranking — Estimator output is not authorization,
+selection, or routing authority.
 
 ---
 
@@ -102,18 +103,19 @@ After Cursor, Codex, Claude, ChatGPT, Gemini, or Grok completes work:
 
 ---
 
-## ALL_CLEAR vs DELEGATE vs PROJECT_DIRECTION_RESEARCH
+## ALL_CLEAR vs DELEGATE
 
 - **`MODE: DELEGATE`** — MMI scored repo evidence and delegated the top task. Matt is not
   required to manually name the next target unless `OPERATOR_ACTION_REQUIRED: YES`.
-- **`MODE: PROJECT_DIRECTION_RESEARCH`** — delegation queue empty but repo evidence exists.
-  MMI scores 3–7 strategic directions on the 10-axis project-direction rubric (0–2 per axis,
-  max 20), recommends the top direction, and explains lower-scored alternatives. Matt selects;
-  the recommendation is not authorization.
-- **`MODE: ALL_CLEAR`** — genuinely no repo evidence to score or delegate. Matt must supply
-  new evidence (signed contract, scoreboard row, or intake).
+- **`MODE: ALL_CLEAR`** — delegation queue empty and no higher-priority route applies.
+  Matt supplies next evidence (signed contract, scoreboard row, intake) or uses Estimator
+  Mode A for read-only candidate ranking. Estimator output is not authorization, selection,
+  or routing authority.
 
-Lower-scored alternatives appear in `LOWER_SCORE_ALTERNATIVES` and `CANDIDATES` for
+**Retired (MMI-DEC-044):** `MODE: PROJECT_DIRECTION_RESEARCH` hardcoded direction scorer removed
+from dispatcher executable path. Retired rubric classified SUPERSEDED_OPINION / DO_NOT_USE_AS_AUTHORITY.
+
+Lower-scored delegation alternatives appear in `LOWER_SCORE_ALTERNATIVES` and `CANDIDATES` for
 context only — not authorization.
 
 ---

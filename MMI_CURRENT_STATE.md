@@ -1,28 +1,17 @@
-MODE: PROJECT_DIRECTION_RESEARCH
-AUTHORIZED_TASK: Score repo-grounded project directions; recommend best next direction
+MODE: ALL_CLEAR
+AUTHORIZED_TASK: No delegable tasks in routing queue
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: YES — top direction has signed contract or explicit build path
+BUILD_AUTHORIZATION_IMPLIED: NO
 CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 33 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
 WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
-DIRECTION_SCOREBOARD: Draft #47 Case Timeline Agent Design Contract [total=16 axes: revenue_market=1,product_foundation=2,security_evidence=2,dependency_unlock=2,drift_reduction=2,build_readiness=1,risk_ambiguity=1,owner_time=2,mmi_alignment=2,demo_customer=1] || Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002) [total=13 axes: revenue_market=1,product_foundation=2,security_evidence=2,dependency_unlock=1,drift_reduction=1,build_readiness=1,risk_ambiguity=1,owner_time=1,mmi_alignment=2,demo_customer=1] || Stage 1 breadth — wrap #52 Plain-English Explanation detector [total=13 axes: revenue_market=2,product_foundation=1,security_evidence=1,dependency_unlock=1,drift_reduction=1,build_readiness=1,risk_ambiguity=2,owner_time=1,mmi_alignment=1,demo_customer=2] || Stabilize — hold new builds; verify and document only [total=9 axes: revenue_market=0,product_foundation=0,security_evidence=1,dependency_unlock=0,drift_reduction=1,build_readiness=2,risk_ambiguity=2,owner_time=2,mmi_alignment=1,demo_customer=0] || Real-data intake path (Evidence Stage 2 promotion) [total=6 axes: revenue_market=1,product_foundation=1,security_evidence=1,dependency_unlock=0,drift_reduction=0,build_readiness=0,risk_ambiguity=1,owner_time=0,mmi_alignment=1,demo_customer=1]
-RECOMMENDED_DIRECTION: Draft #47 Case Timeline Agent Design Contract
-RECOMMENDED_NEXT_ACTION: Claude drafts Case Timeline Agent Design Contract -> Matt §11 sign -> scoreboard reconcile to SIGNED_UNBUILT if signed
-ASSIGNED_WORKER_OR_LANE: Claude -> Matt (§11)
-WHY_THIS_DIRECTION: CYCLE 25/27 #47 re-triage: DEPENDS_ON:#48 satisfied by #48 GOVERNED_AGENT; Layer 4 Evidence timeline needs a signed boundary before SIGNED_UNBUILT/build; partial infra exists (REACTION_TIMING_TEST_LOG, DecisionTimestamps, package audit_trail)
-DECISION_SCORE: 16/20 (revenue_market=1,product_foundation=2,security_evidence=2,dependency_unlock=2,drift_reduction=2,build_readiness=1,risk_ambiguity=1,owner_time=2,mmi_alignment=2,demo_customer=1)
-LOWER_SCORE_ALTERNATIVES: Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002) (score=13) || Stage 1 breadth — wrap #52 Plain-English Explanation detector (score=13) || Stabilize — hold new builds; verify and document only (score=9) || Real-data intake path (Evidence Stage 2 promotion) (score=6)
-SCORE_RUBRIC: MMI project-direction rubric: 0-2 per axis, max total 20. 0=negligible, 1=moderate, 2=strong. risk_ambiguity and owner_time are inverse penalties (2=low risk/burden). Recommendation ranks directions; Matt selects.
-SOURCE_EVIDENCE: agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #47/#48; decision_cycles_log.md CYCLE 25/CYCLE 27; REACTION_TIMING_TEST_LOG.md; core/orchestrator/agent_contract.py DecisionTimestamps; mmi/MMI_DECISION_LOG.md MMI-DEC-013
-OWNER_DECISION_NEEDED: YES — Matt §11 signature required before SIGNED_UNBUILT/build
+ASSIGNED_TO: Matt
+NEXT_PROMPT_GOES_TO: Matt
+OPERATOR_ACTION_REQUIRED: YES — supply next evidence or run Estimator for read-only candidate ranking
+CANDIDATES_NOT_AUTHORIZATION: YES — Estimator ranks candidates; output is not authorization, selection, or routing authority
 REQUIRED_UPDATE_AFTER_COMPLETION: MMI first after any worker completion: append evidence to the relevant MMI record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit routing-authority files, then python3 scripts/mmi_dispatch.py --verify
-ASSIGNED_TO: Matt (direction selection) -> Claude -> Matt (§11)
-NEXT_PROMPT_GOES_TO: Matt confirms direction, then Claude
-OPERATOR_ACTION_REQUIRED: YES — Matt selects among scored directions (recommendation is not authorization)
-CANDIDATES_NOT_AUTHORIZATION: YES — scored directions rank options; Matt selects; lower scores are context only
-CANDIDATES: Draft #47 Case Timeline Agent Design Contract [total=16 axes: revenue_market=1,product_foundation=2,security_evidence=2,dependency_unlock=2,drift_reduction=2,build_readiness=1,risk_ambiguity=1,owner_time=2,mmi_alignment=2,demo_customer=1] || Build second Layer 5 Challenge agent (cross-arbitration; closes KG-002) [total=13 axes: revenue_market=1,product_foundation=2,security_evidence=2,dependency_unlock=1,drift_reduction=1,build_readiness=1,risk_ambiguity=1,owner_time=1,mmi_alignment=2,demo_customer=1] || Stage 1 breadth — wrap #52 Plain-English Explanation detector [total=13 axes: revenue_market=2,product_foundation=1,security_evidence=1,dependency_unlock=1,drift_reduction=1,build_readiness=1,risk_ambiguity=2,owner_time=1,mmi_alignment=1,demo_customer=2] || Stabilize — hold new builds; verify and document only [total=9 axes: revenue_market=0,product_foundation=0,security_evidence=1,dependency_unlock=0,drift_reduction=1,build_readiness=2,risk_ambiguity=2,owner_time=2,mmi_alignment=1,demo_customer=0] || Real-data intake path (Evidence Stage 2 promotion) [total=6 axes: revenue_market=1,product_foundation=1,security_evidence=1,dependency_unlock=0,drift_reduction=0,build_readiness=0,risk_ambiguity=1,owner_time=0,mmi_alignment=1,demo_customer=1]
-NEXT_GATE: Matt confirms direction -> delegate build/design lane -> worker completion -> MMI update -> --verify PASS
+NEXT_GATE: new signed contract, scoreboard row, intake evidence, or operator-selected next action
 TASK_SCOREBOARD: (empty — queue has no delegable tasks)
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py

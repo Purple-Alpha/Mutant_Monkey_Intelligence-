@@ -24,10 +24,7 @@ class MmiDispatchRoutingTests(unittest.TestCase):
     def test_delegate_mode_includes_scoring_fields(self):
         _, lines = self.mmi._build_delegation_lines("test")
         pairs = dict(lines)
-        self.assertIn(
-            pairs["MODE"],
-            ("DELEGATE", "PROJECT_DIRECTION_RESEARCH", "ALL_CLEAR"),
-        )
+        self.assertIn(pairs["MODE"], ("DELEGATE", "ALL_CLEAR"))
         self.assertIn("CURRENT_PROJECT_TRUTH", pairs)
         self.assertIn("REQUIRED_UPDATE_AFTER_COMPLETION", pairs)
         self.assertEqual(pairs["OPERATOR_NAMES_TARGET"], "Matt")
@@ -39,55 +36,37 @@ class MmiDispatchRoutingTests(unittest.TestCase):
             self.assertIn("WHY_THIS_TASK", pairs)
             self.assertIn("LOWER_SCORE_ALTERNATIVES", pairs)
             self.assertNotEqual(pairs["ASSIGNED_TO"], "Matt")
-        elif pairs["MODE"] == "PROJECT_DIRECTION_RESEARCH":
-            for field in (
-                "WHY_QUEUE_IS_EMPTY",
-                "DIRECTION_SCOREBOARD",
-                "RECOMMENDED_DIRECTION",
-                "RECOMMENDED_NEXT_ACTION",
-                "ASSIGNED_WORKER_OR_LANE",
-                "WHY_THIS_DIRECTION",
-                "DECISION_SCORE",
-                "LOWER_SCORE_ALTERNATIVES",
-                "SCORE_RUBRIC",
-                "SOURCE_EVIDENCE",
-                "OWNER_DECISION_NEEDED",
-                "NEXT_GATE",
-            ):
-                self.assertIn(field, pairs, msg=f"missing {field}")
+        else:
+            self.assertEqual(pairs["MODE"], "ALL_CLEAR")
+            self.assertIn("WHY_QUEUE_IS_EMPTY", pairs)
+            self.assertIn("CANDIDATES_NOT_AUTHORIZATION", pairs)
+            self.assertEqual(pairs["BUILD_AUTHORIZATION_IMPLIED"], "NO")
 
-    def test_project_direction_scoring_when_queue_empty(self):
+    def test_all_clear_when_queue_empty(self):
         tasks = self.mmi.collect_delegation_tasks()
         if tasks:
             self.skipTest("delegation queue not empty in this snapshot")
-        directions = self.mmi.collect_project_direction_candidates()
-        self.assertGreaterEqual(len(directions), 3)
-        top = directions[0]
-        self.assertGreater(self.mmi._direction_total(top["axis_scores"]), 0)
-        names = [d["name"] for d in directions]
-        if self.mmi._case_timeline_contract_direction_eligible():
-            self.assertIn("Draft #47 Case Timeline Agent Design Contract", names)
-            self.assertIn("#47", top["name"])
         _, lines = self.mmi._build_delegation_lines("test")
         pairs = dict(lines)
-        self.assertEqual(pairs["MODE"], "PROJECT_DIRECTION_RESEARCH")
-        self.assertNotIn("Matt supplies next evidence", pairs.get("CANDIDATES_NOT_AUTHORIZATION", ""))
+        self.assertEqual(pairs["MODE"], "ALL_CLEAR")
+        self.assertNotIn("RECOMMENDED_DIRECTION", pairs)
+        self.assertNotIn("DIRECTION_SCOREBOARD", pairs)
+        self.assertNotIn("DECISION_SCORE", pairs)
 
-    def test_case_timeline_contract_direction_scored_when_unblocked(self):
-        if not self.mmi._case_timeline_contract_direction_eligible():
-            self.skipTest("#47 not in NEEDS_SIGNED_CONTRACT / #48 not GOVERNED_AGENT")
-        directions = self.mmi.collect_project_direction_candidates()
-        case_timeline = next(
-            d for d in directions if d["name"].startswith("Draft #47 Case Timeline")
-        )
-        self.assertEqual(self.mmi._direction_total(case_timeline["axis_scores"]), 16)
-        self.assertEqual(len(case_timeline["axis_scores"]), 10)
+    def test_project_direction_scorer_removed_from_dispatcher(self):
+        self.assertFalse(hasattr(self.mmi, "collect_project_direction_candidates"))
+        self.assertFalse(hasattr(self.mmi, "_build_project_direction_lines"))
+        self.assertFalse(hasattr(self.mmi, "DIRECTION_RUBRIC_AXES"))
 
-    def test_direction_rubric_has_ten_axes(self):
-        self.assertEqual(len(self.mmi.DIRECTION_RUBRIC_AXES), 10)
-        sample = self.mmi.collect_project_direction_candidates()[0]["axis_scores"]
-        self.assertEqual(len(sample), 10)
-        self.assertLessEqual(self.mmi._direction_total(sample), 20)
+    def test_build_route_empty_queue_is_all_clear_not_direction_research(self):
+        tasks = self.mmi.collect_delegation_tasks()
+        if tasks:
+            self.skipTest("delegation queue not empty in this snapshot")
+        _, lines = self.mmi.build_route_lines()
+        pairs = dict(lines)
+        self.assertEqual(pairs["MODE"], "ALL_CLEAR")
+        self.assertNotIn("RECOMMENDED_DIRECTION", pairs)
+        self.assertEqual(pairs.get("BUILD_AUTHORIZATION_IMPLIED"), "NO")
 
     def test_intake_batch_ranks_above_external_lane(self):
         tasks = self.mmi.collect_delegation_tasks()
