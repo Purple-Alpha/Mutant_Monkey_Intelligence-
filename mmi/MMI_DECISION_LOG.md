@@ -81,6 +81,8 @@ MMI-DEC-026 | 2026-06-19 | Tier 2B Passive Task Registry contract draft placemen
 
 MMI-DEC-027 | 2026-06-19 | Tier 2B Passive Task Registry contract §11 signature | mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md (`495ef8b` base) | ACCEPT | Matt §11 signed Tier 2B passive task registry contract; Mode A selected (human-maintained registry instance only); Mode B not selected (parked); contract only — not implementation; AUTH-5 blocked; registry-fed routing forbidden; separate build authorization required before `mmi/MMI_TASK_REGISTRY.yaml` or validator code | Explicit Tier 2B Mode A build authorization before implementation | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2B_CONTRACT_SIGNATURE_ONLY)
 
+MMI-DEC-028 | 2026-06-19 | Tier 2B Mode A passive task registry build | mmi/MMI_TASK_REGISTRY.yaml; mmi/MMI_TASK_REGISTRY_UPDATE_RULES.md | ACCEPT | Mode A human-maintained registry instance per signed contract `7d245f8`; empty `tasks` envelope; `dispatcher_reads: false`; `autonomous_selection: false`; no validator code; no dispatcher/scoreboard/runtime change; Mode B not implemented; AUTH-5 blocked; registry-fed routing forbidden | None | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2B_MODE_A_BUILD only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

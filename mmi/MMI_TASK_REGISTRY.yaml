@@ -1,0 +1,11 @@
+# Tier 2B Mode A — passive human-maintained task lifecycle registry instance.
+# Not dispatcher input. Not autonomous selection. Not build authority.
+# Authority: mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md (§11 SIGNED 2026-06-19).
+
+registry_version: 1
+maintained_by: human
+last_human_update_at: 2026-06-19T18:00:00Z
+last_human_update_ref: MMI_AUTONOMOUS_BRAIN_TIER2B_MODE_A_BUILD
+dispatcher_reads: false
+autonomous_selection: false
+tasks: []

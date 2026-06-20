@@ -268,3 +268,12 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.m
 Classification: SIGNED_CONTRACT — contract approved only; Tier 2B implementation blocked; first build slice Mode A only if authorized; AUTH-5 blocked; registry-fed routing forbidden
 Routing outcome: separate explicit build authorization required before `mmi/MMI_TASK_REGISTRY.yaml` or validator code
 Matt approval required: YES for Tier 2B Mode A build; §11 signature recorded by operator authorization
+
+INTAKE-2026-06-19-005
+Component: MMI Autonomous Brain Tier 2B Mode A passive task registry
+Request: MMI_AUTONOMOUS_BRAIN_TIER2B_MODE_A_BUILD — Mode A implementation only
+Source: Signed contract `7d245f8`; operator build authorization
+Artifacts: mmi/MMI_TASK_REGISTRY.yaml; mmi/MMI_TASK_REGISTRY_UPDATE_RULES.md
+Classification: TIER2B_MODE_A — human-maintained registry instance; empty tasks; no validator; Mode B not built
+Routing outcome: passive registry available for human lifecycle tracking; does not feed dispatcher or select tasks
+Matt approval required: NO for this build slice (explicit authorization granted)

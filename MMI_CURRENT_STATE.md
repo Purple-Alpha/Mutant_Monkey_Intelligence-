@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Tier 2B Passive Task Registry contract §11 signed
-  (MMI-DEC-027; INTAKE-2026-06-19-004). Mode A selected — passive human-maintained
-  registry instance only; Mode B parked; implementation blocked; AUTH-5 blocked.
-  Prior: Tier 2B draft hardened (`495ef8b`, MMI-DEC-026).
+LAST_COMPLETED: Tier 2B Mode A passive task registry instance created
+  (MMI-DEC-028; INTAKE-2026-06-19-005). `mmi/MMI_TASK_REGISTRY.yaml` — empty
+  `tasks`; human-maintained envelope only; Mode B not implemented; AUTH-5 blocked.
+  Prior: Tier 2B contract §11 signed (`7d245f8`, MMI-DEC-027).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
