@@ -22,6 +22,8 @@
 
 **Draft authorization:** `MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT` only
 
+**Wording patch:** 2026-06-19 — Tier 2B contract review PASS WITH CHANGES (DO_NOT_USE non-deletion, §9.1 guards, F2 enum relationship, AUTH-3B boundary, §13 F4/F5, test wording).
+
 ---
 
 ## 1. Executive summary
@@ -96,6 +98,8 @@ Tier 2B closes the **passive registry mechanics** gap in F5. It does **not** clo
 | Synthetic tests | Focused tests for Mode B validator only; registry fixture files for structural cases |
 
 **First implementation slice:** **Mode A only** — human-maintained registry file and update rules — unless Matt explicitly names Mode B in separate build authorization.
+
+**Populated Mode A registry boundary:** A populated Mode A registry is **human-maintained instance data only**. It is **not** MMI write automation, **not** dispatcher input, **not** registry-fed routing, and **not** AUTH-3B automation.
 
 ### 4.2 Out of scope (hard limits)
 
@@ -262,7 +266,7 @@ Closed enum. **Status labels are lifecycle facts, not authority verdicts.**
 | `SUPERSEDED` | Replaced by another `task_id` | deleted |
 | `CONTRADICTION` | Conflicting evidence; needs human resolution | auto-resolved |
 | `NEEDS_MATT_DECISION` | Fork requires Matt | Matt already decided |
-| `DO_NOT_USE` | Deprecated identifier or scope; retained for history | safe to delete |
+| `DO_NOT_USE` | Deprecated identifier or scope; retained for history | deleted, authoritative, or safe to remove from history |
 
 ### 9.1 Status semantics guards (locked)
 
@@ -272,7 +276,9 @@ Closed enum. **Status labels are lifecycle facts, not authority verdicts.**
 | `SIGNED_CONTRACT` | **Must not** imply `BUILD_AUTHORIZED` without separate build-auth evidence |
 | `BUILD_AUTHORIZED` | **Must** cite `mmi_decision` or `operator_instruction` evidence with explicit build authorization language |
 | `BUILT_NEEDS_REVIEW` | **Must not** mean `COMPLETE` |
-| `COMPLETE` | **Must** cite closeout evidence: commit + `MMI-DEC-*` and/or admissible worker packet + verify PASS reference |
+| `ACCEPTED_FOR_REVIEW` | Accepted into review workflow only — **must not** mean approved, verified, complete, signed, promoted, or build-authorized |
+| `COMPLETE` | Lifecycle record backed by closeout evidence (commit + `MMI-DEC-*` and/or admissible worker packet + verify PASS reference as cite only) — **not** verify PASS, routing completion, build authorization, or autonomous promotion |
+| `CONTRADICTION` | **Never deleted** by default; remains until human resolution, supersession, or correction evidence is recorded |
 | `REJECTED` / `PARKED` / `SUPERSEDED` / `DO_NOT_USE` | **Never deleted** from registry history |
 
 ---
@@ -363,7 +369,9 @@ If present, each entry must match an allowed transition in §10.1.
 
 | Surface | Tier 2B relationship |
 |---|---|
-| **F2 `MMI_TASK_REGISTRY_SCHEMA.md`** | Tier 2B instance implements extended lifecycle enum; F2 remains schema doc; add cross-reference at implementation closeout — F2 rewrite requires gate if enums diverge materially |
+| **F2 `MMI_TASK_REGISTRY_SCHEMA.md`** | Tier 2B registry instance uses the **Tier 2B lifecycle enum** (§9). If F2 schema wording differs, Tier 2B does **not** silently rewrite F2; F2 may be cross-referenced or revised only under separate authorization |
+| **F4 `MMI_DECISION_AUDIT_APPENDIX_SCHEMA.md`** | Registry does not replace decision audit appendix or selection audit history |
+| **F5 `MMI_AUTONOMOUS_BRAIN_STAGE1_GAPS.md`** | Tier 2B closes only the passive registry mechanics gap; it does **not** close AUTH-5, registry-fed routing, contradiction tooling, auto-prompting, or dashboard gaps |
 | **`mmi/MMI_INTAKE_RECORDS.md`** | Intake rows may be cited in `status_evidence`; registry does not auto-append intake |
 | **`mmi/MMI_DECISION_LOG.md`** | `MMI-DEC-*` rows are primary evidence for `BUILD_AUTHORIZED` and `COMPLETE`; registry does not replace decision log |
 | **`scripts/mmi_packet_intake.py`** | Tier 2A admissibility is separate; human may cite `ACCEPT_FOR_MMI_REVIEW` in `status_evidence`; validator does not read registry |
@@ -460,10 +468,10 @@ Locked vocabulary per §16 for Mode B. Tests use synthetic fixture registries on
 | T2B-T7 | Built not complete | `BUILT_NEEDS_REVIEW` → `COMPLETE` without closeout evidence flagged |
 | T2B-T8 | No dispatcher feed | `mmi_dispatch.py` unchanged; no import of registry module |
 | T2B-T9 | No selection stdout | No tooling stdout contains next-task or selection labels |
-| T2B-T10 | Rejected/superseded persist | Historical `REJECTED` and `SUPERSEDED` fixture rows remain after validator run |
+| T2B-T10 | Historical rows persist | Fixture rows with status `PARKED`, `REJECTED`, `SUPERSEDED`, `CONTRADICTION`, or `DO_NOT_USE` remain present after validator run |
 | T2B-T11 | Mode B read-only | Mode B makes zero file writes; digest tests on routing surfaces |
 | T2B-T12 | AUTH-5 still blocked | No AUTH-5 flag, config, or autonomous selection path introduced |
-| T2B-T13 | Non-deletion | Tooling does not delete rows; `DO_NOT_USE` retained |
+| T2B-T13 | Non-deletion | Tooling does not delete rows; `PARKED`, `REJECTED`, `SUPERSEDED`, `CONTRADICTION`, and `DO_NOT_USE` rows retained |
 | T2B-T14 | Human verify after closeout | Human `mmi_dispatch.py --verify` PASS after routing-authority closeout (not registry tooling) |
 
 ---
