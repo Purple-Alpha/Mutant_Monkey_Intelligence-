@@ -4,8 +4,8 @@
 
 registry_version: 1
 maintained_by: human
-last_human_update_at: 2026-06-19T21:00:00Z
-last_human_update_ref: MMI_TASK_REGISTRY_INITIAL_ROWS_HYGIENE_PATCH
+last_human_update_at: 2026-06-19T22:00:00Z
+last_human_update_ref: MMI_TASK_REGISTRY_TIER2C_MODE_A_COMPLETION_ROW
 dispatcher_reads: false
 autonomous_selection: false
 tasks:
@@ -197,4 +197,65 @@ tasks:
         to: COMPLETE
         at: 2026-06-19T20:00:00Z
         evidence_ref: MMI-DEC-028 + INTAKE-2026-06-19-005 + Tier 2B Mode A closeout review PASS at e374a40; retrospective COMPLETE from MMI closeout (no ACCEPTED_FOR_REVIEW recorded; not registry self-approval)
+        human_editor: Matt Nichol
+
+  - task_id: TASK-2026-06-19-003
+    title: MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_REPORT_MODE_A
+    status: COMPLETE
+    classification: TIER2C_CONTRADICTION_REPORT
+    task_or_contract_ref: mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT.md
+    source_evidence:
+      - mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT.md
+      - 689edb556989812b15f89e72f01ab10fdba8e92c
+      - 0761db11181a9e38220297f3d140afa336dec72b
+      - scripts/mmi_contradiction_report.py
+      - tests/test_mmi_contradiction_report.py
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-032
+        recorded_at: 2026-06-19T22:00:00Z
+        note: Tier 2C Mode A contradiction report build ACCEPT
+      - type: intake_record
+        ref: INTAKE-2026-06-19-012
+        recorded_at: 2026-06-19T22:00:00Z
+      - type: contract_signed
+        ref: 689edb556989812b15f89e72f01ab10fdba8e92c
+        recorded_at: 2026-06-19T22:00:00Z
+        note: MMI-DEC-031 signature commit
+      - type: commit
+        ref: 0761db11181a9e38220297f3d140afa336dec72b
+        recorded_at: 2026-06-19T22:00:00Z
+        note: Mode A contradiction report build; 14 tests + packet intake regression
+      - type: other
+        ref: scripts/mmi_contradiction_report.py
+        recorded_at: 2026-06-19T22:00:00Z
+        note: Built-artifact path citation only in source_evidence; not registry self-approval; completion authority is build commit 0761db1, tests, verify, MMI-DEC-032, INTAKE-2026-06-19-012
+      - type: verify_output
+        ref: python3 scripts/mmi_dispatch.py --verify at 0761db1 closeout
+        recorded_at: 2026-06-19T22:00:00Z
+        note: "VERDICT: PASS — current state is properly done and consistent.; drift 0 BLOCK, 0 WARN (citation only; not registry verdict)"
+    assigned_worker: null
+    operator_action_required: no
+    matt_approval_required: no
+    blockers: []
+    superseded_by: null
+    supersedes: null
+    notes: Tier 2C Mode A complete. Read-only stdout-only report-only tool. Mode B parked. AUTH-5 blocked. Registry-fed routing forbidden. Tool does not authorize, select, complete, route, block, or mutate project state. Historical completed row only; not selected; not routing authority
+    created_at: 2026-06-19T22:00:00Z
+    updated_at: 2026-06-19T22:00:00Z
+    transition_log:
+      - from: SIGNED_CONTRACT
+        to: BUILD_AUTHORIZED
+        at: 2026-06-19T22:00:00Z
+        evidence_ref: MMI-DEC-032
+        human_editor: Matt Nichol
+      - from: BUILD_AUTHORIZED
+        to: BUILT_NEEDS_REVIEW
+        at: 2026-06-19T22:00:00Z
+        evidence_ref: 0761db11181a9e38220297f3d140afa336dec72b
+        human_editor: Matt Nichol
+      - from: BUILT_NEEDS_REVIEW
+        to: COMPLETE
+        at: 2026-06-19T22:00:00Z
+        evidence_ref: MMI-DEC-032 + INTAKE-2026-06-19-012 + verify PASS at 0761db1; retrospective COMPLETE from MMI closeout (no ACCEPTED_FOR_REVIEW recorded; not registry self-approval)
         human_editor: Matt Nichol
