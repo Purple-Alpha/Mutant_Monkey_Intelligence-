@@ -67,6 +67,8 @@ MMI-DEC-019 | 2026-06-19 | Tier 1 MMI Autonomous Brain contract wording patch | 
 
 MMI-DEC-020 | 2026-06-18 | Tier 1 MMI Autonomous Brain contract §11 signature | mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md (`f7ac7f2` base) | ACCEPT | Matt §11 signed Tier 1 passive foundation contract; authorizes F1–F5 only upon separate build authorization; not implementation | Explicit Tier 1 build authorization before F1–F5 artifact creation | Run mmi_dispatch.py --verify after commit | Matt Nichol (Tier 1 contract signature update only)
 
+MMI-DEC-021 | 2026-06-18 | Tier 1 MMI Autonomous Brain foundation build (F1–F5) | mmi/MMI_REPO_SURFACE_REGISTRY.md; mmi/MMI_TASK_REGISTRY_SCHEMA.md; mmi/MMI_WORKER_COMPLETION_PACKET_TEMPLATE.md; mmi/MMI_DECISION_AUDIT_APPENDIX_SCHEMA.md; mmi/MMI_AUTONOMOUS_BRAIN_STAGE1_GAPS.md | ACCEPT | Passive Tier 1 foundation artifacts F1–F5 created per signed contract `1972df7`; schema-only F2/F4; no dispatcher/code/runtime/scoreboard change; no live registry; no automation | Tier 2 tooling and AUTH-5 remain blocked until separate gates | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_BUILD only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

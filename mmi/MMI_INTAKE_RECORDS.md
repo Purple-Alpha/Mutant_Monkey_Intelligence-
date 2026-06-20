@@ -205,3 +205,12 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md (§11 SIGN
 Classification: SIGNED_CONTRACT — F1–F5 passive artifacts authorized only upon separate explicit build authorization; not implemented
 Routing outcome: operator must authorize Tier 1 build before F1–F5 creation
 Matt approval required: YES for Tier 1 build slice; §11 signature recorded by operator authorization
+
+INTAKE-2026-06-18-011
+Component: MMI Autonomous Brain Tier 1 foundation (F1–F5 passive artifacts)
+Request: MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_BUILD — passive documentation/schema/template only
+Source: Signed contract `mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md` at `1972df7`; operator build authorization
+Artifacts: mmi/MMI_REPO_SURFACE_REGISTRY.md (F1); mmi/MMI_TASK_REGISTRY_SCHEMA.md (F2); mmi/MMI_WORKER_COMPLETION_PACKET_TEMPLATE.md (F3); mmi/MMI_DECISION_AUDIT_APPENDIX_SCHEMA.md (F4); mmi/MMI_AUTONOMOUS_BRAIN_STAGE1_GAPS.md (F5)
+Classification: TIER1_FOUNDATION — passive only; no dispatcher edit; no live registry; no automation
+Routing outcome: F1–F5 complete; Tier 2/Tier 3 blocked; AUTH-5 not authorized
+Matt approval required: NO for this passive slice (explicit build authorization granted); YES for any Tier 2 gate or AUTH-5
