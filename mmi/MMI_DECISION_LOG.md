@@ -77,6 +77,8 @@ MMI-DEC-024 | 2026-06-19 | Tier 2A Worker Packet Intake contract §11 signature 
 
 MMI-DEC-025 | 2026-06-19 | Tier 2A Mode A packet intake validator build | scripts/mmi_packet_intake.py; tests/test_mmi_packet_intake.py; tests/fixtures/mmi_packets/* | ACCEPT | Mode A stdout-only structural validator per signed contract `e08792a`; `ACCEPT_FOR_MMI_REVIEW` / `REJECT_INCOMPLETE_PACKET`; 20 tests T2A-T1–T12; no dispatcher/scoreboard/runtime writes; Mode B not implemented | None | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2A_PACKET_INTAKE_MODE_A_BUILD only)
 
+MMI-DEC-026 | 2026-06-19 | Tier 2B Passive Task Registry contract draft placement | mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md | ACCEPT | DRAFT UNSIGNED placement only; passive human-maintained registry mechanics contract; not dispatcher input; AUTH-5 blocked; Mode A registry file recommended / Mode B validator parked; no `mmi/MMI_TASK_REGISTRY.yaml`; no validator code; implementation blocked | Matt §11 + separate build authorization before Tier 2B implementation | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2B_CONTRACT_DRAFT_PLACEMENT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

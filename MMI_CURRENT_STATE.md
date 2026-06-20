@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Tier 2A Mode A packet intake validator built
-  (MMI-DEC-025; INTAKE-2026-06-19-002). `scripts/mmi_packet_intake.py` — stdout-only
-  structural validator; Mode B not implemented; 20 contract tests pass.
-  Prior: Tier 2A contract §11 signed Mode A (`e08792a`, MMI-DEC-024).
+LAST_COMPLETED: Tier 2B Passive Task Registry contract draft placed
+  (MMI-DEC-026; INTAKE-2026-06-19-003). `mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md`
+  — DRAFT UNSIGNED; passive registry mechanics; no registry instance; AUTH-5 blocked.
+  Prior: Tier 2A hygiene (`a66b088`); Tier 2A Mode A validator (`10fd8d6`, MMI-DEC-025).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

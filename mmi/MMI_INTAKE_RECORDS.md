@@ -250,3 +250,21 @@ Artifacts: scripts/mmi_packet_intake.py; tests/test_mmi_packet_intake.py; tests/
 Classification: TIER2A_IMPLEMENTATION — Mode A stdout-only; Mode B not built
 Routing outcome: validator available for structural packet checks; does not advance routing
 Matt approval required: NO for this build slice (explicit authorization granted)
+
+INTAKE-2026-06-19-003
+Component: MMI Autonomous Brain Tier 2B Passive Task Registry (contract draft)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2B_CONTRACT_DRAFT_PLACEMENT — draft only, no implementation
+Source: Tier 1 F2 schema; Tier 2A complete (`a66b088`); F5 registry mechanics gap; review material AUTH-3A boundary
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md (DRAFT UNSIGNED)
+Classification: CONTRACT_DRAFT — passive lifecycle tracking only; not dispatcher input; AUTH-5 blocked; Mode A registry file recommended; Mode B validator parked
+Routing outcome: adversarial review + Matt §11 + separate build authorization before registry instance or validator code
+Matt approval required: YES for §11 and Tier 2B implementation; draft placement only authorized by this intake
+
+INTAKE-2026-06-19-003
+Component: MMI Autonomous Brain Tier 2B Passive Task Registry (contract draft)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2B_CONTRACT_DRAFT_PLACEMENT — draft only, no implementation
+Source: Tier 1 F2 schema; Tier 2A complete (`a66b088`); F5 registry mechanics gap; review material AUTH-3A boundary
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md (DRAFT UNSIGNED)
+Classification: CONTRACT_DRAFT — passive lifecycle tracking only; not dispatcher input; AUTH-5 blocked; Mode A registry file recommended; Mode B validator parked
+Routing outcome: adversarial review + Matt §11 + separate build authorization before registry instance or validator code
+Matt approval required: YES for §11 and Tier 2B implementation; draft placement only authorized by this intake
