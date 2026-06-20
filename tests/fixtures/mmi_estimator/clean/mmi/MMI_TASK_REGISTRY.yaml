@@ -1,0 +1,30 @@
+registry_version: 1
+maintained_by: human
+dispatcher_reads: false
+autonomous_selection: false
+tasks:
+  - task_id: TASK-FIXTURE-001
+    title: FIXTURE_BUILD_A
+    status: BUILD_AUTHORIZED
+    classification: FIXTURE
+    source_evidence:
+      - MMI-DEC-001
+      - INTAKE-2026-06-01-001
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-001
+    blockers: []
+  - task_id: TASK-FIXTURE-002
+    title: FIXTURE_BUILD_B
+    status: SIGNED_CONTRACT
+    classification: FIXTURE
+    source_evidence:
+      - mmi/fixture.md
+    status_evidence: []
+    blockers: []
+  - task_id: TASK-FIXTURE-DONE
+    title: FIXTURE_DONE
+    status: COMPLETE
+    classification: FIXTURE
+    source_evidence: []
+    status_evidence: []

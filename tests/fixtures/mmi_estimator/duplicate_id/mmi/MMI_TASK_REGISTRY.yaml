@@ -1,0 +1,7 @@
+registry_version: 1
+tasks:
+  - task_id: "#47"
+    title: conflicting registry row
+    status: SIGNED_CONTRACT
+    source_evidence: []
+    status_evidence: []
