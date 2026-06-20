@@ -341,17 +341,19 @@ def _format_blueprint(
         [
             "---",
             "section: 6 EVIDENCE REQUIREMENTS",
-            "requirement: WORKER_COMPLETION_PACKET with task_or_contract_ref, files_changed, exact_commit_hash, scope_confirmation, tests_gates_run, deviations_from_contract, verify_output, git_status_short",
+            (
+                "requirement: WORKER_COMPLETION_PACKET with task_or_contract_ref, "
+                "files_changed, exact_commit_hash, scope_confirmation, "
+                "tests_gates_run, deviations_from_contract, verify_output, "
+                "git_status_short"
+            ),
             f"requirement: CHECK:file_exists:{manifest.agent_contract_rel}",
-            (
-                "requirement: CHECK:command_expect:python3 -m unittest "
-                "tests.test_plain_english_explanation_agent -v|exit_code=0"
-            ),
-            (
-                "requirement: CHECK:command_expect:python3 scripts/mmi_dispatch.py "
-                "--verify|expect_substring=VERDICT:"
-            ),
-            "requirement: CHECK:field_present:WORKER_COMPLETION_PACKET.no_out_of_scope_confirmations",
+        ]
+    )
+    for cond in parsed.build_conditions:
+        lines.append(f"requirement: CHECK:{cond}")
+    lines.extend(
+        [
             "---",
             f"source_contract_path: {manifest.agent_contract_rel}",
         ]

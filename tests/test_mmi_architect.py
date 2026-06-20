@@ -60,9 +60,10 @@ def _file_digest(rel_path: str) -> str:
 
 def _run_architect(
     fixture_name: str | None = None,
+    candidate: str = "#52",
     extra_args: list[str] | None = None,
 ) -> tuple[int, str, str]:
-    cmd = [sys.executable, SCRIPT_PATH, "--candidate", "#52"]
+    cmd = [sys.executable, SCRIPT_PATH, "--candidate", candidate]
     if fixture_name:
         cmd.extend(["--root", os.path.join(FIXTURES, fixture_name)])
     if extra_args:
@@ -157,6 +158,8 @@ class TestMmiArchitectModeA(unittest.TestCase):
         self.assertIn("section: 6 EVIDENCE REQUIREMENTS", out)
         self.assertIn("WORKER_COMPLETION_PACKET", out)
         self.assertIn("requirement:", out)
+        self.assertIn("tests.test_client_facing_rubric", out)
+        self.assertNotIn("tests.test_plain_english_explanation_agent", out)
 
     def test_t8_forbidden_tokens(self):
         for fixture in ("complete", "missing_contract", "missing_flow"):
@@ -196,6 +199,67 @@ class TestMmiArchitectEnvelope(unittest.TestCase):
         self.assertEqual(code, 0)
         for part in SECTION_PARTS:
             self.assertIn(part, out)
+
+
+class TestMmiArchitectCandidateSpecificEvidence(unittest.TestCase):
+    def test_47_evidence_from_build_conditions(self):
+        code, out, _ = _run_architect(candidate="#47")
+        self.assertEqual(code, 0)
+        self.assertIn("section: 6 EVIDENCE REQUIREMENTS", out)
+        self.assertIn("test_case_timeline_agent", out)
+        self.assertIn("case_timeline_agent.py", out)
+        self.assertIn(
+            "requirement: CHECK:command_expect: python3 -m unittest "
+            "3.SwarmCommand_Engine.Agent_Loop_Runtime.Runtime_Implementation."
+            "tests.test_case_timeline_agent -v|exit_code=0",
+            out,
+        )
+
+    def test_47_no_plain_english_bleed(self):
+        code, out, _ = _run_architect(candidate="#47")
+        self.assertEqual(code, 0)
+        self.assertNotIn("tests.test_plain_english_explanation_agent", out)
+        self.assertNotIn("Plain-English Explanation", out)
+        self.assertNotIn("tests.test_client_facing_rubric", out)
+
+    def test_47_no_52_only_requirement_text(self):
+        code, out, _ = _run_architect(candidate="#47")
+        self.assertEqual(code, 0)
+        self.assertNotIn(
+            "requirement: CHECK:field_present:WORKER_COMPLETION_PACKET."
+            "no_out_of_scope_confirmations",
+            out,
+        )
+        self.assertNotIn(
+            "requirement: CHECK:command_expect:python3 scripts/mmi_dispatch.py "
+            "--verify|expect_substring=VERDICT:",
+            out,
+        )
+
+    def test_missing_build_conditions_insufficient(self):
+        code, out, _ = _run_architect("missing_build_conditions")
+        self.assertEqual(code, 2)
+        self.assertTrue(out.startswith("INPUTS_INSUFFICIENT_CANNOT_BLUEPRINT"))
+        self.assertIn("missing_build_conditions_section", out)
+
+    def test_52_fixture_evidence_requirements_remain(self):
+        code, out, _ = _run_architect("complete")
+        self.assertEqual(code, 0)
+        section_6 = out.split("section: 6 EVIDENCE REQUIREMENTS", 1)[1]
+        self.assertIn("client_facing_rubric.py", section_6)
+        self.assertIn("tests.test_client_facing_rubric", section_6)
+        self.assertNotIn("tests.test_plain_english_explanation_agent", section_6)
+
+    def test_architect_read_only_no_blueprint_of_record(self):
+        blueprint_path = os.path.join(REPO, "mmi", "BLUEPRINT_OF_RECORD.md")
+        before_exists = os.path.isfile(blueprint_path)
+        before_digest = _file_digest("mmi/BLUEPRINT_OF_RECORD.md")
+        code, _, _ = _run_architect(candidate="#47")
+        self.assertEqual(code, 0)
+        after_exists = os.path.isfile(blueprint_path)
+        after_digest = _file_digest("mmi/BLUEPRINT_OF_RECORD.md")
+        self.assertEqual(before_exists, after_exists)
+        self.assertEqual(before_digest, after_digest)
 
 
 if __name__ == "__main__":
