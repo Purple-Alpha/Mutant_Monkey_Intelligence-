@@ -260,11 +260,11 @@ Classification: CONTRACT_DRAFT — passive lifecycle tracking only; not dispatch
 Routing outcome: adversarial review + Matt §11 + separate build authorization before registry instance or validator code
 Matt approval required: YES for §11 and Tier 2B implementation; draft placement only authorized by this intake
 
-INTAKE-2026-06-19-003
-Component: MMI Autonomous Brain Tier 2B Passive Task Registry (contract draft)
-Request: MMI_AUTONOMOUS_BRAIN_TIER2B_CONTRACT_DRAFT_PLACEMENT — draft only, no implementation
-Source: Tier 1 F2 schema; Tier 2A complete (`a66b088`); F5 registry mechanics gap; review material AUTH-3A boundary
-Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md (DRAFT UNSIGNED)
-Classification: CONTRACT_DRAFT — passive lifecycle tracking only; not dispatcher input; AUTH-5 blocked; Mode A registry file recommended; Mode B validator parked
-Routing outcome: adversarial review + Matt §11 + separate build authorization before registry instance or validator code
-Matt approval required: YES for §11 and Tier 2B implementation; draft placement only authorized by this intake
+INTAKE-2026-06-19-004
+Component: MMI Autonomous Brain Tier 2B Passive Task Registry (§11 signature)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2B_CONTRACT_SIGNATURE_ONLY — signature update only, no implementation
+Source: Contract review PASS on `495ef8b`; operator authorization
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md (§11 SIGNED 2026-06-19; Mode A selected; Mode B parked)
+Classification: SIGNED_CONTRACT — contract approved only; Tier 2B implementation blocked; first build slice Mode A only if authorized; AUTH-5 blocked; registry-fed routing forbidden
+Routing outcome: separate explicit build authorization required before `mmi/MMI_TASK_REGISTRY.yaml` or validator code
+Matt approval required: YES for Tier 2B Mode A build; §11 signature recorded by operator authorization

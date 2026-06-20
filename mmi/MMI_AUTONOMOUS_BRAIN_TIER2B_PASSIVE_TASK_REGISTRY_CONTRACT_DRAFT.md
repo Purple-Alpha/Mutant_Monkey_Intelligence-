@@ -1,8 +1,12 @@
 # MMI Autonomous Brain — Tier 2B Passive Task Registry Implementation Contract
 
-**Status:** DRAFT UNSIGNED — contract terms only. **Does not authorize implementation.** No registry instance file, no validator code, no dispatcher changes.
+**Status:** §11 SIGNED 2026-06-19 by Matt Nichol. Signing approves **contract terms only** with **Mode A** selected (passive, human-maintained task registry instance only). Signing does **not** authorize implementation, `mmi/MMI_TASK_REGISTRY.yaml`, validator code, or test fixtures. **Mode B remains parked** (not selected at signature). Separate explicit build authorization is required before any Tier 2B implementation; first authorized build slice must be **Mode A only**.
 
-**Classification:** `DRAFT_CONTRACT` · Tier 2B tooling slice · not implemented
+**Classification:** `SIGNED_CONTRACT` · Tier 2B tooling slice · not implemented
+
+**Wording patch:** 2026-06-19 — Tier 2B contract review PASS WITH CHANGES (DO_NOT_USE non-deletion, §9.1 guards, F2 enum relationship, AUTH-3B boundary, §13 F4/F5, test wording).
+
+**§11 signature:** 2026-06-19 — Mode A selected; Mode B not selected (parked). AUTH-5 autonomous selection remains blocked. Registry-fed routing remains forbidden.
 
 **Owner:** Matt Nichol
 
@@ -21,8 +25,6 @@
 **Date:** 2026-06-19
 
 **Draft authorization:** `MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT` only
-
-**Wording patch:** 2026-06-19 — Tier 2B contract review PASS WITH CHANGES (DO_NOT_USE non-deletion, §9.1 guards, F2 enum relationship, AUTH-3B boundary, §13 F4/F5, test wording).
 
 ---
 
@@ -523,22 +525,31 @@ Post-signature implementation must **not**:
 
 ## 22. Sign-off
 
-**§11 UNSIGNED — awaiting Matt Nichol signature.**
+**§11 SIGNED — Matt Nichol 2026-06-19.**
 
-This §11 signature would approve the contract only. It would **not** authorize implementation, registry population, or validator code.
+This §11 signature approves the contract only. It does **not** authorize implementation, registry population, validator code, or test fixtures.
 
-**Contract configuration to record at signature (not build authorization):**
+Separate explicit build authorization is still required before creating:
 
-| Setting | Options |
+- `mmi/MMI_TASK_REGISTRY.yaml`
+- `mmi/MMI_TASK_REGISTRY_UPDATE_RULES.md` (if named in build authorization)
+- `scripts/mmi_task_registry_validate.py` or any other validator code
+- `tests/test_mmi_task_registry_validate.py` or registry test fixtures
+
+**AUTH-5 autonomous task selection remains blocked.** Registry-fed routing remains forbidden.
+
+**Contract configuration recorded at signature (not build authorization):**
+
+| Setting | Recorded at §11 |
 |---|---|
-| Selected first build mode | **Mode A** (recommended) — human-maintained registry file + rules |
-| Mode B structural validator | **Parked** unless explicitly selected at §11 |
-| Registry format | **YAML** (`mmi/MMI_TASK_REGISTRY.yaml`) recommended; JSON only if named at §11 |
+| Selected implementation mode | **Mode A** — passive, human-maintained task registry instance only |
+| Mode B structural validator | **Not selected — remains parked** |
+| Registry format | **YAML** (`mmi/MMI_TASK_REGISTRY.yaml`) |
 
-**Mode B** (read-only structural validator CLI) remains parked unless Matt separately selects it at §11 **and** names Mode B in separate build authorization. **First build authorization, if issued, should name Mode A only.**
+**Mode B** (read-only structural validator CLI) remains parked unless Matt separately signs or authorizes Mode B in a future contract revision **and** names Mode B in separate build authorization. **First build authorization, if issued, must name Mode A only.**
 
-> [Blank — Matt Nichol signature line]
+> Matt Nichol June 19th 2026
 
 ---
 
-**End of Tier 2B contract draft. DRAFT UNSIGNED. Implementation blocked until Matt §11 signature and separate build authorization.**
+**End of Tier 2B contract. §11 signed; Tier 2B implementation requires separate build authorization (Mode A only). AUTH-5 remains blocked. Registry-fed routing remains forbidden.**
