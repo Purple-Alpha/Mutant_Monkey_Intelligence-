@@ -93,6 +93,8 @@ MMI-DEC-032 | 2026-06-19 | Tier 2C Mode A contradiction report build | scripts/m
 
 MMI-DEC-033 | 2026-06-19 | APT29 / EnvyScout cyber security intelligence input intake | mmi/research/MMI_CYBER_SECURITY_INTELLIGENCE_INPUT_APT29_ENVYSCOUT.md | ACCEPT | RESEARCH_INPUT + CYBER_SECURITY_INTELLIGENCE_INPUT only; operator-supplied concept; not authority; not product doctrine; not MMI success definition; not build authorization; no detection-agent contract; no runtime rules; AUTH-5 blocked | Future review if intelligence doctrine pursued | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_CYBER_SECURITY_INTELLIGENCE_INPUT_INTAKE_APT29_ENVYSCOUT only)
 
+MMI-DEC-034 | 2026-06-19 | MMI success evolution roadmap concept intake | mmi/research/MMI_SUCCESS_EVOLUTION_ROADMAP_INTAKE.md | ACCEPT | MATT_CONCEPT_INPUT only; not signed; not doctrine; not success definition; not build authorization; not autonomous selection; candidate phased roadmap preserved; Phase 1/2/3/4 not authorized; AUTH-5 blocked | Future review before any phase promotion | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_SUCCESS_EVOLUTION_ROADMAP_INTAKE only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

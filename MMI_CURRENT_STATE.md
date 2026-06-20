@@ -35,9 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: APT29/EnvyScout cyber security intelligence input captured
-  (MMI-DEC-033; INTAKE-2026-06-19-013). Research/input only; not authority;
-  not build authorization. Prior: Tier 2C registry row (`437f463`).
+LAST_COMPLETED: MMI research intakes captured — APT29/EnvyScout cyber intelligence input
+  and candidate success evolution roadmap (MMI-DEC-033/034; INTAKE-2026-06-19-013/014).
+  Research/input only; not doctrine; not build authorization; AUTH-5 blocked.
+  Prior: Tier 2C registry row (`437f463`, TASK-2026-06-19-003).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
