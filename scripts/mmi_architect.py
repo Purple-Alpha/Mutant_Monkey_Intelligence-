@@ -75,6 +75,24 @@ class CandidateManifest:
 
 
 CANDIDATE_MANIFEST: dict[str, CandidateManifest] = {
+    "#47": CandidateManifest(
+        candidate_id="#47",
+        name="Case Timeline",
+        agent_contract_rel=(
+            "4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md"
+        ),
+        artifact_basis_rel=(
+            "4. Product_Roadmap/Verification_Outcome_Agent_Design_Contract_Deep_Dive.md",
+            (
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/orchestrator/agent_contract.py"
+            ),
+            (
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/orchestrator/verification_outcome_agent.py"
+            ),
+        ),
+    ),
     "#52": CandidateManifest(
         candidate_id="#52",
         name="Plain-English Explanation",

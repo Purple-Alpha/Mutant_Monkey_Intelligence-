@@ -1,6 +1,6 @@
 # Case Timeline Agent Design Contract — Boundary / Unblock Deep Dive
 
-**Status:** DRAFT (UNSIGNED) 2026-06-19. Authored after MMI project-direction scoring ranked **Draft #47 Case Timeline Agent Design Contract** highest (16/20) following #48 Verification Outcome Agent promotion to `GOVERNED_AGENT` (`6799978`) and #47 dependency re-triage (`80f128c`, CYCLE 27). Build Map CYCLE 25 found #47 Case Timeline needs a governed verification-outcome input before it can become a clean Evidence-layer timeline agent; #48 now supplies that governed input. This draft defines the Agent Design Contract only. It authorizes **no** code, **no** runtime wrapper, **no** scoreboard promotion, **no** `SIGNED_UNBUILT` flip, **no** `REACTION_TIMING_TEST_LOG.md` mutation, **no** evidence-package / audit-trail behavior change, **no** real-customer-data handling, **no** client-facing timing claim, and **no** build until Matt §11 signs and a separate Build Authorization is issued.
+**Status:** §11 SIGNED 2026-06-20 by Matt Nichol (MMI_47_CASE_TIMELINE_MATT_SECTION_11_SIGNATURE_ONLY). **SIGNED CONTRACT — BUILD NOT AUTHORIZED.** Architect-readiness patch 2026-06-20 (MMI_47_CASE_TIMELINE_CONTRACT_ARCHITECT_READINESS_PATCH); pre-signature cleanup 2026-06-20 (MMI_47_CASE_TIMELINE_PRE_SIGNATURE_CLEANUP_ONLY). `PROJECT_DIRECTION_RESEARCH` was retired under MMI-DEC-044. This contract is evaluated under current lifecycle/contract-readiness governance only. Authored after #48 Verification Outcome Agent promotion to `GOVERNED_AGENT` (`6799978`) and #47 dependency re-triage (`80f128c`, CYCLE 27). §11 locks D1-D12 and the §10 operator dispositions as a governed design/build contract candidate. It authorizes **no** runtime wrapper implementation, **no** scoreboard `SIGNED_UNBUILT` reconcile, **no** formal `complete_gate.py` close, **no** `REACTION_TIMING_TEST_LOG.md` mutation, **no** evidence-package / audit-trail behavior change, **no** real-customer-data handling, **no** client-facing timing claim, and **no** build until separate Build Authorization is issued.
 
 **Owner:** Matt Nichol
 
@@ -40,7 +40,7 @@
 | Role | Produce bounded case-timeline evidence by projecting which reaction-timing anchors are present, whether the anchor sequence is internally consistent, and whether a governed verification-outcome phase is represented for the case — without computing client-facing SLA claims or mutating timing ledgers. |
 | Boundary | Read-only Evidence agent over caller-supplied timing anchors and caller-attested governed verification context. The wrapper must not append to `REACTION_TIMING_TEST_LOG.md`, mutate package `audit_trail.json`, write Blackboard workflow events, invoke `#48 VerificationOutcomeAgent`, call `summarize_confirmation_status`, lower risk, approve/deny payment, or emit performance guarantees. |
 | Explicit non-authorities | No autonomous action; no block/quarantine/deny/reject verb; no payment approval/denial; no client-facing timing/SLA claim; no "detected in X seconds" outreach copy; no `REACTION_TIMING_TEST_LOG.md` append; no package-generator / audit-trail / PDF / done-declaration mutation; no Grok/xAI call; no network/subprocess lookup; no workflow enum/schema change; no default-registry registration; no production dispatch at Evidence Stage 1; no real-customer-data handling; no Evidence Stage 2/3 promotion; no builder self-audit (`audit_record_id` remains Final Review only). |
-| Inputs | One explicit case-timeline request supplied by a trusted caller: `tenant_id`, `case_id`, caller-owned `DecisionTimestamps`, optional `inputs_digest`, and optional caller-attested governed verification-phase fact names already present in the case DER (for example closed facts emitted by `#48 VerificationOutcomeAgent`). The wrapper does not read raw email bodies, attachments, payment details, operator labels, channel descriptions, or external systems. |
+| Inputs | One explicit case-timeline request supplied by a trusted caller: `tenant_id`, `case_id`, caller-owned `DecisionTimestamps`, optional `expect_closure` (boolean; default false), optional `inputs_digest`, and optional caller-attested governed verification-phase fact names already present in the case DER (for example closed facts emitted by `#48 VerificationOutcomeAgent`). The wrapper does not read raw email bodies, attachments, payment details, operator labels, channel descriptions, or external systems. |
 | Outputs | One `AgentContribution` (layer 4): `observed_facts` = closed case-timeline phase facts; optional bounded `control_mapping` (for example `case_timeline:stage_a_synthetic`); optional bounded Stage 1 `underwriter_note` stating internal synthetic timeline evidence only. No verification/challenge fields are emitted. |
 | Evidence emitted | Closed fact names only: `case_timeline_detected_at_present`, `case_timeline_verification_requested_at_present`, `case_timeline_verification_outcome_at_present`, `case_timeline_closed_at_present`, `case_timeline_sequence_monotonic`, `case_timeline_sequence_invalid`, `case_timeline_verification_phase_missing`, `case_timeline_verification_phase_present`, `case_timeline_closure_missing`, optional bounded `case_timeline_verification_fact:<closed_fact_name>` when caller attests a governed #48 fact is in scope. Raw timestamps, millisecond durations, record IDs, operator names, email content, and client-facing narrative do not cross into the contribution at Stage 1. |
 | Data minimization | The contribution emits presence/sequence/phase facts only. It does not emit ISO timestamps, elapsed milliseconds, human-segment durations, Blackboard record IDs, package JSON, audit-trail content, vendor/customer names, or reaction-timing test verdicts. |
@@ -67,7 +67,7 @@
 
 ## §0 Purpose
 
-Unblock swarm #47 Case Timeline by defining the Evidence-layer boundary that kept it from being a clean governed agent after CYCLE 25 triage. The scoreboard row cites partial infrastructure (`REACTION_TIMING_TEST_LOG.md`, `DecisionTimestamps`, package `audit_trail.json` references) but no per-agent contract or wrapper.
+Unblock swarm #47 Case Timeline by defining the Evidence-layer boundary that kept it from being a clean governed agent after CYCLE 25 triage. The scoreboard row cites partial infrastructure (`REACTION_TIMING_TEST_LOG.md`, `DecisionTimestamps`, package `audit_trail.json` references) and now has an unsigned Agent Design Contract on disk (`4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md`); the `CaseTimelineAgent` wrapper is not yet built.
 
 The safe Stage 1 agent is narrower than a reaction-timing test runner or evidence-package assembler. It does not append timing-test records, assemble cyber-insurance packages, or contact anyone. It projects caller-supplied case timing anchors — now composable with governed verification-outcome context from `#48` — into closed Layer 4 timeline facts for the DER.
 
@@ -96,6 +96,42 @@ This contract is the governance step only. It does not build runtime code until 
 
 ---
 
+## FLOW CONTRACT
+
+| Field | Value |
+|---|---|
+| output_location | caller receives read-only DER contribution object from CaseTimelineAgent wrapper |
+| output_format | closed presence/sequence facts only; no raw timestamps, durations, record IDs, or client-facing timing language |
+| downstream_consumer | DER / evidence package assembly caller, only after separate authorization |
+| consumer_usage | may include closed presence/sequence facts in evidence record; must not infer SLA, speed, negligence, payment outcome, or verification truth beyond attested facts |
+
+---
+
+## BUILD CONDITIONS
+
+Boundary enforcement targets (verified by §6 required tests 9-12 and 18-20 via the focused test module):
+
+- no writes to `REACTION_TIMING_TEST_LOG.md`
+- no workflow/package/audit-trail mutation
+- no `#48` invocation
+- no raw timestamps emitted
+- no durations emitted
+- no record IDs emitted
+- no client-facing timing language emitted
+- tenant isolation enforced
+
+Checkable build gates:
+
+- CHECK: file_exists: 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/case_timeline_agent.py
+- CHECK: file_exists: 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_case_timeline_agent.py
+- CHECK: file_exists: 3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/agent_contract.py
+- CHECK: file_exists: 4. Product_Roadmap/Verification_Outcome_Agent_Design_Contract_Deep_Dive.md
+- CHECK: command_expect: python3 -m unittest 3.SwarmCommand_Engine.Agent_Loop_Runtime.Runtime_Implementation.tests.test_case_timeline_agent -v|exit_code=0
+- CHECK: format_exact: closed presence/sequence facts only; no raw timestamps, durations, record IDs, or client-facing timing language
+- CHECK: consumer_named: DER / evidence package assembly caller
+
+---
+
 ## §2 Locked Design Decisions (candidate — confirmed at §11)
 
 - **D1 — Identity.** Case Timeline is a Layer 4 Evidence agent, Authority Level 3 Specialist, VISION Stage A, Evidence Stage 1 (Synthetic) at signing. `agent_id = case_timeline_001`.
@@ -105,15 +141,18 @@ This contract is the governance step only. It does not build runtime code until 
 - **D5 — Facts-only Layer 4 contribution.** The agent emits closed observed facts plus optional bounded `control_mapping` / Stage 1 `underwriter_note`. It emits no verification/challenge fields, no durations, no timestamps, and no narrative explanation.
 - **D6 — #48 composition rule.** `case_timeline_verification_phase_present` requires both `verification_outcome_at` in caller timestamps and caller attestation of at least one governed #48 closed fact name. Missing either emits `case_timeline_verification_phase_missing` or absent verification anchor facts as defined in §3.
 - **D7 — Sequence rule.** When all supplied anchors are non-null, they must be monotonic: `detected_at <= verification_requested_at <= verification_outcome_at <= closed_at`. Violations emit `case_timeline_sequence_invalid`; valid monotonic sequences emit `case_timeline_sequence_monotonic`.
+- **D7a — Closure expectation.** Use `expect_closure` flag. Absence of `closed_at` is not invalid unless `expect_closure=true`. When `expect_closure=true` and `closed_at` is absent, emit `case_timeline_closure_missing`.
 - **D8 — Builder/auditor separation.** The timeline projector is not the package assembler and not the Final Review auditor. It must not set `audit_record_id` or call `audit_package()`.
 - **D9 — No client-facing timing claims.** Stage 1 produces internal synthetic timeline evidence only. No SLA, performance guarantee, or "we respond in X" language.
 - **D10 — Tests are the Stage 1 evidence.** The wrapper test suite must prove anchor presence, monotonic sequence handling, #48 phase gating, read-only purity, tenant isolation, persistence, default-registry exclusion, no network/subprocess behavior, and no timestamp/duration/record leakage before the build can close.
+- **D11 — #48 fact transport (Mode A).** Mode A uses attested #48 fact names only. No digest transport in Mode A.
+- **D12 — Duration buckets (Mode A).** Deferred. Duration buckets are forbidden in Mode A.
 
 ---
 
 ## §3 Data surface and output schema
 
-- **Reads:** caller-supplied `tenant_id`, `case_id`, `DecisionTimestamps`, optional `inputs_digest`, optional tuple of attested governed verification fact names (closed vocabulary from `#48` only).
+- **Reads:** caller-supplied `tenant_id`, `case_id`, `DecisionTimestamps`, optional `expect_closure` (default false), optional `inputs_digest`, optional tuple of attested governed verification fact names (closed vocabulary from `#48` only).
 - **Does not read:** raw email, Blackboard bodies, package directories, `audit_trail.json` contents, external clocks beyond supplied datetimes, or workflow APIs.
 - **Emits:** `AgentContribution(agent_id="case_timeline_001", layer=4, observed_facts=<closed timeline facts>, control_mapping="case_timeline:stage_a_synthetic", underwriter_note=<bounded Stage 1 note>)`.
 - **Allowed fact vocabulary:** see Agent Design Contract block `Evidence emitted`.
@@ -153,9 +192,9 @@ The implementation slice must add focused tests proving:
 3. Only `detected_at` present emits `case_timeline_detected_at_present` and missing-anchor facts for later phases as applicable.
 4. Full anchor set with monotonic ordering emits `case_timeline_sequence_monotonic` and the corresponding `*_present` facts.
 5. Non-monotonic anchor ordering emits `case_timeline_sequence_invalid` and does not emit `case_timeline_sequence_monotonic`.
-6. `verification_outcome_at` present without attested governed #48 fact names emits `case_timeline_verification_phase_missing` (or fails closed per implementation choice locked at build — default: emit missing-phase fact).
+6. `verification_outcome_at` present without attested governed #48 fact names emits `case_timeline_verification_phase_missing`.
 7. `verification_outcome_at` present with attested governed #48 closed fact emits `case_timeline_verification_phase_present` and optional bounded `case_timeline_verification_fact:<name>`.
-8. Missing `closed_at` when other anchors exist emits `case_timeline_closure_missing` when closure is expected by caller scenario; otherwise remains absent without overclaim.
+8. Missing `closed_at` when other anchors exist emits `case_timeline_closure_missing` only when caller sets `expect_closure=true`; otherwise remains absent without overclaim.
 9. The wrapper never appends to `REACTION_TIMING_TEST_LOG.md` and never mutates package or audit-trail files.
 10. The wrapper never calls `VerificationOutcomeAgent`, `summarize_confirmation_status`, or workflow write helpers.
 11. Invalid `case_id` / missing tenant context fails closed.
@@ -168,6 +207,7 @@ The implementation slice must add focused tests proving:
 18. Contribution emits no ISO timestamp strings, millisecond counts, record IDs, raw email content, payment data, client-facing timing claim, or forbidden-language package/insurance wording.
 19. Wrapper performs no network/subprocess call and imports no external timing/CRM/reputation client dependency.
 20. Wrapper does not set `audit_record_id`, call `audit_package()`, or mutate runtime detector/scoring modules.
+21. Caller-supplied attested #48 fact names must be restricted to the closed #48 governed fact vocabulary (`Verification_Outcome_Agent_Design_Contract_Deep_Dive.md` Evidence emitted list). Unknown/out-of-vocabulary names must not be emitted as `case_timeline_verification_fact:<name>`; the wrapper rejects them or omits them without emitting the prefixed fact.
 
 ---
 
@@ -186,28 +226,49 @@ This contract draft must pass `complete_gate.py` before §11 signature. Any impl
 - Not a client-facing performance dashboard.
 - Not authorized to use real-mailbox or production tenant timing data.
 
-### Remaining blockers after this draft (expected)
-- **Matt §11 signature** on this contract (required before `SIGNED_UNBUILT` reconcile or build).
-- **Grok draft gate clean 0/0** on this contract slice.
-- **Separate Build Authorization** after §11 signature (this draft does not authorize implementation).
-- **Scoreboard reconcile** from `NEEDS_SIGNED_CONTRACT` to `SIGNED_UNBUILT` only after §11 signature — not at draft time.
+### Remaining blockers after §11 signature (expected)
+
+- **Separate Build Authorization** (required before wrapper/test implementation).
+- **Formal `complete_gate.py` close** on the signed contract slice (pending).
+- **Scoreboard reconcile** from `NEEDS_SIGNED_CONTRACT` to `SIGNED_UNBUILT` only after separate operator authorization — not performed by §11 signature alone.
 
 ---
 
-## §10 Open Questions (operator-only)
+## §10 Operator dispositions (locked — MMI_47 architect-readiness patch)
 
-1. **Stage 1 closure semantics:** when `closed_at` is absent but other anchors exist, should the wrapper emit `case_timeline_closure_missing` always, or only when the caller sets an explicit `expect_closure=true` flag? Default draft posture: caller-owned expectation flag at Stage 1 build time.
-2. **Attested #48 fact transport:** should caller pass fact names only, or fact names plus a digest of the `#48` contribution? Default draft posture: closed fact names only at Stage 1.
-3. **Duration buckets:** should Stage 2 introduce bounded duration-bucket facts (for example `case_timeline_detection_to_verification_bucket:short`), or remain presence/sequence-only forever? Default draft posture: presence/sequence-only at Stage 1; duration buckets deferred to Stage 2+ with separate authorization.
+No design fork remains open. Locked at contract-readiness patch 2026-06-20:
 
-No design fork is resolved until Matt selects in §11 signature or a recorded operator decision.
+1. **Closure semantics:** Use `expect_closure` flag. Absence of `closed_at` is not invalid unless `expect_closure=true`.
+2. **#48 fact transport:** Mode A uses attested #48 fact names only. No digest transport in Mode A.
+3. **Duration buckets:** Deferred. Duration buckets are forbidden in Mode A.
+
+§11 signature confirms D1-D12 and these dispositions.
 
 ---
 
 ## §11 Sign-off
 
-**UNSIGNED — OPERATOR_LOCK pending Matt Nichol §11 signature.**
+**§11 SIGN-OFF — APPROVED BY MATT**
 
-Signing would lock D1-D10 and authorize only the Evidence Stage 1 (Synthetic) `CaseTimelineAgent` wrapper build + focused tests. Signing would authorize **no** reaction-timing ledger append, **no** package/audit-trail mutation, **no** default-registry registration, **no** production dispatch, **no** real-customer-data handling, **no** client-facing timing claim, **no** `#48` behavior change, and **no** autonomous action.
+**Date:** 2026-06-20
 
-> Matt Nichol ____________________  Date __________
+**Authority:** Matt operator approval (MMI_47_CASE_TIMELINE_MATT_SECTION_11_SIGNATURE_ONLY)
+
+**Status after signature:** SIGNED CONTRACT — BUILD NOT AUTHORIZED
+
+This signature locks D1-D12 and the §10 operator dispositions for swarm #47 Case Timeline (`CaseTimelineAgent`) as a Layer 4 Evidence Stage 1 (Synthetic) governed design/build contract candidate.
+
+**Explicitly not authorized by this signature:**
+
+- Implementation remains blocked until separate authorization.
+- Lifecycle reconcile to `SIGNED_UNBUILT` remains blocked until separate authorization.
+- Formal `complete_gate.py` close remains pending.
+- No runtime wrapper is built by this signature.
+- No production dispatch is enabled.
+- No registry-fed routing is enabled.
+- No AUTH-5 unlock.
+- No push.
+
+Signing authorizes **no** reaction-timing ledger append, **no** package/audit-trail mutation, **no** default-registry registration, **no** real-customer-data handling, **no** client-facing timing claim, **no** `#48` behavior change, and **no** autonomous action.
+
+> Matt Nichol — June 20 2026
