@@ -277,3 +277,12 @@ Artifacts: mmi/MMI_TASK_REGISTRY.yaml; mmi/MMI_TASK_REGISTRY_UPDATE_RULES.md
 Classification: TIER2B_MODE_A — human-maintained registry instance; empty tasks; no validator; Mode B not built
 Routing outcome: passive registry available for human lifecycle tracking; does not feed dispatcher or select tasks
 Matt approval required: NO for this build slice (explicit authorization granted)
+
+INTAKE-2026-06-19-006
+Component: MMI Task Registry initial completed historical rows
+Request: MMI_TASK_REGISTRY_INITIAL_COMPLETED_ROWS — registry seed only
+Source: Signed Tier 2B contract `7d245f8`; registry build `e374a40`; operator authorization
+Artifact: mmi/MMI_TASK_REGISTRY.yaml (three COMPLETE historical rows)
+Classification: TIER2B_REGISTRY_SEED — completed history only; no candidates; no routing feed
+Routing outcome: passive registry documents completed MMI brain slices; does not select tasks
+Matt approval required: NO for this seed slice (explicit authorization granted)

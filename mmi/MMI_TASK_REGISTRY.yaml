@@ -4,8 +4,181 @@
 
 registry_version: 1
 maintained_by: human
-last_human_update_at: 2026-06-19T18:00:00Z
-last_human_update_ref: MMI_AUTONOMOUS_BRAIN_TIER2B_MODE_A_BUILD
+last_human_update_at: 2026-06-19T20:00:00Z
+last_human_update_ref: MMI_TASK_REGISTRY_INITIAL_COMPLETED_ROWS
 dispatcher_reads: false
 autonomous_selection: false
-tasks: []
+tasks:
+  - task_id: TASK-2026-06-18-001
+    title: MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION
+    status: COMPLETE
+    classification: TIER1_FOUNDATION
+    task_or_contract_ref: mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md
+    source_evidence:
+      - mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md
+      - 8c7a00f736324b6fce7032829725f4233f18aa47
+      - 38e89c45bef3b99e6a22b5edd2c0f5bf5f1a4f55
+      - mmi/MMI_REPO_SURFACE_REGISTRY.md
+      - mmi/MMI_TASK_REGISTRY_SCHEMA.md
+      - mmi/MMI_WORKER_COMPLETION_PACKET_TEMPLATE.md
+      - mmi/MMI_DECISION_AUDIT_APPENDIX_SCHEMA.md
+      - mmi/MMI_AUTONOMOUS_BRAIN_STAGE1_GAPS.md
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-021
+        recorded_at: 2026-06-18T12:00:00Z
+        note: Tier 1 F1-F5 foundation build ACCEPT
+      - type: intake_record
+        ref: INTAKE-2026-06-18-011
+        recorded_at: 2026-06-18T12:00:00Z
+      - type: commit
+        ref: 8c7a00f736324b6fce7032829725f4233f18aa47
+        recorded_at: 2026-06-18T12:00:00Z
+        note: Tier 1 foundation build
+      - type: commit
+        ref: 38e89c45bef3b99e6a22b5edd2c0f5bf5f1a4f55
+        recorded_at: 2026-06-18T12:00:00Z
+        note: Tier 1 F1 cosmetic closeout patch
+      - type: contract_signed
+        ref: mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md
+        recorded_at: 2026-06-18T12:00:00Z
+        note: MMI-DEC-020 signature path
+    assigned_worker: null
+    operator_action_required: no
+    matt_approval_required: no
+    blockers: []
+    superseded_by: null
+    supersedes: null
+    notes: Historical completed row only; not selected; not routing authority
+    created_at: 2026-06-18T12:00:00Z
+    updated_at: 2026-06-19T20:00:00Z
+    transition_log:
+      - from: SIGNED_CONTRACT
+        to: BUILD_AUTHORIZED
+        at: 2026-06-18T12:00:00Z
+        evidence_ref: MMI-DEC-021
+        human_editor: Matt Nichol
+      - from: BUILD_AUTHORIZED
+        to: BUILT_NEEDS_REVIEW
+        at: 2026-06-18T12:00:00Z
+        evidence_ref: 8c7a00f736324b6fce7032829725f4233f18aa47
+        human_editor: Matt Nichol
+      - from: BUILT_NEEDS_REVIEW
+        to: COMPLETE
+        at: 2026-06-19T20:00:00Z
+        evidence_ref: MMI-DEC-021
+        human_editor: Matt Nichol
+
+  - task_id: TASK-2026-06-19-001
+    title: MMI_AUTONOMOUS_BRAIN_TIER2A_PACKET_INTAKE_MODE_A
+    status: COMPLETE
+    classification: TIER2A_PACKET_INTAKE
+    task_or_contract_ref: mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md
+    source_evidence:
+      - mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md
+      - e08792a47bbdfb50717420bc4025df24de3b5cef
+      - 10fd8d644788bbfe1307e838e42bf93241b41bf3
+      - a66b088280cca1467aec502506cf99adc3a4cb9a
+      - scripts/mmi_packet_intake.py
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-025
+        recorded_at: 2026-06-19T12:00:00Z
+        note: Tier 2A Mode A validator build ACCEPT
+      - type: intake_record
+        ref: INTAKE-2026-06-19-002
+        recorded_at: 2026-06-19T12:00:00Z
+      - type: contract_signed
+        ref: e08792a47bbdfb50717420bc4025df24de3b5cef
+        recorded_at: 2026-06-19T12:00:00Z
+        note: MMI-DEC-024 signature commit
+      - type: commit
+        ref: 10fd8d644788bbfe1307e838e42bf93241b41bf3
+        recorded_at: 2026-06-19T12:00:00Z
+        note: Mode A validator build
+      - type: commit
+        ref: a66b088280cca1467aec502506cf99adc3a4cb9a
+        recorded_at: 2026-06-19T12:00:00Z
+        note: Tier 2A hygiene patch
+    assigned_worker: null
+    operator_action_required: no
+    matt_approval_required: no
+    blockers: []
+    superseded_by: null
+    supersedes: null
+    notes: Historical completed row only; Mode B not implemented
+    created_at: 2026-06-19T12:00:00Z
+    updated_at: 2026-06-19T20:00:00Z
+    transition_log:
+      - from: SIGNED_CONTRACT
+        to: BUILD_AUTHORIZED
+        at: 2026-06-19T12:00:00Z
+        evidence_ref: MMI-DEC-025
+        human_editor: Matt Nichol
+      - from: BUILD_AUTHORIZED
+        to: BUILT_NEEDS_REVIEW
+        at: 2026-06-19T12:00:00Z
+        evidence_ref: 10fd8d644788bbfe1307e838e42bf93241b41bf3
+        human_editor: Matt Nichol
+      - from: BUILT_NEEDS_REVIEW
+        to: COMPLETE
+        at: 2026-06-19T20:00:00Z
+        evidence_ref: MMI-DEC-025
+        human_editor: Matt Nichol
+
+  - task_id: TASK-2026-06-19-002
+    title: MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_MODE_A
+    status: COMPLETE
+    classification: TIER2B_REGISTRY
+    task_or_contract_ref: mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md
+    source_evidence:
+      - mmi/MMI_AUTONOMOUS_BRAIN_TIER2B_PASSIVE_TASK_REGISTRY_CONTRACT_DRAFT.md
+      - 7d245f83294c7d30a11492d64548d21d23030c2f
+      - e374a402575ae4d45edbcdce34cd6b17429c0455
+      - mmi/MMI_TASK_REGISTRY.yaml
+      - mmi/MMI_TASK_REGISTRY_UPDATE_RULES.md
+    status_evidence:
+      - type: mmi_decision
+        ref: MMI-DEC-028
+        recorded_at: 2026-06-19T18:00:00Z
+        note: Tier 2B Mode A registry build ACCEPT
+      - type: intake_record
+        ref: INTAKE-2026-06-19-005
+        recorded_at: 2026-06-19T18:00:00Z
+      - type: contract_signed
+        ref: 7d245f83294c7d30a11492d64548d21d23030c2f
+        recorded_at: 2026-06-19T18:00:00Z
+        note: MMI-DEC-027 signature commit
+      - type: commit
+        ref: e374a402575ae4d45edbcdce34cd6b17429c0455
+        recorded_at: 2026-06-19T18:00:00Z
+        note: Mode A registry instance build
+      - type: other
+        ref: Tier 2B Mode A closeout review PASS at e374a40
+        recorded_at: 2026-06-19T20:00:00Z
+        note: Historical closeout review; not verify PASS or routing authority
+    assigned_worker: null
+    operator_action_required: no
+    matt_approval_required: no
+    blockers: []
+    superseded_by: null
+    supersedes: null
+    notes: Historical completed row only; empty tasks at first build; seeded separately
+    created_at: 2026-06-19T18:00:00Z
+    updated_at: 2026-06-19T20:00:00Z
+    transition_log:
+      - from: SIGNED_CONTRACT
+        to: BUILD_AUTHORIZED
+        at: 2026-06-19T18:00:00Z
+        evidence_ref: MMI-DEC-028
+        human_editor: Matt Nichol
+      - from: BUILD_AUTHORIZED
+        to: BUILT_NEEDS_REVIEW
+        at: 2026-06-19T18:00:00Z
+        evidence_ref: e374a402575ae4d45edbcdce34cd6b17429c0455
+        human_editor: Matt Nichol
+      - from: BUILT_NEEDS_REVIEW
+        to: COMPLETE
+        at: 2026-06-19T20:00:00Z
+        evidence_ref: Tier 2B Mode A closeout review PASS
+        human_editor: Matt Nichol
