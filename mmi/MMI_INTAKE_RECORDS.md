@@ -188,3 +188,12 @@ Artifacts: mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md (hardened); mm
 Classification: ADVERSARIAL_REVIEW + CONTRACT_DRAFT — AUTH-2-EDIT, I13–I16, T12–T16, §14 gaps; Tier 1 five-file scope defined; not implemented
 Routing outcome: Matt §11 on Tier 1 contract + separate build authorization before F1–F5 artifact creation
 Matt approval required: YES for Tier 1 implementation; draft commit authorized by this intake only
+
+INTAKE-2026-06-19-009
+Component: MMI Autonomous Brain Tier 1 contract (wording patch)
+Request: Tier 1 contract review PASS WITH CHANGES — wording patch only
+Source: Tier 1 contract adversarial review on `15ce969`
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER1_FOUNDATION_CONTRACT_DRAFT.md (wording patched; still DRAFT UNSIGNED)
+Classification: CONTRACT_DRAFT — T1-T1/§7 alignment, F2/F4 precision, §4 AUTH split, §7 I15 packet; not implementation
+Routing outcome: Matt §11 + separate build authorization before F1–F5 creation
+Matt approval required: YES for §11 and Tier 1 build; wording patch commit only

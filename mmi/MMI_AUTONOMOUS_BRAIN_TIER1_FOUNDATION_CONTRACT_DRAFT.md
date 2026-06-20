@@ -14,7 +14,7 @@
 
 **Date:** 2026-06-19
 
----
+**Wording patch:** 2026-06-19 — Tier 1 contract review PASS WITH CHANGES (contract wording only; not implementation).
 
 ## 1. Executive summary
 
@@ -38,7 +38,11 @@ Signing this contract (future §11) would authorize **only** creating the five n
 | F4 | `mmi/MMI_DECISION_AUDIT_APPENDIX_SCHEMA.md` | Schema-only |
 | F5 | `mmi/MMI_AUTONOMOUS_BRAIN_STAGE1_GAPS.md` | Gap callout |
 
-No other files may be created under this Tier 1 slice without contract revision.
+**Allowed under `mmi/` for this slice:** F1–F5 only.
+
+**Also allowed at Tier 1 build close (not Tier 1 artifacts):** `MASTER_INDEX.md` entry for F1–F5; `mmi/MMI_DECISION_LOG.md`, `mmi/MMI_INTAKE_RECORDS.md`, and `MMI_CURRENT_STATE.md` updates for build close.
+
+No other `mmi/` files may be created under this Tier 1 slice without contract revision.
 
 ---
 
@@ -52,9 +56,10 @@ No other files may be created under this Tier 1 slice without contract revision.
 
 ### F2 — `mmi/MMI_TASK_REGISTRY_SCHEMA.md`
 
-- **Schema-only** definition for future `MMI_TASK_REGISTRY` (field names, closed enums, status vocabulary).
+- **Schema-only, human-maintained** documentation for future `MMI_TASK_REGISTRY` (field names, closed enums, status vocabulary).
 - **Empty** — no populated task rows, no JSON/YAML instance file with live tasks.
-- Must repeat registry negative authority (§4 of review material): not contract/build/git/scoreboard/dispatcher input authority.
+- No machine writer, no dispatcher reader, no auto-sync from scoreboard or git.
+- Must repeat registry negative authority (review material §4): not contract/build/git/scoreboard/dispatcher input authority.
 
 ### F3 — `mmi/MMI_WORKER_COMPLETION_PACKET_TEMPLATE.md`
 
@@ -65,12 +70,12 @@ No other files may be created under this Tier 1 slice without contract revision.
 
 - Schema for append-only decision audit records: selection event id, timestamp, candidates, scores, reasoning, `decided_by`, non-selected alternatives.
 - Selection event definition from review material §6.
-- No live appendix file populated in Tier 1 unless explicitly listed — schema + empty example only.
+- **Schema + illustrative examples inside this file only** — no separate `MMI_DECISION_AUDIT_APPENDIX.md`, JSONL decision history, or populated appendix data file in Tier 1.
 
 ### F5 — `mmi/MMI_AUTONOMOUS_BRAIN_STAGE1_GAPS.md`
 
-- Mirrors review material §14: doctrine-only capabilities not enforced in code.
-- Updated at Tier 1 build close to reflect which gaps remain after artifact creation.
+- Normative source: review material §14 Stage 1 doctrine-only gaps table.
+- Updated at Tier 1 build close to reflect which gaps remain after artifact creation (T1-T7).
 
 ---
 
@@ -83,7 +88,10 @@ No other files may be created under this Tier 1 slice without contract revision.
 | AUTH-2-EDIT | **Not authorized** |
 | AUTH-3A | Schema file only — **no** populated registry |
 | AUTH-3B | **Not authorized** — no write automation |
-| AUTH-4–7, AUTH-5 | **Not authorized** |
+| AUTH-4 | **Not authorized** — no auto-prompt generation |
+| AUTH-5 | **Not authorized** — no autonomous task selection |
+| AUTH-6 | **Not authorized** — no owner brief / dashboard runtime |
+| AUTH-7 | **Not authorized** — no contradiction-detection automation |
 | Registry as dispatcher input | **Forbidden** — schema must state dispatcher unchanged |
 | Scoreboard / gate registry | **Read-only reference** in prose — no edits |
 | #47 / #48 | **Out of scope** |
@@ -132,12 +140,13 @@ After Tier 1 build (if signed and implemented):
 
 Post-implementation (only after §11 signature + separate build authorization):
 
-1. **File existence:** All five files present at named paths; no extra files under `mmi/` from this slice.
-2. **Git diff scope:** Only the five files + `MASTER_INDEX.md` entry (if required by project discipline) + MMI records for build close — no dispatcher/scoreboard/runtime paths.
-3. **`python3 scripts/mmi_dispatch.py --verify`** — must PASS after MMI record update and commit.
-4. **`git status --short`** — clean; no untracked registry instance files.
-5. **Grok gate** — if Matt authorizes gate on Tier 1 doc slice: `complete_gate.py` 0/0 with manifest listing all five artifacts and this contract.
-6. **Manual review:** Matt confirms F2 has no populated tasks; F3/F4 are templates/schemas only; F5 lists §14 gaps accurately.
+1. **File existence:** F1–F5 present at named paths under `mmi/`. No other `mmi/` files from this slice except F1–F5. Build close may also update `MASTER_INDEX.md` and MMI routing-authority records as listed in §2.
+2. **Tier 1 build completion packet:** Worker submission includes all I15 fields (files changed, scope check, tests/gates run, deviations, `python3 scripts/mmi_dispatch.py --verify` output, `git status --short`, no-out-of-scope confirmations).
+3. **Git diff scope:** F1–F5 + optional `MASTER_INDEX.md` + MMI build-close records only — no changes under `scripts/`, `agent_concepts/`, `core/`, or Architectapp paths.
+4. **`python3 scripts/mmi_dispatch.py --verify`** — must PASS after MMI record update and commit.
+5. **`git status --short`** — clean; no untracked registry instance files (`MMI_TASK_REGISTRY.json` / `.yaml`).
+6. **Grok gate** — if Matt authorizes gate on Tier 1 doc slice: `complete_gate.py` 0/0 with manifest listing all five artifacts and this contract.
+7. **Manual review:** Matt confirms F2 has no populated tasks; F3/F4 are templates/schemas only; F5 matches review material §14 gap table.
 
 ---
 
@@ -166,7 +175,7 @@ Post-implementation (only after §11 signature + separate build authorization):
 
 | Test ID | Name | Pass condition |
 |---|---|---|
-| T1-T1 | Five files only | Exactly F1–F5 exist; no sixth Tier 1 artifact |
+| T1-T1 | Five files only | Exactly F1–F5 under `mmi/`; no sixth Tier 1 artifact; `MASTER_INDEX.md` and MMI build-close records allowed per §2/§7 |
 | T1-T2 | No dispatcher diff | `git diff` shows zero changes under `scripts/mmi_dispatch.py` |
 | T1-T3 | No registry instance | No `MMI_TASK_REGISTRY.json`/`.yaml` with task rows |
 | T1-T4 | Schema disclaims dispatcher input | F2 contains explicit not-dispatcher-input rule |
