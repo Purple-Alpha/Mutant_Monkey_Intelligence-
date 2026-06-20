@@ -241,3 +241,12 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md
 Classification: SIGNED_CONTRACT — contract approved only; Tier 2A implementation blocked; first build slice Mode A only if authorized
 Routing outcome: separate explicit build authorization required before `scripts/mmi_packet_intake.py`
 Matt approval required: YES for Tier 2A Mode A build; §11 signature recorded by operator authorization
+
+INTAKE-2026-06-19-002
+Component: MMI Autonomous Brain Tier 2A Mode A packet intake validator
+Request: MMI_AUTONOMOUS_BRAIN_TIER2A_PACKET_INTAKE_MODE_A_BUILD — Mode A implementation only
+Source: Signed contract `e08792a`; operator build authorization
+Artifacts: scripts/mmi_packet_intake.py; tests/test_mmi_packet_intake.py; tests/fixtures/mmi_packets/*
+Classification: TIER2A_IMPLEMENTATION — Mode A stdout-only; Mode B not built
+Routing outcome: validator available for structural packet checks; does not advance routing
+Matt approval required: NO for this build slice (explicit authorization granted)
