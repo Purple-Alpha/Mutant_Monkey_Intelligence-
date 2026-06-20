@@ -29,6 +29,26 @@ except ImportError:  # pragma: no cover
 
 ENVELOPE_SCORED = "SCORED_CANDIDATES"
 ENVELOPE_INCOMPLETE = "STATE_INCOMPLETE_CANNOT_SCORE"
+ENVELOPE_NO_BUILDABLE = "NO_BUILDABLE_CANDIDATES"
+ENVELOPE_BUILDABILITY_EXCLUSIONS = "BUILDABILITY_EXCLUSIONS"
+
+ADVISORY_ONLY_ALL_CLEAR = (
+    "ADVISORY_ONLY: dispatcher queue is ALL_CLEAR — no active dispatcher route is "
+    "currently open; Estimator output is comparison-only and not next-build direction."
+)
+
+CLOSED_STATE_PREFIXES = ("GATED", "GOVERNED_AGENT", "INFRASTRUCTURE_BUILT")
+BUILDABLE_STATE_PREFIXES = ("SIGNED_UNBUILT", "AWAITING_AUDIT")
+
+AGENT_DESIGN_CONTRACT_PATH_RE = re.compile(
+    r"4\. Product_Roadmap/[^\s`'\"]*Agent[^\s`'\"]*Design[^\s`'\"]*Contract[^\s`'\"]*\.md"
+)
+
+ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
+    "#52": (
+        "4. Product_Roadmap/Plain_English_Explanation_Agent_Design_Contract_Deep_Dive.md"
+    ),
+}
 
 SIGNED_WEIGHTS_RECORD: dict[str, int] = {
     "F1": 30,
@@ -130,6 +150,15 @@ class Candidate:
 
 
 @dataclass
+class BuildabilityExclusion:
+    candidate: Candidate
+    gates: list[str]
+    reason: str
+    runtime_status_prefix: str
+    missing_contract: str = ""
+
+
+@dataclass
 class ScoredCandidate:
     candidate: Candidate
     factor_results: dict[str, FactorResult]
@@ -176,10 +205,31 @@ def _yaml_load_no_comments(text: str) -> dict | list | None:
         return None
 
 
+def _normalized_status_cell(cell: str) -> str:
+    return cell.strip().strip("`").strip()
+
+
+def _cell_prefix(cell: str, prefixes: tuple[str, ...]) -> str:
+    normalized = _normalized_status_cell(cell)
+    for prefix in prefixes:
+        if normalized.startswith(prefix):
+            return prefix
+    token = normalized.split()[0] if normalized else ""
+    return token.rstrip("`")
+
+
+def _cell_matches_prefix(cell: str, prefix: str) -> bool:
+    return _normalized_status_cell(cell).startswith(prefix)
+
+
 def _runtime_status_token(cell: str) -> str:
-    cell = cell.strip().strip("`")
+    cell = _normalized_status_cell(cell)
     if cell.startswith("GOVERNED_AGENT"):
         return "GOVERNED_AGENT"
+    if cell.startswith("GATED"):
+        return "GATED"
+    if cell.startswith("INFRASTRUCTURE_BUILT"):
+        return "INFRASTRUCTURE_BUILT"
     if cell.startswith("SIGNED_UNBUILT"):
         return "SIGNED_UNBUILT"
     if cell.startswith("AWAITING_AUDIT"):
@@ -441,6 +491,92 @@ def _apply_gates(
     return eligible, excluded
 
 
+def _extract_agent_design_contract_paths(*texts: str) -> list[str]:
+    paths: list[str] = []
+    seen: set[str] = set()
+    for text in texts:
+        for match in AGENT_DESIGN_CONTRACT_PATH_RE.findall(text):
+            if match not in seen:
+                seen.add(match)
+                paths.append(match)
+    return paths
+
+
+def _resolve_agent_design_contract(cand: Candidate) -> str | None:
+    for path in _extract_agent_design_contract_paths(cand.status_cell, cand.code_evidence):
+        return path
+    return ARCHITECT_MANIFEST_CONTRACTS.get(cand.candidate_id)
+
+
+def _buildability_reason(gates: list[str]) -> str:
+    if "E12" in gates:
+        return "EXCLUDED_ALREADY_BUILT"
+    if "E14" in gates:
+        return "BLOCKED_MISSING_CONTRACT"
+    return "EXCLUDED_NON_BUILDABLE_STATE"
+
+
+def _evaluate_buildability_gates(cand: Candidate, root: Path) -> tuple[list[str], str]:
+    gates: list[str] = []
+    missing_contract = ""
+    if cand.source == "scoreboard":
+        if any(
+            _cell_matches_prefix(cand.status_cell, prefix)
+            for prefix in CLOSED_STATE_PREFIXES
+        ):
+            return ["E12"], ""
+        if not any(
+            _cell_matches_prefix(cand.status_cell, prefix)
+            for prefix in BUILDABLE_STATE_PREFIXES
+        ):
+            gates.append("E13")
+        contract_rel = _resolve_agent_design_contract(cand)
+        if contract_rel is None or not (root / contract_rel).is_file():
+            gates.append("E14")
+            missing_contract = contract_rel or (
+                ARCHITECT_MANIFEST_CONTRACTS.get(cand.candidate_id) or ""
+            )
+    else:
+        gates.append("E13")
+    return gates, missing_contract
+
+
+def _runtime_status_prefix_for_candidate(cand: Candidate) -> str:
+    if cand.source == "registry":
+        return cand.registry_status or "registry"
+    return _cell_prefix(
+        cand.status_cell,
+        CLOSED_STATE_PREFIXES + BUILDABLE_STATE_PREFIXES,
+    ) or cand.runtime_status or "unknown"
+
+
+def _apply_buildability_gates(
+    candidates: list[Candidate],
+    root: Path,
+) -> tuple[list[Candidate], list[BuildabilityExclusion]]:
+    buildable: list[Candidate] = []
+    exclusions: list[BuildabilityExclusion] = []
+    for cand in candidates:
+        gates, missing_contract = _evaluate_buildability_gates(cand, root)
+        if gates:
+            exclusions.append(
+                BuildabilityExclusion(
+                    candidate=cand,
+                    gates=gates,
+                    reason=_buildability_reason(gates),
+                    runtime_status_prefix=_runtime_status_prefix_for_candidate(cand),
+                    missing_contract=missing_contract,
+                )
+            )
+        else:
+            buildable.append(cand)
+    return buildable, exclusions
+
+
+def _all_clear_from_verify_text(verify_text: str) -> bool:
+    return "current task: MODE: ALL_CLEAR" in verify_text
+
+
 def _f1_readiness(cand: Candidate) -> FactorResult:
     if cand.source == "registry":
         return FactorResult(True, READINESS_REGISTRY.get(cand.registry_status, 3))
@@ -656,7 +792,7 @@ def analyze(
     *,
     active_track: str = "BREADTH",
     verify_text: str = "",
-) -> tuple[list[ScoredCandidate], list[str], str]:
+) -> tuple[list[ScoredCandidate], list[str], str, list[BuildabilityExclusion]]:
     errors: list[str] = []
     scoreboard_path = root / "agent_concepts" / "Blue_Team_Swarm_70_Agent_Scoreboard.md"
     registry_path = root / "mmi" / "MMI_TASK_REGISTRY.yaml"
@@ -669,12 +805,12 @@ def analyze(
     if not registry_text:
         errors.append(f"missing_or_unreadable: {registry_path}")
     if errors:
-        return [], errors, "UNREADABLE"
+        return [], errors, "UNREADABLE", []
 
     verify_ok, manifest_verify = _manifest_verify_gate(verify_text)
     if verify_text.strip() and not verify_ok:
         errors.append(f"manifest_verify_failed: {manifest_verify}")
-        return [], errors, manifest_verify
+        return [], errors, manifest_verify, []
 
     decision_text = _read_text(decision_path)
     health, health_board_present = _parse_health_board(scoreboard)
@@ -690,9 +826,10 @@ def analyze(
     if len(ids) != len(set(ids)):
         dupes = sorted({i for i in ids if ids.count(i) > 1})
         errors.append(f"conflicting_candidate_id: {', '.join(dupes)}")
-        return [], errors, manifest_verify
+        return [], errors, manifest_verify, []
 
     eligible, _ = _apply_gates(candidates, scoreboard, active_track)
+    buildable, buildability_exclusions = _apply_buildability_gates(eligible, root)
     scored = [
         _score_candidate(
             c,
@@ -701,9 +838,48 @@ def analyze(
             graph_populated=graph_populated,
             health_board_present=health_board_present,
         )
-        for c in eligible
+        for c in buildable
     ]
-    return _sort_scored(scored), [], manifest_verify
+    return _sort_scored(scored), [], manifest_verify, buildability_exclusions
+
+
+def format_buildability_exclusions(exclusions: list[BuildabilityExclusion]) -> str:
+    lines = [ENVELOPE_BUILDABILITY_EXCLUSIONS, f"excluded_count: {len(exclusions)}"]
+    for item in exclusions:
+        lines.append("---")
+        lines.append(f"candidate_id: {item.candidate.candidate_id}")
+        lines.append(f"name: {item.candidate.name}")
+        lines.append(f"gates: {','.join(item.gates)}")
+        lines.append(f"reason: {item.reason}")
+        lines.append(f"runtime_status_prefix: {item.runtime_status_prefix}")
+        if item.missing_contract:
+            lines.append(f"missing_contract: {item.missing_contract}")
+    if exclusions:
+        lines.append("---")
+    return "\n".join(lines) + "\n"
+
+
+def format_no_buildable_candidates() -> str:
+    return f"{ENVELOPE_NO_BUILDABLE}\n"
+
+
+def format_output(
+    scored: list[ScoredCandidate],
+    manifest_verify: str,
+    *,
+    verify_text: str,
+    buildability_exclusions: list[BuildabilityExclusion],
+) -> str:
+    parts: list[str] = []
+    if _all_clear_from_verify_text(verify_text):
+        parts.append(ADVISORY_ONLY_ALL_CLEAR)
+    if buildability_exclusions:
+        parts.append(format_buildability_exclusions(buildability_exclusions).rstrip("\n"))
+    if scored:
+        parts.append(format_scored(scored, manifest_verify).rstrip("\n"))
+    else:
+        parts.append(format_no_buildable_candidates().rstrip("\n"))
+    return _validate_output("\n".join(parts) + "\n")
 
 
 def format_scored(scored: list[ScoredCandidate], manifest_verify: str) -> str:
@@ -794,14 +970,21 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     root = args.root.resolve() if args.root else _repo_root()
-    scored, errors, manifest_verify = analyze(
+    scored, errors, manifest_verify, buildability_exclusions = analyze(
         root, active_track=args.track, verify_text=args.verify_text
     )
     if errors:
         sys.stdout.write(format_incomplete(errors))
         return 2
 
-    sys.stdout.write(format_scored(scored, manifest_verify))
+    sys.stdout.write(
+        format_output(
+            scored,
+            manifest_verify,
+            verify_text=args.verify_text,
+            buildability_exclusions=buildability_exclusions,
+        )
+    )
     return 0
 
 
