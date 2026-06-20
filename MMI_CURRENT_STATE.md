@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Adaptive cyber-intelligence organism concept intake captured
-  (MMI-DEC-035; INTAKE-2026-06-19-015). Second-opinion input only; Capture ≠ adoption;
-  not project identity; not build authorization; AUTH-5 blocked.
-  Prior: APT29 + success roadmap research intakes (`58e3a5f`).
+LAST_COMPLETED: Project lineage and exploration intake captured
+  (MMI-DEC-036; INTAKE-2026-06-19-016). Lineage preserved; success deferred;
+  not whole-project cybersecurity/insurance label; not build authorization.
+  Prior: organism concept intake (`8d7fda7`).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

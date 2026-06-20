@@ -340,3 +340,12 @@ Artifact: mmi/research/MMI_ADAPTIVE_CYBER_INTELLIGENCE_ORGANISM_CONCEPT_INTAKE.m
 Classification: SECOND_OPINION_INPUT — MATT_CONCEPT_INPUT; PROJECT_IDENTITY_EXPLORATION; ARTIFICIAL_LIFE_CYBER_INTELLIGENCE_CONCEPT_INPUT; NOT_AUTHORITY; NOT_DOCTRINE; NOT_SUCCESS_DEFINITION; NOT_BUILD_AUTHORIZATION; NOT_PATH_SELECTION; NOT_PRODUCT_POSITIONING; NEEDS_FUTURE_REVIEW
 Routing outcome: concept preserved; Capture ≠ adoption; no path selected; no Phase 1/2/3/4 authorization; AUTH-5 blocked
 Matt approval required: NO for intake placement (explicit authorization granted); YES for any future identity, doctrine, or build promotion
+
+INTAKE-2026-06-19-016
+Component: MMI project lineage and exploration (concept intake)
+Request: MMI_PROJECT_LINEAGE_AND_EXPLORATION_INTAKE — research/intake capture only
+Source: Operator-supplied project lineage and exploration position from Matt
+Artifact: mmi/research/MMI_PROJECT_LINEAGE_AND_EXPLORATION_INTAKE.md
+Classification: MATT_CONCEPT_INPUT — PROJECT_LINEAGE_INPUT; EXPLORATION_STATE; FUTURE_SUCCESS_DEFINITION_INPUT; NOT_AUTHORITY; NOT_DOCTRINE; NOT_SUCCESS_DEFINITION; NOT_BUILD_AUTHORIZATION; NOT_PATH_SELECTION; NEEDS_FUTURE_REVIEW
+Routing outcome: lineage preserved; success deferred; cybersecurity/insurance not whole-project labels; no path selected; AUTH-5 blocked
+Matt approval required: NO for intake placement (explicit authorization granted); YES for any future success definition, identity, or build promotion
