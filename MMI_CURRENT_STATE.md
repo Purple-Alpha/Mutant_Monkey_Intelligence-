@@ -35,10 +35,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Task registry seeded with completed historical MMI rows
-  (MMI-DEC-029; INTAKE-2026-06-19-006). Three COMPLETE rows: Tier 1 foundation,
-  Tier 2A packet intake Mode A, Tier 2B passive registry Mode A. No candidates;
-  AUTH-5 blocked. Prior: Tier 2B Mode A registry instance (`e374a40`, MMI-DEC-028).
+LAST_COMPLETED: Tier 2C Contradiction / Stale-State contract draft placed
+  (MMI-DEC-030; INTAKE-2026-06-19-010). DRAFT UNSIGNED; report-only slice;
+  no implementation. Prior: registry seed hygiene (`9d1f54f`); three COMPLETE
+  historical rows (MMI-DEC-029). AUTH-5 blocked.
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

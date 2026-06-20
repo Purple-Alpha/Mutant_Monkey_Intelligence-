@@ -286,3 +286,12 @@ Artifact: mmi/MMI_TASK_REGISTRY.yaml (three COMPLETE historical rows)
 Classification: TIER2B_REGISTRY_SEED — completed history only; no candidates; no routing feed
 Routing outcome: passive registry documents completed MMI brain slices; does not select tasks
 Matt approval required: NO for this seed slice (explicit authorization granted)
+
+INTAKE-2026-06-19-010
+Component: MMI Autonomous Brain Tier 2C Contradiction / Stale-State (contract draft)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRACT_DRAFT_PLACEMENT — draft only, no implementation
+Source: Tier 1 F5 contradiction tooling gap; Tier 2B registry complete (`9d1f54f` hygiene); review material AUTH-7 report-only default
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT.md (DRAFT UNSIGNED)
+Classification: CONTRACT_DRAFT — report-only cross-surface detection; not dispatcher input; AUTH-5 blocked; Mode A stdout-only recommended; Mode B parked
+Routing outcome: adversarial review + Matt §11 + separate build authorization before `scripts/mmi_contradiction_report.py`
+Matt approval required: YES for §11 and Tier 2C implementation; draft placement only authorized by this intake

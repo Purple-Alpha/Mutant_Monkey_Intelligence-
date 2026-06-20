@@ -85,6 +85,8 @@ MMI-DEC-028 | 2026-06-19 | Tier 2B Mode A passive task registry build | mmi/MMI_
 
 MMI-DEC-029 | 2026-06-19 | Task registry initial completed historical rows | mmi/MMI_TASK_REGISTRY.yaml | ACCEPT | Seeded three COMPLETE historical rows only (Tier 1 foundation, Tier 2A packet intake Mode A, Tier 2B passive registry Mode A); no CANDIDATE/future rows; envelope literals unchanged; no validator; no dispatcher change; AUTH-5 blocked | None | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_TASK_REGISTRY_INITIAL_COMPLETED_ROWS only)
 
+MMI-DEC-030 | 2026-06-19 | Tier 2C Contradiction / Stale-State contract draft placement | mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT.md | ACCEPT | DRAFT UNSIGNED placement only; report-only contradiction/stale-state detection contract; not dispatcher input; AUTH-5 blocked; Mode A stdout-only recommended; Mode B parked; no `scripts/mmi_contradiction_report.py`; no tests/fixtures; implementation blocked | Matt §11 + separate build authorization before Tier 2C code | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRACT_DRAFT_PLACEMENT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
