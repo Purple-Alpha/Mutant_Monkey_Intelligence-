@@ -1,6 +1,6 @@
 # Case Timeline Agent Design Contract — Boundary / Unblock Deep Dive
 
-**Status:** §11 SIGNED 2026-06-20 by Matt Nichol (MMI_47_CASE_TIMELINE_MATT_SECTION_11_SIGNATURE_ONLY). **SIGNED CONTRACT — BUILD NOT AUTHORIZED.** Architect-readiness patch 2026-06-20 (MMI_47_CASE_TIMELINE_CONTRACT_ARCHITECT_READINESS_PATCH); pre-signature cleanup 2026-06-20 (MMI_47_CASE_TIMELINE_PRE_SIGNATURE_CLEANUP_ONLY). `PROJECT_DIRECTION_RESEARCH` was retired under MMI-DEC-044. This contract is evaluated under current lifecycle/contract-readiness governance only. Authored after #48 Verification Outcome Agent promotion to `GOVERNED_AGENT` (`6799978`) and #47 dependency re-triage (`80f128c`, CYCLE 27). §11 locks D1-D12 and the §10 operator dispositions as a governed design/build contract candidate. It authorizes **no** runtime wrapper implementation, **no** scoreboard `SIGNED_UNBUILT` reconcile, **no** formal `complete_gate.py` close, **no** `REACTION_TIMING_TEST_LOG.md` mutation, **no** evidence-package / audit-trail behavior change, **no** real-customer-data handling, **no** client-facing timing claim, and **no** build until separate Build Authorization is issued.
+**Status:** §11 SIGNED 2026-06-20 by Matt Nichol (MMI_47_CASE_TIMELINE_MATT_SECTION_11_SIGNATURE_ONLY). At §11 signature: **SIGNED CONTRACT — BUILD NOT AUTHORIZED** (historical; see §12). **Current contract posture:** **SIGNED CONTRACT — MODE A BUILT; AWAITING_AUDIT; NOT GATED; NOT GOVERNED; NO PRODUCTION DISPATCH** (post-signature authority trail §12; MMI-DEC-048). Architect-readiness patch 2026-06-20 (MMI_47_CASE_TIMELINE_CONTRACT_ARCHITECT_READINESS_PATCH); pre-signature cleanup 2026-06-20 (MMI_47_CASE_TIMELINE_PRE_SIGNATURE_CLEANUP_ONLY). `PROJECT_DIRECTION_RESEARCH` was retired under MMI-DEC-044. This contract is evaluated under current lifecycle/contract-readiness governance only. Authored after #48 Verification Outcome Agent promotion to `GOVERNED_AGENT` (`6799978`) and #47 dependency re-triage (`80f128c`, CYCLE 27). §11 locks D1-D12 and the §10 operator dispositions as a governed design/build contract candidate. §11 signature alone authorized **no** runtime wrapper implementation, **no** scoreboard `SIGNED_UNBUILT` reconcile, **no** formal `complete_gate.py` close, **no** `REACTION_TIMING_TEST_LOG.md` mutation, **no** evidence-package / audit-trail behavior change, **no** real-customer-data handling, **no** client-facing timing claim, and **no** build until separate Build Authorization was issued (recorded in §12).
 
 **Owner:** Matt Nichol
 
@@ -272,3 +272,28 @@ This signature locks D1-D12 and the §10 operator dispositions for swarm #47 Cas
 Signing authorizes **no** reaction-timing ledger append, **no** package/audit-trail mutation, **no** default-registry registration, **no** real-customer-data handling, **no** client-facing timing claim, **no** `#48` behavior change, and **no** autonomous action.
 
 > Matt Nichol — June 20 2026
+
+---
+
+## §12 POST-SIGNATURE AUTHORITY ADDENDUM — BUILD / RECONCILE AUTHORITY TRAIL
+
+§11 signed the contract only and did not authorize implementation at signature time.
+
+After §11, Matt separately authorized the following lanes:
+
+1. MMI_47_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY
+   - Result: #47 reconciled to SIGNED_UNBUILT.
+   - Commit: a99e541fcc1a40bcfded7e2cfe63df8753cfb39b.
+   - Meaning: signed/gate-clean build feedstock only; not implementation.
+
+2. MMI_47_CASE_TIMELINE_MODE_A_BUILD_ONLY
+   - Result: #47 Mode A wrapper/tests implemented.
+   - Implementation commit: 4d7fba2735975561ff6095e1fe4e42cfdb3e1ce8.
+   - Meaning: implementation authorized for Mode A only; no production dispatch, no registry/default dispatch, no GATED/GOVERNED promotion.
+
+3. MMI_47_BUILD_COMMIT_AND_AWAITING_AUDIT_RECONCILE
+   - Result: implementation committed and lifecycle reconciled to AWAITING_AUDIT.
+   - Reconcile commit: d3db9568fef445732466383b1af7fa76595452ab.
+   - Meaning: built but audit/gate not closed; not GATED, not GOVERNED_AGENT, not production-dispatched.
+
+This addendum supersedes the signature-time phrase "BUILD NOT AUTHORIZED" only for the recorded post-signature actions above. It does not authorize any further build, production dispatch, registry wiring, GATED promotion, GOVERNED_AGENT promotion, AUTH-5 unlock, push, or autonomous routing.

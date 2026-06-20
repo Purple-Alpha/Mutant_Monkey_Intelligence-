@@ -121,6 +121,8 @@ MMI-DEC-046 | 2026-06-20 | #47 Case Timeline scoreboard lifecycle reconcile | ag
 
 MMI-DEC-047 | 2026-06-20 | #47 CaseTimelineAgent Mode A implementation + AWAITING_AUDIT reconcile | `core/orchestrator/case_timeline_agent.py`; `tests/test_case_timeline_agent.py`; agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #47 row | ACCEPT | Mode A `CaseTimelineAgent` wrapper + 22 pytest tests committed at `4d7fba2`; lifecycle reconciled `SIGNED_UNBUILT` -> `AWAITING_AUDIT`; dispatcher routes MODE:AUDIT pending Grok completion gate; **not GATED**, **not GOVERNED_AGENT**, not production-dispatched, not in `build_default_registry` | Grok `complete_gate.py` on implementation slice before GATED flip | Run mmi_dispatch.py --sync after reconcile commit | Matt Nichol (authorize MMI_47_BUILD_COMMIT_AND_AWAITING_AUDIT_RECONCILE)
 
+MMI-DEC-048 | 2026-06-20 | #47 post-signature authority trail reconciled | `4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md` §12; mmi/MMI_DECISION_LOG.md | ACCEPT | Records that §11 did not itself authorize build, but Matt later separately authorized SIGNED_UNBUILT reconcile (`a99e541`), Mode A build (`4d7fba2`), and AWAITING_AUDIT reconcile (`d3db956`) through named lanes and commits. Contract §12 supersedes signature-time BUILD NOT AUTHORIZED only for those recorded actions. | Grok completion gate re-run with §12 in packet | No GATED/GOVERNED promotion, registry/default dispatch, production dispatch, AUTH-5, push, or further autonomous action | Matt Nichol (authorize MMI_47_POST_SIGNATURE_AUTHORITY_ADDENDUM_ONLY)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
