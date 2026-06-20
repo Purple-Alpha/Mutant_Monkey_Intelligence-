@@ -91,6 +91,8 @@ MMI-DEC-031 | 2026-06-19 | Tier 2C Contradiction / Stale-State contract §11 sig
 
 MMI-DEC-032 | 2026-06-19 | Tier 2C Mode A contradiction report build | scripts/mmi_contradiction_report.py; tests/test_mmi_contradiction_report.py; tests/fixtures/mmi_contradiction/* | ACCEPT | Mode A stdout-only read-only contradiction/stale-state report per signed contract `689edb5`; envelope `REPORT_ONLY_FINDINGS` / `NO_REPORTABLE_FINDINGS` / `REVIEW_REQUIRED`; 14 contract tests + packet intake regression; no file writes; no `mmi/reports/`; no registry mutation by tool; no dispatcher import/execute/call; Mode B not implemented; AUTH-5 blocked | None | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2C_MODE_A_BUILD only)
 
+MMI-DEC-033 | 2026-06-19 | APT29 / EnvyScout cyber security intelligence input intake | mmi/research/MMI_CYBER_SECURITY_INTELLIGENCE_INPUT_APT29_ENVYSCOUT.md | ACCEPT | RESEARCH_INPUT + CYBER_SECURITY_INTELLIGENCE_INPUT only; operator-supplied concept; not authority; not product doctrine; not MMI success definition; not build authorization; no detection-agent contract; no runtime rules; AUTH-5 blocked | Future review if intelligence doctrine pursued | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_CYBER_SECURITY_INTELLIGENCE_INPUT_INTAKE_APT29_ENVYSCOUT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

@@ -313,3 +313,12 @@ Artifacts: scripts/mmi_contradiction_report.py; tests/test_mmi_contradiction_rep
 Classification: TIER2C_MODE_A — stdout-only read-only report CLI; no `mmi/reports/`; no registry mutation by tool; Mode B not built
 Routing outcome: report-only findings for human/MMI review; does not feed dispatcher or select tasks
 Matt approval required: NO for this build slice (explicit authorization granted)
+
+INTAKE-2026-06-19-013
+Component: MMI cyber security intelligence input (APT29 / EnvyScout example)
+Request: MMI_CYBER_SECURITY_INTELLIGENCE_INPUT_INTAKE_APT29_ENVYSCOUT — research/classification intake only
+Source: Operator-supplied concept from Matt
+Artifact: mmi/research/MMI_CYBER_SECURITY_INTELLIGENCE_INPUT_APT29_ENVYSCOUT.md
+Classification: RESEARCH_INPUT — CYBER_SECURITY_INTELLIGENCE_INPUT; NOT_AUTHORITY; NOT_PRODUCT_DOCTRINE; NOT_MMI_SUCCESS_DEFINITION; NOT_BUILD_AUTHORIZATION
+Routing outcome: preserved for future intelligence doctrine review; no detection build; no runtime changes
+Matt approval required: NO for intake placement (explicit authorization granted); YES for any future doctrine or build
