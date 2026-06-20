@@ -1,10 +1,12 @@
-# MMI Autonomous Brain — Tier 2A Worker Packet Intake Implementation Contract (Draft)
+# MMI Autonomous Brain — Tier 2A Worker Packet Intake Implementation Contract
 
-**Status:** DRAFT — UNSIGNED. **Not in force.** Placement and wording patches do not authorize implementation, code, or `scripts/mmi_packet_intake.py`.
+**Status:** §11 SIGNED 2026-06-19 by Matt Nichol. Signing approves **contract terms only** with **Mode A** selected (stdout-only, zero file-write authority). Signing does **not** authorize implementation, code, or `scripts/mmi_packet_intake.py`. **Mode B remains parked** (not selected at signature). Separate explicit build authorization is required before any Tier 2A implementation; first authorized build slice must be **Mode A only**.
 
-**Classification:** `CONTRACT_DRAFT` · Tier 2A tooling slice · not implemented
+**Classification:** `SIGNED_CONTRACT` · Tier 2A tooling slice · not implemented
 
 **Wording patch:** 2026-06-18 — Tier 2A contract review PASS WITH CHANGES (vocabulary, structural-only, exit codes, rollback/demotion, tests).
+
+**§11 signature:** 2026-06-19 — Mode A selected; Mode B not selected (parked).
 
 **Owner:** Matt Nichol
 
@@ -307,21 +309,21 @@ All tests use locked vocabulary: `ACCEPT_FOR_MMI_REVIEW`, `REJECT_INCOMPLETE_PAC
 
 ## 15. Sign-off
 
-**DRAFT — UNSIGNED — NOT IN FORCE.**
+**§11 SIGNED — Matt Nichol 2026-06-19.**
 
-**§11 signature language (when signed):** This §11 signature approves the contract only. It does not authorize implementation. Build authorization must be issued separately after signature.
+This §11 signature approves the contract only. It does **not** authorize implementation. Build authorization must be issued separately after signature before creating `scripts/mmi_packet_intake.py` or any Tier 2A code.
 
-**Contract configuration at signature (not build authorization):**
+**Contract configuration recorded at signature (not build authorization):**
 
-| Setting | Default |
+| Setting | Recorded at §11 |
 |---|---|
-| Recommended first implementation mode | **Mode A** — stdout-only, zero file-write authority |
-| Mode B | **Parked** — stdout + narrow append to `mmi/MMI_INTAKE_RECORDS.md` only; requires explicit §11 selection **and** separate build authorization naming Mode B |
+| Selected implementation mode | **Mode A** — stdout-only, zero file-write authority |
+| Mode B | **Not selected — remains parked** |
 
-Matt may record Mode A or Mode B as **contract default** at §11. Either selection is configuration only until a separate operator instruction names the implementation slice and mode. **First build authorization should name Mode A only** unless Matt explicitly chooses Mode B.
+**Mode B** (stdout + narrow append to `mmi/MMI_INTAKE_RECORDS.md`) remains parked unless Matt separately signs or authorizes Mode B in a future contract revision **and** names Mode B in a separate build authorization. **First build authorization, if issued, must name Mode A only.**
 
-> Matt Nichol ____________________  Date __________
+> Matt Nichol June 19th 2026
 
 ---
 
-**End of Tier 2A contract draft. UNSIGNED — wording patch does not authorize implementation.**
+**End of Tier 2A contract. §11 signed; Tier 2A implementation requires separate build authorization (Mode A only).**

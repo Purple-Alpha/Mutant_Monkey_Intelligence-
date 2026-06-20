@@ -232,3 +232,12 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md
 Classification: CONTRACT_DRAFT — locked stdout vocabulary, structural-only validation, rollback/demotion, Mode B parked
 Routing outcome: adversarial re-review optional; Matt §11 + separate build authorization (Mode A first) before code
 Matt approval required: YES for §11 and implementation; wording patch only authorized by this intake
+
+INTAKE-2026-06-19-001
+Component: MMI Autonomous Brain Tier 2A Worker Packet Intake (§11 signature)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2A_CONTRACT_SIGNATURE_ONLY — signature update only, no implementation
+Source: Review PASS on `07b9ff4`; operator authorization
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2A_WORKER_PACKET_INTAKE_CONTRACT_DRAFT.md (§11 SIGNED 2026-06-19; Mode A selected; Mode B parked)
+Classification: SIGNED_CONTRACT — contract approved only; Tier 2A implementation blocked; first build slice Mode A only if authorized
+Routing outcome: separate explicit build authorization required before `scripts/mmi_packet_intake.py`
+Matt approval required: YES for Tier 2A Mode A build; §11 signature recorded by operator authorization
