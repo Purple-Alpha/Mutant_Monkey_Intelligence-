@@ -1,8 +1,8 @@
 # MMI Autonomous Brain — Tier 2C Contradiction / Stale-State Report-Only Detection Contract
 
-**Status:** DRAFT UNSIGNED — contract terms only. **Does not authorize implementation.** No report CLI, no validator code, no registry mutation, no dispatcher changes, no routing changes.
+**Status:** §11 SIGNED 2026-06-19 by Matt Nichol. Signing approves **contract terms only** with **Mode A** selected (stdout-only, read-only, zero file-write report CLI only). Signing does **not** authorize implementation, `scripts/mmi_contradiction_report.py`, tests, fixtures, or `mmi/reports/`. **Mode B remains parked** (not selected at signature). Separate explicit build authorization is required before any Tier 2C implementation; first authorized build slice must be **Mode A only**.
 
-**Classification:** `DRAFT_CONTRACT` · Tier 2C tooling slice · not implemented
+**Classification:** `SIGNED_CONTRACT` · Tier 2C tooling slice · not implemented
 
 **Owner:** Matt Nichol
 
@@ -26,7 +26,9 @@
 
 **Draft authorization:** `MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT` only
 
-**Wording patch:** 2026-06-19 — Tier 2C contract review PASS WITH CHANGES (dispatcher/verify citation boundary, forbidden-vocabulary scope, E-01 advisory wording, no-renaming authority). Contract wording only; not §11 signed; not implementation.
+**Wording patch:** 2026-06-19 — Tier 2C contract review PASS WITH CHANGES (dispatcher/verify citation boundary, forbidden-vocabulary scope, E-01 advisory wording, no-renaming authority). Contract wording only; not implementation.
+
+**§11 signature:** 2026-06-19 — Mode A selected (stdout-only, read-only, zero file-write); Mode B not selected (parked). Signing is not build authorization.
 
 ---
 
@@ -516,27 +518,33 @@ Locked vocabulary per §8. Tests use synthetic fixtures under `tests/fixtures/mm
 
 ---
 
-## 21. Matt §11 sign-off
+## 21. Sign-off
 
-**§11 UNSIGNED — Matt Nichol**
+**§11 SIGNED — Matt Nichol 2026-06-19.**
 
-Signing this contract approves **contract terms only** with Mode selection:
+This §11 signature approves the contract only. It does **not** authorize implementation, `scripts/mmi_contradiction_report.py`, tests, fixtures, `mmi/reports/`, registry mutation, dispatcher edits, or routing changes.
 
-- [ ] **Mode A selected** — stdout-only report CLI; zero file-write authority
-- [ ] **Mode B selected** — (not default; requires explicit checkbox + separate build authorization for report files)
+Separate explicit build authorization is still required before creating:
 
-Signing does **not** authorize:
+- `scripts/mmi_contradiction_report.py`
+- `tests/test_mmi_contradiction_report.py`
+- `tests/fixtures/mmi_contradiction/*`
+- `mmi/reports/` or any Mode B report file output path
 
-- `scripts/mmi_contradiction_report.py` or any implementation
-- tests or fixtures
-- registry mutation or population changes
-- dispatcher edits
-- AUTH-5
-- registry-fed routing
-- automated halt / BLOCK enforcement
-- replacement of `python3 scripts/mmi_dispatch.py --verify`
+**AUTH-5 autonomous task selection remains blocked.** Registry-fed routing remains forbidden.
 
-Separate explicit operator build authorization is required before any Tier 2C code.
+**Contract configuration recorded at signature (not build authorization):**
+
+| Setting | Recorded at §11 |
+|---|---|
+| Selected implementation mode | **Mode A** — stdout-only, read-only, zero file-write report CLI |
+| Mode B optional report files | **Not selected — remains parked** |
+| Dispatcher execution | **Forbidden** — Tier 2C tooling must not execute, import, or call `mmi_dispatch.py` or `--verify` |
+| Registry / MMI record writes by tooling | **Forbidden** |
+
+**Mode B** (optional report file under `mmi/reports/`) remains parked unless Matt separately signs or authorizes Mode B in a future contract revision **and** names Mode B in separate build authorization. **First build authorization, if issued, must name Mode A only.**
+
+> Matt Nichol June 19th 2026
 
 ---
 
@@ -579,6 +587,6 @@ Separate explicit operator build authorization is required before any Tier 2C co
 
 ---
 
-**Implementation remains blocked** until Matt signs §11 on this contract **and** separately authorizes a Tier 2C build slice (default: Mode A only).
+**Implementation remains blocked** until separate explicit operator build authorization for a Tier 2C Mode A slice.
 
-**Draft only. Not signed. Not implementation authorization.**
+**End of Tier 2C contract. §11 signed; Tier 2C implementation requires separate build authorization (Mode A only). AUTH-5 remains blocked. Registry-fed routing remains forbidden.**

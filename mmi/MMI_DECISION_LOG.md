@@ -87,6 +87,8 @@ MMI-DEC-029 | 2026-06-19 | Task registry initial completed historical rows | mmi
 
 MMI-DEC-030 | 2026-06-19 | Tier 2C Contradiction / Stale-State contract draft placement | mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT.md | ACCEPT | DRAFT UNSIGNED placement only; report-only contradiction/stale-state detection contract; not dispatcher input; AUTH-5 blocked; Mode A stdout-only recommended; Mode B parked; no `scripts/mmi_contradiction_report.py`; no tests/fixtures; implementation blocked | Matt §11 + separate build authorization before Tier 2C code | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRACT_DRAFT_PLACEMENT only)
 
+MMI-DEC-031 | 2026-06-19 | Tier 2C Contradiction / Stale-State contract §11 signature | mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT.md (`cedad2e` base) | ACCEPT | Matt §11 signed Tier 2C report-only contradiction/stale-state contract; Mode A selected (stdout-only, read-only, zero file-write); Mode B not selected (parked); contract only — not implementation; no dispatcher execution/import/call; AUTH-5 blocked; registry-fed routing forbidden; separate build authorization required before `scripts/mmi_contradiction_report.py` or tests | Explicit Tier 2C Mode A build authorization before implementation | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_TIER2C_MATT_SECTION_11_SIGNATURE only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

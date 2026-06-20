@@ -295,3 +295,12 @@ Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRA
 Classification: CONTRACT_DRAFT — report-only cross-surface detection; not dispatcher input; AUTH-5 blocked; Mode A stdout-only recommended; Mode B parked
 Routing outcome: adversarial review + Matt §11 + separate build authorization before `scripts/mmi_contradiction_report.py`
 Matt approval required: YES for §11 and Tier 2C implementation; draft placement only authorized by this intake
+
+INTAKE-2026-06-19-011
+Component: MMI Autonomous Brain Tier 2C Contradiction / Stale-State (§11 signature)
+Request: MMI_AUTONOMOUS_BRAIN_TIER2C_MATT_SECTION_11_SIGNATURE — signature update only, no implementation
+Source: Contract review PASS WITH CHANGES wording patch `cedad2e`; operator authorization
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_TIER2C_CONTRADICTION_STALE_STATE_CONTRACT_DRAFT.md (§11 SIGNED 2026-06-19; Mode A selected; Mode B parked)
+Classification: SIGNED_CONTRACT — contract approved only; Tier 2C implementation blocked; first build slice Mode A only if authorized; AUTH-5 blocked; registry-fed routing forbidden
+Routing outcome: separate explicit build authorization required before `scripts/mmi_contradiction_report.py` or tests
+Matt approval required: YES for Tier 2C Mode A build; §11 signature recorded by operator authorization
