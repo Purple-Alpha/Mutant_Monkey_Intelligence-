@@ -349,3 +349,12 @@ Artifact: mmi/research/MMI_PROJECT_LINEAGE_AND_EXPLORATION_INTAKE.md
 Classification: MATT_CONCEPT_INPUT — PROJECT_LINEAGE_INPUT; EXPLORATION_STATE; FUTURE_SUCCESS_DEFINITION_INPUT; NOT_AUTHORITY; NOT_DOCTRINE; NOT_SUCCESS_DEFINITION; NOT_BUILD_AUTHORIZATION; NOT_PATH_SELECTION; NEEDS_FUTURE_REVIEW
 Routing outcome: lineage preserved; success deferred; cybersecurity/insurance not whole-project labels; no path selected; AUTH-5 blocked
 Matt approval required: NO for intake placement (explicit authorization granted); YES for any future success definition, identity, or build promotion
+
+INTAKE-2026-06-19-017
+Component: MMI research intake index and classification review
+Request: MMI_RESEARCH_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW_PLACEMENT — governance index only
+Source: Gate READY FOR CURSOR PLACEMENT; live disk reconciliation of mmi/research/
+Artifact: mmi/research/MMI_RESEARCH_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md
+Classification: GOVERNANCE_INDEX — CLASSIFICATION_REVIEW; DRIFT_CONTROL; NOT_AUTHORITY; NOT_DOCTRINE; NOT_SUCCESS_DEFINITION; NOT_PATH_SELECTION; NOT_BUILD_AUTHORIZATION; NEEDS_PERIODIC_RE_REVIEW
+Routing outcome: all research notes classified as input with zero routing influence; indexing does not promote; AUTH-5 blocked
+Matt approval required: NO for index placement (explicit authorization granted); YES for any future research convergence or promotion review

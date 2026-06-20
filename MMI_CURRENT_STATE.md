@@ -35,10 +35,9 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Project lineage and exploration intake captured
-  (MMI-DEC-036; INTAKE-2026-06-19-016). Lineage preserved; success deferred;
-  not whole-project cybersecurity/insurance label; not build authorization.
-  Prior: organism concept intake (`8d7fda7`).
+LAST_COMPLETED: Research intake classification index placed
+  (MMI-DEC-037; INTAKE-2026-06-19-017). 4 intake notes registered; input only;
+  indexing does not promote; AUTH-5 blocked. Prior: lineage intake (`6c62346`).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

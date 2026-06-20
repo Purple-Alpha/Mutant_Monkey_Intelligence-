@@ -99,6 +99,8 @@ MMI-DEC-035 | 2026-06-19 | Adaptive cyber-intelligence organism concept intake |
 
 MMI-DEC-036 | 2026-06-19 | Project lineage and exploration concept intake | mmi/research/MMI_PROJECT_LINEAGE_AND_EXPLORATION_INTAKE.md | ACCEPT | MATT_CONCEPT_INPUT + PROJECT_LINEAGE_INPUT + EXPLORATION_STATE + FUTURE_SUCCESS_DEFINITION_INPUT only; lineage sequence preserved; cybersecurity/insurance not whole-project labels; success deferred; scientist/exploration mode; not authority; not doctrine; not success definition; not build authorization; not path selection; AUTH-5 blocked | Future review before success definition or identity promotion | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_PROJECT_LINEAGE_AND_EXPLORATION_INTAKE only)
 
+MMI-DEC-037 | 2026-06-19 | Research intake index and classification review | mmi/research/MMI_RESEARCH_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md | ACCEPT | GOVERNANCE_INDEX + CLASSIFICATION_REVIEW + DRIFT_CONTROL only; reconciled against live mmi/research/ directory; 4 intake notes registered; influence ceilings pinned; indexing does not promote; not authority; not doctrine; not success definition; not path selection; not build authorization; AUTH-5 blocked | Periodic re-review when research folder changes | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_RESEARCH_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW_PLACEMENT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
