@@ -57,6 +57,8 @@ MMI-DEC-014 | 2026-06-19 | MMI project-direction scoring include #47 | scripts/m
 
 MMI-DEC-015 | 2026-06-19 | #47 Case Timeline Agent Design Contract draft | 4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md | ACCEPT | Draft authored from scoreboard #47, CYCLE 25/27, DecisionTimestamps, REACTION_TIMING_TEST_LOG, #48 GOVERNED_AGENT input rule; §11 UNSIGNED; no build/scoreboard flip | Grok draft gate + Matt §11 required before SIGNED_UNBUILT | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_RECOMMENDED_47_CASE_TIMELINE_CONTRACT_DRAFT only)
 
+MMI-DEC-016 | 2026-06-19 | MMI Autonomous Brain Foundation review material placement | mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md | ACCEPT | DRAFT adversarial review material placed; AUTH-3 split to AUTH-3A (registry format) + AUTH-3B (write mechanics); no dispatcher/code/scoreboard change | Adversarial review + separate AUTH gates before any implementation | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_PLACEMENT only)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

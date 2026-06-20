@@ -35,11 +35,12 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #47 Case Timeline Agent Design Contract draft authored
-  (`4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md`, DRAFT
-  UNSIGNED; MMI-DEC-015 / MMI_RECOMMENDED_47_CASE_TIMELINE_CONTRACT_DRAFT).
-  Scoreboard #47 remains `NEEDS_SIGNED_CONTRACT`; no build authorized.
-  Prior: MMI direction scoring include #47 (`8d47c45`).
+LAST_COMPLETED: MMI Autonomous Brain Foundation review material placed
+  (`mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md`, DRAFT FOR ADVERSARIAL
+  REVIEW — NOT SIGNED — NOT A CONTRACT; MMI-DEC-016 /
+  MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_PLACEMENT). Review material only; no dispatcher,
+  code, scoreboard, or implementation authorization.
+  Prior: #47 Case Timeline contract draft (`99dbe6f`).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

@@ -160,3 +160,12 @@ Artifact: 4. Product_Roadmap/Case_Timeline_Agent_Design_Contract_Deep_Dive.md (D
 Classification: CONTRACT_DRAFT — §11 signature pending; scoreboard remains NEEDS_SIGNED_CONTRACT
 Routing outcome: next gate Grok draft gate 0/0 + Matt §11 sign; then SIGNED_UNBUILT reconcile if signed
 Matt approval required: YES for §11 signature before build; draft commit authorized by MMI_RECOMMENDED_47_CASE_TIMELINE_CONTRACT_DRAFT only
+
+INTAKE-2026-06-19-006
+Component: MMI Autonomous Brain Foundation (review material)
+Request: MMI_AUTONOMOUS_BRAIN_REVIEW_MATERIAL_PLACEMENT — doctrine/governance review material only
+Source: MMI Stage 1 baseline; MMI_PROTOCOL/Routing/Rules; dispatcher modes; board/brain concepts; routing alignment review
+Artifact: mmi/MMI_AUTONOMOUS_BRAIN_FOUNDATION_REVIEW_MATERIAL.md (DRAFT FOR ADVERSARIAL REVIEW — NOT SIGNED — NOT A CONTRACT)
+Classification: ADVERSARIAL_REVIEW — AUTH-1 placement only; AUTH-2 through AUTH-8 not authorized; AUTH-3 split AUTH-3A/3B
+Routing outcome: adversarial review lane; no dispatcher edit; no registry population; no implementation
+Matt approval required: YES before any AUTH-2+ gate or contract promotion
