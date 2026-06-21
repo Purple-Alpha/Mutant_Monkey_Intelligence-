@@ -27,3 +27,4 @@ ts=2026-06-20T23:00:00Z | task=HANDOFF_SIGNAL_AND_PM_ROUTING | by=Cursor | did=h
 ts=2026-06-21T06:00:00Z | task=HANDOFF_SIGNAL_AND_PM_ROUTING | by=Matt Nichol | did=Matt §11 signed handoff signal lane closed | state=DONE_CLOSED | next_step=lane closed | evidence=MMI-DEC-051; gate blockers resolved by operator closeout
 ts=2026-06-21T06:30:00Z | task=ARCHITECT_PARSER_ALIGNMENT_PATCH | by=Matt Nichol | did=parser patch MMI closeout complete | state=DONE_CLOSED | next_step=lane closed | evidence=MMI-DEC-052; 829175b/d53ef03
 ts=2026-06-21T07:00:00Z | task=PM_VOICE_ALWAYS_ROUTES | by=Cursor | did=PM Voice always-routes routing priority + envelope completion built | state=DONE_AWAITING_SIGN | next_step=Matt sign + close | evidence=always-routes build pending commit hash
+ts=2026-06-21T07:30:00Z | task=PM_VOICE_ALWAYS_ROUTES | by=Matt Nichol | did=Matt §11 signed PM Voice always-routes lane closed | state=DONE_CLOSED | next_step=lane closed | evidence=MMI-DEC-053; d792acc

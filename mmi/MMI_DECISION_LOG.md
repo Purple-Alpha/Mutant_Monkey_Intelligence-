@@ -131,6 +131,8 @@ MMI-DEC-051 | 2026-06-21 | HANDOFF_SIGNAL_AND_PM_ROUTING sign and closeout | `mm
 
 MMI-DEC-052 | 2026-06-21 | ARCHITECT_PARSER_ALIGNMENT_PATCH MMI closeout | `mmi/MMI_ARCHITECT_PARSER_ALIGNMENT_PATCH.md`; builds `829175b`/`d53ef03`; `scripts/mmi_architect.py`; `tests/test_mmi_architect.py` | ACCEPT | Parser alignment built and §11-signed 2026-06-20; MMI records closed. Handoff log marks lane `DONE_CLOSED`. Live `#52` contract blueprints (sentinel_exact / invariant_present prefixes). **No** rebuild, **no** `#52` wrapper build, **no** scoreboard SIGNED_UNBUILT reconcile, **no** registry/default dispatch, **no** BLUEPRINT-of-Record population, **no** AUTH-5. | Separate scoreboard reconcile or `#52` build authorization if Matt chooses | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (parser patch MMI closeout)
 
+MMI-DEC-053 | 2026-06-21 | PM_VOICE_ALWAYS_ROUTES sign and closeout | `mmi/MMI_PM_VOICE_ALWAYS_ROUTES_CONTRACT.md`; builds `1665261`/`668dc06`/`d792acc`; gate `mmi_pm_voice_always_routes_20260621T055040Z` | ACCEPT | Matt §11 signed and closed PM Voice always-routes lane. Handoff log marks `DONE_CLOSED`. PM Voice routes next move without dead-end when no open handoff (live: `#52` SIGNED_UNBUILT reconcile). **No** rebuild, **no** scoreboard/registry/BLUEPRINT/AUTH-5 changes in this closeout slice. | `#52` scoreboard reconcile if Matt authorizes `MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY` | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (PM_VOICE_ALWAYS_ROUTES sign and close)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

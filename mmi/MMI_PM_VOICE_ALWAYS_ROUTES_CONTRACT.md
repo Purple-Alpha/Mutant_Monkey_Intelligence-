@@ -2,7 +2,7 @@
 
 **Document ID:** `MMI_PM_VOICE_ALWAYS_ROUTES`
 
-**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Build verified at `1665261`/`668dc06`. Lane **open** at handoff `DONE_AWAITING_SIGN` pending Matt closeout (dispatch Step 8 — not a completion deviation).
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Lane **CLOSED** per MMI-DEC-053. Builds `1665261`/`668dc06`/`d792acc`; gate clean `mmi_pm_voice_always_routes_20260621T055040Z`.
 
 **Amends:** `mmi/MMI_PM_VOICE_LAYER_CONTRACT.md` (§11 signed 2026-06-20); `mmi/MMI_HANDOFF_SIGNAL_AND_PM_ROUTING_CONTRACT.md` (closed MMI-DEC-051)
 
@@ -51,6 +51,6 @@ PM Voice must always route one next move with one named handler and one concrete
 
 ## §11 Sign-off
 
-SIGNED. Matt authorizes PM Voice always-routes Mode A completion for read-only routing layer + handoff read path. Build verified; handoff `PM_VOICE_ALWAYS_ROUTES` remains at `DONE_AWAITING_SIGN` until Matt runs a separate closeout lane.
+SIGNED and CLOSED. Matt approves the completed **PM_VOICE_ALWAYS_ROUTES** lane. PM Voice always-routes Mode A is signed and closed; no further build without a new authorized lane.
 
 > Matt Nichol June 21st 2026

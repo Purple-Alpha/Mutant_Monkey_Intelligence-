@@ -24,10 +24,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: ARCHITECT_PARSER_ALIGNMENT_PATCH MMI closeout
-  (MMI-DEC-052; INTAKE-2026-06-21-002; builds `829175b`/`d53ef03`). Parser alignment lane
-  closed in handoff log; `#52` contract blueprints via sentinel_exact/invariant_present prefixes.
-  No open handoff IN_FLIGHT. Prior: HANDOFF_SIGNAL signed/closed (`55eaa7c`; MMI-DEC-051).
+LAST_COMPLETED: PM_VOICE_ALWAYS_ROUTES signed and closed
+  (MMI-DEC-053; INTAKE-2026-06-21-003; builds `1665261`/`668dc06`/`d792acc`). Matt §11
+  closed always-routes lane; gate clean. No open handoff IN_FLIGHT; PM Voice routes `#52`
+  reconcile next. Prior: parser patch closeout (`ad3c651`; MMI-DEC-052).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

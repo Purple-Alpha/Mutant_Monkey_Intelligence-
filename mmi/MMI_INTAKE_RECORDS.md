@@ -385,3 +385,12 @@ Artifact: MMI-DEC-052; handoff log DONE_CLOSED line
 Classification: SIGNED_PATCH_CLOSED — parser alignment complete; `#52` blueprints cleanly; wrapper build and scoreboard reconcile remain separate lanes; AUTH-5 blocked
 Routing outcome: no open handoff IN_FLIGHT; dispatcher ALL_CLEAR; PM Voice falls back to engine routing until next lane
 Matt approval required: YES for `#52` scoreboard SIGNED_UNBUILT reconcile and/or Mode A build if Matt chooses
+
+INTAKE-2026-06-21-003
+Component: PM_VOICE_ALWAYS_ROUTES (sign and closeout)
+Request: Matt §11 sign + MMI closeout for always-routes lane; no rebuild
+Source: Builds `1665261`/`668dc06`/`d792acc`; gate `mmi_pm_voice_always_routes_20260621T055040Z`; open handoff DONE_AWAITING_SIGN
+Artifact: `mmi/MMI_PM_VOICE_ALWAYS_ROUTES_CONTRACT.md` (§11 SIGNED and CLOSED 2026-06-21)
+Classification: SIGNED_CONTRACT_CLOSED — always-routes routing priority + envelope; handoff DONE_CLOSED; AUTH-5 blocked
+Routing outcome: no open handoff IN_FLIGHT; PM Voice surfaces `#52` SIGNED_UNBUILT reconcile to Cursor; dispatcher ALL_CLEAR
+Matt approval required: YES for `MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY` if Matt chooses that next lane
