@@ -619,3 +619,12 @@ Artifact: `4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_
 Classification: SIGNED_UNBUILT — contract signed; build not authorized until Matt names build lane
 Routing outcome: Dispatcher may surface MODE:BUILD feedstock for #64; separate build authorization required
 Matt approval required: YES to authorize build lane before implementation
+
+INTAKE-2026-06-21-012
+Component: #64 Failure Classification (build lane)
+Request: Matt authorized build lane via PM Voice relay
+Source: Matt Nichol 2026-06-21
+Artifact: `core/sandbox/failure_classification_agent.py`; `tests/test_failure_classification_agent.py`; MMI-DEC-087
+Classification: AWAITING_AUDIT — built; completion gate pending; not GATED
+Routing outcome: Superintendent AWAITING_AUDIT reconcile + Grok completion gate before GATED
+Matt approval required: YES for MMI_64_GATED_RECONCILE_ONLY after clean gate
