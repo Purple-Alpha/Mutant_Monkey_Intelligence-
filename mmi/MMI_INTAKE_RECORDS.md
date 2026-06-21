@@ -358,3 +358,12 @@ Artifact: mmi/research/MMI_RESEARCH_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md
 Classification: GOVERNANCE_INDEX — CLASSIFICATION_REVIEW; DRIFT_CONTROL; NOT_AUTHORITY; NOT_DOCTRINE; NOT_SUCCESS_DEFINITION; NOT_PATH_SELECTION; NOT_BUILD_AUTHORIZATION; NEEDS_PERIODIC_RE_REVIEW
 Routing outcome: all research notes classified as input with zero routing influence; indexing does not promote; AUTH-5 blocked
 Matt approval required: NO for index placement (explicit authorization granted); YES for any future research convergence or promotion review
+
+INTAKE-2026-06-20-001
+Component: #52 Plain-English Explanation Agent Design Contract (§11 signature closeout)
+Request: MMI_52_CONTRACT_SIGNATURE_CLOSEOUT — contract placement, pre-sign patch, Codex re-gate, Matt §11 signature; MMI routing closeout only
+Source: Draft `1611fe6`; pre-sign patch `137fdde`; Codex SIGNABLE; signature `379d0e6`; operator authorization to sign
+Artifact: `4. Product_Roadmap/Plain_English_Explanation_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED 2026-06-20)
+Classification: SIGNED_CONTRACT — Stage 1 wrapper build authorized by contract §11 only; scoreboard still `DETECTOR_FUNCTION`; not SIGNED_UNBUILT; not built; AUTH-5 blocked
+Routing outcome: dispatcher remains ALL_CLEAR until scoreboard reconcile or other feedstock; Estimator/next_lane/pm_voice may rank or relay #52 as missing-contract cleared but buildability still requires SIGNED_UNBUILT lifecycle
+Matt approval required: YES for scoreboard SIGNED_UNBUILT reconcile and/or Mode A build; §11 signature recorded by operator authorization

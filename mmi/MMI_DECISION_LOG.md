@@ -125,6 +125,8 @@ MMI-DEC-048 | 2026-06-20 | #47 post-signature authority trail reconciled | `4. P
 
 MMI-DEC-049 | 2026-06-20 | #47 CaseTimelineAgent Mode A reconciled to GATED | agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md #47 row | ACCEPT | Completion gate rerun clean with 0 blocking / 0 warnings at `audit_outputs/case_timeline_20260620T233212Z.md`; lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing, not push. | No GOVERNED_AGENT promotion without separate authorization | Run mmi_dispatch.py --sync after commit | Matt Nichol (authorize MMI_47_GATED_RECONCILE_ONLY)
 
+MMI-DEC-050 | 2026-06-20 | #52 Plain-English Explanation contract placement through §11 signature | `4. Product_Roadmap/Plain_English_Explanation_Agent_Design_Contract_Deep_Dive.md` (`1611fe6` draft; `137fdde` pre-sign patch; Codex re-gate SIGNABLE; `379d0e6` §11 signature) | ACCEPT | Contract placed and repo-reconciled (EmailAnalysisPayload / ClientFacingRubricPayload upstream; DailyDigestAgent downstream; INPUT_INSUFFICIENT_CANNOT_EXPLAIN; D12 per-line traceability; D13–D15 locked). Matt §11 signed 2026-06-20. Authorizes Stage 1 `PlainEnglishExplanationAgent` wrapper + focused tests only. **Not** scoreboard SIGNED_UNBUILT, **not** build started, **not** Blueprint-of-Record, **not** registry/default dispatch, **not** AUTH-5. | Separate scoreboard reconcile or build authorization required before MODE:BUILD feedstock | Run mmi_dispatch.py --sync + --verify after closeout commit | Matt Nichol (#52 contract sign lane closeout)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

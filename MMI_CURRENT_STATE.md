@@ -24,9 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Research intake classification index placed
-  (MMI-DEC-037; INTAKE-2026-06-19-017). 4 intake notes registered; input only;
-  indexing does not promote; AUTH-5 blocked. Prior: lineage intake (`6c62346`).
+LAST_COMPLETED: #52 Plain-English Explanation Agent Design Contract §11 signed
+  (`379d0e6`; MMI-DEC-050; INTAKE-2026-06-20-001). Draft `1611fe6`, pre-sign patch
+  `137fdde`, Codex SIGNABLE. Stage 1 wrapper build authorized by contract only;
+  scoreboard not reconciled; not built; AUTH-5 blocked. Prior: research intake index
+  (`MMI-DEC-037`; INTAKE-2026-06-19-017).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
