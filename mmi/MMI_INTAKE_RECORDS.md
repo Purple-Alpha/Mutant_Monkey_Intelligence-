@@ -538,3 +538,12 @@ Artifact: `audit_outputs/mmi_63_contract_gate_20260621T191927Z.md` (0/0); packet
 Classification: PRE_BUILD_GATE_CLEAN — SIGNABLE; §11 signature lane open
 Routing outcome: PM Voice routes Matt §11 sign; then SIGNED_UNBUILT reconcile; then separate build authorization
 Matt approval required: YES for §11 sign and SIGNED_UNBUILT reconcile
+
+INTAKE-2026-06-21-005
+Component: #63 Adversarial Test (§11 sign + SIGNED_UNBUILT reconcile)
+Request: Matt §11 signature + MMI_63_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY
+Source: MMI_63_CONTRACT_DRAFT_PLACEMENT handoff; gate MMI-DEC-074 clean
+Artifact: `4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED; scoreboard #63 `SIGNED_UNBUILT`; MMI-DEC-075
+Classification: SIGNED_UNBUILT_RECONCILED — build lane opens on separate operator authorization
+Routing outcome: PM Voice can relay build authorization when Matt chooses; Architect blueprintable
+Matt approval required: YES for separate build lane authorization

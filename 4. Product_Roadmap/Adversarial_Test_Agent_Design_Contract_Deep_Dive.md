@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_63_ADVERSARIAL_TEST_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT — UNSIGNED. Evidence Stage 1 (Synthetic) agent wrapper is **not** authorized until Matt §11 signature after Grok pre-build gate review. Signing will lock D1-D9 and authorize the `AdversarialTestAgent` wrapper build + focused tests **only**. It authorizes **no** Blueprint-of-Record population, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5. Scoreboard `SIGNED_UNBUILT` reconcile is a separate superintendent slice (`MMI_63_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY`).
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol (Grok pre-build gate clean `mmi_63_contract_gate_20260621T191927Z` 0/0). Evidence Stage 1 (Synthetic) agent wrapper authorized by signature. Signing locks D1-D9 and authorizes the `AdversarialTestAgent` wrapper build + focused tests **only**. It authorizes **no** Blueprint-of-Record population, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5. Scoreboard `SIGNED_UNBUILT` reconcile reconciled in same signing action per MMI-DEC-075.
 
 **Candidate:** #63 — Adversarial Test
 
@@ -150,7 +150,7 @@ advisory only; no adversarial cases emitted; no execution; no AUTH-5
 
 ---
 
-## §2 Locked Design Decisions (unsigned — locked at §11)
+## §2 Locked Design Decisions (§11 signed 2026-06-21)
 
 - **D1 — Identity.** Adversarial Test is Layer 5 Challenge/test-support, Authority L3, Stage A, Evidence Stage 1 at signing.
 - **D2 — Contract-boundaries-only input.** Cases derive from declared contract boundaries, never from target implementation code.
@@ -202,16 +202,16 @@ Focused wrapper tests must prove:
 
 ## §11 Sign-off
 
-**UNSIGNED.** §11 signature locks D1-D9 and authorizes the Evidence Stage 1 (Synthetic) `AdversarialTestAgent` wrapper build + focused tests only; no Blueprint-of-Record population, no default-registry registration, no production dispatch, no autonomous action, no AUTH-5. Scoreboard `SIGNED_UNBUILT` reconcile requires separate superintendent authorization (`MMI_63_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY`).
+SIGNED. This signature locks D1-D9 and authorizes the Evidence Stage 1 (Synthetic) `AdversarialTestAgent` wrapper build + focused tests only; no Blueprint-of-Record population, no default-registry registration, no production dispatch, no autonomous action, no AUTH-5. Matt also authorized `MMI_63_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY` in this signing action.
 
-- [ ] I approve this contract as written.
-- [ ] I authorize Grok pre-build gate review (Codex lane).
-- [ ] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
+- [x] I approve this contract as written.
+- [x] I authorize Grok pre-build gate review (Codex lane) — completed clean 0/0.
+- [x] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
 
 Confirmed: #63 generates contract-boundary adversarial test cases; never runs, judges, builds, weaponizes, attacks live systems, or retaliates. Expected outcome is always the target's correct refusal.
 
 Upstream contract-boundary source + downstream adversarial-runner reconciled against repo:
 - [x] yes (Cursor reconcile 2026-06-22)
-- [ ] yes (operator review complete)
+- [x] yes (operator review complete)
 
-> Signature pending — Matt Nichol
+> Matt Nichol June 21st 2026
