@@ -145,6 +145,8 @@ MMI-DEC-058 | 2026-06-21 | #61 Test Case Generator contract draft placement | `4
 
 MMI-DEC-059 | 2026-06-21 | #61 Test Case Generator Grok pre-build gate | `audit_outputs/mmi_61_contract_gate_20260621T074416Z.md` (0 blocking / 0 warnings); packet SHA256 `417ccfcf0823e1d0bdecea755353db036b260d845690441db7bacb01e2f961fe`; Codex verdict SIGNABLE | ACCEPT | Pre-build gate clean; contract boundary confirmed (contract-in test-cases-out; no execution/evaluation/code-read/invention/governance writes; AUTH-5 blocked). **Not** §11 signed by this record, **not** SIGNED_UNBUILT reconcile, **not** build, **not** Blueprint/registry/AUTH-5. | Matt §11 sign #61 contract | Run mmi_dispatch.py --sync + --verify after commit | Codex (Grok pre-build gate review relay)
 
+MMI-DEC-060 | 2026-06-21 | #61 Test Case Generator §11 sign + SIGNED_UNBUILT reconcile | `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED 2026-06-21; `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #61 row | ACCEPT | Matt §11 signed; lifecycle `DETECTOR_FUNCTION` -> `SIGNED_UNBUILT` with empty BLOCKERS; dispatcher can surface MODE:BUILD feedstock; contract authorizes Stage 1 wrapper build by §11 only; **separate operator build authorization still required** before implementation; no wrapper/tests on disk; **not** Blueprint-of-Record, **not** registry/default dispatch, **not** AUTH-5 | Separate operator build authorization before TestCaseGeneratorAgent implementation | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (§11 sign + authorize MMI_61_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

@@ -19,7 +19,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **BREADTH RUNWAY:** **14** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10, #11, #14, #23, #24, #27, #30, #31, #39, #46, #48.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **#52 Plain-English Explanation** — `GATED` (`audit_outputs/plain_english_explanation_20260621T061124Z.md`; **not GOVERNED_AGENT**). **#47 Case Timeline** — `GATED` (`audit_outputs/case_timeline_20260620T233212Z.md`; **not GOVERNED_AGENT**). (#7/#13/#15/#17/#20/#25/#37 remain RECLASSIFY; #16/#32/#44 remain merged; depth gate CLOSED).
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **#61 Test Case Generator** — `SIGNED_UNBUILT` (§11 signed 2026-06-21; Grok pre-build gate 0/0 `mmi_61_contract_gate_20260621T074416Z`; **build not authorized**; no `TestCaseGeneratorAgent` wrapper or focused tests on disk). First `SIGNED_UNBUILT` breadth feedstock row — lifecycle tracking only, not build authorization. **#52 Plain-English Explanation** — `GATED` (`audit_outputs/plain_english_explanation_20260621T061124Z.md`; **not GOVERNED_AGENT**). **#47 Case Timeline** — `GATED` (`audit_outputs/case_timeline_20260620T233212Z.md`; **not GOVERNED_AGENT**). (#7/#13/#15/#17/#20/#25/#37 remain RECLASSIFY; #16/#32/#44 remain merged; depth gate CLOSED).
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -189,7 +189,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 61 | Test Case Generator | `DETECTOR_FUNCTION` | `core/sandbox/red_agents/` (synthetic case generators) | 5 Challenge/Red-Team | A |  | BREADTH | — | adoption |
+| 61 | Test Case Generator | `SIGNED_UNBUILT` (§11 signed 2026-06-21; Grok pre-build gate 0/0 `mmi_61_contract_gate_20260621T074416Z`; **build not authorized**; no `TestCaseGeneratorAgent` wrapper or focused tests on disk) | `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED 2026-06-21; SIGNED CONTRACT — wrapper build authorized by contract §11 only; separate operator build lane required) + `core/sandbox/red_agents/` (reference patterns only; contract-only test derivation) | 5 Challenge/Red-Team | A |  | BREADTH | — | 2026-06-21 |
 | 62 | Regression Test | `DETECTOR_FUNCTION` | `tests/` pytest suite + cadence gate | 5 Challenge/Red-Team | A |  | BREADTH | — | adoption |
 | 63 | Adversarial Test | `DETECTOR_FUNCTION` | `core/sandbox/red_battery.py` | 5 Challenge/Red-Team | A |  | BREADTH | — | adoption |
 | 64 | Failure Classification | `SPEC_ONLY` | Email Security Testing failure cards (draft) | 5 Challenge/Red-Team | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
