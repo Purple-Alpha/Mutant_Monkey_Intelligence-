@@ -34,6 +34,13 @@ FORBIDDEN_CONCLUSIONS = frozenset(
 
 HIGH_RISK_CANDIDATE_IDS = frozenset({"#1", "#3"})
 PREFERRED_CONTRACT_CANDIDATE = "#52"
+PREFERRED_RECONCILE_CANDIDATE = "#52"
+RECONCILE_YOU_DO = {
+    "#52": "Authorize MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY.",
+}
+
+BUILDABLE_LIFECYCLE_PREFIXES = ("SIGNED_UNBUILT", "AWAITING_AUDIT")
+CLOSED_LIFECYCLE_PREFIXES = ("GATED", "GOVERNED_AGENT", "INFRASTRUCTURE_BUILT")
 
 ROSTER_CONTRACT_DRAFT = "Claude"
 ROSTER_BUILD = "Cursor"
@@ -131,6 +138,81 @@ def gather_evidence(repo_root: Path, menu_limit: int = 30) -> VoiceEvidence:
     return evidence
 
 
+def _read_text(path: Path) -> str:
+    try:
+        return path.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+
+
+def _is_contract_signed(root: Path, contract_rel: str) -> bool:
+    content = _read_text(root / contract_rel)
+    if not content:
+        return False
+    for line in content.splitlines():
+        if "**Status:**" not in line:
+            continue
+        if "UNSIGNED" in line or "DRAFT - unsigned" in line:
+            continue
+        if "SIGNED" in line:
+            return True
+    return False
+
+
+def _contract_rel_for_candidate(candidate_id: str) -> str | None:
+    estimator = _load_module("mmi_estimator", "mmi_estimator.py")
+    return estimator.ARCHITECT_MANIFEST_CONTRACTS.get(candidate_id)
+
+
+def _relay_buildable_option(evidence: VoiceEvidence) -> object | None:
+    for option in evidence.menu_options:
+        if option.buildability_status == "BUILDABLE":
+            return option
+    if evidence.buildable_count > 0 and evidence.scored_first:
+        for option in evidence.menu_options:
+            if option.candidate_id == evidence.scored_first:
+                return option
+    return None
+
+
+def _relay_signed_unreconciled(root: Path, options: list) -> object | None:
+    preferred = PREFERRED_RECONCILE_CANDIDATE
+    contract_rel = _contract_rel_for_candidate(preferred)
+    if contract_rel and (root / contract_rel).is_file() and _is_contract_signed(root, contract_rel):
+        for option in options:
+            if option.candidate_id != preferred:
+                continue
+            if option.contract_status != "PRESENT":
+                continue
+            lifecycle = option.source_lifecycle or ""
+            if lifecycle.startswith(BUILDABLE_LIFECYCLE_PREFIXES):
+                continue
+            if any(lifecycle.startswith(prefix) for prefix in CLOSED_LIFECYCLE_PREFIXES):
+                continue
+            if option.buildability_status in {
+                "EXCLUDED_NON_BUILDABLE_STATE",
+                "BLOCKED_MISSING_CONTRACT",
+            }:
+                return option
+
+    for option in options:
+        if option.contract_status != "PRESENT":
+            continue
+        if option.buildability_status != "EXCLUDED_NON_BUILDABLE_STATE":
+            continue
+        lifecycle = option.source_lifecycle or ""
+        if lifecycle.startswith(BUILDABLE_LIFECYCLE_PREFIXES):
+            continue
+        if any(lifecycle.startswith(prefix) for prefix in CLOSED_LIFECYCLE_PREFIXES):
+            continue
+        contract_rel = _contract_rel_for_candidate(option.candidate_id)
+        if contract_rel and (root / contract_rel).is_file() and _is_contract_signed(
+            root, contract_rel
+        ):
+            return option
+    return None
+
+
 def _relay_contract_candidate(options: list) -> object | None:
     for option in options:
         if (
@@ -222,7 +304,7 @@ def _route_next_step(next_step: str) -> str:
     lower = next_step.lower()
     if "draft" in lower:
         return ROSTER_CONTRACT_DRAFT
-    if "build" in lower:
+    if "build" in lower or "reconcile" in lower:
         return ROSTER_BUILD
     if "review" in lower or "gate" in lower:
         return ROSTER_REVIEW
@@ -233,118 +315,196 @@ def _route_next_step(next_step: str) -> str:
     return ROSTER_MATT
 
 
-def _compose_handoff_voice(evidence: VoiceEvidence, handoff) -> dict[str, str]:
-    boundary = (
-        "advisory only; Matt chooses; no autonomous selection; no AUTH-5"
-    )
+def _boundary_line() -> str:
+    return "advisory only; Matt chooses; no autonomous selection; no AUTH-5"
+
+
+def _ignore_block(evidence: VoiceEvidence) -> str:
     ignore_lines = _ignore_lines(evidence.menu_options)
-    ignore_text = (
-        "\n".join(f"- {line}" for line in ignore_lines)
-        if ignore_lines
-        else "- No additional ignore lines relayed from engine menu."
-    )
+    if ignore_lines:
+        return "\n".join(f"- {line}" for line in ignore_lines)
+    return "- No additional ignore lines relayed from engine menu."
+
+
+def _compose_handoff_voice(evidence: VoiceEvidence, handoff) -> dict[str, str]:
     hand_it_to = _route_next_step(handoff.next_step)
     return {
+        "WHAT_NEEDS_MATT": (
+            f"Open handoff {handoff.task} is {handoff.state.replace('_', ' ').lower()}."
+        ),
         "IN_FLIGHT": (
             f"task={handoff.task}; state={handoff.state}; by={handoff.by}; "
             f"next_step={handoff.next_step}"
         ),
-        "WHAT_NEEDS_MATT": (
-            f"Open handoff {handoff.task} is {handoff.state.replace('_', ' ').lower()}."
-        ),
         "HAND_IT_TO": hand_it_to,
+        "YOU_DO": handoff.next_step,
         "WHY": (
             f"handoff_log latest open entry: task={handoff.task}; state={handoff.state}; "
             f"did={handoff.did}; evidence={handoff.evidence}"
         ),
-        "IGNORE_FOR_NOW": ignore_text,
-        "YOU_DO": handoff.next_step,
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
         "SOURCE": _source_line(evidence, handoff=handoff),
-        "BOUNDARY": boundary,
+        "BOUNDARY": _boundary_line(),
     }
 
 
-def compose_voice(evidence: VoiceEvidence, handoff=None) -> dict[str, str]:
+def _compose_buildable_voice(evidence: VoiceEvidence, option) -> dict[str, str]:
+    return {
+        "WHAT_NEEDS_MATT": (
+            f"Build lane authorization is needed for {option.candidate_id} "
+            f"{option.candidate_name}."
+        ),
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": ROSTER_BUILD,
+        "YOU_DO": (
+            f"Authorize build lane for {option.candidate_id} "
+            f"{option.candidate_name}."
+        ),
+        "WHY": (
+            f"next_lane/estimator relay: {option.candidate_id} is BUILDABLE with "
+            f"source_lifecycle={option.source_lifecycle}; buildable_count="
+            f"{evidence.buildable_count}."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
+def _compose_signed_unreconciled_voice(
+    evidence: VoiceEvidence, option, contract_rel: str
+) -> dict[str, str]:
+    you_do = RECONCILE_YOU_DO.get(
+        option.candidate_id,
+        f"Authorize reconcile to SIGNED_UNBUILT for {option.candidate_id}.",
+    )
+    return {
+        "WHAT_NEEDS_MATT": (
+            f"Reconcile {option.candidate_id} {option.candidate_name} to "
+            f"SIGNED_UNBUILT to open its build path."
+        ),
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": ROSTER_BUILD,
+        "YOU_DO": you_do,
+        "WHY": (
+            f"{option.candidate_id} contract is signed/on disk at {contract_rel}, "
+            f"but lifecycle still shows {option.source_lifecycle} / not SIGNED_UNBUILT. "
+            f"Reconcile is required before Architect/build lane."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
+def _compose_missing_contract_voice(
+    evidence: VoiceEvidence, relay
+) -> dict[str, str]:
+    if relay:
+        you_do = (
+            f"Authorize contract draft lane for {relay.candidate_id} "
+            f"{relay.candidate_name}."
+        )
+        what = (
+            f"Contract draft lane is needed for {relay.candidate_id} "
+            f"{relay.candidate_name}."
+        )
+        why = (
+            f"next_lane relay: {relay.candidate_id} is "
+            f"{relay.buildability_status} with contract_status="
+            f"{relay.contract_status}."
+        )
+    else:
+        you_do = "Authorize contract draft lane for the top missing-contract candidate."
+        what = "Contract draft lane is needed for the top missing-contract candidate."
+        why = (
+            f"Dispatcher is {evidence.dispatcher_mode}. PM console reports "
+            f"{evidence.blueprint_status}. buildable_count=0; "
+            f"missing_contract_count={evidence.missing_contract_count}."
+        )
+    return {
+        "WHAT_NEEDS_MATT": what,
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": ROSTER_CONTRACT_DRAFT,
+        "YOU_DO": you_do,
+        "WHY": why,
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
+def _compose_fallback_voice(evidence: VoiceEvidence) -> dict[str, str]:
+    if evidence.scored_first:
+        you_do = (
+            f"Run Estimator review for {evidence.scored_first} "
+            f"{evidence.scored_first_name}, then authorize the next lane Matt selects."
+        )
+        what = (
+            f"Next move requires Matt lane selection after Estimator-ranked "
+            f"{evidence.scored_first} {evidence.scored_first_name}."
+        )
+        why = (
+            f"Dispatcher is {evidence.dispatcher_mode}; no open handoff; "
+            f"estimator_rank_first={evidence.scored_first}."
+        )
+        hand_it_to = ROSTER_MATT
+    else:
+        you_do = "Authorize the next MMI lane Matt selects, or run Estimator for candidate ranking."
+        what = "Next lane selection is required to keep MMI moving."
+        why = (
+            f"Dispatcher is {evidence.dispatcher_mode}; PM console reports "
+            f"{evidence.blueprint_status}; no open handoff relay."
+        )
+        hand_it_to = ROSTER_MATT
+    return {
+        "WHAT_NEEDS_MATT": what,
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": hand_it_to,
+        "YOU_DO": you_do,
+        "WHY": why,
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
+def compose_voice(
+    evidence: VoiceEvidence, handoff=None, repo_root: Path | None = None
+) -> dict[str, str]:
     if handoff is not None:
         return _compose_handoff_voice(evidence, handoff)
 
-    boundary = (
-        "advisory only; Matt chooses; no autonomous selection; no AUTH-5"
-    )
-    ignore_lines = _ignore_lines(evidence.menu_options)
-    ignore_text = (
-        "\n".join(f"- {line}" for line in ignore_lines)
-        if ignore_lines
-        else "- No additional ignore lines relayed from engine menu."
-    )
+    root = repo_root or _repo_root()
 
-    if evidence.buildable_count > 0 and evidence.scored_first:
-        return {
-            "WHAT_NEEDS_MATT": (
-                f"Build authorization review is needed for {evidence.scored_first} "
-                f"{evidence.scored_first_name}, ranked first by the Estimator."
-            ),
-            "HAND_IT_TO": ROSTER_MATT,
-            "WHY": (
-                f"Dispatcher is {evidence.dispatcher_mode}. Estimator ranked "
-                f"{evidence.scored_first} first among buildable candidates. "
-                f"PM console reports blueprint_status={evidence.blueprint_status}."
-            ),
-            "IGNORE_FOR_NOW": ignore_text,
-            "YOU_DO": (
-                f"Authorize a Matt-authorized build lane for {evidence.scored_first}, "
-                f"or hold."
-            ),
-            "SOURCE": _source_line(evidence),
-            "BOUNDARY": boundary,
-        }
+    buildable = _relay_buildable_option(evidence)
+    if buildable is not None:
+        return _compose_buildable_voice(evidence, buildable)
+
+    unreconciled = _relay_signed_unreconciled(root, evidence.menu_options)
+    if unreconciled is not None:
+        contract_rel = _contract_rel_for_candidate(unreconciled.candidate_id) or ""
+        return _compose_signed_unreconciled_voice(evidence, unreconciled, contract_rel)
 
     relay = _relay_contract_candidate(evidence.menu_options)
-    relay_label = (
-        f"{relay.candidate_id} {relay.candidate_name}"
-        if relay
-        else "a missing-contract candidate surfaced by next_lane"
-    )
-    you_do = (
-        f"Authorize a contract draft lane, likely {relay.candidate_id} "
-        f"{relay.candidate_name}, or hold."
-        if relay
-        else "Authorize a contract draft lane for a next_lane menu candidate, or hold."
-    )
+    if relay is not None or evidence.missing_contract_count > 0:
+        return _compose_missing_contract_voice(evidence, relay)
 
-    return {
-        "WHAT_NEEDS_MATT": (
-            "A contract draft lane is needed because there is no active build pipe "
-            "and no buildable candidate."
-        ),
-        "HAND_IT_TO": ROSTER_CONTRACT_DRAFT,
-        "WHY": (
-            f"Dispatcher is {evidence.dispatcher_mode}. PM console reports "
-            f"{evidence.blueprint_status}. Next-lane menu reports buildable_count: 0 "
-            f"and missing signed Agent Design Contracts."
-        ),
-        "IGNORE_FOR_NOW": ignore_text,
-        "YOU_DO": you_do,
-        "SOURCE": _source_line(evidence),
-        "BOUNDARY": boundary,
-    }
+    return _compose_fallback_voice(evidence)
 
 
 def format_voice(fields: dict[str, str]) -> str:
-    lines = [ENVELOPE_VOICE]
-    if fields.get("IN_FLIGHT"):
-        lines.append(f"IN_FLIGHT:\n{fields['IN_FLIGHT']}")
-    lines.extend(
-        [
-            f"WHAT_NEEDS_MATT:\n{fields['WHAT_NEEDS_MATT']}",
-            f"HAND_IT_TO:\n{fields['HAND_IT_TO']}",
-            f"WHY:\n{fields['WHY']}",
-            f"IGNORE_FOR_NOW:\n{fields['IGNORE_FOR_NOW']}",
-            f"YOU_DO:\n{fields['YOU_DO']}",
-            f"SOURCE:\n{fields['SOURCE']}",
-            f"BOUNDARY:\n{fields['BOUNDARY']}",
-        ]
-    )
+    lines = [
+        ENVELOPE_VOICE,
+        f"WHAT_NEEDS_MATT:\n{fields['WHAT_NEEDS_MATT']}",
+        f"IN_FLIGHT:\n{fields.get('IN_FLIGHT', 'none')}",
+        f"HAND_IT_TO:\n{fields['HAND_IT_TO']}",
+        f"YOU_DO:\n{fields['YOU_DO']}",
+        f"WHY:\n{fields['WHY']}",
+        f"IGNORE_FOR_NOW:\n{fields['IGNORE_FOR_NOW']}",
+        f"SOURCE:\n{fields['SOURCE']}",
+        f"BOUNDARY:\n{fields['BOUNDARY']}",
+    ]
     return _validate_output("\n".join(lines) + "\n")
 
 
@@ -414,7 +574,9 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write(format_insufficient(evidence.gaps))
         return 2
 
-    sys.stdout.write(format_voice(compose_voice(evidence, handoff=handoff)))
+    sys.stdout.write(
+        format_voice(compose_voice(evidence, handoff=handoff, repo_root=repo_root))
+    )
     return 0
 
 

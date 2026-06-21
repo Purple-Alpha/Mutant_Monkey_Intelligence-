@@ -13,6 +13,8 @@ ts=<ISO-8601> | task=<id> | by=<actor> | did=<summary> | state=<state> | next_st
 - `DONE_AWAITING_CLOSEOUT`
 - `DONE_AWAITING_GATE`
 - `DONE_AWAITING_SIGN`
+- `DONE_AWAITING_REVIEW`
+- `DONE_AWAITING_MATT`
 - `DONE_CLOSED`
 
 **Open handoff:** among tasks whose **latest** log line is not `DONE_CLOSED`, the chronologically last line whose `state` starts with `DONE_AWAITING_` (append-only closeout: a later `DONE_CLOSED` for the same `task` closes that lane).

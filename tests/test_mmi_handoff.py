@@ -145,10 +145,21 @@ class TestMmiHandoffPmRouting(unittest.TestCase):
             dispatcher_mode="ALL_CLEAR",
             blueprint_status="NO_CURRENT_PLAN",
             buildable_count=0,
-            menu_options=[],
+            missing_contract_count=1,
+            menu_options=[
+                self.pm_voice._load_module("mmi_next_lane", "mmi_next_lane.py").MenuOption(
+                    candidate_id="#61",
+                    candidate_name="Test Case Generator",
+                    source_lifecycle="DETECTOR_FUNCTION",
+                    buildability_status="BLOCKED_MISSING_CONTRACT",
+                    contract_status="MISSING",
+                    reason_summary="test",
+                    recommended_matt_action="HOLD_MISSING_CONTRACT",
+                )
+            ],
         )
-        fields = self.pm_voice.compose_voice(evidence, handoff=None)
-        self.assertNotIn("IN_FLIGHT", fields)
+        fields = self.pm_voice.compose_voice(evidence, handoff=None, repo_root=Path(REPO))
+        self.assertEqual(fields["IN_FLIGHT"], "none")
         self.assertEqual(fields["HAND_IT_TO"], "Claude")
 
     def test_t7_existing_pm_engine_tests_still_pass(self):
@@ -157,7 +168,6 @@ class TestMmiHandoffPmRouting(unittest.TestCase):
                 sys.executable,
                 "-m",
                 "unittest",
-                "tests.test_mmi_pm_voice",
                 "tests.test_mmi_pm_console",
                 "tests.test_mmi_next_lane",
                 "-q",

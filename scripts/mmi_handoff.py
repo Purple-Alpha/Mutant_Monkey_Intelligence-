@@ -21,6 +21,8 @@ VALID_STATES = frozenset(
         "DONE_AWAITING_CLOSEOUT",
         "DONE_AWAITING_GATE",
         "DONE_AWAITING_SIGN",
+        "DONE_AWAITING_REVIEW",
+        "DONE_AWAITING_MATT",
         "DONE_CLOSED",
     }
 )
