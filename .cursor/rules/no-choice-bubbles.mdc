@@ -1,0 +1,16 @@
+---
+description: Ban AskQuestion choice-bubbles; write scored prose forks instead
+alwaysApply: true
+---
+
+# No choice-bubbles — ever
+
+The `AskQuestion` tool is **banned** in this project. Do not invoke it for options, forks, confirmations, or questions of any kind.
+
+**Why:** Matt cannot copy-paste bubble UI to Codex or Claude. Bubbles cannot be relayed across lanes.
+
+**Instead:** Write the question in plain prose Matt can copy. For each option include pros, cons, score (from the project's rubric engine when applicable), second-order consequence, and your recommended default. Matt decides.
+
+**Authority:** `AGENTS.md` §3.1 rule 10 (operator-authored 2026-06-06, MANDATORY).
+
+**Self-check before sending:** If you are about to call `AskQuestion`, stop and rewrite as prose.

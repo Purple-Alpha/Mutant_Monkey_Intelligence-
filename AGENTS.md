@@ -364,7 +364,7 @@ The single most important rule: no NorthStar artifact may make a compliance or i
 - **Operator:** Matt Nichol. Owner-operator. Lives the build himself; not a delegator.
 - **Project posture:** Local-first, spec-first, audit-gated, anti-drift.
 - **Operating mode:** The 14-Day Operating Doctrine Trial is active (`4. Product_Roadmap/Operating_Doctrine_14_Day_Trial.md`). Honor its terms.
-- **Physical context:** Matt is currently typing one-handed (thumb injury). Use multi-choice tools when you would otherwise ask a free-form question.
+- **Physical context:** Matt is currently typing one-handed (thumb injury). Keep prose tight. Never use choice-bubbles (`AskQuestion`); write forks out in copy-pasteable prose with pros/cons/scores (§3.1 rule 10).
 - **Time context:** Sessions often run late. If Matt says he is tired, prefer to wrap a clean unit of work and stop rather than starting a new track.
 
 ---
