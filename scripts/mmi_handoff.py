@@ -120,10 +120,18 @@ def read_entries(root: Path) -> list[HandoffEntry]:
 
 
 def latest_open_handoff(root: Path) -> HandoffEntry | None:
-    open_entries = [entry for entry in read_entries(root) if entry.is_open]
-    if not open_entries:
+    entries = read_entries(root)
+    if not entries:
         return None
-    return open_entries[-1]
+    latest_by_task: dict[str, HandoffEntry] = {}
+    for entry in entries:
+        latest_by_task[entry.task] = entry
+    last_open: HandoffEntry | None = None
+    for entry in entries:
+        latest = latest_by_task[entry.task]
+        if latest.is_open and latest is entry:
+            last_open = entry
+    return last_open
 
 
 def append_handoff(

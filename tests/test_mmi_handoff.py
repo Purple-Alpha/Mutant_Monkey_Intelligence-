@@ -169,6 +169,48 @@ class TestMmiHandoffPmRouting(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, msg=proc.stdout + proc.stderr)
 
+    def test_t8_done_closed_supersedes_awaiting_sign(self):
+        mod = self.handoff
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            log_path = root / "mmi" / "MMI_HANDOFF_LOG.md"
+            log_path.parent.mkdir(parents=True)
+            log_path.write_text("# header\n\n", encoding="utf-8")
+            mod.append_handoff(
+                root,
+                task="ARCHITECT_PARSER_ALIGNMENT_PATCH",
+                by="Cursor",
+                did="parser patch built",
+                state="DONE_AWAITING_CLOSEOUT",
+                next_step="close MMI records",
+                evidence="829175b",
+                ts="2026-06-20T22:30:00Z",
+            )
+            mod.append_handoff(
+                root,
+                task="HANDOFF_SIGNAL_AND_PM_ROUTING",
+                by="Cursor",
+                did="handoff built",
+                state="DONE_AWAITING_SIGN",
+                next_step="Matt sign + close",
+                evidence="953e1bc",
+                ts="2026-06-20T23:00:00Z",
+            )
+            mod.append_handoff(
+                root,
+                task="HANDOFF_SIGNAL_AND_PM_ROUTING",
+                by="Matt Nichol",
+                did="lane closed",
+                state="DONE_CLOSED",
+                next_step="lane closed",
+                evidence="MMI-DEC-051",
+                ts="2026-06-21T06:00:00Z",
+            )
+            latest = mod.latest_open_handoff(root)
+            self.assertIsNotNone(latest)
+            self.assertEqual(latest.task, "ARCHITECT_PARSER_ALIGNMENT_PATCH")
+            self.assertEqual(latest.state, "DONE_AWAITING_CLOSEOUT")
+
 
 if __name__ == "__main__":
     unittest.main()

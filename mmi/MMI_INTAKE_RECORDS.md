@@ -367,3 +367,12 @@ Artifact: `4. Product_Roadmap/Plain_English_Explanation_Agent_Design_Contract_De
 Classification: SIGNED_CONTRACT — Stage 1 wrapper build authorized by contract §11 only; scoreboard still `DETECTOR_FUNCTION`; not SIGNED_UNBUILT; not built; AUTH-5 blocked
 Routing outcome: dispatcher remains ALL_CLEAR until scoreboard reconcile or other feedstock; Estimator/next_lane/pm_voice may rank or relay #52 as missing-contract cleared but buildability still requires SIGNED_UNBUILT lifecycle
 Matt approval required: YES for scoreboard SIGNED_UNBUILT reconcile and/or Mode A build; §11 signature recorded by operator authorization
+
+INTAKE-2026-06-21-001
+Component: HANDOFF_SIGNAL_AND_PM_ROUTING (sign and closeout)
+Request: MMI_HANDOFF_SIGNAL_AND_PM_ROUTING_SIGN_AND_CLOSEOUT_ONLY — Matt §11 sign + MMI closeout only; no rebuild
+Source: Builds `953e1bc`/`ddb86bc`; gate `audit_outputs/mmi_handoff_signal_pm_routing_20260621T053223Z.md` (2 blocking); operator authorization to sign and close
+Artifact: `mmi/MMI_HANDOFF_SIGNAL_AND_PM_ROUTING_CONTRACT.md` (§11 SIGNED 2026-06-21; lane CLOSED)
+Classification: SIGNED_CONTRACT_CLOSED — handoff log + writer + PM IN_FLIGHT routing; gate blockers resolved by operator closeout; no rebuild; AUTH-5 blocked
+Routing outcome: HANDOFF_SIGNAL lane closed in handoff log; PM Voice surfaces next open handoff (parser patch closeout) or engine fallback; dispatcher unchanged ALL_CLEAR
+Matt approval required: NO for this closeout slice (explicit authorization granted); YES for parser patch MMI closeout or other next lanes
