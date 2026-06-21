@@ -827,7 +827,7 @@ def _parse_bor_feedstock(bor_text: str) -> list[FeedstockEntry]:
 
 
 def _score_feedstock(
-    eligible: list[Candidate],
+    candidates: list[Candidate],
     feedstock_entries: list[FeedstockEntry],
     scoreboard: str,
     manifest_verify: str,
@@ -835,7 +835,12 @@ def _score_feedstock(
     graph_populated: bool,
     health_board_present: bool,
 ) -> list[ScoredFeedstock]:
-    by_id = {candidate.candidate_id: candidate for candidate in eligible}
+    """Score BOR feedstock against scoreboard rows (not buildability-eligible subset)."""
+    by_id = {
+        candidate.candidate_id: candidate
+        for candidate in candidates
+        if candidate.source == "scoreboard"
+    }
     ranked: list[ScoredFeedstock] = []
     for entry in feedstock_entries:
         if entry.hold_unless_matt:
@@ -950,7 +955,7 @@ def analyze(
     bor_text = _read_text(root / BOR_PATH_REL)
     feedstock_entries = _parse_bor_feedstock(bor_text)
     feedstock_scored = _score_feedstock(
-        eligible,
+        candidates,
         feedstock_entries,
         scoreboard,
         manifest_verify,

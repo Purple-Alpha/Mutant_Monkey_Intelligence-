@@ -63,6 +63,15 @@ ROSTER_MULTI_LANE_ADVISORY = (
     "4. Product_Roadmap/MMI_Governance_Invariants_Testing_Advisory_Lane_Brief.md"
 )
 
+GOVERNANCE_FRAMEWORK_CONTRACTS: dict[str, str] = {
+    "#105": (
+        "4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md"
+    ),
+}
+
+INVARIANTS_PROBE_REL = "scripts/mmi_authority_escalation_probe.py"
+INVARIANTS_PROBE_TEST_REL = "tests/test_mmi_authority_escalation_probe.py"
+
 REVISION_ROWS = (
     (
         "What gets prioritized / ranked",
@@ -149,6 +158,11 @@ def gather_evidence(repo_root: Path, menu_limit: int = 30) -> VoiceEvidence:
     scored, errors, _, _, feedstock_scored = estimator.analyze(repo_root)
     if errors:
         evidence.gaps.extend(errors)
+    elif feedstock_scored and evidence.dispatcher_mode == "ALL_CLEAR":
+        top = feedstock_scored[0]
+        evidence.feedstock_first = top.entry.candidate_id
+        evidence.feedstock_first_name = top.entry.name or top.scored.candidate.name
+        evidence.feedstock_lane_type = top.entry.lane_type
     elif scored:
         evidence.scored_first = scored[0].candidate.candidate_id
         evidence.scored_first_name = scored[0].candidate.name
@@ -183,6 +197,9 @@ def _is_contract_signed(root: Path, contract_rel: str) -> bool:
 
 
 def _contract_rel_for_candidate(candidate_id: str) -> str | None:
+    rel = GOVERNANCE_FRAMEWORK_CONTRACTS.get(candidate_id)
+    if rel:
+        return rel
     estimator = _load_module("mmi_estimator", "mmi_estimator.py")
     return estimator.ARCHITECT_MANIFEST_CONTRACTS.get(candidate_id)
 
@@ -458,6 +475,8 @@ def _compose_awaiting_audit_gated_voice(
 def _feedstock_hand_it_to(lane_type: str) -> str:
     if lane_type == "CONTRACT_DRAFT":
         return ROSTER_CONTRACT_DRAFT
+    if lane_type == "CONTRACT_REVIEW":
+        return ROSTER_REVIEW
     if lane_type == "ADVISORY_MULTI_LANE_DESIGN":
         return ROSTER_MULTI_LANE_ADVISORY
     if lane_type == "PROMOTION_REVIEW":
@@ -474,6 +493,32 @@ def _compose_unsigned_contract_review_voice(
 ) -> dict[str, str]:
     candidate_id = evidence.feedstock_first
     candidate_name = evidence.feedstock_first_name
+    if candidate_id == "#105":
+        return {
+            "WHAT_NEEDS_MATT": (
+                f"Pre-build gate review is needed for {candidate_id} {candidate_name} "
+                f"invariants framework contract."
+            ),
+            "IN_FLIGHT": (
+                f"Lane 1 probe shipped ({INVARIANTS_PROBE_REL}; "
+                f"pytest {INVARIANTS_PROBE_TEST_REL}); contract still UNSIGNED."
+            ),
+            "HAND_IT_TO": ROSTER_REVIEW,
+            "YOU_DO": (
+                f"Run Grok pre-build gate review on {candidate_id} "
+                f"{candidate_name} at {contract_rel}; optional Matt §11 when ready. "
+                f"Maintain drift defense: pytest {INVARIANTS_PROBE_TEST_REL} after "
+                f"any scripts/mmi_*.py change."
+            ),
+            "WHY": (
+                f"unsigned invariants contract on disk at {contract_rel}; "
+                f"Lane 1 Mode A probe complete (MMI-DEC-082/083); "
+                f"estimator feedstock rank {candidate_id}; gate before §11 per contract §16."
+            ),
+            "IGNORE_FOR_NOW": _ignore_block(evidence),
+            "SOURCE": _source_line(evidence),
+            "BOUNDARY": _boundary_line(),
+        }
     return {
         "WHAT_NEEDS_MATT": (
             f"Pre-build gate review is needed for {candidate_id} {candidate_name} "
@@ -507,15 +552,24 @@ def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
         what = f"Contract draft lane is needed for {candidate_id} {candidate_name}."
     elif lane_type == "ADVISORY_MULTI_LANE_DESIGN":
         you_do = (
-            f"Run multi-lane invariants contract advisory review for {candidate_id} "
+            f"Optional multi-lane invariants contract advisory review for {candidate_id} "
             f"{candidate_name} per "
             f"4. Product_Roadmap/MMI_Governance_Invariants_Testing_Advisory_Lane_Brief.md "
-            f"(Claude + Gemini + ChatGPT); optional Codex pre-build gate per contract §16; "
-            f"record verdicts in PROJECT_ACTIVITY_LOG.md."
+            f"if Matt wants external review; Lane 1 probe already shipped — "
+            f"pytest {INVARIANTS_PROBE_TEST_REL} is the drift-defense default."
         )
         what = (
-            f"Multi-lane governance invariants framework review is needed for "
-            f"{candidate_id} {candidate_name} before §11 or Lane 1 build."
+            f"Optional governance invariants framework external review for "
+            f"{candidate_id} {candidate_name}; regular lane restored — not required."
+        )
+    elif lane_type == "CONTRACT_REVIEW":
+        you_do = (
+            f"Review unsigned invariants framework contract for {candidate_id} "
+            f"{candidate_name}; run Grok pre-build gate when Matt chooses §11 path."
+        )
+        what = (
+            f"Invariants framework contract review is available for "
+            f"{candidate_id} {candidate_name}."
         )
     elif lane_type == "PROMOTION_REVIEW":
         you_do = (
@@ -674,7 +728,12 @@ def compose_voice(
         return _compose_signed_unreconciled_voice(evidence, unreconciled, contract_rel)
 
     relay = _relay_contract_candidate(evidence.menu_options)
-    if relay is not None or evidence.missing_contract_count > 0:
+    if relay is not None or (
+        evidence.missing_contract_count > 0
+        and not (
+            evidence.feedstock_first and evidence.dispatcher_mode == "ALL_CLEAR"
+        )
+    ):
         return _compose_missing_contract_voice(evidence, relay)
 
     return _compose_fallback_voice(evidence)

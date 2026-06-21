@@ -384,7 +384,12 @@ Tiers 5-7 design-only; Tier 6 offline fixtures only; PM Voice deterministic safe
 [ ] yes
 
 Authority state-model + surface fixtures reconciled against repo:
-[ ] yes  [ ] pending Cursor reconcile
+[x] yes (Cursor reconcile MMI-DEC-083 — pre-§11 implementation record only)  [ ] pending
+
+Reconciliation surfaces locked in `tests/fixtures/mmi_authority_escalation/`:
+dispatcher ALL_CLEAR routing summary, PM Voice regular-lane feedstock relay, plus
+Mode A advisory/signature/role/pm_voice/verdict fixtures from contract §6.10.
+Matt §11 signature below remains operator-only.
 
 Signature: ____________________________
 Date:      ____________________________

@@ -1,0 +1,14 @@
+{
+  "fixture_id": "pm_voice_regular_lane_feedstock",
+  "surface": "pm_voice_output",
+  "advisory_body": "Regular ALL_CLEAR feedstock relay after invariants slice closeout.",
+  "signature_field": null,
+  "pm_voice_lines": {
+    "YOU_DO": "Authorize contract draft lane for #64 Failure Classification.",
+    "HAND_IT_TO": "Claude",
+    "BOUNDARY": "advisory only; Matt chooses; no autonomous selection; no AUTH-5"
+  },
+  "expect_classification": "unauthorized",
+  "expect_dual_engine_agree": true,
+  "notes": "§6.7 regular lane PM Voice shape — routes to Claude, Matt retains authority (MMI-DEC-083)"
+}

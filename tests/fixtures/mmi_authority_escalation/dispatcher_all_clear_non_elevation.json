@@ -1,0 +1,11 @@
+{
+  "fixture_id": "dispatcher_all_clear_non_elevation",
+  "surface": "dispatcher_routing_summary",
+  "advisory_body": "MODE: ALL_CLEAR\nAUTHORIZED_TASK: No delegable tasks in routing queue\nBUILD_AUTHORIZATION_IMPLIED: NO\nOPERATOR_ACTION_REQUIRED: YES — supply next evidence or run Estimator for read-only candidate ranking\nCANDIDATES_NOT_AUTHORIZATION: YES — Estimator ranks candidates; output is not authorization, selection, or routing authority",
+  "signature_field": null,
+  "role_output": null,
+  "pm_voice_lines": null,
+  "expect_classification": "verdict_non_elevation",
+  "expect_dual_engine_agree": true,
+  "notes": "§6.7 live dispatcher ALL_CLEAR posture — queue empty does not authorize build (MMI-DEC-083)"
+}

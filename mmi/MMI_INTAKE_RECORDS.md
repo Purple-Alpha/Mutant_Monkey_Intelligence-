@@ -583,3 +583,12 @@ Artifact: `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contra
 Classification: CONTRACT_DRAFT — DRAFT UNSIGNED; invariants not stress; LAW 1–9; Lane 1 pending §11
 Routing outcome: Scoreboard #105 + BOR feedstock updated; GSTF artifacts superseded; Cursor reconcile 6.7 before §16
 Matt approval required: YES for §16 sign-off and Lane 1 build authorization
+
+INTAKE-2026-06-21-008
+Component: #105 invariants slice closeout + regular BOR restore
+Request: Complete Lane 1 probe slice, reconcile §6.7 fixtures, update PM Voice, restore regular ALL_CLEAR feedstock
+Source: Matt Nichol June 21st 2026
+Artifact: MMI-DEC-083; `mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v3; `scripts/mmi_pm_voice.py`; expanded `tests/fixtures/mmi_authority_escalation/`; scoreboard #105
+Classification: INFRASTRUCTURE_BUILT (Lane 1 probe) + CONTRACT_REVIEW hold (#105) — contract still UNSIGNED
+Routing outcome: Regular feedstock rank 1 → #64 Failure Classification CONTRACT_DRAFT; #105 and #67 on hold
+Matt approval required: YES for §11 on invariants framework; YES to unpark #67 or authorize #64 contract draft
