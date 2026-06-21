@@ -403,3 +403,12 @@ Artifact: MMI-DEC-054; scoreboard #52 row `SIGNED_UNBUILT`
 Classification: SCOREBOARD_RECONCILE — lifecycle feedstock only; wrapper build requires separate authorization; AUTH-5 blocked
 Routing outcome: dispatcher MODE:BUILD feedstock for #52; PM Voice routes build authorization next; not build authorization by itself
 Matt approval required: YES for PlainEnglishExplanationAgent Mode A build lane if Matt chooses
+
+INTAKE-2026-06-21-005
+Component: #52 Plain-English Explanation (AWAITING_AUDIT reconcile + Grok gate)
+Request: #52 AWAITING_AUDIT scoreboard reconcile + complete_gate.py (same pattern as #47)
+Source: build `5953d1a`; Matt authorization for audit lane; DEC-054 SIGNED_UNBUILT feedstock
+Artifact: MMI-DEC-055; scoreboard #52 row `AWAITING_AUDIT`; gate `audit_outputs/plain_english_explanation_20260621T060725Z.md` 0/0
+Classification: BUILT_AWAITING_AUDIT — scoreboard lifecycle advance + completion gate clean; GATED flip separate lane
+Routing outcome: dispatcher MODE:AUDIT for #52; PM Voice may surface `MMI_52_GATED_RECONCILE_ONLY` next; **not GATED**, **not GOVERNED_AGENT**
+Matt approval required: YES for `MMI_52_GATED_RECONCILE_ONLY` if Matt chooses GATED promotion next

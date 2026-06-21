@@ -1,18 +1,12 @@
-MODE: BUILD
-AUTHORIZED_TASK: Build Plain-English Explanation
-OPERATOR_NAMES_TARGET: Matt
-MMI_ASSIGNS_LANE: YES
-LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
-PROJECT_IDENTITY: Mutant Monkey Security
-MMI_BRAIN: Mutant Monkey Intelligence (MMI)
-AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
-ASSIGNED_TO: Cursor → Codex → Cursor
-PRE_BUILD_REVIEW: Codex
-NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
-BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
-OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
+MODE: AUDIT
+AUTHORIZED_TASK: Run Grok completion gate for Plain-English Explanation
+ASSIGNED_TO: Grok (negative-feedback auditor)
+NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits
+OPERATOR_ACTION_REQUIRED: NO  (Grok activation is standing; no per-run permission)
+RUN: python3 audit_tools/complete_gate.py --pre-commit --task plain_english_explanation --claim "Plain-English Explanation build implemented + tested; ready for audit"
+MANIFEST: audit_outputs/pending/plain_english_explanation.manifest.json (present)
+BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed
+NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -24,11 +18,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #52 Plain-English Explanation scoreboard SIGNED_UNBUILT reconcile
-  (MMI-DEC-054; INTAKE-2026-06-21-004). Matt authorized `MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY`.
-  `#52` lifecycle `DETECTOR_FUNCTION` -> `SIGNED_UNBUILT`; empty BLOCKERS; dispatcher MODE:BUILD
-  feedstock; build not authorized until separate operator lane. Prior: PM Voice always-routes
-  closed (`82fbcd9`; MMI-DEC-053).
+LAST_COMPLETED: #52 Plain-English Explanation AWAITING_AUDIT reconcile + Grok gate 0/0
+  (MMI-DEC-055; INTAKE-2026-06-21-005). Build `5953d1a`; gate
+  `audit_outputs/plain_english_explanation_20260621T060725Z.md`; lifecycle `SIGNED_UNBUILT` ->
+  `AWAITING_AUDIT`; **not GATED**. Prior: SIGNED_UNBUILT reconcile (`3b1dcb9`; MMI-DEC-054).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
