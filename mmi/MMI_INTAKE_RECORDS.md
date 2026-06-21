@@ -394,3 +394,12 @@ Artifact: `mmi/MMI_PM_VOICE_ALWAYS_ROUTES_CONTRACT.md` (§11 SIGNED and CLOSED 2
 Classification: SIGNED_CONTRACT_CLOSED — always-routes routing priority + envelope; handoff DONE_CLOSED; AUTH-5 blocked
 Routing outcome: no open handoff IN_FLIGHT; PM Voice surfaces `#52` SIGNED_UNBUILT reconcile to Cursor; dispatcher ALL_CLEAR
 Matt approval required: YES for `MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY` if Matt chooses that next lane
+
+INTAKE-2026-06-21-004
+Component: #52 Plain-English Explanation (scoreboard SIGNED_UNBUILT reconcile)
+Request: MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY — scoreboard lifecycle reconcile only; no build
+Source: §11 signed contract `379d0e6`; PM Voice routed reconcile; Matt authorization granted
+Artifact: MMI-DEC-054; scoreboard #52 row `SIGNED_UNBUILT`
+Classification: SCOREBOARD_RECONCILE — lifecycle feedstock only; wrapper build requires separate authorization; AUTH-5 blocked
+Routing outcome: dispatcher MODE:BUILD feedstock for #52; PM Voice routes build authorization next; not build authorization by itself
+Matt approval required: YES for PlainEnglishExplanationAgent Mode A build lane if Matt chooses

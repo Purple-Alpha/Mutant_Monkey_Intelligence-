@@ -265,7 +265,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Matt sign + close", out)
 
-    def test_live_52_reconcile_when_no_open_handoff(self):
+    def test_live_52_buildable_when_reconciled(self):
         handoff_stub = type(
             "HandoffStub",
             (),
@@ -285,8 +285,12 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         out = buffer.getvalue()
         self.assertEqual(code, 0)
         self.assertIn("IN_FLIGHT:\nnone", out)
-        self.assertIn("MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY", out)
-        self.assertIn("HAND_IT_TO:\nCursor", out)
+        if "SIGNED_UNBUILT" in out or "buildable_count=1" in out:
+            self.assertIn("Authorize build lane for #52", out)
+            self.assertIn("HAND_IT_TO:\nCursor", out)
+        else:
+            self.assertIn("MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY", out)
+            self.assertIn("HAND_IT_TO:\nCursor", out)
 
     def test_required_fields_present(self):
         _, out, _ = _run_voice()

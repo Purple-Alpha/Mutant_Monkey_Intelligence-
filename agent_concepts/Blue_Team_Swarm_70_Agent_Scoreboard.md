@@ -19,7 +19,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **BREADTH RUNWAY:** **14** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1 Synthetic): #6, #6A, #8, #10, #11, #14, #23, #24, #27, #30, #31, #39, #46, #48.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **#47 Case Timeline** — `GATED` after clean completion gate `audit_outputs/case_timeline_20260620T233212Z.md` (Mode A `4d7fba2`; §12 authority `80b5381`; **not GOVERNED_AGENT**; no production dispatch; not in `build_default_registry`). `DEPENDS_ON:#48` cleared (`#48` `GOVERNED_AGENT` `6799978`). (#7/#13/#15/#17/#20/#25/#37 remain RECLASSIFY; #16/#32/#44 remain merged; depth gate CLOSED).
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **#52 Plain-English Explanation** — `SIGNED_UNBUILT` reconcile 2026-06-21 (`379d0e6` §11 sign; Architect blueprintable after parser alignment `829175b`/`d53ef03`; **build not authorized**; no `PlainEnglishExplanationAgent` wrapper or focused tests on disk). First `SIGNED_UNBUILT` breadth feedstock row — lifecycle tracking only, not build authorization. **#47 Case Timeline** — `GATED` (`audit_outputs/case_timeline_20260620T233212Z.md`; **not GOVERNED_AGENT**). (#7/#13/#15/#17/#20/#25/#37 remain RECLASSIFY; #16/#32/#44 remain merged; depth gate CLOSED).
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -170,7 +170,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 49 | Audit Trail | `DETECTOR_FUNCTION` | `core/blackboard/` append-only + `evidence_package/audit_packet.py`; `NEEDS_SIGNED_CONTRACT` blocker added per Phase 1 Infrastructure contract §9 Open-Q1 + operator Step-6.5 housekeeping — status annotation that #49 needs its own per-agent contract before promotion, **not** a promotion or scope grant | 4 Evidence | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | fe355da |
 | 50 | Evidence Strength | `SPEC_ONLY` | Email Security Testing framework (draft) | 4 Evidence | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
 | 51 | Assumption Control | `GOVERNANCE_DOC_ONLY` | claim-boundary discipline; not a runtime module | 4 Evidence | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 52 | Plain-English Explanation | `DETECTOR_FUNCTION` | `core/scoring/client_facing_rubric.py` (signed 5-axis rubric, why_this_score) | 4 Evidence | A |  | BREADTH | — | adoption |
+| 52 | Plain-English Explanation | `SIGNED_UNBUILT` (§11 signed 2026-06-20 `379d0e6`; Architect blueprintable after parser alignment `829175b`/`d53ef03`; **build not authorized**; no `PlainEnglishExplanationAgent` wrapper or focused tests on disk) | `4. Product_Roadmap/Plain_English_Explanation_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED 2026-06-20 `379d0e6`; SIGNED CONTRACT — wrapper build authorized by contract §11 only; separate operator build lane required) + `core/scoring/client_facing_rubric.py` (signed 5-axis rubric upstream); downstream pin `DailyDigestAgent`; not in `build_default_registry` | 4 Evidence | A |  | BREADTH | — | 2026-06-21 |
 | 53 | Safe Language | `GOVERNANCE_DOC_ONLY` | `Compliance_and_Trend_Watch_Process.md` §5 + `complete_gate.py` forbidden-language | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 8 — Cyber insurance (SPARK #54-#60)
