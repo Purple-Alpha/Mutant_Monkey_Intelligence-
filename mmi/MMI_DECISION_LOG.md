@@ -201,6 +201,10 @@ MMI-DEC-086 | 2026-06-21 | #64 Failure Classification §11 sign + SIGNED_UNBUILT
 
 MMI-DEC-087 | 2026-06-21 | #64 Failure Classification build authorization + implementation | `core/sandbox/failure_classification_agent.py`; `tests/test_failure_classification_agent.py` | ACCEPT | Matt authorized build lane via PM Voice relay ("Authorize build lane for #64 Failure Classification"); prerequisite MMI-DEC-086 satisfied. `FailureClassificationAgent` Stage 1 wrapper + 16 focused pytest tests. **Not GATED** until completion gate clean 0/0; **not GOVERNED_AGENT**; not production dispatch; not default registry; not AUTH-5. | AWAITING_AUDIT scoreboard reconcile + Grok completion gate | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize #64 build lane)
 
+MMI-DEC-088 | 2026-06-21 | #64 Failure Classification reconciled to GATED | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #64 row; `audit_outputs/failure_classification_20260621T220552Z.md` (0/0) | ACCEPT | Matt authorized superintendent closeout ("have it audited if this is next task"); completion gate clean 0 blocking / 0 warnings; lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing. | No GOVERNED_AGENT promotion without separate authorization | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (superintendent lane: #64 GATED reconcile after clean gate)
+
+MMI-DEC-089 | 2026-06-21 | BOR feedstock skip GATED #64 + ALL_CLEAR hold-only feedstock | `mmi/BLUEPRINT_OF_RECORD.md` | ACCEPT | #64 marked completed in BOR; rank-1 CONTRACT_DRAFT feedstock removed; remaining entries hold-only (#67, #105, #1, #3, #47, #52). **Not** build authorization for #67+. | Contract draft lane for #67 when Matt unparks | Run mmi_dispatch.py --sync + --verify after commit | Cursor (PM accuracy after #64 GATED)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

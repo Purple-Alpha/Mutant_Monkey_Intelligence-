@@ -628,3 +628,12 @@ Artifact: `core/sandbox/failure_classification_agent.py`; `tests/test_failure_cl
 Classification: AWAITING_AUDIT — built; completion gate pending; not GATED
 Routing outcome: Superintendent AWAITING_AUDIT reconcile + Grok completion gate before GATED
 Matt approval required: YES for MMI_64_GATED_RECONCILE_ONLY after clean gate
+
+INTAKE-2026-06-21-013
+Component: #64 Failure Classification (GATED reconcile)
+Request: Matt authorized superintendent closeout after clean completion gate
+Source: Matt Nichol 2026-06-21
+Artifact: scoreboard #64 `GATED`; `audit_outputs/failure_classification_20260621T220552Z.md`; MMI-DEC-088
+Classification: GATED_RECONCILE — lifecycle advance; PM Voice relay accuracy; **not GOVERNED_AGENT**
+Routing outcome: #64 lane closed; BOR hold-only feedstock (MMI-DEC-089); dispatcher may surface ALL_CLEAR
+Matt approval required: NO for this reconcile slice (authorization granted)
