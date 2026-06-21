@@ -22,6 +22,7 @@ IMMUTABLE_PATHS = [
     "mmi/MMI_TASK_REGISTRY.yaml",
     "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md",
     "mmi/BLUEPRINT_OF_RECORD.md",
+    "mmi/MMI_HANDOFF_LOG.md",
 ]
 
 FORBIDDEN_CONCLUSIONS = frozenset(
@@ -88,9 +89,30 @@ class TestMmiPmVoiceModeA(unittest.TestCase):
             self.assertIn(field, out)
 
     def test_empty_pipeline_routes_to_claude(self):
-        _, out, _ = _run_voice()
+        import io
+        from contextlib import redirect_stdout
+
+        handoff_stub = type(
+            "HandoffStub",
+            (),
+            {"latest_open_handoff": staticmethod(lambda root: None)},
+        )()
+        real_load = self.mod._load_module
+
+        def side_effect(name, filename):
+            if filename == "mmi_handoff.py":
+                return handoff_stub
+            return real_load(name, filename)
+
+        with patch.object(self.mod, "_load_module", side_effect=side_effect):
+            buffer = io.StringIO()
+            with redirect_stdout(buffer):
+                code = self.mod.main([])
+        out = buffer.getvalue()
+        self.assertEqual(code, 0)
         self.assertIn("HAND_IT_TO:\nClaude", out)
         self.assertIn("contract draft lane", out)
+        self.assertNotIn("IN_FLIGHT:", out)
 
     def test_source_traces_engines(self):
         _, out, _ = _run_voice()
@@ -163,6 +185,12 @@ class TestMmiPmVoiceModeA(unittest.TestCase):
         fields = mod.compose_voice(evidence)
         self.assertIn("ranked first by the Estimator", fields["WHAT_NEEDS_MATT"])
         self.assertEqual(fields["HAND_IT_TO"], "Matt")
+
+    def test_in_flight_when_open_handoff_present(self):
+        _, out, _ = _run_voice()
+        if "IN_FLIGHT:" in out:
+            self.assertIn("ARCHITECT_PARSER_ALIGNMENT_PATCH", out)
+            self.assertIn("HAND_IT_TO:\nMatt", out)
 
     def test_revision_mode_read_only(self):
         code, out, _ = _run_voice(["--revision"])

@@ -196,7 +196,7 @@ def _ignore_lines(options: list) -> list[str]:
     return lines[:6]
 
 
-def _source_line(evidence: VoiceEvidence) -> str:
+def _source_line(evidence: VoiceEvidence, handoff: object | None = None) -> str:
     parts = [
         f"dispatcher: {evidence.dispatcher_mode} (MMI_CURRENT_STATE.md / dispatch verify posture)",
         (
@@ -213,10 +213,61 @@ def _source_line(evidence: VoiceEvidence) -> str:
         parts.append(
             f"estimator_rank_first: {evidence.scored_first} {evidence.scored_first_name}"
         )
+    if handoff is not None:
+        parts.append("handoff_log: mmi/MMI_HANDOFF_LOG.md")
     return "; ".join(parts)
 
 
-def compose_voice(evidence: VoiceEvidence) -> dict[str, str]:
+def _route_next_step(next_step: str) -> str:
+    lower = next_step.lower()
+    if "draft" in lower:
+        return ROSTER_CONTRACT_DRAFT
+    if "build" in lower:
+        return ROSTER_BUILD
+    if "review" in lower or "gate" in lower:
+        return ROSTER_REVIEW
+    if "research" in lower:
+        return ROSTER_RESEARCH
+    if "sign" in lower or "close" in lower:
+        return ROSTER_MATT
+    return ROSTER_MATT
+
+
+def _compose_handoff_voice(evidence: VoiceEvidence, handoff) -> dict[str, str]:
+    boundary = (
+        "advisory only; Matt chooses; no autonomous selection; no AUTH-5"
+    )
+    ignore_lines = _ignore_lines(evidence.menu_options)
+    ignore_text = (
+        "\n".join(f"- {line}" for line in ignore_lines)
+        if ignore_lines
+        else "- No additional ignore lines relayed from engine menu."
+    )
+    hand_it_to = _route_next_step(handoff.next_step)
+    return {
+        "IN_FLIGHT": (
+            f"task={handoff.task}; state={handoff.state}; by={handoff.by}; "
+            f"next_step={handoff.next_step}"
+        ),
+        "WHAT_NEEDS_MATT": (
+            f"Open handoff {handoff.task} is {handoff.state.replace('_', ' ').lower()}."
+        ),
+        "HAND_IT_TO": hand_it_to,
+        "WHY": (
+            f"handoff_log latest open entry: task={handoff.task}; state={handoff.state}; "
+            f"did={handoff.did}; evidence={handoff.evidence}"
+        ),
+        "IGNORE_FOR_NOW": ignore_text,
+        "YOU_DO": handoff.next_step,
+        "SOURCE": _source_line(evidence, handoff=handoff),
+        "BOUNDARY": boundary,
+    }
+
+
+def compose_voice(evidence: VoiceEvidence, handoff=None) -> dict[str, str]:
+    if handoff is not None:
+        return _compose_handoff_voice(evidence, handoff)
+
     boundary = (
         "advisory only; Matt chooses; no autonomous selection; no AUTH-5"
     )
@@ -280,16 +331,20 @@ def compose_voice(evidence: VoiceEvidence) -> dict[str, str]:
 
 
 def format_voice(fields: dict[str, str]) -> str:
-    lines = [
-        ENVELOPE_VOICE,
-        f"WHAT_NEEDS_MATT:\n{fields['WHAT_NEEDS_MATT']}",
-        f"HAND_IT_TO:\n{fields['HAND_IT_TO']}",
-        f"WHY:\n{fields['WHY']}",
-        f"IGNORE_FOR_NOW:\n{fields['IGNORE_FOR_NOW']}",
-        f"YOU_DO:\n{fields['YOU_DO']}",
-        f"SOURCE:\n{fields['SOURCE']}",
-        f"BOUNDARY:\n{fields['BOUNDARY']}",
-    ]
+    lines = [ENVELOPE_VOICE]
+    if fields.get("IN_FLIGHT"):
+        lines.append(f"IN_FLIGHT:\n{fields['IN_FLIGHT']}")
+    lines.extend(
+        [
+            f"WHAT_NEEDS_MATT:\n{fields['WHAT_NEEDS_MATT']}",
+            f"HAND_IT_TO:\n{fields['HAND_IT_TO']}",
+            f"WHY:\n{fields['WHY']}",
+            f"IGNORE_FOR_NOW:\n{fields['IGNORE_FOR_NOW']}",
+            f"YOU_DO:\n{fields['YOU_DO']}",
+            f"SOURCE:\n{fields['SOURCE']}",
+            f"BOUNDARY:\n{fields['BOUNDARY']}",
+        ]
+    )
     return _validate_output("\n".join(lines) + "\n")
 
 
@@ -346,6 +401,8 @@ def main(argv: list[str] | None = None) -> int:
 
     repo_root = args.root.resolve() if args.root else _repo_root()
     evidence = gather_evidence(repo_root, menu_limit=max(1, args.limit))
+    handoff_mod = _load_module("mmi_handoff", "mmi_handoff.py")
+    handoff = handoff_mod.latest_open_handoff(repo_root)
 
     critical = [
         g
@@ -357,7 +414,7 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write(format_insufficient(evidence.gaps))
         return 2
 
-    sys.stdout.write(format_voice(compose_voice(evidence)))
+    sys.stdout.write(format_voice(compose_voice(evidence, handoff=handoff)))
     return 0
 
 
