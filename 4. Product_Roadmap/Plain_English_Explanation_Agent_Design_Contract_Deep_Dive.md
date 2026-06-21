@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_52_PLAIN_ENGLISH_EXPLANATION_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT — UNSIGNED. **Not in force.** Placement/reconcile only. Does not authorize build, §11 signature, scoreboard reconcile, registry registration, production dispatch, or AUTH-5.
+**Status:** DRAFT — UNSIGNED. **Not in force.** Pre-sign patch applied 2026-06-20 (`MMI_52_PRE_SIGN_PATCH_ONLY`). Does not authorize build, §11 signature, scoreboard reconcile, registry registration, production dispatch, or AUTH-5.
 
 **Candidate:** #52 — Plain-English Explanation
 
@@ -43,8 +43,8 @@ This contract governs a future Plain-English Explanation **agent wrapper** aroun
 | Role | Emit plain-English per-axis `why_this_score` strings by running the signed client-facing rubric projection (`project_client_facing_rubric`) over one validated `EmailAnalysisPayload`. The wrapper explains the existing analysis verdict object; it does not create a new score, action, or disposition. |
 | Boundary | Read-only Evidence agent over one validated analysis payload. The wrapper must not detect threats, mutate scoring, lower/raise risk, change `recommended_action`, invent advice beyond the signed rubric mapper output, read raw mailbox bodies/attachments/headers directly, transmit explanations, write Blackboard records, or alter `core/scoring/client_facing_rubric.py`. |
 | Explicit non-authorities | No autonomous action; no block/quarantine/deny/reject verb; no buyer-facing compliance claim; no network/HTTP/DNS/LLM call; no raw-source read; no explanation send/transmit path; no Blackboard write at Stage 1; no default-registry registration; no production dispatch at Evidence Stage 1; no Evidence Stage 2/3 promotion; no AUTH-5; no scoring/rubric logic change. |
-| Inputs | One tenant-scoped validated `EmailAnalysisPayload` on an `EMAIL_ANALYSIS` Blackboard record, located via `MissionContext.source_record_id`. Reads validated analysis sub-objects only (`EmailAnalysisRiskAnalysis`, `EmailAnalysisImpersonationAnalysis`, optional ransomware-precursor analysis, `behavioral_deviation_flags`, `forced_escalation_triggers`, and related validated fields already on the payload). Does **not** read raw `EMAIL_INBOUND` body, attachment bytes, or external systems. |
-| Outputs | One bounded explanation surface: `ClientFacingRubricPayload` attached to the same analysis context and/or one Layer 4 `AgentContribution` carrying closed plain-English explanation facts derived only from that payload. No verification/challenge/score/action fields are emitted. |
+| Inputs | One tenant-scoped validated `EmailAnalysisPayload` on an `EMAIL_ANALYSIS` Blackboard record, located via `MissionContext.source_record_id`. Reads validated analysis sub-objects only (`EmailAnalysisRiskAnalysis`, `EmailAnalysisImpersonationAnalysis`, optional ransomware-precursor analysis, `behavioral_deviation_flags`, `forced_escalation_triggers`, and related validated fields already on the payload). Does **not** read raw `EMAIL_INBOUND` body, attachment bytes, or external systems. If `source_record_id` is missing, the record is absent, the payload fails validation, or required analysis sub-objects are not traceable, the wrapper must refuse with `INPUT_INSUFFICIENT_CANNOT_EXPLAIN` and name the missing field(s). |
+| Outputs | Exactly one of two envelopes: (1) bounded explanation surface — projected `ClientFacingRubricPayload` on the in-memory analysis copy returned to the explicit caller/test, with every `why_this_score` line traceable to input payload fields via `project_client_facing_rubric()`; or (2) `INPUT_INSUFFICIENT_CANNOT_EXPLAIN` when required inputs are missing or not traceable. No verification/challenge/score/action fields are emitted. No plain-English explanation is emitted on the refusal path. |
 | Evidence emitted | Closed-set plain-English axis explanation facts only, derived from `ClientFacingRubricPayload.axes[*].why_this_score`, `axis_total`, `rubric_status`, and bounded consistency markers when present. No new detector facts, no disposition, no payment guidance beyond what the signed rubric mapper already encodes. |
 | Data minimization | Explanations are bounded by rubric D15 (160-char `why_this_score` cap) and D7 PII safety rules. No raw header chains, payment destinations, account/routing identifiers, mailbox body echoes, or unbounded generated text. |
 | Tenant isolation | Reads only the tenant-scoped Blackboard path for the supplied `tenant_id`. Stage 1 tests must use isolated synthetic tenant IDs. Tenant A's analysis never explains tenant B. |
@@ -77,7 +77,11 @@ Live-repo placeholders resolved 2026-06-20 (contract placement/reconcile only):
 | Projection function / explanation source | `project_client_facing_rubric()` in `core/scoring/client_facing_rubric.py` → `ClientFacingRubricPayload` with per-axis `why_this_score` | Signed rubric spec §5; immutable projection module docstring |
 | Downstream consumer / report surface | `DailyDigestAgent` (`core/drafting/daily_digest_agent.py`) | Reads `analysis.client_facing_rubric.axes[*].why_this_score` and `axis_total` when `rubric_status == "available"`; rubric spec §6 / D17 report-only digest surface |
 
-No unresolved items at placement time.
+Repo-reconciliation placeholders: **resolved.**
+
+Signability blockers from §10 operator dispositions: **resolved** (pre-sign patch 2026-06-20).
+
+**No unresolved repo reconciliation items remain for §11 signature.**
 
 ---
 
@@ -123,6 +127,31 @@ This contract is the governance step only. It does not build runtime code, sign 
 | output_format | `ClientFacingRubricPayload` per `4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md` §5 |
 | downstream_consumer | `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/drafting/daily_digest_agent.py` (`DailyDigestAgent`) |
 | consumer_usage | Reads `analysis.client_facing_rubric.axes[*].why_this_score` and `axis_total` for digest rendering per rubric spec §6 when `rubric_status == "available"`; shows unavailable sentinel when `rubric_status == "unavailable"` |
+| insufficient_output | `INPUT_INSUFFICIENT_CANNOT_EXPLAIN` — required input fields are missing or not traceable; names missing field(s); emits no `ClientFacingRubricPayload` and no per-axis explanation lines |
+
+---
+
+## TWO-OUTPUT ENVELOPE
+
+The Stage 1 wrapper emits **exactly one** of:
+
+### Explanation envelope
+
+Projected `ClientFacingRubricPayload` returned on the in-memory analysis copy. Every emitted `why_this_score` line must be backed by a trace to the input payload field(s) that produced it through `project_client_facing_rubric()`. When rubric projection fails validation, the signed rubric unavailable sentinel (`rubric_status="unavailable"`) is allowed; invented axis rows are not.
+
+### Refusal envelope
+
+```text
+INPUT_INSUFFICIENT_CANNOT_EXPLAIN
+missing_fields:
+- <field_name>
+WHY:
+Required input fields are missing or not traceable, so #52 refuses to produce a plain-English explanation and names the missing field(s).
+BOUNDARY:
+advisory only; no explanation emitted; no scoring/action mutation; no send/transmit; no AUTH-5
+```
+
+**Per-line traceability invariant (checkable):** Every emitted explanation line must include or be backed by a trace to the input field(s) that produced it. If a line cannot be traced to an input field, it must not be emitted.
 
 ---
 
@@ -134,6 +163,8 @@ This contract is the governance step only. It does not build runtime code, sign 
 - CHECK: command_expect: python3 -m unittest 3.SwarmCommand_Engine.Agent_Loop_Runtime.Runtime_Implementation.tests.test_client_facing_rubric -v|exit_code=0
 - CHECK: consumer_named: DailyDigestAgent
 - CHECK: format_exact: bounded `ClientFacingRubricPayload` only; no raw-source read; no send/transmit; no scoring/action mutation
+- CHECK: sentinel_exact: INPUT_INSUFFICIENT_CANNOT_EXPLAIN
+- CHECK: invariant_present: per-line traceability — every emitted explanation line traceable to input field(s) or not emitted
 
 Boundary enforcement targets (verified by §6 required tests):
 
@@ -144,6 +175,8 @@ Boundary enforcement targets (verified by §6 required tests):
 - no rubric-logic change inside `client_facing_rubric.py`
 - tenant isolation enforced
 - AUTH-5 remains blocked
+- missing/untraceable input → `INPUT_INSUFFICIENT_CANNOT_EXPLAIN` with named `missing_fields:`
+- every emitted explanation line traceable to input field(s) or not emitted
 
 ---
 
@@ -158,7 +191,12 @@ Boundary enforcement targets (verified by §6 required tests):
 - **D7 — Persistence + rollout.** Contributions, if persisted, use registry-gated routes only when separately authorized. The agent is NOT in `build_default_registry` at Stage 1.
 - **D8 — Stage A / no autonomy / AUTH-5 blocked.** No block/quarantine/deny/reject; no autonomous action; no AUTH-5 unlock at contract placement or Stage 1 build authorization.
 - **D9 — Downstream consumer pin.** `DailyDigestAgent` is the named v1 digest/report consumer for `why_this_score` rendering per rubric D17.
-- **D10 — Tests are the Stage 1 evidence.** Existing rubric gate tests plus focused wrapper tests must prove read-only purity, tenant isolation, no raw-source read, no send/transmit, and no scoring/action mutation before build close.
+- **D10 — Tests are the Stage 1 evidence.** Existing rubric gate tests plus focused wrapper tests must prove read-only purity, tenant isolation, no raw-source read, no send/transmit, missing-input refusal, per-line traceability, and no scoring/action mutation before build close.
+- **D11 — Missing-input refusal.** When required inputs are missing or not traceable, the wrapper emits `INPUT_INSUFFICIENT_CANNOT_EXPLAIN`, names the missing field(s), and emits no plain-English explanation lines.
+- **D12 — Per-line traceability.** Every emitted explanation line must include or be backed by a trace to the input field(s) that produced it. If a line cannot be traced to an input field, it must not be emitted. Traceability is satisfied when the line is produced solely by `project_client_facing_rubric()` over the supplied validated payload fields.
+- **D13 — Stage 1 persistence shape (locked).** Stage 1 returns projected `ClientFacingRubricPayload` on the in-memory analysis copy to the explicit caller/test only. No Blackboard write and no Layer 4 `AgentContribution` persistence at Stage 1.
+- **D14 — Scoring-agent path (locked).** `#52` complements and governs the optional `EmailRiskScoringAgent.enable_client_facing_rubric` path; it does not replace or mutate that scoring-agent flag or wiring. A caller chooses one projection path per analysis cycle; duplicate projection on the same payload in one pass is forbidden.
+- **D15 — Downstream consumer pin (locked).** `DailyDigestAgent` is the sole named mandatory downstream consumer at §11 signature. Rubric §6 report-rendering fixtures/tests validate `ClientFacingRubricPayload` compatibility only; additional consumer registration requires Stage 2 promotion.
 
 ---
 
@@ -170,6 +208,8 @@ Boundary enforcement targets (verified by §6 required tests):
 - **Transmit creep** — wrapper sends explanations directly. Mitigation: D6 explicit prohibition.
 - **Write creep** — wrapper mutates Blackboard or scoring artifacts. Mitigation: Stage 1 read-only posture and boundary tests.
 - **Cross-tenant bleed** — tenant A payload explained in tenant B context. Mitigation: tenant isolation tests mirroring rubric §8.13 discipline.
+- **Silent invention** — wrapper emits explanation lines not traceable to input fields. Mitigation: D12 per-line traceability invariant and focused traceability tests.
+- **Missing-input fabrication** — wrapper guesses explanations when inputs are absent. Mitigation: D11 `INPUT_INSUFFICIENT_CANNOT_EXPLAIN` refusal envelope.
 
 ---
 
@@ -187,14 +227,30 @@ Minimum focused wrapper suite (future build):
 8. Default registry exclusion preserved.
 9. No network/subprocess calls.
 10. Existing `test_client_facing_rubric` suite remains passing without mapper changes.
+11. Missing or untraceable required input (absent `source_record_id`, missing analysis record, invalid payload, or absent required analysis sub-object) emits `INPUT_INSUFFICIENT_CANNOT_EXPLAIN`, names `missing_fields:`, and emits no `ClientFacingRubricPayload` or per-axis explanation lines.
+12. Per-line traceability: every emitted `why_this_score` line is backed by a trace to input payload field(s) through `project_client_facing_rubric()`; untraceable lines are absent from output.
+
+**Done conditions (Stage 1 build close):** wrapper tests 1–12 pass; `INPUT_INSUFFICIENT_CANNOT_EXPLAIN` refusal path proven; per-line traceability invariant proven; existing rubric gate tests unchanged and passing.
 
 ---
 
-## §10 Open Questions (operator-only)
+## §10 Operator dispositions — resolved (locked for §11)
 
-1. **Stage 1 persistence shape.** Should Stage 1 attach `ClientFacingRubricPayload` only on the analysis object, emit Layer 4 `AgentContribution` only, or both? Default draft posture: mirror existing scoring-agent attachment pattern unless Matt selects otherwise at §11.
-2. **Wrapper vs scoring-agent attachment.** Today `EmailRiskScoringAgent` can attach rubric when `enable_client_facing_rubric=True`. Confirm whether #52 wrapper replaces, complements, or merely governs that optional path at Stage 1.
-3. **Additional consumers beyond digest.** Rubric §6 also governs report rendering fixtures/tests. Confirm whether future signed promotion needs explicit consumer enumeration beyond `DailyDigestAgent`.
+All former open questions are locked by pre-sign patch `MMI_52_PRE_SIGN_PATCH_ONLY` (2026-06-20):
+
+| Former question | Locked disposition | §2 anchor |
+|---|---|---|
+| Stage 1 persistence shape | In-memory `ClientFacingRubricPayload` on analysis copy returned to explicit caller/test only; no Blackboard write; no Layer 4 `AgentContribution` persistence at Stage 1 | D13 |
+| Wrapper vs scoring-agent attachment | Complement and govern; do not replace or mutate `EmailRiskScoringAgent.enable_client_facing_rubric`; one projection path per analysis cycle | D14 |
+| Additional consumers beyond digest | `DailyDigestAgent` is the sole named mandatory consumer at signature; rubric §6 fixtures are compatibility tests only until Stage 2 promotion | D15 |
+
+No signability-blocking open questions remain in §10.
+
+---
+
+## FUTURE_BUILD_NOTES (not signability scope)
+
+Stage 2 promotion may revisit Blackboard persistence shape, Layer 4 `AgentContribution` emission, and explicit enumeration of additional report consumers. Those items require template §6.2 promotion conditions and a separate Matt-signed promotion record; they are not open questions for §11 signature of this contract.
 
 ---
 
@@ -202,6 +258,6 @@ Minimum focused wrapper suite (future build):
 
 **DRAFT — UNSIGNED.** §11 signature is operator-only and is **not** present in this placement draft.
 
-Signing, when separately authorized, would lock D1-D10 and could authorize Evidence Stage 1 (Synthetic) wrapper build + focused tests only. Signing would **not** authorize scoreboard reconcile, Blueprint-of-Record population, registry/default dispatch, production dispatch, explanation send/transmit, rubric/scoring mutation, Evidence Stage 2/3 promotion, or AUTH-5.
+Signing, when separately authorized, would lock D1-D15 and could authorize Evidence Stage 1 (Synthetic) wrapper build + focused tests only. Signing would **not** authorize scoreboard reconcile, Blueprint-of-Record population, registry/default dispatch, production dispatch, explanation send/transmit, rubric/scoring mutation, Evidence Stage 2/3 promotion, or AUTH-5.
 
 > Operator signature placeholder — not signed.
