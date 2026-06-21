@@ -24,9 +24,9 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #61 Test Case Generator reconciled to GATED
-  (MMI-DEC-063). Gate `test_case_generator_20260621T080345Z.md` 0/0; build `b444984`;
-  **not GOVERNED_AGENT**. Prior: AWAITING_AUDIT (`b3703ab`; MMI-DEC-062).
+LAST_COMPLETED: #62 Regression Test contract draft placed (UNSIGNED)
+  (MMI-DEC-065; INTAKE-2026-06-21-013). Claude draft relay; Cursor baseline reconciliation
+  (`audit_outputs/` 0/0 + MMI-DEC). Prior: #61 GATED (`e95b38b`; MMI-DEC-063).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

@@ -475,3 +475,12 @@ Artifact: scoreboard #61 `GATED`; MMI-DEC-063
 Classification: GATED — built + gate clean; not GOVERNED_AGENT
 Routing outcome: PM Voice holds #61 unless promotion review authorized
 Matt approval required: YES for GOVERNED_AGENT promotion only
+
+INTAKE-2026-06-21-013
+Component: #62 Regression Test (contract draft placement from Claude)
+Request: Superintendent placement after Claude contract draft relay
+Source: PM feedstock rank #62; Claude draft; Matt strict PM line
+Artifact: `4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md` UNSIGNED; MMI-DEC-065; handoff DONE_AWAITING_SIGN
+Classification: CONTRACT_DRAFT_PLACED — baseline source reconciled to audit_outputs 0/0 + MMI-DEC; gate + §11 required
+Routing outcome: PM Voice routes Codex pre-build gate review; then Matt §11 sign; then SIGNED_UNBUILT reconcile
+Matt approval required: YES for Grok pre-build gate and §11 sign

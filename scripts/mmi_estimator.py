@@ -62,6 +62,9 @@ ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
     "#61": (
         "4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md"
     ),
+    "#62": (
+        "4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md"
+    ),
 }
 
 SIGNED_WEIGHTS_RECORD: dict[str, int] = {

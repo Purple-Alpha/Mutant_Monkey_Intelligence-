@@ -131,6 +131,18 @@ CANDIDATE_MANIFEST: dict[str, CandidateManifest] = {
             ),
         ),
     ),
+    "#62": CandidateManifest(
+        candidate_id="#62",
+        name="Regression Test",
+        agent_contract_rel=(
+            "4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md"
+        ),
+        artifact_basis_rel=(
+            "4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md",
+            "4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md",
+            "mmi/MMI_DECISION_LOG.md",
+        ),
+    ),
 }
 
 FLOW_FIELDS = (

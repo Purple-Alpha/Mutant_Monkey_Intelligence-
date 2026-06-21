@@ -155,6 +155,8 @@ MMI-DEC-063 | 2026-06-21 | #61 Test Case Generator reconciled to GATED | `agent_
 
 MMI-DEC-064 | 2026-06-21 | BOR feedstock skip GATED #61 + Estimator filter | `mmi/BLUEPRINT_OF_RECORD.md`; `scripts/mmi_estimator.py` | ACCEPT | #61 marked completed in BOR; Estimator feedstock ranking skips GATED/GOVERNED rows; PM Voice no longer routes stale CONTRACT_DRAFT for #61. **Not** build authorization for #62+. | Next feedstock rank (#62) when Matt chooses | Run mmi_dispatch.py --sync + --verify after commit | Cursor (PM accuracy after #61 GATED)
 
+MMI-DEC-065 | 2026-06-21 | #62 Regression Test contract draft placement | `4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md`; Claude draft relay; Cursor repo reconciliation (baseline = audit_outputs 0/0 + MMI-DEC) | ACCEPT | UNSIGNED contract draft placed on disk; Estimator/Architect manifest paths added; PM Voice routes UNSIGNED contract to Codex pre-build gate review. **Not** §11 signed, **not** SIGNED_UNBUILT reconcile, **not** build, **not** AUTH-5. | Grok pre-build gate review then Matt §11 sign | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (Claude contract draft relay + superintendent placement)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
