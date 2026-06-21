@@ -173,6 +173,8 @@ MMI-DEC-072 | 2026-06-22 | #63 Adversarial Test contract draft lane authorizatio
 
 MMI-DEC-073 | 2026-06-22 | #63 Adversarial Test contract draft placement | `4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md`; Claude draft relay; Cursor repo reconciliation | ACCEPT | UNSIGNED contract draft placed on disk; Estimator/Architect manifest paths added; PM Voice routes UNSIGNED contract to Codex pre-build gate review. **Not** §11 signed, **not** SIGNED_UNBUILT reconcile, **not** build, **not** AUTH-5. | Grok pre-build gate review then Matt §11 sign | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (Claude contract draft relay + superintendent placement)
 
+MMI-DEC-074 | 2026-06-22 | #63 Adversarial Test Grok pre-build gate | `audit_outputs/mmi_63_contract_gate_20260621T191927Z.md` (0 blocking / 0 warnings); packet SHA256 `bd4c22ab3256f5876a971bc5ac9bd3872f15e7c3c00b31a8091c137dcb2a0de9`; Codex verdict SIGNABLE | ACCEPT | Pre-build gate clean; contract boundary confirmed (contract-boundaries-in adversarial-cases-out; no execution/evaluation/code-read/weaponization/live-attack/invented-boundary/governance writes; correct-refusal `expected` rule; AUTH-5 blocked). **Not** §11 signed by this record, **not** SIGNED_UNBUILT reconcile, **not** build, **not** Blueprint/registry/AUTH-5. | Matt §11 sign #63 contract | Run mmi_dispatch.py --sync + --verify after commit | Codex (Grok pre-build gate review relay)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
