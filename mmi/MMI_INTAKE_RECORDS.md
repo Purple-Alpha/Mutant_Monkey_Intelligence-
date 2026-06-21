@@ -520,3 +520,12 @@ Artifact: handoff `MMI_63_CONTRACT_DRAFT_PLACEMENT` open; target `4. Product_Roa
 Classification: CONTRACT_DRAFT_AUTHORIZED — draft only; no build; no §11
 Routing outcome: Claude drafts UNSIGNED contract; Cursor superintendent placement after relay; then Codex pre-build gate
 Matt approval required: YES for Grok pre-build gate and §11 sign after draft placement
+
+INTAKE-2026-06-22-003
+Component: #63 Adversarial Test (contract draft placement from Claude)
+Request: Superintendent placement after Claude contract draft relay
+Source: MMI_63_CONTRACT_DRAFT_PLACEMENT handoff; MMI-DEC-073
+Artifact: `4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md` UNSIGNED; handoff DONE_AWAITING_SIGN
+Classification: CONTRACT_DRAFT_PLACED — repo reconciliation applied; gate + §11 required before SIGNED_UNBUILT
+Routing outcome: PM Voice routes Codex pre-build gate review; then Matt §11 sign; then SIGNED_UNBUILT reconcile
+Matt approval required: YES for Grok pre-build gate and §11 sign

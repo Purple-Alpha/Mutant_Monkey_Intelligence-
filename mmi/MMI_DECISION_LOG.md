@@ -171,6 +171,8 @@ MMI-DEC-071 | 2026-06-22 | BOR feedstock skip GATED #62 + promote #63 | `mmi/BLU
 
 MMI-DEC-072 | 2026-06-22 | #63 Adversarial Test contract draft lane authorization | PM Voice feedstock rank #63 (`mmi/BLUEPRINT_OF_RECORD.md`); scoreboard #63 `DETECTOR_FUNCTION` | ACCEPT | Matt authorized contract draft lane for Claude per PM Voice relay (`HAND_IT_TO: Claude`). **Not** contract on disk, **not** Grok pre-build gate, **not** §11 signed, **not** SIGNED_UNBUILT reconcile, **not** build, **not** AUTH-5. | Claude drafts UNSIGNED `4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md`; Cursor superintendent placement + repo reconciliation after relay | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize #63 contract draft lane)
 
+MMI-DEC-073 | 2026-06-22 | #63 Adversarial Test contract draft placement | `4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md`; Claude draft relay; Cursor repo reconciliation | ACCEPT | UNSIGNED contract draft placed on disk; Estimator/Architect manifest paths added; PM Voice routes UNSIGNED contract to Codex pre-build gate review. **Not** §11 signed, **not** SIGNED_UNBUILT reconcile, **not** build, **not** AUTH-5. | Grok pre-build gate review then Matt §11 sign | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (Claude contract draft relay + superintendent placement)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

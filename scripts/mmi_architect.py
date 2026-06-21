@@ -143,6 +143,22 @@ CANDIDATE_MANIFEST: dict[str, CandidateManifest] = {
             "mmi/MMI_DECISION_LOG.md",
         ),
     ),
+    "#63": CandidateManifest(
+        candidate_id="#63",
+        name="Adversarial Test",
+        agent_contract_rel=(
+            "4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md"
+        ),
+        artifact_basis_rel=(
+            "4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md",
+            "4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md",
+            "4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md",
+            (
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/sandbox/red_battery.py"
+            ),
+        ),
+    ),
 }
 
 FLOW_FIELDS = (
