@@ -21,3 +21,4 @@ ts=<ISO-8601> | task=<id> | by=<actor> | did=<summary> | state=<state> | next_st
 
 ---
 ts=2026-06-20T22:30:00Z | task=ARCHITECT_PARSER_ALIGNMENT_PATCH | by=Cursor | did=parser patch built (829175b, d53ef03) | state=DONE_AWAITING_CLOSEOUT | next_step=close MMI records (DEC + LAST_COMPLETED) | evidence=829175b/d53ef03
+ts=2026-06-20T23:00:00Z | task=HANDOFF_SIGNAL_AND_PM_ROUTING | by=Cursor | did=handoff log writer + PM IN_FLIGHT routing built | state=DONE_AWAITING_SIGN | next_step=Matt §11 sign + close | evidence=953e1bc
