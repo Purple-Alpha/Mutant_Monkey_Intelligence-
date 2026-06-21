@@ -290,7 +290,7 @@ Cross-cutting MMI governance artifacts that are not single runtime agents. **Aut
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 105 | MMI Governance Invariants Testing Framework | `SPEC_DRAFT` (hardened invariants contract DRAFT UNSIGNED; Lane 1 probe Mode A complete — `scripts/mmi_authority_escalation_probe.py` + 7 fixtures + pytest; §6.7 reconciled MMI-DEC-083; regular BOR lane restored; Matt §11 still pending) | `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md`; `scripts/mmi_authority_escalation_probe.py`; `tests/fixtures/mmi_authority_escalation/`; `tests/test_mmi_authority_escalation_probe.py` | 6 Learning/Governance | A |  | BREADTH | — | Matt Nichol June 21st 2026 |
+| 105 | MMI Governance Invariants Testing Framework | `SPEC_DRAFT` (hardened invariants contract DRAFT UNSIGNED on disk; Lane 1 probe Mode A complete — `scripts/mmi_authority_escalation_probe.py` + 7 fixtures + pytest; awaiting Codex pre-build gate → Matt §11; **not** redraft) | `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md`; `scripts/mmi_authority_escalation_probe.py`; `tests/fixtures/mmi_authority_escalation/`; `tests/test_mmi_authority_escalation_probe.py` | 6 Learning/Governance | A |  | BREADTH | — | Matt Nichol June 21st 2026 |
 
 ---
 

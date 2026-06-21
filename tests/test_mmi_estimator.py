@@ -482,9 +482,11 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
 
     def test_t35_scored_feedstock_from_bor(self):
         _, out, _ = _run_estimator(None, ["--verify-text", VERIFY_ALL_CLEAR])
-        self.assertIn("NO_BUILDABLE_CANDIDATES", out)
-        self.assertNotIn("SCORED_FEEDSTOCK", out)
-        self.assertEqual(_candidate_ids(out), [])
+        self.assertIn("SCORED_FEEDSTOCK", out)
+        ranked = _candidate_ids(out)
+        self.assertEqual(ranked[:1], ["#105"])
+        self.assertIn("lane_type: CONTRACT_REVIEW", out)
+        self.assertNotIn("NO_BUILDABLE_CANDIDATES", out)
 
     def test_first_use_live_regression(self):
         verify_text = subprocess.run(
@@ -504,7 +506,7 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
         if "current task: MODE: ALL_CLEAR" in verify_text and _candidate_ids(out) == []:
             self.assertIn("NO_BUILDABLE_CANDIDATES", out)
         if "current task: MODE: ALL_CLEAR" in verify_text and "SCORED_FEEDSTOCK" in out:
-            self.assertEqual(_candidate_ids(out), [])
+            self.assertEqual(_candidate_ids(out)[:1], ["#105"])
 
 
 if __name__ == "__main__":

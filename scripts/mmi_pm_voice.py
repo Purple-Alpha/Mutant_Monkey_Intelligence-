@@ -11,7 +11,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import sys
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 ENVELOPE_VOICE = "MMI_PM_VOICE"
@@ -730,6 +730,19 @@ def compose_voice(
         return _compose_signed_unreconciled_voice(evidence, unreconciled, contract_rel)
 
     relay = _relay_contract_candidate(evidence.menu_options)
+    if relay is not None:
+        contract_rel = _contract_rel_for_candidate(relay.candidate_id)
+        if (
+            contract_rel
+            and (root / contract_rel).is_file()
+            and not _is_contract_signed(root, contract_rel)
+        ):
+            relay_evidence = replace(
+                evidence,
+                feedstock_first=relay.candidate_id,
+                feedstock_first_name=relay.candidate_name,
+            )
+            return _compose_unsigned_contract_review_voice(relay_evidence, contract_rel)
     if relay is not None or (
         evidence.missing_contract_count > 0
         and not (

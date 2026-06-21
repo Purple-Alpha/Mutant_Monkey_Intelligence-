@@ -205,6 +205,8 @@ MMI-DEC-088 | 2026-06-21 | #64 Failure Classification reconciled to GATED | `age
 
 MMI-DEC-089 | 2026-06-21 | BOR feedstock skip GATED #64 + ALL_CLEAR hold-only feedstock | `mmi/BLUEPRINT_OF_RECORD.md` | ACCEPT | #64 marked completed in BOR; rank-1 CONTRACT_DRAFT feedstock removed; remaining entries hold-only (#67, #105, #1, #3, #47, #52). **Not** build authorization for #67+. | Contract draft lane for #67 when Matt unparks | Run mmi_dispatch.py --sync + --verify after commit | Cursor (PM accuracy after #64 GATED)
 
+MMI-DEC-090 | 2026-06-21 | #105 invariants contract PMV reconcile — redraft blocked | `scripts/mmi_estimator.py` `GOVERNANCE_FRAMEWORK_CONTRACTS`; `scripts/mmi_pm_voice.py` missing-contract intercept; `mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v5; scoreboard #105 row | ACCEPT | Root cause: Estimator E14 fired because invariants contract path is not Agent-Design-shaped; PM Voice fell through to Claude CONTRACT_DRAFT redraft. Contract already on disk (`MMI_Governance_Invariants_Testing_Framework_Contract.md`, MMI-DEC-081). Reconcile only: Estimator sees contract PRESENT; PM Voice routes #105 to Codex pre-build gate (not Claude draft). **Not** §11; **not** Lane 1 rebuild; **not** redraft; AUTH-5 blocked | Matt authorize Grok pre-build gate on #105 when ready | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (#105 reconcile not redraft)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

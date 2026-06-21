@@ -73,6 +73,12 @@ ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
     ),
 }
 
+GOVERNANCE_FRAMEWORK_CONTRACTS: dict[str, str] = {
+    "#105": (
+        "4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md"
+    ),
+}
+
 SIGNED_WEIGHTS_RECORD: dict[str, int] = {
     "F1": 30,
     "F2": 25,
@@ -543,6 +549,9 @@ def _extract_agent_design_contract_paths(*texts: str) -> list[str]:
 def _resolve_agent_design_contract(cand: Candidate) -> str | None:
     for path in _extract_agent_design_contract_paths(cand.status_cell, cand.code_evidence):
         return path
+    governance = GOVERNANCE_FRAMEWORK_CONTRACTS.get(cand.candidate_id)
+    if governance:
+        return governance
     return ARCHITECT_MANIFEST_CONTRACTS.get(cand.candidate_id)
 
 

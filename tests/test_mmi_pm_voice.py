@@ -185,6 +185,31 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertEqual(fields["HAND_IT_TO"], "Claude")
         self.assertIn("#61", fields["YOU_DO"])
 
+    def test_t6b_missing_contract_with_drafted_governance_contract_routes_codex(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            missing_contract_count=1,
+            menu_options=[
+                _menu_option(
+                    candidate_id="#105",
+                    candidate_name="MMI Governance Invariants Testing Framework",
+                    source_lifecycle="SPEC_DRAFT",
+                    buildability_status="BLOCKED_MISSING_CONTRACT",
+                    contract_status="MISSING",
+                )
+            ],
+        )
+        with patch.object(self.mod, "_is_contract_signed", return_value=False):
+            fields = self.mod.compose_voice(
+                evidence,
+                repo_root=self.mod._repo_root(),
+            )
+        self.assertEqual(fields["HAND_IT_TO"], "Codex")
+        self.assertIn("Grok pre-build gate review", fields["YOU_DO"])
+        self.assertIn("#105", fields["YOU_DO"])
+        self.assertNotIn("contract draft lane", fields["YOU_DO"].lower())
+
     def test_t7_buildable_routes_cursor(self):
         evidence = self.mod.VoiceEvidence(
             dispatcher_mode="BUILD",
@@ -352,14 +377,22 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 code = self.mod.main([])
         out = buffer.getvalue()
         self.assertEqual(code, 0)
-        self.assertIn("IN_FLIGHT:\nnone", out)
+        if "Pre-build gate review is needed for #105" in out:
+            self.assertIn("HAND_IT_TO:\nCodex", out)
+            self.assertIn("Grok pre-build gate review", out)
+            self.assertIn("Lane 1 probe shipped", out)
+        else:
+            self.assertIn("IN_FLIGHT:\nnone", out)
         if "MMI_52_GATED_RECONCILE_ONLY" in out:
             self.assertIn("HAND_IT_TO:\nCursor", out)
         elif "#52 Plain-English Explanation is already GATED" in out:
             self.assertNotIn("Authorize build lane for #52", out)
         elif "estimator feedstock rank" in out or "SCORED_FEEDSTOCK" in out:
-            self.assertIn("HAND_IT_TO:\nClaude", out)
-            self.assertIn("#61", out)
+            if "#105" in out and "Grok pre-build gate review" in out:
+                self.assertIn("HAND_IT_TO:\nCodex", out)
+            else:
+                self.assertIn("HAND_IT_TO:\nClaude", out)
+                self.assertIn("#61", out)
         elif "MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY" in out:
             self.assertIn("HAND_IT_TO:\nCursor", out)
         else:

@@ -637,3 +637,12 @@ Artifact: scoreboard #64 `GATED`; `audit_outputs/failure_classification_20260621
 Classification: GATED_RECONCILE — lifecycle advance; PM Voice relay accuracy; **not GOVERNED_AGENT**
 Routing outcome: #64 lane closed; BOR hold-only feedstock (MMI-DEC-089); dispatcher may surface ALL_CLEAR
 Matt approval required: NO for this reconcile slice (authorization granted)
+
+INTAKE-2026-06-21-014
+Component: #105 MMI Governance Invariants Testing Framework (PMV reconcile)
+Request: Matt — contract already drafted; reconcile not redraft; fix PMV loop break
+Source: Matt Nichol 2026-06-21
+Artifact: `scripts/mmi_estimator.py` GOVERNANCE_FRAMEWORK_CONTRACTS; `scripts/mmi_pm_voice.py` intercept; BOR v5; MMI-DEC-090
+Classification: PMV_RECONCILE — contract on disk; route Codex gate not Claude draft
+Routing outcome: PM Voice should surface pre-build gate review for #105
+Matt approval required: YES for Grok pre-build gate when Matt chooses §11 path

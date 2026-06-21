@@ -1,6 +1,6 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-21 (MMI-DEC-089). #64 Failure Classification GATED; hold-only ALL_CLEAR feedstock.
+**Status:** CURRENT_PLAN populated 2026-06-21 (MMI-DEC-090). #105 invariants contract reconciled for PMV; CONTRACT_REVIEW feedstock rank 1.
 
 **Classification:** Shared crew artifact · Blueprint of Record
 
@@ -10,22 +10,22 @@
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v4
+## CURRENT_PLAN — ALL_CLEAR feedstock v5
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v4
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v4
-population_decision: MMI-DEC-089
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v5
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v5
+population_decision: MMI-DEC-090
 created_at: 2026-06-21
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: scoreboard print + #64 Failure Classification GATED closeout (MMI-DEC-088/089)
-revision_reason: #64 Failure Classification GATED; remove rank-1 CONTRACT_DRAFT feedstock; hold-only entries remain
+architect_blueprint_source: scoreboard print + #105 invariants contract PMV reconcile (MMI-DEC-090)
+revision_reason: #105 hardened invariants contract already on disk; restore CONTRACT_REVIEW feedstock rank 1; do not redraft
 non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, contract draft, promotion, or registry dispatch.
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
 
+feedstock_entry: priority=1 candidate_id=#105 lane_type=CONTRACT_REVIEW name=MMI Governance Invariants Testing Framework
 feedstock_entry: priority=hold candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement hold_unless_matt=true
-feedstock_entry: priority=hold candidate_id=#105 lane_type=CONTRACT_REVIEW name=MMI Governance Invariants Testing Framework hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#1 lane_type=CONTRACT_DRAFT name=Swarm Commander Agent hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#3 lane_type=CONTRACT_DRAFT name=Risk Triage Agent hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
