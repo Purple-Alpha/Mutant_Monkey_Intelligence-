@@ -24,12 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #105 MMI Governance Invariants Testing Framework Lane 1 probe slice
-  closed + regular BOR feedstock restored (MMI-DEC-083; Matt Nichol June 21st 2026).
-  Probe: `scripts/mmi_authority_escalation_probe.py` + pytest; contract still UNSIGNED.
-  Next regular feedstock rank: #64 Failure Classification CONTRACT_DRAFT.
+LAST_COMPLETED: #64 Failure Classification Agent Design Contract draft filed
+  (MMI-DEC-084; Matt Nichol June 21st 2026; DRAFT UNSIGNED; Grok pre-build gate pending).
 
-PRIOR_LAST_COMPLETED: #63 Adversarial Test reconciled to GATED (MMI-DEC-078)
+PRIOR_LAST_COMPLETED: #105 MMI Governance Invariants Testing Framework Lane 1 probe slice
+  closed + regular BOR feedstock restored (MMI-DEC-083; Matt Nichol June 21st 2026).
   Gate `adversarial_test_20260621T194650Z.md` 0/0; build `2701726`; **not GOVERNED_AGENT**.
 
 REVIEW_ACCEPTED_ITEMS:

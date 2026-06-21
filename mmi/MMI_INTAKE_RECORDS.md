@@ -592,3 +592,12 @@ Artifact: MMI-DEC-083; `mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v3; 
 Classification: INFRASTRUCTURE_BUILT (Lane 1 probe) + CONTRACT_REVIEW hold (#105) — contract still UNSIGNED
 Routing outcome: Regular feedstock rank 1 → #64 Failure Classification CONTRACT_DRAFT; #105 and #67 on hold
 Matt approval required: YES for §11 on invariants framework; YES to unpark #67 or authorize #64 contract draft
+
+INTAKE-2026-06-21-009
+Component: #64 Failure Classification Agent Design Contract
+Request: File Matt-authored contract draft with Cursor §5/§7 reconciliation
+Source: Matt Nichol June 21st 2026
+Artifact: `4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_Dive.md`; MMI-DEC-084; scoreboard #64; `scripts/mmi_estimator.py` manifest #64
+Classification: CONTRACT_DRAFT — DRAFT UNSIGNED; label-only classifier; no response/fix/route
+Routing outcome: PM Voice should route ALL_CLEAR feedstock #64 to Codex pre-build gate review (unsigned contract on disk)
+Matt approval required: YES for Grok pre-build gate; YES for §11; YES for SIGNED_UNBUILT reconcile before build
