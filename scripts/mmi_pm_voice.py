@@ -442,8 +442,8 @@ def _compose_awaiting_audit_gated_voice(
         "YOU_DO": you_do,
         "WHY": (
             f"dispatcher: MODE:AUDIT; {option.candidate_id} is "
-            f"{option.source_lifecycle} with completion gate clean; "
-            f"scoreboard GATED flip is the next lifecycle step."
+            f"{option.source_lifecycle}; superintendent must confirm Grok "
+            f"completion gate 0/0 before GATED reconcile."
         ),
         "IGNORE_FOR_NOW": _ignore_block(evidence),
         "SOURCE": _source_line(evidence),
