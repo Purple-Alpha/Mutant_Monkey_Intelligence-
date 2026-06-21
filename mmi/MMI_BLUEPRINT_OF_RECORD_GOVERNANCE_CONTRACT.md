@@ -1,6 +1,6 @@
 # MMI Blueprint of Record — Governance Contract
 
-**Status:** DRAFT — UNSIGNED
+**Status:** §11 SIGNED 2026-06-20 by Matt Nichol. Governance rules only; does not authorize population of `mmi/BLUEPRINT_OF_RECORD.md`.
 
 **Classification:** Governance contract · Blueprint of Record population and revision
 
@@ -192,8 +192,15 @@ A populated Blueprint-of-record plan block must include:
 
 ## 11. Sign-off
 
-**§11 UNSIGNED — placeholder for Matt Nichol.**
+**§11 SIGNED — Matt Nichol, June 20 2026.**
 
-- Governance contract only; does not authorize population
-- Does not grant Architect direct write authority to `mmi/BLUEPRINT_OF_RECORD.md`
-- Does not authorize build, routing, lifecycle promotion, or AUTH-5
+- [x] I approve this governance contract as written.
+- Governance rules for `mmi/BLUEPRINT_OF_RECORD.md` population and revision: **signed**
+- Population of `mmi/BLUEPRINT_OF_RECORD.md`: **not authorized** by this signature
+- Population lanes: **not authorized** by this signature
+- Architect direct write authority to `mmi/BLUEPRINT_OF_RECORD.md`: **not granted**
+- Build, routing, lifecycle promotion, scoreboard/registry/dispatcher mutation: **not authorized**
+- AUTH-5 unlock and registry-fed routing: **not authorized** (remain FORBIDDEN / BLOCKED)
+- OQ1 (population lane naming) and OQ3 (superseded retention): **deferred** to population-lane time
+
+Matt Nichol
