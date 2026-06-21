@@ -195,6 +195,8 @@ MMI-DEC-083 | 2026-06-21 | Invariants slice closeout + regular BOR restore + PM 
 
 MMI-DEC-084 | 2026-06-21 | #64 Failure Classification Agent Design Contract draft placement | `4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_Dive.md`; `scripts/mmi_estimator.py` ARCHITECT_MANIFEST #64; scoreboard #64 row | ACCEPT | Matt-authored `MMI_64_FAILURE_CLASSIFICATION_AGENT_DESIGN_CONTRACT_DRAFT` filed; Cursor §5/§7 reconciliation (gate artifacts, pytest captures, authority probe, contradiction report, dispatch verify FAIL; operator + PM Voice consumers); fixed taxonomy + T1–T10 acceptance tests; **not** §11; **not** Grok pre-build gate run; **not** build; **not** SIGNED_UNBUILT reconcile; AUTH-5 blocked | Matt authorize Grok pre-build gate on #64 contract → §11 when ready | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol June 21st 2026
 
+MMI-DEC-085 | 2026-06-21 | #64 Failure Classification Grok pre-build gate | `audit_outputs/mmi_64_contract_gate_20260621T214737Z.md` (0 blocking / 0 warnings); packet SHA256 `9b6aabe02baa0bf2180c5bf83ff6cacb68ae3259dfe5a8d86ecde2a905510655`; Grok verdict SIGNABLE | ACCEPT | Matt authorized pre-build gate; gate clean; contract boundary confirmed (record-in classification-out; fixed taxonomy; no response/fix/route/block/recommendation; no governance writes; AUTH-5 blocked). **Not** §11 signed by this record, **not** SIGNED_UNBUILT reconcile, **not** build, **not** Blueprint/registry/AUTH-5. | Matt §11 sign #64 contract | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize Grok pre-build gate #64)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

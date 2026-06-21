@@ -601,3 +601,12 @@ Artifact: `4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_
 Classification: CONTRACT_DRAFT — DRAFT UNSIGNED; label-only classifier; no response/fix/route
 Routing outcome: PM Voice should route ALL_CLEAR feedstock #64 to Codex pre-build gate review (unsigned contract on disk)
 Matt approval required: YES for Grok pre-build gate; YES for §11; YES for SIGNED_UNBUILT reconcile before build
+
+INTAKE-2026-06-21-010
+Component: #64 Failure Classification (Grok pre-build gate)
+Request: Matt authorized Codex/Grok pre-build gate review on UNSIGNED contract draft
+Source: Matt Nichol 2026-06-21
+Artifact: `audit_outputs/mmi_64_contract_gate_20260621T214737Z.md` (0/0); packet SHA256 `9b6aabe02baa0bf2180c5bf83ff6cacb68ae3259dfe5a8d86ecde2a905510655`; MMI-DEC-085
+Classification: CONTRACT_DRAFT — Grok SIGNABLE; still UNSIGNED; not build authorization
+Routing outcome: PM Voice handoff → Matt §11 sign #64 contract
+Matt approval required: YES for §11 sign; YES for SIGNED_UNBUILT reconcile before build

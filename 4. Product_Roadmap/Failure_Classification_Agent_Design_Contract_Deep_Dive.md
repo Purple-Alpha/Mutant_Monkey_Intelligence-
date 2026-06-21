@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_64_FAILURE_CLASSIFICATION_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT — UNSIGNED (Matt-authored contract text filed 2026-06-21; Cursor §5/§7 reconciliation applied; Grok pre-build gate pending; **not** §11; **not** build; **not** SIGNED_UNBUILT reconcile)
+**Status:** DRAFT — UNSIGNED (Matt-authored contract text filed 2026-06-21; Cursor §5/§7 reconciliation applied; Grok pre-build gate clean `mmi_64_contract_gate_20260621T214737Z` 0/0; **not** §11; **not** build; **not** SIGNED_UNBUILT reconcile)
 
 **Candidate:** #64 — Failure Classification
 
