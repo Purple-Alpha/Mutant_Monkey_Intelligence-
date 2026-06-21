@@ -24,9 +24,9 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #61 TestCaseGeneratorAgent built (AWAITING_AUDIT)
-  (MMI-DEC-061; build `b444984`). Wrapper + 16 tests; completion gate pending.
-  Prior: §11 sign + SIGNED_UNBUILT (`3fe65df`; MMI-DEC-060).
+LAST_COMPLETED: #61 Test Case Generator reconciled to GATED
+  (MMI-DEC-063). Gate `test_case_generator_20260621T080345Z.md` 0/0; build `b444984`;
+  **not GOVERNED_AGENT**. Prior: AWAITING_AUDIT (`b3703ab`; MMI-DEC-062).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

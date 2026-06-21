@@ -151,6 +151,8 @@ MMI-DEC-061 | 2026-06-21 | #61 Test Case Generator build authorization + impleme
 
 MMI-DEC-062 | 2026-06-21 | #61 Test Case Generator AWAITING_AUDIT scoreboard reconcile | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #61 row; build `b444984` | ACCEPT | Separate superintendent slice after SIGNED_UNBUILT (`MMI-DEC-060`) and build (`MMI-DEC-061`); lifecycle `SIGNED_UNBUILT` -> `AWAITING_AUDIT`; completion gate pending. **Not GATED** until Grok 0/0; **not GOVERNED_AGENT**; not production dispatch; not AUTH-5. | Grok completion gate then GATED reconcile | Run mmi_dispatch.py --sync + --verify after commit | Cursor (superintendent AWAITING_AUDIT reconcile `b3703ab`)
 
+MMI-DEC-063 | 2026-06-21 | #61 Test Case Generator reconciled to GATED | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #61 row; `audit_outputs/test_case_generator_20260621T080345Z.md` (0/0) | ACCEPT | Completion gate clean 0 blocking / 0 warnings; lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing. | No GOVERNED_AGENT promotion without separate authorization | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (superintendent lane: #61 GATED reconcile after clean gate)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

@@ -466,3 +466,12 @@ Artifact: `core/sandbox/test_case_generator_agent.py`; `tests/test_test_case_gen
 Classification: BUILT_AWAITING_AUDIT — completion gate required before GATED
 Routing outcome: Grok completion gate then GATED reconcile
 Matt approval required: YES for GATED reconcile after clean gate
+
+INTAKE-2026-06-21-012
+Component: #61 Test Case Generator (GATED reconcile)
+Request: Superintendent GATED flip after Grok completion gate 0/0
+Source: `audit_outputs/test_case_generator_20260621T080345Z.md`; MMI-DEC-062 AWAITING_AUDIT
+Artifact: scoreboard #61 `GATED`; MMI-DEC-063
+Classification: GATED — built + gate clean; not GOVERNED_AGENT
+Routing outcome: PM Voice holds #61 unless promotion review authorized
+Matt approval required: YES for GOVERNED_AGENT promotion only
