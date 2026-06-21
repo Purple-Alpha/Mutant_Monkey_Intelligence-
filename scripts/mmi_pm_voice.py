@@ -38,8 +38,13 @@ PREFERRED_RECONCILE_CANDIDATE = "#52"
 RECONCILE_YOU_DO = {
     "#52": "Authorize MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY.",
 }
+GATED_RECONCILE_YOU_DO = {
+    "#52": "Authorize MMI_52_GATED_RECONCILE_ONLY.",
+}
 
 BUILDABLE_LIFECYCLE_PREFIXES = ("SIGNED_UNBUILT", "AWAITING_AUDIT")
+BUILD_AUTHORIZATION_LIFECYCLE_PREFIXES = ("SIGNED_UNBUILT",)
+AWAITING_AUDIT_LIFECYCLE_PREFIXES = ("AWAITING_AUDIT",)
 CLOSED_LIFECYCLE_PREFIXES = ("GATED", "GOVERNED_AGENT", "INFRASTRUCTURE_BUILT")
 
 ROSTER_CONTRACT_DRAFT = "Claude"
@@ -166,12 +171,34 @@ def _contract_rel_for_candidate(candidate_id: str) -> str | None:
 
 def _relay_buildable_option(evidence: VoiceEvidence) -> object | None:
     for option in evidence.menu_options:
-        if option.buildability_status == "BUILDABLE":
-            return option
+        if option.buildability_status != "BUILDABLE":
+            continue
+        lifecycle = option.source_lifecycle or ""
+        if not lifecycle.startswith(BUILD_AUTHORIZATION_LIFECYCLE_PREFIXES):
+            continue
+        return option
     if evidence.buildable_count > 0 and evidence.scored_first:
         for option in evidence.menu_options:
-            if option.candidate_id == evidence.scored_first:
-                return option
+            if option.candidate_id != evidence.scored_first:
+                continue
+            lifecycle = option.source_lifecycle or ""
+            if not lifecycle.startswith(BUILD_AUTHORIZATION_LIFECYCLE_PREFIXES):
+                continue
+            return option
+    return None
+
+
+def _relay_awaiting_audit_gated(evidence: VoiceEvidence) -> object | None:
+    if evidence.dispatcher_mode != "AUDIT":
+        return None
+    for option in evidence.menu_options:
+        lifecycle = option.source_lifecycle or ""
+        if not lifecycle.startswith(AWAITING_AUDIT_LIFECYCLE_PREFIXES):
+            continue
+        if option.buildability_status == "BUILDABLE":
+            return option
+        if option.candidate_id == evidence.scored_first:
+            return option
     return None
 
 
@@ -243,6 +270,14 @@ def _ignore_lines(options: list) -> list[str]:
 
     for option in options:
         if option.candidate_id == "#47" and option.buildability_status == "EXCLUDED_ALREADY_BUILT":
+            add_line(
+                f"{option.candidate_id} {option.candidate_name} is already "
+                f"{option.source_lifecycle}; no current action."
+            )
+            break
+
+    for option in options:
+        if option.candidate_id == "#52" and option.buildability_status == "EXCLUDED_ALREADY_BUILT":
             add_line(
                 f"{option.candidate_id} {option.candidate_name} is already "
                 f"{option.source_lifecycle}; no current action."
@@ -371,6 +406,32 @@ def _compose_buildable_voice(evidence: VoiceEvidence, option) -> dict[str, str]:
     }
 
 
+def _compose_awaiting_audit_gated_voice(
+    evidence: VoiceEvidence, option
+) -> dict[str, str]:
+    you_do = GATED_RECONCILE_YOU_DO.get(
+        option.candidate_id,
+        f"Authorize GATED reconcile for {option.candidate_id}.",
+    )
+    return {
+        "WHAT_NEEDS_MATT": (
+            f"GATED reconcile is needed for {option.candidate_id} "
+            f"{option.candidate_name}."
+        ),
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": ROSTER_BUILD,
+        "YOU_DO": you_do,
+        "WHY": (
+            f"dispatcher: MODE:AUDIT; {option.candidate_id} is "
+            f"{option.source_lifecycle} with completion gate clean; "
+            f"scoreboard GATED flip is the next lifecycle step."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_signed_unreconciled_voice(
     evidence: VoiceEvidence, option, contract_rel: str
 ) -> dict[str, str]:
@@ -476,6 +537,10 @@ def compose_voice(
         return _compose_handoff_voice(evidence, handoff)
 
     root = repo_root or _repo_root()
+
+    awaiting_audit = _relay_awaiting_audit_gated(evidence)
+    if awaiting_audit is not None:
+        return _compose_awaiting_audit_gated_voice(evidence, awaiting_audit)
 
     buildable = _relay_buildable_option(evidence)
     if buildable is not None:

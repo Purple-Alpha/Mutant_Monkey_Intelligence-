@@ -198,6 +198,27 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertEqual(fields["HAND_IT_TO"], "Cursor")
         self.assertIn("Authorize build lane", fields["YOU_DO"])
 
+    def test_t7b_awaiting_audit_routes_gated_reconcile(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="AUDIT",
+            blueprint_status="NO_CURRENT_PLAN",
+            buildable_count=1,
+            scored_first="#52",
+            menu_options=[
+                _menu_option(
+                    candidate_id="#52",
+                    candidate_name="Plain-English Explanation",
+                    source_lifecycle="AWAITING_AUDIT",
+                    buildability_status="BUILDABLE",
+                    contract_status="PRESENT",
+                )
+            ],
+        )
+        fields = self._fields(evidence)
+        self.assertEqual(fields["HAND_IT_TO"], "Cursor")
+        self.assertEqual(fields["YOU_DO"], "Authorize MMI_52_GATED_RECONCILE_ONLY.")
+        self.assertIn("GATED reconcile", fields["WHAT_NEEDS_MATT"])
+
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
         _run_voice()
@@ -265,7 +286,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Matt sign + close", out)
 
-    def test_live_52_buildable_when_reconciled(self):
+    def test_live_52_gated_or_next_feedstock(self):
         handoff_stub = type(
             "HandoffStub",
             (),
@@ -285,11 +306,14 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         out = buffer.getvalue()
         self.assertEqual(code, 0)
         self.assertIn("IN_FLIGHT:\nnone", out)
-        if "SIGNED_UNBUILT" in out or "buildable_count=1" in out:
-            self.assertIn("Authorize build lane for #52", out)
+        if "MMI_52_GATED_RECONCILE_ONLY" in out:
+            self.assertIn("HAND_IT_TO:\nCursor", out)
+        elif "#52 Plain-English Explanation is already GATED" in out:
+            self.assertNotIn("Authorize build lane for #52", out)
+        elif "MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY" in out:
             self.assertIn("HAND_IT_TO:\nCursor", out)
         else:
-            self.assertIn("MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY", out)
+            self.assertIn("Authorize build lane for #52", out)
             self.assertIn("HAND_IT_TO:\nCursor", out)
 
     def test_required_fields_present(self):

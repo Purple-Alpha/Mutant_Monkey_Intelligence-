@@ -412,3 +412,12 @@ Artifact: MMI-DEC-055; scoreboard #52 row `AWAITING_AUDIT`; gate `audit_outputs/
 Classification: BUILT_AWAITING_AUDIT — scoreboard lifecycle advance + completion gate clean; GATED flip separate lane
 Routing outcome: dispatcher MODE:AUDIT for #52; PM Voice may surface `MMI_52_GATED_RECONCILE_ONLY` next; **not GATED**, **not GOVERNED_AGENT**
 Matt approval required: YES for `MMI_52_GATED_RECONCILE_ONLY` if Matt chooses GATED promotion next
+
+INTAKE-2026-06-21-006
+Component: #52 Plain-English Explanation (GATED reconcile + PM Voice routing fix)
+Request: Superintendent lane — scoreboard GATED flip + PM Voice AWAITING_AUDIT routing so voice is not stale
+Source: gate `audit_outputs/plain_english_explanation_20260621T061124Z.md` 0/0; AWAITING_AUDIT reconcile `70c8ec2`; Matt directive: never ignore PM Voice; update state after every lane
+Artifact: MMI-DEC-056; scoreboard #52 row `GATED`; `scripts/mmi_pm_voice.py` AWAITING_AUDIT -> GATED reconcile branch
+Classification: GATED_RECONCILE — lifecycle advance; PM Voice relay accuracy; **not GOVERNED_AGENT**
+Routing outcome: #52 EXCLUDED_ALREADY_BUILT in estimator menu; PM Voice routes next feedstock candidate; dispatcher sync after commit
+Matt approval required: YES for GOVERNED_AGENT promotion on #52 if Matt chooses later
