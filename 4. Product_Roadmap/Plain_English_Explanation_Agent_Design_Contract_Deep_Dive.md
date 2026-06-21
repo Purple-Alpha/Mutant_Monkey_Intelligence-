@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_52_PLAIN_ENGLISH_EXPLANATION_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT — UNSIGNED. **Not in force.** Pre-sign patch applied 2026-06-20 (`MMI_52_PRE_SIGN_PATCH_ONLY`). Does not authorize build, §11 signature, scoreboard reconcile, registry registration, production dispatch, or AUTH-5.
+**Status:** §11 SIGNED 2026-06-20 by Matt Nichol (pre-sign patch `137fdde`; Codex re-gate SIGNABLE 2026-06-20). Evidence Stage 1 (Synthetic) agent wrapper only. Signing locks D1-D15 and authorizes the `PlainEnglishExplanationAgent` wrapper build + focused tests **only**. It authorizes **no scoreboard `SIGNED_UNBUILT` reconcile**, **no Blueprint-of-Record population**, **no default-registry registration**, **no production dispatch**, **no real-customer-data handling**, **no Evidence Stage 2/3 promotion**, **no explanation send/transmit**, **no scoring/rubric change**, **no autonomous action**, and **no AUTH-5**.
 
 **Candidate:** #52 — Plain-English Explanation
 
@@ -256,8 +256,6 @@ Stage 2 promotion may revisit Blackboard persistence shape, Layer 4 `AgentContri
 
 ## §11 Sign-off
 
-**DRAFT — UNSIGNED.** §11 signature is operator-only and is **not** present in this placement draft.
+SIGNED. This signature locks D1-D15 and authorizes the Evidence Stage 1 (Synthetic) `PlainEnglishExplanationAgent` wrapper build + focused tests only; no scoreboard `SIGNED_UNBUILT` reconcile, no Blueprint-of-Record population, no default-registry registration, no production dispatch, no real-customer-data handling, no Evidence Stage 2/3 promotion, no explanation send/transmit, no scoring/rubric change, no autonomous action, no AUTH-5.
 
-Signing, when separately authorized, would lock D1-D15 and could authorize Evidence Stage 1 (Synthetic) wrapper build + focused tests only. Signing would **not** authorize scoreboard reconcile, Blueprint-of-Record population, registry/default dispatch, production dispatch, explanation send/transmit, rubric/scoring mutation, Evidence Stage 2/3 promotion, or AUTH-5.
-
-> Operator signature placeholder — not signed.
+> Matt Nichol June 20th 2026
