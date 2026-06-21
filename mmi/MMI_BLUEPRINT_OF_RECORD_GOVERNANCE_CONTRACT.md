@@ -56,6 +56,7 @@ The Blueprint-of-record is **advisory and revisable**. It records traceable stru
 | G-D5 | **One current plan:** the Blueprint-of-record may contain only one `CURRENT_PLAN` at a time. Older plans must be marked `SUPERSEDED_PLAN`, not deleted |
 | G-D6 | **Traceable revision:** Matt may direct or approve revisions. Normal population/revision should route through Architect so the artifact remains traceable and checkable. This contract constrains MMI roles, not Matt's ultimate authority |
 | G-D7 | **Registry-fed routing FORBIDDEN; AUTH-5 BLOCKED** |
+| G-D8 | **DRAFT_PLAN coexistence:** `DRAFT_PLAN` may temporarily coexist with one `CURRENT_PLAN` only during a Matt-authorized revision/population review lane. `DRAFT_PLAN` is not readable as plan-of-record by the crew. Before a `DRAFT_PLAN` becomes `CURRENT_PLAN`, the prior `CURRENT_PLAN` must be marked `SUPERSEDED_PLAN` in the same authorized lane. If no `CURRENT_PLAN` exists, a `DRAFT_PLAN` still does not become `CURRENT_PLAN` until Matt authorizes population |
 
 ---
 
@@ -66,6 +67,8 @@ The Blueprint-of-record is **advisory and revisable**. It records traceable stru
 **Architect output to stdout is not population.** Population means writing or replacing content in `mmi/BLUEPRINT_OF_RECORD.md`, and requires a separate Matt-authorized population lane.
 
 Population lanes must record `population_authorization` (operator lane name, decision id, or explicit Matt instruction reference).
+
+The executor of a population lane must be explicitly named in Matt's population authorization. No default executor exists.
 
 ### 4.2 What population does not authorize
 
@@ -81,7 +84,7 @@ Population does **not** authorize:
 
 ### 4.3 No autonomous population
 
-No agent may populate or revise `BLUEPRINT_OF_RECORD.md` because Estimator ranked a candidate, dispatcher entered `BUILD` / `AUDIT`, Architect emitted `BLUEPRINT`, Superintendent emitted `MATCHES_BLUEPRINT`, Project Manager emitted `PROCEED_FOR_MATT_REVIEW`, or a gate passed. Population still requires separate Matt authorization.
+No agent may populate or revise `mmi/BLUEPRINT_OF_RECORD.md` because Estimator ranked a candidate, dispatcher entered `BUILD` / `AUDIT`, Architect emitted `BLUEPRINT`, Superintendent emitted `MATCHES_BLUEPRINT`, Project Manager emitted `PROCEED_FOR_MATT_REVIEW`, or a gate passed. Population still requires separate Matt authorization.
 
 ### 4.4 Role boundaries (preserved)
 
@@ -104,7 +107,7 @@ No agent may populate or revise `BLUEPRINT_OF_RECORD.md` because Estimator ranke
 | R1 | Population requires explicit `population_authorization` recorded in the artifact |
 | R2 | Only one `CURRENT_PLAN` per Blueprint-of-record file at any time |
 | R3 | Superseded plans remain on disk as `SUPERSEDED_PLAN`; no silent deletion of prior plans |
-| R4 | Every populated plan cites `source_contract` and `architect_blueprint_source` trace paths |
+| R4 | Every populated plan cites `source_contract` and `architect_blueprint_source` trace paths. Source exclusions inherit the Architect contract discipline: research notes, unsigned drafts, parked work, speculative direction, chat memory, and non-authoritative discovery material cannot be used as blueprint authority unless separately promoted through an explicit signed gate. `mmi/research/` remains input only and not authority |
 | R5 | **No self-applied authority conclusions.** A populated blueprint must not use `AUTHORIZED`, `BUILD_AUTHORIZED`, `SELECTED`, `COMPLETE`, `VERIFIED`, `PROMOTED`, `GOVERNED_AGENT`, `GATED`, `NEXT_DECIDED`, or similar terms as self-applied conclusions. It may cite signed source contracts, lifecycle rows, or gate artifacts as evidence |
 | R6 | `non_authority_disclaimer` is mandatory on every populated plan |
 | R7 | Estimator rank order, dispatcher mode, crew stdout envelopes, and gate artifacts may be cited as **evidence only** — never as population authorization |
@@ -132,6 +135,14 @@ A populated Blueprint-of-record plan block must include:
 
 **One-current-plan rule:** The Blueprint-of-record may contain only one `CURRENT_PLAN` at a time. Older plans must be marked `SUPERSEDED_PLAN`, not deleted.
 
+**DRAFT_PLAN coexistence (locked):**
+
+- `DRAFT_PLAN` may temporarily coexist with one `CURRENT_PLAN` only during a Matt-authorized revision/population review lane.
+- `DRAFT_PLAN` is not readable as plan-of-record by the crew.
+- Only one `CURRENT_PLAN` may exist at a time.
+- Before a `DRAFT_PLAN` becomes `CURRENT_PLAN`, the prior `CURRENT_PLAN` must be marked `SUPERSEDED_PLAN` in the same authorized population/revision lane.
+- If no `CURRENT_PLAN` exists, a `DRAFT_PLAN` still does not become `CURRENT_PLAN` until Matt authorizes population.
+
 ---
 
 ## 7. Falsifiable checks
@@ -150,6 +161,7 @@ A populated Blueprint-of-record plan block must include:
 | C10 | Architect stdout `BLUEPRINT` being treated as file population is a violation |
 | C11 | Population triggered by Estimator, dispatcher, Architect, Superintendent, Project Manager, or gate output without separate Matt authorization is a violation |
 | C12 | A populated blueprint missing `version_id`, `source_contract`, or `non_authority_disclaimer` is a violation |
+| C13 | `DRAFT_PLAN` treated as plan-of-record by the crew, or more than one `CURRENT_PLAN`, or `DRAFT_PLAN` promoted to `CURRENT_PLAN` without same-lane supersession of the prior `CURRENT_PLAN` |
 
 ---
 
@@ -174,7 +186,6 @@ A populated Blueprint-of-record plan block must include:
 ## 10. Open questions
 
 - OQ1: Exact population lane naming convention for `population_authorization` field
-- OQ2: Whether `DRAFT_PLAN` blocks coexist with `CURRENT_PLAN` during Matt review
 - OQ3: Retention policy for `SUPERSEDED_PLAN` blocks beyond one-current-plan minimum
 
 ---
