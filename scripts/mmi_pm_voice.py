@@ -58,6 +58,10 @@ ROSTER_BUILD = "Cursor"
 ROSTER_REVIEW = "Codex"
 ROSTER_RESEARCH = "Gemini+ChatGPT"
 ROSTER_MATT = "Matt"
+ROSTER_MULTI_LANE_ADVISORY = (
+    "Matt orchestrates; Claude + Gemini + ChatGPT per "
+    "4. Product_Roadmap/MMI_Governance_Invariants_Testing_Advisory_Lane_Brief.md"
+)
 
 REVISION_ROWS = (
     (
@@ -454,6 +458,8 @@ def _compose_awaiting_audit_gated_voice(
 def _feedstock_hand_it_to(lane_type: str) -> str:
     if lane_type == "CONTRACT_DRAFT":
         return ROSTER_CONTRACT_DRAFT
+    if lane_type == "ADVISORY_MULTI_LANE_DESIGN":
+        return ROSTER_MULTI_LANE_ADVISORY
     if lane_type == "PROMOTION_REVIEW":
         return ROSTER_MATT
     if lane_type == "RESEARCH":
@@ -499,6 +505,18 @@ def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
             f"Authorize contract draft lane for {candidate_id} {candidate_name}."
         )
         what = f"Contract draft lane is needed for {candidate_id} {candidate_name}."
+    elif lane_type == "ADVISORY_MULTI_LANE_DESIGN":
+        you_do = (
+            f"Run multi-lane invariants contract advisory review for {candidate_id} "
+            f"{candidate_name} per "
+            f"4. Product_Roadmap/MMI_Governance_Invariants_Testing_Advisory_Lane_Brief.md "
+            f"(Claude + Gemini + ChatGPT); optional Codex pre-build gate per contract §16; "
+            f"record verdicts in PROJECT_ACTIVITY_LOG.md."
+        )
+        what = (
+            f"Multi-lane governance invariants framework review is needed for "
+            f"{candidate_id} {candidate_name} before §11 or Lane 1 build."
+        )
     elif lane_type == "PROMOTION_REVIEW":
         you_do = (
             f"Authorize GOVERNED_AGENT promotion review for {candidate_id} "

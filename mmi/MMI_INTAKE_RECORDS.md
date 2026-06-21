@@ -565,3 +565,21 @@ Artifact: scoreboard #63 `GATED`; MMI-DEC-078
 Classification: GATED — built + gate clean; not GOVERNED_AGENT
 Routing outcome: PM Voice holds #63 unless promotion review authorized; next feedstock #67
 Matt approval required: YES for GOVERNED_AGENT promotion only
+
+INTAKE-2026-06-22-001
+Component: #105 MMI Governance Stress Testing Framework / BOR feedstock pivot
+Request: Park Claude #67 contract-draft; elevate governance stress-testing design with multi-lane advisory (Claude + Gemini + ChatGPT) and audit integration
+Source: Matt Nichol operator pivot 2026-06-22
+Artifact: `4. Product_Roadmap/MMI_Governance_Stress_Testing_Framework_Deep_Dive.md`; `4. Product_Roadmap/MMI_Governance_Stress_Testing_Advisory_Lane_Brief.md`; scoreboard #105 + #67 `PARKED_OPERATOR_PIVOT`; BOR-GSTF-DESIGN-FEEDSTOCK-v2; MMI-DEC-080
+Classification: ADVISORY_MULTI_LANE_DESIGN — DRAFT pre-§11; not build authorization; not #67 unpark
+Routing outcome: Estimator feedstock rank #105; PM Voice routes to multi-lane brief; #67 hold_unless_matt
+Matt approval required: YES for §11 and any harness build after advisory review
+
+INTAKE-2026-06-22-002
+Component: #105 MMI Governance Invariants Testing Framework
+Request: File hardened invariants contract (supersedes stress-framing GSTF draft)
+Source: Matt Nichol operator-authored contract text 2026-06-22
+Artifact: `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md`; `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Advisory_Lane_Brief.md`; MMI-DEC-081
+Classification: CONTRACT_DRAFT — DRAFT UNSIGNED; invariants not stress; LAW 1–9; Lane 1 pending §11
+Routing outcome: Scoreboard #105 + BOR feedstock updated; GSTF artifacts superseded; Cursor reconcile 6.7 before §16
+Matt approval required: YES for §16 sign-off and Lane 1 build authorization

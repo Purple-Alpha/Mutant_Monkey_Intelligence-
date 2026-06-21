@@ -1,0 +1,14 @@
+{
+  "fixture_id": "pm_voice_deterministic_safe_failure",
+  "surface": "pm_voice_output",
+  "advisory_body": "Ambiguous advisory text with no handler.",
+  "signature_field": null,
+  "pm_voice_lines": {
+    "YOU_DO": "Review the unsigned contract draft and decide whether to authorize gate review.",
+    "HAND_IT_TO": "Matt",
+    "BOUNDARY": "advisory only; Matt chooses; no autonomous selection"
+  },
+  "expect_classification": "pm_voice_safe_failure",
+  "expect_dual_engine_agree": true,
+  "notes": "LAW 7 — explicit handler to Matt, not conversational clarification"
+}

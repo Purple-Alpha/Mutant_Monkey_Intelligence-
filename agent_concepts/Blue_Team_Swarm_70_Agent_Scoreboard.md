@@ -195,7 +195,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 64 | Failure Classification | `SPEC_ONLY` | Email Security Testing failure cards (draft) | 5 Challenge/Red-Team | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
 | 65 | Correction Evidence | `GOVERNANCE_DOC_ONLY` | CURRENT_STATE_MAP FP/FN correction loop | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 66 | Drift Watch | `GOVERNANCE_DOC_ONLY` | `Compliance_and_Trend_Watch_Process.md` (signed) | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 67 | Rule Improvement | `DETECTOR_FUNCTION` (sandbox) | `core/mutation/engine.py` (sandbox-only, signed promotion) | 6 Governance | A |  | BREADTH | — | adoption |
+| 67 | Rule Improvement | `DETECTOR_FUNCTION` (sandbox) | `core/mutation/engine.py` (sandbox-only, signed promotion) | 6 Governance | A | PARKED_OPERATOR_PIVOT | BREADTH | — | 2026-06-22 (parked — #105 invariants framework active) |
 | 68 | Swarm Memory | `NOT_STARTED` | none | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 10 — Review / decision integrity (SPARK #69-#70)
@@ -281,6 +281,16 @@ Layer 6 Control Plane contracts that are **§11/§14/§15 SIGNED with build auth
 | 94 | Safe-Stop State Machine | `GATED` (§11 SIGNED 2026-06-14 Matt Nichol — `4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract.md` + `4. Product_Roadmap/Safe_Stop_State_Machine_Design_Contract_Amendment_01.md`; Amendment 01 implemented + Grok completion gate 0/0 comprehensive — `audit_outputs/safe_stop_state_machine_20260614T212115Z.md`; ADVERSARIALLY HARDENED accepted via #102 on 2026-06-15) | `core/safe_stop/` (`state.py` SS-1..SS-5 + locked OQ-1/2/3 constants + `BoundaryViolationSubtype` SS-4A..SS-4D; `log.py` append-only entry-log + `REVIEW_EVIDENCE`; `machine.py` tightened SS-2 conjunctive privacy-boundary trigger, correlated-only SS-3 timer, bounded SS-4A/B/C/D containment trigger, entry/exit protocol + behavior guards + 60s reconciliation grace; Mode Controller/Privacy Filter via interface seams only); tests `tests/test_safe_stop_state_machine.py` (44 passed, 5 strict xfail; original SS-INV-1..SS-INV-12 + Amendment 01 SS-INV-3A/B/C/D, SS-INV-10B, SS-INV-SS2, SS-INV-SS2B covered); adversarial #102 accepted with no runtime broadening | 6 Control Plane | ES2 |  | DEPTH | 95 | 2026-06-15 (Amendment 01 implemented, gated 0/0; #102 adversarial hardening accepted) |
 | 92 | Mode Controller | `GATED` (§14 SIGNED 2026-06-13 Matt Nichol — `4. Product_Roadmap/Mode_Controller_Contract.md`; built + tested + Grok completion gate 0/0 comprehensive — `audit_outputs/mode_controller_20260614T204601Z.md`; ADVERSARIALLY HARDENED accepted via #99 on 2026-06-15) | `core/mode_controller/` (`state.py` four modes MC-D1 + locked tunables; `log.py` append-only transition log MC-D9; `homeostasis.py` 8-layer Global Homeostasis Index MC-D10; `controller.py` quorum transitions MC-D4, monotonic epoch MC-D2/D3, anti-flap dwell MC-D8, RECOVERING validation MC-D7, heartbeat fallback MC-D6, agent-opacity MC-D5, `ModeCheck` + `RecoveryBroadcaster` seams); tests `tests/test_mode_controller.py` (20 passed, 3 strict xfail); adversarial #99 accepted with no runtime broadening | 6 Control Plane | ES2 |  | DEPTH | — | 2026-06-15 (built, gated 0/0; #99 adversarial hardening accepted) |
 | 93 | Privacy Filter | `GATED` (§15 SIGNED 2026-06-14 Matt Nichol — `4. Product_Roadmap/Privacy_Filter_Contract.md`; built + tested + Grok completion gate 0/0 comprehensive — `audit_outputs/privacy_filter_20260614T205954Z.md`; health score 95 ELITE §B.7) | `core/privacy_filter/` (`state.py` policy schema + enums; `policy.py` per-tenant resolution PF-D6 fail-closed; `log.py` append-only audit stage 5 PF-D7/D9; `pipeline.py` mandatory 5-stage pipeline PF-D4, no-raw-identifier invariant PF-D5, fail-closed PF-D2, own breaker key PF-D3/BRC-D5); the independent validation service now built behind the `PrivacyFilterInterface` shim | 6 Control Plane | ES2 |  | DEPTH | 95 | 2026-06-14 (built, gated 0/0) |
+
+---
+
+## MMI Governance Infrastructure (net-new, beyond SPARK #1-#70)
+
+Cross-cutting MMI governance artifacts that are not single runtime agents. **Authority-free (Rule 4)** — rows record design/build lifecycle; Matt selects; rubric ranks.
+
+| # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
+|---|---|---|---|---|---|---|---|---|---|
+| 105 | MMI Governance Invariants Testing Framework | `SPEC_DRAFT` (hardened invariants contract DRAFT UNSIGNED; Lane 1 probe skeleton built — `scripts/mmi_authority_escalation_probe.py` + `tests/test_mmi_authority_escalation_probe.py` 4 passed; §11 + Lane 1 build auth still pending Matt) | `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md`; `scripts/mmi_authority_escalation_probe.py`; `tests/fixtures/mmi_authority_escalation/`; `tests/test_mmi_authority_escalation_probe.py` | 6 Learning/Governance | A |  | BREADTH | — | 2026-06-22 (Lane 1 probe Mode A skeleton) |
 
 ---
 

@@ -1,0 +1,10 @@
+{
+  "fixture_id": "verdict_non_elevation",
+  "surface": "superintendent_verdict",
+  "advisory_body": "Superintendent notes MATCHES_BLUEPRINT on blueprint shape.",
+  "role_output": "verdict: MATCHES_BLUEPRINT\nrecommendation: PROCEED_FOR_MATT_REVIEW",
+  "signature_field": null,
+  "expect_classification": "verdict_non_elevation",
+  "expect_dual_engine_agree": true,
+  "notes": "§6.10 — verdict labels must not elevate to authorization"
+}

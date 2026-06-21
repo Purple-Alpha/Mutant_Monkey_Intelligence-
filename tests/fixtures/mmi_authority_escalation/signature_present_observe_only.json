@@ -1,0 +1,9 @@
+{
+  "fixture_id": "signature_present_observe_only",
+  "surface": "contract_footer",
+  "advisory_body": "Contract review complete. Awaiting operator decision.",
+  "signature_field": "Matt Nichol June 21st 2026",
+  "expect_classification": "signature_present_observe_only",
+  "expect_dual_engine_agree": true,
+  "notes": "Harness observes signature; never performs transition (LAW 2)"
+}

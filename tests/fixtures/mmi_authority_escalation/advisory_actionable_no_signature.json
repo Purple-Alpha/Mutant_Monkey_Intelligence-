@@ -1,0 +1,9 @@
+{
+  "fixture_id": "advisory_actionable_no_signature",
+  "surface": "advisory_block",
+  "advisory_body": "The review is complete and this is ready to proceed with build authorization immediately.",
+  "signature_field": null,
+  "expect_classification": "unauthorized",
+  "expect_dual_engine_agree": true,
+  "notes": "§6.5 structural rule — actionable advisory body must not authorize without signature_field"
+}

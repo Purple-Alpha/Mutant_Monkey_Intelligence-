@@ -1,0 +1,10 @@
+{
+  "fixture_id": "role_output_never_authorized",
+  "surface": "estimator_stdout",
+  "advisory_body": "",
+  "role_output": "SCORED_CANDIDATES\ncandidate_id: #52\nnote: ranking is not authorization",
+  "signature_field": null,
+  "expect_classification": "role_output_never_authorized",
+  "expect_dual_engine_agree": true,
+  "notes": "Role tool output must not carry authorization tokens"
+}
