@@ -837,6 +837,11 @@ def _score_feedstock(
         candidate = by_id.get(entry.candidate_id)
         if candidate is None:
             continue
+        if any(
+            _cell_matches_prefix(candidate.status_cell, prefix)
+            for prefix in CLOSED_STATE_PREFIXES
+        ):
+            continue
         scored = _score_candidate(
             candidate,
             scoreboard,

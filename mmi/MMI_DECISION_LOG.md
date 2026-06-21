@@ -153,6 +153,8 @@ MMI-DEC-062 | 2026-06-21 | #61 Test Case Generator AWAITING_AUDIT scoreboard rec
 
 MMI-DEC-063 | 2026-06-21 | #61 Test Case Generator reconciled to GATED | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #61 row; `audit_outputs/test_case_generator_20260621T080345Z.md` (0/0) | ACCEPT | Completion gate clean 0 blocking / 0 warnings; lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing. | No GOVERNED_AGENT promotion without separate authorization | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (superintendent lane: #61 GATED reconcile after clean gate)
 
+MMI-DEC-064 | 2026-06-21 | BOR feedstock skip GATED #61 + Estimator filter | `mmi/BLUEPRINT_OF_RECORD.md`; `scripts/mmi_estimator.py` | ACCEPT | #61 marked completed in BOR; Estimator feedstock ranking skips GATED/GOVERNED rows; PM Voice no longer routes stale CONTRACT_DRAFT for #61. **Not** build authorization for #62+. | Next feedstock rank (#62) when Matt chooses | Run mmi_dispatch.py --sync + --verify after commit | Cursor (PM accuracy after #61 GATED)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
