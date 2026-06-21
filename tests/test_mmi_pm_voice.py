@@ -257,9 +257,33 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         )
         self.assertEqual(proc.returncode, 0, msg=proc.stdout + proc.stderr)
 
-    def test_live_output_routes_52_reconcile(self):
+    def test_live_open_handoff_when_present(self):
         _, out, _ = _run_voice()
         self.assertTrue(out.startswith("MMI_PM_VOICE"))
+        if "PM_VOICE_ALWAYS_ROUTES" in out:
+            self.assertIn("DONE_AWAITING_SIGN", out)
+            self.assertIn("HAND_IT_TO:\nMatt", out)
+            self.assertIn("Matt sign + close", out)
+
+    def test_live_52_reconcile_when_no_open_handoff(self):
+        handoff_stub = type(
+            "HandoffStub",
+            (),
+            {"latest_open_handoff": staticmethod(lambda root: None)},
+        )()
+        real_load = self.mod._load_module
+
+        def side_effect(name, filename):
+            if filename == "mmi_handoff.py":
+                return handoff_stub
+            return real_load(name, filename)
+
+        with patch.object(self.mod, "_load_module", side_effect=side_effect):
+            buffer = io.StringIO()
+            with redirect_stdout(buffer):
+                code = self.mod.main([])
+        out = buffer.getvalue()
+        self.assertEqual(code, 0)
         self.assertIn("IN_FLIGHT:\nnone", out)
         self.assertIn("MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY", out)
         self.assertIn("HAND_IT_TO:\nCursor", out)
