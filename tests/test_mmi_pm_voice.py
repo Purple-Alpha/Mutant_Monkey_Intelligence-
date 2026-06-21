@@ -291,6 +291,27 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertEqual(fields["HAND_IT_TO"], "Codex")
         self.assertIn("Grok pre-build gate review", fields["YOU_DO"])
 
+    def test_t7e_signed_105_feedstock_routes_hold_not_gate(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            feedstock_first="#105",
+            feedstock_first_name="MMI Governance Invariants Testing Framework",
+            feedstock_lane_type="CONTRACT_REVIEW",
+            menu_options=[],
+        )
+        with patch.object(self.mod, "_is_contract_signed", return_value=True):
+            fields = self.mod.compose_voice(
+                evidence,
+                repo_root=self.mod._repo_root(),
+            )
+        self.assertEqual(fields["HAND_IT_TO"], "Matt")
+        self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("Hold Lane 2+", fields["YOU_DO"])
+        self.assertNotIn("Grok pre-build gate", fields["YOU_DO"])
+        self.assertNotIn("unsigned", fields["YOU_DO"].lower())
+
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
         _run_voice()
@@ -381,6 +402,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nCodex", out)
             self.assertIn("Grok pre-build gate review", out)
             self.assertIn("Lane 1 probe shipped", out)
+        elif "#105 MMI Governance Invariants Testing Framework is §11 signed" in out:
+            self.assertIn("HAND_IT_TO:\nMatt", out)
+            self.assertIn("Hold Lane 2+", out)
         else:
             self.assertIn("IN_FLIGHT:\nnone", out)
         if "MMI_52_GATED_RECONCILE_ONLY" in out:

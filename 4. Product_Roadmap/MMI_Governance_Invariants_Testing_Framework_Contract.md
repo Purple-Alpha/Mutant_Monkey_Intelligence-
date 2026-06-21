@@ -1,6 +1,6 @@
 # MMI_GOVERNANCE_INVARIANTS_TESTING_FRAMEWORK_CONTRACT
 
-**Status:** DRAFT — UNSIGNED (hardened revision)
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol (`MMI-DEC-092`; pre-build gate `MMI-DEC-091` 0/0)
 **Lane:** Governance / Invariant Verification Framework
 **Authority:** Mutant Monkey Intelligence (MMI)
 **Repo:** `/home/socialarchitect/northstar`
@@ -364,24 +364,24 @@ functional + adversarial suites.
 
 I, Matt Nichol, have reviewed this governance invariants testing framework contract draft.
 
-[ ] I approve this contract as written.
-[ ] I authorize gate (Codex pre-build review) of this contract.
-[ ] On clean gate, I §11-sign and authorize the BUILD OF LANE 1 ONLY
+[x] I approve this contract as written.
+[x] I authorize gate (Codex pre-build review) of this contract — completed clean 0/0.
+[x] On clean gate, I §11-sign and authorize the BUILD OF LANE 1 ONLY
     (MMI_AUTHORITY_ESCALATION_PROBE_MODE_A).
 
 Confirmed: the nine foundational laws (Section 2) are correct as written.
-[ ] yes
+[x] yes
 
 Confirmed: I understand and accept the honest-scope limitation (LAW 9 / Section 2.8) —
 this framework defends against accidental drift, NOT malicious signature forgery, because
 the §11 signature is currently a non-cryptographic typed label. Cryptographic signing is a
 separate future contract. No forgery-resistance is claimed.
-[ ] yes
+[x] yes
 
 Confirmed: detect-not-enact; harness holds no authority; static-only (no live execution);
 dual-engine is a fixture test, not a live runtime gate; Lane 1 first; Lanes 2-3 specced;
 Tiers 5-7 design-only; Tier 6 offline fixtures only; PM Voice deterministic safe-failure.
-[ ] yes
+[x] yes
 
 Authority state-model + surface fixtures reconciled against repo:
 [x] yes (Cursor reconcile MMI-DEC-083 — pre-§11 implementation record only)  [ ] pending
@@ -391,9 +391,7 @@ dispatcher ALL_CLEAR routing summary, PM Voice regular-lane feedstock relay, plu
 Mode A advisory/signature/role/pm_voice/verdict fixtures from contract §6.10.
 Matt §11 signature below remains operator-only.
 
-Signature: ____________________________
-Date:      ____________________________
-Commit:    ____________________________
+> Matt Nichol June 21st 2026
 ```
 
 ---
@@ -401,12 +399,9 @@ Commit:    ____________________________
 ## 17. Non-Authority Footer
 
 ```
-This is a CONTRACT DRAFT — UNSIGNED. It is not authority.
-No §11 sign-off. No lane built. No state mutated. No cryptographic signing implemented.
-"Stress testing" is historical working-lane language only, not the contract-of-record framing.
-This framework defends against accidental DRIFT, not malicious FORGERY (LAW 9 / Section 2.8).
-The §11 signature is a non-cryptographic typed label; crypto-signing is a separate future contract.
-Detect, never enact. Two dumb static readers, never one live run. The harness never gains the
-authority it tests. Lane 1 first; Lanes 2-3 specced; Tiers 5-7 design-only; Tier 6 offline only.
-AUTH-5 remains blocked. Human authority held throughout. Build remains blocked until Matt §11.
+§11 SIGNED (MMI-DEC-092). Authorizes Lane 1 (MMI_AUTHORITY_ESCALATION_PROBE_MODE_A) only;
+Lane 1 Mode A probe already on disk (MMI-DEC-082). Lanes 2-3, Tiers 5-7, crypto-signing,
+registry/default dispatch, production runtime gate, and AUTH-5 remain blocked without
+separate operator authorization. Detect, never enact. LAW 9 honest-scope: drift-defense,
+not forgery-defense.
 ```

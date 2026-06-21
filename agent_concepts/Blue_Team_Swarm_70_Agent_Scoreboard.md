@@ -290,7 +290,7 @@ Cross-cutting MMI governance artifacts that are not single runtime agents. **Aut
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 105 | MMI Governance Invariants Testing Framework | `SPEC_DRAFT` (hardened invariants contract DRAFT UNSIGNED on disk; Lane 1 probe Mode A complete — `scripts/mmi_authority_escalation_probe.py` + 7 fixtures + pytest; awaiting Codex pre-build gate → Matt §11; **not** redraft) | `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md`; `scripts/mmi_authority_escalation_probe.py`; `tests/fixtures/mmi_authority_escalation/`; `tests/test_mmi_authority_escalation_probe.py` | 6 Learning/Governance | A |  | BREADTH | — | Matt Nichol June 21st 2026 |
+| 105 | MMI Governance Invariants Testing Framework | `SIGNED_CONTRACT` (§11 SIGNED 2026-06-21 Matt Nichol; Grok pre-build gate 0/0 `audit_outputs/mmi_105_contract_gate_20260621T231319Z.md`; Lane 1 Authority Escalation Probe Mode A on disk — MMI-DEC-082; **not** Lane 2+; **not** GOVERNED_AGENT`; **not** AUTH-5) | `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md` (§11 SIGNED 2026-06-21); `scripts/mmi_authority_escalation_probe.py`; `tests/fixtures/mmi_authority_escalation/`; `tests/test_mmi_authority_escalation_probe.py` | 6 Learning/Governance | A |  | BREADTH | — | Matt Nichol June 21st 2026 |
 
 ---
 

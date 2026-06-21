@@ -646,3 +646,12 @@ Artifact: `scripts/mmi_estimator.py` GOVERNANCE_FRAMEWORK_CONTRACTS; `scripts/mm
 Classification: PMV_RECONCILE — contract on disk; route Codex gate not Claude draft
 Routing outcome: PM Voice should surface pre-build gate review for #105
 Matt approval required: YES for Grok pre-build gate when Matt chooses §11 path
+
+INTAKE-2026-06-21-015
+Component: #105 MMI Governance Invariants Testing Framework (§11 sign + SIGNED_CONTRACT reconcile)
+Request: Matt §11 signature after clean pre-build gate 0/0
+Source: Matt Nichol June 21st 2026
+Artifact: `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md` §11 SIGNED; scoreboard #105 `SIGNED_CONTRACT`; MMI-DEC-091/092
+Classification: SIGNED_CONTRACT — Lane 1 authorized; probe on disk; not SIGNED_UNBUILT (no false BUILD dispatch)
+Routing outcome: PM Voice should not route Claude redraft or Codex pre-build gate for unsigned contract
+Matt approval required: YES for Lane 2+ or probe expansion when Matt chooses

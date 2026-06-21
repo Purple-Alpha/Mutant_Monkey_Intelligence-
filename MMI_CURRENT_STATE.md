@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #64 Failure Classification reconciled to GATED
-  (MMI-DEC-088; gate `failure_classification_20260621T220552Z.md` 0/0; build `872b972`; **not GOVERNED_AGENT**).
+LAST_COMPLETED: #105 MMI Governance Invariants Testing Framework §11 signed + SIGNED_CONTRACT reconcile
+  (MMI-DEC-092; pre-build gate `mmi_105_contract_gate_20260621T231319Z.md` 0/0; Lane 1 probe MMI-DEC-082; **not** Lane 2+; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: #64 Failure Classification Mode A wrapper + 16 tests built
-  (MMI-DEC-087; AWAITING_AUDIT; completion gate pending).
+PRIOR_LAST_COMPLETED: #64 Failure Classification reconciled to GATED
+  (MMI-DEC-088; gate `failure_classification_20260621T220552Z.md` 0/0; build `872b972`; **not GOVERNED_AGENT**).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

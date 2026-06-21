@@ -542,6 +542,34 @@ def _compose_unsigned_contract_review_voice(
     }
 
 
+def _compose_signed_invariants_framework_voice(
+    evidence: VoiceEvidence, contract_rel: str
+) -> dict[str, str]:
+    return {
+        "WHAT_NEEDS_MATT": (
+            "#105 MMI Governance Invariants Testing Framework is §11 signed; "
+            "Lane 1 authorized and on disk; hold Lane 2+ until separate authorization."
+        ),
+        "IN_FLIGHT": (
+            f"Lane 1 probe shipped ({INVARIANTS_PROBE_REL}; "
+            f"pytest {INVARIANTS_PROBE_TEST_REL}); contract §11 SIGNED (MMI-DEC-092)."
+        ),
+        "HAND_IT_TO": ROSTER_MATT,
+        "YOU_DO": (
+            f"Hold Lane 2+ closed; maintain drift defense: pytest "
+            f"{INVARIANTS_PROBE_TEST_REL} after any scripts/mmi_*.py change. "
+            f"No redraft; no pre-build gate rerun on {contract_rel}."
+        ),
+        "WHY": (
+            f"§11 signed at {contract_rel}; pre-build gate 0/0 (MMI-DEC-091); "
+            f"scoreboard SIGNED_CONTRACT (MMI-DEC-092); estimator feedstock rank #105."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
     candidate_id = evidence.feedstock_first
     candidate_name = evidence.feedstock_first_name
@@ -716,12 +744,11 @@ def compose_voice(
 
     if evidence.feedstock_first and evidence.dispatcher_mode == "ALL_CLEAR":
         contract_rel = _contract_rel_for_candidate(evidence.feedstock_first)
-        if (
-            contract_rel
-            and (root / contract_rel).is_file()
-            and not _is_contract_signed(root, contract_rel)
-        ):
-            return _compose_unsigned_contract_review_voice(evidence, contract_rel)
+        if contract_rel and (root / contract_rel).is_file():
+            if not _is_contract_signed(root, contract_rel):
+                return _compose_unsigned_contract_review_voice(evidence, contract_rel)
+            if evidence.feedstock_first == "#105":
+                return _compose_signed_invariants_framework_voice(evidence, contract_rel)
         return _compose_feedstock_voice(evidence)
 
     unreconciled = _relay_signed_unreconciled(root, evidence.menu_options)
