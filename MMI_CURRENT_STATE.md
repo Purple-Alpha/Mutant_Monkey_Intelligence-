@@ -24,10 +24,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #52 Plain-English Explanation GATED reconcile + PM Voice AWAITING_AUDIT routing
-  (MMI-DEC-056; INTAKE-2026-06-21-006). Gate `audit_outputs/plain_english_explanation_20260621T061124Z.md`;
-  lifecycle `AWAITING_AUDIT` -> `GATED`; PM Voice no longer stale on #52 build authorization.
-  Prior: AWAITING_AUDIT reconcile (`70c8ec2`; MMI-DEC-055).
+LAST_COMPLETED: Blueprint ALL_CLEAR feedstock + Estimator BOR read + PM Voice feedstock relay
+  (MMI-DEC-057; INTAKE-2026-06-21-007). BOR-ALL-CLEAR-FEEDSTOCK-v1 populated; Estimator emits
+  SCORED_FEEDSTOCK under ALL_CLEAR; PM Voice relays Estimator rank. Prior: #52 GATED (`3adc7ae`;
+  MMI-DEC-056).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

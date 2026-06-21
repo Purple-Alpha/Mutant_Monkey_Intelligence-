@@ -87,7 +87,7 @@ def _candidate_ids(stdout: str) -> list[str]:
     ids: list[str] = []
     in_scored = False
     for line in stdout.splitlines():
-        if line.startswith("SCORED_CANDIDATES"):
+        if line.startswith(("SCORED_CANDIDATES", "SCORED_FEEDSTOCK")):
             in_scored = True
             continue
         if line.startswith(("BUILDABILITY_EXCLUSIONS", "NO_BUILDABLE_CANDIDATES", "ADVISORY_ONLY:")):
@@ -151,7 +151,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertLessEqual(f6_contrib, 5.0)
 
     def test_t9_readiness_ordering(self):
-        scored, _, _, _ = self.mod.analyze(
+        scored, _, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
@@ -162,7 +162,7 @@ class EstimatorContractTests(unittest.TestCase):
         )
 
     def test_t10_weighted_sum(self):
-        scored, _, _, _ = self.mod.analyze(
+        scored, _, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
@@ -195,11 +195,11 @@ class EstimatorContractTests(unittest.TestCase):
                 self.fail(f"forbidden VERDICT envelope line: {stripped}")
 
     def test_t13_refresh(self):
-        clean, _, _, _ = self.mod.analyze(
+        clean, _, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
-        refresh, _, _, _ = self.mod.analyze(
+        refresh, _, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "refresh")),
             verify_text=VERIFY_PASS,
         )
@@ -209,7 +209,7 @@ class EstimatorContractTests(unittest.TestCase):
         )
 
     def test_t13_verify_block_cannot_score(self):
-        _, errors, _, _ = self.mod.analyze(
+        _, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text="drift: 1 BLOCK, 0 WARN",
         )
@@ -245,7 +245,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertIn("factor_coverage_summary:", out)
 
     def test_t15_top_rows_not_collapsed(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "buildability_worth")),
             verify_text=VERIFY_PASS,
         )
@@ -255,7 +255,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertGreater(len(set(top_totals)), 1, msg=f"top totals flat: {top_totals}")
 
     def test_t16_scoreboard_f4_wired(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
@@ -264,7 +264,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertGreater(by_id["#200"].factor_results["F4"].value, 0)
 
     def test_t17_research_paths_excluded(self):
-        scored, errors, _, exclusions = self.mod.analyze(
+        scored, errors, _, exclusions, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "research_excluded")),
             verify_text=VERIFY_PASS,
         )
@@ -275,7 +275,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertGreater(by_id["#200"].factor_results["F4"].value, 0)
 
     def test_t18_equivalent_tie_has_separation(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
@@ -285,7 +285,7 @@ class EstimatorContractTests(unittest.TestCase):
             self.assertIn("F1=", item.separation)
 
     def test_t19_measured_zero_preserved(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "null_f2_measured_zero")),
             verify_text=VERIFY_PASS,
         )
@@ -296,7 +296,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertEqual(f2.value, 0)
 
     def test_t20_absent_source_emits_null(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "null_f2_null")),
             verify_text=VERIFY_PASS,
         )
@@ -307,7 +307,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertIn("NULL(no_data:", f2.display())
 
     def test_t21_null_excluded_from_total(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
@@ -332,7 +332,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertRegex(out, r"coverage: \d/6")
 
     def test_t24_low_coverage_provisional(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "null_low_coverage")),
             verify_text=VERIFY_PASS,
         )
@@ -347,7 +347,7 @@ class EstimatorContractTests(unittest.TestCase):
         self.assertEqual(self.mod.WEIGHTS, self.mod.SIGNED_WEIGHTS_RECORD)
 
     def test_t26_no_negative_missing_data_penalty(self):
-        scored, errors, _, _ = self.mod.analyze(
+        scored, errors, _, _, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
@@ -418,7 +418,7 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
         self.assertEqual(_candidate_ids(out), [])
 
     def test_t33_agreement_check(self):
-        scored, errors, _, exclusions = self.mod.analyze(
+        scored, errors, _, exclusions, _ = self.mod.analyze(
             self.mod.Path(os.path.join(FIXTURES, "clean")),
             verify_text=VERIFY_PASS,
         )
@@ -469,7 +469,7 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
                 for cand in buildable
             ]
         )
-        scored, errors, _, _ = self.mod.analyze(root, verify_text=VERIFY_PASS)
+        scored, errors, _, _, _ = self.mod.analyze(root, verify_text=VERIFY_PASS)
         self.assertEqual(errors, [])
         self.assertEqual(
             [s.candidate.candidate_id for s in scored],
@@ -479,6 +479,14 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
             [s.total_measured_score for s in scored],
             [s.total_measured_score for s in direct],
         )
+
+    def test_t35_scored_feedstock_from_bor(self):
+        _, out, _ = _run_estimator(None, ["--verify-text", VERIFY_ALL_CLEAR])
+        self.assertIn("SCORED_FEEDSTOCK", out)
+        ranked = _candidate_ids(out)
+        self.assertEqual(ranked[:1], ["#61"])
+        self.assertIn("lane_type: CONTRACT_DRAFT", out)
+        self.assertNotIn("NO_BUILDABLE_CANDIDATES", out)
 
     def test_first_use_live_regression(self):
         verify_text = subprocess.run(
@@ -497,6 +505,8 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
         self.assertIn("BLOCKED_MISSING_CONTRACT", out)
         if "current task: MODE: ALL_CLEAR" in verify_text and _candidate_ids(out) == []:
             self.assertIn("NO_BUILDABLE_CANDIDATES", out)
+        if "current task: MODE: ALL_CLEAR" in verify_text and "SCORED_FEEDSTOCK" in out:
+            self.assertEqual(_candidate_ids(out)[:1], ["#61"])
 
 
 if __name__ == "__main__":

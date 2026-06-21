@@ -96,6 +96,9 @@ class VoiceEvidence:
     menu_options: list = field(default_factory=list)
     scored_first: str = ""
     scored_first_name: str = ""
+    feedstock_first: str = ""
+    feedstock_first_name: str = ""
+    feedstock_lane_type: str = ""
     gaps: list[str] = field(default_factory=list)
 
 
@@ -133,12 +136,17 @@ def gather_evidence(repo_root: Path, menu_limit: int = 30) -> VoiceEvidence:
     evidence.menu_options = options
     evidence.gaps.extend(gaps)
 
-    scored, errors, _, _ = estimator.analyze(repo_root)
+    scored, errors, _, _, feedstock_scored = estimator.analyze(repo_root)
     if errors:
         evidence.gaps.extend(errors)
     elif scored:
         evidence.scored_first = scored[0].candidate.candidate_id
         evidence.scored_first_name = scored[0].candidate.name
+    elif feedstock_scored:
+        top = feedstock_scored[0]
+        evidence.feedstock_first = top.entry.candidate_id
+        evidence.feedstock_first_name = top.entry.name or top.scored.candidate.name
+        evidence.feedstock_lane_type = top.entry.lane_type
 
     return evidence
 
@@ -330,6 +338,11 @@ def _source_line(evidence: VoiceEvidence, handoff: object | None = None) -> str:
         parts.append(
             f"estimator_rank_first: {evidence.scored_first} {evidence.scored_first_name}"
         )
+    if evidence.feedstock_first:
+        parts.append(
+            f"estimator_feedstock_first: {evidence.feedstock_first} "
+            f"{evidence.feedstock_first_name} lane_type={evidence.feedstock_lane_type}"
+        )
     if handoff is not None:
         parts.append("handoff_log: mmi/MMI_HANDOFF_LOG.md")
     return "; ".join(parts)
@@ -425,6 +438,55 @@ def _compose_awaiting_audit_gated_voice(
             f"dispatcher: MODE:AUDIT; {option.candidate_id} is "
             f"{option.source_lifecycle} with completion gate clean; "
             f"scoreboard GATED flip is the next lifecycle step."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
+def _feedstock_hand_it_to(lane_type: str) -> str:
+    if lane_type == "CONTRACT_DRAFT":
+        return ROSTER_CONTRACT_DRAFT
+    if lane_type == "PROMOTION_REVIEW":
+        return ROSTER_MATT
+    if lane_type == "RESEARCH":
+        return ROSTER_RESEARCH
+    if lane_type == "REVISE":
+        return ROSTER_REVIEW
+    return ROSTER_MATT
+
+
+def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
+    candidate_id = evidence.feedstock_first
+    candidate_name = evidence.feedstock_first_name
+    lane_type = evidence.feedstock_lane_type
+    hand_it_to = _feedstock_hand_it_to(lane_type)
+    if lane_type == "CONTRACT_DRAFT":
+        you_do = (
+            f"Authorize contract draft lane for {candidate_id} {candidate_name}."
+        )
+        what = f"Contract draft lane is needed for {candidate_id} {candidate_name}."
+    elif lane_type == "PROMOTION_REVIEW":
+        you_do = (
+            f"Authorize GOVERNED_AGENT promotion review for {candidate_id} "
+            f"{candidate_name}."
+        )
+        what = (
+            f"Promotion review is needed for {candidate_id} {candidate_name}."
+        )
+    else:
+        you_do = f"Authorize {lane_type} lane for {candidate_id} {candidate_name}."
+        what = f"{lane_type} lane is needed for {candidate_id} {candidate_name}."
+    return {
+        "WHAT_NEEDS_MATT": what,
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": hand_it_to,
+        "YOU_DO": you_do,
+        "WHY": (
+            f"estimator feedstock rank from BOR CURRENT_PLAN: {candidate_id} "
+            f"lane_type={lane_type}; dispatcher={evidence.dispatcher_mode}; "
+            f"buildable_count={evidence.buildable_count}."
         ),
         "IGNORE_FOR_NOW": _ignore_block(evidence),
         "SOURCE": _source_line(evidence),
@@ -545,6 +607,9 @@ def compose_voice(
     buildable = _relay_buildable_option(evidence)
     if buildable is not None:
         return _compose_buildable_voice(evidence, buildable)
+
+    if evidence.feedstock_first and evidence.dispatcher_mode == "ALL_CLEAR":
+        return _compose_feedstock_voice(evidence)
 
     unreconciled = _relay_signed_unreconciled(root, evidence.menu_options)
     if unreconciled is not None:

@@ -28,9 +28,20 @@ except ImportError:  # pragma: no cover
     yaml = None  # type: ignore
 
 ENVELOPE_SCORED = "SCORED_CANDIDATES"
+ENVELOPE_SCORED_FEEDSTOCK = "SCORED_FEEDSTOCK"
 ENVELOPE_INCOMPLETE = "STATE_INCOMPLETE_CANNOT_SCORE"
 ENVELOPE_NO_BUILDABLE = "NO_BUILDABLE_CANDIDATES"
 ENVELOPE_BUILDABILITY_EXCLUSIONS = "BUILDABILITY_EXCLUSIONS"
+BOR_PATH_REL = "mmi/BLUEPRINT_OF_RECORD.md"
+
+FEEDSTOCK_ENTRY_RE = re.compile(
+    r"^feedstock_entry:\s*"
+    r"priority=(?P<priority>hold|\d+)\s+"
+    r"candidate_id=(?P<candidate_id>#\d+[A-Z]?)\s+"
+    r"lane_type=(?P<lane_type>[A-Z_]+)\s+"
+    r"name=(?P<name>.+?)"
+    r"(?:\s+hold_unless_matt=(?P<hold>true|false))?\s*$"
+)
 
 ADVISORY_ONLY_ALL_CLEAR = (
     "ADVISORY_ONLY: dispatcher queue is ALL_CLEAR — no active dispatcher route is "
@@ -182,6 +193,21 @@ class ScoredCandidate:
     @property
     def total(self) -> float:
         return self.total_measured_score
+
+
+@dataclass(frozen=True)
+class FeedstockEntry:
+    candidate_id: str
+    lane_type: str
+    name: str
+    priority: int
+    hold_unless_matt: bool = False
+
+
+@dataclass
+class ScoredFeedstock:
+    entry: FeedstockEntry
+    scored: ScoredCandidate
 
 
 def _repo_root() -> Path:
@@ -768,6 +794,64 @@ def _sort_scored(scored: list[ScoredCandidate]) -> list[ScoredCandidate]:
     )
 
 
+def _parse_bor_feedstock(bor_text: str) -> list[FeedstockEntry]:
+    if "plan_status: CURRENT_PLAN" not in bor_text:
+        return []
+    entries: list[FeedstockEntry] = []
+    for line in bor_text.splitlines():
+        match = FEEDSTOCK_ENTRY_RE.match(line.strip())
+        if not match:
+            continue
+        priority_raw = match.group("priority")
+        hold = match.group("hold") == "true" or priority_raw == "hold"
+        priority = 999 if hold else int(priority_raw)
+        entries.append(
+            FeedstockEntry(
+                candidate_id=match.group("candidate_id"),
+                lane_type=match.group("lane_type"),
+                name=match.group("name").strip(),
+                priority=priority,
+                hold_unless_matt=hold,
+            )
+        )
+    return entries
+
+
+def _score_feedstock(
+    eligible: list[Candidate],
+    feedstock_entries: list[FeedstockEntry],
+    scoreboard: str,
+    manifest_verify: str,
+    *,
+    graph_populated: bool,
+    health_board_present: bool,
+) -> list[ScoredFeedstock]:
+    by_id = {candidate.candidate_id: candidate for candidate in eligible}
+    ranked: list[ScoredFeedstock] = []
+    for entry in feedstock_entries:
+        if entry.hold_unless_matt:
+            continue
+        candidate = by_id.get(entry.candidate_id)
+        if candidate is None:
+            continue
+        scored = _score_candidate(
+            candidate,
+            scoreboard,
+            manifest_verify,
+            graph_populated=graph_populated,
+            health_board_present=health_board_present,
+        )
+        ranked.append(ScoredFeedstock(entry=entry, scored=scored))
+    ranked.sort(
+        key=lambda item: (
+            item.entry.priority,
+            -item.scored.total_measured_score,
+            item.entry.candidate_id,
+        )
+    )
+    return ranked
+
+
 def _factor_coverage_summary(scored: list[ScoredCandidate]) -> dict[str, tuple[int, int]]:
     summary: dict[str, tuple[int, int]] = {}
     for factor_id in FACTOR_IDS:
@@ -792,7 +876,13 @@ def analyze(
     *,
     active_track: str = "BREADTH",
     verify_text: str = "",
-) -> tuple[list[ScoredCandidate], list[str], str, list[BuildabilityExclusion]]:
+) -> tuple[
+    list[ScoredCandidate],
+    list[str],
+    str,
+    list[BuildabilityExclusion],
+    list[ScoredFeedstock],
+]:
     errors: list[str] = []
     scoreboard_path = root / "agent_concepts" / "Blue_Team_Swarm_70_Agent_Scoreboard.md"
     registry_path = root / "mmi" / "MMI_TASK_REGISTRY.yaml"
@@ -805,12 +895,12 @@ def analyze(
     if not registry_text:
         errors.append(f"missing_or_unreadable: {registry_path}")
     if errors:
-        return [], errors, "UNREADABLE", []
+        return [], errors, "UNREADABLE", [], []
 
     verify_ok, manifest_verify = _manifest_verify_gate(verify_text)
     if verify_text.strip() and not verify_ok:
         errors.append(f"manifest_verify_failed: {manifest_verify}")
-        return [], errors, manifest_verify, []
+        return [], errors, manifest_verify, [], []
 
     decision_text = _read_text(decision_path)
     health, health_board_present = _parse_health_board(scoreboard)
@@ -826,7 +916,7 @@ def analyze(
     if len(ids) != len(set(ids)):
         dupes = sorted({i for i in ids if ids.count(i) > 1})
         errors.append(f"conflicting_candidate_id: {', '.join(dupes)}")
-        return [], errors, manifest_verify, []
+        return [], errors, manifest_verify, [], []
 
     eligible, _ = _apply_gates(candidates, scoreboard, active_track)
     buildable, buildability_exclusions = _apply_buildability_gates(eligible, root)
@@ -840,7 +930,20 @@ def analyze(
         )
         for c in buildable
     ]
-    return _sort_scored(scored), [], manifest_verify, buildability_exclusions
+    if buildable:
+        return _sort_scored(scored), [], manifest_verify, buildability_exclusions, []
+
+    bor_text = _read_text(root / BOR_PATH_REL)
+    feedstock_entries = _parse_bor_feedstock(bor_text)
+    feedstock_scored = _score_feedstock(
+        eligible,
+        feedstock_entries,
+        scoreboard,
+        manifest_verify,
+        graph_populated=graph_populated,
+        health_board_present=health_board_present,
+    )
+    return [], [], manifest_verify, buildability_exclusions, feedstock_scored
 
 
 def format_buildability_exclusions(exclusions: list[BuildabilityExclusion]) -> str:
@@ -869,6 +972,7 @@ def format_output(
     *,
     verify_text: str,
     buildability_exclusions: list[BuildabilityExclusion],
+    feedstock_scored: list[ScoredFeedstock] | None = None,
 ) -> str:
     parts: list[str] = []
     if _all_clear_from_verify_text(verify_text):
@@ -877,6 +981,10 @@ def format_output(
         parts.append(format_buildability_exclusions(buildability_exclusions).rstrip("\n"))
     if scored:
         parts.append(format_scored(scored, manifest_verify).rstrip("\n"))
+    elif feedstock_scored:
+        parts.append(
+            format_scored_feedstock(feedstock_scored, manifest_verify).rstrip("\n")
+        )
     else:
         parts.append(format_no_buildable_candidates().rstrip("\n"))
     return _validate_output("\n".join(parts) + "\n")
@@ -931,6 +1039,39 @@ def format_scored(scored: list[ScoredCandidate], manifest_verify: str) -> str:
     return _validate_output("\n".join(lines) + "\n")
 
 
+def format_scored_feedstock(
+    feedstock_scored: list[ScoredFeedstock], manifest_verify: str
+) -> str:
+    lines = [
+        ENVELOPE_SCORED_FEEDSTOCK,
+        f"candidate_count: {len(feedstock_scored)}",
+        "source: mmi/BLUEPRINT_OF_RECORD.md CURRENT_PLAN feedstock_entry",
+        "weights: F1=30 F2=25 F3=20 F4=10 F5=10 F6=5",
+        f"manifest_verify: {manifest_verify}",
+        "advisory: ALL_CLEAR feedstock ranking only; not build authorization",
+    ]
+    lines.append("---")
+    for item in feedstock_scored:
+        entry = item.entry
+        scored = item.scored
+        candidate = scored.candidate
+        lines.append(f"candidate_id: {entry.candidate_id}")
+        lines.append(f"name: {entry.name or candidate.name}")
+        lines.append(f"lane_type: {entry.lane_type}")
+        lines.append(f"bor_priority: {entry.priority}")
+        lines.append("factors:")
+        for factor_id in FACTOR_IDS:
+            lines.append(
+                f"  {factor_id}={scored.factor_results[factor_id].display()}"
+            )
+        lines.append(f"total_measured_score: {scored.total_measured_score:.2f}")
+        lines.append(f"coverage_status: {scored.coverage_status}")
+        lines.append("---")
+    if lines[-1] == "---" and len(feedstock_scored) > 0:
+        lines.pop()
+    return _validate_output("\n".join(lines) + "\n")
+
+
 def format_incomplete(errors: list[str]) -> str:
     lines = [ENVELOPE_INCOMPLETE, "missing_or_conflicting:"]
     lines.extend(f"  - {err}" for err in errors)
@@ -970,7 +1111,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     root = args.root.resolve() if args.root else _repo_root()
-    scored, errors, manifest_verify, buildability_exclusions = analyze(
+    scored, errors, manifest_verify, buildability_exclusions, feedstock_scored = analyze(
         root, active_track=args.track, verify_text=args.verify_text
     )
     if errors:
@@ -983,6 +1124,7 @@ def main(argv: list[str] | None = None) -> int:
             manifest_verify,
             verify_text=args.verify_text,
             buildability_exclusions=buildability_exclusions,
+            feedstock_scored=feedstock_scored,
         )
     )
     return 0

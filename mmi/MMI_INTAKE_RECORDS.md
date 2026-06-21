@@ -421,3 +421,12 @@ Artifact: MMI-DEC-056; scoreboard #52 row `GATED`; `scripts/mmi_pm_voice.py` AWA
 Classification: GATED_RECONCILE — lifecycle advance; PM Voice relay accuracy; **not GOVERNED_AGENT**
 Routing outcome: #52 EXCLUDED_ALREADY_BUILT in estimator menu; PM Voice routes next feedstock candidate; dispatcher sync after commit
 Matt approval required: YES for GOVERNED_AGENT promotion on #52 if Matt chooses later
+
+INTAKE-2026-06-21-007
+Component: Blueprint ALL_CLEAR feedstock + Estimator BOR read + PM Voice feedstock relay
+Request: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v1 + Estimator BOR read (Path 2 crew loop fix)
+Source: Matt authorization; ALL_CLEAR queue empty; Estimator NO_BUILDABLE without BOR feedstock
+Artifact: MMI-DEC-057; `mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v1; `SCORED_FEEDSTOCK` envelope
+Classification: CREW_LOOP_FIX — advisory feedstock ranking when build queue empty; not build authorization
+Routing outcome: Estimator ranks #61-#67 contract-draft feedstock; PM Voice relays rank #1 to Claude; hold rows excluded from auto rank
+Matt approval required: YES for #61 contract draft lane when Matt chooses

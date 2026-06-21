@@ -219,6 +219,29 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertEqual(fields["YOU_DO"], "Authorize MMI_52_GATED_RECONCILE_ONLY.")
         self.assertIn("GATED reconcile", fields["WHAT_NEEDS_MATT"])
 
+    def test_t7c_all_clear_feedstock_routes_claude(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            feedstock_first="#61",
+            feedstock_first_name="Test Case Generator",
+            feedstock_lane_type="CONTRACT_DRAFT",
+            menu_options=[
+                _menu_option(
+                    candidate_id="#61",
+                    candidate_name="Test Case Generator",
+                    source_lifecycle="DETECTOR_FUNCTION",
+                    buildability_status="BLOCKED_MISSING_CONTRACT",
+                    contract_status="MISSING",
+                )
+            ],
+        )
+        fields = self.mod.compose_voice(evidence)
+        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertIn("#61", fields["YOU_DO"])
+        self.assertIn("estimator feedstock rank", fields["WHY"])
+
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
         _run_voice()
@@ -310,6 +333,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nCursor", out)
         elif "#52 Plain-English Explanation is already GATED" in out:
             self.assertNotIn("Authorize build lane for #52", out)
+        elif "estimator feedstock rank" in out or "SCORED_FEEDSTOCK" in out:
+            self.assertIn("HAND_IT_TO:\nClaude", out)
+            self.assertIn("#61", out)
         elif "MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY" in out:
             self.assertIn("HAND_IT_TO:\nCursor", out)
         else:

@@ -168,7 +168,7 @@ def _menu_from_exclusion(exclusion, root: Path, estimator_mod) -> MenuOption:
 
 def build_menu(repo_root: Path, limit: int) -> tuple[str, list[MenuOption], list[str]]:
     estimator_mod = _load_estimator_module()
-    scored, errors, _, exclusions = estimator_mod.analyze(repo_root)
+    scored, errors, _, exclusions, _ = estimator_mod.analyze(repo_root)
     if errors:
         return ENVELOPE_INSUFFICIENT, [], errors
 
