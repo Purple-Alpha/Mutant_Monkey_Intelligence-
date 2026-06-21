@@ -169,6 +169,8 @@ MMI-DEC-070 | 2026-06-22 | #62 Regression Test reconciled to GATED | `agent_conc
 
 MMI-DEC-071 | 2026-06-22 | BOR feedstock skip GATED #62 + promote #63 | `mmi/BLUEPRINT_OF_RECORD.md` | ACCEPT | #62 marked completed in BOR; next feedstock rank #63 Adversarial Test. **Not** build authorization for #63+. | Contract draft lane for #63 when Matt chooses | Run mmi_dispatch.py --sync + --verify after commit | Cursor (PM accuracy after #62 GATED)
 
+MMI-DEC-072 | 2026-06-22 | #63 Adversarial Test contract draft lane authorization | PM Voice feedstock rank #63 (`mmi/BLUEPRINT_OF_RECORD.md`); scoreboard #63 `DETECTOR_FUNCTION` | ACCEPT | Matt authorized contract draft lane for Claude per PM Voice relay (`HAND_IT_TO: Claude`). **Not** contract on disk, **not** Grok pre-build gate, **not** §11 signed, **not** SIGNED_UNBUILT reconcile, **not** build, **not** AUTH-5. | Claude drafts UNSIGNED `4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md`; Cursor superintendent placement + repo reconciliation after relay | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize #63 contract draft lane)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

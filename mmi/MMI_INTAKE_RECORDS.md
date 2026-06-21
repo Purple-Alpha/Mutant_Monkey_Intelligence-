@@ -511,3 +511,12 @@ Artifact: `core/sandbox/regression_test_agent.py`; `tests/test_regression_test_a
 Classification: GATED — built + gate clean; not GOVERNED_AGENT
 Routing outcome: PM Voice holds #62; next feedstock #63
 Matt approval required: YES for GOVERNED_AGENT promotion only
+
+INTAKE-2026-06-22-002
+Component: #63 Adversarial Test (contract draft lane authorization)
+Request: Matt authorized contract draft lane per PM Voice feedstock rank #63
+Source: PM Voice `HAND_IT_TO: Claude`; BOR priority=1; MMI-DEC-072
+Artifact: handoff `MMI_63_CONTRACT_DRAFT_PLACEMENT` open; target `4. Product_Roadmap/Adversarial_Test_Agent_Design_Contract_Deep_Dive.md` (not yet on disk)
+Classification: CONTRACT_DRAFT_AUTHORIZED — draft only; no build; no §11
+Routing outcome: Claude drafts UNSIGNED contract; Cursor superintendent placement after relay; then Codex pre-build gate
+Matt approval required: YES for Grok pre-build gate and §11 sign after draft placement
