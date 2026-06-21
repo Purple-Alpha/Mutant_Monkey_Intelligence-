@@ -484,3 +484,12 @@ Artifact: `4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md
 Classification: CONTRACT_DRAFT_PLACED — baseline source reconciled to audit_outputs 0/0 + MMI-DEC; gate + §11 required
 Routing outcome: PM Voice routes Codex pre-build gate review; then Matt §11 sign; then SIGNED_UNBUILT reconcile
 Matt approval required: YES for Grok pre-build gate and §11 sign
+
+INTAKE-2026-06-21-014
+Component: #62 Regression Test (Grok pre-build gate)
+Request: Codex Grok pre-build gate review on UNSIGNED contract draft
+Source: MMI_62_CONTRACT_DRAFT_PLACEMENT handoff; commit 590b9ba
+Artifact: `audit_outputs/mmi_62_contract_gate_20260621T082232Z.md` (0/0); packet SHA256 8eedc712d92622c0d663d50bb56efb931c0de3787fced07e2099c6cdfcd32cec; MMI-DEC-066
+Classification: PRE_BUILD_GATE_CLEAN — SIGNABLE; §11 signature lane open
+Routing outcome: PM Voice routes Matt §11 sign; then SIGNED_UNBUILT reconcile; then separate build authorization
+Matt approval required: YES for §11 sign and SIGNED_UNBUILT reconcile

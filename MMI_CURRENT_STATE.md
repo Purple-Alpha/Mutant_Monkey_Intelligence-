@@ -24,9 +24,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #62 Regression Test contract draft placed (UNSIGNED)
-  (MMI-DEC-065; INTAKE-2026-06-21-013). Claude draft relay; Cursor baseline reconciliation
-  (`audit_outputs/` 0/0 + MMI-DEC). Prior: #61 GATED (`e95b38b`; MMI-DEC-063).
+LAST_COMPLETED: #62 Regression Test Grok pre-build gate clean (SIGNABLE)
+  (MMI-DEC-066; INTAKE-2026-06-21-014). Gate `mmi_62_contract_gate_20260621T082232Z.md` 0/0;
+  contract still UNSIGNED — Matt §11 sign lane open. Prior: contract draft placement
+  (`590b9ba`; MMI-DEC-065).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
