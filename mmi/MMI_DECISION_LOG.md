@@ -141,6 +141,8 @@ MMI-DEC-056 | 2026-06-21 | #52 PlainEnglishExplanationAgent reconciled to GATED 
 
 MMI-DEC-057 | 2026-06-21 | Blueprint ALL_CLEAR feedstock + Estimator BOR read | `mmi/BLUEPRINT_OF_RECORD.md` CURRENT_PLAN BOR-ALL-CLEAR-FEEDSTOCK-v1; `scripts/mmi_estimator.py` SCORED_FEEDSTOCK; `scripts/mmi_pm_voice.py` feedstock relay | ACCEPT | Populated Blueprint-of-Record with ALL_CLEAR feedstock plan from scoreboard print; Estimator emits `SCORED_FEEDSTOCK` when buildable_count=0; PM Voice relays Estimator feedstock rank under ALL_CLEAR. **Not** build authorization, **not** contract draft execution, **not** AUTH-5. | Run contract draft lane for ranked feedstock when Matt chooses | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize MMI_BOR_ALL_CLEAR_FEEDSTOCK_v1 + Estimator BOR read)
 
+MMI-DEC-058 | 2026-06-21 | #61 Test Case Generator contract draft placement | `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md`; Claude draft relay; Cursor repo reconciliation | ACCEPT | UNSIGNED contract draft placed on disk; Estimator/Architect manifest paths added; PM Voice routes UNSIGNED contract to Codex pre-build gate review. **Not** §11 signed, **not** SIGNED_UNBUILT reconcile, **not** build, **not** AUTH-5. | Grok pre-build gate review then Matt §11 sign | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (Claude contract draft relay + superintendent placement)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

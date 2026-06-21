@@ -117,6 +117,20 @@ CANDIDATE_MANIFEST: dict[str, CandidateManifest] = {
             ),
         ),
     ),
+    "#61": CandidateManifest(
+        candidate_id="#61",
+        name="Test Case Generator",
+        agent_contract_rel=(
+            "4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md"
+        ),
+        artifact_basis_rel=(
+            "4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md",
+            (
+                "3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/"
+                "core/sandbox/red_agents/__init__.py"
+            ),
+        ),
+    ),
 }
 
 FLOW_FIELDS = (

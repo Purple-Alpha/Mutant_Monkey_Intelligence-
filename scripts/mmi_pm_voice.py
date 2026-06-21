@@ -350,12 +350,12 @@ def _source_line(evidence: VoiceEvidence, handoff: object | None = None) -> str:
 
 def _route_next_step(next_step: str) -> str:
     lower = next_step.lower()
+    if "review" in lower or "gate" in lower:
+        return ROSTER_REVIEW
     if "draft" in lower:
         return ROSTER_CONTRACT_DRAFT
     if "build" in lower or "reconcile" in lower:
         return ROSTER_BUILD
-    if "review" in lower or "gate" in lower:
-        return ROSTER_REVIEW
     if "research" in lower:
         return ROSTER_RESEARCH
     if "sign" in lower or "close" in lower:
@@ -455,6 +455,32 @@ def _feedstock_hand_it_to(lane_type: str) -> str:
     if lane_type == "REVISE":
         return ROSTER_REVIEW
     return ROSTER_MATT
+
+
+def _compose_unsigned_contract_review_voice(
+    evidence: VoiceEvidence, contract_rel: str
+) -> dict[str, str]:
+    candidate_id = evidence.feedstock_first
+    candidate_name = evidence.feedstock_first_name
+    return {
+        "WHAT_NEEDS_MATT": (
+            f"Pre-build gate review is needed for {candidate_id} {candidate_name} "
+            f"contract draft."
+        ),
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": ROSTER_REVIEW,
+        "YOU_DO": (
+            f"Run Grok pre-build gate review on {candidate_id} "
+            f"{candidate_name} contract draft at {contract_rel}."
+        ),
+        "WHY": (
+            f"contract draft on disk at {contract_rel}; §11 UNSIGNED; "
+            f"estimator feedstock rank {candidate_id}; gate before §11 per contract."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
 
 
 def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
@@ -609,6 +635,13 @@ def compose_voice(
         return _compose_buildable_voice(evidence, buildable)
 
     if evidence.feedstock_first and evidence.dispatcher_mode == "ALL_CLEAR":
+        contract_rel = _contract_rel_for_candidate(evidence.feedstock_first)
+        if (
+            contract_rel
+            and (root / contract_rel).is_file()
+            and not _is_contract_signed(root, contract_rel)
+        ):
+            return _compose_unsigned_contract_review_voice(evidence, contract_rel)
         return _compose_feedstock_voice(evidence)
 
     unreconciled = _relay_signed_unreconciled(root, evidence.menu_options)

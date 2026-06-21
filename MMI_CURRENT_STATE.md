@@ -1,18 +1,25 @@
-MODE: ALL_CLEAR
-AUTHORIZED_TASK: No delegable tasks in routing queue
+MODE: DELEGATE
+AUTHORIZED_TASK: Classify parked roadmap drafts (1 files)
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 35 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
-WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
-ASSIGNED_TO: Matt
-NEXT_PROMPT_GOES_TO: Matt
-OPERATOR_ACTION_REQUIRED: YES — supply next evidence or run Estimator for read-only candidate ranking
-CANDIDATES_NOT_AUTHORIZATION: YES — Estimator ranks candidates; output is not authorization, selection, or routing authority
+BUILD_AUTHORIZATION_IMPLIED: NO — delegated intake/design/research lane
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 35 GATED rows; 1 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+TASK_SCOREBOARD: Classify parked roadmap drafts (1 files) [INTAKE_CLASSIFY_BATCH score=72]
+NEXT_DELEGATED_TASK: Classify parked roadmap drafts (1 files)
+ASSIGNED_WORKER: Cursor
+ASSIGNED_TO: Cursor
+WHY_THIS_TASK: Untracked parallel-session drafts need MMI intake classification before any promotion; batch review is the actionable unblock
+TASK_SCORE: 72
+LOWER_SCORE_ALTERNATIVES: (none)
+SOURCE_EVIDENCE: git status untracked: Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md
 REQUIRED_UPDATE_AFTER_COMPLETION: MMI first after any worker completion: append evidence to the relevant MMI record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit routing-authority files, then python3 scripts/mmi_dispatch.py --verify
-NEXT_GATE: new signed contract, scoreboard row, intake evidence, or operator-selected next action
-TASK_SCOREBOARD: (empty — queue has no delegable tasks)
+NEXT_PROMPT_GOES_TO: Cursor
+BLOCKED_UNTIL: Cursor completes delegated task and MMI update
+OPERATOR_ACTION_REQUIRED: NO
+CANDIDATES_NOT_AUTHORIZATION: YES — lower-scored alternatives are context only; delegation is evidence-based
+CANDIDATES: [INTAKE] Classify parked roadmap drafts (1 files) | Classification: INTAKE_CLASSIFY_BATCH | Score: 72 | Source: git status untracked: Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md | Worker: Cursor | Matt action: NO
+NEXT_GATE: worker completion → MMI update first → --verify PASS
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -24,10 +31,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Blueprint ALL_CLEAR feedstock + Estimator BOR read + PM Voice feedstock relay
-  (MMI-DEC-057; INTAKE-2026-06-21-007). BOR-ALL-CLEAR-FEEDSTOCK-v1 populated; Estimator emits
-  SCORED_FEEDSTOCK under ALL_CLEAR; PM Voice relays Estimator rank. Prior: #52 GATED (`3adc7ae`;
-  MMI-DEC-056).
+LAST_COMPLETED: #61 Test Case Generator contract draft placed (UNSIGNED)
+  (MMI-DEC-058; INTAKE-2026-06-21-008). Claude draft relay; Cursor repo reconciliation;
+  `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md`. Prior: ALL_CLEAR
+  feedstock loop (`b0fa8a6`; MMI-DEC-057).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

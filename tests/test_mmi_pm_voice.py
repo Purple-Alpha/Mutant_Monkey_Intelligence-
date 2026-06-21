@@ -113,6 +113,12 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertTrue(you_do)
         self.assertNotIn("or hold", you_do.lower())
 
+    def test_route_next_step_gate_review_before_draft_keyword(self):
+        routed = self.mod._route_next_step(
+            "Run Grok pre-build gate review on #61 contract draft"
+        )
+        self.assertEqual(routed, "Codex")
+
     def test_t3_no_nameless_dead_end_when_candidate_evidence_exists(self):
         evidence = self.mod.VoiceEvidence(
             dispatcher_mode="ALL_CLEAR",
@@ -241,6 +247,23 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertEqual(fields["HAND_IT_TO"], "Claude")
         self.assertIn("#61", fields["YOU_DO"])
         self.assertIn("estimator feedstock rank", fields["WHY"])
+
+    def test_t7d_unsigned_contract_routes_codex(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            feedstock_first="#61",
+            feedstock_first_name="Test Case Generator",
+            feedstock_lane_type="CONTRACT_DRAFT",
+            menu_options=[],
+        )
+        fields = self.mod.compose_voice(
+            evidence,
+            repo_root=self.mod._repo_root(),
+        )
+        self.assertEqual(fields["HAND_IT_TO"], "Codex")
+        self.assertIn("Grok pre-build gate review", fields["YOU_DO"])
 
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}

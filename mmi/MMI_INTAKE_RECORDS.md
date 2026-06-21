@@ -430,3 +430,12 @@ Artifact: MMI-DEC-057; `mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v1; 
 Classification: CREW_LOOP_FIX — advisory feedstock ranking when build queue empty; not build authorization
 Routing outcome: Estimator ranks #61-#67 contract-draft feedstock; PM Voice relays rank #1 to Claude; hold rows excluded from auto rank
 Matt approval required: YES for #61 contract draft lane when Matt chooses
+
+INTAKE-2026-06-21-008
+Component: #61 Test Case Generator (contract draft placement from Claude)
+Request: Superintendent placement after Claude contract draft relay
+Source: PM feedstock rank #61; Claude draft; Matt strict PM line
+Artifact: `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md` UNSIGNED; MMI-DEC-058; handoff DONE_AWAITING_SIGN
+Classification: CONTRACT_DRAFT_PLACED — repo reconciliation applied; gate + §11 required before SIGNED_UNBUILT
+Routing outcome: PM Voice routes Codex pre-build gate review; then Matt §11 sign; then SIGNED_UNBUILT reconcile
+Matt approval required: YES for Grok pre-build gate and §11 sign
