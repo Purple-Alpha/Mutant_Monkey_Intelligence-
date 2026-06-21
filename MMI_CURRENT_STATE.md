@@ -24,10 +24,9 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #62 Regression Test §11 signed + SIGNED_UNBUILT reconcile
-  (MMI-DEC-067; INTAKE-2026-06-21-015). Contract §11 SIGNED 2026-06-21; scoreboard row
-  `SIGNED_UNBUILT`; **build not authorized**. Prior: Grok pre-build gate SIGNABLE
-  (`710a94b`; MMI-DEC-066).
+LAST_COMPLETED: #62 RegressionTestAgent built (AWAITING_AUDIT)
+  (MMI-DEC-068/069; build `9a8fb51`). Wrapper + 16 tests; completion gate pending.
+  Prior: §11 sign + SIGNED_UNBUILT (`b193842`; MMI-DEC-067).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
