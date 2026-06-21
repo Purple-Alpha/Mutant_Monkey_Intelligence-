@@ -258,10 +258,11 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             feedstock_lane_type="CONTRACT_DRAFT",
             menu_options=[],
         )
-        fields = self.mod.compose_voice(
-            evidence,
-            repo_root=self.mod._repo_root(),
-        )
+        with patch.object(self.mod, "_is_contract_signed", return_value=False):
+            fields = self.mod.compose_voice(
+                evidence,
+                repo_root=self.mod._repo_root(),
+            )
         self.assertEqual(fields["HAND_IT_TO"], "Codex")
         self.assertIn("Grok pre-build gate review", fields["YOU_DO"])
 
