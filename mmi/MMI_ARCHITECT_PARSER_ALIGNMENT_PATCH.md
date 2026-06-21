@@ -2,7 +2,7 @@
 
 **Document ID:** `MMI_ARCHITECT_PARSER_ALIGNMENT_PATCH`
 
-**Status:** §11 SIGNED 2026-06-20 by Matt Nichol. Parser implementation authorized for `scripts/mmi_architect.py` + targeted tests only.
+**Status:** §11 SIGNED 2026-06-20 by Matt Nichol. Lane **CLOSED** per MMI-DEC-052 (2026-06-21). Parser implementation at `829175b`/`d53ef03`.
 
 **Amends:** `mmi/MMI_ARCHITECT_BLUEPRINT_CONTRACT.md` (§11 signed 2026-06-20; commit `6f542a4`)
 

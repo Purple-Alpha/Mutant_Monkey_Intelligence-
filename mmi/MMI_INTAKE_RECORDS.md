@@ -376,3 +376,12 @@ Artifact: `mmi/MMI_HANDOFF_SIGNAL_AND_PM_ROUTING_CONTRACT.md` (§11 SIGNED 2026-
 Classification: SIGNED_CONTRACT_CLOSED — handoff log + writer + PM IN_FLIGHT routing; gate blockers resolved by operator closeout; no rebuild; AUTH-5 blocked
 Routing outcome: HANDOFF_SIGNAL lane closed in handoff log; PM Voice surfaces next open handoff (parser patch closeout) or engine fallback; dispatcher unchanged ALL_CLEAR
 Matt approval required: NO for this closeout slice (explicit authorization granted); YES for parser patch MMI closeout or other next lanes
+
+INTAKE-2026-06-21-002
+Component: ARCHITECT_PARSER_ALIGNMENT_PATCH (MMI closeout)
+Request: Parser patch MMI closeout — DEC + LAST_COMPLETED + handoff DONE_CLOSED only; no rebuild
+Source: §11 signed `mmi/MMI_ARCHITECT_PARSER_ALIGNMENT_PATCH.md`; builds `829175b`/`d53ef03`; open handoff DONE_AWAITING_CLOSEOUT
+Artifact: MMI-DEC-052; handoff log DONE_CLOSED line
+Classification: SIGNED_PATCH_CLOSED — parser alignment complete; `#52` blueprints cleanly; wrapper build and scoreboard reconcile remain separate lanes; AUTH-5 blocked
+Routing outcome: no open handoff IN_FLIGHT; dispatcher ALL_CLEAR; PM Voice falls back to engine routing until next lane
+Matt approval required: YES for `#52` scoreboard SIGNED_UNBUILT reconcile and/or Mode A build if Matt chooses
