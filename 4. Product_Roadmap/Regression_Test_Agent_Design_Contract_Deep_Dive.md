@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_62_REGRESSION_TEST_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT — UNSIGNED (Claude draft relayed by Matt 2026-06-21; Cursor repo reconciliation applied). Evidence Stage 1 (Synthetic) agent wrapper only when §11-signed. **No build**, **no scoreboard reconcile**, **no Blueprint-of-Record population**, **no registry/default dispatch**, **no AUTH-5**.
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol (Grok pre-build gate clean `mmi_62_contract_gate_20260621T082232Z` 0/0). Evidence Stage 1 (Synthetic) agent wrapper authorized by signature. Signing locks D1-D8 and authorizes the `RegressionTestAgent` wrapper build + focused tests **only**. It authorizes **no Blueprint-of-Record population**, **no default-registry registration**, **no production dispatch**, **no autonomous action**, and **no AUTH-5**. Scoreboard `SIGNED_UNBUILT` reconcile is a separate superintendent slice (`MMI_62_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY`).
 
 **Candidate:** #62 — Regression Test
 
@@ -146,7 +146,7 @@ advisory only; no regression cases emitted; no execution; no AUTH-5
 
 ---
 
-## §2 Locked Design Decisions (candidate — confirmed at §11)
+## §2 Locked Design Decisions (§11 signed 2026-06-21)
 
 - **D1 — Identity.** Regression Test is Layer 5 Challenge/test-support, Authority L3, Stage A, Evidence Stage 1 at signing.
 - **D2 — Recorded baseline only.** Baseline is prior-verified gate artifacts / MMI records — never current implementation code.
@@ -193,20 +193,16 @@ Focused wrapper tests must prove:
 
 ## §11 Sign-off
 
-**§11 UNSIGNED — draft placement only.**
+SIGNED. This signature locks D1-D8 and authorizes the Evidence Stage 1 (Synthetic) `RegressionTestAgent` wrapper build + focused tests only; no Blueprint-of-Record population, no default-registry registration, no production dispatch, no autonomous action, no AUTH-5. Matt also authorized `MMI_62_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY` in this signing action.
 
-- [ ] I approve this contract as written.
-- [ ] I authorize Grok pre-build gate review (Codex lane).
-- [ ] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
+- [x] I approve this contract as written.
+- [x] I authorize Grok pre-build gate review (Codex lane) — completed clean 0/0.
+- [x] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
 
 Confirmed: #62 generates regression tests from recorded verified behavior; it never runs, judges, or builds; operator decides regression vs. intended change.
 
 Upstream contract + recorded-baseline source + downstream test-runner reconciled against repo:
 - [x] yes (Cursor reconcile 2026-06-21)
-- [ ] pending operator review
+- [x] yes (operator review complete)
 
-Signature: ____________________________
-
-Date: ____________________________
-
-Commit: ____________________________
+> Matt Nichol June 21st 2026

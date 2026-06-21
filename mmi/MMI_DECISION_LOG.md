@@ -159,6 +159,8 @@ MMI-DEC-065 | 2026-06-21 | #62 Regression Test contract draft placement | `4. Pr
 
 MMI-DEC-066 | 2026-06-21 | #62 Regression Test Grok pre-build gate | `audit_outputs/mmi_62_contract_gate_20260621T082232Z.md` (0 blocking / 0 warnings); packet SHA256 `8eedc712d92622c0d663d50bb56efb931c0de3787fced07e2099c6cdfcd32cec`; Codex verdict SIGNABLE | ACCEPT | Pre-build gate clean; baseline-source language blocks self-certifying read of current implementation; `NO_BASELINE_CANNOT_GENERATE_REGRESSION` refusal confirmed; AUTH-5 blocked. **Not** §11 signed by this record, **not** SIGNED_UNBUILT reconcile, **not** build, **not** Blueprint/registry/AUTH-5. | Matt §11 sign #62 contract | Run mmi_dispatch.py --sync + --verify after commit | Codex (Grok pre-build gate review relay)
 
+MMI-DEC-067 | 2026-06-21 | #62 Regression Test §11 sign + SIGNED_UNBUILT reconcile | `4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED 2026-06-21; `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #62 row | ACCEPT | Matt §11 signed; lifecycle `DETECTOR_FUNCTION` -> `SIGNED_UNBUILT` with empty BLOCKERS; dispatcher can surface MODE:BUILD feedstock; contract authorizes Stage 1 wrapper build by §11 only; **separate operator build authorization still required** before implementation; no wrapper/tests on disk; **not** Blueprint-of-Record, **not** registry/default dispatch, **not** AUTH-5 | Separate operator build authorization before RegressionTestAgent implementation | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (§11 sign + authorize MMI_62_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
