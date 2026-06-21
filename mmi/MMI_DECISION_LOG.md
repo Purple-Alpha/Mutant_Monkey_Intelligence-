@@ -181,6 +181,10 @@ MMI-DEC-076 | 2026-06-21 | #63 Adversarial Test build authorization + implementa
 
 MMI-DEC-077 | 2026-06-21 | #63 Adversarial Test AWAITING_AUDIT scoreboard reconcile | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #63 row; build `2701726` | ACCEPT | Separate superintendent slice after SIGNED_UNBUILT (`MMI-DEC-075`) and build (`MMI-DEC-076`); lifecycle `SIGNED_UNBUILT` -> `AWAITING_AUDIT`; completion gate pending. **Not GATED** until Grok 0/0; **not GOVERNED_AGENT**; not production dispatch; not AUTH-5. | Grok completion gate then GATED reconcile | Run mmi_dispatch.py --sync + --verify after commit | Cursor (superintendent AWAITING_AUDIT reconcile)
 
+MMI-DEC-078 | 2026-06-21 | #63 Adversarial Test reconciled to GATED | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #63 row; `audit_outputs/adversarial_test_20260621T194650Z.md` (0/0) | ACCEPT | Matt authorized `MMI_63_GATED_RECONCILE_ONLY`; completion gate clean 0 blocking / 0 warnings; lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing. | No GOVERNED_AGENT promotion without separate authorization | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (superintendent lane: #63 GATED reconcile after clean gate)
+
+MMI-DEC-079 | 2026-06-21 | BOR feedstock skip GATED #63 + promote #67 | `mmi/BLUEPRINT_OF_RECORD.md` | ACCEPT | #63 marked completed in BOR; next feedstock rank #67 Rule Improvement. **Not** build authorization for #67+. | Contract draft lane for #67 when Matt chooses | Run mmi_dispatch.py --sync + --verify after commit | Cursor (PM accuracy after #63 GATED)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

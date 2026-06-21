@@ -556,3 +556,12 @@ Artifact: `core/sandbox/adversarial_test_agent.py`; `tests/test_adversarial_test
 Classification: BUILT_AWAITING_AUDIT — completion gate required before GATED
 Routing outcome: Grok completion gate then GATED reconcile
 Matt approval required: YES for GATED reconcile after clean gate
+
+INTAKE-2026-06-21-007
+Component: #63 Adversarial Test (GATED reconcile)
+Request: Superintendent GATED flip after Grok completion gate 0/0
+Source: Matt authorized MMI_63_GATED_RECONCILE_ONLY; `audit_outputs/adversarial_test_20260621T194650Z.md`; MMI-DEC-077 AWAITING_AUDIT
+Artifact: scoreboard #63 `GATED`; MMI-DEC-078
+Classification: GATED — built + gate clean; not GOVERNED_AGENT
+Routing outcome: PM Voice holds #63 unless promotion review authorized; next feedstock #67
+Matt approval required: YES for GOVERNED_AGENT promotion only
