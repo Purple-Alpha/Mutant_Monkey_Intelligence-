@@ -24,10 +24,10 @@ non_authority_disclaimer: Advisory flow plan only. Does not authorize build, rou
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
 
-feedstock_entry: priority=1 candidate_id=#62 lane_type=CONTRACT_DRAFT name=Regression Test
-feedstock_entry: priority=2 candidate_id=#63 lane_type=CONTRACT_DRAFT name=Adversarial Test
-feedstock_entry: priority=3 candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement
+feedstock_entry: priority=1 candidate_id=#63 lane_type=CONTRACT_DRAFT name=Adversarial Test
+feedstock_entry: priority=2 candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement
 feedstock_entry: priority=completed candidate_id=#61 lane_type=GATED name=Test Case Generator completed_gated=true
+feedstock_entry: priority=completed candidate_id=#62 lane_type=GATED name=Regression Test completed_gated=true
 feedstock_entry: priority=hold candidate_id=#1 lane_type=CONTRACT_DRAFT name=Swarm Commander Agent hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#3 lane_type=CONTRACT_DRAFT name=Risk Triage Agent hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true

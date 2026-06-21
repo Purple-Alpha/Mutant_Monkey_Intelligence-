@@ -502,3 +502,12 @@ Artifact: `4. Product_Roadmap/Regression_Test_Agent_Design_Contract_Deep_Dive.md
 Classification: SIGNED_UNBUILT_RECONCILED — build lane opens on separate operator authorization
 Routing outcome: PM Voice can relay build authorization when Matt chooses
 Matt approval required: YES for separate build lane authorization
+
+INTAKE-2026-06-22-001
+Component: #62 Regression Test (build + GATED)
+Request: Matt authorized build lane; full breadth lane execution
+Source: PM Voice build authorization 2026-06-22
+Artifact: `core/sandbox/regression_test_agent.py`; `tests/test_regression_test_agent.py`; `9a8fb51`; gate `regression_test_20260621T190616Z.md`; MMI-DEC-068 through MMI-DEC-070
+Classification: GATED — built + gate clean; not GOVERNED_AGENT
+Routing outcome: PM Voice holds #62; next feedstock #63
+Matt approval required: YES for GOVERNED_AGENT promotion only

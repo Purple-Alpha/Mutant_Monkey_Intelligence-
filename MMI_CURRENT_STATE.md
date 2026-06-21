@@ -24,9 +24,9 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #62 RegressionTestAgent built (AWAITING_AUDIT)
-  (MMI-DEC-068/069; build `9a8fb51`). Wrapper + 16 tests; completion gate pending.
-  Prior: §11 sign + SIGNED_UNBUILT (`b193842`; MMI-DEC-067).
+LAST_COMPLETED: #62 Regression Test reconciled to GATED
+  (MMI-DEC-070). Gate `regression_test_20260621T190616Z.md` 0/0; build `9a8fb51`;
+  **not GOVERNED_AGENT**. Prior: AWAITING_AUDIT (`33ac9ce`; MMI-DEC-068/069).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
