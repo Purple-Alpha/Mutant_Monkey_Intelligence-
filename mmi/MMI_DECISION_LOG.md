@@ -147,6 +147,8 @@ MMI-DEC-059 | 2026-06-21 | #61 Test Case Generator Grok pre-build gate | `audit_
 
 MMI-DEC-060 | 2026-06-21 | #61 Test Case Generator §11 sign + SIGNED_UNBUILT reconcile | `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED 2026-06-21; `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #61 row | ACCEPT | Matt §11 signed; lifecycle `DETECTOR_FUNCTION` -> `SIGNED_UNBUILT` with empty BLOCKERS; dispatcher can surface MODE:BUILD feedstock; contract authorizes Stage 1 wrapper build by §11 only; **separate operator build authorization still required** before implementation; no wrapper/tests on disk; **not** Blueprint-of-Record, **not** registry/default dispatch, **not** AUTH-5 | Separate operator build authorization before TestCaseGeneratorAgent implementation | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (§11 sign + authorize MMI_61_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY)
 
+MMI-DEC-061 | 2026-06-21 | #61 Test Case Generator build authorization + implementation | `core/sandbox/test_case_generator_agent.py`; `tests/test_test_case_generator_agent.py`; build `b444984` | ACCEPT | Matt authorized build lane explicitly ("yes keep going"); `TestCaseGeneratorAgent` Stage 1 wrapper + 16 focused pytest tests committed at `b444984`. **Not GATED** until completion gate clean 0/0; **not GOVERNED_AGENT**; not production dispatch; not default registry; not AUTH-5. | AWAITING_AUDIT reconcile + Grok completion gate | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize #61 build lane)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

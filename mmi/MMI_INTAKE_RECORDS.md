@@ -457,3 +457,12 @@ Artifact: `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Div
 Classification: SIGNED_UNBUILT_RECONCILED — build lane opens on separate operator authorization
 Routing outcome: PM Voice can relay build authorization when Matt chooses; Architect blueprintable
 Matt approval required: YES for separate build lane authorization
+
+INTAKE-2026-06-21-011
+Component: #61 Test Case Generator (build + AWAITING_AUDIT)
+Request: Matt authorized build lane; wrapper implementation
+Source: PM Voice build authorization; Matt "yes keep going"
+Artifact: `core/sandbox/test_case_generator_agent.py`; `tests/test_test_case_generator_agent.py`; `b444984`; MMI-DEC-061
+Classification: BUILT_AWAITING_AUDIT — completion gate required before GATED
+Routing outcome: Grok completion gate then GATED reconcile
+Matt approval required: YES for GATED reconcile after clean gate
