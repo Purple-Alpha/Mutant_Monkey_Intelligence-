@@ -143,6 +143,8 @@ MMI-DEC-057 | 2026-06-21 | Blueprint ALL_CLEAR feedstock + Estimator BOR read | 
 
 MMI-DEC-058 | 2026-06-21 | #61 Test Case Generator contract draft placement | `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md`; Claude draft relay; Cursor repo reconciliation | ACCEPT | UNSIGNED contract draft placed on disk; Estimator/Architect manifest paths added; PM Voice routes UNSIGNED contract to Codex pre-build gate review. **Not** §11 signed, **not** SIGNED_UNBUILT reconcile, **not** build, **not** AUTH-5. | Grok pre-build gate review then Matt §11 sign | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (Claude contract draft relay + superintendent placement)
 
+MMI-DEC-059 | 2026-06-21 | #61 Test Case Generator Grok pre-build gate | `audit_outputs/mmi_61_contract_gate_20260621T074416Z.md` (0 blocking / 0 warnings); packet SHA256 `417ccfcf0823e1d0bdecea755353db036b260d845690441db7bacb01e2f961fe`; Codex verdict SIGNABLE | ACCEPT | Pre-build gate clean; contract boundary confirmed (contract-in test-cases-out; no execution/evaluation/code-read/invention/governance writes; AUTH-5 blocked). **Not** §11 signed by this record, **not** SIGNED_UNBUILT reconcile, **not** build, **not** Blueprint/registry/AUTH-5. | Matt §11 sign #61 contract | Run mmi_dispatch.py --sync + --verify after commit | Codex (Grok pre-build gate review relay)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

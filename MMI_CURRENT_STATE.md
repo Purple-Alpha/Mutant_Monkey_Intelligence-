@@ -24,10 +24,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #61 Test Case Generator contract draft placed (UNSIGNED)
-  (MMI-DEC-058; INTAKE-2026-06-21-008). Claude draft relay; Cursor repo reconciliation;
-  `4. Product_Roadmap/Test_Case_Generator_Agent_Design_Contract_Deep_Dive.md`. Prior: ALL_CLEAR
-  feedstock loop (`b0fa8a6`; MMI-DEC-057).
+LAST_COMPLETED: #61 Test Case Generator Grok pre-build gate clean (SIGNABLE)
+  (MMI-DEC-059; INTAKE-2026-06-21-009). Gate `mmi_61_contract_gate_20260621T074416Z.md` 0/0;
+  contract still UNSIGNED — Matt §11 sign lane open. Prior: contract draft placement
+  (`e541352`/`687a8b7`; MMI-DEC-058).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
