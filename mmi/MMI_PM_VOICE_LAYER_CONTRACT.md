@@ -1,6 +1,6 @@
 # MMI PM Voice Layer — Owner Interface Contract
 
-**Status:** DRAFT — UNSIGNED
+**Status:** §11 SIGNED 2026-06-20 by Matt Nichol. Mode A read-only build authorized for `scripts/mmi_pm_voice.py` only.
 
 **Classification:** Governance contract · PM Voice Layer (single-voice reading-and-routing layer)
 
@@ -180,8 +180,17 @@ The engines are retained, untouched, running, and separately inspectable. They a
 
 ## 11. Sign-off
 
-**§11 UNSIGNED — placeholder for Matt Nichol.**
+**§11 SIGNED — Matt Nichol, June 20 2026.**
 
-- Governance contract only until signed
-- Mode A build target: `scripts/mmi_pm_voice.py`
-- Does not authorize engine edits, population of `mmi/BLUEPRINT_OF_RECORD.md`, AUTH-5, or routing mutation
+- [x] I approve this PM Voice Layer contract as written.
+- [x] I separately authorize Mode A read-only build of `scripts/mmi_pm_voice.py`.
+
+Confirmed: PM Voice is one voice that reads the engines and routes to the Matt-defined roster. It relays only — every line traces to a named engine; it adds nothing but the roster lookup. Candidate surfacing is relayed from existing engines, not independently selected by PM Voice.
+
+Confirmed: the underlying engines stay intact as the audit trail and revision map.
+
+Confirmed: this signature does **not** authorize writes to engines, scoreboard, registry, `MMI_CURRENT_STATE.md`, `mmi/BLUEPRINT_OF_RECORD.md` population, AUTH-5 unlock, or routing mutation.
+
+Roster (Section 5) confirmed as written: **yes**
+
+Matt Nichol
