@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance tests T1–T11 for MMI Architect Mode A."""
+"""Acceptance tests T1–T17 for MMI Architect Mode A."""
 from __future__ import annotations
 
 import hashlib
@@ -260,6 +260,46 @@ class TestMmiArchitectCandidateSpecificEvidence(unittest.TestCase):
         after_digest = _file_digest("mmi/BLUEPRINT_OF_RECORD.md")
         self.assertEqual(before_exists, after_exists)
         self.assertEqual(before_digest, after_digest)
+
+
+class TestMmiArchitectParserAlignment(unittest.TestCase):
+    def test_t12_sentinel_exact_renders_checkable_blueprint_line(self):
+        code, out, _ = _run_architect(candidate="#52")
+        self.assertEqual(code, 0)
+        self.assertIn(
+            "condition: CHECK:sentinel_exact: INPUT_INSUFFICIENT_CANNOT_EXPLAIN",
+            out,
+        )
+
+    def test_t13_invariant_present_renders_checkable_blueprint_line(self):
+        code, out, _ = _run_architect(candidate="#52")
+        self.assertEqual(code, 0)
+        self.assertIn("condition: CHECK:invariant_present:", out)
+        self.assertIn("per-line traceability", out)
+
+    def test_t14_live_52_blueprints_cleanly(self):
+        code, out, _ = _run_architect(candidate="#52")
+        self.assertEqual(code, 0, msg=out)
+        self.assertTrue(out.startswith("BLUEPRINT"))
+        self.assertNotIn("non_checkable_build_condition:", out)
+        self.assertNotIn("unknown_build_condition_prefix:", out)
+
+    def test_t15_unknown_prefix_refuses_and_names_prefix(self):
+        code, out, _ = _run_architect("unknown_build_condition_prefix")
+        self.assertEqual(code, 2)
+        self.assertTrue(out.startswith("INPUTS_INSUFFICIENT_CANNOT_BLUEPRINT"))
+        self.assertIn("unknown_build_condition_prefix: bogus_prefix", out)
+
+    def test_t16_existing_architect_tests_still_pass(self):
+        for fixture in ("complete", "missing_contract", "missing_flow", "missing_out_of_scope"):
+            _run_architect(fixture)
+
+    def test_t17_parser_alignment_read_only(self):
+        before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
+        code, _, _ = _run_architect(candidate="#52")
+        self.assertEqual(code, 0)
+        after = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
+        self.assertEqual(before, after)
 
 
 if __name__ == "__main__":

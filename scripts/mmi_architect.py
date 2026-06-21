@@ -52,6 +52,16 @@ VAGUE_WORDS = frozenset(
 RESEARCH_PATH_RE = re.compile(r"mmi/research/", re.IGNORECASE)
 TABLE_ROW_RE = re.compile(r"^\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|")
 CHECK_LINE_RE = re.compile(r"^\s*-\s*CHECK:\s*(.+)\s*$", re.MULTILINE)
+ALLOWED_CHECK_PREFIXES = (
+    "file_exists:",
+    "field_present:",
+    "command_expect:",
+    "path_exact:",
+    "format_exact:",
+    "consumer_named:",
+    "sentinel_exact:",
+    "invariant_present:",
+)
 OUT_OF_SCOPE_HEADER_RE = re.compile(
     r"(?:^|\n)#{1,3}\s*Out of scope[^\n]*\n(.*?)(?=\n#{1,3}\s|\Z)",
     re.IGNORECASE | re.DOTALL,
@@ -229,6 +239,22 @@ def _validate_flow(flow: dict[str, str]) -> list[str]:
     return gaps
 
 
+def _checkable_build_condition(cond: str) -> bool:
+    lower = cond.lower()
+    return any(lower.startswith(prefix) for prefix in ALLOWED_CHECK_PREFIXES)
+
+
+def _unknown_build_condition_prefix(cond: str) -> str | None:
+    if ":" not in cond:
+        return None
+    prefix = cond.split(":", 1)[0].strip().lower()
+    if not prefix:
+        return None
+    if _checkable_build_condition(cond):
+        return None
+    return prefix
+
+
 def _validate_build_conditions(conditions: list[str]) -> list[str]:
     gaps: list[str] = []
     if not conditions:
@@ -236,15 +262,12 @@ def _validate_build_conditions(conditions: list[str]) -> list[str]:
         return gaps
     for cond in conditions:
         lower = cond.lower()
-        if not (
-            lower.startswith("file_exists:")
-            or lower.startswith("field_present:")
-            or lower.startswith("command_expect:")
-            or lower.startswith("path_exact:")
-            or lower.startswith("format_exact:")
-            or lower.startswith("consumer_named:")
-        ):
-            gaps.append(f"non_checkable_build_condition: {cond}")
+        if not _checkable_build_condition(cond):
+            unknown = _unknown_build_condition_prefix(cond)
+            if unknown:
+                gaps.append(f"unknown_build_condition_prefix: {unknown}")
+            else:
+                gaps.append(f"non_checkable_build_condition: {cond}")
             continue
         for vague in VAGUE_WORDS:
             if vague in lower:
