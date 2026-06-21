@@ -610,3 +610,12 @@ Artifact: `audit_outputs/mmi_64_contract_gate_20260621T214737Z.md` (0/0); packet
 Classification: CONTRACT_DRAFT — Grok SIGNABLE; still UNSIGNED; not build authorization
 Routing outcome: PM Voice handoff → Matt §11 sign #64 contract
 Matt approval required: YES for §11 sign; YES for SIGNED_UNBUILT reconcile before build
+
+INTAKE-2026-06-21-011
+Component: #64 Failure Classification (§11 sign + SIGNED_UNBUILT reconcile)
+Request: Matt §11 signature + MMI_64_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY
+Source: Matt Nichol June 21st 2026
+Artifact: `4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED; scoreboard #64 `SIGNED_UNBUILT`; MMI-DEC-086
+Classification: SIGNED_UNBUILT — contract signed; build not authorized until Matt names build lane
+Routing outcome: Dispatcher may surface MODE:BUILD feedstock for #64; separate build authorization required
+Matt approval required: YES to authorize build lane before implementation

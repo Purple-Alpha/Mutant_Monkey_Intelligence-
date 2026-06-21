@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #64 Failure Classification Grok pre-build gate clean 0/0
-  (MMI-DEC-085; `mmi_64_contract_gate_20260621T214737Z`; Matt §11 sign pending).
+LAST_COMPLETED: #64 Failure Classification §11 signed + SIGNED_UNBUILT reconcile
+  (MMI-DEC-086; Matt Nichol June 21st 2026; build authorization separate).
 
-PRIOR_LAST_COMPLETED: #64 Failure Classification Agent Design Contract draft filed
-  (MMI-DEC-084; Matt Nichol June 21st 2026; DRAFT UNSIGNED).
+PRIOR_LAST_COMPLETED: #64 Failure Classification Grok pre-build gate clean 0/0
+  (MMI-DEC-085; `mmi_64_contract_gate_20260621T214737Z`).
   Gate `adversarial_test_20260621T194650Z.md` 0/0; build `2701726`; **not GOVERNED_AGENT**.
 
 REVIEW_ACCEPTED_ITEMS:

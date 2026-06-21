@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_64_FAILURE_CLASSIFICATION_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT — UNSIGNED (Matt-authored contract text filed 2026-06-21; Cursor §5/§7 reconciliation applied; Grok pre-build gate clean `mmi_64_contract_gate_20260621T214737Z` 0/0; **not** §11; **not** build; **not** SIGNED_UNBUILT reconcile)
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol (Grok pre-build gate clean `mmi_64_contract_gate_20260621T214737Z` 0/0). Evidence Stage 1 (Synthetic) agent wrapper authorized by signature. Signing locks D1-D9 and authorizes the `FailureClassificationAgent` wrapper build + focused tests **only**. It authorizes **no** Blueprint-of-Record population, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5. Scoreboard `SIGNED_UNBUILT` reconciled in same signing action per MMI-DEC-086.
 
 **Candidate:** #64 — Failure Classification
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** BLOCKED until §11 sign-off + reconcile to SIGNED_UNBUILT
+**Implementation:** BLOCKED until separate operator build authorization (§11 signed; scoreboard `SIGNED_UNBUILT` per MMI-DEC-086)
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -288,40 +288,32 @@ A build is admissible for sign-off only if T1–T10 all pass.
 
 ---
 
-## §12 Matt §11 Signature Block
+## §12 Sign-off
 
-```
-§11 SIGN-OFF — MMI_64_FAILURE_CLASSIFICATION_AGENT_DESIGN_CONTRACT
+SIGNED. This signature locks D1-D9 and authorizes the Evidence Stage 1 (Synthetic) `FailureClassificationAgent` wrapper build + focused tests only; no Blueprint-of-Record population, no default-registry registration, no production dispatch, no autonomous action, no AUTH-5. Matt also authorized `MMI_64_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY` in this signing action.
 
-I, Matt Nichol, have reviewed this Agent Design Contract draft for #64.
+- [x] I approve this contract as written.
+- [x] I authorize Grok pre-build gate review (Codex lane) — completed clean 0/0.
+- [x] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
 
-[ ] I approve this contract as written.
-[ ] I authorize gate (Grok pre-build review).
-[ ] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
-
-Confirmed: #64 CLASSIFIES failures from recorded evidence; it never responds, fixes, routes,
-blocks, escalates, or recommends. Label only.
-[ ] yes
+Confirmed: #64 CLASSIFIES failures from recorded evidence; it never responds, fixes, routes, blocks, escalates, or recommends. Label only.
 
 Fixed taxonomy (categories + severities, Section 4) is correct as written:
-[ ] yes  [ ] revise: _______________________________
+- [x] yes
 
 Upstream failure-record source + downstream consumer reconciled against repo:
-[x] yes (Cursor reconcile 2026-06-21 — draft record only)  [ ] pending
+- [x] yes (Cursor reconcile 2026-06-21)
+- [x] yes (operator review complete)
 
-Signature: ____________________________
-Date:      ____________________________
-Commit:    ____________________________
-```
+> Matt Nichol June 21st 2026
 
 ---
 
 ## §13 Non-Authority Footer
 
 ```
-This is a CONTRACT DRAFT — UNSIGNED. It is not authority.
-No §11 sign-off. No build. No SIGNED_UNBUILT reconcile. No state mutated.
+§11 SIGNED. Authorizes Stage 1 `FailureClassificationAgent` wrapper build + focused tests only.
+Separate operator build authorization required before implementation.
+No Blueprint-of-Record population, no registry/default dispatch, no production dispatch, no AUTH-5.
 #64 labels recorded failures only; it never responds, fixes, routes, blocks, escalates, or recommends.
-Classification output does not auto-route work; Matt chooses all responses.
-AUTH-5 remains blocked. Human authority held throughout.
 ```

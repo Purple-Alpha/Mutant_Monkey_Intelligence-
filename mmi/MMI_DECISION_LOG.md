@@ -197,6 +197,8 @@ MMI-DEC-084 | 2026-06-21 | #64 Failure Classification Agent Design Contract draf
 
 MMI-DEC-085 | 2026-06-21 | #64 Failure Classification Grok pre-build gate | `audit_outputs/mmi_64_contract_gate_20260621T214737Z.md` (0 blocking / 0 warnings); packet SHA256 `9b6aabe02baa0bf2180c5bf83ff6cacb68ae3259dfe5a8d86ecde2a905510655`; Grok verdict SIGNABLE | ACCEPT | Matt authorized pre-build gate; gate clean; contract boundary confirmed (record-in classification-out; fixed taxonomy; no response/fix/route/block/recommendation; no governance writes; AUTH-5 blocked). **Not** §11 signed by this record, **not** SIGNED_UNBUILT reconcile, **not** build, **not** Blueprint/registry/AUTH-5. | Matt §11 sign #64 contract | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol (authorize Grok pre-build gate #64)
 
+MMI-DEC-086 | 2026-06-21 | #64 Failure Classification §11 sign + SIGNED_UNBUILT reconcile | `4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED 2026-06-21; `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #64 row | ACCEPT | Matt §11 signed (`Matt Nichol June 21st 2026`); lifecycle `SPEC_DRAFT` -> `SIGNED_UNBUILT` with empty BLOCKERS; dispatcher can surface MODE:BUILD feedstock; contract authorizes Stage 1 wrapper build by §11 only; **separate operator build authorization still required** before implementation; no wrapper/tests on disk; **not** Blueprint-of-Record, **not** registry/default dispatch, **not** AUTH-5 | Separate operator build authorization before FailureClassificationAgent implementation | Run mmi_dispatch.py --sync + --verify after commit | Matt Nichol June 21st 2026
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
