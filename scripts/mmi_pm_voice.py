@@ -79,8 +79,21 @@ RUBRIC_BINARY_CALIBRATION_AMENDMENT_REL = (
     "4. Product_Roadmap/Next_Action_Decision_Rubric_Binary_Calibration_Amendment_Deep_Dive.md"
 )
 
+CONTRACT_SIGNED_DECISION: dict[str, str] = {
+    "#1": "MMI-DEC-102",
+    "#3": "MMI-DEC-098",
+}
+
+CONTRACT_DRAFTS_ON_DISK: dict[str, str] = {
+    "#1": "docs/mmi/contracts/001_swarm_commander_contract.md",
+}
+
 CONTRACT_REVIEW_DRAFTS_ON_DISK: dict[str, str] = {
     "#3": "docs/mmi/contracts/003_risk_triage_contract.md",
+}
+
+CONTRACT_DRAFT_GATE_GLOBS: dict[str, str] = {
+    "#1": "mmi_01_contract_gate_*.md",
 }
 
 CONTRACT_REVIEW_GATE_GLOBS: dict[str, str] = {
@@ -216,15 +229,18 @@ def _is_rubric_binary_calibration_in_force(root: Path) -> bool:
 
 
 def _contract_review_draft_rel(candidate_id: str, root: Path) -> str | None:
-    rel = CONTRACT_REVIEW_DRAFTS_ON_DISK.get(candidate_id)
-    if rel and (root / rel).is_file():
-        return rel
+    for mapping in (CONTRACT_DRAFTS_ON_DISK, CONTRACT_REVIEW_DRAFTS_ON_DISK):
+        rel = mapping.get(candidate_id)
+        if rel and (root / rel).is_file():
+            return rel
     return None
 
 
-def _contract_review_gate_clean(root: Path, candidate_id: str) -> str | None:
-    """Return newest clean pre-build gate artifact path for a contract-review draft."""
-    pattern = CONTRACT_REVIEW_GATE_GLOBS.get(candidate_id)
+def _contract_gate_clean(root: Path, candidate_id: str) -> str | None:
+    """Return newest clean pre-build gate artifact path for a contract draft."""
+    pattern = CONTRACT_DRAFT_GATE_GLOBS.get(
+        candidate_id
+    ) or CONTRACT_REVIEW_GATE_GLOBS.get(candidate_id)
     if not pattern:
         return None
     audit_dir = root / "audit_outputs"
@@ -296,6 +312,9 @@ def _all_clear_hold_posture(evidence: VoiceEvidence, root: Path) -> bool:
 
 
 def _contract_rel_for_candidate(candidate_id: str) -> str | None:
+    rel = CONTRACT_DRAFTS_ON_DISK.get(candidate_id)
+    if rel:
+        return rel
     rel = CONTRACT_REVIEW_DRAFTS_ON_DISK.get(candidate_id)
     if rel:
         return rel
@@ -378,6 +397,8 @@ def _relay_signed_unreconciled(root: Path, options: list) -> object | None:
             root, contract_rel
         ):
             if option.candidate_id in CONTRACT_REVIEW_DRAFTS_ON_DISK:
+                continue
+            if option.candidate_id in CONTRACT_DRAFTS_ON_DISK:
                 continue
             return option
     return None
@@ -470,8 +491,8 @@ def _ignore_lines(options: list, root: Path, feedstock_first: str = "") -> list[
                     continue
                 add_line(
                     f"{option.candidate_id} {option.candidate_name} has "
-                    f"CONTRACT_REVIEW draft on disk at {draft_rel} (DRAFT "
-                    f"UNSIGNED); hold unless Matt chooses unpark."
+                    f"{'contract DRAFT' if option.candidate_id in CONTRACT_DRAFTS_ON_DISK else 'CONTRACT_REVIEW draft'} "
+                    f"on disk at {draft_rel} (DRAFT UNSIGNED); hold unless Matt chooses unpark."
                 )
             else:
                 add_line(
@@ -479,18 +500,20 @@ def _ignore_lines(options: list, root: Path, feedstock_first: str = "") -> list[
                     f"control/risk candidate; hold unless Matt chooses it."
                 )
 
-    for candidate_id, draft_rel in CONTRACT_REVIEW_DRAFTS_ON_DISK.items():
-        if not _is_contract_signed(root, draft_rel):
-            continue
-        label = candidate_id
-        for option in options:
-            if option.candidate_id == candidate_id:
-                label = f"{option.candidate_id} {option.candidate_name}"
-                break
-        add_line(
-            f"{label} contract §11 SIGNED at {draft_rel} (MMI-DEC-098); not build / not "
-            f"SIGNED_UNBUILT."
-        )
+    for mapping in (CONTRACT_DRAFTS_ON_DISK, CONTRACT_REVIEW_DRAFTS_ON_DISK):
+        for candidate_id, draft_rel in mapping.items():
+            if not _is_contract_signed(root, draft_rel):
+                continue
+            label = candidate_id
+            for option in options:
+                if option.candidate_id == candidate_id:
+                    label = f"{option.candidate_id} {option.candidate_name}"
+                    break
+            decision = CONTRACT_SIGNED_DECISION.get(candidate_id, "MMI-DEC")
+            add_line(
+                f"{label} contract §11 SIGNED at {draft_rel} ({decision}); not build / not "
+                f"SIGNED_UNBUILT."
+            )
 
     for option in options:
         if option.candidate_id == "#105" and (
@@ -673,10 +696,41 @@ def _feedstock_hand_it_to(lane_type: str) -> str:
     return ROSTER_MATT
 
 
+def _compose_signed_swarm_commander_contract_voice(
+    evidence: VoiceEvidence, contract_rel: str, repo_root: Path
+) -> dict[str, str]:
+    gate_rel = _contract_gate_clean(repo_root, "#1") or ""
+    gate_note = f" gate {gate_rel}" if gate_rel else ""
+    return {
+        "WHAT_NEEDS_MATT": (
+            "Matt selects next lane explicitly; #1 Swarm Commander contract §11 "
+            "signed; dispatcher ALL_CLEAR with buildable_count=0."
+        ),
+        "IN_FLIGHT": (
+            f"#1 contract §11 SIGNED at {contract_rel} (MMI-DEC-102);"
+            f"{gate_note}; not build / not SIGNED_UNBUILT."
+        ),
+        "HAND_IT_TO": ROSTER_MATT,
+        "YOU_DO": (
+            f"Hold until Matt names next lane. Spine contracts #1 + #3 §11 signed; "
+            f"maintain drift defense: pytest {INVARIANTS_PROBE_TEST_REL} after any "
+            f"scripts/mmi_*.py change."
+        ),
+        "WHY": (
+            f"§11 signed at {contract_rel}; pre-build gate 0/0 (MMI-DEC-101); "
+            f"BOR hold-only feedstock; missing_contract_count="
+            f"{evidence.missing_contract_count}."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_signed_risk_triage_contract_voice(
     evidence: VoiceEvidence, contract_rel: str, repo_root: Path
 ) -> dict[str, str]:
-    gate_rel = _contract_review_gate_clean(repo_root, "#3") or ""
+    gate_rel = _contract_gate_clean(repo_root, "#3") or ""
     gate_note = f" gate {gate_rel}" if gate_rel else ""
     return {
         "WHAT_NEEDS_MATT": (
@@ -696,6 +750,66 @@ def _compose_signed_risk_triage_contract_voice(
             f"§11 signed at {contract_rel}; pre-build gate 0/0 (MMI-DEC-097); "
             f"BOR hold-only feedstock; missing_contract_count="
             f"{evidence.missing_contract_count}."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
+def _compose_unsigned_contract_draft_voice(
+    evidence: VoiceEvidence, contract_rel: str
+) -> dict[str, str]:
+    candidate_id = evidence.feedstock_first
+    candidate_name = evidence.feedstock_first_name
+    return {
+        "WHAT_NEEDS_MATT": (
+            f"Pre-build gate review is needed for {candidate_id} {candidate_name} "
+            f"contract draft."
+        ),
+        "IN_FLIGHT": f"Contract draft on disk at {contract_rel}; §11 UNSIGNED.",
+        "HAND_IT_TO": ROSTER_REVIEW,
+        "YOU_DO": (
+            f"Run Grok pre-build gate review on {candidate_id} "
+            f"{candidate_name} contract draft at {contract_rel}."
+        ),
+        "WHY": (
+            f"contract draft on disk at {contract_rel}; §11 UNSIGNED; "
+            f"estimator feedstock rank {candidate_id}; MMI-DEC-099 unpark; "
+            f"MMI-DEC-100 draft placement."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
+def _compose_gate_clean_contract_draft_voice(
+    evidence: VoiceEvidence,
+    contract_rel: str,
+    gate_rel: str,
+    repo_root: Path,
+) -> dict[str, str]:
+    candidate_id = evidence.feedstock_first
+    candidate_name = evidence.feedstock_first_name
+    return {
+        "WHAT_NEEDS_MATT": (
+            f"Optional Matt §11 signature on {candidate_id} {candidate_name} "
+            f"contract draft when ready."
+        ),
+        "IN_FLIGHT": (
+            f"Pre-build gate clean 0/0 at {gate_rel}; contract still UNSIGNED."
+        ),
+        "HAND_IT_TO": ROSTER_MATT,
+        "YOU_DO": (
+            f"Matt §11 sign {candidate_id} {candidate_name} at {contract_rel} "
+            f"when ready. Gate evidence: {gate_rel}. No build authorization; "
+            f"no SIGNED_UNBUILT reconcile; no scoreboard promotion implied."
+        ),
+        "WHY": (
+            f"pre-build gate 0/0 at {gate_rel}; contract draft at {contract_rel}; "
+            f"estimator feedstock rank {candidate_id}; MMI-DEC-099 unpark; "
+            f"MMI-DEC-101 gate record."
         ),
         "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
         "SOURCE": _source_line(evidence, repo_root=repo_root),
@@ -953,6 +1067,10 @@ def _compose_all_clear_hold_voice(
         repo_root, CONTRACT_REVIEW_DRAFTS_ON_DISK["#3"]
     ):
         why += " #3 contract §11 SIGNED (MMI-DEC-098); not build."
+    if (repo_root / CONTRACT_DRAFTS_ON_DISK["#1"]).is_file() and _is_contract_signed(
+        repo_root, CONTRACT_DRAFTS_ON_DISK["#1"]
+    ):
+        why += " #1 contract §11 SIGNED (MMI-DEC-102); not build."
     if _is_rubric_binary_calibration_in_force(repo_root):
         why += (
             " Next-Action Rubric §3.A binary calibration in force "
@@ -1039,15 +1157,28 @@ def compose_voice(
             contract_rel = _contract_rel_for_candidate(evidence.feedstock_first)
             if contract_rel and (root / contract_rel).is_file():
                 if not _is_contract_signed(root, contract_rel):
-                    gate_rel = _contract_review_gate_clean(
-                        root, evidence.feedstock_first
-                    )
+                    gate_rel = _contract_gate_clean(root, evidence.feedstock_first)
                     if gate_rel:
+                        if evidence.feedstock_lane_type == "CONTRACT_DRAFT":
+                            return _compose_gate_clean_contract_draft_voice(
+                                evidence, contract_rel, gate_rel, root
+                            )
                         return _compose_gate_clean_contract_review_voice(
                             evidence, contract_rel, gate_rel, root
                         )
+                    if evidence.feedstock_lane_type == "CONTRACT_DRAFT":
+                        return _compose_unsigned_contract_draft_voice(
+                            evidence, contract_rel
+                        )
                     return _compose_unsigned_contract_review_voice(
                         evidence, contract_rel
+                    )
+                if (
+                    evidence.feedstock_first == "#1"
+                    and _is_contract_signed(root, contract_rel)
+                ):
+                    return _compose_signed_swarm_commander_contract_voice(
+                        evidence, contract_rel, root
                     )
                 if (
                     evidence.feedstock_first == "#3"

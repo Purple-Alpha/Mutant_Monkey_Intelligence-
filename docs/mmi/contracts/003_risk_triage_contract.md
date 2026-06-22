@@ -266,7 +266,7 @@ No file creation, registry entry, or scoreboard `SIGNED_UNBUILT` reconcile is au
 2. Governed retrofit vs replacement for `email_risk_scoring_agent.py` — separate operator decision.
 3. Whether `axis_scores` uses fixed key names from Client-Facing 5-Axis rubric or internal axis ids only at telemetry layer.
 4. Maximum `detector_outputs` array size and rejection policy when all records invalid (empty score vs error envelope).
-5. Companion #1 Swarm Commander contract draft ordering — parallel review vs sequential gate.
+5. Companion #1 Swarm Commander contract draft ordering — **resolved:** #1 draft follows #3 §11 sign (MMI-DEC-098/099/100 sequential path).
 
 ---
 

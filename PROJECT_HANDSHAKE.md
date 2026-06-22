@@ -24,7 +24,7 @@ Historical "NorthStar" / "NorthStar Inbox Shield" references in signed specs =
 ═══════════════════════════════════════════════
 
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 0f361aa)
+CURRENT NEXT ACTION (verify HEAD at session start — spine admin reconcile 2026-06-22)
 ═══════════════════════════════════════════════
 AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Monkey
   Security authority repo** — PRIMARY CODEBASE (operator decision 2026-06-13; see
@@ -33,13 +33,15 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: 0f361aa (verify at session start — admin drift reconcile baseline 2026-06-21)
+HEAD: verify at session start (spine closeout + admin reconcile commit pending this cycle)
 
 DISPATCHER: MODE ALL_CLEAR — `python3 scripts/mmi_dispatch.py --verify` PASS
-  0 SIGNED_UNBUILT · 0 AWAITING_AUDIT · 39 GATED control-plane rows
+  0 SIGNED_UNBUILT · 0 AWAITING_AUDIT · GATED rows unchanged
   Task scoreboard empty — Matt names next lane
 
 LAST_COMPLETED (MMI authority repo):
+  #1 Swarm Commander + #3 Risk Triage — spine contract-review §11 signed at
+    `docs/mmi/contracts/` (MMI-DEC-098/101/102); gates 0/0; **not** build / **not** SIGNED_UNBUILT
   #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
     (MMI-DEC-092); Lane 1 Authority Escalation Probe on disk (MMI-DEC-082); Lane 2+ held
   #64 Failure Classification — GATED (MMI-DEC-088)
@@ -47,12 +49,12 @@ LAST_COMPLETED (MMI authority repo):
   Evidence wrappers #47 Case Timeline, #52 Plain-English Explanation — GATED
 
 ESTIMATOR (advisory only — not authorization):
-  buildable_count=0 · missing_contract_count=2 (#1 Swarm Commander, #3 Risk Triage)
-  BOR feedstock hold-only (BOR-ALL-CLEAR-FEEDSTOCK-v6, MMI-DEC-093)
+  buildable_count=0 · missing_contract_count=0 (#1/#3 contracts PRESENT on disk)
+  BOR hold-only (BOR-ALL-CLEAR-FEEDSTOCK-v10, MMI-DEC-102)
 
-NEXT ACTION: Matt selects next lane explicitly. PM Voice / Estimator rank only.
+NEXT ACTION: Matt selects next lane explicitly. PM Voice / Estimator / rubric rank only.
   Held unless authorized: #105 Lane 2+, #67 unpark, GOVERNED_AGENT promotion for GATED rows,
-  #1/#3 contract draft (higher-risk control-plane candidates).
+  #1/#3 wrapper build / SIGNED_UNBUILT reconcile, #2 Mission Context contract draft.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`
@@ -60,7 +62,7 @@ PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
 PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 14 GOVERNED_AGENT at ES1 Synthetic;
   depth gate CLOSED · Stage B gate CLOSED · revenue milestones mostly open (see MILESTONE_ARC.md)
 
-LAST UPDATED: 2026-06-21 (admin drift cleanup: BOR v6, MMI_HEALTH_STATE, handshake reconcile)
+LAST UPDATED: 2026-06-22 (admin reconcile: scoreboard + handshake spine contract truth; MMI-DEC-103)
 ═══════════════════════════════════════════════
 
 ─────────────────────────────────────────────────

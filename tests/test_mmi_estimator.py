@@ -483,11 +483,11 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
     def test_t35_scored_feedstock_from_bor(self):
         _, out, _ = _run_estimator(None, ["--verify-text", VERIFY_ALL_CLEAR])
         self.assertIn("ADVISORY_ONLY:", out)
-        self.assertIn("SCORED_FEEDSTOCK", out)
-        self.assertIn("candidate_id: #1", out)
-        self.assertIn("lane_type: CONTRACT_DRAFT", out)
+        self.assertIn("NO_BUILDABLE_CANDIDATES", out)
+        self.assertNotIn("SCORED_FEEDSTOCK", out)
         self.assertIn("BUILDABILITY_EXCLUSIONS", out)
-        self.assertIn("BLOCKED_MISSING_CONTRACT", out)
+        self.assertIn("EXCLUDED_NON_BUILDABLE_STATE", out)
+        self.assertNotIn("lane_type: CONTRACT_DRAFT", out)
         self.assertNotIn("lane_type: CONTRACT_REVIEW", out)
 
     def test_first_use_live_regression(self):

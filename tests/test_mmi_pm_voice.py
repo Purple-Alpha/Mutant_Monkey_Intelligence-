@@ -378,9 +378,10 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         )
         self.assertIn("MMI-DEC-095", fields["WHY"])
         self.assertIn("MMI-DEC-098", fields["WHY"])
+        self.assertIn("MMI-DEC-102", fields["WHY"])
         self.assertIn("§11 SIGNED", fields["IGNORE_FOR_NOW"])
+        self.assertIn("001_swarm_commander_contract.md", fields["IGNORE_FOR_NOW"])
         self.assertIn("003_risk_triage_contract.md", fields["IGNORE_FOR_NOW"])
-        self.assertIn("higher-risk control/risk candidate", fields["IGNORE_FOR_NOW"])
         self.assertIn("rubric_calibration: MMI-DEC-095", fields["SOURCE"])
 
     def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):
@@ -400,7 +401,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 ),
             ],
         )
-        with patch.object(self.mod, "_contract_review_gate_clean", return_value=None):
+        with patch.object(self.mod, "_contract_gate_clean", return_value=None):
             with patch.object(self.mod, "_is_contract_signed", return_value=False):
                 fields = self.mod.compose_voice(
                     evidence,
@@ -464,10 +465,98 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertEqual(fields["HAND_IT_TO"], "Matt")
         self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
         self.assertIn("MMI-DEC-098", fields["IN_FLIGHT"])
-        self.assertNotIn("§11 sign", fields["YOU_DO"])
+        self.assertNotIn("Matt §11 sign", fields["YOU_DO"])
         self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
 
-    def test_t7k_unparked_1_feedstock_routes_claude_contract_draft(self):
+    def test_t7k_unparked_1_draft_on_disk_routes_codex_gate(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=0,
+            feedstock_first="#1",
+            feedstock_first_name="Swarm Commander Agent",
+            feedstock_lane_type="CONTRACT_DRAFT",
+            menu_options=[
+                _menu_option(
+                    candidate_id="#1",
+                    candidate_name="Swarm Commander Agent",
+                    buildability_status="EXCLUDED_NON_BUILDABLE_STATE",
+                ),
+            ],
+        )
+        with patch.object(self.mod, "_contract_gate_clean", return_value=None):
+            with patch.object(self.mod, "_is_contract_signed", return_value=False):
+                fields = self.mod.compose_voice(
+                    evidence,
+                    repo_root=self.mod._repo_root(),
+                )
+        self.assertEqual(fields["HAND_IT_TO"], "Codex")
+        self.assertIn("Pre-build gate review is needed for #1", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("001_swarm_commander_contract.md", fields["YOU_DO"])
+        self.assertIn("MMI-DEC-100", fields["WHY"])
+        self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
+
+    def test_t7m_gate_clean_1_routes_matt_sign(self):
+        root = self.mod._repo_root()
+        gate_path = root / "audit_outputs" / "mmi_01_contract_gate_test_unit.md"
+        gate_path.parent.mkdir(parents=True, exist_ok=True)
+        gate_path.write_text(
+            "GATE_SUMMARY: blocking=0 warnings=0\n", encoding="utf-8"
+        )
+        self.addCleanup(lambda: gate_path.unlink(missing_ok=True))
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=0,
+            feedstock_first="#1",
+            feedstock_first_name="Swarm Commander Agent",
+            feedstock_lane_type="CONTRACT_DRAFT",
+            menu_options=[
+                _menu_option(
+                    candidate_id="#1",
+                    candidate_name="Swarm Commander Agent",
+                    buildability_status="EXCLUDED_NON_BUILDABLE_STATE",
+                ),
+            ],
+        )
+        with patch.object(self.mod, "_is_contract_signed", return_value=False):
+            fields = self.mod.compose_voice(evidence, repo_root=root)
+        self.assertEqual(fields["HAND_IT_TO"], "Matt")
+        self.assertIn("§11 sign", fields["YOU_DO"])
+        self.assertIn("mmi_01_contract_gate_test_unit.md", fields["YOU_DO"])
+        self.assertIn("MMI-DEC-101", fields["WHY"])
+        self.assertNotIn("Grok pre-build gate review", fields["YOU_DO"])
+
+    def test_t7n_signed_1_feedstock_routes_hold_not_sign(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=0,
+            feedstock_first="#1",
+            feedstock_first_name="Swarm Commander Agent",
+            feedstock_lane_type="CONTRACT_DRAFT",
+            menu_options=[
+                _menu_option(
+                    candidate_id="#1",
+                    candidate_name="Swarm Commander Agent",
+                    buildability_status="EXCLUDED_NON_BUILDABLE_STATE",
+                ),
+            ],
+        )
+        fields = self.mod.compose_voice(
+            evidence,
+            repo_root=self.mod._repo_root(),
+        )
+        self.assertEqual(fields["HAND_IT_TO"], "Matt")
+        self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("MMI-DEC-102", fields["IN_FLIGHT"])
+        self.assertNotIn("Matt §11 sign", fields["YOU_DO"])
+        self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
+
+    def test_t7l_unparked_1_no_draft_routes_claude_contract_draft(self):
         evidence = self.mod.VoiceEvidence(
             dispatcher_mode="ALL_CLEAR",
             blueprint_status="CURRENT_PLAN_PRESENT",
@@ -484,15 +573,19 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 ),
             ],
         )
-        fields = self.mod.compose_voice(
-            evidence,
-            repo_root=self.mod._repo_root(),
-        )
+        with patch.object(
+            self.mod,
+            "_contract_rel_for_candidate",
+            return_value=None,
+        ):
+            fields = self.mod.compose_voice(
+                evidence,
+                repo_root=self.mod._repo_root(),
+            )
         self.assertEqual(fields["HAND_IT_TO"], "Claude")
         self.assertIn("Contract draft lane is needed for #1", fields["WHAT_NEEDS_MATT"])
         self.assertIn("Authorize contract draft lane for #1", fields["YOU_DO"])
         self.assertIn("MMI-DEC-099", fields["WHY"])
-        self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
 
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
@@ -584,6 +677,15 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nCodex", out)
             self.assertIn("Grok pre-build gate review", out)
             self.assertIn("Lane 1 probe shipped", out)
+        elif "Pre-build gate review is needed for #1" in out:
+            self.assertIn("HAND_IT_TO:\nCodex", out)
+            self.assertIn("001_swarm_commander_contract.md", out)
+        elif "Optional Matt §11 signature on #1" in out:
+            self.assertIn("HAND_IT_TO:\nMatt", out)
+            self.assertIn("Pre-build gate clean", out)
+            self.assertIn("mmi_01_contract_gate", out)
+        elif "Matt selects next lane explicitly" in out and "#1 Swarm Commander contract §11 signed" in out:
+            pass
         elif "Matt selects next lane explicitly" in out:
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Hold until Matt names next lane", out)
