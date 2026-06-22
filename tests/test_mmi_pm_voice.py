@@ -312,6 +312,35 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertNotIn("Grok pre-build gate", fields["YOU_DO"])
         self.assertNotIn("unsigned", fields["YOU_DO"].lower())
 
+    def test_t7f_signed_105_signed_contract_no_feedstock_routes_hold_not_reconcile(
+        self,
+    ):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=2,
+            menu_options=[
+                _menu_option(
+                    candidate_id="#105",
+                    candidate_name="MMI Governance Invariants Testing Framework",
+                    source_lifecycle="SIGNED_CONTRACT",
+                    buildability_status="EXCLUDED_NON_BUILDABLE_STATE",
+                    contract_status="PRESENT",
+                )
+            ],
+        )
+        with patch.object(self.mod, "_is_contract_signed", return_value=True):
+            fields = self.mod.compose_voice(
+                evidence,
+                repo_root=self.mod._repo_root(),
+            )
+        self.assertEqual(fields["HAND_IT_TO"], "Matt")
+        self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("Hold Lane 2+", fields["YOU_DO"])
+        self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
+        self.assertNotIn("Authorize reconcile", fields["YOU_DO"])
+
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
         _run_voice()

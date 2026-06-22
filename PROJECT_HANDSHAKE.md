@@ -24,73 +24,55 @@ Historical "NorthStar" / "NorthStar Inbox Shield" references in signed specs =
 ═══════════════════════════════════════════════
 
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (as of 50b58a8)
+CURRENT NEXT ACTION (as of 0f361aa)
 ═══════════════════════════════════════════════
 AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Monkey
   Security authority repo** — PRIMARY CODEBASE (operator decision 2026-06-13; see
   CURRENT_STATE_MAP.md "Codebase authority state").
   The Windows surface (`/mnt/c/Unified Folder Structure NorthStar + SwarmCommand Venture`)
-  is secondary/reference only. Do not merge/import this repo into Windows, do not delete
-  this repo, and do not treat the Windows master as primary unless the operator changes
-  authority later.
+  is secondary/reference only.
 
-BRANCH: safety/queue-drift-cleanup-20260528 — aligned with
-  github/safety/queue-drift-cleanup-20260528 (PUSHED, clean tree).
+BRANCH: safety/queue-drift-cleanup-20260528
+HEAD: 0f361aa (verify at session start — admin drift reconcile baseline 2026-06-21)
+
+DISPATCHER: MODE ALL_CLEAR — `python3 scripts/mmi_dispatch.py --verify` PASS
+  0 SIGNED_UNBUILT · 0 AWAITING_AUDIT · 39 GATED control-plane rows
+  Task scoreboard empty — Matt names next lane
+
+LAST_COMPLETED (MMI authority repo):
+  #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
+    (MMI-DEC-092); Lane 1 Authority Escalation Probe on disk (MMI-DEC-082); Lane 2+ held
+  #64 Failure Classification — GATED (MMI-DEC-088)
+  Challenge/red-team wrappers #61–#63 — GATED (2026-06-21)
+  Evidence wrappers #47 Case Timeline, #52 Plain-English Explanation — GATED
+
+ESTIMATOR (advisory only — not authorization):
+  buildable_count=0 · missing_contract_count=2 (#1 Swarm Commander, #3 Risk Triage)
+  BOR feedstock hold-only (BOR-ALL-CLEAR-FEEDSTOCK-v6, MMI-DEC-093)
+
+NEXT ACTION: Matt selects next lane explicitly. PM Voice / Estimator rank only.
+  Held unless authorized: #105 Lane 2+, #67 unpark, GOVERNED_AGENT promotion for GATED rows,
+  #1/#3 contract draft (higher-risk control-plane candidates).
+
+PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
+  `pytest tests/test_mmi_authority_escalation_probe.py`
+
+PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 14 GOVERNED_AGENT at ES1 Synthetic;
+  depth gate CLOSED · Stage B gate CLOSED · revenue milestones mostly open (see MILESTONE_ARC.md)
+
+LAST UPDATED: 2026-06-21 (admin drift cleanup: BOR v6, MMI_HEALTH_STATE, handshake reconcile)
+═══════════════════════════════════════════════
+
+─────────────────────────────────────────────────
+SUPERSEDED SNAPSHOT — preserved for history (was the live block "as of 50b58a8")
+─────────────────────────────────────────────────
+CURRENT NEXT ACTION (as of 50b58a8)
 HEAD: 50b58a8 docs: reconcile MMI build-truth drift checks (2026-06-13)
-
-STATE: Far past the prior Phase 1 snapshot. Repo history now contains gated milestones
-  through Phase 6 plus the newer concepts. **Next action:** run
+STATE: Far past the prior Phase 1 snapshot. **Next action:** run
   `python3 scripts/mmi_dispatch.py` — MMI delegates the highest-scored evidence-backed
   task (`MODE: DELEGATE`); do not treat surfaced candidates as build authorization.
-       Phase 2 knowledge intel agents ............ GATED
-       Phase 3 detection swarm (six Layer 1) ..... GATED
-       Phase 4 ReconciliationAgent ensemble ...... GATED
-       Phase 5 Mutation Engine (Layer 5) ......... GATED
-       Phase 6 Control Plane / Blast Radius ...... GATED (f1c817e)
-       Load Fission #90 / Specialisation Fission #91 GATED (190002f / c7ef023)
-       Watcher Agents (Layer 6 Governance) ....... GATED (6da6284)
-       Shadow Watcher Swarm: concept (e7dc3a4) -> ten-layer contract (5320ba0) -> Layer 1 GATED (03cd7d2)
-       Dual LLM: DRAFT (53635dc) -> contract + rubric amendment (d68c70a) -> pattern GATED (696ee45)
-
-MMI GOVERNANCE CENTER (file-based; documentation/governance only — already exists, do NOT rebuild):
-  - `mmi/` created abfebb3 — initial eight-file governance structure
-    (MMI_PROTOCOL, MMI_AUTHORITY_MATRIX, MMI_ROUTING_RULES, MMI_INTAKE_RECORDS,
-     MMI_DECISION_LOG, MMI_AUDIT_REVIEW_TEMPLATE, MMI_GATE_REGISTRY, MMI_HEALTH_STATE).
-  - 5711b62 reconciled the MMI seed decision/gate records to the current scoreboard.
-  - MMI governance/docs: ACTIVE (`mmi/` folder, history intake, reviews, concepts).
-  - Dispatcher Stage 1: ACTIVE — file-based, scoreboard-derived (`scripts/mmi_dispatch.py`).
-  - Runtime MMI integration: NOT active (no live wiring, no always-on MMI process).
-  - Automation: NOT active (no watcher/hook auto-runs dispatcher or changes state).
-
-NAMING CLARIFICATION (read before any evaluation-matrix work):
-  - The new evaluation artifact is named: "Shadow Watcher Alarm-and-Fission Evaluation Matrix".
-    Use this exact name. Do NOT call it "the 5-axis rubric".
-  - "the 5-axis rubric" is AMBIGUOUS — it is not a single artifact. At least two existing
-    5-axis lineages already use that shorthand:
-      (a) Client-Facing 5-Axis Email Scoring Rubric — the product/client-facing email-risk
-          score (4. Product_Roadmap/Client_Facing_5_Axis_Email_Scoring_Rubric_Deep_Dive.md +
-          core/scoring/client_facing_rubric.py).
-      (b) think_sheet.md strategic rubric — the five 0-2 axis idea-prioritization scoring
-          (the "a·b·c·d·e = N" rubric) used to score and promote ideas throughout
-          think_sheet.md.
-    Because the phrase is overloaded, never use "the 5-axis rubric" as a name; always use a
-    specific artifact name.
-  - The Dual LLM "rubric amendment" targets the Agent Health Score Rubric
-    (Agent_Health_Score_Rubric.md + ..._Amendment_DualLLM.md), NOT either 5-axis rubric.
-
-NEXT ACTION:
-  Shadow Watcher Swarm, Dual LLM, and Fission ALREADY EXIST in history. Do NOT recreate
-  them as new concepts. Treat next work as a clarification/amendment pass on existing
-  signed artifacts. No code, no build, no Phase execution until the operator authorizes a
-  specific §11-signed scope.
-
-IF BLOCKED:
-  Not blocked — tree is clean and pushed. Awaiting operator direction on the
-  clarification/amendment pass.
-
-LAST UPDATED: 50b58a8 2026-06-13 (authority refresh: WSL primary, branch pushed/aligned,
-  Phases 2-6 + Shadow Watcher + Dual LLM + Fission gated, naming locked)
-═══════════════════════════════════════════════
+NEXT ACTION: Shadow Watcher Swarm, Dual LLM, and Fission clarification/amendment pass.
+LAST UPDATED: 50b58a8 2026-06-13
 
 ─────────────────────────────────────────────────
 SUPERSEDED SNAPSHOT — preserved for history (was the live block "as of aa64e29")

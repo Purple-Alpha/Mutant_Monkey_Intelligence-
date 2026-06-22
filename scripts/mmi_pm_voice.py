@@ -70,6 +70,7 @@ GOVERNANCE_FRAMEWORK_CONTRACTS: dict[str, str] = {
         "4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contract.md"
     ),
 }
+GOVERNANCE_SIGNED_CONTRACT_LIFECYCLE = "SIGNED_CONTRACT"
 
 INVARIANTS_PROBE_REL = "scripts/mmi_authority_escalation_probe.py"
 INVARIANTS_PROBE_TEST_REL = "tests/test_mmi_authority_escalation_probe.py"
@@ -246,6 +247,8 @@ def _relay_signed_unreconciled(root: Path, options: list) -> object | None:
         for option in options:
             if option.candidate_id != preferred:
                 continue
+            if option.candidate_id in GOVERNANCE_FRAMEWORK_CONTRACTS:
+                continue
             if option.contract_status != "PRESENT":
                 continue
             lifecycle = option.source_lifecycle or ""
@@ -260,6 +263,8 @@ def _relay_signed_unreconciled(root: Path, options: list) -> object | None:
                 return option
 
     for option in options:
+        if option.candidate_id in GOVERNANCE_FRAMEWORK_CONTRACTS:
+            continue
         if option.contract_status != "PRESENT":
             continue
         if option.buildability_status != "EXCLUDED_NON_BUILDABLE_STATE":
@@ -274,6 +279,29 @@ def _relay_signed_unreconciled(root: Path, options: list) -> object | None:
             root, contract_rel
         ):
             return option
+    return None
+
+
+def _relay_signed_governance_framework(
+    root: Path, evidence: VoiceEvidence
+) -> dict[str, str] | None:
+    if evidence.dispatcher_mode != "ALL_CLEAR":
+        return None
+    for candidate_id, contract_rel in GOVERNANCE_FRAMEWORK_CONTRACTS.items():
+        if not ((root / contract_rel).is_file() and _is_contract_signed(root, contract_rel)):
+            continue
+        for option in evidence.menu_options:
+            if option.candidate_id != candidate_id:
+                continue
+            lifecycle = option.source_lifecycle or ""
+            if not lifecycle.startswith(GOVERNANCE_SIGNED_CONTRACT_LIFECYCLE):
+                continue
+            gov_evidence = replace(
+                evidence,
+                feedstock_first=candidate_id,
+                feedstock_first_name=option.candidate_name,
+            )
+            return _compose_signed_invariants_framework_voice(gov_evidence, contract_rel)
     return None
 
 
@@ -741,6 +769,10 @@ def compose_voice(
     buildable = _relay_buildable_option(evidence)
     if buildable is not None:
         return _compose_buildable_voice(evidence, buildable)
+
+    governance_voice = _relay_signed_governance_framework(root, evidence)
+    if governance_voice is not None:
+        return governance_voice
 
     if evidence.feedstock_first and evidence.dispatcher_mode == "ALL_CLEAR":
         contract_rel = _contract_rel_for_candidate(evidence.feedstock_first)

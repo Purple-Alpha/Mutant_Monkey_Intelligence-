@@ -1968,6 +1968,31 @@ Operator §11 on Wave 3 spec; then optional Wave 3.1 `review_ledger.py` implemen
 
 ---
 
+## 2026-06-21 - Admin drift cleanup (BOR v6, health, handshake, scoreboard header)
+
+**Actor:** Cursor (operator-requested admin reconcile)
+
+**Action:** Updated
+
+**Files Changed:**
+- `mmi/BLUEPRINT_OF_RECORD.md` — BOR-ALL-CLEAR-FEEDSTOCK-v6; #105 SIGNED_CONTRACT marked complete; hold-only feedstock; Estimator #1/#3 missing-contract advisory
+- `mmi/MMI_HEALTH_STATE.md` — reconciled to 2026-06-21; #105 + #61–#64 closeout reflected
+- `mmi/MMI_DECISION_LOG.md` — MMI-DEC-093 admin closeout record
+- `PROJECT_HANDSHAKE.md` — CURRENT NEXT ACTION block updated (0f361aa baseline, ALL_CLEAR, #105 closeout); prior 50b58a8 block moved to superseded snapshot
+- `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` — critical-path header: #63/#64 GATED, #105 SIGNED_CONTRACT, #1/#3 missing-contract advisory
+- `tests/test_mmi_estimator.py` — T35 + live regression aligned to BOR v6 hold-only feedstock
+
+**Reason:**
+Operator asked to clear admin drift before choosing next lane. Engines (PM Voice / Estimator feedstock) were lagging disk after #105 §11 sign (MMI-DEC-092).
+
+**Boundary:**
+Doc-only admin reconcile. No build, no contract draft, no Lane 2+, no push, no AUTH-5.
+
+**Next Step:**
+Run `python3 scripts/mmi_dispatch.py --sync` and `--verify` after commit. Matt names next lane.
+
+---
+
 ---
 
 ## Archived history
