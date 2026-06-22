@@ -353,6 +353,61 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertNotIn("Authorize reconcile", fields["YOU_DO"])
         self.assertNotIn("§11 signed", fields["WHAT_NEEDS_MATT"])
 
+    def test_t7g_all_clear_hold_relay_dec095_and_3_contract_review_draft(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=2,
+            menu_options=[
+                _menu_option(
+                    candidate_id="#1",
+                    candidate_name="Swarm Commander Agent",
+                    buildability_status="BLOCKED_MISSING_CONTRACT",
+                ),
+                _menu_option(
+                    candidate_id="#3",
+                    candidate_name="Risk Triage Agent",
+                    buildability_status="BLOCKED_MISSING_CONTRACT",
+                ),
+            ],
+        )
+        fields = self.mod.compose_voice(
+            evidence,
+            repo_root=self.mod._repo_root(),
+        )
+        self.assertIn("MMI-DEC-095", fields["WHY"])
+        self.assertIn("CONTRACT_REVIEW draft on disk", fields["IGNORE_FOR_NOW"])
+        self.assertIn("003_risk_triage_contract.md", fields["IGNORE_FOR_NOW"])
+        self.assertIn("higher-risk control/risk candidate", fields["IGNORE_FOR_NOW"])
+        self.assertIn("rubric_calibration: MMI-DEC-095", fields["SOURCE"])
+
+    def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=2,
+            feedstock_first="#3",
+            feedstock_first_name="Risk Triage Agent",
+            feedstock_lane_type="CONTRACT_REVIEW",
+            menu_options=[
+                _menu_option(
+                    candidate_id="#3",
+                    candidate_name="Risk Triage Agent",
+                    buildability_status="BLOCKED_MISSING_CONTRACT",
+                ),
+            ],
+        )
+        fields = self.mod.compose_voice(
+            evidence,
+            repo_root=self.mod._repo_root(),
+        )
+        self.assertEqual(fields["HAND_IT_TO"], "Codex")
+        self.assertIn("Pre-build gate review is needed for #3", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("003_risk_triage_contract.md", fields["YOU_DO"])
+        self.assertNotIn("Hold until Matt names next lane", fields["YOU_DO"])
+
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
         _run_voice()

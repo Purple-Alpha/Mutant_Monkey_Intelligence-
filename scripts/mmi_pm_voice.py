@@ -75,6 +75,14 @@ GOVERNANCE_SIGNED_CONTRACT_LIFECYCLE = "SIGNED_CONTRACT"
 INVARIANTS_PROBE_REL = "scripts/mmi_authority_escalation_probe.py"
 INVARIANTS_PROBE_TEST_REL = "tests/test_mmi_authority_escalation_probe.py"
 
+RUBRIC_BINARY_CALIBRATION_AMENDMENT_REL = (
+    "4. Product_Roadmap/Next_Action_Decision_Rubric_Binary_Calibration_Amendment_Deep_Dive.md"
+)
+
+CONTRACT_REVIEW_DRAFTS_ON_DISK: dict[str, str] = {
+    "#3": "docs/mmi/contracts/003_risk_triage_contract.md",
+}
+
 REVISION_ROWS = (
     (
         "What gets prioritized / ranked",
@@ -199,6 +207,17 @@ def _is_contract_signed(root: Path, contract_rel: str) -> bool:
     return False
 
 
+def _is_rubric_binary_calibration_in_force(root: Path) -> bool:
+    return _is_contract_signed(root, RUBRIC_BINARY_CALIBRATION_AMENDMENT_REL)
+
+
+def _contract_review_draft_rel(candidate_id: str, root: Path) -> str | None:
+    rel = CONTRACT_REVIEW_DRAFTS_ON_DISK.get(candidate_id)
+    if rel and (root / rel).is_file():
+        return rel
+    return None
+
+
 def _governance_framework_lane_closed(root: Path, candidate_id: str) -> bool:
     """True when signed governance framework + Lane 1 probe are on disk (no PM nag)."""
     contract_rel = GOVERNANCE_FRAMEWORK_CONTRACTS.get(candidate_id)
@@ -218,6 +237,11 @@ def _all_clear_hold_posture(evidence: VoiceEvidence, root: Path) -> bool:
     if evidence.dispatcher_mode != "ALL_CLEAR":
         return False
     if evidence.buildable_count != 0:
+        return False
+
+    if evidence.feedstock_first:
+        if evidence.feedstock_first in GOVERNANCE_FRAMEWORK_CONTRACTS:
+            return _governance_framework_lane_closed(root, evidence.feedstock_first)
         return False
 
     relay = _relay_contract_candidate(evidence.menu_options)
@@ -244,15 +268,13 @@ def _all_clear_hold_posture(evidence: VoiceEvidence, root: Path) -> bool:
         ):
             return True
 
-    if evidence.feedstock_first:
-        if evidence.feedstock_first in GOVERNANCE_FRAMEWORK_CONTRACTS:
-            return _governance_framework_lane_closed(root, evidence.feedstock_first)
-        return False
-
     return True
 
 
 def _contract_rel_for_candidate(candidate_id: str) -> str | None:
+    rel = CONTRACT_REVIEW_DRAFTS_ON_DISK.get(candidate_id)
+    if rel:
+        return rel
     rel = GOVERNANCE_FRAMEWORK_CONTRACTS.get(candidate_id)
     if rel:
         return rel
@@ -379,7 +401,7 @@ def _relay_contract_candidate(options: list) -> object | None:
     return None
 
 
-def _ignore_lines(options: list) -> list[str]:
+def _ignore_lines(options: list, root: Path, feedstock_first: str = "") -> list[str]:
     lines: list[str] = []
     seen: set[str] = set()
 
@@ -409,10 +431,20 @@ def _ignore_lines(options: list) -> list[str]:
             option.candidate_id in HIGH_RISK_CANDIDATE_IDS
             and option.buildability_status == "BLOCKED_MISSING_CONTRACT"
         ):
-            add_line(
-                f"{option.candidate_id} {option.candidate_name} is a higher-risk "
-                f"control/risk candidate; hold unless Matt chooses it."
-            )
+            draft_rel = _contract_review_draft_rel(option.candidate_id, root)
+            if draft_rel:
+                if feedstock_first == option.candidate_id:
+                    continue
+                add_line(
+                    f"{option.candidate_id} {option.candidate_name} has "
+                    f"CONTRACT_REVIEW draft on disk at {draft_rel} (DRAFT "
+                    f"UNSIGNED); hold unless Matt chooses unpark."
+                )
+            else:
+                add_line(
+                    f"{option.candidate_id} {option.candidate_name} is a higher-risk "
+                    f"control/risk candidate; hold unless Matt chooses it."
+                )
 
     for option in options:
         if option.candidate_id == "#105" and (
@@ -442,10 +474,12 @@ def _ignore_lines(options: list) -> list[str]:
                 f"{option.source_lifecycle}; no current action."
             )
 
-    return lines[:6]
+    return lines[:8]
 
 
-def _source_line(evidence: VoiceEvidence, handoff: object | None = None) -> str:
+def _source_line(
+    evidence: VoiceEvidence, handoff: object | None = None, repo_root: Path | None = None
+) -> str:
     parts = [
         f"dispatcher: {evidence.dispatcher_mode} (MMI_CURRENT_STATE.md / dispatch verify posture)",
         (
@@ -469,6 +503,11 @@ def _source_line(evidence: VoiceEvidence, handoff: object | None = None) -> str:
         )
     if handoff is not None:
         parts.append("handoff_log: mmi/MMI_HANDOFF_LOG.md")
+    root = repo_root or _repo_root()
+    if _is_rubric_binary_calibration_in_force(root):
+        parts.append(
+            "rubric_calibration: MMI-DEC-095 §3.A in force (signed amendment on disk)"
+        )
     return "; ".join(parts)
 
 
@@ -491,8 +530,11 @@ def _boundary_line() -> str:
     return "advisory only; Matt chooses; no autonomous selection; no AUTH-5"
 
 
-def _ignore_block(evidence: VoiceEvidence) -> str:
-    ignore_lines = _ignore_lines(evidence.menu_options)
+def _ignore_block(evidence: VoiceEvidence, repo_root: Path | None = None) -> str:
+    root = repo_root or _repo_root()
+    ignore_lines = _ignore_lines(
+        evidence.menu_options, root, feedstock_first=evidence.feedstock_first
+    )
     if ignore_lines:
         return "\n".join(f"- {line}" for line in ignore_lines)
     return "- No additional ignore lines relayed from engine menu."
@@ -619,16 +661,16 @@ def _compose_unsigned_contract_review_voice(
     return {
         "WHAT_NEEDS_MATT": (
             f"Pre-build gate review is needed for {candidate_id} {candidate_name} "
-            f"contract draft."
+            f"contract review draft."
         ),
         "IN_FLIGHT": "none",
         "HAND_IT_TO": ROSTER_REVIEW,
         "YOU_DO": (
             f"Run Grok pre-build gate review on {candidate_id} "
-            f"{candidate_name} contract draft at {contract_rel}."
+            f"{candidate_name} contract review draft at {contract_rel}."
         ),
         "WHY": (
-            f"contract draft on disk at {contract_rel}; §11 UNSIGNED; "
+            f"contract review draft on disk at {contract_rel}; §11 UNSIGNED; "
             f"estimator feedstock rank {candidate_id}; gate before §11 per contract."
         ),
         "IGNORE_FOR_NOW": _ignore_block(evidence),
@@ -786,7 +828,20 @@ def _compose_missing_contract_voice(
     }
 
 
-def _compose_all_clear_hold_voice(evidence: VoiceEvidence) -> dict[str, str]:
+def _compose_all_clear_hold_voice(
+    evidence: VoiceEvidence, repo_root: Path
+) -> dict[str, str]:
+    why = (
+        f"dispatcher={evidence.dispatcher_mode}; buildable_count="
+        f"{evidence.buildable_count}; missing_contract_count="
+        f"{evidence.missing_contract_count}; BOR hold-only feedstock; "
+        f"#105 SIGNED_CONTRACT + Lane 1 probe complete (MMI-DEC-092)."
+    )
+    if _is_rubric_binary_calibration_in_force(repo_root):
+        why += (
+            " Next-Action Rubric §3.A binary calibration in force "
+            "(MMI-DEC-095)."
+        )
     return {
         "WHAT_NEEDS_MATT": (
             "Matt selects next lane explicitly; dispatcher ALL_CLEAR with "
@@ -798,14 +853,9 @@ def _compose_all_clear_hold_voice(evidence: VoiceEvidence) -> dict[str, str]:
             f"Hold until Matt names next lane. Maintain drift defense: pytest "
             f"{INVARIANTS_PROBE_TEST_REL} after any scripts/mmi_*.py change."
         ),
-        "WHY": (
-            f"dispatcher={evidence.dispatcher_mode}; buildable_count="
-            f"{evidence.buildable_count}; missing_contract_count="
-            f"{evidence.missing_contract_count}; BOR hold-only feedstock; "
-            f"#105 SIGNED_CONTRACT + Lane 1 probe complete (MMI-DEC-092)."
-        ),
-        "IGNORE_FOR_NOW": _ignore_block(evidence),
-        "SOURCE": _source_line(evidence),
+        "WHY": why,
+        "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root),
         "BOUNDARY": _boundary_line(),
     }
 
@@ -911,7 +961,7 @@ def compose_voice(
             return _compose_missing_contract_voice(evidence, relay)
 
     if _all_clear_hold_posture(evidence, root):
-        return _compose_all_clear_hold_voice(evidence)
+        return _compose_all_clear_hold_voice(evidence, root)
 
     return _compose_fallback_voice(evidence)
 

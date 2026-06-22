@@ -1,6 +1,6 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-21 (MMI-DEC-093). #105 SIGNED_CONTRACT complete; hold-only feedstock; Estimator missing-contract advisory #1/#3.
+**Status:** CURRENT_PLAN populated 2026-06-22 (MMI-DEC-096). #3 unparked CONTRACT_REVIEW feedstock rank 1; #1 hold; MMI-DEC-095 rubric §3.A in force.
 
 **Classification:** Shared crew artifact · Blueprint of Record
 
@@ -10,22 +10,22 @@
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v6
+## CURRENT_PLAN — ALL_CLEAR feedstock v7
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v6
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v6
-population_decision: MMI-DEC-093
-created_at: 2026-06-21
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v7
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v7
+population_decision: MMI-DEC-096
+created_at: 2026-06-22
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: scoreboard print + #105 SIGNED_CONTRACT closeout (MMI-DEC-092)
-revision_reason: #105 §11 signed + SIGNED_CONTRACT reconcile complete; remove stale CONTRACT_REVIEW feedstock; restore hold-only ALL_CLEAR feedstock; Estimator missing_contract_count=2 advisory (#1, #3) when Matt unparks
+architect_blueprint_source: scoreboard print + #3 contract-review draft on disk (docs/mmi/contracts/003_risk_triage_contract.md)
+revision_reason: Matt unparked #3 Risk Triage as rank-1 CONTRACT_REVIEW feedstock; contract review draft on disk (DRAFT UNSIGNED); #1 Swarm Commander remains hold-only; not build authorization
 non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, contract draft, promotion, or registry dispatch.
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
 
+feedstock_entry: priority=1 candidate_id=#3 lane_type=CONTRACT_REVIEW name=Risk Triage Agent
 feedstock_entry: priority=hold candidate_id=#1 lane_type=CONTRACT_DRAFT name=Swarm Commander Agent hold_unless_matt=true
-feedstock_entry: priority=hold candidate_id=#3 lane_type=CONTRACT_DRAFT name=Risk Triage Agent hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
@@ -34,7 +34,24 @@ Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows aut
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
-Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): missing Agent Design Contract on disk for #1 and #3 when Matt removes hold.
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): missing Agent Design Contract on disk for #1 when Matt removes hold.
+
+---
+
+## Prior ALL_CLEAR v6 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v6
+supersedes: BOR-ALL-CLEAR-FEEDSTOCK-v5
+population_decision: MMI-DEC-093
+revision_reason: Superseded by v7 after #3 unpark (MMI-DEC-096)
+
+Historical v6 feedstock (inactive — do not parse):
+  feedstock_entry: priority=hold candidate_id=#1 lane_type=CONTRACT_DRAFT name=Swarm Commander Agent hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#3 lane_type=CONTRACT_DRAFT name=Risk Triage Agent hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
 ---
 
