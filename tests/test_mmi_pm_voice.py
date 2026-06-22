@@ -399,14 +399,45 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 ),
             ],
         )
-        fields = self.mod.compose_voice(
-            evidence,
-            repo_root=self.mod._repo_root(),
-        )
+        with patch.object(self.mod, "_contract_review_gate_clean", return_value=None):
+            fields = self.mod.compose_voice(
+                evidence,
+                repo_root=self.mod._repo_root(),
+            )
         self.assertEqual(fields["HAND_IT_TO"], "Codex")
         self.assertIn("Pre-build gate review is needed for #3", fields["WHAT_NEEDS_MATT"])
         self.assertIn("003_risk_triage_contract.md", fields["YOU_DO"])
         self.assertNotIn("Hold until Matt names next lane", fields["YOU_DO"])
+
+    def test_t7i_gate_clean_3_routes_matt_sign(self):
+        root = self.mod._repo_root()
+        gate_path = root / "audit_outputs" / "mmi_03_contract_gate_test_unit.md"
+        gate_path.parent.mkdir(parents=True, exist_ok=True)
+        gate_path.write_text(
+            "GATE_SUMMARY: blocking=0 warnings=0\n", encoding="utf-8"
+        )
+        self.addCleanup(lambda: gate_path.unlink(missing_ok=True))
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=2,
+            feedstock_first="#3",
+            feedstock_first_name="Risk Triage Agent",
+            feedstock_lane_type="CONTRACT_REVIEW",
+            menu_options=[
+                _menu_option(
+                    candidate_id="#3",
+                    candidate_name="Risk Triage Agent",
+                    buildability_status="BLOCKED_MISSING_CONTRACT",
+                ),
+            ],
+        )
+        fields = self.mod.compose_voice(evidence, repo_root=root)
+        self.assertEqual(fields["HAND_IT_TO"], "Matt")
+        self.assertIn("§11 sign", fields["YOU_DO"])
+        self.assertIn("mmi_03_contract_gate_test_unit.md", fields["YOU_DO"])
+        self.assertNotIn("Grok pre-build gate review", fields["YOU_DO"])
 
     def test_t8_read_only_no_mutation(self):
         before = {rel: _file_digest(rel) for rel in IMMUTABLE_PATHS}
@@ -502,6 +533,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Hold until Matt names next lane", out)
             self.assertIn("IN_FLIGHT:\nnone", out)
+        elif "Optional Matt §11 signature on #3" in out:
+            self.assertIn("HAND_IT_TO:\nMatt", out)
+            self.assertIn("Pre-build gate clean", out)
         else:
             self.assertIn("IN_FLIGHT:\nnone", out)
         if "MMI_52_GATED_RECONCILE_ONLY" in out:

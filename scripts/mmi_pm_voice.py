@@ -83,6 +83,10 @@ CONTRACT_REVIEW_DRAFTS_ON_DISK: dict[str, str] = {
     "#3": "docs/mmi/contracts/003_risk_triage_contract.md",
 }
 
+CONTRACT_REVIEW_GATE_GLOBS: dict[str, str] = {
+    "#3": "mmi_03_contract_gate_*.md",
+}
+
 REVISION_ROWS = (
     (
         "What gets prioritized / ranked",
@@ -215,6 +219,26 @@ def _contract_review_draft_rel(candidate_id: str, root: Path) -> str | None:
     rel = CONTRACT_REVIEW_DRAFTS_ON_DISK.get(candidate_id)
     if rel and (root / rel).is_file():
         return rel
+    return None
+
+
+def _contract_review_gate_clean(root: Path, candidate_id: str) -> str | None:
+    """Return newest clean pre-build gate artifact path for a contract-review draft."""
+    pattern = CONTRACT_REVIEW_GATE_GLOBS.get(candidate_id)
+    if not pattern:
+        return None
+    audit_dir = root / "audit_outputs"
+    if not audit_dir.is_dir():
+        return None
+    matches = sorted(audit_dir.glob(pattern), reverse=True)
+    for path in matches:
+        content = _read_text(path)
+        if not content:
+            continue
+        if "**Blocking deviations:** `0`" in content and "**Warnings:** `0`" in content:
+            return path.relative_to(root).as_posix()
+        if "GATE_SUMMARY: blocking=0 warnings=0" in content:
+            return path.relative_to(root).as_posix()
     return None
 
 
@@ -627,6 +651,39 @@ def _feedstock_hand_it_to(lane_type: str) -> str:
     return ROSTER_MATT
 
 
+def _compose_gate_clean_contract_review_voice(
+    evidence: VoiceEvidence,
+    contract_rel: str,
+    gate_rel: str,
+    repo_root: Path,
+) -> dict[str, str]:
+    candidate_id = evidence.feedstock_first
+    candidate_name = evidence.feedstock_first_name
+    return {
+        "WHAT_NEEDS_MATT": (
+            f"Optional Matt §11 signature on {candidate_id} {candidate_name} "
+            f"contract review draft when ready."
+        ),
+        "IN_FLIGHT": (
+            f"Pre-build gate clean 0/0 at {gate_rel}; contract still UNSIGNED."
+        ),
+        "HAND_IT_TO": ROSTER_MATT,
+        "YOU_DO": (
+            f"Matt §11 sign {candidate_id} {candidate_name} at {contract_rel} "
+            f"when ready. Gate evidence: {gate_rel}. No build authorization; "
+            f"no SIGNED_UNBUILT reconcile; no scoreboard promotion implied."
+        ),
+        "WHY": (
+            f"pre-build gate 0/0 at {gate_rel}; contract review draft at "
+            f"{contract_rel}; estimator feedstock rank {candidate_id}; "
+            f"MMI-DEC-096 unpark."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_unsigned_contract_review_voice(
     evidence: VoiceEvidence, contract_rel: str
 ) -> dict[str, str]:
@@ -923,6 +980,13 @@ def compose_voice(
             contract_rel = _contract_rel_for_candidate(evidence.feedstock_first)
             if contract_rel and (root / contract_rel).is_file():
                 if not _is_contract_signed(root, contract_rel):
+                    gate_rel = _contract_review_gate_clean(
+                        root, evidence.feedstock_first
+                    )
+                    if gate_rel:
+                        return _compose_gate_clean_contract_review_voice(
+                            evidence, contract_rel, gate_rel, root
+                        )
                     return _compose_unsigned_contract_review_voice(
                         evidence, contract_rel
                     )

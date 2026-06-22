@@ -219,6 +219,8 @@ MMI-DEC-095 | 2026-06-21 | Next-Action Rubric Binary Calibration Amendment §11 
 
 MMI-DEC-096 | 2026-06-22 | Unpark #3 Risk Triage CONTRACT_REVIEW feedstock | `mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v7; `scripts/mmi_pm_voice.py` contract-review draft path + feedstock relay; `docs/mmi/contracts/003_risk_triage_contract.md` on disk | ACCEPT | Matt authorized unpark #3 as rank-1 `CONTRACT_REVIEW` feedstock; contract review draft exists (DRAFT UNSIGNED); PM Voice routes to Codex pre-build gate relay when ALL_CLEAR; #1 remains hold-only; **not** §11 on #3 contract; **not** build; **not** SIGNED_UNBUILT; **not** AUTH-5 | Run Grok pre-build gate on #3 contract review draft when Matt chooses; #1 contract draft next after #3 lane complete | Run mmi_dispatch.py --sync + --verify + probe pytest after commit | Matt Nichol (unpark #3 contract review)
 
+MMI-DEC-097 | 2026-06-22 | #3 Risk Triage contract review Grok pre-build gate | `audit_outputs/mmi_03_contract_gate_20260622T015428Z.md` (0 blocking / 0 warnings); packet SHA256 `1555e24e65cef67ecc238ae8afc3a374f8c60f4de9a92c5959d8dfef9dc6e37e`; Grok verdict SIGNABLE | ACCEPT | Pre-build gate clean; #3 score-only telemetry spine preserved (#1 routes / #3 scores); no routing/mitigation/narrative/build/AUTH-5 in contract draft. **Not** §11 signed by this record; **not** build; **not** SIGNED_UNBUILT; **not** scoreboard reconcile; **not** push | Matt §11 sign #3 contract when ready | Run mmi_dispatch.py --verify after PMV update | Matt Nichol (authorize #3 gate record)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
