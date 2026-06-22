@@ -114,6 +114,10 @@ Measures how easily the action can be undone if wrong.
 - **1:** Partially reversible. Action can be undone with effort or partial loss.
 - **2:** Fully reversible. Action can be cleanly rolled back at any point with no data, decision, or relationship loss.
 
+### §3.6 Objective binary calibration (amendment — in force)
+
+Prose definitions above remain authoritative for axis **meaning**. Mandatory **0–2 disk-truth scoring rules**, Estimator pool boundary, and machine-log axis keys are in `4. Product_Roadmap/Next_Action_Decision_Rubric_Binary_Calibration_Amendment_Deep_Dive.md` (§3.A), **§11 SIGNED 2026-06-21** (MMI-DEC-095; pre-build gate 0/0 `audit_outputs/next_action_rubric_binary_calibration_amendment_20260622T012415Z.md`). Session tactical scoring uses §3.A when calibrating candidates. The rubric still ranks; Matt selects (D2).
+
 ---
 
 ## §4 The Decision Loop (10 steps)
