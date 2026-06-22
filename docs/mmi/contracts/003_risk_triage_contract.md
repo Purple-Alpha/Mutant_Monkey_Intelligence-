@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_03_RISK_TRIAGE_AGENT_DESIGN_CONTRACT_REVIEW_DRAFT`
 
-**Status:** `CONTRACT_REVIEW` / **DRAFT — UNSIGNED**
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Pre-build gate clean 0/0 (`audit_outputs/mmi_03_contract_gate_20260622T015428Z.md`; packet SHA256 `1555e24e65cef67ecc238ae8afc3a374f8c60f4de9a92c5959d8dfef9dc6e37e`). Locks D1–D9 spine boundary and AUTH-4 telemetry-scorer scope. Authorizes **contract text only** — **no** build, **no** `SIGNED_UNBUILT`, **no** scoreboard lifecycle promotion, **no** AUTH-5.
 
 **Candidate:** #3 — Risk Triage
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **BLOCKED** — no build, no runtime wiring, no scoreboard lifecycle promotion beyond draft/review tracking.
+**Implementation:** **BLOCKED** until separate operator Build Authorization. §11 signature does not authorize wrapper build, registry dispatch, or `SIGNED_UNBUILT` reconcile.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (template shape only — this draft is not §11-signed)
@@ -270,10 +270,16 @@ No file creation, registry entry, or scoreboard `SIGNED_UNBUILT` reconcile is au
 
 ---
 
-## §11 Sign-off
+## §11 Sign-off — SIGNED 2026-06-21
 
-**DRAFT — UNSIGNED.** No operator signature. No §11 lock. No Build Authorization. No lifecycle promotion.
+Signed by Matt Nichol on 2026-06-21 after pre-build gate clean 0/0 (`audit_outputs/mmi_03_contract_gate_20260622T015428Z.md`; MMI-DEC-097). Locks D1–D9, AUTH-4, inbound/outbound schema, and score provenance rules. Authorizes contract text only. Does **not** authorize build, `SIGNED_UNBUILT`, scoreboard reconcile, or AUTH-5.
+
+### Sign-off line
+
+> matt Nichol June 21st 2026
+
+Per Authorship Rule: operator-authored signature, placed verbatim.
 
 ---
 
-**End of contract review draft.**
+**End of contract. §11 in force as of 2026-06-21 (MMI-DEC-098).**

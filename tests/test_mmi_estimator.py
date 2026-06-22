@@ -484,11 +484,11 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
         _, out, _ = _run_estimator(None, ["--verify-text", VERIFY_ALL_CLEAR])
         self.assertIn("ADVISORY_ONLY:", out)
         self.assertIn("SCORED_FEEDSTOCK", out)
-        self.assertIn("candidate_id: #3", out)
-        self.assertIn("lane_type: CONTRACT_REVIEW", out)
+        self.assertIn("candidate_id: #1", out)
+        self.assertIn("lane_type: CONTRACT_DRAFT", out)
         self.assertIn("BUILDABILITY_EXCLUSIONS", out)
         self.assertIn("BLOCKED_MISSING_CONTRACT", out)
-        self.assertIn("candidate_id: #1", out)
+        self.assertNotIn("lane_type: CONTRACT_REVIEW", out)
 
     def test_first_use_live_regression(self):
         verify_text = subprocess.run(

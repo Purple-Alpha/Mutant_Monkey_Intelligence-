@@ -71,6 +71,7 @@ ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
     "#64": (
         "4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_Dive.md"
     ),
+    "#3": "docs/mmi/contracts/003_risk_triage_contract.md",
 }
 
 GOVERNANCE_FRAMEWORK_CONTRACTS: dict[str, str] = {
@@ -815,11 +816,33 @@ def _sort_scored(scored: list[ScoredCandidate]) -> list[ScoredCandidate]:
     )
 
 
-def _parse_bor_feedstock(bor_text: str) -> list[FeedstockEntry]:
+def _current_plan_bor_slice(bor_text: str) -> str:
+    """Return only the active CURRENT_PLAN block; ignore superseded historical feedstock."""
     if "plan_status: CURRENT_PLAN" not in bor_text:
+        return ""
+    lines = bor_text.splitlines()
+    start: int | None = None
+    for index, line in enumerate(lines):
+        if line.strip() == "plan_status: CURRENT_PLAN":
+            start = index
+            break
+    if start is None:
+        return ""
+    end = len(lines)
+    for index in range(start + 1, len(lines)):
+        stripped = lines[index].strip()
+        if stripped.startswith("## Prior") or stripped == "plan_status: SUPERSEDED_PLAN":
+            end = index
+            break
+    return "\n".join(lines[start:end])
+
+
+def _parse_bor_feedstock(bor_text: str) -> list[FeedstockEntry]:
+    slice_text = _current_plan_bor_slice(bor_text)
+    if not slice_text:
         return []
     entries: list[FeedstockEntry] = []
-    for line in bor_text.splitlines():
+    for line in slice_text.splitlines():
         match = FEEDSTOCK_ENTRY_RE.match(line.strip())
         if not match:
             continue

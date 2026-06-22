@@ -377,6 +377,8 @@ def _relay_signed_unreconciled(root: Path, options: list) -> object | None:
         if contract_rel and (root / contract_rel).is_file() and _is_contract_signed(
             root, contract_rel
         ):
+            if option.candidate_id in CONTRACT_REVIEW_DRAFTS_ON_DISK:
+                continue
             return option
     return None
 
@@ -455,9 +457,16 @@ def _ignore_lines(options: list, root: Path, feedstock_first: str = "") -> list[
             option.candidate_id in HIGH_RISK_CANDIDATE_IDS
             and option.buildability_status == "BLOCKED_MISSING_CONTRACT"
         ):
+            if feedstock_first == option.candidate_id:
+                continue
             draft_rel = _contract_review_draft_rel(option.candidate_id, root)
             if draft_rel:
-                if feedstock_first == option.candidate_id:
+                if _is_contract_signed(root, draft_rel):
+                    add_line(
+                        f"{option.candidate_id} {option.candidate_name} contract "
+                        f"§11 SIGNED at {draft_rel} (MMI-DEC-098); not build / not "
+                        f"SIGNED_UNBUILT."
+                    )
                     continue
                 add_line(
                     f"{option.candidate_id} {option.candidate_name} has "
@@ -469,6 +478,19 @@ def _ignore_lines(options: list, root: Path, feedstock_first: str = "") -> list[
                     f"{option.candidate_id} {option.candidate_name} is a higher-risk "
                     f"control/risk candidate; hold unless Matt chooses it."
                 )
+
+    for candidate_id, draft_rel in CONTRACT_REVIEW_DRAFTS_ON_DISK.items():
+        if not _is_contract_signed(root, draft_rel):
+            continue
+        label = candidate_id
+        for option in options:
+            if option.candidate_id == candidate_id:
+                label = f"{option.candidate_id} {option.candidate_name}"
+                break
+        add_line(
+            f"{label} contract §11 SIGNED at {draft_rel} (MMI-DEC-098); not build / not "
+            f"SIGNED_UNBUILT."
+        )
 
     for option in options:
         if option.candidate_id == "#105" and (
@@ -651,6 +673,36 @@ def _feedstock_hand_it_to(lane_type: str) -> str:
     return ROSTER_MATT
 
 
+def _compose_signed_risk_triage_contract_voice(
+    evidence: VoiceEvidence, contract_rel: str, repo_root: Path
+) -> dict[str, str]:
+    gate_rel = _contract_review_gate_clean(repo_root, "#3") or ""
+    gate_note = f" gate {gate_rel}" if gate_rel else ""
+    return {
+        "WHAT_NEEDS_MATT": (
+            "Matt selects next lane explicitly; #3 Risk Triage contract §11 "
+            "signed; dispatcher ALL_CLEAR with buildable_count=0."
+        ),
+        "IN_FLIGHT": (
+            f"#3 contract §11 SIGNED at {contract_rel} (MMI-DEC-098);"
+            f"{gate_note}; not build / not SIGNED_UNBUILT."
+        ),
+        "HAND_IT_TO": ROSTER_MATT,
+        "YOU_DO": (
+            f"Hold until Matt names next lane. Maintain drift defense: pytest "
+            f"{INVARIANTS_PROBE_TEST_REL} after any scripts/mmi_*.py change."
+        ),
+        "WHY": (
+            f"§11 signed at {contract_rel}; pre-build gate 0/0 (MMI-DEC-097); "
+            f"BOR hold-only feedstock; missing_contract_count="
+            f"{evidence.missing_contract_count}."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_gate_clean_contract_review_voice(
     evidence: VoiceEvidence,
     contract_rel: str,
@@ -769,11 +821,14 @@ def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
     candidate_name = evidence.feedstock_first_name
     lane_type = evidence.feedstock_lane_type
     hand_it_to = _feedstock_hand_it_to(lane_type)
+    why_extra = ""
     if lane_type == "CONTRACT_DRAFT":
         you_do = (
             f"Authorize contract draft lane for {candidate_id} {candidate_name}."
         )
         what = f"Contract draft lane is needed for {candidate_id} {candidate_name}."
+        if candidate_id == "#1":
+            why_extra = "; MMI-DEC-099 unpark"
     elif lane_type == "ADVISORY_MULTI_LANE_DESIGN":
         you_do = (
             f"Optional multi-lane invariants contract advisory review for {candidate_id} "
@@ -814,7 +869,7 @@ def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
         "WHY": (
             f"estimator feedstock rank from BOR CURRENT_PLAN: {candidate_id} "
             f"lane_type={lane_type}; dispatcher={evidence.dispatcher_mode}; "
-            f"buildable_count={evidence.buildable_count}."
+            f"buildable_count={evidence.buildable_count}{why_extra}."
         ),
         "IGNORE_FOR_NOW": _ignore_block(evidence),
         "SOURCE": _source_line(evidence),
@@ -894,6 +949,10 @@ def _compose_all_clear_hold_voice(
         f"{evidence.missing_contract_count}; BOR hold-only feedstock; "
         f"#105 SIGNED_CONTRACT + Lane 1 probe complete (MMI-DEC-092)."
     )
+    if (repo_root / CONTRACT_REVIEW_DRAFTS_ON_DISK["#3"]).is_file() and _is_contract_signed(
+        repo_root, CONTRACT_REVIEW_DRAFTS_ON_DISK["#3"]
+    ):
+        why += " #3 contract §11 SIGNED (MMI-DEC-098); not build."
     if _is_rubric_binary_calibration_in_force(repo_root):
         why += (
             " Next-Action Rubric §3.A binary calibration in force "
@@ -989,6 +1048,13 @@ def compose_voice(
                         )
                     return _compose_unsigned_contract_review_voice(
                         evidence, contract_rel
+                    )
+                if (
+                    evidence.feedstock_first == "#3"
+                    and _is_contract_signed(root, contract_rel)
+                ):
+                    return _compose_signed_risk_triage_contract_voice(
+                        evidence, contract_rel, root
                     )
                 if (
                     evidence.feedstock_first == "#105"
