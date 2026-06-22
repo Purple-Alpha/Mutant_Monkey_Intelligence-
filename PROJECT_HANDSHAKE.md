@@ -33,7 +33,7 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: 5f21aca (spine closeout 772fbb7 + handshake pin; verify at session start)
+HEAD: 4f81f1b (spine bundle 772fbb7; verify at session start)
 
 DISPATCHER: MODE ALL_CLEAR — `python3 scripts/mmi_dispatch.py --verify` PASS
   0 SIGNED_UNBUILT · 0 AWAITING_AUDIT · GATED rows unchanged
