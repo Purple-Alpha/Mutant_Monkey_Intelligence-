@@ -199,6 +199,59 @@ def _is_contract_signed(root: Path, contract_rel: str) -> bool:
     return False
 
 
+def _governance_framework_lane_closed(root: Path, candidate_id: str) -> bool:
+    """True when signed governance framework + Lane 1 probe are on disk (no PM nag)."""
+    contract_rel = GOVERNANCE_FRAMEWORK_CONTRACTS.get(candidate_id)
+    if not contract_rel:
+        return False
+    if not ((root / contract_rel).is_file() and _is_contract_signed(root, contract_rel)):
+        return False
+    if not (root / INVARIANTS_PROBE_REL).is_file():
+        return False
+    if not (root / INVARIANTS_PROBE_TEST_REL).is_file():
+        return False
+    return True
+
+
+def _all_clear_hold_posture(evidence: VoiceEvidence, root: Path) -> bool:
+    """ALL_CLEAR with no buildable rows; hold when only high-risk gaps or closed lanes."""
+    if evidence.dispatcher_mode != "ALL_CLEAR":
+        return False
+    if evidence.buildable_count != 0:
+        return False
+
+    relay = _relay_contract_candidate(evidence.menu_options)
+    if relay is not None:
+        if relay.candidate_id in HIGH_RISK_CANDIDATE_IDS:
+            return True
+        if relay.candidate_id in GOVERNANCE_FRAMEWORK_CONTRACTS:
+            contract_rel = _contract_rel_for_candidate(relay.candidate_id)
+            if contract_rel and (root / contract_rel).is_file():
+                if not _is_contract_signed(root, contract_rel):
+                    return False
+            if _governance_framework_lane_closed(root, relay.candidate_id):
+                return True
+        return False
+
+    if evidence.missing_contract_count > 0:
+        blocked = [
+            option
+            for option in evidence.menu_options
+            if option.buildability_status == "BLOCKED_MISSING_CONTRACT"
+        ]
+        if blocked and all(
+            option.candidate_id in HIGH_RISK_CANDIDATE_IDS for option in blocked
+        ):
+            return True
+
+    if evidence.feedstock_first:
+        if evidence.feedstock_first in GOVERNANCE_FRAMEWORK_CONTRACTS:
+            return _governance_framework_lane_closed(root, evidence.feedstock_first)
+        return False
+
+    return True
+
+
 def _contract_rel_for_candidate(candidate_id: str) -> str | None:
     rel = GOVERNANCE_FRAMEWORK_CONTRACTS.get(candidate_id)
     if rel:
@@ -288,6 +341,8 @@ def _relay_signed_governance_framework(
     if evidence.dispatcher_mode != "ALL_CLEAR":
         return None
     for candidate_id, contract_rel in GOVERNANCE_FRAMEWORK_CONTRACTS.items():
+        if _governance_framework_lane_closed(root, candidate_id):
+            continue
         if not ((root / contract_rel).is_file() and _is_contract_signed(root, contract_rel)):
             continue
         for option in evidence.menu_options:
@@ -358,6 +413,18 @@ def _ignore_lines(options: list) -> list[str]:
                 f"{option.candidate_id} {option.candidate_name} is a higher-risk "
                 f"control/risk candidate; hold unless Matt chooses it."
             )
+
+    for option in options:
+        if option.candidate_id == "#105" and (
+            (option.source_lifecycle or "").startswith(GOVERNANCE_SIGNED_CONTRACT_LIFECYCLE)
+            or option.contract_status == "PRESENT"
+        ):
+            add_line(
+                "#105 MMI Governance Invariants Testing Framework is SIGNED_CONTRACT "
+                "+ Lane 1 probe complete (MMI-DEC-092); hold Lane 2+ unless Matt "
+                "authorizes."
+            )
+            break
 
     for option in options:
         if option.candidate_id in {"#72", "#73"} and option.buildability_status == "EXCLUDED_ALREADY_BUILT":
@@ -719,6 +786,30 @@ def _compose_missing_contract_voice(
     }
 
 
+def _compose_all_clear_hold_voice(evidence: VoiceEvidence) -> dict[str, str]:
+    return {
+        "WHAT_NEEDS_MATT": (
+            "Matt selects next lane explicitly; dispatcher ALL_CLEAR with "
+            "buildable_count=0."
+        ),
+        "IN_FLIGHT": "none",
+        "HAND_IT_TO": ROSTER_MATT,
+        "YOU_DO": (
+            f"Hold until Matt names next lane. Maintain drift defense: pytest "
+            f"{INVARIANTS_PROBE_TEST_REL} after any scripts/mmi_*.py change."
+        ),
+        "WHY": (
+            f"dispatcher={evidence.dispatcher_mode}; buildable_count="
+            f"{evidence.buildable_count}; missing_contract_count="
+            f"{evidence.missing_contract_count}; BOR hold-only feedstock; "
+            f"#105 SIGNED_CONTRACT + Lane 1 probe complete (MMI-DEC-092)."
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence),
+        "SOURCE": _source_line(evidence),
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_fallback_voice(evidence: VoiceEvidence) -> dict[str, str]:
     if evidence.scored_first:
         you_do = (
@@ -775,40 +866,52 @@ def compose_voice(
         return governance_voice
 
     if evidence.feedstock_first and evidence.dispatcher_mode == "ALL_CLEAR":
-        contract_rel = _contract_rel_for_candidate(evidence.feedstock_first)
-        if contract_rel and (root / contract_rel).is_file():
-            if not _is_contract_signed(root, contract_rel):
-                return _compose_unsigned_contract_review_voice(evidence, contract_rel)
-            if evidence.feedstock_first == "#105":
-                return _compose_signed_invariants_framework_voice(evidence, contract_rel)
-        return _compose_feedstock_voice(evidence)
+        if not (
+            evidence.feedstock_first in GOVERNANCE_FRAMEWORK_CONTRACTS
+            and _governance_framework_lane_closed(root, evidence.feedstock_first)
+        ):
+            contract_rel = _contract_rel_for_candidate(evidence.feedstock_first)
+            if contract_rel and (root / contract_rel).is_file():
+                if not _is_contract_signed(root, contract_rel):
+                    return _compose_unsigned_contract_review_voice(
+                        evidence, contract_rel
+                    )
+                if (
+                    evidence.feedstock_first == "#105"
+                    and not _governance_framework_lane_closed(root, "#105")
+                ):
+                    return _compose_signed_invariants_framework_voice(
+                        evidence, contract_rel
+                    )
+            return _compose_feedstock_voice(evidence)
 
     unreconciled = _relay_signed_unreconciled(root, evidence.menu_options)
     if unreconciled is not None:
         contract_rel = _contract_rel_for_candidate(unreconciled.candidate_id) or ""
         return _compose_signed_unreconciled_voice(evidence, unreconciled, contract_rel)
 
-    relay = _relay_contract_candidate(evidence.menu_options)
-    if relay is not None:
-        contract_rel = _contract_rel_for_candidate(relay.candidate_id)
-        if (
-            contract_rel
-            and (root / contract_rel).is_file()
-            and not _is_contract_signed(root, contract_rel)
-        ):
-            relay_evidence = replace(
-                evidence,
-                feedstock_first=relay.candidate_id,
-                feedstock_first_name=relay.candidate_name,
-            )
-            return _compose_unsigned_contract_review_voice(relay_evidence, contract_rel)
-    if relay is not None or (
-        evidence.missing_contract_count > 0
-        and not (
-            evidence.feedstock_first and evidence.dispatcher_mode == "ALL_CLEAR"
-        )
-    ):
-        return _compose_missing_contract_voice(evidence, relay)
+    if not _all_clear_hold_posture(evidence, root):
+        relay = _relay_contract_candidate(evidence.menu_options)
+        if relay is not None:
+            contract_rel = _contract_rel_for_candidate(relay.candidate_id)
+            if (
+                contract_rel
+                and (root / contract_rel).is_file()
+                and not _is_contract_signed(root, contract_rel)
+            ):
+                relay_evidence = replace(
+                    evidence,
+                    feedstock_first=relay.candidate_id,
+                    feedstock_first_name=relay.candidate_name,
+                )
+                return _compose_unsigned_contract_review_voice(
+                    relay_evidence, contract_rel
+                )
+        if relay is not None or evidence.missing_contract_count > 0:
+            return _compose_missing_contract_voice(evidence, relay)
+
+    if _all_clear_hold_posture(evidence, root):
+        return _compose_all_clear_hold_voice(evidence)
 
     return _compose_fallback_voice(evidence)
 
