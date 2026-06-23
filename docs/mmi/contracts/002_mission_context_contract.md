@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **BLOCKED** until separate operator Build Authorization. §11 signature authorizes contract text only. MMI-DEC-106 opened the scoreboard `SIGNED_UNBUILT` build feedstock path; wrapper implementation, registry dispatch, and `MissionContext` schema mutation on disk still require explicit operator build authorization.
+**Implementation:** **BUILD AUTHORIZED 2026-06-23 (MMI-DEC-108).** Stage 1 `MissionContextAgent` wrapper at `core/command/mission_context_agent.py` with separate `MissionClassification` envelope (MissionContext schema unchanged). Interim taxonomy rules embedded under `CLASSIFICATION_POLICY_VERSION=mmi_mc_v1` pending signed classification-policy annex. Registry dispatch and Commander auto-wiring still blocked pending routing-policy annex. Scoreboard reconcile MMI-DEC-106; pre-build gate MMI-DEC-107.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (template shape only — this draft is not §11-signed)
@@ -295,19 +295,21 @@ If emitted:
 
 ---
 
-## §9 Build path (not authorized)
+## §9 Build path — AUTHORIZED 2026-06-23 (MMI-DEC-108)
 
-**Proposed future path (frozen for review only):**
+Matt authorized wrapper build 2026-06-23. Implemented path:
 
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/command/mission_context_agent.py`
 
-Build Authorization must also specify:
+Build decisions locked at authorization:
 
-- Whether `MissionContext` gains optional classification fields vs separate `MissionClassification` envelope.
-- Signed **classification-policy annex** (taxonomy rules → `required_evidence` manifests).
-- Signed **routing-policy annex** (#2 output → Commander `agents[]` hints) — if any automation is desired.
+- Separate `MissionClassification` envelope (`MissionContext` pydantic fields unchanged).
+- Interim closed-vocabulary taxonomy rules embedded under `CLASSIFICATION_POLICY_VERSION=mmi_mc_v1` pending signed **classification-policy annex** (§10 Q1).
+- Signed **routing-policy annex** (#2 output → Commander `agents[]` hints) remains unsigned — no production Commander wiring.
 
-No file creation, registry entry, schema mutation, or scoreboard `SIGNED_UNBUILT` reconcile is authorized by this draft.
+Prior superintendent slices: scoreboard `SIGNED_UNBUILT` reconcile MMI-DEC-106; pre-build gate MMI-DEC-107.
+
+Not authorized by this build slice: registry/default dispatch, GOVERNED_AGENT promotion, routing-policy automation, or AUTH-5.
 
 ---
 

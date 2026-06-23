@@ -1,18 +1,12 @@
-MODE: BUILD
-AUTHORIZED_TASK: Build Mission Context Agent
-OPERATOR_NAMES_TARGET: Matt
-MMI_ASSIGNS_LANE: YES
-LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
-PROJECT_IDENTITY: Mutant Monkey Security
-MMI_BRAIN: Mutant Monkey Intelligence (MMI)
-AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
-ASSIGNED_TO: Cursor → Codex → Cursor
-PRE_BUILD_REVIEW: Codex
-NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
-BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
-OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
+MODE: AUDIT
+AUTHORIZED_TASK: Run Grok completion gate for Mission Context Agent
+ASSIGNED_TO: Grok (negative-feedback auditor)
+NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits
+OPERATOR_ACTION_REQUIRED: NO  (Grok activation is standing; no per-run permission)
+RUN: python3 audit_tools/complete_gate.py --pre-commit --task mission_context_agent --claim "Mission Context Agent build implemented + tested; ready for audit"
+MANIFEST: audit_outputs/pending/mission_context_agent.manifest.json (present)
+BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed
+NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -24,11 +18,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #2 Mission Context pre-build gate clean 0/0
-  (MMI-DEC-107; `mmi_02_contract_gate_20260623T033955Z.md`; receipt pinned; SIGNED_UNBUILT reconcile MMI-DEC-106; **build implementation not authorized**; **not** AUTH-5).
+LAST_COMPLETED: #2 Mission Context build + AWAITING_AUDIT reconcile
+  (MMI-DEC-108; Matt authorized #2 build; `MissionContextAgent` + 16 tests; pre-build gate MMI-DEC-107; **not GATED** until completion gate 0/0; **not GOVERNED_AGENT**; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: #2 Mission Context scoreboard SIGNED_UNBUILT reconcile
-  (MMI-DEC-106; Matt authorized build_auth_#2; §11 contract MMI-DEC-105).
+PRIOR_LAST_COMPLETED: #2 Mission Context pre-build gate clean 0/0
+  (MMI-DEC-107; `mmi_02_contract_gate_20260623T033955Z.md`; SIGNED_UNBUILT reconcile MMI-DEC-106).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

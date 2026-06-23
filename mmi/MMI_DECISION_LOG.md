@@ -241,6 +241,8 @@ MMI-DEC-106 | 2026-06-23 | #2 Mission Context scoreboard lifecycle reconcile | `
 
 MMI-DEC-107 | 2026-06-23 | #2 Mission Context contract draft Grok pre-build gate | `audit_outputs/mmi_02_contract_gate_20260623T033955Z.md` (0 blocking / 0 warnings); packet SHA256 `996e54f54c48404104f42a2dc6a6b00e5dced25c97aaf914bb74a537d47a0d58`; Grok verdict SIGNABLE | ACCEPT | Pre-build gate clean; #2 MC-AUTH classify-only spine preserved (#2 classifies / #1 routes / #3 scores); receipt pinned in contract header; MMI-DEC-106 reconcile separate; **not** wrapper build; **not** AUTH-5 | Separate operator build authorization before MissionContextAgent implementation | Run mmi_dispatch.py --verify after commit | Matt Nichol (authorize mmi_02_contract_gate)
 
+MMI-DEC-108 | 2026-06-23 | #2 Mission Context build authorization + implementation | `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/command/mission_context_agent.py`; `tests/test_mission_context_agent.py` | ACCEPT | Matt authorized #2 build lane explicitly; prerequisite MMI-DEC-106 SIGNED_UNBUILT + MMI-DEC-107 pre-build gate satisfied. `MissionContextAgent` Stage 1 MC-AUTH classify-only wrapper + 16 focused pytest tests. Separate `MissionClassification` envelope; MissionContext schema unchanged. **Not GATED** until completion gate clean 0/0; **not GOVERNED_AGENT**; not production dispatch; not default registry; not AUTH-5 | Grok completion gate then GATED reconcile | Run mmi_dispatch.py --sync + --verify + probe pytest after commit | Matt Nichol (authorize #2 build)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
