@@ -316,9 +316,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 repo_root=self.mod._repo_root(),
             )
         self.assertEqual(fields["HAND_IT_TO"], "Matt")
-        self.assertIn("Matt selects next lane explicitly", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("Select one ranked lane", fields["WHAT_NEEDS_MATT"])
         self.assertEqual(fields["IN_FLIGHT"], "none")
-        self.assertIn("Hold until Matt names next lane", fields["YOU_DO"])
+        self.assertIn("ranked lane", fields["YOU_DO"].lower())
         self.assertNotIn("Grok pre-build gate", fields["YOU_DO"])
         self.assertNotIn("§11 signed", fields["WHAT_NEEDS_MATT"])
 
@@ -346,9 +346,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 repo_root=self.mod._repo_root(),
             )
         self.assertEqual(fields["HAND_IT_TO"], "Matt")
-        self.assertIn("Matt selects next lane explicitly", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("Select one ranked lane", fields["WHAT_NEEDS_MATT"])
         self.assertEqual(fields["IN_FLIGHT"], "none")
-        self.assertIn("Hold until Matt names next lane", fields["YOU_DO"])
+        self.assertIn("ranked lane", fields["YOU_DO"].lower())
         self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
         self.assertNotIn("Authorize reconcile", fields["YOU_DO"])
         self.assertNotIn("§11 signed", fields["WHAT_NEEDS_MATT"])
@@ -684,11 +684,11 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Pre-build gate clean", out)
             self.assertIn("mmi_01_contract_gate", out)
-        elif "Matt selects next lane explicitly" in out and "#1 Swarm Commander contract §11 signed" in out:
+        elif "Select one ranked lane" in out and "#1 Swarm Commander contract §11 signed" in out:
             pass
-        elif "Matt selects next lane explicitly" in out:
+        elif "Select one ranked lane" in out:
             self.assertIn("HAND_IT_TO:\nMatt", out)
-            self.assertIn("Hold until Matt names next lane", out)
+            self.assertIn("ranked lane", out.lower())
             self.assertIn("IN_FLIGHT:\nnone", out)
         elif "Optional Matt §11 signature on #3" in out:
             self.assertIn("HAND_IT_TO:\nMatt", out)

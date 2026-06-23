@@ -78,6 +78,7 @@ INVARIANTS_PROBE_TEST_REL = "tests/test_mmi_authority_escalation_probe.py"
 RUBRIC_BINARY_CALIBRATION_AMENDMENT_REL = (
     "4. Product_Roadmap/Next_Action_Decision_Rubric_Binary_Calibration_Amendment_Deep_Dive.md"
 )
+RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
 
 CONTRACT_SIGNED_DECISION: dict[str, str] = {
     "#1": "MMI-DEC-102",
@@ -147,6 +148,7 @@ class VoiceEvidence:
     feedstock_first_name: str = ""
     feedstock_lane_type: str = ""
     gaps: list[str] = field(default_factory=list)
+    ranked_rows: list = field(default_factory=list)
 
 
 def _repo_root() -> Path:
@@ -182,6 +184,7 @@ def gather_evidence(repo_root: Path, menu_limit: int = 30) -> VoiceEvidence:
     envelope, options, gaps = next_lane.build_menu(repo_root, menu_limit)
     evidence.menu_options = options
     evidence.gaps.extend(gaps)
+    evidence.ranked_rows = _load_ranked_rows(repo_root)
 
     scored, errors, _, _, feedstock_scored = estimator.analyze(repo_root)
     if errors:
@@ -208,6 +211,36 @@ def _read_text(path: Path) -> str:
         return path.read_text(encoding="utf-8")
     except OSError:
         return ""
+
+
+def _load_ranked_rows(repo_root: Path) -> list[dict[str, str]]:
+    """Load persisted ranked lanes; compute in-memory if board file is absent."""
+    ranked_path = repo_root / RANKED_ACTIONS_REL
+    if ranked_path.is_file():
+        rubric = _load_module("mmi_next_action_rubric", "mmi_next_action_rubric.py")
+        rows = rubric.parse_ranked_markdown(_read_text(ranked_path))
+        if rows:
+            return rows
+    rubric = _load_module("mmi_next_action_rubric", "mmi_next_action_rubric.py")
+    scored = rubric.analyze(repo_root, limit=7)
+    return [
+        {
+            "rank": str(index),
+            "total": str(item.axes.total),
+            "label": item.candidate.label,
+        }
+        for index, item in enumerate(scored, start=1)
+    ]
+
+
+def _format_ranked_lane_lines(rows: list[dict[str, str]], limit: int = 5) -> list[str]:
+    lines: list[str] = []
+    for row in rows[:limit]:
+        rank = row.get("rank", "?")
+        total = row.get("total", "?")
+        label = row.get("label", "unknown")
+        lines.append(f"  {rank}. [{total}/10] {label}")
+    return lines
 
 
 def _is_contract_signed(root: Path, contract_rel: str) -> bool:
@@ -701,10 +734,13 @@ def _compose_signed_swarm_commander_contract_voice(
 ) -> dict[str, str]:
     gate_rel = _contract_gate_clean(repo_root, "#1") or ""
     gate_note = f" gate {gate_rel}" if gate_rel else ""
+    ranked = evidence.ranked_rows or _load_ranked_rows(repo_root)
+    ranked_lines = _format_ranked_lane_lines(ranked, limit=3)
+    ranked_block = "\n".join(ranked_lines) if ranked_lines else ""
     return {
         "WHAT_NEEDS_MATT": (
-            "Matt selects next lane explicitly; #1 Swarm Commander contract §11 "
-            "signed; dispatcher ALL_CLEAR with buildable_count=0."
+            "#1 Swarm Commander contract §11 signed; select next ranked lane "
+            "(buildable_count=0)."
         ),
         "IN_FLIGHT": (
             f"#1 contract §11 SIGNED at {contract_rel} (MMI-DEC-102);"
@@ -712,9 +748,9 @@ def _compose_signed_swarm_commander_contract_voice(
         ),
         "HAND_IT_TO": ROSTER_MATT,
         "YOU_DO": (
-            f"Hold until Matt names next lane. Spine contracts #1 + #3 §11 signed; "
-            f"maintain drift defense: pytest {INVARIANTS_PROBE_TEST_REL} after any "
-            f"scripts/mmi_*.py change."
+            f"Ranked lanes (Matt selects one):\n{ranked_block}\n"
+            f"Board: {RANKED_ACTIONS_REL}. Maintain drift defense: pytest "
+            f"{INVARIANTS_PROBE_TEST_REL} after any scripts/mmi_*.py change."
         ),
         "WHY": (
             f"§11 signed at {contract_rel}; pre-build gate 0/0 (MMI-DEC-101); "
@@ -732,10 +768,13 @@ def _compose_signed_risk_triage_contract_voice(
 ) -> dict[str, str]:
     gate_rel = _contract_gate_clean(repo_root, "#3") or ""
     gate_note = f" gate {gate_rel}" if gate_rel else ""
+    ranked = evidence.ranked_rows or _load_ranked_rows(repo_root)
+    ranked_lines = _format_ranked_lane_lines(ranked, limit=3)
+    ranked_block = "\n".join(ranked_lines) if ranked_lines else ""
     return {
         "WHAT_NEEDS_MATT": (
-            "Matt selects next lane explicitly; #3 Risk Triage contract §11 "
-            "signed; dispatcher ALL_CLEAR with buildable_count=0."
+            "#3 Risk Triage contract §11 signed; select next ranked lane "
+            "(buildable_count=0)."
         ),
         "IN_FLIGHT": (
             f"#3 contract §11 SIGNED at {contract_rel} (MMI-DEC-098);"
@@ -743,7 +782,8 @@ def _compose_signed_risk_triage_contract_voice(
         ),
         "HAND_IT_TO": ROSTER_MATT,
         "YOU_DO": (
-            f"Hold until Matt names next lane. Maintain drift defense: pytest "
+            f"Ranked lanes (Matt selects one):\n{ranked_block}\n"
+            f"Board: {RANKED_ACTIONS_REL}. Maintain drift defense: pytest "
             f"{INVARIANTS_PROBE_TEST_REL} after any scripts/mmi_*.py change."
         ),
         "WHY": (
@@ -1076,20 +1116,34 @@ def _compose_all_clear_hold_voice(
             " Next-Action Rubric §3.A binary calibration in force "
             "(MMI-DEC-095)."
         )
+
+    ranked = evidence.ranked_rows or _load_ranked_rows(repo_root)
+    ranked_lines = _format_ranked_lane_lines(ranked)
+    top = ranked[0] if ranked else None
+    top_label = top.get("label", "Hold ALL_CLEAR") if top else "Hold ALL_CLEAR"
+    top_total = top.get("total", "?") if top else "?"
+
+    you_do_parts = [
+        "Select one ranked lane (rubric ranks; Matt selects; not authorization):",
+        *ranked_lines,
+        f"Persisted board: {RANKED_ACTIONS_REL} — refresh with "
+        f"`python3 scripts/mmi_lane_board_sync.py` after repo changes.",
+        f"Maintain drift defense: pytest {INVARIANTS_PROBE_TEST_REL} after any "
+        f"scripts/mmi_*.py change.",
+    ]
+
     return {
         "WHAT_NEEDS_MATT": (
-            "Matt selects next lane explicitly; dispatcher ALL_CLEAR with "
-            "buildable_count=0."
+            f"Select one ranked lane — top [{top_total}/10]: {top_label}. "
+            f"Dispatcher ALL_CLEAR; buildable_count=0."
         ),
         "IN_FLIGHT": "none",
         "HAND_IT_TO": ROSTER_MATT,
-        "YOU_DO": (
-            f"Hold until Matt names next lane. Maintain drift defense: pytest "
-            f"{INVARIANTS_PROBE_TEST_REL} after any scripts/mmi_*.py change."
-        ),
+        "YOU_DO": "\n".join(you_do_parts),
         "WHY": why,
         "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
-        "SOURCE": _source_line(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root)
+        + f"; ranked_board: {RANKED_ACTIONS_REL}",
         "BOUNDARY": _boundary_line(),
     }
 
