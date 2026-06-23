@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_02_MISSION_CONTEXT_AGENT_DESIGN_CONTRACT_REVIEW_DRAFT`
 
-**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Pre-build gate manifest repaired 2026-06-22 (re-run `mmi_02_contract_gate` for 0/0 receipt; gate receipt SHA to be pinned on next clean run). Locks D1–D10, MC-AUTH case-classifier spine, and closed classification vocabularies. Authorizes **contract text only** — **no** build, **no** `SIGNED_UNBUILT`, **no** scoreboard lifecycle promotion, **no** AUTH-5.
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Pre-build gate clean 0/0 (`audit_outputs/mmi_02_contract_gate_20260623T033955Z.md`; packet SHA256 `996e54f54c48404104f42a2dc6a6b00e5dced25c97aaf914bb74a537d47a0d58`; MMI-DEC-107). Locks D1–D10, MC-AUTH case-classifier spine, and closed classification vocabularies. Scoreboard `SIGNED_UNBUILT` reconcile MMI-DEC-106 is a separate superintendent slice. Authorizes **contract text only** — **no** wrapper build, **no** registry dispatch, **no** AUTH-5.
 
 **Candidate:** #2 — Mission Context
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **BLOCKED** until separate operator Build Authorization. §11 signature (when granted) does not authorize wrapper build, registry dispatch, `MissionContext` schema mutation on disk, or `SIGNED_UNBUILT` reconcile.
+**Implementation:** **BLOCKED** until separate operator Build Authorization. §11 signature authorizes contract text only. MMI-DEC-106 opened the scoreboard `SIGNED_UNBUILT` build feedstock path; wrapper implementation, registry dispatch, and `MissionContext` schema mutation on disk still require explicit operator build authorization.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (template shape only — this draft is not §11-signed)
@@ -324,7 +324,7 @@ No file creation, registry entry, schema mutation, or scoreboard `SIGNED_UNBUILT
 
 ## §11 Sign-off — SIGNED 2026-06-21
 
-Signed by Matt Nichol on 2026-06-21 after manifest repair for Grok pre-build gate `mmi_02_contract_gate` (re-run for 0/0 receipt). Locks D1–D10, MC-AUTH, inbound/outbound schema, and closed vocabularies in Section 6. Authorizes contract text only. Does **not** authorize build, `SIGNED_UNBUILT`, scoreboard reconcile, or AUTH-5.
+Signed by Matt Nichol on 2026-06-21 after pre-build gate clean 0/0 (`audit_outputs/mmi_02_contract_gate_20260623T033955Z.md`; MMI-DEC-107). Locks D1–D10, MC-AUTH, inbound/outbound schema, and closed vocabularies in Section 6. Authorizes contract text only. Scoreboard `SIGNED_UNBUILT` reconcile is MMI-DEC-106 (separate superintendent authorization). Does **not** authorize wrapper build, registry dispatch, or AUTH-5.
 
 ### Sign-off line
 

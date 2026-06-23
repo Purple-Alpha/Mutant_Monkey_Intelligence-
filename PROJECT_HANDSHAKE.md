@@ -41,7 +41,7 @@ DISPATCHER: MODE BUILD — `python3 scripts/mmi_dispatch.py --verify` PASS
 
 LAST_COMPLETED (MMI authority repo):
   #2 Mission Context — scoreboard `SIGNED_UNBUILT` reconcile (MMI-DEC-106); §11 contract at
-    `docs/mmi/contracts/002_mission_context_contract.md` (MMI-DEC-105); pre-build gate receipt pending — re-run `mmi_02_contract_gate`
+    `docs/mmi/contracts/002_mission_context_contract.md` (MMI-DEC-105); pre-build gate 0/0 (MMI-DEC-107)
   Ranked lane board LIVE — `mmi/MMI_RANKED_NEXT_ACTIONS.md` + `scripts/mmi_next_action_rubric.py` (MMI-DEC-104)
   #1 Swarm Commander + #3 Risk Triage — spine contract-review §11 signed at
     `docs/mmi/contracts/` (MMI-DEC-098/101/102); gates 0/0; **not** build / **not** SIGNED_UNBUILT
@@ -55,7 +55,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=1 (#2 Mission Context SIGNED_UNBUILT) · missing_contract_count=0
   BOR hold-only (BOR-ALL-CLEAR-FEEDSTOCK-v10, MMI-DEC-102)
 
-NEXT ACTION: #2 Mission Context is SIGNED_UNBUILT (MMI-DEC-106) — dispatcher MODE:BUILD. Matt must explicitly authorize wrapper implementation before Cursor writes code. Pre-build gate receipt pending (`mmi_02_contract_gate`). Ranked lanes: `mmi/MMI_RANKED_NEXT_ACTIONS.md`.
+NEXT ACTION: #2 Mission Context is SIGNED_UNBUILT (MMI-DEC-106) — dispatcher MODE:BUILD. Matt must explicitly authorize wrapper implementation before Cursor writes code. Pre-build gate clean 0/0 (MMI-DEC-107). Ranked lanes: `mmi/MMI_RANKED_NEXT_ACTIONS.md`.
   Held unless authorized: wrapper implementation, BOR unpark, GOVERNED_AGENT promotion for GATED rows.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run

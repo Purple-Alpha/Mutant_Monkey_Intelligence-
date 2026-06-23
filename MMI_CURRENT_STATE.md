@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #2 Mission Context scoreboard SIGNED_UNBUILT reconcile
-  (MMI-DEC-106; Matt authorized build_auth_#2; §11 contract MMI-DEC-105; pre-build gate receipt pending `mmi_02_contract_gate`; **build implementation not authorized**; **not** AUTH-5).
+LAST_COMPLETED: #2 Mission Context pre-build gate clean 0/0
+  (MMI-DEC-107; `mmi_02_contract_gate_20260623T033955Z.md`; receipt pinned; SIGNED_UNBUILT reconcile MMI-DEC-106; **build implementation not authorized**; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: #105 MMI Governance Invariants Testing Framework §11 signed + SIGNED_CONTRACT reconcile
-  (MMI-DEC-092; pre-build gate `mmi_105_contract_gate_20260621T231319Z.md` 0/0; Lane 1 probe MMI-DEC-082; **not** Lane 2+; **not** AUTH-5).
+PRIOR_LAST_COMPLETED: #2 Mission Context scoreboard SIGNED_UNBUILT reconcile
+  (MMI-DEC-106; Matt authorized build_auth_#2; §11 contract MMI-DEC-105).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
