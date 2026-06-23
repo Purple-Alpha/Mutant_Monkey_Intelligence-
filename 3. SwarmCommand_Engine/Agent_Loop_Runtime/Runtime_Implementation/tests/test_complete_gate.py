@@ -186,6 +186,43 @@ def test_request_timeout_is_60_seconds() -> None:
     assert module.REQUEST_RETRIES == 1
 
 
+def test_gate_provider_defaults_to_auto() -> None:
+    module = _load_gate()
+    assert module.DEFAULT_GATE_PROVIDER == "auto"
+    assert module.VALID_GATE_PROVIDERS == frozenset({"xai", "gemini", "auto"})
+
+
+def test_auto_falls_back_to_gemini_on_xai_auth_failure(gate, monkeypatch) -> None:
+    gate.ENV_PATH.write_text(
+        "XAI_API_KEY=xai-test\nGEMINI_API_KEY=gemini-test\n",
+        encoding="utf-8",
+    )
+    (gate.WORKSPACE_ROOT / "PROGRESS.md").write_text("progress\n", encoding="utf-8")
+    _write_manifest(gate, task_id="fallback_task", files_modified=["PROGRESS.md"])
+    _patch_git(gate, monkeypatch, changed_files=["PROGRESS.md"])
+
+    def failing_xai(**_):
+        raise gate.GrokCallError("grok_call_auth_failed: HTTP 403 Forbidden")
+
+    monkeypatch.setattr(gate, "call_grok", failing_xai)
+    monkeypatch.setattr(
+        gate,
+        "call_gemini",
+        lambda **_: _clean_grok_response(blocking=0, warnings=0),
+    )
+
+    outcome = gate.run_gate(
+        task_id="fallback_task",
+        completion_claim="fallback path",
+    )
+
+    assert outcome.exit_code == gate.EXIT_OK
+    assert outcome.audit_output_path is not None
+    written = outcome.audit_output_path.read_text(encoding="utf-8")
+    assert "Completion Audit" in written
+    assert "**Auditor:** `gemini`" in written
+
+
 def test_packet_caps_are_50k_and_200k() -> None:
     module = _load_gate()
     assert module.PER_FILE_CAP_BYTES == 50_000

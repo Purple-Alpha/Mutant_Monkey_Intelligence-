@@ -60,8 +60,12 @@ manually if desired.
 
 Boundaries
 ----------
-- Reads ``XAI_API_KEY`` (and optional ``XAI_MODEL``) from ``.env`` at
-  the workspace root. Never prints, logs, persists, or echoes the key.
+- Reads auditor credentials from ``.env`` at the workspace root:
+  ``XAI_API_KEY`` / ``XAI_MODEL`` (xAI Grok), ``GEMINI_API_KEY`` /
+  ``GEMINI_MODEL`` (Google Gemini), and optional
+  ``COMPLETION_GATE_PROVIDER`` (``xai``, ``gemini``, or ``auto``; default
+  ``auto`` tries xAI first and falls back to Gemini on auth/billing
+  failure). Never prints, logs, persists, or echoes any API key.
 - Writes outputs under ``audit_outputs/``, which is git-ignored.
 - Does not touch Blackboard, production state, operator state, or any
   runtime surface. The gate only reads existing files and writes audit
@@ -92,6 +96,12 @@ DRIFT_INCIDENT_DIR = OUTPUT_DIR / "drift_incidents"
 
 XAI_ENDPOINT = "https://api.x.ai/v1/chat/completions"
 DEFAULT_MODEL = "grok-4"
+GEMINI_ENDPOINT_TEMPLATE = (
+    "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+)
+DEFAULT_GEMINI_MODEL = "gemini-2.5-pro"
+VALID_GATE_PROVIDERS = frozenset({"xai", "gemini", "auto"})
+DEFAULT_GATE_PROVIDER = "auto"
 REQUEST_TIMEOUT_SECONDS = 60
 REQUEST_RETRIES = 1
 
@@ -961,42 +971,65 @@ def find_cached_audit(task_id: str, packet_hash: str) -> CachedAudit | None:
 
 
 # ---------------------------------------------------------------------------
-# Grok call
+# Auditor call (xAI Grok + Google Gemini fallback)
 # ---------------------------------------------------------------------------
 
-def load_xai_credentials(env_path: Path) -> tuple[str, str]:
-    """Load XAI_API_KEY and optional XAI_MODEL from .env.
-
-    The key is read once and never echoed. Other env variables are
-    intentionally ignored.
-    """
+def _read_env_vars(env_path: Path) -> dict[str, str]:
+    """Parse ``KEY=VALUE`` lines from a ``.env`` file (comments ignored)."""
 
     if not env_path.exists():
-        raise GrokCallError(
-            f"missing .env at {env_path}. Add XAI_API_KEY=... and re-run, "
-            "or pass --operator-override <reason>."
-        )
-
-    api_key: str | None = None
-    model: str | None = None
+        return {}
+    values: dict[str, str] = {}
     for line in env_path.read_text(encoding="utf-8").splitlines():
         stripped = line.strip()
         if not stripped or stripped.startswith("#") or "=" not in stripped:
             continue
         key, _, value = stripped.partition("=")
-        key = key.strip()
-        value = value.strip().strip('"').strip("'")
-        if key == "XAI_API_KEY":
-            api_key = value
-        elif key == "XAI_MODEL":
-            model = value
+        values[key.strip()] = value.strip().strip('"').strip("'")
+    return values
+
+
+def load_gate_provider(env_path: Path) -> str:
+    """Return ``COMPLETION_GATE_PROVIDER`` (``xai`` / ``gemini`` / ``auto``)."""
+
+    provider = (
+        _read_env_vars(env_path).get("COMPLETION_GATE_PROVIDER")
+        or DEFAULT_GATE_PROVIDER
+    ).lower()
+    if provider not in VALID_GATE_PROVIDERS:
+        raise GrokCallError(
+            "invalid COMPLETION_GATE_PROVIDER="
+            f"{provider!r}; expected one of {sorted(VALID_GATE_PROVIDERS)}"
+        )
+    return provider
+
+
+def load_xai_credentials(env_path: Path) -> tuple[str, str]:
+    """Load XAI_API_KEY and optional XAI_MODEL from .env."""
+
+    env = _read_env_vars(env_path)
+    api_key = env.get("XAI_API_KEY")
     if not api_key:
         raise GrokCallError(
             "XAI_API_KEY not set in .env. Add a line like\n"
             "    XAI_API_KEY=xai-...\n"
             "and re-run. Do not paste the key into chat."
         )
-    return api_key, model or DEFAULT_MODEL
+    return api_key, env.get("XAI_MODEL") or DEFAULT_MODEL
+
+
+def load_gemini_credentials(env_path: Path) -> tuple[str, str]:
+    """Load GEMINI_API_KEY and optional GEMINI_MODEL from .env."""
+
+    env = _read_env_vars(env_path)
+    api_key = env.get("GEMINI_API_KEY")
+    if not api_key:
+        raise GrokCallError(
+            "GEMINI_API_KEY not set in .env. Add a line like\n"
+            "    GEMINI_API_KEY=...\n"
+            "and re-run. Do not paste the key into chat."
+        )
+    return api_key, env.get("GEMINI_MODEL") or DEFAULT_GEMINI_MODEL
 
 
 def _categorize_http_failure(status: int, reason: str, detail: str) -> str:
@@ -1077,6 +1110,105 @@ def call_grok(*, api_key: str, model: str, payload: str) -> str:
     raise last_error
 
 
+def call_gemini(*, api_key: str, model: str, payload: str) -> str:
+    """POST a single request to Google Generative Language API."""
+
+    full_prompt = NEGATIVE_FEEDBACK_PROMPT + OUTPUT_FORMAT_INSTRUCTION
+    url = f"{GEMINI_ENDPOINT_TEMPLATE.format(model=model)}?key={api_key}"
+    body = {
+        "systemInstruction": {"parts": [{"text": full_prompt}]},
+        "contents": [{"role": "user", "parts": [{"text": payload}]}],
+        "generationConfig": {"temperature": 0.2},
+    }
+    request = urllib.request.Request(
+        url=url,
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+
+    last_error: GrokCallError | None = None
+    for attempt in range(REQUEST_RETRIES + 1):
+        try:
+            with urllib.request.urlopen(
+                request, timeout=REQUEST_TIMEOUT_SECONDS
+            ) as resp:
+                response_body = resp.read().decode("utf-8")
+            parsed = json.loads(response_body)
+            return parsed["candidates"][0]["content"]["parts"][0]["text"]
+        except urllib.error.HTTPError as exc:
+            detail = ""
+            try:
+                detail = exc.read().decode("utf-8", errors="replace")
+            except Exception:  # noqa: BLE001 - detail is best-effort
+                detail = ""
+            message = _categorize_http_failure(exc.code, exc.reason, detail).replace(
+                "grok_call_", "gemini_call_"
+            )
+            last_error = GrokCallError(message)
+            if exc.code in (401, 403) or 400 <= exc.code < 500 and exc.code != 429:
+                break
+        except urllib.error.URLError as exc:
+            reason = str(exc.reason)
+            if "timed out" in reason.lower():
+                last_error = GrokCallError(
+                    f"gemini_call_timeout: request exceeded "
+                    f"{REQUEST_TIMEOUT_SECONDS}s ({reason})"
+                )
+            else:
+                last_error = GrokCallError(
+                    f"gemini_call_network_error: {reason}"
+                )
+        except (KeyError, IndexError, TypeError, json.JSONDecodeError) as exc:
+            last_error = GrokCallError(
+                f"gemini_call_unexpected_response_shape: {exc}"
+            )
+            break
+
+    assert last_error is not None  # noqa: S101 - logic guard
+    raise last_error
+
+
+def _xai_auth_failure(exc: GrokCallError) -> bool:
+    message = str(exc)
+    return "grok_call_auth_failed" in message or "403" in message or "401" in message
+
+
+def call_completion_auditor(
+    *, provider: str, env_path: Path, payload: str
+) -> tuple[str, str, str]:
+    """Call the configured completion auditor and return content + metadata."""
+
+    if not env_path.exists():
+        raise GrokCallError(
+            f"missing .env at {env_path}. Add auditor API keys and re-run, "
+            "or pass --operator-override <reason>."
+        )
+
+    if provider == "gemini":
+        api_key, model = load_gemini_credentials(env_path)
+        return call_gemini(api_key=api_key, model=model, payload=payload), "gemini", model
+
+    if provider == "xai":
+        api_key, model = load_xai_credentials(env_path)
+        return call_grok(api_key=api_key, model=model, payload=payload), "xai", model
+
+    # auto: prefer xAI Grok; fall back to Gemini on auth/billing failure.
+    try:
+        api_key, model = load_xai_credentials(env_path)
+        content = call_grok(api_key=api_key, model=model, payload=payload)
+        return content, "xai", model
+    except GrokCallError as xai_exc:
+        if not _xai_auth_failure(xai_exc):
+            raise
+        try:
+            api_key, model = load_gemini_credentials(env_path)
+        except GrokCallError:
+            raise xai_exc from None
+        content = call_gemini(api_key=api_key, model=model, payload=payload)
+        return content, "gemini", model
+
+
 # ---------------------------------------------------------------------------
 # Grok response parsing
 # ---------------------------------------------------------------------------
@@ -1126,19 +1258,26 @@ def save_grok_output(
     model: str,
     packet: AuditPacket,
     result: GrokAuditResult,
+    provider: str = "xai",
 ) -> Path:
-    """Write the Grok response to disk with the packet hash in the header.
+    """Write the auditor response to disk with the packet hash in the header.
 
     The packet hash is the freshness anchor: a future run with the same
     touched files + same contents will hit this same file via
-    ``find_cached_audit`` and skip the Grok call.
+    ``find_cached_audit`` and skip the auditor call.
     """
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = _utc_timestamp()
     output_path = OUTPUT_DIR / f"{task_id}_{timestamp}.md"
+    title = (
+        "Grok Completion Audit"
+        if provider == "xai"
+        else "Completion Audit"
+    )
     header = (
-        f"# Grok Completion Audit — {task_id}\n\n"
+        f"# {title} — {task_id}\n\n"
+        f"- **Auditor:** `{provider}`\n"
         f"- **Model:** `{model}`\n"
         f"- **Run at (UTC):** `{datetime.now(timezone.utc).isoformat()}`\n"
         f"- **{PACKET_HASH_HEADER_KEY}:** `{packet.packet_hash}`\n"
@@ -1341,12 +1480,16 @@ def run_gate(
         )
 
     try:
-        api_key, model = load_xai_credentials(ENV_PATH)
+        provider = load_gate_provider(ENV_PATH)
     except GrokCallError as exc:
         return GateRunOutcome(exit_code=exc.exit_code, message=str(exc))
 
     try:
-        content = call_grok(api_key=api_key, model=model, payload=packet.text)
+        content, auditor, model = call_completion_auditor(
+            provider=provider,
+            env_path=ENV_PATH,
+            payload=packet.text,
+        )
     except GrokCallError as exc:
         return GateRunOutcome(exit_code=exc.exit_code, message=str(exc))
 
@@ -1360,6 +1503,7 @@ def run_gate(
         model=model,
         packet=packet,
         result=result,
+        provider=auditor,
     )
 
     if result.blocking_count > 0:
