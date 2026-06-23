@@ -61,7 +61,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=1 (#1 Swarm Commander SIGNED_UNBUILT) · awaiting_audit_count=0 · missing_contract_count=0
   BOR hold-only (BOR-ALL-CLEAR-FEEDSTOCK-v10, MMI-DEC-102)
 
-NEXT ACTION: #1 Swarm Commander is SIGNED_UNBUILT (MMI-DEC-110) — dispatcher MODE:BUILD. Matt must explicitly authorize wrapper implementation before Cursor writes code. Pre-build gate already clean (MMI-DEC-101). Ranked lanes: `mmi/MMI_RANKED_NEXT_ACTIONS.md`.
+NEXT ACTION: Read ranked lanes on disk — rubric ranks; Matt selects one. Top ranked (5/10): Refresh ranked lane board (mmi_lane_board_sync + handshake pin). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Held unless authorized: wrapper implementation, BOR unpark, GOVERNED_AGENT promotion for GATED rows.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
