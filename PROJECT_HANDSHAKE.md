@@ -35,14 +35,15 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
 BRANCH: safety/queue-drift-cleanup-20260528
 HEAD: 4f81f1b (spine bundle 772fbb7; verify at session start)
 
-DISPATCHER: MODE BUILD — `python3 scripts/mmi_dispatch.py --verify` PASS
-  1 SIGNED_UNBUILT (#1 Swarm Commander) · 0 AWAITING_AUDIT · #2 Mission Context GATED (MMI-DEC-109)
+DISPATCHER: run `python3 scripts/mmi_dispatch.py --sync` + `--verify` after commit
+  #1 Swarm Commander GATED (MMI-DEC-112) · #2 Mission Context GATED (MMI-DEC-109)
   Ranked lanes on disk — `mmi/MMI_RANKED_NEXT_ACTIONS.md`
 
 LAST_COMPLETED (MMI authority repo):
-  #1 Swarm Commander — scoreboard `SIGNED_UNBUILT` reconcile (MMI-DEC-110); §11 contract at
-    `docs/mmi/contracts/001_swarm_commander_contract.md` (MMI-DEC-102); pre-build gate (MMI-DEC-101);
-    **build implementation not authorized**
+  #1 Swarm Commander — `SwarmCommanderAgent` GATED (MMI-DEC-112); completion gate
+    `audit_outputs/swarm_commander_agent_20260623T061720Z.md` (0 blocking / 1 warning);
+    build MMI-DEC-111; §11 contract `docs/mmi/contracts/001_swarm_commander_contract.md`
+    (MMI-DEC-102); pre-build gate (MMI-DEC-101); **not GOVERNED_AGENT**
   #2 Mission Context — `MissionContextAgent` GATED (MMI-DEC-109); completion gate
     `audit_outputs/mission_context_agent_20260623T052118Z.md` (0 blocking / 1 warning);
     build MMI-DEC-108; §11 contract `docs/mmi/contracts/002_mission_context_contract.md`

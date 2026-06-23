@@ -2,7 +2,9 @@
 
 **Draft ID:** `MMI_01_SWARM_COMMANDER_AGENT_DESIGN_CONTRACT_REVIEW_DRAFT`
 
-**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Pre-build gate clean 0/0 (`audit_outputs/mmi_01_contract_gate_20260622T032315Z.md`; packet SHA256 `82806c4c32ca6920d426b9f26e190df52feefb4a3fea775c0ebdbaccc99e1035`; MMI-DEC-101). Locks D1–D10, RC-AUTH route-commander spine, and DER assembly boundary. Authorizes **contract text only** — **no** build, **no** `SIGNED_UNBUILT`, **no** scoreboard lifecycle promotion, **no** AUTH-5.
+**Implementation:** **BUILD AUTHORIZED 2026-06-23 (MMI-DEC-111).** **GATED 2026-06-23 (MMI-DEC-112).** Stage 1 `SwarmCommanderAgent` wrapper at `core/command/swarm_commander_agent.py` delegating to legacy `SwarmCommander` spine with RC-AUTH DER probes. Disposition policy `mmi_sc_v1`. Completion gate clean 0 blocking / 1 warning at `audit_outputs/swarm_commander_agent_20260623T061720Z.md` (packet SHA256 `225efd04c0356d1052f2d489ef14d3c595f04f2c248d49ed8145349c46e09430`). Scoreboard reconcile MMI-DEC-110; pre-build gate MMI-DEC-101. **Not GOVERNED_AGENT**; not production dispatch; not default registry.
+
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Pre-build gate clean 0/0 (`audit_outputs/mmi_01_contract_gate_20260622T032315Z.md`; packet SHA256 `82806c4c32ca6920d426b9f26e190df52feefb4a3fea775c0ebdbaccc99e1035`; MMI-DEC-101). Locks D1–D10, RC-AUTH route-commander spine, and DER assembly boundary. Authorizes **contract text**; build slice authorized separately (MMI-DEC-111).
 
 **Candidate:** #1 — Swarm Commander
 
@@ -283,13 +285,22 @@ Precedence (most cautious first):
 
 ---
 
-## §9 Build path (not authorized)
+## §9 Build path — AUTHORIZED 2026-06-23 (MMI-DEC-111)
 
-**Proposed future path (frozen for review only):**
+Matt authorized wrapper build 2026-06-23. Implemented path:
 
-Governed wrapper promotion reconciles existing `core/orchestrator/swarm_commander.py` to carry Agent Design Contract metadata and authority-probe compliance. Exact file path and registry wiring are **TBD at Build Authorization** — no default-on registry dispatch authorized by this draft.
+`3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/command/swarm_commander_agent.py`
 
-No scoreboard `SIGNED_UNBUILT` reconcile, registry default wiring, or production dispatch is authorized by this draft.
+Build decisions locked at authorization:
+
+- Governed `SwarmCommanderAgent` wrapper delegates registry-first dispatch + DER assembly to legacy `core/orchestrator/swarm_commander.py` spine.
+- RC-AUTH authority probe on outbound DER (`assert_der_rc_auth_compliant`); disposition policy version `mmi_sc_v1`.
+- Optional `risk_triage_telemetry` accepted read-only; v1 ignores score-only hints and rejects routing-by-score keys pending signed **routing-policy annex** (§10 Q1).
+- Not in `build_default_registry`; caller-declared `agents[]` / `challenge_agents[]` only.
+
+Prior superintendent slices: scoreboard `SIGNED_UNBUILT` reconcile MMI-DEC-110; pre-build gate MMI-DEC-101; completion gate MMI-DEC-112 (`audit_outputs/swarm_commander_agent_20260623T061720Z.md`; 0 blocking / 1 warning).
+
+Not authorized by this build slice: registry/default dispatch, GOVERNED_AGENT promotion, routing-by-score automation, or AUTH-5.
 
 ---
 
