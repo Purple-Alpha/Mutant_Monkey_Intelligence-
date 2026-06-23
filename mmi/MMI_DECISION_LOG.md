@@ -233,6 +233,10 @@ MMI-DEC-102 | 2026-06-22 | #1 Swarm Commander contract §11 sign + BOR v10 hold 
 
 MMI-DEC-103 | 2026-06-22 | Admin reconcile — spine contract tracking drift | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` actionable-now + #1/#3 rows; `PROJECT_HANDSHAKE.md` CURRENT NEXT ACTION block | ACCEPT | Operator-selected Next-Action Rubric ACTION 2; reconciles stale missing-contract handshake/scoreboard prose to signed `docs/mmi/contracts/` truth (MMI-DEC-098/102); Estimator missing_contract_count=0; **not** lifecycle promotion; **not** build; **not** SIGNED_UNBUILT; **not** AUTH-5 | Commit spine closeout DEC-098–102 bundle | Run mmi_dispatch.py --verify + probe pytest after commit | Matt Nichol (ACTION 2 admin reconcile)
 
+MMI-DEC-104 | 2026-06-22 | Ranked lane board + rubric script bundle | `scripts/mmi_next_action_rubric.py`; `scripts/mmi_lane_board_sync.py`; `mmi/MMI_RANKED_NEXT_ACTIONS.md`; `scripts/mmi_pm_voice.py`; `scripts/mmi_dispatch.py --sync` hook; tests | ACCEPT | Operator-authorized build of read-only tactical rubric + persisted ranked board; PMV ALL_CLEAR relays ranked list instead of empty hold wall; **not** lane selection authority; **not** AUTH-5 | Draft #2 Mission Context contract | Run lane_board_sync after material repo changes | Matt Nichol (lane board fix session)
+
+MMI-DEC-105 | 2026-06-22 | #2 Mission Context contract §11 sign | `docs/mmi/contracts/002_mission_context_contract.md` §11 SIGNED; `MASTER_INDEX.md`; `scripts/mmi_estimator.py` #2 manifest path | ACCEPT | Matt §11 signed (`Matt Nichol June 21st 2026`); locks MC-AUTH classify-only spine (#2 classifies / #1 routes / #3 scores); pre-build gate manifest repaired (`mmi_02_contract_gate`) — **re-run gate for 0/0 receipt**; **not** build; **not** SIGNED_UNBUILT; **not** AUTH-5 | Re-run `mmi_02_contract_gate`; refresh ranked board | Run mmi_dispatch.py --verify + probe pytest after commit | Matt Nichol June 21st 2026
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

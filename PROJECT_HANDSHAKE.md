@@ -24,7 +24,7 @@ Historical "NorthStar" / "NorthStar Inbox Shield" references in signed specs =
 ═══════════════════════════════════════════════
 
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (verify HEAD at session start — spine admin reconcile 2026-06-22)
+CURRENT NEXT ACTION (verify HEAD at session start — #2 contract §11 + lane board 2026-06-22)
 ═══════════════════════════════════════════════
 AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Monkey
   Security authority repo** — PRIMARY CODEBASE (operator decision 2026-06-13; see
@@ -37,9 +37,12 @@ HEAD: 4f81f1b (spine bundle 772fbb7; verify at session start)
 
 DISPATCHER: MODE ALL_CLEAR — `python3 scripts/mmi_dispatch.py --verify` PASS
   0 SIGNED_UNBUILT · 0 AWAITING_AUDIT · GATED rows unchanged
-  Task scoreboard empty — Matt names next lane
+  Ranked lanes on disk — `mmi/MMI_RANKED_NEXT_ACTIONS.md`
 
 LAST_COMPLETED (MMI authority repo):
+  #2 Mission Context — spine contract-review §11 signed at
+    `docs/mmi/contracts/002_mission_context_contract.md` (MMI-DEC-105); gate manifest repaired — re-run `mmi_02_contract_gate`
+  Ranked lane board LIVE — `mmi/MMI_RANKED_NEXT_ACTIONS.md` + `scripts/mmi_next_action_rubric.py` (MMI-DEC-104)
   #1 Swarm Commander + #3 Risk Triage — spine contract-review §11 signed at
     `docs/mmi/contracts/` (MMI-DEC-098/101/102); gates 0/0; **not** build / **not** SIGNED_UNBUILT
   #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
@@ -52,9 +55,8 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · missing_contract_count=0 (#1/#3 contracts PRESENT on disk)
   BOR hold-only (BOR-ALL-CLEAR-FEEDSTOCK-v10, MMI-DEC-102)
 
-NEXT ACTION: Matt selects next lane explicitly. PM Voice / Estimator / rubric rank only.
-  Held unless authorized: #105 Lane 2+, #67 unpark, GOVERNED_AGENT promotion for GATED rows,
-  #1/#3 wrapper build / SIGNED_UNBUILT reconcile, #2 Mission Context contract draft.
+NEXT ACTION: Read ranked lanes on disk — rubric ranks; Matt selects one. Top ranked (5/10): Refresh ranked lane board (mmi_lane_board_sync + handshake pin). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+  Held unless authorized: build lanes, BOR unpark, GOVERNED_AGENT promotion for GATED rows.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`
@@ -62,7 +64,7 @@ PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
 PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 14 GOVERNED_AGENT at ES1 Synthetic;
   depth gate CLOSED · Stage B gate CLOSED · revenue milestones mostly open (see MILESTONE_ARC.md)
 
-LAST UPDATED: 2026-06-22 (admin reconcile: scoreboard + handshake spine contract truth; MMI-DEC-103)
+LAST UPDATED: 2026-06-22 (#2 Mission Context §11 MMI-DEC-105; ranked lane board MMI-DEC-104)
 ═══════════════════════════════════════════════
 
 ─────────────────────────────────────────────────

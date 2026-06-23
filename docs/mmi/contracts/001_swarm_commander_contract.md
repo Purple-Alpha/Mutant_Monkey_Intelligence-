@@ -255,7 +255,7 @@ Precedence (most cautious first):
 | Agent / surface | Relationship |
 |---|---|
 | #3 Risk Triage | Downstream telemetry producer; optional read-only input; never routes. Governed by signed `003_risk_triage_contract.md`. |
-| #2 Mission Context | Upstream case classifier (separate contract TBD); not owned by this draft. |
+| #2 Mission Context | Upstream case classifier (governed by signed `002_mission_context_contract.md`); not owned by this draft. |
 | Detectors (#10, #21, …) | Pass-1 contributors via `analyze()`; untrusted until their own contracts validate outputs. |
 | Layer 5 Challenge agents | Pass-2 contributors via `challenge()`; verdict-only; Commander owns disposition. |
 | #52 Plain-English Explanation | Downstream narrative consumer; #1 must not emit plain-English artifacts. |
