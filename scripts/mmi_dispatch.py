@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import importlib.util
 import os
 import re
 import subprocess
@@ -1384,6 +1385,23 @@ def main(argv=None):
                 "--sync: MMI_CURRENT_STATE.md routing block "
                 + ("updated to match derived state." if changed else "already current.")
             )
+            try:
+                lane_sync = Path(__file__).resolve().parent / "mmi_lane_board_sync.py"
+                spec = importlib.util.spec_from_file_location(
+                    "mmi_lane_board_sync", lane_sync
+                )
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                ranked_path, top_label, top_total = module.sync(
+                    Path(__file__).resolve().parent.parent
+                )
+                print(
+                    f"--sync: ranked lane board updated at "
+                    f"{ranked_path.relative_to(Path(__file__).resolve().parent.parent)} "
+                    f"(top {top_total}/10: {top_label[:60]}...)"
+                )
+            except Exception as exc:  # pragma: no cover
+                print(f"--sync: lane board sync skipped ({exc})")
     elif pin is None and routing_block_is_stale(lines):
         print(
             "NOTE: MMI_CURRENT_STATE.md routing block is stale vs derived state. "
