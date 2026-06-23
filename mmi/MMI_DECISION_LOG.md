@@ -237,6 +237,8 @@ MMI-DEC-104 | 2026-06-22 | Ranked lane board + rubric script bundle | `scripts/m
 
 MMI-DEC-105 | 2026-06-22 | #2 Mission Context contract §11 sign | `docs/mmi/contracts/002_mission_context_contract.md` §11 SIGNED; `MASTER_INDEX.md`; `scripts/mmi_estimator.py` #2 manifest path | ACCEPT | Matt §11 signed (`Matt Nichol June 21st 2026`); locks MC-AUTH classify-only spine (#2 classifies / #1 routes / #3 scores); pre-build gate manifest repaired (`mmi_02_contract_gate`) — **re-run gate for 0/0 receipt**; **not** build; **not** SIGNED_UNBUILT; **not** AUTH-5 | Re-run `mmi_02_contract_gate`; refresh ranked board | Run mmi_dispatch.py --verify + probe pytest after commit | Matt Nichol June 21st 2026
 
+MMI-DEC-106 | 2026-06-23 | #2 Mission Context scoreboard lifecycle reconcile | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #2 row; contract `docs/mmi/contracts/002_mission_context_contract.md` §11 SIGNED MMI-DEC-105 | ACCEPT | Matt authorized ranked lane `build_auth_#2`; #2 flipped `NOT_STARTED`/`NEEDS_BUILD_AUTH` -> `SIGNED_UNBUILT` with empty BLOCKERS; dispatcher can route MODE:BUILD as lifecycle feedstock; MC-AUTH classify-only; **separate operator build authorization still required** before implementation; no wrapper/tests on disk; **not** Blueprint-of-Record, **not** registry/default dispatch, **not** AUTH-5; pre-build gate `mmi_02_contract_gate` 0/0 receipt still pending | Separate operator build authorization before MissionContextAgent implementation; re-run `mmi_02_contract_gate` for receipt | Run mmi_dispatch.py --sync + --verify + probe pytest after commit | Matt Nichol (authorize build_auth_#2 / MMI_02_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

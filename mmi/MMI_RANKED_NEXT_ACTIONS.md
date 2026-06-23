@@ -1,12 +1,12 @@
-generated_at: 2026-06-23T03:28:19Z
-git_head: c0220e8
+generated_at: 2026-06-23T03:37:06Z
+git_head: a588b77
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
 
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
-dispatcher_mode: ALL_CLEAR
+dispatcher_mode: BUILD
 candidate_count: 7
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`

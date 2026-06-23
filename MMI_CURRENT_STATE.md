@@ -1,18 +1,18 @@
-MODE: ALL_CLEAR
-AUTHORIZED_TASK: No delegable tasks in routing queue
+MODE: BUILD
+AUTHORIZED_TASK: Build Mission Context Agent
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 39 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
-WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
-ASSIGNED_TO: Matt
-NEXT_PROMPT_GOES_TO: Matt
-OPERATOR_ACTION_REQUIRED: YES — supply next evidence or run Estimator for read-only candidate ranking
-CANDIDATES_NOT_AUTHORIZATION: YES — Estimator ranks candidates; output is not authorization, selection, or routing authority
-REQUIRED_UPDATE_AFTER_COMPLETION: MMI first after any worker completion: append evidence to the relevant MMI record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit routing-authority files, then python3 scripts/mmi_dispatch.py --verify
-NEXT_GATE: new signed contract, scoreboard row, intake evidence, or operator-selected next action
-TASK_SCOREBOARD: (empty — queue has no delegable tasks)
+BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
+PROJECT_IDENTITY: Mutant Monkey Security
+MMI_BRAIN: Mutant Monkey Intelligence (MMI)
+AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
+ASSIGNED_TO: Cursor → Codex → Cursor
+PRE_BUILD_REVIEW: Codex
+NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
+BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
+OPERATOR_ACTION_REQUIRED: NO
+NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #105 MMI Governance Invariants Testing Framework §11 signed + SIGNED_CONTRACT reconcile
-  (MMI-DEC-092; pre-build gate `mmi_105_contract_gate_20260621T231319Z.md` 0/0; Lane 1 probe MMI-DEC-082; **not** Lane 2+; **not** AUTH-5).
+LAST_COMPLETED: #2 Mission Context scoreboard SIGNED_UNBUILT reconcile
+  (MMI-DEC-106; Matt authorized build_auth_#2; §11 contract MMI-DEC-105; pre-build gate receipt pending `mmi_02_contract_gate`; **build implementation not authorized**; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: #64 Failure Classification reconciled to GATED
-  (MMI-DEC-088; gate `failure_classification_20260621T220552Z.md` 0/0; build `872b972`; **not GOVERNED_AGENT**).
+PRIOR_LAST_COMPLETED: #105 MMI Governance Invariants Testing Framework §11 signed + SIGNED_CONTRACT reconcile
+  (MMI-DEC-092; pre-build gate `mmi_105_contract_gate_20260621T231319Z.md` 0/0; Lane 1 probe MMI-DEC-082; **not** Lane 2+; **not** AUTH-5).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED
