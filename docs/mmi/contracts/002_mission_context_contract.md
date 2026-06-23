@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **BUILD AUTHORIZED 2026-06-23 (MMI-DEC-108).** Stage 1 `MissionContextAgent` wrapper at `core/command/mission_context_agent.py` with separate `MissionClassification` envelope (MissionContext schema unchanged). Interim taxonomy rules embedded under `CLASSIFICATION_POLICY_VERSION=mmi_mc_v1` pending signed classification-policy annex. Registry dispatch and Commander auto-wiring still blocked pending routing-policy annex. Scoreboard reconcile MMI-DEC-106; pre-build gate MMI-DEC-107.
+**Implementation:** **BUILD AUTHORIZED 2026-06-23 (MMI-DEC-108).** **GATED 2026-06-23 (MMI-DEC-109).** Stage 1 `MissionContextAgent` wrapper at `core/command/mission_context_agent.py` with separate `MissionClassification` envelope (MissionContext schema unchanged). Interim taxonomy rules embedded under `CLASSIFICATION_POLICY_VERSION=mmi_mc_v1` pending signed classification-policy annex. Completion gate clean 0 blocking / 1 warning at `audit_outputs/mission_context_agent_20260623T052118Z.md` (packet SHA256 `4b6ed430dc65dcdcfb9c2e7dbe9a35472899486c19317535a537bc7f05335e56`). Registry dispatch and Commander auto-wiring still blocked pending routing-policy annex. Scoreboard reconcile MMI-DEC-106; pre-build gate MMI-DEC-107.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (template shape only — this draft is not §11-signed)
@@ -307,7 +307,7 @@ Build decisions locked at authorization:
 - Interim closed-vocabulary taxonomy rules embedded under `CLASSIFICATION_POLICY_VERSION=mmi_mc_v1` pending signed **classification-policy annex** (§10 Q1).
 - Signed **routing-policy annex** (#2 output → Commander `agents[]` hints) remains unsigned — no production Commander wiring.
 
-Prior superintendent slices: scoreboard `SIGNED_UNBUILT` reconcile MMI-DEC-106; pre-build gate MMI-DEC-107.
+Prior superintendent slices: scoreboard `SIGNED_UNBUILT` reconcile MMI-DEC-106; pre-build gate MMI-DEC-107; completion gate MMI-DEC-109 (`audit_outputs/mission_context_agent_20260623T052118Z.md`; 0 blocking / 1 warning).
 
 Not authorized by this build slice: registry/default dispatch, GOVERNED_AGENT promotion, routing-policy automation, or AUTH-5.
 
