@@ -4,7 +4,7 @@
 
 **Document Reference:** MMI-CTR-2026-06-24
 
-**Status:** **CONTRACT_DRAFT** — NOT §11 SIGNED · NOT BUILD AUTHORIZED · NOT GOVERNED_AGENT · NOT AUTH-5
+**Status:** §11 SIGNED 2026-06-24 by Matt Nichol (MMI-DEC-140). **NOT BUILD AUTHORIZED** · NOT GOVERNED_AGENT · NOT AUTH-5
 
 **Lane:** Platform architecture contract (Phase B federation mesh bus)
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Promotion:** CONCEPT → **CONTRACT_DRAFT** (Stage B · b03 · MMI-DEC-134)
+**Promotion:** CONCEPT → CONTRACT_DRAFT (MMI-DEC-134) → **§11 SIGNED** (MMI-DEC-140)
 
 **Source-of-truth links:**
 - `mmi/concepts/MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md` (vision — CONCEPT ONLY)
@@ -292,18 +292,15 @@ No signed surface is modified by this contract draft.
 
 ---
 
-## §11 Sign-off — **AWAITING MATT §11**
+## §11 Sign-off — SIGNED 2026-06-24
 
-**Not signed.** Matt §11 required before:
+Signed by Matt Nichol on 2026-06-24 (MMI-DEC-140 · Stage B end). Locks IFM-D1–D12, ME-AUTH boundary, mesh safety doctrine, HMAC egress, anti-poisoning, replay/TTL, Mode Controller consent modes, and schema patch input. Authorizes **contract text** only. Does **not** authorize mesh bus build, federation pricing lock, legal consent artifact finalization (counsel), numeric copy cap lock, GOVERNED_AGENT promotion, default registry, production dispatch, or AUTH-5.
 
-- Build Authorization for mesh bus implementation
-- Legal consent artifact finalization (counsel review)
-- Numeric mesh-triggered copy cap lock
-- Federation pool pilot wiring (Stage C · c02)
+### Sign-off line
 
-### Sign-off line (placeholder)
+> Matt Nichol June 24th 2026
 
-> _Awaiting Matt Nichol §11 signature_
+Per Authorship Rule: operator-authored signature, placed verbatim.
 
 ---
 

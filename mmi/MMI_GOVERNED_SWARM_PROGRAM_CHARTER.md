@@ -2,7 +2,7 @@
 
 **Document Reference:** MMI-CHT-2026-06-24
 
-**Status:** **PROGRAM CHARTER (governing frame)** — NOT §11 SIGNED · NOT BUILD AUTHORIZED · NOT GOVERNED_AGENT · NOT AUTH-5
+**Status:** **PROGRAM CHARTER** — §11 SIGNED 2026-06-24 by Matt Nichol (MMI-DEC-140) · NOT BUILD AUTHORIZED · NOT GOVERNED_AGENT · NOT AUTH-5
 
 **Lane:** Stage B · b04 — governance envelope for the Blue Team swarm program
 
@@ -191,18 +191,24 @@ Growth runs in **gated waves**. A wave does not open until the prior wave's evid
 
 ## §9 Matt §11 and charter acceptance
 
-This charter is filed as the **governing frame** for the governed swarm program. Matt §11 on the charter text itself is **optional at b04** — operator may sign at b05 fork (MMI-DEC-140) when federation economics and mesh contract are reviewed together.
+**§11 SIGNED 2026-06-24 (MMI-DEC-140)** — bundled with federation economics fork and Immune Federation Mesh platform contract at Stage B end.
 
-**Charter acceptance (MMI-DEC-136):** ACCEPT as governing envelope with standing rule §2/§7 attached.
+### Sign-off line
 
-**Not authorized by charter acceptance:** any agent build, wave opening beyond W0 confirmation, GOVERNED_AGENT promotion, production dispatch, AUTH-5, Todd pilot, mesh bus implementation.
+> Matt Nichol June 24th 2026
+
+Per Authorship Rule: operator-authored signature, placed verbatim.
+
+**Charter acceptance (MMI-DEC-136 + MMI-DEC-140):** ACCEPT as governing envelope with standing rule §2/§7 attached.
+
+**Not authorized by §11 signature:** any agent build, wave opening beyond W0 confirmation, GOVERNED_AGENT promotion, production dispatch, AUTH-5, Todd pilot, mesh bus implementation.
 
 ---
 
 ## §10 Open items (deferred)
 
-1. Matt §11 signature on charter text (optional now; may bundle at b05).
-2. Seat-economics caps tying agent count to SMB tiers (b05).
+1. ~~Matt §11 signature on charter text~~ — **SIGNED 2026-06-24 (MMI-DEC-140).**
+2. Seat-economics caps tying agent count to SMB tiers — operator direction affirmed; locked MSRP still deferred to commercial execution.
 3. W0b command-spine GOVERNED_AGENT promotion decision.
 4. Real-tenant fission threshold calibration (scoreboard pre-condition on #90/#91).
 5. Per-wave adversarial review cadence for W1+ (Codex pre-build per existing BUILD route doctrine).

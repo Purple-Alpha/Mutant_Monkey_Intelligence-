@@ -42,9 +42,10 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Dispatcher** | ALL_CLEAR — 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT |
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
-| **Active stage** | **Stage B** — federation-first SMB seat economics + swarm program |
-| **Next waypoint** | **b05** — Federation economics + mesh contract fork → **Matt §11** |
-| **Last closed** | MMI-DEC-136 Governed swarm program charter |
+| **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
+| **Active stage** | **Stage C** — Lung production, federation scale, governed production loop |
+| **Next waypoint** | **c01** — Operator Lung Dial spec → signed contract → **Claude** |
+| **Last closed** | MMI-DEC-140 Stage B end (Matt §11) |
 
 ---
 
@@ -122,7 +123,7 @@ Re-staged per MMI-DEC-135. Todd intake remains on file; not Stage A end gate.
 
 ---
 
-### Stage B — ACTIVE (federation-first SMB seat economics + swarm program)
+### Stage B — COMPLETE (federation-first SMB seat economics + swarm program)
 
 ```text
 START  Stage A complete (MMI-DEC-130)
@@ -130,7 +131,7 @@ START  Stage A complete (MMI-DEC-130)
   · b02  Brain/immune + tenant-data audit (Lung prod gate)            ✓ [MMI-DEC-133]
   · b03  Immune Federation Mesh contract draft                         ✓ [MMI-DEC-134]
   · b04  Governed swarm program charter (70-agent motion)              ✓ [MMI-DEC-136]
-  · b05  Federation economics + mesh contract fork                     → Matt §11
+  · b05  Federation economics + mesh contract fork                     ✓ [MMI-DEC-140 · Matt §11]
 END    Federation economics anchored + mesh contract path ready
 ```
 
@@ -138,10 +139,10 @@ END    Federation economics anchored + mesh contract path ready
 
 ---
 
-### Stage C — BLOCKED until Stage B END (MMI-DEC-140)
+### Stage C — ACTIVE (Lung production, federation scale, governed production loop)
 
 ```text
-START  Stage B complete
+START  Stage B complete (MMI-DEC-140)
   · c01  Operator Lung Dial spec → signed contract              → Claude
   · c02  Federation mesh pilot wiring plan (opt-in MSP pool)      → Cursor
   · c03  Governed production organism loop                      → Matt

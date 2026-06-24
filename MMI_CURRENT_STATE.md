@@ -24,16 +24,16 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Stage B b04 — Governed swarm program charter (MMI-DEC-136)
-  (`mmi/MMI_GOVERNED_SWARM_PROGRAM_CHARTER.md`; federation-adjacent 70-agent
-  governance envelope; scoreboard reconciled; charter ≠ agent authorization;
-  **not** wave build; **not** GOVERNED_AGENT promotion; **not** AUTH-5).
+LAST_COMPLETED: Stage B END — federation economics + mesh contract fork (MMI-DEC-140)
+  (Matt §11 June 24th 2026; `docs/mmi/contracts/004_immune_federation_mesh_contract.md`
+  §11 signed; `mmi/MMI_GOVERNED_SWARM_PROGRAM_CHARTER.md` §11 signed; poverty-line
+  operator direction affirmed per MMI-DEC-132 — conditional framing, **not** locked MSRP;
+  **not** mesh bus build; **not** Lung production; **not** build authorization).
 
-PRIOR_LAST_COMPLETED: Stage B b03 — Immune Federation Mesh contract draft (MMI-DEC-134)
-  (`docs/mmi/contracts/004_immune_federation_mesh_contract.md`; CONCEPT →
-  CONTRACT_DRAFT; Matt §11 before mesh build; **not** build authorization).
+PRIOR_LAST_COMPLETED: Stage B b04 — Governed swarm program charter (MMI-DEC-136)
+  (`mmi/MMI_GOVERNED_SWARM_PROGRAM_CHARTER.md`; charter ≠ agent authorization).
 
-PRIOR: Stage B b02 — brain/immune + tenant-data Lung prerequisite audit (MMI-DEC-133)
+PRIOR: Stage B b03 — Immune Federation Mesh contract draft (MMI-DEC-134)
   (`mmi/research/MMI_BRAIN_IMMUNE_LUNG_PREREQ_AUDIT_MMI-DEC-133.md`;
   Lung production BLOCKED; tenant calibration + Playhouse + signed Load Multiplier
   contract remain open).
