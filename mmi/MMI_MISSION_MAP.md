@@ -45,7 +45,7 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
 | **Active stage** | **ALL_STAGES_COMPLETE** — breadth queue via BOR feedstock (MMI-DEC-159) |
-| **Next build lane** | **#65 Correction Evidence** — contract draft on disk (MMI-DEC-160); pre-build gate next |
+| **Next build lane** | **#65 Correction Evidence** — §11 SIGNED (MMI-DEC-162); SIGNED_UNBUILT; separate build authorization required |
 | **Last closed** | MMI-DEC-157 `#67` Rule Improvement GATED |
 
 ---
@@ -158,7 +158,7 @@ END    Governed organism program direction accepted — production loop downstre
 
 After mission map stages complete, **BOR CURRENT_PLAN feedstock** names the next breadth lane. Estimator scores feedstock; PMV relays `HAND_IT_TO` + `YOU_DO` to the crew (typically Claude contract draft → Codex review → Cursor build).
 
-**Current rank-1:** `#65 Correction Evidence` — `CONTRACT_DRAFT` (MMI-DEC-159 · BOR v15)
+**Current rank-1:** `#65 Correction Evidence` — `SIGNED_UNBUILT` (MMI-DEC-162 · BOR v16)
 
 Matt is required only for: §11 signatures, explicit build authorization, GOVERNED_AGENT promotion, BOR unpark of hold-only rows, authority forks.
 

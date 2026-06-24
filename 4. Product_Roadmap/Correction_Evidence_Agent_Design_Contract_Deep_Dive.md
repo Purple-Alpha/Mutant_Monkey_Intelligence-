@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_65_CORRECTION_EVIDENCE_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT UNSIGNED — advisory lane placement (MMI-DEC-160). Evidence Stage 1 (Synthetic) agent wrapper **not** authorized. Signing locks D1–D9 and would authorize the `CorrectionEvidenceAgent` wrapper build + focused tests **only**. It would authorize **no** Blueprint-of-Record population beyond feedstock completion, **no** default-registry registration, **no** production dispatch, **no** rule promotion/apply, and **no** AUTH-5.
+**Status:** §11 SIGNED 2026-06-24 by Matt Nichol (pre-build gate clean `mmi_65_contract_gate_20260624T221330Z` 0 blocking / 1 warning · MMI-DEC-161). Evidence Stage 1 (Synthetic) agent wrapper authorized by signature. Signing locks D1–D9 and authorizes the `CorrectionEvidenceAgent` wrapper build + focused tests **only**. It authorizes **no** Blueprint-of-Record population beyond feedstock completion, **no** default-registry registration, **no** production dispatch, **no** rule promotion/apply, and **no** AUTH-5. Scoreboard `SIGNED_UNBUILT` reconciled in same signing action per MMI-DEC-162.
 
 **Candidate:** #65 — Correction Evidence
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** BLOCKED until §11 signature + separate operator build authorization
+**Implementation:** BLOCKED until separate operator build authorization (§11 signed; scoreboard `SIGNED_UNBUILT` per MMI-DEC-162)
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (Evidence Stage §6 canonical)
@@ -75,7 +75,7 @@ Cursor reconciliation applied 2026-06-24 (draft placement · MMI-DEC-160):
 1. ES1 synthetic corpus fixture manifest path (build defines `tests/fixtures/correction_evidence/` or equivalent).
 2. Pre-build gate on this contract after §11 sign (Gemini/Grok via `complete_gate.py`).
 
-Repo-reconciliation placeholders: **resolved for draft review.** §11 signature still required before build authorization.
+Repo-reconciliation placeholders: **resolved for draft review.** §11 signed; separate operator build authorization still required.
 
 ---
 
@@ -280,25 +280,25 @@ When Matt chooses §11 path:
 
 **§11 — Correction Evidence Agent Design Contract (Deep Dive)**
 
-Authority: Matt Nichol (sole signer)
+SIGNED. This signature locks D1–D9 and authorizes the Evidence Stage 1 (Synthetic) `CorrectionEvidenceAgent` wrapper build + focused tests only; no Blueprint-of-Record population beyond feedstock completion, no default-registry registration, no production dispatch, no rule promotion/apply, no AUTH-5. Matt also authorized `MMI_65_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY` in this signing action.
 
-- [ ] I approve this contract as written.
-- [ ] I authorize pre-build gate review when ready.
-- [ ] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
+- [x] I approve this contract as written.
+- [x] I authorize pre-build gate review when ready — completed clean 0 blocking (`mmi_65_contract_gate_20260624T221330Z`).
+- [x] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
 
 Confirmed: #65 **validates** correction evidence for §11 review; it **never** promotes, applies, or signs rule changes. A `SUFFICIENT` verdict is **not** authorization.
 
-Signature: __________________________   Date: __________
-
-**[UNSIGNED — draft placement MMI-DEC-160 does not sign]**
+> Matt Nichol June 24th 2026
 
 ---
 
 ## BUILD CONDITIONS (post-§11)
 
-Not yet signed. When §11-signed, authorizes Stage 1 `CorrectionEvidenceAgent` wrapper build + focused tests only when operator separately names build.
+§11 SIGNED. Authorizes Stage 1 `CorrectionEvidenceAgent` wrapper build + focused tests only when operator separately names build.
 
-At signing, this agent would be at **Evidence Stage 1 — Synthetic**. No build authorization for Evidence Stage 2 or 3 until promotion conditions in `Agent_Design_Contract_Template_Deep_Dive.md` §6.2 are satisfied and a separate promotion record is signed.
+At signing, this agent is at **Evidence Stage 1 — Synthetic**. No build authorization for Evidence Stage 2 or 3 until promotion conditions in `Agent_Design_Contract_Template_Deep_Dive.md` §6.2 are satisfied and a separate promotion record is signed.
+
+Matt Nichol — Correction Evidence Agent Design Contract §11 signed (MMI-DEC-162).
 
 ---
 
