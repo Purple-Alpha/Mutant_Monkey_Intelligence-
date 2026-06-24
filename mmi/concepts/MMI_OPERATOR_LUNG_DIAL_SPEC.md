@@ -14,6 +14,8 @@
 
 **Research lane open:** copy-cap numbers, Playhouse UI, federation pool pricing, tenant calibration data — see §6.
 
+**Promotion gate (MMI-DEC-141 · PARK 2026-06-24):** Spec **not** promoted to signed-contract lane. See `mmi/research/MMI_OPERATOR_LUNG_DIAL_PROMOTION_GATE_MMI-DEC-141.md`.
+
 **Boundary:** Operator vocabulary pin only. Does not authorize wiring, GOVERNED_AGENT, or production dispatch.
 
 ---
