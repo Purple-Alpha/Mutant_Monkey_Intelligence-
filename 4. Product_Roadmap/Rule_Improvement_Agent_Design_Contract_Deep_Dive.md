@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_67_RULE_IMPROVEMENT_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** **DRAFT (UNSIGNED)** — advisory lane reconciled by Cursor 2026-06-24. **Not** §11 · **not** build authorization · **not** `GOVERNED_AGENT` · **not** AUTH-5 · **not** production mutation deploy.
+**Status:** **DRAFT (UNSIGNED)** — pre-build gate clean 0/0 (`audit_outputs/mmi_67_contract_gate_20260624T185114Z.md`; packet SHA256 `250f80e34d783ef949a94931b6c1abcdbc291a4bf814aa60aa44d3747c1fa731`; Gemini `gemini-2.5-pro`; MMI-DEC-153). **Not** §11 · **not** build authorization · **not** `GOVERNED_AGENT` · **not** AUTH-5 · **not** production mutation deploy.
 
 **Candidate:** #67 — Rule Improvement
 

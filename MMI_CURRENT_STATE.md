@@ -24,12 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #67 Rule Improvement Agent Design Contract draft placement (MMI-DEC-152)
-  (`4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md`;
-  REPO_RECONCILIATION vs mutation engine + #64; **DRAFT UNSIGNED**;
-  **not** §11; **not** build; **not** GOVERNED_AGENT; **not** AUTH-5).
+LAST_COMPLETED: #67 Rule Improvement pre-build gate (MMI-DEC-153)
+  (`audit_outputs/mmi_67_contract_gate_20260624T185114Z.md`; 0 blocking / 0 warnings;
+  Gemini SIGNABLE; propose-only sandbox boundary confirmed; **not** §11; **not** build).
 
-PRIOR_LAST_COMPLETED: BOR #67 unpark — contract draft lane (MMI-DEC-151)
+PRIOR_LAST_COMPLETED: #67 Rule Improvement Agent Design Contract draft placement (MMI-DEC-152)
   (opt-in MSP pool; P0–P3; synthetic-first; Todd intake separate).
 
 PRIOR: Stage C c01 — Operator Lung Dial promotion gate (MMI-DEC-141 · PARK)
