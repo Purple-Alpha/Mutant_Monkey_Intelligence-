@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_01_SWARM_COMMANDER_ROUTING_POLICY_ANNEX_REVIEW_DRAFT`
 
-**Status:** DRAFT UNSIGNED — contract review storage only. Pre-build gate clean **0 blocking / 0 warnings** at `audit_outputs/routing_policy_annex_pre_build_gate_20260624T015713Z.md` (Gemini `gemini-2.5-pro`; packet SHA256 `474d2756fea42431ead9a9d957284c81ae21469a5a89512c84eb2533fc5ecac2`; MMI-DEC-120). Prior run **0 blocking / 1 warning** at `audit_outputs/routing_policy_annex_pre_build_gate_20260624T015436Z.md` (MMI-DEC-119; spine-boundary repair applied). **Optional Matt §11** when ready; no runtime wiring without separate Build Authorization.
+**Status:** §11 SIGNED 2026-06-23 by Matt Nichol (`Matt Nichol June 23rd 2026`, MMI-DEC-121). Pre-build gate clean **0 blocking / 0 warnings** at `audit_outputs/routing_policy_annex_pre_build_gate_20260624T015713Z.md` (Gemini `gemini-2.5-pro`; packet SHA256 `474d2756fea42431ead9a9d957284c81ae21469a5a89512c84eb2533fc5ecac2`; MMI-DEC-120). Prior run **0 blocking / 1 warning** at `audit_outputs/routing_policy_annex_pre_build_gate_20260624T015436Z.md` (MMI-DEC-119; spine-boundary repair applied). Locks read-only `#3` telemetry consumption and `mmi_rp_v1` disposition-hint rules. Authorizes **annex text only**; runtime wiring blocked until separate Build Authorization.
 
 **Parent contract:** `docs/mmi/contracts/001_swarm_commander_contract.md` (§11 SIGNED MMI-DEC-102; `SwarmCommanderAgent` GATED MMI-DEC-112)
 
@@ -18,7 +18,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **BLOCKED** until separate operator §11 signature **and** Build Authorization to wire `SwarmCommanderAgent.run_case(risk_triage_telemetry=...)`. Stage 1 wrapper currently rejects routing-by-score keys and **does not** apply score-derived disposition hints (MMI-DEC-111).
+**Implementation:** **BLOCKED** until separate Matt Build Authorization to wire `SwarmCommanderAgent.run_case(risk_triage_telemetry=...)`. §11 signature does not authorize wrapper wiring, GOVERNED_AGENT promotion, default registry, or production dispatch. Stage 1 wrapper currently rejects routing-by-score keys and **does not** apply score-derived disposition hints (MMI-DEC-111).
 
 **Source-of-truth links:**
 - `docs/mmi/contracts/001_swarm_commander_contract.md` (RC-AUTH parent; DER allowlist; disposition precedence `mmi_sc_v1`)
@@ -83,7 +83,7 @@ It does **not** authorize production dispatch, default registry wiring, GOVERNED
 
 ### Out of scope
 
-- §11 signature, pre-build gate record, or Build Authorization for runtime wiring.
+- Pre-build gate record or Build Authorization for runtime wiring.
 - `#2 MissionContext` classification → `agents[]` manifest binding (reserved §10 Q2 — future annex revision or sibling annex).
 - `#3` scoring policy changes (governed by `003_risk_triage_contract.md` and `mmi_rt_v1`).
 - Client-facing copy, mitigation commands, tenant notifications.
@@ -92,11 +92,11 @@ It does **not** authorize production dispatch, default registry wiring, GOVERNED
 
 ---
 
-## §2 Locked design decisions (draft — unsigned)
+## §2 Locked design decisions (signed)
 
-| # | Decision | Locked value (pending operator review) |
+| # | Decision | Locked value |
 |---|---|---|
-| R1 | Parent dependency | Annex inactive until §11 signed; parent RC-AUTH remains authoritative |
+| R1 | Parent dependency | Annex text in force (MMI-DEC-121); parent RC-AUTH remains authoritative; runtime wiring requires separate Build Authorization |
 | R2 | Read-only ingest | `#1` may read allowlisted `#3` fields; must not copy scorer fields into DER |
 | R3 | No score-only routing | `aggregate_risk_score` alone must never select agents, skip registry guards, or suppress human review |
 | R4 | Contribution-first | Disposition precedence in parent §5 runs first; hints may only **raise** caution, never lower it |
@@ -207,10 +207,10 @@ When Matt authorizes wiring (separate from this §11 review):
 
 ## §8 Build path — NOT AUTHORIZED
 
-This draft placement resolves PMV chain fork (MMI-DEC-116/117). **No runtime wiring** until:
+This draft placement resolved PMV chain fork (MMI-DEC-116/117). **No runtime wiring** until:
 
-1. Grok pre-build gate clean 0/0 on this annex draft.
-2. Matt §11 signature on this annex.
+1. ~~Grok pre-build gate clean 0/0 on this annex draft.~~ **Done** (MMI-DEC-120).
+2. ~~Matt §11 signature on this annex.~~ **Done** (MMI-DEC-121).
 3. Separate Matt Build Authorization to implement §6 in `swarm_commander_agent.py` (+ focused tests).
 
 Parent `#1` wrapper remains GATED without annex wiring. **Not GOVERNED_AGENT**; not default registry.
@@ -226,14 +226,16 @@ Parent `#1` wrapper remains GATED without annex wiring. **Not GOVERNED_AGENT**; 
 
 ---
 
-## §10 Sign-off — UNSIGNED
+## §10 Sign-off — SIGNED 2026-06-23
 
-Matt §11 signature required after pre-build gate review. Signature authorizes **annex text only** — not Build Authorization, not GOVERNED_AGENT, not production dispatch, not AUTH-5.
+Signed by Matt Nichol on 2026-06-23 after pre-build gate clean 0/0 (`audit_outputs/routing_policy_annex_pre_build_gate_20260624T015713Z.md`; MMI-DEC-120). Locks read-only `#3 RiskScoreTelemetry` consumption, `mmi_rp_v1` conservative disposition-hint rules, and score-only routing prohibitions. Authorizes **annex text only**. Does **not** authorize Build Authorization to wire `SwarmCommanderAgent`, GOVERNED_AGENT promotion, default registry, production dispatch, or AUTH-5.
 
 ### Sign-off line
 
-> _(pending Matt Nichol §11 signature)_
+> Matt Nichol June 23rd 2026
+
+Per Authorship Rule: operator-authored signature, placed verbatim.
 
 ---
 
-**End of routing-policy annex draft. Inactive until §11 signed.**
+**End of routing-policy annex. §11 in force as of 2026-06-23 (MMI-DEC-121). Runtime wiring requires separate Build Authorization.**

@@ -682,5 +682,5 @@ Request: PMV chain YOU_DO — draft annex after Command spine GATED
 Source: PMV relay MMI-DEC-116/117; Cursor execution
 Artifact: `docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`; MMI-DEC-118; PMV/rubric Codex gate relay update
 Classification: CONTRACT_REVIEW_DRAFT — resolves parent §10 Q1; not Build Authorization
-Routing outcome: `pmv` routes optional Matt §11 on annex after clean 0/0 gate (MMI-DEC-120); runtime wiring blocked until §11 + separate build auth
-Matt approval required: YES for optional §11 sign when Matt chooses; YES for runtime wiring Build Authorization separately
+Routing outcome: annex §11 signed (MMI-DEC-121); runtime wiring blocked until separate Build Authorization
+Matt approval required: YES for Build Authorization to wire `SwarmCommanderAgent` §6 hints; not required for §11 (done)

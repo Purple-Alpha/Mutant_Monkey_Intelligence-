@@ -40,8 +40,8 @@ DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
   **not GOVERNED_AGENT** · not wired
 
 LAST_COMPLETED (MMI authority repo):
-  #1 routing-policy annex — draft at `docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`
-    (MMI-DEC-118/120; DRAFT UNSIGNED; pre-build gate clean 0/0; optional Matt §11; **not** runtime wiring)
+  #1 routing-policy annex — §11 SIGNED at `docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`
+    (MMI-DEC-121; gate 0/0 MMI-DEC-120; **not** runtime wiring until Build Authorization)
   PMV chain relay (MMI-DEC-117) · Command spine #1–#3 GATED (MMI-DEC-112/109/116)
   Ranked lane board LIVE — `mmi/MMI_RANKED_NEXT_ACTIONS.md` + `scripts/mmi_next_action_rubric.py` (MMI-DEC-104)
   #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
