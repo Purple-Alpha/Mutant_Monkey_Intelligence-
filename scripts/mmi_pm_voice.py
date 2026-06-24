@@ -1165,10 +1165,19 @@ def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
     hand_it_to = _feedstock_hand_it_to(lane_type)
     why_extra = ""
     if lane_type == "CONTRACT_DRAFT":
-        you_do = (
-            f"Authorize contract draft lane for {candidate_id} {candidate_name}."
+        contract_rel = _contract_rel_for_candidate(candidate_id) or (
+            f"4. Product_Roadmap/{candidate_name.replace(' ', '_')}_Agent_Design_Contract_Deep_Dive.md"
         )
-        what = f"Contract draft lane is needed for {candidate_id} {candidate_name}."
+        you_do = (
+            f"Draft Agent Design Contract for {candidate_id} {candidate_name} "
+            f"at `{contract_rel}`. Reconcile against scoreboard + repo; follow "
+            f"Team 9 governance patterns (#64/#67); record MMI decision on placement. "
+            f"Not §11 sign; not build; not scoreboard promotion."
+        )
+        what = (
+            f"None for contract draft execution — BOR rank-1 feedstock "
+            f"{candidate_id} {candidate_name}."
+        )
         if candidate_id == "#1":
             why_extra = "; MMI-DEC-099 unpark"
     elif lane_type == "ADVISORY_MULTI_LANE_DESIGN":
@@ -1464,7 +1473,7 @@ def _compose_all_clear_hold_voice(
         return _compose_command_spine_routing_annex_voice(evidence, repo_root)
 
     mission_voice = _compose_mission_map_voice(evidence, repo_root)
-    if mission_voice is not None:
+    if mission_voice is not None and not evidence.feedstock_first:
         return mission_voice
 
     chain = _live_chain_actions(repo_root)

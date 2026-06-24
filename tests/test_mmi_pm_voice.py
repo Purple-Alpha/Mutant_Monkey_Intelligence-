@@ -435,8 +435,17 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 self.assertTrue(
                     "chain-of-command" in fields["WHAT_NEEDS_MATT"].lower()
                     or "mission map authority fork" in fields["WHAT_NEEDS_MATT"].lower()
+                    or "contract draft execution" in fields["WHAT_NEEDS_MATT"].lower()
                 )
-                self.assertIn("chain: mission_map", fields["SOURCE"])
+                self.assertIn(
+                    "chain:",
+                    fields["SOURCE"],
+                )
+                self.assertTrue(
+                    "mission_map" in fields["SOURCE"]
+                    or "live_rubric" in fields["SOURCE"]
+                    or "estimator feedstock" in fields["WHY"].lower()
+                )
             if self.mod._routing_policy_annex_pending(self.mod._repo_root()):
                 if self.mod._routing_policy_annex_gate_clean(self.mod._repo_root()):
                     self.assertIn("MMI-DEC-120", fields["WHY"])
@@ -451,21 +460,24 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertIn("003_risk_triage_contract.md", fields["IGNORE_FOR_NOW"])
         self.assertIn("rubric_calibration: MMI-DEC-095", fields["SOURCE"])
 
-    def test_t7i_all_clear_mission_map_routes_b02_brain_immune_audit(self):
+    def test_t7i_all_clear_mission_map_complete_feedstock_or_chain(self):
         evidence = self.mod.VoiceEvidence(
             dispatcher_mode="ALL_CLEAR",
             blueprint_status="CURRENT_PLAN_PRESENT",
             buildable_count=0,
             missing_contract_count=0,
+            feedstock_first="#65",
+            feedstock_first_name="Correction Evidence",
+            feedstock_lane_type="CONTRACT_DRAFT",
             menu_options=[],
         )
         fields = self.mod.compose_voice(
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertEqual(fields["HAND_IT_TO"], "Cursor")
-        self.assertIn("b02", fields["YOU_DO"])
-        self.assertIn("chain: mission_map", fields["SOURCE"])
+        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertIn("#65", fields["YOU_DO"])
+        self.assertIn("Draft Agent Design Contract", fields["YOU_DO"])
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
 
     def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):
@@ -670,8 +682,8 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 repo_root=self.mod._repo_root(),
             )
         self.assertEqual(fields["HAND_IT_TO"], "Claude")
-        self.assertIn("Contract draft lane is needed for #1", fields["WHAT_NEEDS_MATT"])
-        self.assertIn("Authorize contract draft lane for #1", fields["YOU_DO"])
+        self.assertIn("contract draft execution", fields["WHAT_NEEDS_MATT"].lower())
+        self.assertIn("Draft Agent Design Contract for #1", fields["YOU_DO"])
         self.assertIn("MMI-DEC-099", fields["WHY"])
 
     def test_t8_read_only_no_mutation(self):

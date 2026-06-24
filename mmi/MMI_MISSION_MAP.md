@@ -44,9 +44,9 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
-| **Active stage** | **Post–Stage C** — breadth + hybrid depth-first (Matt-directed) |
-| **Next waypoint** | **d02 hold** — Matt selects next breadth lane or hybrid fork (MMI-DEC-158) |
-| **Last closed** | MMI-DEC-157 `#67` Rule Improvement GATED (build + completion gate 0 blocking) |
+| **Active stage** | **ALL_STAGES_COMPLETE** — breadth queue via BOR feedstock (MMI-DEC-159) |
+| **Next build lane** | **#65 Correction Evidence** — rank-1 `CONTRACT_DRAFT` (Claude → Codex → Cursor) |
+| **Last closed** | MMI-DEC-157 `#67` Rule Improvement GATED |
 
 ---
 
@@ -154,16 +154,13 @@ END    Governed organism program direction accepted — production loop downstre
 
 ---
 
-### Post–Stage C — ACTIVE (scoreboard breadth + hybrid depth-first)
+## Post–Stage C breadth queue (BOR feedstock — not Matt direction-pick)
 
-```text
-START  Governed organism program direction accepted (MMI-DEC-150)
-  · d01  #67 Rule Improvement wrapper GATED (sandbox-only proposal)   ✓ [MMI-DEC-157]
-  · d02  Hold — Matt selects next breadth lane or hybrid fork           → Matt [authority fork]
-END    Operator program fork (not machine-complete — MMI-DEC-POST-STAGE-C-PROGRAM-FORK)
-```
+After mission map stages complete, **BOR CURRENT_PLAN feedstock** names the next breadth lane. Estimator scores feedstock; PMV relays `HAND_IT_TO` + `YOU_DO` to the crew (typically Claude contract draft → Codex review → Cursor build).
 
-**d02 hold:** Promotion reviews `#47` / `#52` remain hold-only until Matt authorizes GOVERNED_AGENT. Hybrid depth-first (real tenant, Playhouse, ES2) is parallel Matt priority — not overridden by rubric rank.
+**Current rank-1:** `#65 Correction Evidence` — `CONTRACT_DRAFT` (MMI-DEC-159 · BOR v15)
+
+Matt is required only for: §11 signatures, explicit build authorization, GOVERNED_AGENT promotion, BOR unpark of hold-only rows, authority forks.
 
 ---
 
@@ -179,6 +176,6 @@ END    Operator program fork (not machine-complete — MMI-DEC-POST-STAGE-C-PROG
 
 ## Hold lanes (not direction — mission map wins)
 
-GOVERNED_AGENT promotion reviews (#47/#52) and rubric-ranked alternates remain **hold unless Matt authorizes** — they do not override mission map waypoint **d02**.
+GOVERNED_AGENT promotion reviews (#47/#52) remain **hold unless Matt names promotion** — they do not override BOR rank-1 feedstock.
 
-Matt Nichol — mission map v4 (post–Stage C breadth · MMI-DEC-158).
+Matt Nichol — mission map v4 (ALL_STAGES_COMPLETE · BOR feedstock breadth queue · MMI-DEC-159).

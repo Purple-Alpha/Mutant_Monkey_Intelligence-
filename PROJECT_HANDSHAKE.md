@@ -36,15 +36,13 @@ BRANCH: safety/queue-drift-cleanup-20260528
 HEAD: 5b465b1 (verify at session start — #67 Rule Improvement GATED MMI-DEC-157)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  Mission map post_stage_c · waypoint d02 hold (Matt selects next fork)
+  BOR v15 rank-1 feedstock: #65 Correction Evidence CONTRACT_DRAFT (MMI-DEC-159)
+  PMV relays Claude contract draft — not Matt direction-pick
   Command spine #1–#3 GATED · #67 Rule Improvement GATED (MMI-DEC-157)
-  **not GOVERNED_AGENT** · not wired · not production mutation deploy
 
 LAST_COMPLETED (MMI authority repo):
+  Chain routing fix — BOR surfaces #65 next build lane (MMI-DEC-159)
   #67 Rule Improvement — build + GATED closeout (MMI-DEC-155–157)
-    (`core/sandbox/rule_improvement_agent.py`; 16 tests; gate 0 blocking
-    `audit_outputs/rule_improvement_agent_20260624T185625Z.md`)
-  Chain-of-command mission map post–Stage C extension (MMI-DEC-158)
   Stage C governed organism program direction (MMI-DEC-150 · Matt §11)
   Command spine #1–#3 GATED (MMI-DEC-112/109/116)
   #64 Failure Classification — GATED (MMI-DEC-088)
@@ -55,9 +53,8 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
   BOR v14 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (0/10): Promotion review #47 (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
-  Mission map active: post_stage_c d02 — Matt hold fork unless authorizing next breadth/promotion lane.
-  Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, production mutation deploy.
+NEXT ACTION: Chain-of-command reads BOR feedstock — rank-1: #65 Correction Evidence CONTRACT_DRAFT → Claude draft. Full ranked list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+  Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`

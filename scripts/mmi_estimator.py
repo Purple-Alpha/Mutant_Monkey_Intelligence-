@@ -71,6 +71,12 @@ ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
     "#64": (
         "4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_Dive.md"
     ),
+    "#65": (
+        "4. Product_Roadmap/Correction_Evidence_Agent_Design_Contract_Deep_Dive.md"
+    ),
+    "#67": (
+        "4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md"
+    ),
     "#3": "docs/mmi/contracts/003_risk_triage_contract.md",
     "#2": "docs/mmi/contracts/002_mission_context_contract.md",
     "#1": "docs/mmi/contracts/001_swarm_commander_contract.md",

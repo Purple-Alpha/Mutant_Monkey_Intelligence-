@@ -1,6 +1,6 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-157). #67 Rule Improvement GATED on scoreboard.
+**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-159). #65 Correction Evidence rank-1 CONTRACT_DRAFT feedstock.
 
 **Classification:** Shared crew artifact · Blueprint of Record
 
@@ -10,20 +10,21 @@
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v14
+## CURRENT_PLAN — ALL_CLEAR feedstock v15
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v14
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v14
-population_decision: MMI-DEC-157
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v15
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v15
+population_decision: MMI-DEC-159
 created_at: 2026-06-24
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: #67 Rule Improvement GATED (MMI-DEC-157); hold-only feedstock remains
-revision_reason: #67 build + completion gate clean; CONTRACT_DRAFT/build feedstock complete; hold-only feedstock remains
+architect_blueprint_source: Team 9 scoreboard order after #67 GATED — #65 next breadth contract
+revision_reason: Chain-derived repopulation; #65 rank-1 CONTRACT_DRAFT; not operator direction-pick
 non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
 
+feedstock_entry: priority=1 candidate_id=#65 lane_type=CONTRACT_DRAFT name=Correction Evidence
 feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
@@ -36,6 +37,19 @@ Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows aut
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
 Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock #47/#52.
+
+---
+
+## Prior ALL_CLEAR v14 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v14
+supersedes: BOR-ALL-CLEAR-FEEDSTOCK-v13
+population_decision: MMI-DEC-157
+revision_reason: Superseded by v15 after chain-derived #65 feedstock (MMI-DEC-159)
+feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
+feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
+  #67 Rule Improvement — GATED wrapper (MMI-DEC-157)
 
 ---
 
