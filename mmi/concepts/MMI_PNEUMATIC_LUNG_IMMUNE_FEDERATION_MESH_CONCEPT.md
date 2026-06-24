@@ -140,6 +140,6 @@ This concept does **not** authorize:
 
 1. Read **`MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md`** in full.
 2. Operator review: consent modes, TTL defaults, mesh trust tiers.
-3. Only then: draft Agent Design Contract or platform annex for Phase B sign-off.
+3. **Contract draft filed:** `docs/mmi/contracts/004_immune_federation_mesh_contract.md` (MMI-DEC-134 · CONTRACT_DRAFT). Matt §11 before build.
 
 Matt Nichol — concept capture 2026-06-24.

@@ -24,12 +24,18 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Stage B b02 — brain/immune + tenant-data Lung prerequisite audit (MMI-DEC-133)
-  (`mmi/research/MMI_BRAIN_IMMUNE_LUNG_PREREQ_AUDIT_MMI-DEC-133.md`;
-  Lung production BLOCKED; b03/b04 cleared; tenant calibration + Playhouse + signed
-  Load Multiplier contract remain open; **not** build authorization).
+LAST_COMPLETED: Stage B b03 — Immune Federation Mesh contract draft (MMI-DEC-134)
+  (`docs/mmi/contracts/004_immune_federation_mesh_contract.md`; CONCEPT →
+  CONTRACT_DRAFT; hardening addendum §5–§14 incorporated; Matt §11 before build;
+  Lung production BLOCKED per MMI-DEC-133; **not** mesh bus implementation;
+  **not** build authorization).
 
-PRIOR_LAST_COMPLETED: Stage A end — platform credibility closeout (MMI-DEC-130)
+PRIOR_LAST_COMPLETED: Stage B b02 — brain/immune + tenant-data Lung prerequisite audit (MMI-DEC-133)
+  (`mmi/research/MMI_BRAIN_IMMUNE_LUNG_PREREQ_AUDIT_MMI-DEC-133.md`;
+  Lung production BLOCKED; tenant calibration + Playhouse + signed Load Multiplier
+  contract remain open).
+
+PRIOR: Stage A end — platform credibility closeout (MMI-DEC-130)
   (`mmi/research/MMI_STAGE_A_PLATFORM_CREDIBILITY_CLOSEOUT_MMI-DEC-130.md`;
   GATED stack + docs posture; Todd intake historical — not end gate;
   re-staged to Stage B federation-first per MMI-DEC-135).

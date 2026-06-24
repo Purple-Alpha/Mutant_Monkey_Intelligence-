@@ -295,6 +295,8 @@ MMI-DEC-132 | 2026-06-23 | Stage B b01 — federation SMB seat economics + pover
 
 MMI-DEC-133 | 2026-06-24 | Stage B b02 — brain/immune + tenant-data Lung prerequisite audit | `mmi/research/MMI_BRAIN_IMMUNE_LUNG_PREREQ_AUDIT_MMI-DEC-133.md` | ACCEPT | Brain/HQ + immune GATED stack sufficient for b03/b04; Lung production BLOCKED — tenant calibration, Playhouse UI, signed Load Multiplier contract, #90/#103 wiring open. **Not** Lung build; **not** GOVERNED_AGENT; **not** AUTH-5 | Stage B b03 mesh contract draft (MMI-DEC-134) | Run mmi_dispatch --sync + --verify + pmv after commit | Cursor (mission map b02)
 
+MMI-DEC-134 | 2026-06-24 | Stage B b03 — Immune Federation Mesh contract draft (CONCEPT → CONTRACT_DRAFT) | `docs/mmi/contracts/004_immune_federation_mesh_contract.md`; `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md`; `mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md` | ACCEPT | Hardening addendum §5–§14 promoted to platform contract draft (ME-AUTH, HMAC egress, anti-poisoning, replay/TTL, Mode Controller consent, schema patch). Matt §11 before build; legal consent + numeric copy cap TBD at signing. Lung production remains BLOCKED per MMI-DEC-133. **Not** mesh bus implementation; **not** locked MSRP; **not** GOVERNED_AGENT; **not** AUTH-5 | Stage B b04 governed swarm program charter (MMI-DEC-136) | Run mmi_dispatch --sync + --verify + pmv after commit | Claude (mission map b03 — Cursor execution relay)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
