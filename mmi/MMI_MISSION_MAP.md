@@ -45,8 +45,8 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
 | **Active stage** | **Post–Stage C** — BOR feedstock rank 1: `#67 Rule Improvement` CONTRACT_DRAFT |
-| **Next waypoint** | **#67 contract draft** → Claude (MMI-DEC-151 unpark) |
-| **Last closed** | MMI-DEC-151 BOR #67 unpark — contract draft lane authorized |
+| **Next waypoint** | **#67 contract draft** — pre-build gate → Matt §11 when ready |
+| **Last closed** | MMI-DEC-152 `#67` Rule Improvement contract draft placed (UNSIGNED) |
 
 ---
 
