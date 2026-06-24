@@ -1,43 +1,58 @@
-# MMI Mission Map — One Screen (Living)
+# MMI Mission Map — Staged Chain of Command
 
-**Status:** Advisory · operator-maintained · **NOT routing authority**
+**Status:** **Chain-of-command routing authority** for ALL_CLEAR delegable lanes (MMI-DEC-126)
 
-**Owner:** Matt Nichol
+**Machine map:** `mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`
 
-**Last updated:** 2026-06-24 (post federation mesh + Lung dial capture)
+**Engine:** `python3 scripts/mmi_mission_map.py --position`
 
-**Refresh rule:** Update after every material closeout commit. PMV reads BOR + rubric for lanes; **this map is human orientation only.**
+**Owner:** Matt Nichol — Matt §11 only on `requires_matt_escalation` waypoints
 
-**Supersedes for orientation:** stale “NEXT: Shadow Watcher Layer 2” lead in `Swarm_Build_Map_Master.md` until that file is reconciled.
+**Last updated:** 2026-06-24
 
----
-
-## North star (unchanged)
-
-**Build the full 70-agent governed swarm organism** — not a trimmed V1, not “cyber insurance software” as identity. Email fraud / inbox MDR is the **first battlefield**, not the whole project.
+**Rule:** Every stage has a **START → waypoints (dots) → END**. PMV reads the engine; Matt is not asked to pick direction on delegable waypoints.
 
 ---
 
-## Where we are now
+## North star
+
+**Build the full 70-agent governed swarm organism.** Email fraud / inbox MDR is the **first battlefield**, not the whole project identity.
+
+---
+
+## How chain-of-command uses this map
+
+```text
+READ     → scripts/mmi_mission_map.py (YAML + repo markers)
+ESTIMATE → rubric/board remain advisory; mission map wins for direction
+PLAN     → current stage + next incomplete waypoint
+EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
+```
+
+**Matt is NOT the direction-picker** on delegable lanes. He sniffs markers; the map connects the dots.
+
+**Matt IS required** for: §11 signatures, BOR unpark, GOVERNED_AGENT promotion, Stage A/B/C end milestones.
+
+---
+
+## Where we are now (live posture)
 
 | Layer | State |
 |---|---|
 | **Dispatcher** | ALL_CLEAR — 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT |
-| **Command spine #1–#3** | Built + GATED; annex §6 wired (MMI-DEC-122/123); **not** production / not GOVERNED_AGENT |
-| **Control plane** | Largely GATED (watchers, load multiplier, BRC, Safe-Stop, CIS, mutation) |
-| **Shadow back-line** | Layer 1 GATED (`core/shadow_watchers/`) |
-| **Stage A revenue** | 0 of 7 milestones — bottleneck is **buyer motion**, not empty repo |
-| **Insurance GTM** | Secondary at best; D10 not met; not primary hook |
-| **Last closed lane** | Routing-policy annex wiring gate 0/0 (MMI-DEC-123) |
+| **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
+| **Active stage** | **Stage A** — decision-support + first MSP motion |
+| **Next waypoint** | **a03** — Terminology purge fission → Lung → Claude (MMI-DEC-128) |
+| **Last closed** | MMI-DEC-127 Swarm Build Map reconciliation |
 
 ---
 
-## Organ map (use these words)
+## Organ vocabulary (locked)
 
 ```text
 Brain/HQ     → Commander #1, Mission Context #2, Reconciliation #84
-Limbs        → 70 scoreboard specialists (detection, evidence, verification)
-Shadow       → Shadow Watcher Swarm (fraud signal sensors, back line)
+Limbs        → 70 scoreboard specialists
+Shadow       → Shadow Watcher Swarm (fraud sensors, back line)
 Nervous      → W1–W3 #85–87 (swarm health; multiplier trigger)
 Lung         → Load Multiplier #90/#103 (inflate / exhale)
 Immune       → CIS, Safe-Stop, Mode Controller, BRC
@@ -53,45 +68,78 @@ Mesh (B/C)   → Immune Federation — shared threat shape, never shared tenant 
 
 **Do not lead with:** cyber insurance mandatory narrative · beating Barracuda on price · replacing Microsoft Defender filter
 
-**Position:** **Beside** Defender — decision layer + Lung dials — not MX-in-front replacement
+**Position:** **Beside** Defender — decision layer + Lung dials
 
 ---
 
-## Phase map
+## Stage maps (START → dots → END)
 
-| Phase | Focus |
-|---|---|
-| **A (now)** | Stage A decision-support; prove one MSP motion; organism docs |
-| **B** | Wire spine to pilot; Purple v1 slice; mesh hardening → signed contract |
-| **C** | Federation economics; full Lung Playhouse dials; self-evolving loop in production |
+### Foundation — COMPLETE
+
+```text
+START  Command spine contracts signed (MMI-DEC-102 / MMI-DEC-098)
+  ·    Control plane + shadow L1 GATED stack
+  ·    Routing-policy annex gate clean (MMI-DEC-123)
+  ·    Annex §11 signed (MMI-DEC-121)
+END    Spine wrappers GATED; annex in force; no production wiring
+```
 
 ---
 
-## Concept docs filed this session (research open)
+### Stage A — ACTIVE (decision-support + first MSP motion)
 
-| Doc | Purpose |
+```text
+START  Organism concept captured (MMI-DEC-125)
+  · a01  Chain-of-command mission map engine + PMV wiring      → Cursor   [MMI-DEC-126]
+  · a02  Swarm Build Map reconciliation                        → Cursor   [MMI-DEC-127]
+  · a03  Terminology purge fission → Lung (buyer voice)        → Claude   [MMI-DEC-128]
+  · a04  MSP pilot motion intake (Todd / commercial lane)      → Claude   [MMI-DEC-129]
+  · a05  Mesh hardening research closeout (Phase B prep)        → Research [MMI-DEC-131]
+  · a06  MSP pilot buyer proof milestone                        → Matt     [MMI-DEC-130]
+END    One MSP pilot proof — buyer motion, not empty repo
+```
+
+Research lane stays open on mesh pricing / copy caps / legal consent / protobuf until a05 closes.
+
+---
+
+### Stage B — BLOCKED until Stage A END (MMI-DEC-130)
+
+```text
+START  Stage A complete
+  · b01  Immune Federation Mesh contract draft                  → Claude
+  · b02  Purple Team attacker-cost v1 slice spec                → Claude
+  · b03  Spine-to-pilot wiring plan (no production)             → Cursor
+  · b04  Mesh contract §11 + pilot wiring fork                  → Matt
+END    Signed mesh contract + Purple v1 in pilot posture
+```
+
+---
+
+### Stage C — BLOCKED until Stage B END (MMI-DEC-140)
+
+```text
+START  Stage B complete
+  · c01  Operator Lung Dial spec → signed contract              → Claude
+  · c02  Federation economics model                             → Research
+  · c03  Governed production organism loop                      → Matt
+END    Self-evolving organism in governed production posture
+```
+
+---
+
+## Concept docs (research — not build until map reaches Stage B)
+
+| Doc | Role |
 |---|---|
 | `mmi/concepts/MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md` | Federation vision |
-| `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md` | Mesh teeth (HMAC, consent, anti-poison) |
-| `mmi/concepts/MMI_OPERATOR_LUNG_DIAL_SPEC.md` | Matt’s Dial 1 (deal) + Dial 2 (scale) |
-
-**Not authorized for build** until Matt selects a signed contract lane.
+| `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md` | Mesh teeth |
+| `mmi/concepts/MMI_OPERATOR_LUNG_DIAL_SPEC.md` | Dial 1 (deal) + Dial 2 (scale) |
 
 ---
 
-## PMV top lane (mechanical)
+## Hold lanes (not direction — mission map wins)
 
-Hold-only BOR **#67 Rule Improvement** unless Matt unparks — not a statement that nothing was built.
+BOR unpark (#67), GOVERNED_AGENT promotion reviews, and rubric-ranked alternates remain **hold unless Matt unparks** — they do not override the mission map chain.
 
----
-
-## Next operator forks (Matt selects — not auto-ranked authorization)
-
-1. Unpark #67 or another BOR feedstock
-2. MSP pilot / Todd motion (buyer proof)
-3. Phase B mesh contract draft (after research items in hardening addendum)
-4. Operator Lung dial wiring spec (post Playhouse / tenant data)
-5. Living map + Swarm Build Map reconciliation pass
-6. Terminology purge (fission → Lung Multiplier in buyer voice)
-
-Matt Nichol — mission map v1.
+Matt Nichol — mission map v2 (chain-of-command).

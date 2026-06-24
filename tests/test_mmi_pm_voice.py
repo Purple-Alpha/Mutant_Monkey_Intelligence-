@@ -432,7 +432,8 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                         fields["YOU_DO"],
                     )
             else:
-                self.assertIn("Chain-of-command", fields["WHAT_NEEDS_MATT"])
+                self.assertIn("chain-of-command", fields["WHAT_NEEDS_MATT"].lower())
+                self.assertIn("chain: mission_map", fields["SOURCE"])
             if self.mod._routing_policy_annex_pending(self.mod._repo_root()):
                 if self.mod._routing_policy_annex_gate_clean(self.mod._repo_root()):
                     self.assertIn("MMI-DEC-120", fields["WHY"])
@@ -446,6 +447,25 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertIn("001_swarm_commander_contract.md", fields["IGNORE_FOR_NOW"])
         self.assertIn("003_risk_triage_contract.md", fields["IGNORE_FOR_NOW"])
         self.assertIn("rubric_calibration: MMI-DEC-095", fields["SOURCE"])
+
+    def test_t7i_all_clear_mission_map_routes_cursor_not_bor_unpark(self):
+        evidence = self.mod.VoiceEvidence(
+            dispatcher_mode="ALL_CLEAR",
+            blueprint_status="CURRENT_PLAN_PRESENT",
+            buildable_count=0,
+            missing_contract_count=0,
+            menu_options=[],
+        )
+        fields = self.mod.compose_voice(
+            evidence,
+            repo_root=self.mod._repo_root(),
+        )
+        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertIn("mission map chain-of-command", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("a03", fields["YOU_DO"])
+        self.assertIn("chain: mission_map", fields["SOURCE"])
+        self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
+        self.assertNotIn("Matt selects one", fields["YOU_DO"])
 
     def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):
         evidence = self.mod.VoiceEvidence(
@@ -759,6 +779,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("001_swarm_commander_routing_policy_annex.md", out)
         elif "Select one ranked lane" in out and "#1 Swarm Commander contract §11 signed" in out:
             pass
+        elif "mission map chain-of-command" in out.lower():
+            self.assertIn("HAND_IT_TO:\nClaude", out)
+            self.assertIn("chain: mission_map", out)
         elif "Select one ranked lane" in out:
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("ranked lane", out.lower())

@@ -87,6 +87,9 @@ RUBRIC_BINARY_CALIBRATION_AMENDMENT_REL = (
     "4. Product_Roadmap/Next_Action_Decision_Rubric_Binary_Calibration_Amendment_Deep_Dive.md"
 )
 RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
+MISSION_MAP_REL = "mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml"
+MISSION_MAP_HUMAN_REL = "mmi/MMI_MISSION_MAP.md"
+MISSION_MAP_SCRIPT_REL = "scripts/mmi_mission_map.py"
 SCOREBOARD_REL = "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md"
 ROUTING_POLICY_ANNEX_REL = (
     "docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md"
@@ -1387,16 +1390,81 @@ def _compose_command_spine_routing_annex_voice(
     }
 
 
+def _compose_mission_map_voice(
+    evidence: VoiceEvidence, repo_root: Path
+) -> dict[str, str] | None:
+    mission = _load_module("mmi_mission_map", "mmi_mission_map.py")
+    position = mission.analyze(repo_root)
+    if not position.active or position.all_stages_complete:
+        return None
+    wp = position.next_waypoint
+    if wp is None:
+        return None
+
+    you_do_parts = [
+        (
+            f"Mission map {position.stage_id} · {wp.waypoint_id} "
+            f"[{wp.label}]: {wp.you_do}"
+        ),
+        f"YAML: {MISSION_MAP_REL} · human map: {MISSION_MAP_HUMAN_REL}",
+        f"Position: `python3 {MISSION_MAP_SCRIPT_REL} --position`",
+    ]
+    if position.upcoming_waypoints:
+        you_do_parts.append("Upcoming waypoints (hold until current completes):")
+        for item in position.upcoming_waypoints[:4]:
+            you_do_parts.append(f"  · {item.waypoint_id}: {item.label}")
+
+    why = (
+        f"dispatcher={evidence.dispatcher_mode}; buildable_count="
+        f"{evidence.buildable_count}; mission_map stage={position.stage_id}; "
+        f"waypoint={wp.waypoint_id}; completed_in_stage="
+        f"{len(position.completed_waypoints)}; "
+        f"LAST_COMPLETED: {_last_completed_summary(repo_root)}"
+    )
+    if _is_rubric_binary_calibration_in_force(repo_root):
+        why += " Rubric §3.A binary calibration in force (MMI-DEC-095)."
+
+    if wp.requires_matt_escalation:
+        what = (
+            f"Mission map authority fork — {position.stage_name}: {wp.label}."
+        )
+    else:
+        what = (
+            f"None for waypoint execution — mission map chain-of-command routes "
+            f"{position.stage_name}: {wp.label}."
+        )
+
+    in_flight = (
+        f"Stage {position.stage_id} active; "
+        f"{len(position.completed_waypoints)} waypoint(s) complete in stage."
+    )
+    return {
+        "WHAT_NEEDS_MATT": what,
+        "IN_FLIGHT": in_flight,
+        "HAND_IT_TO": wp.hand_to,
+        "YOU_DO": "\n".join(you_do_parts),
+        "WHY": why,
+        "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root)
+        + f"; mission_map: {MISSION_MAP_REL}; chain: mission_map",
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_all_clear_hold_voice(
     evidence: VoiceEvidence, repo_root: Path
 ) -> dict[str, str]:
-    chain = _live_chain_actions(repo_root)
     if (
         _command_spine_wrappers_gated(repo_root)
         and _routing_policy_annex_pending(repo_root)
     ):
         return _compose_command_spine_routing_annex_voice(evidence, repo_root)
 
+    mission_voice = _compose_mission_map_voice(evidence, repo_root)
+    if mission_voice is not None:
+        return mission_voice
+
+    chain = _live_chain_actions(repo_root)
     top = chain[0] if chain else None
     if top:
         action_id = top.get("action_id", "")

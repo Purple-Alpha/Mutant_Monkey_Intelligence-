@@ -1,0 +1,226 @@
+# MMI Chain-of-Command Mission Map — machine-readable routing spine
+# Authority: chain-of-command read → estimate → plan → execute (ALL_CLEAR delegable lanes)
+# Owner: Matt Nichol · Matt §11 only on requires_matt_escalation waypoints
+# Human view: mmi/MMI_MISSION_MAP.md
+# Engine: python3 scripts/mmi_mission_map.py [--position]
+
+version: 1
+map_id: mmi_chain_of_command_mission_map
+north_star: Build the full 70-agent governed swarm organism — email fraud / inbox MDR is the first battlefield, not the whole identity.
+
+roster:
+  Cursor: Cursor
+  Claude: Claude
+  Codex: Codex
+  Gemini+ChatGPT: Gemini+ChatGPT
+  Matt: Matt
+
+stages:
+  - id: foundation
+    name: Foundation — command spine + control plane GATED
+    start:
+      label: Command spine contracts signed (MMI-DEC-102 / MMI-DEC-098)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-102
+        - type: decision_log_contains
+          pattern: MMI-DEC-098
+    end:
+      label: Routing-policy annex gate clean + spine wrappers GATED
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-123
+        - type: file_contains
+          path: docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md
+          pattern: "§11 SIGNED"
+    waypoints: []
+
+  - id: stage_a
+    name: Stage A — decision-support + first MSP motion
+    start:
+      label: Organism concept captured (MMI-DEC-125)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-125
+    end:
+      label: One MSP pilot proof milestone (buyer motion, not empty repo)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-130
+    waypoints:
+      - id: a01
+        label: Chain-of-command mission map engine + PMV wiring
+        hand_to: Cursor
+        you_do: >-
+          Finish scripts/mmi_mission_map.py, staged YAML, PMV ALL_CLEAR relay,
+          tests, and closeout MMI-DEC-126. Run lane_board_sync + mmi_dispatch
+          --verify + pmv after commit.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-126
+        requires_matt_escalation: false
+
+      - id: a02
+        label: Swarm Build Map reconciliation to mission map
+        hand_to: Cursor
+        you_do: >-
+          Reconcile 4. Product_Roadmap/Swarm_Build_Map_Master.md one-screen lead
+          to Stage A mission map (replace stale Shadow Layer 2 lead); add
+          MISSION_MAP_RECONCILED banner; closeout MMI-DEC-127.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-127
+        requires_matt_escalation: false
+
+      - id: a03
+        label: Terminology purge — fission → Lung Multiplier (buyer voice)
+        hand_to: Claude
+        you_do: >-
+          Purge buyer-facing "fission" term in GTM/commercial docs; use Lung
+          Multiplier vocabulary per MMI_OPERATOR_LUNG_DIAL_SPEC.md; record
+          MMI-DEC-128.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-128
+        requires_matt_escalation: false
+
+      - id: a04
+        label: MSP pilot motion intake (Todd path / commercial lane)
+        hand_to: Claude
+        you_do: >-
+          Draft MSP pilot motion intake aligned to mission map commercial lane
+          (beside Defender, BEC/vendor pain, billable-time recovery); file under
+          mmi/intake/; closeout MMI-DEC-129. Matt §11 only if signed contract
+          emerges — not for draft intake.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-129
+        requires_matt_escalation: false
+
+      - id: a05
+        label: Mesh hardening research closeout (Phase B prep)
+        hand_to: Gemini+ChatGPT
+        you_do: >-
+          Close open research items in
+          mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md
+          (pricing, copy caps, legal consent, protobuf); advisory memo only;
+          closeout MMI-DEC-131. No mesh build authorization.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-131
+        requires_matt_escalation: false
+
+      - id: a06
+        label: Stage A end — MSP pilot buyer proof milestone
+        hand_to: Matt
+        you_do: >-
+          Operator sign-off on first MSP pilot proof (buyer motion milestone).
+          Separate from build authorization; records Stage A complete (MMI-DEC-130).
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-130
+        requires_matt_escalation: true
+
+  - id: stage_b
+    name: Stage B — wire spine to pilot, Purple v1, mesh contract
+    start:
+      label: Stage A complete (MMI-DEC-130)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-130
+    end:
+      label: Signed mesh contract + Purple v1 slice in pilot posture
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-140
+    waypoints:
+      - id: b01
+        label: Immune Federation Mesh contract draft (research-gated)
+        hand_to: Claude
+        you_do: >-
+          Draft signed-contract lane for Immune Federation Mesh using hardened
+          addendum; CONCEPT → CONTRACT_DRAFT only; Matt §11 before build;
+          closeout MMI-DEC-132.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-132
+        requires_matt_escalation: false
+
+      - id: b02
+        label: Purple Team attacker-cost v1 slice spec
+        hand_to: Claude
+        you_do: >-
+          Spec Purple v1 slice (friction + memory + hardening loop) aligned to
+          parked Purple_Team_Attacker_Cost_Doctrine.md; closeout MMI-DEC-133.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-133
+        requires_matt_escalation: false
+
+      - id: b03
+        label: Spine-to-pilot wiring plan (no production promotion)
+        hand_to: Cursor
+        you_do: >-
+          Draft wiring plan connecting GATED command spine to MSP pilot posture;
+          no registry promotion; no production; closeout MMI-DEC-134.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-134
+        requires_matt_escalation: false
+
+      - id: b04
+        label: Stage B end — mesh contract signed + pilot wiring authorized
+        hand_to: Matt
+        you_do: >-
+          Matt §11 on mesh contract + authorize pilot wiring fork when ready
+          (MMI-DEC-140). Not implied by draft lanes.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-140
+        requires_matt_escalation: true
+
+  - id: stage_c
+    name: Stage C — federation economics, full Lung dials, production loop
+    start:
+      label: Stage B complete (MMI-DEC-140)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-140
+    end:
+      label: Self-evolving organism loop in governed production posture
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-150
+    waypoints:
+      - id: c01
+        label: Operator Lung Dial wiring spec → signed contract
+        hand_to: Claude
+        you_do: >-
+          Promote MMI_OPERATOR_LUNG_DIAL_SPEC.md to signed contract lane when
+          Playhouse/tenant calibration inputs exist; closeout MMI-DEC-141.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-141
+        requires_matt_escalation: false
+
+      - id: c02
+        label: Federation economics model (mesh bus TCO / pulse economics)
+        hand_to: Gemini+ChatGPT
+        you_do: >-
+          Model federation pulse economics per hardening addendum; advisory only;
+          closeout MMI-DEC-142.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-142
+        requires_matt_escalation: false
+
+      - id: c03
+        label: Stage C end — governed production organism loop
+        hand_to: Matt
+        you_do: >-
+          Operator authorization for governed production organism loop
+          (MMI-DEC-150). Not implied by prior stages.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-150
+        requires_matt_escalation: true

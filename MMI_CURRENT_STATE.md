@@ -24,13 +24,15 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Swarm organism concept capture — federation mesh + Lung dials + mission map (MMI-DEC-125)
-  (`mmi/concepts/MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md`;
-  `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md`;
-  `mmi/concepts/MMI_OPERATOR_LUNG_DIAL_SPEC.md`; `mmi/MMI_MISSION_MAP.md`;
-  **CONCEPT ONLY**; research lane open; **not** build authorization).
+LAST_COMPLETED: Swarm Build Map reconciliation to mission map (MMI-DEC-127)
+  (`4. Product_Roadmap/Swarm_Build_Map_Master.md` MISSION_MAP_RECONCILED banner;
+  stale Shadow Layer 2 lead retired; live direction → mission map engine + PMV).
 
-PRIOR_LAST_COMPLETED: #1 routing-policy annex §6 wiring completion gate clean 0/0 (MMI-DEC-123)
+PRIOR_LAST_COMPLETED: Chain-of-command mission map — staged START/END waypoints + PMV wiring (MMI-DEC-126)
+  (`mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`; `scripts/mmi_mission_map.py`;
+  `mmi/MMI_MISSION_MAP.md` v2; PMV ALL_CLEAR relay to mission map).
+
+PRIOR: Swarm organism concept capture — federation mesh + Lung dials (MMI-DEC-125)
   (`mmi_rp_v1` hints; RoutePolicyAudit metadata).
 
 PRIOR: #3 Risk Triage GATED (MMI-DEC-116); Command spine #1–#3 GATED at wrapper layer.

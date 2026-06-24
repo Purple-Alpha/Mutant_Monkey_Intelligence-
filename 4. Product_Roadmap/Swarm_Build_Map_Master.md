@@ -1,24 +1,38 @@
 # Mutant Monkey Inbox Shield — Swarm Build Map
-**Status:** Advisory lane — requires §11 signature before build authorization
-**Date:** June 12, 2026 (reconciled — Phases 5 & 6 closed; Watchers, Fission, Dual LLM, and Shadow Watcher Layer 1 GATED)
+**Status:** Advisory lane — historical phase/build-order reference; live direction via mission map (MMI-DEC-127)
+**Date:** June 12, 2026 base map · **MISSION_MAP_RECONCILED** 2026-06-24 (MMI-DEC-127)
 **Authority:** Matt Nichol — sole signing authority
-**Purpose:** Master build order document. Replaces "what do you want to build next" permanently.
+**Purpose:** Master build order document — phase tracker and agent inventory below. **One-screen "what now" lives in the mission map**, not this file's former Layer-2 lead.
 **Companion doc:** `4. Product_Roadmap/The_Lung_Concept_Spec.md`
+**Live direction:** `mmi/MMI_MISSION_MAP.md` · `mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`
 
 ---
 
 ## WHAT'S NEXT — read this first (one screen)
 
-This is the deterministic answer to "what now," derived from signed contracts + gated state. No one has to decide it; the state dictates it.
+> **MISSION_MAP_RECONCILED (MMI-DEC-127)** — Stale lead ("Shadow Watcher Layer 2 next") retired. Chain-of-command reads the staged mission map; this file stays the **historical build-order reference** for phases and scoreboard rows.
 
-**CURRENT BUILD STATE → Shadow Watcher Swarm Layer 1 GATED.**
-- **What closed tonight:** the signed Shadow Watcher Swarm Layer 1 Watch Layer (`Shadow_Watcher_Swarm_Contract.md`, §11 signed 2026-06-12 `5320ba0`) is implemented in `core/shadow_watchers/` as six Q-class observe-only agents: SenderShadowWatcher, PaymentShadowWatcher, LanguageShadowWatcher, AttachmentShadowWatcher, GeoShadowWatcher, VendorHistoryShadowWatcher.
-- **Verification:** Layer 1 targeted suite 9 passed / 4 xfailed; adjacent watcher + Dual LLM suites 59 passed / 14 xfailed; full runtime suite 1740 passed / 1 skipped / 49 xfailed / 1 third-party warning.
-- **Boundary:** Layer 1 observes only, emits structured alarm-input facts, separates observed facts from inference, holds no tools/credentials, makes no final fraud claims, never blocks actions, and writes no blackboard evidence.
+**Live direction (use these — not the old Layer-2 lead below):**
 
-**Next guided build when work resumes:** Shadow Watcher Swarm Layer 2 — Alarm Layer. Stop point tonight is Layer 1 complete, per operator instruction.
+| Source | Role |
+|---|---|
+| `mmi/MMI_MISSION_MAP.md` | Human staged map (START → dots → END) |
+| `mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml` | Machine routing spine |
+| `python3 scripts/mmi_mission_map.py --position` | Current stage + next waypoint |
+| `python3 scripts/mmi_pm_voice.py` | Handoff envelope (HAND_IT_TO + YOU_DO) |
 
-**Housekeeping, anytime:** all session commits from `09dac9a` → `d68c70a` are **local-only**; push to remote when a fresh token is ready.
+**Current posture (2026-06-24):**
+- **Dispatcher:** ALL_CLEAR — 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT
+- **Foundation:** COMPLETE — command spine #1–#3 GATED; routing-policy annex §11 signed (MMI-DEC-121); §6 wiring gate clean (MMI-DEC-123)
+- **Active stage:** Stage A — decision-support + first MSP motion (MMI-DEC-125)
+- **Next waypoint after this reconcile:** a03 terminology purge → a04 MSP pilot intake → … (see mission map)
+
+**Historical build state (still true — not the live lead):**
+- Shadow Watcher Swarm **Layer 1 GATED** in `core/shadow_watchers/` (six Q-class observe-only agents; `Shadow_Watcher_Swarm_Contract.md` §11 signed 2026-06-12)
+- Layer 1 targeted suite 9 passed / 4 xfailed; adjacent watcher + Dual LLM suites 59 passed / 14 xfailed
+- **Layer 2 Alarm Layer** remains a future scoreboard lane — parked until mission map or Matt unparks; **not** the current chain-of-command direction
+
+**Housekeeping, anytime:** push local commits when a fresh token is ready.
 
 ---
 
