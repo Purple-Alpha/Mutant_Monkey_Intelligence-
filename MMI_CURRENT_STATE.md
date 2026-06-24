@@ -24,11 +24,12 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #52 Plain-English Explanation GOVERNED_AGENT promotion review (MMI-DEC-169)
-  (§11 contract `379d0e6`; build `5953d1a`; 16 tests; Grok gate 0/0;
-  breadth runway 15 -> 16; **not** production dispatch / **not** default registry).
+LAST_COMPLETED: #1 Swarm Commander GOVERNED_AGENT promotion review (MMI-DEC-170)
+  (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
+  0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
+  **not** default registry).
 
-PRIOR_LAST_COMPLETED: #47 Case Timeline GOVERNED_AGENT promotion review (MMI-DEC-168)
+PRIOR_LAST_COMPLETED: #52 Plain-English Explanation GOVERNED_AGENT promotion review (MMI-DEC-169)
   (§11 contract `4eec76a`; build `4d7fba2`; 22 tests; Grok gate 0/0;
   breadth runway 14 -> 15; **not** production dispatch / **not** default registry).
 

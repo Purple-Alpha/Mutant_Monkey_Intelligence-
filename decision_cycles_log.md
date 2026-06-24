@@ -599,6 +599,30 @@ AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
 
 ---
 
+---
+
+CYCLE 30 — 2026-06-25T00:00Z   [type: TACTICAL]
+  OBSERVE: #1 Swarm Commander built (MMI-DEC-111/122), completion gate 0 blocking /
+           1 warning (`audit_outputs/swarm_commander_agent_20260623T061720Z.md`),
+           annex wiring gate 0/0 (MMI-DEC-123), scoreboard row at `GATED` pending
+           GOVERNED_AGENT promotion review.
+  SELECTED:      Operator-authorized GOVERNED_AGENT promotion review #1 only.
+  EXPECTED:      Promote #1 to GOVERNED_AGENT at Evidence Stage 1 if repo evidence
+                 and doctrine support it; record health score; no production dispatch.
+  EXECUTED AT:   2026-06-25T00:00Z
+  AUDIT VERDICT: PASS — §11 contract MMI-DEC-102; routing-policy annex MMI-DEC-121/122;
+                 27 focused tests; L1 Command promotion bar cleared (RC-AUTH route-only
+                 + annex §6 conservative hints); completion gate 0 blocking; #1 promoted
+                 GOVERNED_AGENT; breadth runway 16 -> 17; health score 87 seeded.
+
+AGENT HEALTH SCORE — #1 Swarm Commander   2026-06-25T00:00Z   [type: GOVERNANCE]
+  EVENT: #1 promoted to GOVERNED_AGENT at Evidence Stage 1 after build MMI-DEC-122
+         + completion gate (`swarm_commander_agent_20260623T061720Z.md`).
+  SCORE: 87 (Layer 1 Command; ES1 ceiling; first governed L1 agent).
+  NEXT:  #2 Mission Context promotion review only — no build authorized.
+
+---
+
 CYCLE 29 — 2026-06-24T23:30Z   [type: TACTICAL]
   OBSERVE: #52 Plain-English Explanation built (`5953d1a`), Grok gate clean 0/0
            (`audit_outputs/plain_english_explanation_20260621T061124Z.md`), scoreboard
