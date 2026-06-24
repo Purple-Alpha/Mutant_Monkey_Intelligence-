@@ -81,3 +81,11 @@ This addendum does **not** authorize:
 - AUTH-5 or registry-fed routing
 
 Matt remains final authority.
+
+---
+
+## 7. External scaling research (absorbed 2026-06-24)
+
+Operator triage of external paradigms (graph morphing, context-folding, stigmergy, holonic assembly): **continue centralized Lung Multiplier spine**; borrow bounded topology morphing (federation mesh) and tenant-only context swell; **reject** brainless stigmergy and agent self-fission holons.
+
+**Register:** `mmi/research/MMI_ELASTIC_ORGANISM_SCALING_RESEARCH_ABSORPTION.md` — advisory only; not build authorization.
