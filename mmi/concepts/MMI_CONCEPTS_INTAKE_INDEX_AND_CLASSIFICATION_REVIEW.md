@@ -64,8 +64,9 @@ Default ceiling: **concept only, zero routing influence**.
 | `MMI_BRAIN_IMMUNE_LUNG_ZERO_TRUST_CONTROL_LOOP_CONCEPT.md` | PARKED 2026-06-18; Manus research input | `CONCEPT_INPUT` · `CONTROL_PLANE_METAPHOR` · `NEEDS_MMI_REVIEW` · `PARKED_DRAFT` | Zero routing | Broad homeostasis research; superseded for build by signed fission/safe-stop rows |
 | `MMI_BOARD_ADVISORY_LAYER_CONCEPT.md` | CONCEPT_LOCK 2026-06-16 | `CONCEPT_INPUT` · `NEEDS_MMI_REVIEW` · `PARKED_DRAFT` | Zero routing | Board advisory layer doctrine; parked until requirements research |
 | `MMI_CONCEPTS_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md` | MMI-DEC-113 | `GOVERNANCE_INDEX` · `CLASSIFICATION_REVIEW` | Meta only | This register |
-| `MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md` | MMI-CON-2026-06-24 | `CONCEPT_INPUT` · `CONTROL_PLANE_METAPHOR` · `EXPLICITLY_NOT_DOCTRINE` · `NEEDS_FUTURE_REVIEW` | Zero routing | Phase B/C pooled Lung + federation mesh vision; synchronized immune response; MSP network economics; not cross-tenant data |
-| `MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md` | MMI-CON-2026-06-24-A | `CONCEPT_INPUT` · `CONTROL_PLANE_METAPHOR` · `EXPLICITLY_NOT_DOCTRINE` | Zero routing | HMAC pulses, anti-poisoning, replay/TTL, consent modes, RA #84 egress-only sign; required before mesh contract |
+| `MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md` | MMI-CON-2026-06-24; MMI-DEC-125 | `CONCEPT_INPUT` · `CONTROL_PLANE_METAPHOR` · `EXPLICITLY_NOT_DOCTRINE` · `NEEDS_FUTURE_REVIEW` | Zero routing | Phase B/C pooled Lung + federation mesh vision; synchronized immune response; MSP network economics; not cross-tenant data |
+| `MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md` | MMI-CON-2026-06-24-A; MMI-DEC-125 | `CONCEPT_INPUT` · `CONTROL_PLANE_METAPHOR` · `EXPLICITLY_NOT_DOCTRINE` | Zero routing | HMAC pulses, anti-poisoning, replay/TTL, consent modes, RA #84 egress-only sign; required before mesh contract |
+| `MMI_OPERATOR_LUNG_DIAL_SPEC.md` | MMI-CON-2026-06-24-B; MMI-DEC-125 | `CONCEPT_INPUT` · `CONTROL_PLANE_METAPHOR` · `EXPLICITLY_NOT_DOCTRINE` · `NEEDS_FUTURE_REVIEW` | Zero routing | Matt Dial 1 deal path + Dial 2 scale; research open on caps/pricing/UI |
 
 **Reconciliation rule:** Re-run `find` on every concepts-folder change. Do not ship a partial register.
 

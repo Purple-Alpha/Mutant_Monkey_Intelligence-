@@ -24,11 +24,13 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #1 routing-policy annex §6 wiring completion gate clean 0/0 (MMI-DEC-123)
-  (`audit_outputs/swarm_commander_routing_policy_annex_wiring_20260624T022634Z.md`;
-  wiring MMI-DEC-122; 27 focused tests; **not** GOVERNED_AGENT promotion).
+LAST_COMPLETED: Swarm organism concept capture — federation mesh + Lung dials + mission map (MMI-DEC-125)
+  (`mmi/concepts/MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md`;
+  `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md`;
+  `mmi/concepts/MMI_OPERATOR_LUNG_DIAL_SPEC.md`; `mmi/MMI_MISSION_MAP.md`;
+  **CONCEPT ONLY**; research lane open; **not** build authorization).
 
-PRIOR_LAST_COMPLETED: #1 routing-policy annex §6 wired in SwarmCommanderAgent (MMI-DEC-122)
+PRIOR_LAST_COMPLETED: #1 routing-policy annex §6 wiring completion gate clean 0/0 (MMI-DEC-123)
   (`mmi_rp_v1` hints; RoutePolicyAudit metadata).
 
 PRIOR: #3 Risk Triage GATED (MMI-DEC-116); Command spine #1–#3 GATED at wrapper layer.
