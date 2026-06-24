@@ -33,7 +33,7 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: 1c72f77 (verify at session start — routing-policy annex gate clean 0/0 MMI-DEC-120)
+HEAD: 8e63b5b (verify at session start — routing-policy annex §11 signed MMI-DEC-121)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
   Command spine #1–#3 GATED (MMI-DEC-112/109/116) · PMV chain relay (MMI-DEC-117)
@@ -54,7 +54,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
   BOR v11 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (4/10): Optional Matt §11 sign on #1 routing-policy annex (pre-build gate clean 0/0). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (3/10): Unpark BOR feedstock #67 Rule Improvement (CONTRACT_DRAFT). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, routing-policy annex runtime wiring.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
