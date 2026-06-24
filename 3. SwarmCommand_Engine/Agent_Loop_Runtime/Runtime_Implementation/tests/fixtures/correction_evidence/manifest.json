@@ -1,10 +1,26 @@
 {
   "manifest_version": "correction_evidence_es1_v1",
-  "minimum_negative_cases": 3,
+  "minimum_cases": 4,
   "cases": [
-    {"case_id": "ce-fix-001", "role": "target_failure_replay"},
-    {"case_id": "ce-neg-001", "role": "corpus_negative"},
-    {"case_id": "ce-neg-002", "role": "corpus_negative"},
-    {"case_id": "ce-neg-003", "role": "corpus_negative"}
+    {
+      "case_id": "ce-fix-001",
+      "role": "target_failure_replay",
+      "subject": "Urgent invoice payment review"
+    },
+    {
+      "case_id": "ce-neg-001",
+      "role": "corpus_negative",
+      "subject": "Immediate policy confirmation request"
+    },
+    {
+      "case_id": "ce-neg-002",
+      "role": "corpus_negative",
+      "subject": "Urgent wire transfer review"
+    },
+    {
+      "case_id": "ce-neg-003",
+      "role": "corpus_negative",
+      "subject": "Immediate verification required"
+    }
   ]
 }

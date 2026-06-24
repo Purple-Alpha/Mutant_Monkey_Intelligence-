@@ -26,12 +26,13 @@ import json
 import uuid
 from dataclasses import dataclass, replace
 from typing import Callable, Literal
+from uuid import uuid4
 
-from core.blackboard import GovernanceError
+from core.blackboard import GovernanceError, SyntheticAttackCasePayload
 from core.orchestrator import RouteContext
 from core.orchestrator.agent_contract import AgentContribution, ChallengeResult, MissionContext
 from core.sandbox.failure_classification_agent import FailureClassification
-from core.sandbox.loop import SandboxLoopConfig, run_sandbox_cycle
+from core.sandbox.loop import SandboxLoopConfig, _blue_detect, run_sandbox_cycle
 from core.sandbox.rule_improvement_agent import RuleImprovementProposal
 
 CORRECTION_EVIDENCE_AGENT_ID = "correction_evidence_001"
@@ -80,7 +81,9 @@ class CorrectionValidationRequest:
 @dataclass(frozen=True)
 class RegressionCorpusCase:
     case_id: str
-    new_miss: bool
+    subject: str
+    sender_domain: str
+    expected_signals: tuple[str, ...]
 
 
 @dataclass(frozen=True)
@@ -179,9 +182,49 @@ def _inputs_digest(
 
 
 def _corpus_hash(corpus_cases: tuple[RegressionCorpusCase, ...]) -> str:
-    payload = [{"case_id": case.case_id, "new_miss": case.new_miss} for case in corpus_cases]
+    payload = [
+        {
+            "case_id": case.case_id,
+            "subject": case.subject,
+            "sender_domain": case.sender_domain,
+            "expected_signals": list(case.expected_signals),
+        }
+        for case in corpus_cases
+    ]
     encoded = json.dumps(payload, sort_keys=True).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _corpus_case_passes(
+    case: RegressionCorpusCase, config: SandboxLoopConfig
+) -> bool:
+    payload = SyntheticAttackCasePayload(
+        attack_kind=f"synthetic_{case.case_id}",
+        generated_from_weakness_id=uuid4(),
+        synthetic_subject=case.subject,
+        synthetic_sender_domain=case.sender_domain,
+        expected_detection_signals=list(case.expected_signals),
+        raw_tenant_data_removed=True,
+    )
+    detection = _blue_detect(payload)
+    missing = [
+        signal for signal in case.expected_signals if signal not in detection.signals
+    ]
+    return (
+        detection.confidence >= config.detection_confidence_threshold and not missing
+    )
+
+
+def _target_corpus_cases(
+    request: CorrectionValidationRequest,
+    corpus_cases: tuple[RegressionCorpusCase, ...],
+) -> tuple[RegressionCorpusCase, ...]:
+    if request.corpus_refs:
+        by_id = {case.case_id: case for case in corpus_cases}
+        selected = tuple(by_id[ref] for ref in request.corpus_refs if ref in by_id)
+        if selected:
+            return selected
+    return corpus_cases[:1]
 
 
 def _reproducibility_line(
@@ -224,43 +267,59 @@ def default_evaluation_runner(
     route_context: RouteContext,
     corpus_cases: tuple[RegressionCorpusCase, ...],
 ) -> EvaluationResult:
-    cycle_result = run_sandbox_cycle(
-        route_context,
-        config=SandboxLoopConfig(sandbox_tenant_id="sandbox_default"),
-    )
+    config = SandboxLoopConfig(sandbox_tenant_id="sandbox_default")
+    cycle_result = run_sandbox_cycle(route_context, config=config)
     cycle_evidence_ids = tuple(
         str(item.mutant_evaluation.record.record_id)
         for item in cycle_result.item_results
     )
 
+    target_cases = _target_corpus_cases(request, corpus_cases)
+    target_results = {
+        case.case_id: _corpus_case_passes(case, config) for case in target_cases
+    }
     failure_ref_bound = request.failure_ref in proposal.rationale
     fix_passed = (
         proposal.proposal_id == request.proposal_ref
         and failure_ref_bound
         and cycle_result.processed_count > 0
+        and bool(target_cases)
+        and all(target_results.values())
         and proposal.candidate_confidence > proposal.baseline_confidence
         and bool(proposal.sandbox_evidence_ids)
     )
+    target_summary = ", ".join(
+        f"{case_id}={'pass' if passed else 'miss'}"
+        for case_id, passed in target_results.items()
+    )
     fix_proof = (
         f"failure_ref {request.failure_ref} bound in proposal rationale; "
-        f"sandbox replay processed {cycle_result.processed_count} weakness case(s); "
+        f"target corpus replay {target_summary}; "
+        f"sandbox cycle processed {cycle_result.processed_count} weakness case(s); "
         f"confidence {proposal.baseline_confidence:.4f} -> "
-        f"{proposal.candidate_confidence:.4f}; "
-        f"cycle_evidence_ids={', '.join(cycle_evidence_ids) or 'none'}"
+        f"{proposal.candidate_confidence:.4f}"
         if fix_passed
         else (
-            "fix proof failed: failure_ref not bound in proposal rationale, "
+            "fix proof failed: target corpus miss, failure_ref not bound, "
             "sandbox replay empty, or missing confidence delta / sandbox evidence ids"
         )
     )
 
-    new_misses = tuple(case.case_id for case in corpus_cases if case.new_miss)
-    no_regression_passed = len(corpus_cases) >= 3 and not new_misses
-    listed = ", ".join(case.case_id for case in corpus_cases) or "none"
+    regression_results = {
+        case.case_id: _corpus_case_passes(case, config) for case in corpus_cases
+    }
+    new_misses = tuple(
+        case_id for case_id, passed in regression_results.items() if not passed
+    )
+    no_regression_passed = len(corpus_cases) >= 4 and not new_misses
+    listed = ", ".join(
+        f"{case.case_id}={'pass' if regression_results[case.case_id] else 'miss'}"
+        for case in corpus_cases
+    )
     no_regression_proof = (
-        f"corpus run zero new misses; case ids: {listed}"
+        f"corpus sandbox replay zero new misses; cases: {listed}"
         if no_regression_passed
-        else f"corpus regression misses: {', '.join(new_misses) or 'insufficient corpus'}"
+        else f"corpus sandbox replay misses: {', '.join(new_misses) or 'insufficient corpus'}"
     )
 
     blast_radius_passed = (

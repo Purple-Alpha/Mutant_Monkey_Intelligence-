@@ -46,7 +46,7 @@ VALID_REQUEST = CorrectionValidationRequest(
     proposal_ref="rip_test001",
     tenant_scope="sandbox_only",
     classification_ref="fc-001",
-    corpus_refs=("ce-neg-001", "ce-neg-002", "ce-neg-003"),
+    corpus_refs=("ce-fix-001",),
     evidence_refs=("evidence-1",),
 )
 
@@ -69,9 +69,30 @@ GOOD_PROPOSAL = RuleImprovementProposal(
 )
 
 GOOD_CORPUS = (
-    RegressionCorpusCase("ce-neg-001", False),
-    RegressionCorpusCase("ce-neg-002", False),
-    RegressionCorpusCase("ce-neg-003", False),
+    RegressionCorpusCase(
+        "ce-fix-001",
+        "Urgent invoice payment review",
+        "sandbox-training.example",
+        ("financial_lure_language", "urgency_language", "unknown_sender_domain"),
+    ),
+    RegressionCorpusCase(
+        "ce-neg-001",
+        "Immediate policy confirmation request",
+        "sandbox-training.example",
+        ("urgency_language", "unknown_sender_domain"),
+    ),
+    RegressionCorpusCase(
+        "ce-neg-002",
+        "Urgent payment transfer review",
+        "sandbox-training.example",
+        ("financial_lure_language", "urgency_language", "unknown_sender_domain"),
+    ),
+    RegressionCorpusCase(
+        "ce-neg-003",
+        "Immediate verification required",
+        "sandbox-training.example",
+        ("urgency_language", "unknown_sender_domain"),
+    ),
 )
 
 GOOD_CLASSIFICATION = FailureClassification(
@@ -205,9 +226,30 @@ def test_t4_insufficient_when_fix_proof_fails(tmp_path):
 
 def test_t5_insufficient_when_regression_misses(tmp_path):
     corpus = (
-        RegressionCorpusCase("ce-neg-001", False),
-        RegressionCorpusCase("ce-neg-002", True),
-        RegressionCorpusCase("ce-neg-003", False),
+        RegressionCorpusCase(
+            "ce-fix-001",
+            "Urgent invoice payment review",
+            "sandbox-training.example",
+            ("financial_lure_language", "urgency_language", "unknown_sender_domain"),
+        ),
+        RegressionCorpusCase(
+            "ce-neg-001",
+            "Immediate policy confirmation request",
+            "sandbox-training.example",
+            ("urgency_language", "unknown_sender_domain"),
+        ),
+        RegressionCorpusCase(
+            "ce-neg-002",
+            "Broken regression case",
+            "sandbox-training.example",
+            ("missing_signal",),
+        ),
+        RegressionCorpusCase(
+            "ce-neg-003",
+            "Immediate verification required",
+            "sandbox-training.example",
+            ("urgency_language", "unknown_sender_domain"),
+        ),
     )
     result = validate_correction_evidence(
         VALID_REQUEST,
