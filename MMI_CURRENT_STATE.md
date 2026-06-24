@@ -25,8 +25,8 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
 LAST_COMPLETED: PMV chain-of-command relay after Command spine GATED (MMI-DEC-117)
-  (rubric + PMV route routing-policy annex draft to Claude; ranked board synced;
-  AGENTS.md mandatory PMV closeout loop pinned).
+  (commit `1b85ed9`; rubric + PMV route routing-policy annex draft to Claude;
+  ranked board synced; AGENTS.md mandatory PMV closeout loop pinned).
 
 PRIOR_LAST_COMPLETED: #3 Risk Triage Command spine wrapper GATED (MMI-DEC-116)
   (completion gate `audit_outputs/risk_triage_agent_20260624T003249Z.md` 0/0;

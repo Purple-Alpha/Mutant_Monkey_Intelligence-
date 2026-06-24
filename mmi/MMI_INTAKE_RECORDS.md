@@ -666,3 +666,12 @@ Artifact: `4. Product_Roadmap/MMI_Governance_Invariants_Testing_Framework_Contra
 Classification: SIGNED_CONTRACT — Lane 1 authorized; probe on disk; not SIGNED_UNBUILT (no false BUILD dispatch)
 Routing outcome: PM Voice should not route Claude redraft or Codex pre-build gate for unsigned contract
 Matt approval required: YES for Lane 2+ or probe expansion when Matt chooses
+
+INTAKE-2026-06-24-001
+Component: PMV chain-of-command relay (post Command spine GATED)
+Request: Operator escalation — PMV stale after #3 GATED; agent must own PMV closeout loop
+Source: Matt Nichol 2026-06-24 (process breach callout)
+Artifact: `scripts/mmi_pm_voice.py`; `scripts/mmi_next_action_rubric.py`; `scripts/mmi_lane_board_sync.py`; `mmi/BLUEPRINT_OF_RECORD.md` BOR v11; `AGENTS.md` §2 PMV closeout; commit `1b85ed9`; MMI-DEC-117
+Classification: PMV_CHAIN_RELAY — control-plane accuracy; not build authorization
+Routing outcome: `pmv` routes Claude routing-policy annex draft lane; rubric skips GATED `build_auth_*`; dispatcher ALL_CLEAR unchanged
+Matt approval required: NO for PMV/rubric fix slice; YES only for annex draft execution when chain advances
