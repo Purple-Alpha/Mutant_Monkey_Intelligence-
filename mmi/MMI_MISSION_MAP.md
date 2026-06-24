@@ -42,8 +42,8 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Dispatcher** | ALL_CLEAR — 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT |
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
 | **Active stage** | **Stage A** — decision-support + first MSP motion |
-| **Next waypoint** | **a04** — MSP pilot motion intake → Claude (MMI-DEC-129) |
-| **Last closed** | MMI-DEC-128 terminology purge (buyer voice → Lung Multiplier) |
+| **Next waypoint** | **a05** — Mesh hardening research closeout → Gemini+ChatGPT (MMI-DEC-131) |
+| **Last closed** | MMI-DEC-129 MSP pilot motion intake (VERIFY — P0 with Todd open) |
 
 ---
 
@@ -107,7 +107,7 @@ START  Organism concept captured (MMI-DEC-125)
   · a01  Chain-of-command mission map engine + PMV wiring      → Cursor   [MMI-DEC-126]
   · a02  Swarm Build Map reconciliation                        → Cursor   [MMI-DEC-127]
   · a03  Terminology purge → Lung Multiplier (buyer voice)           ✓ [MMI-DEC-128]
-  · a04  MSP pilot motion intake (Todd / commercial lane)      → Claude   [MMI-DEC-129]
+  · a04  MSP pilot motion intake (Todd / commercial lane)          ✓ [MMI-DEC-129 VERIFY]
   · a05  Mesh hardening research closeout (Phase B prep)        → Research [MMI-DEC-131]
   · a06  MSP pilot buyer proof milestone                        → Matt     [MMI-DEC-130]
 END    One MSP pilot proof — buyer motion, not empty repo

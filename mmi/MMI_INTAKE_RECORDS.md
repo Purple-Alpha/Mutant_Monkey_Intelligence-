@@ -684,3 +684,13 @@ Artifact: `docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`; MMI-
 Classification: CONTRACT_REVIEW_DRAFT — resolves parent §10 Q1; not Build Authorization
 Routing outcome: annex §11 signed (MMI-DEC-121); runtime wiring blocked until separate Build Authorization
 Matt approval required: YES for Build Authorization to wire `SwarmCommanderAgent` §6 hints; not required for §11 (done)
+
+INTAKE-2026-06-24-003
+Component: Stage A a04 — MSP pilot motion (Todd / CMIT Kelowna · commercial lane)
+Request: File detect-only MSP pilot motion intake per mission map a04; Claude advisory → Cursor write
+Source: Matt Nichol relay; Claude advisory deliverable 2026-06-24; mission map `a04`
+Assigned to: Cursor (intake filing); Todd (validator at P0+); Matt (signing authority)
+Artifact: `mmi/intake/MMI_INTAKE_2026-06-24-003_MSP_Pilot_Motion_Todd_CMIT.md`; MMI-DEC-129
+Classification: COMMERCIAL_PILOT_MOTION — VERIFY at filing; ACCEPT blocked until pilot evidence (§8)
+Routing outcome: VERIFY — P0 scoping with Todd open; legal/consent gate prerequisite; no live mail until P1
+Matt approval required: YES before live third-party mail; YES for any §11/build fork; NO for intake filing slice

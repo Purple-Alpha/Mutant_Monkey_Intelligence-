@@ -460,9 +460,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertEqual(fields["HAND_IT_TO"], "Gemini+ChatGPT")
         self.assertIn("mission map chain-of-command", fields["WHAT_NEEDS_MATT"])
-        self.assertIn("a04", fields["YOU_DO"])
+        self.assertIn("a05", fields["YOU_DO"])
         self.assertIn("chain: mission_map", fields["SOURCE"])
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
         self.assertNotIn("Matt selects one", fields["YOU_DO"])
@@ -780,7 +780,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         elif "Select one ranked lane" in out and "#1 Swarm Commander contract §11 signed" in out:
             pass
         elif "mission map chain-of-command" in out.lower():
-            self.assertIn("HAND_IT_TO:\nClaude", out)
+            self.assertIn("HAND_IT_TO:\nGemini+ChatGPT", out)
             self.assertIn("chain: mission_map", out)
         elif "Select one ranked lane" in out:
             self.assertIn("HAND_IT_TO:\nMatt", out)

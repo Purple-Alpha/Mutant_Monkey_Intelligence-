@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Stage A a03 — buyer voice terminology purge fission → Lung Multiplier (MMI-DEC-128)
-  (`mmi/MMI_MISSION_MAP.md` commercial lane; `The_Lung_Concept_Spec.md`;
-  `Swarm_Build_Map_Master.md` Layer 3 buyer prose; engineering `#90`/`#91`/`core/fission/` untouched).
+LAST_COMPLETED: Stage A a04 — MSP pilot motion intake Todd / CMIT Kelowna (MMI-DEC-129)
+  (`mmi/intake/MMI_INTAKE_2026-06-24-003_MSP_Pilot_Motion_Todd_CMIT.md`;
+  routing VERIFY; P0 scoping open; legal/consent before live mail).
 
-PRIOR_LAST_COMPLETED: Swarm Build Map reconciliation to mission map (MMI-DEC-127)
+PRIOR_LAST_COMPLETED: Stage A a03 — buyer voice terminology purge (MMI-DEC-128)
   (`mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`; `scripts/mmi_mission_map.py`;
   `mmi/MMI_MISSION_MAP.md` v2; PMV ALL_CLEAR relay to mission map).
 
