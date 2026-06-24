@@ -8,7 +8,7 @@
 
 **Owner:** Matt Nichol — Matt §11 only on `requires_matt_escalation` waypoints
 
-**Last updated:** 2026-06-23
+**Last updated:** 2026-06-24
 
 **Rule:** Every stage has a **START → waypoints (dots) → END**. PMV reads the engine; Matt is not asked to pick direction on delegable waypoints.
 
@@ -43,9 +43,10 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
-| **Active stage** | **Stage C** — Lung production, federation scale, governed production loop |
-| **Next waypoint** | **c03** — Governed production organism loop → **Matt §11** |
-| **Last closed** | MMI-DEC-142 Federation mesh pilot wiring plan |
+| **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
+| **Active stage** | **Post–Stage C** — operator selects depth-first evidence target |
+| **Next waypoint** | **Operator fork** — real tenant / Playhouse / mesh P0 / c01 retry (no auto-staging) |
+| **Last closed** | MMI-DEC-150 Stage C end — narrow ACCEPT (program direction; not production GO) |
 
 ---
 
@@ -139,14 +140,14 @@ END    Federation economics anchored + mesh contract path ready
 
 ---
 
-### Stage C — ACTIVE (Lung production, federation scale, governed production loop)
+### Stage C — COMPLETE (Lung production, federation scale, governed production loop)
 
 ```text
 START  Stage B complete (MMI-DEC-140)
   · c01  Operator Lung Dial spec → signed contract              ✓ [MMI-DEC-141 · PARK]
   · c02  Federation mesh pilot wiring plan (opt-in MSP pool)      ✓ [MMI-DEC-142]
-  · c03  Governed production organism loop                      → Matt §11
-END    Self-evolving organism in governed production posture
+  · c03  Governed production organism loop                      ✓ [MMI-DEC-150 · Matt §11]
+END    Governed organism program direction accepted — production loop downstream
 ```
 
 **c01 PARK note:** MMI-DEC-133 prerequisites not met — dial spec remains CONCEPT; retry after tenant data, Playhouse, `#90`/`#103` wiring.

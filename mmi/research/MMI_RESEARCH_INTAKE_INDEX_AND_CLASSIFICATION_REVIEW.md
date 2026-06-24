@@ -101,6 +101,7 @@ Default ceiling for all intake notes: **input only, zero routing influence**.
 | `MMI_RESEARCH_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md` | MMI-DEC-037; INTAKE-2026-06-19-017 | `GOVERNANCE_INDEX` · `CLASSIFICATION_REVIEW` · `DRIFT_CONTROL` · `EXPLICITLY_NOT_DOCTRINE` · `NEEDS_PERIODIC_RE_REVIEW` | Meta only; zero routing influence | This register; classifies other notes; does not promote them |
 | `MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md` | MMI-DEC-131; INTAKE-2026-06-24-004 | `RESEARCH_INPUT` · `ADVISORY_MEMO` · `EXPLICITLY_NOT_DOCTRINE` · `ZERO_ROUTING_INFLUENCE` | Input only; zero routing influence | Stage A a05 mesh hardening closeout; federation addendum research gaps closed; not build authority |
 | `MMI_ELASTIC_ORGANISM_SCALING_RESEARCH_ABSORPTION.md` | MMI-RES-2026-06-24 | `RESEARCH_INPUT` · `ADVISORY_MEMO` · `EXPLICITLY_NOT_DOCTRINE` · `ZERO_ROUTING_INFLUENCE` | Input only; zero routing influence | External scaling paradigms triage: KEEP topology morphing + tenant context-folding; DISCARD stigmergy + holonic; no spine pivot |
+| `MMI_STAGE_C_GOVERNED_ORGANISM_CLOSEOUT_MMI-DEC-150.md` | MMI-DEC-150 · §11 signed 2026-06-24 | `CLOSEOUT_RECORD` · `STAGE_END` · `OPERATOR_FORK` | Stage C end; not build authorization | Narrow ACCEPT: program direction yes, production organism no; c01 PARK + c02 plan acknowledged; hybrid depth-first execution |
 
 **Reconciliation rule:** On every update to this index, re-run the `find` command and ensure every `mmi/research/*.md` intake or governance file is listed. Do not ship a partial register.
 
