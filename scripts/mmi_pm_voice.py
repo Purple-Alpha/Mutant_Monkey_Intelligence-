@@ -99,6 +99,7 @@ COMMAND_SPINE_IDS = ("#1", "#2", "#3")
 CONTRACT_SIGNED_DECISION: dict[str, str] = {
     "#1": "MMI-DEC-102",
     "#3": "MMI-DEC-098",
+    "#67": "MMI-DEC-157",
 }
 
 CONTRACT_DRAFTS_ON_DISK: dict[str, str] = {

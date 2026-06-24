@@ -24,13 +24,17 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #67 Rule Improvement §11 sign + SIGNED_UNBUILT reconcile (MMI-DEC-154)
-  (`4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED;
-  Matt Nichol June 24th 2026; scoreboard #67 SIGNED_UNBUILT; **separate build auth required**;
+LAST_COMPLETED: #67 Rule Improvement build + GATED closeout (MMI-DEC-155–157)
+  (`core/sandbox/rule_improvement_agent.py` + 16 tests; completion gate 0 blocking
+  `audit_outputs/rule_improvement_agent_20260624T185625Z.md`; scoreboard #67 GATED;
   **not** GOVERNED_AGENT; **not** production mutation deploy; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: #67 Rule Improvement pre-build gate (MMI-DEC-153)
-  (opt-in MSP pool; P0–P3; synthetic-first; Todd intake separate).
+PRIOR_LAST_COMPLETED: #67 Rule Improvement §11 sign + SIGNED_UNBUILT reconcile (MMI-DEC-154)
+  (`4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED;
+  Matt Nichol June 24th 2026).
+
+PRIOR: #67 Rule Improvement pre-build gate (MMI-DEC-153)
+  (Gemini pre-build gate 0/0; contract signable).
 
 PRIOR: Stage C c01 — Operator Lung Dial promotion gate (MMI-DEC-141 · PARK)
   (MMI-DEC-133 prerequisites not met; spec not promoted).

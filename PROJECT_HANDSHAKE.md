@@ -24,7 +24,7 @@ Historical "NorthStar" / "NorthStar Inbox Shield" references in signed specs =
 ═══════════════════════════════════════════════
 
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (verify HEAD at session start — #2 contract §11 + lane board 2026-06-22)
+CURRENT NEXT ACTION (verify HEAD at session start — chain-of-command post–Stage C · MMI-DEC-158)
 ═══════════════════════════════════════════════
 AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Monkey
   Security authority repo** — PRIMARY CODEBASE (operator decision 2026-06-13; see
@@ -33,29 +33,31 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: 0e82f5a (verify at session start — annex §6 wiring gate clean 0/0 MMI-DEC-123)
+HEAD: 5b465b1 (verify at session start — #67 Rule Improvement GATED MMI-DEC-157)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  Command spine #1–#3 GATED (MMI-DEC-112/109/116) · PMV chain relay (MMI-DEC-117)
-  **not GOVERNED_AGENT** · not wired
+  Mission map post_stage_c · waypoint d02 hold (Matt selects next fork)
+  Command spine #1–#3 GATED · #67 Rule Improvement GATED (MMI-DEC-157)
+  **not GOVERNED_AGENT** · not wired · not production mutation deploy
 
 LAST_COMPLETED (MMI authority repo):
-  #1 routing-policy annex §6 wiring — completion gate clean 0/0 (MMI-DEC-123)
-    (`audit_outputs/swarm_commander_routing_policy_annex_wiring_20260624T022634Z.md`; wiring MMI-DEC-122)
-  PMV chain relay (MMI-DEC-117) · Command spine #1–#3 GATED (MMI-DEC-112/109/116)
-  Ranked lane board LIVE — `mmi/MMI_RANKED_NEXT_ACTIONS.md` + `scripts/mmi_next_action_rubric.py` (MMI-DEC-104)
-  #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
-    (MMI-DEC-092); Lane 1 Authority Escalation Probe on disk (MMI-DEC-082); Lane 2+ held
+  #67 Rule Improvement — build + GATED closeout (MMI-DEC-155–157)
+    (`core/sandbox/rule_improvement_agent.py`; 16 tests; gate 0 blocking
+    `audit_outputs/rule_improvement_agent_20260624T185625Z.md`)
+  Chain-of-command mission map post–Stage C extension (MMI-DEC-158)
+  Stage C governed organism program direction (MMI-DEC-150 · Matt §11)
+  Command spine #1–#3 GATED (MMI-DEC-112/109/116)
   #64 Failure Classification — GATED (MMI-DEC-088)
   Challenge/red-team wrappers #61–#63 — GATED (2026-06-21)
   Evidence wrappers #47 Case Timeline, #52 Plain-English Explanation — GATED
 
 ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
-  BOR v11 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
+  BOR v14 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
 
 NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (0/10): Promotion review #47 (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
-  Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, routing-policy annex runtime wiring.
+  Mission map active: post_stage_c d02 — Matt hold fork unless authorizing next breadth/promotion lane.
+  Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, production mutation deploy.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`
@@ -63,7 +65,7 @@ PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
 PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 14 GOVERNED_AGENT at ES1 Synthetic;
   depth gate CLOSED · Stage B gate CLOSED · revenue milestones mostly open (see MILESTONE_ARC.md)
 
-LAST UPDATED: 2026-06-23 (governance housekeeping MMI-DEC-113; #1 GATED MMI-DEC-112)
+LAST UPDATED: 2026-06-24 (chain-of-command refresh MMI-DEC-158; #67 GATED MMI-DEC-157)
 ═══════════════════════════════════════════════
 
 ─────────────────────────────────────────────────

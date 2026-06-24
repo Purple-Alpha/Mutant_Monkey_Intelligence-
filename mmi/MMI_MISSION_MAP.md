@@ -44,9 +44,9 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
-| **Active stage** | **Post–Stage C** — `#67` SIGNED_UNBUILT (§11 MMI-DEC-154) |
-| **Next waypoint** | **#67 build** — separate operator build authorization required |
-| **Last closed** | MMI-DEC-154 `#67` §11 sign + SIGNED_UNBUILT reconcile |
+| **Active stage** | **Post–Stage C** — breadth + hybrid depth-first (Matt-directed) |
+| **Next waypoint** | **d02 hold** — Matt selects next breadth lane or hybrid fork (MMI-DEC-158) |
+| **Last closed** | MMI-DEC-157 `#67` Rule Improvement GATED (build + completion gate 0 blocking) |
 
 ---
 
@@ -154,6 +154,19 @@ END    Governed organism program direction accepted — production loop downstre
 
 ---
 
+### Post–Stage C — ACTIVE (scoreboard breadth + hybrid depth-first)
+
+```text
+START  Governed organism program direction accepted (MMI-DEC-150)
+  · d01  #67 Rule Improvement wrapper GATED (sandbox-only proposal)   ✓ [MMI-DEC-157]
+  · d02  Hold — Matt selects next breadth lane or hybrid fork           → Matt [authority fork]
+END    Operator program fork (not machine-complete — MMI-DEC-POST-STAGE-C-PROGRAM-FORK)
+```
+
+**d02 hold:** Promotion reviews `#47` / `#52` remain hold-only until Matt authorizes GOVERNED_AGENT. Hybrid depth-first (real tenant, Playhouse, ES2) is parallel Matt priority — not overridden by rubric rank.
+
+---
+
 ## Concept docs (research — not build until map reaches Stage B/C)
 
 | Doc | Role |
@@ -166,6 +179,6 @@ END    Governed organism program direction accepted — production loop downstre
 
 ## Hold lanes (not direction — mission map wins)
 
-BOR unpark (#67 **unparked MMI-DEC-151**), GOVERNED_AGENT promotion reviews (#47/#52), and rubric-ranked alternates remain **hold unless Matt unparks** — they do not override feedstock rank 1.
+GOVERNED_AGENT promotion reviews (#47/#52) and rubric-ranked alternates remain **hold unless Matt authorizes** — they do not override mission map waypoint **d02**.
 
-Matt Nichol — mission map v3 (federation-first re-stage · MMI-DEC-135).
+Matt Nichol — mission map v4 (post–Stage C breadth · MMI-DEC-158).

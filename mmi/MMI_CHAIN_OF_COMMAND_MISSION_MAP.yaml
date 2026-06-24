@@ -4,6 +4,7 @@
 # Human view: mmi/MMI_MISSION_MAP.md
 # Engine: python3 scripts/mmi_mission_map.py [--position]
 # Re-staged: MMI-DEC-135 (2026-06-23) — Stage A platform credibility closeout + Stage B federation-first
+# Extended: MMI-DEC-158 (2026-06-24) — Post–Stage C breadth lane (#67 GATED) + hold fork
 
 version: 1
 map_id: mmi_chain_of_command_mission_map
@@ -238,4 +239,43 @@ stages:
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-150
+        requires_matt_escalation: true
+
+  - id: post_stage_c
+    name: Post–Stage C — scoreboard breadth + hybrid depth-first (Matt-directed)
+    start:
+      label: Governed organism program direction accepted (MMI-DEC-150)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-150
+    end:
+      label: Operator selects next program fork (hold — not machine-complete)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-POST-STAGE-C-PROGRAM-FORK
+    waypoints:
+      - id: d01
+        label: "#67 Rule Improvement — Stage 1 wrapper GATED"
+        hand_to: Cursor
+        you_do: >-
+          Build RuleImprovementAgent sandbox-only wrapper per §11 contract;
+          completion gate 0 blocking; scoreboard GATED; closeout MMI-DEC-155–157.
+          No production mutation deploy; not governed promotion; not default registry.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-157
+        requires_matt_escalation: false
+
+      - id: d02
+        label: Hold — Matt selects next breadth lane or hybrid depth-first fork
+        hand_to: Matt
+        you_do: >-
+          Mission map stages Foundation/A/B/C complete; #67 GATED (MMI-DEC-157).
+          Hold ALL_CLEAR unless Matt names next contract/build/promotion lane.
+          Advisory ranked board: mmi/MMI_RANKED_NEXT_ACTIONS.md. Promotion hold-only:
+          #47 Case Timeline, #52 Plain-English Explanation (governed promotion when Matt names).
+          Hybrid depth-first (real tenant, Playhouse, ES2) remains parallel Matt priority.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-POST-STAGE-C-PROGRAM-FORK
         requires_matt_escalation: true
