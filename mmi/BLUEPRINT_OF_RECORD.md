@@ -1,6 +1,6 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-166). #65 Correction Evidence GATED; hold-only feedstock restored.
+**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-168). #47 Case Timeline GOVERNED_AGENT; hold-only feedstock #52.
 
 **Classification:** Shared crew artifact · Blueprint of Record
 
@@ -10,24 +10,24 @@
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v17
+## CURRENT_PLAN — ALL_CLEAR feedstock v18
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v17
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v17
-population_decision: MMI-DEC-166
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v18
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v18
+population_decision: MMI-DEC-168
 created_at: 2026-06-24
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: Team 9 #65 GATED — breadth queue via hold feedstock + Estimator
-revision_reason: #65 GATED closeout; rank-1 build feedstock retired
+architect_blueprint_source: Team 9 #47 GOVERNED_AGENT — breadth queue via hold feedstock + Estimator
+revision_reason: #47 GOVERNED_AGENT promotion review; rank-1 promotion feedstock retired
 non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
 
-feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
 Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #47 Case Timeline — GOVERNED_AGENT (MMI-DEC-168); not production dispatch; not default registry
   Command spine #1 Swarm Commander — GATED wrapper (MMI-DEC-112); not GOVERNED_AGENT; not wired
   Command spine #2 Mission Context — GATED wrapper (MMI-DEC-109); not GOVERNED_AGENT; not wired
   Command spine #3 Risk Triage — GATED wrapper (MMI-DEC-116); not GOVERNED_AGENT; not wired
@@ -36,7 +36,19 @@ Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows aut
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
-Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock #47/#52.
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock #52.
+
+---
+
+## Prior ALL_CLEAR v17 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v17
+supersedes: BOR-ALL-CLEAR-FEEDSTOCK-v16
+population_decision: MMI-DEC-166
+revision_reason: Superseded by v18 after #47 GOVERNED_AGENT (MMI-DEC-168)
+feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
+feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
 ---
 

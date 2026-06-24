@@ -4,7 +4,7 @@ OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
 BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 44 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 43 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
 WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
 ASSIGNED_TO: Matt
 NEXT_PROMPT_GOES_TO: Matt
@@ -24,10 +24,14 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Ranked lane board refresh after #65 GATED (2026-06-24T22:40:26Z)
+LAST_COMPLETED: #47 Case Timeline GOVERNED_AGENT promotion review (MMI-DEC-168)
+  (§11 contract `4eec76a`; build `4d7fba2`; 22 tests; Grok gate 0/0;
+  breadth runway 14 -> 15; **not** production dispatch / **not** default registry).
+
+PRIOR_LAST_COMPLETED: Ranked lane board refresh after #65 GATED (2026-06-24T22:40:26Z)
   (`mmi/MMI_RANKED_NEXT_ACTIONS.md` git_head dcaa47a; top ranked #47 promotion review 0/10).
 
-PRIOR_LAST_COMPLETED: #65 Correction Evidence GATED closeout (MMI-DEC-165/166)
+PRIOR: #65 Correction Evidence GATED closeout (MMI-DEC-165/166)
   (`audit_outputs/correction_evidence_20260624T223220Z.md` 0 blocking / 1 warning;
   Gemini; **not GOVERNED_AGENT**).
 

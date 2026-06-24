@@ -341,6 +341,8 @@ MMI-DEC-166 | 2026-06-24 | #65 Correction Evidence reconciled to GATED | `agent_
 
 MMI-DEC-167 | 2026-06-24 | Ranked lane board refresh post–#65 GATED | `mmi/MMI_RANKED_NEXT_ACTIONS.md`; `PROJECT_HANDSHAKE.md`; `MMI_CURRENT_STATE.md` | ACCEPT | PMV chain-of-command closeout after #65 GATED (MMI-DEC-166): `mmi_lane_board_sync.py` refreshed ranked board (git_head dcaa47a; top ranked #47 promotion review 0/10). **Not** promotion authorization; **not** GOVERNED_AGENT; **not** build | Optional Matt promotion review #47/#52 when authorized | Run mmi_dispatch --verify + pmv after commit | Cursor (PMV lane board sync closeout)
 
+MMI-DEC-168 | 2026-06-24 | #47 Case Timeline GOVERNED_AGENT promotion review | scoreboard #47 row; decision_cycles_log CYCLE 28; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v18 | ACCEPT | Repo evidence supports promotion: §11 contract `4eec76a`, build `4d7fba2`, 22 focused tests, Grok completion gate 0/0 (`audit_outputs/case_timeline_20260620T233212Z.md`), L4 bar cleared; #47 GATED -> GOVERNED_AGENT; breadth runway 14 -> 15; governed input from #48 `VerificationOutcomeAgent`; BOR feedstock #47 retired | No production dispatch, default registry wiring, AUTH-5 unlock, or #52 promotion | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize GOVERNED_AGENT promotion review #47)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

@@ -595,6 +595,30 @@ AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
 
 ---
 
+---
+
+CYCLE 28 — 2026-06-24T23:00Z   [type: TACTICAL]
+  OBSERVE: #47 Case Timeline built (`4d7fba2`), Grok gate clean 0/0
+           (`audit_outputs/case_timeline_20260620T233212Z.md`), scoreboard
+           row at `GATED` pending GOVERNED_AGENT promotion review; #48
+           `VerificationOutcomeAgent` is governed input (`GOVERNED_AGENT`).
+  SELECTED:      Operator-authorized GOVERNED_AGENT promotion review #47 only.
+  EXPECTED:      Promote #47 to GOVERNED_AGENT at Evidence Stage 1 if repo evidence
+                 and doctrine support it; record health score; no production dispatch.
+  EXECUTED AT:   2026-06-24T23:00Z
+  AUDIT VERDICT: PASS — §11 contract `4eec76a`; 22 focused tests; L4 promotion bar
+                 cleared (signed contract + read-only timeline projector + governed
+                 #48 input rule); Grok gate comprehensive 0/0; #47 promoted
+                 GOVERNED_AGENT; breadth runway 14 -> 15; health score 87 seeded.
+
+AGENT HEALTH SCORE — #47 Case Timeline   2026-06-24T23:00Z   [type: GOVERNANCE]
+  EVENT: #47 promoted to GOVERNED_AGENT at Evidence Stage 1 after build `4d7fba2`
+         + Grok gate 0/0 (`case_timeline_20260620T233212Z.md`).
+  SCORE: 87 (Layer 4 Evidence; ES1 ceiling; second governed L4 agent after #46).
+  NEXT:  #52 Plain-English Explanation promotion review only — no build authorized.
+
+---
+
 CYCLE 27 — 2026-06-19T04:30Z   [type: TACTICAL]
   OBSERVE: #48 Verification Outcome promoted GOVERNED_AGENT (`6799978`); #47 Case
            Timeline still `DETECTOR_FUNCTION` (partial) with `DEPENDS_ON:#48`.
