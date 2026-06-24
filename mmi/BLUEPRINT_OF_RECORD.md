@@ -32,13 +32,13 @@ Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows aut
   Command spine #2 Mission Context — GATED wrapper (MMI-DEC-109); not GOVERNED_AGENT; not wired
   Command spine #3 Risk Triage — GATED wrapper (MMI-DEC-116); not GOVERNED_AGENT; not wired
   #67 Rule Improvement — GATED wrapper (MMI-DEC-157); not GOVERNED_AGENT; not wired; sandbox-only proposal
-  #65 Correction Evidence — §11 SIGNED (MMI-DEC-162); SIGNED_UNBUILT; separate build auth required
+  #65 Correction Evidence — §11 SIGNED (MMI-DEC-162); built AWAITING_AUDIT (MMI-DEC-163/164); completion gate pending
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
 Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock #47/#52.
 
-Dispatcher note: #65 SIGNED_UNBUILT may surface MODE:BUILD — **separate operator build authorization still required**.
+Dispatcher note: #65 AWAITING_AUDIT — completion gate required before GATED reconcile.
 
 ---
 

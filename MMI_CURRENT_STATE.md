@@ -1,18 +1,12 @@
-MODE: BUILD
-AUTHORIZED_TASK: Build Correction Evidence
-OPERATOR_NAMES_TARGET: Matt
-MMI_ASSIGNS_LANE: YES
-LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
-PROJECT_IDENTITY: Mutant Monkey Security
-MMI_BRAIN: Mutant Monkey Intelligence (MMI)
-AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
-ASSIGNED_TO: Cursor → Codex → Cursor
-PRE_BUILD_REVIEW: Codex
-NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
-BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
-OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
+MODE: AUDIT
+AUTHORIZED_TASK: Run completion gate for Correction Evidence
+ASSIGNED_TO: completion gate auditor (complete_gate.py)
+NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits
+OPERATOR_ACTION_REQUIRED: NO  (completion gate activation is standing; no per-run permission)
+RUN: python3 audit_tools/complete_gate.py --pre-commit --task correction_evidence --claim "Correction Evidence build implemented + tested; ready for audit"
+MANIFEST: audit_outputs/pending/correction_evidence.manifest.json (MISSING - create before gate)
+BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed
+NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -24,16 +18,14 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #65 Correction Evidence §11 sign + SIGNED_UNBUILT reconcile (MMI-DEC-162)
-  (`4. Product_Roadmap/Correction_Evidence_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED;
-  Matt Nichol June 24th 2026; **not** build authorization).
+LAST_COMPLETED: #65 Correction Evidence build + AWAITING_AUDIT reconcile (MMI-DEC-163/164)
+  (`CorrectionEvidenceAgent` wrapper + 19 tests; **not GATED** until completion gate).
 
-PRIOR_LAST_COMPLETED: #65 Correction Evidence pre-build gate (MMI-DEC-161)
-  (`audit_outputs/mmi_65_contract_gate_20260624T221330Z.md` 0 blocking / 1 warning;
-  Gemini SIGNABLE).
+PRIOR_LAST_COMPLETED: #65 Correction Evidence §11 sign + SIGNED_UNBUILT reconcile (MMI-DEC-162)
+  (`Matt Nichol June 24th 2026`; **not** build authorization by itself).
 
-PRIOR: #65 Correction Evidence contract draft placement (MMI-DEC-160)
-  (`4. Product_Roadmap/Correction_Evidence_Agent_Design_Contract_Deep_Dive.md` DRAFT placed).
+PRIOR: #65 Correction Evidence pre-build gate (MMI-DEC-161)
+  (`audit_outputs/mmi_65_contract_gate_20260624T221330Z.md` 0 blocking / 1 warning).
 
 PRIOR: #67 Rule Improvement pre-build gate (MMI-DEC-153)
   (Gemini pre-build gate 0/0; contract signable).

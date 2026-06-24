@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** BLOCKED until separate operator build authorization (§11 signed; scoreboard `SIGNED_UNBUILT` per MMI-DEC-162)
+**Implementation:** AWAITING_AUDIT — Stage 1 wrapper built (MMI-DEC-163); completion gate pending; separate operator build authorization satisfied for implementation slice only
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (Evidence Stage §6 canonical)
