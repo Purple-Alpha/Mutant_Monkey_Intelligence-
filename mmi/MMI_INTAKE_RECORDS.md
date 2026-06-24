@@ -694,3 +694,12 @@ Artifact: `mmi/intake/MMI_INTAKE_2026-06-24-003_MSP_Pilot_Motion_Todd_CMIT.md`; 
 Classification: COMMERCIAL_PILOT_MOTION — VERIFY at filing; ACCEPT blocked until pilot evidence (§8)
 Routing outcome: VERIFY — P0 scoping with Todd open; legal/consent gate prerequisite; no live mail until P1
 Matt approval required: YES before live third-party mail; YES for any §11/build fork; NO for intake filing slice
+
+INTAKE-2026-06-24-004
+Component: Stage A a05 — mesh hardening research closeout
+Request: Close research gaps on federation mesh hardening addendum; research lane handover → Cursor filing
+Source: Research lane advisory handover 2026-06-24; mission map `a05`
+Artifact: `mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md`; addendum research register; MMI-DEC-131
+Classification: RESEARCH_CLOSEOUT — advisory memo; zero routing influence; simulation figures not repo-verified
+Routing outcome: Research lane closed for pricing/copy caps/consent/protobuf; Stage B b01 mesh contract draft next structural fork (blocked until MMI-DEC-130)
+Matt approval required: NO for research filing slice; YES for mesh contract §11/build when Stage B opens

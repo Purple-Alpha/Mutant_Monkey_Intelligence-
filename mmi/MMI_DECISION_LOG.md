@@ -285,6 +285,8 @@ MMI-DEC-128 | 2026-06-24 | Stage A a03 — buyer voice terminology purge (fissio
 
 MMI-DEC-129 | 2026-06-24 | Stage A a04 — MSP pilot motion intake (Todd / CMIT Kelowna) | `mmi/intake/MMI_INTAKE_2026-06-24-003_MSP_Pilot_Motion_Todd_CMIT.md`; `mmi/MMI_INTAKE_RECORDS.md` INTAKE-2026-06-24-003 | ACCEPT | Claude advisory → Cursor execution. Detect-only pilot motion filed; routing **VERIFY** pending P0 scoping + pilot evidence. Todd = validator not decision-maker. Legal/consent gate before live third-party mail. **Not** §11; **not** build; **not** GOVERNED_AGENT; **not** AUTH-5; **not** D10 completion | Stage A a05 mesh hardening research closeout (MMI-DEC-131) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Cursor (mission map a04)
 
+MMI-DEC-131 | 2026-06-24 | Stage A a05 — mesh hardening research closeout | `mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md`; `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md` research register §MMI-DEC-131 | ACCEPT | Research lane handover filed. Closed open items: pricing/economics (§11 + token accounting), copy caps (§8D + contract TBD), legal consent (§10 concept), protobuf (§9/§13). Simulation topology figures recorded as **advisory only** — no mesh production code in authority repo. Guardrail 11 / HMAC / replay / anti-poisoning validated against addendum. **Not** production deployment; **not** mesh build; **not** GOVERNED_AGENT; **not** AUTH-5 | Stage A a06 MSP pilot buyer proof milestone (MMI-DEC-130 — Matt only) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Cursor (mission map a05 — research closeout)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

@@ -42,8 +42,8 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Dispatcher** | ALL_CLEAR — 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT |
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
 | **Active stage** | **Stage A** — decision-support + first MSP motion |
-| **Next waypoint** | **a05** — Mesh hardening research closeout → Gemini+ChatGPT (MMI-DEC-131) |
-| **Last closed** | MMI-DEC-129 MSP pilot motion intake (VERIFY — P0 with Todd open) |
+| **Next waypoint** | **a06** — MSP pilot buyer proof milestone → **Matt only** (MMI-DEC-130) |
+| **Last closed** | MMI-DEC-131 mesh hardening research closeout |
 
 ---
 
@@ -108,12 +108,12 @@ START  Organism concept captured (MMI-DEC-125)
   · a02  Swarm Build Map reconciliation                        → Cursor   [MMI-DEC-127]
   · a03  Terminology purge → Lung Multiplier (buyer voice)           ✓ [MMI-DEC-128]
   · a04  MSP pilot motion intake (Todd / commercial lane)          ✓ [MMI-DEC-129 VERIFY]
-  · a05  Mesh hardening research closeout (Phase B prep)        → Research [MMI-DEC-131]
+  · a05  Mesh hardening research closeout (Phase B prep)            ✓ [MMI-DEC-131]
   · a06  MSP pilot buyer proof milestone                        → Matt     [MMI-DEC-130]
 END    One MSP pilot proof — buyer motion, not empty repo
 ```
 
-Research lane stays open on mesh pricing / copy caps / legal consent / protobuf until a05 closes.
+Research lane on mesh pricing / copy caps / legal consent / protobuf **closed at MMI-DEC-131**. Stage B mesh contract draft (`b01`) blocked until Stage A end (MMI-DEC-130).
 
 ---
 

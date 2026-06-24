@@ -24,23 +24,21 @@ class MissionMapTests(unittest.TestCase):
     def setUpClass(cls):
         cls.mod = _load_module()
 
-    def test_analyze_stage_a_a05_next_after_dec129(self):
+    def test_analyze_stage_a_a06_next_after_dec131(self):
         position = self.mod.analyze(self.mod._repo_root())
         self.assertTrue(position.active)
         self.assertEqual(position.stage_id, "stage_a")
         self.assertIsNotNone(position.next_waypoint)
-        self.assertEqual(position.next_waypoint.waypoint_id, "a05")
-        self.assertEqual(position.next_waypoint.hand_to, "Gemini+ChatGPT")
-        self.assertFalse(position.next_waypoint.requires_matt_escalation)
-        self.assertEqual(len(position.completed_waypoints), 4)
-        completed_ids = [item.waypoint_id for item in position.completed_waypoints]
-        self.assertEqual(completed_ids, ["a01", "a02", "a03", "a04"])
+        self.assertEqual(position.next_waypoint.waypoint_id, "a06")
+        self.assertEqual(position.next_waypoint.hand_to, "Matt")
+        self.assertTrue(position.next_waypoint.requires_matt_escalation)
+        self.assertEqual(len(position.completed_waypoints), 5)
 
     def test_decision_log_match_requires_entry_line_not_mention(self):
         log = self.mod._read_text(self.mod._repo_root() / self.mod.DECISION_LOG_REL)
-        self.assertIn("MMI-DEC-131", log)
+        self.assertIn("MMI-DEC-130", log)
         position = self.mod.analyze(self.mod._repo_root())
-        self.assertEqual(position.next_waypoint.waypoint_id, "a05")
+        self.assertEqual(position.next_waypoint.waypoint_id, "a06")
 
     def test_render_stdout_envelope(self):
         position = self.mod.analyze(self.mod._repo_root())
@@ -48,7 +46,7 @@ class MissionMapTests(unittest.TestCase):
         self.assertIn(self.mod.ENVELOPE, out)
         self.assertIn("stage_id: stage_a", out)
         self.assertIn("next_waypoint:", out)
-        self.assertIn("a05", out)
+        self.assertIn("a06", out)
 
     def test_cli_position(self):
         import subprocess

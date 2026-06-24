@@ -372,3 +372,22 @@ Never shared tenant truth.
 Keep **`MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md`** as the **vision document**. This file is the **hardening addendum** required before anyone turns federation into a signed contract.
 
 Matt Nichol — 2026-06-24.
+
+---
+
+## Research closeout (MMI-DEC-131)
+
+**Status:** Pre-contract research lane **CLOSED** for pricing, copy caps, legal consent, and protobuf schema inputs.
+
+**Record:** `mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md`
+
+| Open item (pre-a05) | Closeout |
+|---|---|
+| Pricing / economics | §11 + research memo §5 (token accounting, tiered marginal cost) |
+| Copy caps | §8D + research memo §5–6 (numeric cap **TBD at Stage B contract**) |
+| Legal consent | §10 retained; counsel/§11 at mesh contract — no new legal doc at a05 |
+| Protobuf / schema | §9 + §13 retained as contract draft input |
+
+**Still CONCEPT ONLY.** No build authorization. Stage B **`b01`** mesh contract draft is the next structural fork — not production deployment.
+
+Matt Nichol — research closeout register 2026-06-24.
