@@ -33,7 +33,7 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: d44e747 (verify at session start — housekeeping commit follows)
+HEAD: f73599e (verify at session start — housekeeping commit follows)
 
 DISPATCHER: MODE ALL_CLEAR — `python3 scripts/mmi_dispatch.py --verify` PASS after sync
   #1 Swarm Commander GATED (MMI-DEC-112) · #2 Mission Context GATED (MMI-DEC-109)
