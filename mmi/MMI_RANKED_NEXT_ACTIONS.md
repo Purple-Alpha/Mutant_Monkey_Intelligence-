@@ -1,5 +1,5 @@
-generated_at: 2026-06-24T23:05:43Z
-git_head: 07af70a
+generated_at: 2026-06-24T23:06:03Z
+git_head: 46631cb
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
