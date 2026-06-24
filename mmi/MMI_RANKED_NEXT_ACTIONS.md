@@ -1,5 +1,5 @@
-generated_at: 2026-06-24T23:06:03Z
-git_head: 46631cb
+generated_at: 2026-06-24T23:16:56Z
+git_head: 1a76476
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
@@ -7,13 +7,91 @@ generator: scripts/mmi_lane_board_sync.py
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
 dispatcher_mode: ALL_CLEAR
-candidate_count: 1
+candidate_count: 7
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ---
 
-## ACTION 1 — TOTAL 3/10
+## ACTION 1 — TOTAL 5/10
+
+**Promotion review #1 Swarm Commander Agent (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#1`
+- primary_scope: `#1`
+- leverage: 2
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 5**
+
+## ACTION 2 — TOTAL 5/10
+
+**Promotion review #2 Mission Context Agent (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#2`
+- primary_scope: `#2`
+- leverage: 2
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 5**
+
+## ACTION 3 — TOTAL 5/10
+
+**Promotion review #3 Risk Triage Agent (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#3`
+- primary_scope: `#3`
+- leverage: 2
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 5**
+
+## ACTION 4 — TOTAL 4/10
+
+**Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#61`
+- primary_scope: `#61`
+- leverage: 1
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 4**
+
+## ACTION 5 — TOTAL 4/10
+
+**Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#62`
+- primary_scope: `#62`
+- leverage: 1
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 4**
+
+## ACTION 6 — TOTAL 4/10
+
+**Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#63`
+- primary_scope: `#63`
+- leverage: 1
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 4**
+
+## ACTION 7 — TOTAL 3/10
 
 **Hold ALL_CLEAR — no new lane this cycle**
 

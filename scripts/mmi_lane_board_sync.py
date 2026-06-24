@@ -110,6 +110,15 @@ def sync(root: Path, limit: int = 7, handshake: bool = True) -> tuple[Path, str,
             updated = _patch_handshake(_read_text(hs_path), top_label, top_total)
             hs_path.write_text(updated, encoding="utf-8")
 
+    try:
+        op_sync = Path(__file__).resolve().parent / "mmi_operator_map_sync.py"
+        spec = importlib.util.spec_from_file_location("mmi_operator_map_sync", op_sync)
+        op_module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(op_module)
+        op_module.sync(root)
+    except Exception:
+        pass
+
     return ranked_path, top_label, top_total
 
 

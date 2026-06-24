@@ -122,6 +122,35 @@ class TestMmiNextActionRubric(unittest.TestCase):
         self.assertIn("admin_lane_board_sync", live)
         self.assertNotIn("admin_lane_board_sync", sync)
 
+    def test_gated_breadth_agents_surface_promotion_review(self):
+        root = self.mod._repo_root()
+        scoreboard = self.mod._read_text(root / self.mod.SCOREBOARD_REL)
+        ids = {c.action_id for c in self.mod.generate_candidates(root)}
+        gated = self.mod._gated_breadth_promotion_ids(scoreboard)
+        for cid in gated:
+            self.assertIn(f"promotion_{cid}", ids)
+        if self.mod.command_spine_wrappers_gated(scoreboard):
+            self.assertIn("promotion_#1", ids)
+        self.assertNotIn("promotion_#47", ids)
+        self.assertNotIn("promotion_#52", ids)
+
+    def test_promotion_review_outranks_hold_when_gate_clean(self):
+        root = self.mod._repo_root()
+        scoreboard = self.mod._read_text(root / self.mod.SCOREBOARD_REL)
+        if not self.mod.command_spine_wrappers_gated(scoreboard):
+            self.skipTest("command spine not all GATED")
+        scored = self.mod.analyze(root, board_sync=True)
+        if not scored:
+            self.skipTest("no scored candidates")
+        top = scored[0]
+        hold = next(
+            (item for item in scored if item.candidate.action_id == "hold_all_clear"),
+            None,
+        )
+        self.assertIsNotNone(hold)
+        if top.candidate.action_id.startswith("promotion_"):
+            self.assertGreater(top.axes.total, hold.axes.total)
+
 
 if __name__ == "__main__":
     unittest.main()

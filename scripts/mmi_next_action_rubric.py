@@ -52,6 +52,20 @@ RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
 HANDSHAKE_REL = "PROJECT_HANDSHAKE.md"
 COMMAND_SPINE_IDS = ("#1", "#2", "#3")
 CLOSED_LIFECYCLE_PREFIXES = ("GATED", "GOVERNED_AGENT", "INFRASTRUCTURE_BUILT")
+# Standing breadth rolling order when BOR hold feedstock is empty (advisory only).
+PROMOTION_PRIORITY = (
+    "#1",
+    "#2",
+    "#3",
+    "#64",
+    "#67",
+    "#65",
+    "#61",
+    "#62",
+    "#63",
+    "#47",
+    "#52",
+)
 
 
 def _spine_contract_signed(root: Path, candidate_id: str) -> bool:
@@ -206,6 +220,65 @@ def _scoreboard_row_blockers(scoreboard: str, candidate_id: str) -> str:
         if raw_id.lstrip("#") == candidate_id.lstrip("#"):
             return parts[6]
     return ""
+
+
+def _scoreboard_row_track(scoreboard: str, candidate_id: str) -> str:
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 8:
+            continue
+        raw_id = parts[0]
+        if raw_id.lstrip("#") == candidate_id.lstrip("#"):
+            return parts[7]
+    return ""
+
+
+def _scoreboard_spark_name(scoreboard: str, candidate_id: str) -> str:
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 2:
+            continue
+        raw_id = parts[0]
+        if raw_id.lstrip("#") == candidate_id.lstrip("#"):
+            return parts[1]
+    return candidate_id
+
+
+def _promotion_priority_key(candidate_id: str) -> tuple[int, str]:
+    if candidate_id in PROMOTION_PRIORITY:
+        return (PROMOTION_PRIORITY.index(candidate_id), candidate_id)
+    return (len(PROMOTION_PRIORITY), candidate_id.lstrip("#"))
+
+
+def _gated_breadth_promotion_ids(scoreboard: str) -> list[str]:
+    """GATED + empty BLOCKERS + BREADTH rows eligible for promotion review."""
+    found: list[str] = []
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 8:
+            continue
+        raw_id = parts[0]
+        if raw_id in ("#", "---") or not raw_id:
+            continue
+        if raw_id.replace("A", "").isdigit() or raw_id == "6A":
+            cid = raw_id if raw_id.startswith("#") else f"#{raw_id}"
+        else:
+            continue
+        if not _scoreboard_runtime_prefix(scoreboard, cid).startswith("GATED"):
+            continue
+        if parts[6].strip():
+            continue
+        if parts[7].strip() != "BREADTH":
+            continue
+        found.append(cid)
+    found.sort(key=_promotion_priority_key)
+    return found
 
 
 def _scoreboard_runtime_prefix(scoreboard: str, candidate_id: str) -> str:
@@ -380,20 +453,21 @@ def generate_candidates(root: Path, *, board_sync: bool = False) -> list[RubricC
                 )
             )
 
-    for cid in ("#47", "#52"):
-        if not _scoreboard_runtime_prefix(scoreboard, cid).startswith("GATED"):
-            continue
-        if f"| {cid.lstrip('#')} " in scoreboard or f"| {cid} " in scoreboard:
-            add(
-                RubricCandidate(
-                    action_id=f"promotion_{cid}",
-                    label=f"Promotion review {cid} (GATED -> GOVERNED_AGENT when authorized)",
-                    primary_scope=cid,
-                    kind="promotion",
-                    lifecycle_promotion=True,
-                    edit_path_count=2,
-                )
+    for cid in _gated_breadth_promotion_ids(scoreboard):
+        name = _scoreboard_spark_name(scoreboard, cid)
+        add(
+            RubricCandidate(
+                action_id=f"promotion_{cid}",
+                label=(
+                    f"Promotion review {cid} {name} "
+                    f"(GATED -> GOVERNED_AGENT when authorized)"
+                ),
+                primary_scope=cid,
+                kind="promotion",
+                lifecycle_promotion=True,
+                edit_path_count=2,
             )
+        )
 
     annex_path = root / ROUTING_POLICY_ANNEX_REL
     if spine_gated and not annex_path.is_file():
@@ -465,6 +539,10 @@ def generate_candidates(root: Path, *, board_sync: bool = False) -> list[RubricC
 
 
 def _score_leverage(candidate: RubricCandidate, scoreboard: str) -> int:
+    if candidate.kind == "promotion":
+        if candidate.primary_scope in COMMAND_SPINE_IDS:
+            return 2
+        return 1
     if candidate.kind in ("routing_annex", "contract_gate"):
         return 2
     if candidate.kind in ("hold", "admin"):

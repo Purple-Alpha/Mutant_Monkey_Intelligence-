@@ -26,6 +26,8 @@ Historical "NorthStar" / "NorthStar Inbox Shield" references in signed specs =
 ═══════════════════════════════════════════════
 CURRENT NEXT ACTION (verify HEAD at session start — chain-of-command post–Stage C · MMI-DEC-158)
 ═══════════════════════════════════════════════
+OPERATOR MAP (plain English — read first): `mmi/MMI_OPERATOR_MAP.md`
+  Auto-sync: `python3 scripts/mmi_operator_map_sync.py` (also runs with lane_board_sync)
 AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Monkey
   Security authority repo** — PRIMARY CODEBASE (operator decision 2026-06-13; see
   CURRENT_STATE_MAP.md "Codebase authority state").
@@ -55,7 +57,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
   BOR v19 no hold-only promotion feedstock (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (3/10): Hold ALL_CLEAR — no new lane this cycle. Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (5/10): Promotion review #1 Swarm Commander Agent (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
