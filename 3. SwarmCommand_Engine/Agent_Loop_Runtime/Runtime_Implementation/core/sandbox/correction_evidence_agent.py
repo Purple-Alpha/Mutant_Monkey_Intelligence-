@@ -31,6 +31,7 @@ from core.blackboard import GovernanceError
 from core.orchestrator import RouteContext
 from core.orchestrator.agent_contract import AgentContribution, ChallengeResult, MissionContext
 from core.sandbox.failure_classification_agent import FailureClassification
+from core.sandbox.loop import SandboxLoopConfig, run_sandbox_cycle
 from core.sandbox.rule_improvement_agent import RuleImprovementProposal
 
 CORRECTION_EVIDENCE_AGENT_ID = "correction_evidence_001"
@@ -223,19 +224,31 @@ def default_evaluation_runner(
     route_context: RouteContext,
     corpus_cases: tuple[RegressionCorpusCase, ...],
 ) -> EvaluationResult:
-    del route_context  # ES1 default runner is structural; injectable runner may use context.
+    cycle_result = run_sandbox_cycle(
+        route_context,
+        config=SandboxLoopConfig(sandbox_tenant_id="sandbox_default"),
+    )
+    cycle_evidence_ids = tuple(
+        str(item.mutant_evaluation.record.record_id)
+        for item in cycle_result.item_results
+    )
 
     fix_passed = (
         proposal.proposal_id == request.proposal_ref
+        and cycle_result.processed_count > 0
         and proposal.candidate_confidence > proposal.baseline_confidence
         and bool(proposal.sandbox_evidence_ids)
     )
     fix_proof = (
-        f"target failure_ref {request.failure_ref} replay "
-        f"confidence {proposal.baseline_confidence:.4f} -> "
-        f"{proposal.candidate_confidence:.4f}"
+        f"sandbox replay processed {cycle_result.processed_count} weakness case(s) "
+        f"for failure_ref {request.failure_ref}; confidence "
+        f"{proposal.baseline_confidence:.4f} -> {proposal.candidate_confidence:.4f}; "
+        f"cycle_evidence_ids={', '.join(cycle_evidence_ids) or 'none'}"
         if fix_passed
-        else "fix proof failed: missing confidence delta or sandbox evidence ids"
+        else (
+            "fix proof failed: sandbox replay empty or missing proposal confidence "
+            "delta / sandbox evidence ids"
+        )
     )
 
     new_misses = tuple(case.case_id for case in corpus_cases if case.new_miss)
@@ -266,7 +279,7 @@ def default_evaluation_runner(
         regression_new_misses=new_misses,
         blast_radius_passed=blast_radius_passed,
         blast_radius_estimate=blast_radius_estimate,
-        sandbox_evidence_ids=proposal.sandbox_evidence_ids,
+        sandbox_evidence_ids=proposal.sandbox_evidence_ids + cycle_evidence_ids,
     )
 
 

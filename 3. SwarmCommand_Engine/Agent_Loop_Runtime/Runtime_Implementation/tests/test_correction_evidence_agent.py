@@ -19,6 +19,7 @@ import pytest
 from core.blackboard import GovernanceError
 from core.orchestrator import Agent, MissionContext, RouteContext
 from core.orchestrator.registry import build_default_registry
+from core.production import ProductionLoopConfig, ProductionSignal, run_production_cycle
 from core.sandbox import correction_evidence_agent as cea
 from core.sandbox.correction_evidence_agent import (
     REFUSAL_ENVELOPE,
@@ -98,6 +99,20 @@ def _mission_context() -> MissionContext:
     )
 
 
+def _seed_sandbox_context(route_context: RouteContext) -> None:
+    run_production_cycle(
+        route_context,
+        tenant_id="tenant_demo",
+        signal=ProductionSignal(
+            source="mailbox",
+            event_kind="email_received",
+            subject="Team lunch update",
+            sender_domain="client-example.ca",
+        ),
+        config=ProductionLoopConfig(confidence_threshold=0.99),
+    )
+
+
 def test_correction_evidence_agent_satisfies_agent_protocol():
     agent = CorrectionEvidenceAgent(
         validation_request=VALID_REQUEST,
@@ -145,10 +160,12 @@ def test_t2_es1_rejects_non_sandbox_tenant_scope():
 
 
 def test_t3_all_proof_bars_emit_sufficient(tmp_path):
+    route_context = _context(tmp_path)
+    _seed_sandbox_context(route_context)
     result = validate_correction_evidence(
         VALID_REQUEST,
         GOOD_PROPOSAL,
-        _context(tmp_path),
+        route_context,
         classification=GOOD_CLASSIFICATION,
         corpus_cases=GOOD_CORPUS,
     )
@@ -230,10 +247,12 @@ def test_t6_insufficient_when_blast_radius_unbounded(tmp_path):
 
 
 def test_t7_no_promote_language_in_packet_output(tmp_path):
+    route_context = _context(tmp_path)
+    _seed_sandbox_context(route_context)
     result = validate_correction_evidence(
         VALID_REQUEST,
         GOOD_PROPOSAL,
-        _context(tmp_path),
+        route_context,
         classification=GOOD_CLASSIFICATION,
         corpus_cases=GOOD_CORPUS,
     )
@@ -259,10 +278,12 @@ def test_t8_no_network_or_subprocess(monkeypatch, tmp_path):
     monkeypatch.setattr(socket, "socket", _no_network)
     monkeypatch.setattr(subprocess, "Popen", _no_subprocess)
     monkeypatch.setattr(subprocess, "run", _no_subprocess)
+    route_context = _context(tmp_path)
+    _seed_sandbox_context(route_context)
     result = CorrectionEvidenceAgent(
         validation_request=VALID_REQUEST,
         proposal=GOOD_PROPOSAL,
-        route_context=_context(tmp_path),
+        route_context=route_context,
         corpus_cases=GOOD_CORPUS,
     ).validate()
     assert result.packet is not None
@@ -270,10 +291,12 @@ def test_t8_no_network_or_subprocess(monkeypatch, tmp_path):
 
 
 def test_t9_consumable_packet_structure(tmp_path):
+    route_context = _context(tmp_path)
+    _seed_sandbox_context(route_context)
     result = validate_correction_evidence(
         VALID_REQUEST,
         GOOD_PROPOSAL,
-        _context(tmp_path),
+        route_context,
         classification=GOOD_CLASSIFICATION,
         corpus_cases=GOOD_CORPUS,
     )
@@ -285,11 +308,13 @@ def test_t9_consumable_packet_structure(tmp_path):
 
 
 def test_t10_zero_governance_state_writes(tmp_path):
+    route_context = _context(tmp_path)
+    _seed_sandbox_context(route_context)
     before = _repo_digest(SCOREBOARD_REL)
     result = validate_correction_evidence(
         VALID_REQUEST,
         GOOD_PROPOSAL,
-        _context(tmp_path),
+        route_context,
         corpus_cases=GOOD_CORPUS,
     )
     after = _repo_digest(SCOREBOARD_REL)
@@ -323,10 +348,12 @@ def test_t11_adversarial_proposal_cannot_force_sufficient_without_proof_bars(tmp
 
 
 def test_t12_sufficient_populates_correction_evidence_slot(tmp_path):
+    route_context = _context(tmp_path)
+    _seed_sandbox_context(route_context)
     result = validate_correction_evidence(
         VALID_REQUEST,
         GOOD_PROPOSAL,
-        _context(tmp_path),
+        route_context,
         classification=GOOD_CLASSIFICATION,
         corpus_cases=GOOD_CORPUS,
     )
@@ -343,10 +370,12 @@ def test_t13_classification_promotion_path_gap(tmp_path):
         evidence_ref="evidence-1",
         rationale="Flaky signal only.",
     )
+    route_context = _context(tmp_path)
+    _seed_sandbox_context(route_context)
     result = validate_correction_evidence(
         VALID_REQUEST,
         GOOD_PROPOSAL,
-        _context(tmp_path),
+        route_context,
         classification=classification,
         corpus_cases=GOOD_CORPUS,
     )
