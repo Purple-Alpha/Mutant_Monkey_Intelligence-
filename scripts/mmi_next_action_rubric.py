@@ -49,6 +49,7 @@ ROUTING_POLICY_ANNEX_REL = (
 )
 ROUTING_POLICY_ANNEX_GATE_GLOB = "routing_policy_annex_pre_build_gate_*.md"
 RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
+HANDSHAKE_REL = "PROJECT_HANDSHAKE.md"
 COMMAND_SPINE_IDS = ("#1", "#2", "#3")
 CLOSED_LIFECYCLE_PREFIXES = ("GATED", "GOVERNED_AGENT", "INFRASTRUCTURE_BUILT")
 
@@ -260,6 +261,42 @@ def _git_head_short(root: Path) -> str:
     return ""
 
 
+def _board_pin_commit_only(root: Path, pinned: str, current: str) -> bool:
+    """True when HEAD is one commit ahead of pin and only refreshed board files."""
+    try:
+        ancestor = subprocess.run(
+            ["git", "merge-base", "--is-ancestor", pinned, current],
+            cwd=root,
+            capture_output=True,
+            check=False,
+        )
+        if ancestor.returncode != 0:
+            return False
+        count = subprocess.run(
+            ["git", "rev-list", "--count", f"{pinned}..{current}"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if count.returncode != 0 or count.stdout.strip() != "1":
+            return False
+        diff = subprocess.run(
+            ["git", "diff", "--name-only", pinned, current],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if diff.returncode != 0:
+            return False
+        changed = {line.strip() for line in diff.stdout.splitlines() if line.strip()}
+        allowed = {RANKED_ACTIONS_REL, HANDSHAKE_REL}
+        return RANKED_ACTIONS_REL in changed and changed.issubset(allowed)
+    except OSError:
+        return False
+
+
 def _ranked_board_stale(root: Path) -> bool:
     ranked_path = root / RANKED_ACTIONS_REL
     if not ranked_path.is_file():
@@ -270,7 +307,13 @@ def _ranked_board_stale(root: Path) -> bool:
         return True
     pinned = match.group(1)
     current = _git_head_short(root)
-    return bool(current) and pinned != current
+    if not current:
+        return False
+    if pinned == current:
+        return False
+    if _board_pin_commit_only(root, pinned, current):
+        return False
+    return True
 
 
 def generate_candidates(root: Path, *, board_sync: bool = False) -> list[RubricCandidate]:

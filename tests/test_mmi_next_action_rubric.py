@@ -74,13 +74,19 @@ class TestMmiNextActionRubric(unittest.TestCase):
         self.assertNotIn("build_auth_#2", ids)
         self.assertNotIn("build_auth_#3", ids)
         if (root / self.mod.ROUTING_POLICY_ANNEX_REL).is_file():
-            if self.mod._routing_policy_annex_gate_clean(root):
+            annex_text = self.mod._read_text(root / self.mod.ROUTING_POLICY_ANNEX_REL)
+            if self.mod._is_contract_signed(annex_text):
+                self.assertNotIn("routing_policy_annex_sign", ids)
+                self.assertNotIn("routing_policy_annex_gate", ids)
+                self.assertNotIn("routing_policy_annex_draft", ids)
+            elif self.mod._routing_policy_annex_gate_clean(root):
                 self.assertIn("routing_policy_annex_sign", ids)
                 self.assertNotIn("routing_policy_annex_gate", ids)
+                self.assertNotIn("routing_policy_annex_draft", ids)
             else:
                 self.assertIn("routing_policy_annex_gate", ids)
                 self.assertNotIn("routing_policy_annex_sign", ids)
-            self.assertNotIn("routing_policy_annex_draft", ids)
+                self.assertNotIn("routing_policy_annex_draft", ids)
         else:
             self.assertIn("routing_policy_annex_draft", ids)
 
@@ -96,6 +102,25 @@ class TestMmiNextActionRubric(unittest.TestCase):
             self.assertNotIn("build_auth_#2", ids)
         else:
             self.assertIn("build_auth_#2", ids)
+
+    def test_board_pin_commit_does_not_surface_admin_lane(self):
+        root = self.mod._repo_root()
+        if self.mod._ranked_board_stale(root):
+            self.skipTest("ranked board already stale relative to HEAD")
+        ids = {c.action_id for c in self.mod.generate_candidates(root)}
+        self.assertNotIn("admin_lane_board_sync", ids)
+
+    def test_board_sync_excludes_admin_lane_when_stale(self):
+        root = self.mod._repo_root()
+        if not self.mod._ranked_board_stale(root):
+            self.skipTest("ranked board already fresh relative to HEAD")
+        live = {c.action_id for c in self.mod.generate_candidates(root)}
+        sync = {
+            c.action_id
+            for c in self.mod.generate_candidates(root, board_sync=True)
+        }
+        self.assertIn("admin_lane_board_sync", live)
+        self.assertNotIn("admin_lane_board_sync", sync)
 
 
 if __name__ == "__main__":
