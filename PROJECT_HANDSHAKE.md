@@ -54,7 +54,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
   BOR v11 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (3/10): Unpark BOR feedstock #67 Rule Improvement (CONTRACT_DRAFT). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (0/10): Promotion review #47 (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, routing-policy annex runtime wiring.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run

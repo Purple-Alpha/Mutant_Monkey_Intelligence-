@@ -195,7 +195,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 64 | Failure Classification | `GATED` — Mode A wrapper/tests committed; completion gate clean at `audit_outputs/failure_classification_20260621T220552Z.md`; **not GOVERNED_AGENT**; no production dispatch; not in `build_default_registry` | `4. Product_Roadmap/Failure_Classification_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED 2026-06-21) + governed wrapper `core/sandbox/failure_classification_agent.py` (`FailureClassificationAgent`, Stage 1 record-in classification-out, `872b972`, 16 focused tests `tests/test_failure_classification_agent.py`; completion gate 0/0 `audit_outputs/failure_classification_20260621T220552Z.md`); not in `build_default_registry` | 5 Challenge/Red-Team | A |  | BREADTH | — | 2026-06-21 (built, Grok 0/0, gated) |
 | 65 | Correction Evidence | `GOVERNANCE_DOC_ONLY` | CURRENT_STATE_MAP FP/FN correction loop | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 66 | Drift Watch | `GOVERNANCE_DOC_ONLY` | `Compliance_and_Trend_Watch_Process.md` (signed) | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 67 | Rule Improvement | `DETECTOR_FUNCTION` (sandbox) | `core/mutation/engine.py` (sandbox-only, signed promotion) | 6 Governance | A | PARKED_OPERATOR_PIVOT | BREADTH | — | 2026-06-22 (parked — #105 invariants framework active) |
+| 67 | Rule Improvement | `DETECTOR_FUNCTION` (sandbox) | `core/mutation/engine.py` (sandbox-only, signed promotion) | 6 Governance | A |  | BREADTH | — | 2026-06-24 (unparked MMI-DEC-151 — contract draft lane authorized) |
 | 68 | Swarm Memory | `NOT_STARTED` | none | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
 ## Team 10 — Review / decision integrity (SPARK #69-#70)

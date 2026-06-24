@@ -24,13 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Stage C END — Governed organism program direction (MMI-DEC-150 · Matt §11)
-  (`mmi/research/MMI_STAGE_C_GOVERNED_ORGANISM_CLOSEOUT_MMI-DEC-150.md`;
-  narrow ACCEPT: Brain–Lung–Immune program direction; c01 PARK acknowledged;
-  hybrid depth-first execution; **not** production organism GO; **not** Lung prod;
-  **not** mesh bus build; **not** GOVERNED_AGENT wave; **not** AUTH-5).
+LAST_COMPLETED: BOR #67 Rule Improvement unpark — contract draft lane (MMI-DEC-151)
+  (`mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v12; scoreboard #67 unparked;
+  rank-1 CONTRACT_DRAFT feedstock; **not** §11; **not** build; **not** GOVERNED_AGENT).
 
-PRIOR_LAST_COMPLETED: Stage C c02 — Federation mesh pilot wiring plan (MMI-DEC-142)
+PRIOR_LAST_COMPLETED: Stage C END — Governed organism program direction (MMI-DEC-150 · Matt §11)
   (opt-in MSP pool; P0–P3; synthetic-first; Todd intake separate).
 
 PRIOR: Stage C c01 — Operator Lung Dial promotion gate (MMI-DEC-141 · PARK)

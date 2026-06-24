@@ -44,9 +44,9 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
-| **Active stage** | **Post–Stage C** — operator selects depth-first evidence target |
-| **Next waypoint** | **Operator fork** — real tenant / Playhouse / mesh P0 / c01 retry (no auto-staging) |
-| **Last closed** | MMI-DEC-150 Stage C end — narrow ACCEPT (program direction; not production GO) |
+| **Active stage** | **Post–Stage C** — BOR feedstock rank 1: `#67 Rule Improvement` CONTRACT_DRAFT |
+| **Next waypoint** | **#67 contract draft** → Claude (MMI-DEC-151 unpark) |
+| **Last closed** | MMI-DEC-151 BOR #67 unpark — contract draft lane authorized |
 
 ---
 
@@ -166,6 +166,6 @@ END    Governed organism program direction accepted — production loop downstre
 
 ## Hold lanes (not direction — mission map wins)
 
-BOR unpark (#67), GOVERNED_AGENT promotion reviews, and rubric-ranked alternates remain **hold unless Matt unparks** — they do not override the mission map chain.
+BOR unpark (#67 **unparked MMI-DEC-151**), GOVERNED_AGENT promotion reviews (#47/#52), and rubric-ranked alternates remain **hold unless Matt unparks** — they do not override feedstock rank 1.
 
 Matt Nichol — mission map v3 (federation-first re-stage · MMI-DEC-135).

@@ -1,6 +1,6 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-117). Command spine #1–#3 GATED at wrapper layer; PMV chain relay to routing-policy annex fork.
+**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-151). #67 Rule Improvement unparked — rank-1 CONTRACT_DRAFT feedstock.
 
 **Classification:** Shared crew artifact · Blueprint of Record
 
@@ -10,21 +10,21 @@
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v11
+## CURRENT_PLAN — ALL_CLEAR feedstock v12
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v11
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v11
-population_decision: MMI-DEC-117
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v12
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v12
+population_decision: MMI-DEC-151
 created_at: 2026-06-24
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: Command spine #1–#3 GATED at wrapper layer (MMI-DEC-112/109/116); PMV chain relay
-revision_reason: Command spine wrappers complete; chain-of-command next fork is routing-policy annex draft; hold-only feedstock unchanged
-non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, contract draft, promotion, or registry dispatch.
+architect_blueprint_source: Post–Stage C operator fork; #67 Rule Improvement unparked for contract draft lane
+revision_reason: Matt unpark BOR #67 (MMI-DEC-151); GSTF-D9 park lifted by explicit operator authorization (#105 §11 signed MMI-DEC-092)
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, contract draft execution, promotion, or registry dispatch.
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
 
-feedstock_entry: priority=hold candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement hold_unless_matt=true
+feedstock_entry: priority=1 candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement
 feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
 feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
@@ -35,9 +35,24 @@ Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows aut
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
-Chain-of-command next fork (PMV relay; not feedstock authorization): routing-policy annex for #1 — **§11 SIGNED (MMI-DEC-121); §6 wired (MMI-DEC-122); not GOVERNED_AGENT / not default registry**.
+Chain-of-command: all mission-map stages complete (MMI-DEC-150). Feedstock rank 1 = #67 contract draft.
 
-Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock; spine wrappers GATED; PMV reads live rubric for chain relay.
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock #47/#52; spine wrappers GATED; PMV reads live rubric + BOR feedstock.
+
+---
+
+## Prior ALL_CLEAR v11 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v11
+supersedes: BOR-ALL-CLEAR-FEEDSTOCK-v10
+population_decision: MMI-DEC-117
+revision_reason: Superseded by v12 after Matt unpark #67 (MMI-DEC-151)
+
+Historical v11 feedstock (inactive — do not parse):
+  feedstock_entry: priority=hold candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
 ---
 
