@@ -462,7 +462,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         )
         self.assertEqual(fields["HAND_IT_TO"], "Claude")
         self.assertIn("mission map chain-of-command", fields["WHAT_NEEDS_MATT"])
-        self.assertIn("a03", fields["YOU_DO"])
+        self.assertIn("a04", fields["YOU_DO"])
         self.assertIn("chain: mission_map", fields["SOURCE"])
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
         self.assertNotIn("Matt selects one", fields["YOU_DO"])

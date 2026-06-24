@@ -1,5 +1,7 @@
 # Agent Fission — Concept Doc
 
+> **Buyer-voice note (MMI-DEC-128):** GTM and one-screen orientation use **Lung Multiplier**, not "Agent Fission." This concept doc keeps **Agent Fission** as the internal engineering/design name for the contract session. See `mmi/MMI_MISSION_MAP.md` commercial lane and `mmi/concepts/MMI_LUNG_MULTIPLIER_VS_FISSION_GOVERNANCE_ADDENDUM.md`.
+
 **Document type:** Concept / advisory-lane design note
 **Status:** CONCEPT — advisory lane only. **No build authorization.** A §11-signed contract is required before any build.
 **Date:** June 12 2026

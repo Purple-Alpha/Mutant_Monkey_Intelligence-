@@ -118,8 +118,9 @@
 ---
 
 ## LAYER 3 — THE LUNG (ELASTIC SCALING + DUAL DIAL)
-*Two dials. Elastic scaling. Agent Fission.*
+*Two dials. Elastic scaling. Lung Multiplier (buyer voice).*
 *Dependency: Phases 1-4 complete + real tenant baseline data*
+*Engineering substrate: Load Fission `#90` / `#103` on disk — row IDs unchanged.*
 
 ### Dial 1 — Protection Depth (per tenant)
 
@@ -149,24 +150,24 @@
 | ThreatFocusDial | CONCEPT | LungController | Dial 2 — Spam/Phishing/BEC/Ransomware/Full per tenant. NEW — added June 9. |
 | BaselineMonitor | CONCEPT | ScalingTriggerEngine | Watches for attack vs normal. Prevents false positives from scaling events. |
 
-### Agent Fission — The True Mutation
+### Lung Multiplier — elastic capacity (buyer voice)
 
-**What it is:** One agent divides into two more specialised agents when load or complexity demands it. Not just scaling — differentiating. One PhishIntelAgent becomes PhishIntelAgent-Credential and PhishIntelAgent-Social. Each child is more specialised than the parent.
+**What it is:** Under attack or volume pressure, the swarm **inhales** — the **Lung Multiplier** adds governed capacity (parallel copies of existing specialists) until the pressure passes, then **exhales**. Separate path: specialization expansion when a problem space needs narrower experts — both are **centralized, gated elasticity**, not agents splitting themselves in the field.
 
-**Why it matters:** This is biological mutation applied to the swarm. The swarm doesn't just get bigger under pressure — it gets smarter. More specialised. More accurate.
+**Why it matters:** The swarm doesn't just get bigger under pressure — it stays accurate while coverage expands. Operator-controlled dials + documented override; every expansion logged.
 
-**Status:** CONCEPT — requires its own contract. Phase 5+ territory.
+**Status:** CONCEPT in this map layer — mechanical substrate **GATED** on disk as Load Fission `#90` / `#103` (engineering names unchanged).
 
 **Governance rules locked for when this is built:**
-- Fission requires a signed trigger threshold before it can fire
+- Lung Multiplier expansion requires a signed trigger threshold before it can fire
 - Child agents inherit parent's evidence schema — no new output types without signed amendment
-- Every fission event logged to governance audit trail with timestamp and reason
-- Child agents get their own scoreboard rows after fission
-- Matt signs any fission that creates a net-new agent type
+- Every multiplier event logged to governance audit trail with timestamp and reason
+- Child agents get their own scoreboard rows after expansion
+- Matt signs any expansion that creates a net-new agent type
 
 **Calibration blockers (honest — these stop the Lung contract, not Phase 1-4):**
 - Inhale/exhale threshold numbers require real tenant baseline traffic data
-- Fission trigger threshold requires real detection load data
+- Lung Multiplier expansion threshold requires real detection load data
 - Infrastructure cost model at scale requires validation before contract is signed
 
 ---

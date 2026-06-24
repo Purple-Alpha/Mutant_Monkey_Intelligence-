@@ -1,8 +1,9 @@
 # The Lung — Concept Specification (Updated)
 **Status:** Advisory lane — concept doc. NOT §11 signed. No build authorization.
-**Date:** June 9, 2026
+**Date:** June 9, 2026 · buyer voice aligned MMI-DEC-128 (Lung Multiplier; not "Agent Fission" in GTM)
 **Commit reference:** fe355da
 **Source:** Matt Nichol session — June 9 2026
+**Operator vocabulary:** `mmi/concepts/MMI_OPERATOR_LUNG_DIAL_SPEC.md` · governance pin: `mmi/concepts/MMI_LUNG_MULTIPLIER_VS_FISSION_GOVERNANCE_ADDENDUM.md`
 
 ---
 
@@ -64,30 +65,29 @@ Under normal conditions the swarm runs at baseline. Under coordinated attack it 
 
 ---
 
-## Agent Fission — The True Mutation
+## Lung Multiplier — elastic capacity (buyer voice)
 
-This is distinct from pattern mutation (3-shot confirmation learning). Agent Fission is a separate mechanism.
+This is distinct from pattern mutation (3-shot confirmation learning). The **Lung Multiplier** is the governed elastic layer — inhale under pressure, exhale when clear.
 
 **What it is:**
-One agent divides into two more specialised agents when volume or complexity demands it.
+When volume or complexity demands more coverage, the **Lung Multiplier** expands capacity under control-plane gates — parallel copies of existing specialists, or (separate signed path) narrower specialist types. Example shape under sustained load:
 
-A single PhishIntelAgent starts handling all phishing patterns. Under sustained load with increasing pattern complexity it divides:
-- PhishIntelAgent-Credential — handles credential harvesting patterns
-- PhishIntelAgent-Social — handles social engineering patterns
+- PhishIntelAgent-Credential — credential harvesting patterns
+- PhishIntelAgent-Social — social engineering patterns
 
-Each child agent is more specialised than the parent. Each gets better at its narrower job. The swarm doesn't just scale — it differentiates under pressure.
+Each child is more specialised than the parent. The swarm doesn't just scale — it differentiates under pressure **without autonomous field splitting**.
 
-**Why this is the true definition of mutation:**
-Biological mutation at its most fundamental is one cell dividing into two more specialised cells. The swarm evolves the same way. Not just learning new patterns — growing new specialists.
+**Why this matters:**
+Elastic defense with receipts — expansion is logged, time-bounded, and tripwired (Safe-Stop / Mode Controller), not uncontrolled agent birth.
 
-**Governance requirements for Agent Fission (these must be in the contract before this is built):**
-- Fission requires a trigger threshold — what load/complexity level justifies a split
+**Governance requirements (must be in contract before build):**
+- Lung Multiplier expansion requires a signed trigger threshold
 - Child agents must inherit the parent's evidence schema — no new output types without a signed amendment
-- Fission events are logged to the governance audit trail with timestamp and reason
-- Child agents require their own scoreboard rows after fission
-- Matt signs off on any fission that creates a net-new agent type — fission within an existing type chains automatically once the threshold is signed
+- Multiplier events logged to the governance audit trail with timestamp and reason
+- Child agents require their own scoreboard rows after expansion
+- Matt signs off on any expansion that creates a net-new agent type
 
-**Current status:** Concept only. Requires its own Agent Design Contract before build. This is Phase 5+ territory — mutation engine must exist first.
+**Current status:** Concept in this doc; mechanical substrate **GATED** as Load Fission `#90` / `#103` (engineering row IDs unchanged).
 
 ---
 
@@ -105,7 +105,7 @@ Biological mutation at its most fundamental is one cell dividing into two more s
 These are not blockers to building Phase 1-3. They are blockers to signing the Lung contract:
 
 1. **Inhale threshold numbers** — what volume constitutes an attack vs normal traffic? Needs at least one real tenant's baseline data to calibrate.
-2. **Fission trigger threshold** — what complexity/volume level justifies an agent split? Needs real detection data.
+2. **Lung Multiplier expansion threshold** — what complexity/volume level justifies inhale? Needs real detection data.
 3. **Infrastructure cost at scale** — 10x baseline agent instances is manageable. The cost model needs to be validated before the Lung contract is signed.
 
 None of these stop the current build. They stop the Lung contract specifically.

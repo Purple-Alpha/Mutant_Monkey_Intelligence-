@@ -42,8 +42,8 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Dispatcher** | ALL_CLEAR — 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT |
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
 | **Active stage** | **Stage A** — decision-support + first MSP motion |
-| **Next waypoint** | **a03** — Terminology purge fission → Lung → Claude (MMI-DEC-128) |
-| **Last closed** | MMI-DEC-127 Swarm Build Map reconciliation |
+| **Next waypoint** | **a04** — MSP pilot motion intake → Claude (MMI-DEC-129) |
+| **Last closed** | MMI-DEC-128 terminology purge (buyer voice → Lung Multiplier) |
 
 ---
 
@@ -70,6 +70,20 @@ Mesh (B/C)   → Immune Federation — shared threat shape, never shared tenant 
 
 **Position:** **Beside** Defender — decision layer + Lung dials
 
+**Buyer voice (MMI-DEC-128):** say **Lung Multiplier** for elastic capacity — not "fission" or "Agent Fission" in GTM copy. Scoreboard rows `#90` / `#91` and `core/fission/` stay engineering names on disk.
+
+### Beside Defender
+
+Defender stops the known stuff. Mutant Monkey Inbox Shield catches what walks past it — the look-alike vendor email, the hijacked reply thread, the "quick favor" from your CEO that isn't. Every catch ships with receipts: headers, auth results, the exact reason it's fraud. No black box, no "just trust us." And as your client load grows, the **Lung Multiplier** expands coverage — no extra headcount.
+
+### MSP billable-time
+
+Your techs burn billable hours every week playing email detective — "is this real?" tickets, manual header checks, talking a client back off a wire they almost sent. Mutant Monkey Inbox Shield runs that triage in seconds and hands the tech a verdict with the evidence attached. Billable time goes back to real work — and the client sees you caught what their inbox missed.
+
+### BEC / vendor payment pain
+
+The expensive ones don't look like spam. They look like your vendor, mid-thread, with "new" banking details. Or the owner, asking for a gift-card run before a flight. Mutant Monkey Inbox Shield reads the thread like an investigator — who actually sent it, whether the domain's a look-alike, whether the chain was forged — and flags it before the money moves. One stopped invoice fraud pays for the tool many times over.
+
 ---
 
 ## Stage maps (START → dots → END)
@@ -92,7 +106,7 @@ END    Spine wrappers GATED; annex in force; no production wiring
 START  Organism concept captured (MMI-DEC-125)
   · a01  Chain-of-command mission map engine + PMV wiring      → Cursor   [MMI-DEC-126]
   · a02  Swarm Build Map reconciliation                        → Cursor   [MMI-DEC-127]
-  · a03  Terminology purge fission → Lung (buyer voice)        → Claude   [MMI-DEC-128]
+  · a03  Terminology purge → Lung Multiplier (buyer voice)           ✓ [MMI-DEC-128]
   · a04  MSP pilot motion intake (Todd / commercial lane)      → Claude   [MMI-DEC-129]
   · a05  Mesh hardening research closeout (Phase B prep)        → Research [MMI-DEC-131]
   · a06  MSP pilot buyer proof milestone                        → Matt     [MMI-DEC-130]

@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Swarm Build Map reconciliation to mission map (MMI-DEC-127)
-  (`4. Product_Roadmap/Swarm_Build_Map_Master.md` MISSION_MAP_RECONCILED banner;
-  stale Shadow Layer 2 lead retired; live direction → mission map engine + PMV).
+LAST_COMPLETED: Stage A a03 — buyer voice terminology purge fission → Lung Multiplier (MMI-DEC-128)
+  (`mmi/MMI_MISSION_MAP.md` commercial lane; `The_Lung_Concept_Spec.md`;
+  `Swarm_Build_Map_Master.md` Layer 3 buyer prose; engineering `#90`/`#91`/`core/fission/` untouched).
 
-PRIOR_LAST_COMPLETED: Chain-of-command mission map — staged START/END waypoints + PMV wiring (MMI-DEC-126)
+PRIOR_LAST_COMPLETED: Swarm Build Map reconciliation to mission map (MMI-DEC-127)
   (`mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`; `scripts/mmi_mission_map.py`;
   `mmi/MMI_MISSION_MAP.md` v2; PMV ALL_CLEAR relay to mission map).
 
