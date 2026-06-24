@@ -33,17 +33,17 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: 5b465b1 (verify at session start — #67 Rule Improvement GATED MMI-DEC-157)
+HEAD: dcaa47a (verify at session start — #65 Correction Evidence GATED MMI-DEC-166)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  BOR v17: #65 Correction Evidence GATED (MMI-DEC-166)
-  PMV relays Claude contract draft — not Matt direction-pick
+  BOR v17: hold-only feedstock #47/#52 (MMI-DEC-166)
+  Team 9 chain #64/#67/#65 GATED at wrapper layer (not GOVERNED_AGENT)
   Command spine #1–#3 GATED · #67 Rule Improvement GATED (MMI-DEC-157)
 
 LAST_COMPLETED (MMI authority repo):
-  Chain routing fix — BOR surfaces #65 next build lane (MMI-DEC-159)
+  #65 Correction Evidence — GATED closeout (MMI-DEC-165/166)
+  Ranked lane board refreshed (2026-06-24T22:40:26Z · git_head dcaa47a)
   #67 Rule Improvement — build + GATED closeout (MMI-DEC-155–157)
-  Stage C governed organism program direction (MMI-DEC-150 · Matt §11)
   Command spine #1–#3 GATED (MMI-DEC-112/109/116)
   #64 Failure Classification — GATED (MMI-DEC-088)
   Challenge/red-team wrappers #61–#63 — GATED (2026-06-21)
@@ -51,7 +51,7 @@ LAST_COMPLETED (MMI authority repo):
 
 ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
-  BOR v14 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
+  BOR v17 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
 
 NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (0/10): Promotion review #47 (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.

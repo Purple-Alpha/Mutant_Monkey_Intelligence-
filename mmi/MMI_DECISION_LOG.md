@@ -339,6 +339,8 @@ MMI-DEC-165 | 2026-06-24 | #65 Correction Evidence completion gate | `audit_outp
 
 MMI-DEC-166 | 2026-06-24 | #65 Correction Evidence reconciled to GATED | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #65 row; `audit_outputs/correction_evidence_20260624T223220Z.md` (MMI-DEC-165) | ACCEPT | Matt authorized GATED reconcile via PM Voice relay; completion gate clean 0 blocking (Gemini; 1 warning on corpus_refs fallback); lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing. | Chain-of-command next breadth lane via BOR feedstock | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (PMV GATED reconcile #65)
 
+MMI-DEC-167 | 2026-06-24 | Ranked lane board refresh post–#65 GATED | `mmi/MMI_RANKED_NEXT_ACTIONS.md`; `PROJECT_HANDSHAKE.md`; `MMI_CURRENT_STATE.md` | ACCEPT | PMV chain-of-command closeout after #65 GATED (MMI-DEC-166): `mmi_lane_board_sync.py` refreshed ranked board (git_head dcaa47a; top ranked #47 promotion review 0/10). **Not** promotion authorization; **not** GOVERNED_AGENT; **not** build | Optional Matt promotion review #47/#52 when authorized | Run mmi_dispatch --verify + pmv after commit | Cursor (PMV lane board sync closeout)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

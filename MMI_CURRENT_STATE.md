@@ -24,15 +24,15 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #65 Correction Evidence GATED closeout (MMI-DEC-165/166)
+LAST_COMPLETED: Ranked lane board refresh after #65 GATED (2026-06-24T22:40:26Z)
+  (`mmi/MMI_RANKED_NEXT_ACTIONS.md` git_head dcaa47a; top ranked #47 promotion review 0/10).
+
+PRIOR_LAST_COMPLETED: #65 Correction Evidence GATED closeout (MMI-DEC-165/166)
   (`audit_outputs/correction_evidence_20260624T223220Z.md` 0 blocking / 1 warning;
   Gemini; **not GOVERNED_AGENT**).
 
-PRIOR_LAST_COMPLETED: #65 Correction Evidence build + AWAITING_AUDIT (MMI-DEC-163/164)
+PRIOR: #65 Correction Evidence build + AWAITING_AUDIT (MMI-DEC-163/164)
   (`CorrectionEvidenceAgent` wrapper + 19 tests).
-
-PRIOR: #67 Rule Improvement pre-build gate (MMI-DEC-153)
-  (Gemini pre-build gate 0/0; contract signable).
 
 PRIOR: Stage C c01 — Operator Lung Dial promotion gate (MMI-DEC-141 · PARK)
   (MMI-DEC-133 prerequisites not met; spec not promoted).
