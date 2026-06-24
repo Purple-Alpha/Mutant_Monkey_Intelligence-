@@ -43,8 +43,8 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Active stage** | **Stage B** — federation-first SMB seat economics + swarm program |
-| **Next waypoint** | **b04** — Governed swarm program charter (70-agent motion) → **Claude** |
-| **Last closed** | MMI-DEC-134 Immune Federation Mesh contract draft |
+| **Next waypoint** | **b05** — Federation economics + mesh contract fork → **Matt §11** |
+| **Last closed** | MMI-DEC-136 Governed swarm program charter |
 
 ---
 
@@ -129,8 +129,8 @@ START  Stage A complete (MMI-DEC-130)
   · b01  Federation-first SMB seat economics + poverty-line thesis     ✓ [MMI-DEC-132]
   · b02  Brain/immune + tenant-data audit (Lung prod gate)            ✓ [MMI-DEC-133]
   · b03  Immune Federation Mesh contract draft                         ✓ [MMI-DEC-134]
-  · b04  Governed swarm program charter (70-agent motion)              → Claude
-  · b05  Federation economics + mesh contract fork                     → Matt
+  · b04  Governed swarm program charter (70-agent motion)              ✓ [MMI-DEC-136]
+  · b05  Federation economics + mesh contract fork                     → Matt §11
 END    Federation economics anchored + mesh contract path ready
 ```
 
