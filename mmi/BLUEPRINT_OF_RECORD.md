@@ -1,6 +1,6 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-154). #67 Rule Improvement §11 signed — SIGNED_UNBUILT on scoreboard.
+**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-157). #67 Rule Improvement GATED on scoreboard.
 
 **Classification:** Shared crew artifact · Blueprint of Record
 
@@ -10,16 +10,16 @@
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v13
+## CURRENT_PLAN — ALL_CLEAR feedstock v14
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v13
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v13
-population_decision: MMI-DEC-154
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v14
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v14
+population_decision: MMI-DEC-157
 created_at: 2026-06-24
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: #67 Rule Improvement §11 signed; scoreboard SIGNED_UNBUILT (MMI-DEC-154)
-revision_reason: Matt §11 on #67 contract; CONTRACT_DRAFT feedstock complete; hold-only feedstock remains
+architect_blueprint_source: #67 Rule Improvement GATED (MMI-DEC-157); hold-only feedstock remains
+revision_reason: #67 build + completion gate clean; CONTRACT_DRAFT/build feedstock complete; hold-only feedstock remains
 non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
@@ -31,13 +31,25 @@ Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows aut
   Command spine #1 Swarm Commander — GATED wrapper (MMI-DEC-112); not GOVERNED_AGENT; not wired
   Command spine #2 Mission Context — GATED wrapper (MMI-DEC-109); not GOVERNED_AGENT; not wired
   Command spine #3 Risk Triage — GATED wrapper (MMI-DEC-116); not GOVERNED_AGENT; not wired
-  #67 Rule Improvement — §11 SIGNED (MMI-DEC-154); SIGNED_UNBUILT; separate build auth required
+  #67 Rule Improvement — GATED wrapper (MMI-DEC-157); not GOVERNED_AGENT; not wired; sandbox-only proposal
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
-Dispatcher note: #67 SIGNED_UNBUILT may surface MODE:BUILD — **separate operator build authorization still required**.
-
 Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock #47/#52.
+
+---
+
+## Prior ALL_CLEAR v13 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v13
+supersedes: BOR-ALL-CLEAR-FEEDSTOCK-v12
+population_decision: MMI-DEC-154
+revision_reason: Superseded by v14 after #67 GATED (MMI-DEC-157)
+feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
+feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
+  #67 Rule Improvement — §11 SIGNED (MMI-DEC-154); SIGNED_UNBUILT; separate build auth required
+Dispatcher note: #67 SIGNED_UNBUILT may surface MODE:BUILD — **separate operator build authorization still required**.
 
 ---
 
