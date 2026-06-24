@@ -18,7 +18,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **BLOCKED** until separate Matt Build Authorization to wire `SwarmCommanderAgent.run_case(risk_triage_telemetry=...)`. §11 signature does not authorize wrapper wiring, GOVERNED_AGENT promotion, default registry, or production dispatch. Stage 1 wrapper currently rejects routing-by-score keys and **does not** apply score-derived disposition hints (MMI-DEC-111).
+**Implementation:** **WIRED 2026-06-24 (MMI-DEC-122).** `SwarmCommanderAgent.run_case` applies annex §3 validation and §4 `mmi_rp_v1` disposition hints after base `mmi_sc_v1` disposition. §11 signature (MMI-DEC-121) + Build Authorization satisfied. **Not GOVERNED_AGENT**; not default registry; not production dispatch.
 
 **Source-of-truth links:**
 - `docs/mmi/contracts/001_swarm_commander_contract.md` (RC-AUTH parent; DER allowlist; disposition precedence `mmi_sc_v1`)
@@ -211,9 +211,9 @@ This draft placement resolved PMV chain fork (MMI-DEC-116/117). **No runtime wir
 
 1. ~~Grok pre-build gate clean 0/0 on this annex draft.~~ **Done** (MMI-DEC-120).
 2. ~~Matt §11 signature on this annex.~~ **Done** (MMI-DEC-121).
-3. Separate Matt Build Authorization to implement §6 in `swarm_commander_agent.py` (+ focused tests).
+3. ~~Separate Matt Build Authorization to implement §6 in `swarm_commander_agent.py` (+ focused tests).~~ **Done** (MMI-DEC-122).
 
-Parent `#1` wrapper remains GATED without annex wiring. **Not GOVERNED_AGENT**; not default registry.
+Parent `#1` wrapper remains **GATED** with annex §6 wiring on disk. **Not GOVERNED_AGENT**; not default registry.
 
 ---
 

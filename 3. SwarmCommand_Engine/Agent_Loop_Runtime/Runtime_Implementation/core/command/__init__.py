@@ -24,9 +24,13 @@ from .risk_triage_agent import (
 )
 from .swarm_commander_agent import (
     DISPOSITION_POLICY_VERSION,
+    ROUTING_POLICY_VERSION,
     SWARM_COMMANDER_AGENT_ID,
+    RoutePolicyAudit,
     SwarmCommanderAgent,
+    apply_routing_policy_hints,
     assert_der_rc_auth_compliant,
+    build_route_policy_audit,
     format_route_summary,
 )
 
@@ -36,6 +40,8 @@ __all__ = [
     "DetectorEvidenceRecord",
     "MISSION_CONTEXT_AGENT_ID",
     "RISK_TRIAGE_AGENT_ID",
+    "ROUTING_POLICY_VERSION",
+    "RoutePolicyAudit",
     "SCORING_POLICY_VERSION",
     "SWARM_COMMANDER_AGENT_ID",
     "MissionClassification",
@@ -47,8 +53,10 @@ __all__ = [
     "ScoringResult",
     "SourceProvenance",
     "SwarmCommanderAgent",
+    "apply_routing_policy_hints",
     "assert_der_rc_auth_compliant",
     "assert_telemetry_auth4_compliant",
+    "build_route_policy_audit",
     "classify_case",
     "format_classification",
     "format_route_summary",

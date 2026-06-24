@@ -24,12 +24,12 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #1 routing-policy annex §11 signed (MMI-DEC-121)
-  (`docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`; gate MMI-DEC-120;
-  read-only #3 telemetry + `mmi_rp_v1` hints locked; **not** runtime wiring).
+LAST_COMPLETED: #1 routing-policy annex §6 wired in SwarmCommanderAgent (MMI-DEC-122)
+  (`mmi_rp_v1` hints after `mmi_sc_v1` base disposition; 27 focused tests;
+  **not** GOVERNED_AGENT; **not** default registry).
 
-PRIOR_LAST_COMPLETED: #1 routing-policy annex pre-build gate clean 0/0 (MMI-DEC-120)
-  (spine-boundary repair; optional Matt §11 satisfied).
+PRIOR_LAST_COMPLETED: #1 routing-policy annex §11 signed (MMI-DEC-121)
+  (gate MMI-DEC-120; read-only #3 telemetry rules locked).
 
 PRIOR: #3 Risk Triage GATED (MMI-DEC-116); Command spine #1–#3 GATED at wrapper layer.
 

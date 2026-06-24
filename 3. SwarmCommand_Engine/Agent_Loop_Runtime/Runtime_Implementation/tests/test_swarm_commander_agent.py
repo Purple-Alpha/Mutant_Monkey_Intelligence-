@@ -24,7 +24,10 @@ from core.blackboard.models import (
 )
 from core.command import (
     DISPOSITION_POLICY_VERSION,
+    ROUTING_POLICY_VERSION,
+    SCORING_POLICY_VERSION,
     SwarmCommanderAgent,
+    apply_routing_policy_hints,
     assert_der_rc_auth_compliant,
     format_route_summary,
 )
@@ -190,9 +193,121 @@ def test_ignores_benign_score_telemetry_without_routing_keys():
     der = agent.run_case(
         _context(),
         [_StubAgent()],
-        risk_triage_telemetry={"aggregate_risk_score": 72},
+        risk_triage_telemetry={
+            "aggregate_risk_score": 72,
+            "scoring_policy_version": SCORING_POLICY_VERSION,
+        },
     )
     assert der.disposition == "suspicious"
+    assert agent.last_route_policy_audit is not None
+    assert agent.last_route_policy_audit.hints_applied == ()
+
+
+def _telemetry(**overrides):
+    payload = {
+        "message_id": "msg-1",
+        "tenant_id": "tenant_commander",
+        "aggregate_risk_score": 0,
+        "axis_scores": {},
+        "scoring_reason_codes": (),
+        "scoring_policy_version": SCORING_POLICY_VERSION,
+    }
+    payload.update(overrides)
+    return payload
+
+
+def test_aggregate_score_85_elevates_clear_or_suspicious_to_hold():
+    agent = SwarmCommanderAgent({"blue_detection_001": _detection_entry()})
+    der = agent.run_case(
+        _context(),
+        [_StubAgent()],
+        risk_triage_telemetry=_telemetry(aggregate_risk_score=85),
+    )
+    assert der.disposition == "hold"
+    assert der.human_state == "not_required"
+    assert "aggregate_risk_score>=85->hold" in agent.last_route_policy_audit.hints_applied
+
+
+def test_aggregate_score_95_elevates_to_human_required():
+    agent = SwarmCommanderAgent({"blue_detection_001": _detection_entry()})
+    der = agent.run_case(
+        _context(),
+        [_StubAgent()],
+        risk_triage_telemetry=_telemetry(aggregate_risk_score=95),
+    )
+    assert der.disposition == "human_required"
+    assert der.human_state == "requested"
+
+
+def test_axis_score_90_steps_up_one_caution_level():
+    agent = SwarmCommanderAgent({"blue_detection_001": _detection_entry()})
+    der = agent.run_case(
+        _context(),
+        [_StubAgent(observed_facts=())],
+        risk_triage_telemetry=_telemetry(
+            aggregate_risk_score=10,
+            axis_scores={"vendor_fraud": 90},
+        ),
+    )
+    assert der.disposition == "suspicious"
+
+
+def test_policy_version_mismatch_skips_hints():
+    agent = SwarmCommanderAgent({"blue_detection_001": _detection_entry()})
+    der = agent.run_case(
+        _context(),
+        [_StubAgent()],
+        risk_triage_telemetry=_telemetry(
+            aggregate_risk_score=99,
+            scoring_policy_version="mmi_rt_v0",
+        ),
+    )
+    assert der.disposition == "suspicious"
+    assert agent.last_route_policy_audit.hints_applied == ()
+
+
+def test_hints_never_lower_caution():
+    agent = SwarmCommanderAgent({"blue_detection_001": _detection_entry()})
+    der = agent.run_case(
+        _context(),
+        [],
+        risk_triage_telemetry=_telemetry(aggregate_risk_score=0),
+    )
+    assert der.disposition == "human_required"
+
+
+def test_rejects_risk_triage_forbidden_routing_key_on_telemetry():
+    agent = SwarmCommanderAgent({"blue_detection_001": _detection_entry()})
+    with pytest.raises(GovernanceError, match="routing-by-score"):
+        agent.run_case(
+            _context(),
+            [_StubAgent()],
+            risk_triage_telemetry=_telemetry(route_to="blue_detection_001"),
+        )
+
+
+def test_route_policy_audit_records_base_and_final_disposition():
+    agent = SwarmCommanderAgent({"blue_detection_001": _detection_entry()})
+    agent.run_case(
+        _context(),
+        [_StubAgent()],
+        risk_triage_telemetry=_telemetry(aggregate_risk_score=85),
+    )
+    audit = agent.last_route_policy_audit
+    assert audit.routing_policy_version == ROUTING_POLICY_VERSION
+    assert audit.base_disposition == "suspicious"
+    assert audit.final_disposition == "hold"
+    assert audit.hints_applied
+
+
+def test_apply_routing_policy_hints_combines_rules_with_max_caution():
+    final, hints = apply_routing_policy_hints(
+        "suspicious",
+        _telemetry(aggregate_risk_score=96, axis_scores={"vendor_fraud": 91}),
+    )
+    assert final == "human_required"
+    assert "aggregate_risk_score>=95->human_required" in hints
+    assert "axis_score>=90->step_up" in hints
 
 
 def test_format_route_summary_is_machine_readable():
@@ -302,8 +417,6 @@ def test_contradicted_challenge_forces_human_required():
     assert der.human_state == "requested"
 
 
-def test_wrapper_delegates_to_legacy_spine_without_scoring():
+def test_wrapper_delegates_to_legacy_spine_and_applies_annex_hints():
     assert "SwarmCommander" in inspect.getsource(SwarmCommanderAgent)
-    source = inspect.getsource(SwarmCommanderAgent.run_case)
-    assert "aggregate_risk_score" not in source
-    assert "axis_scores" not in source
+    assert "apply_routing_policy_hints" in inspect.getsource(SwarmCommanderAgent.run_case)
