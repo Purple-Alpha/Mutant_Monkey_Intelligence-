@@ -388,6 +388,6 @@ Matt Nichol — 2026-06-24.
 | Legal consent | §10 retained; counsel/§11 at mesh contract — no new legal doc at a05 |
 | Protobuf / schema | §9 + §13 retained as contract draft input |
 
-**Contract draft filed.** Stage B **`b03`** promoted hardening requirements to `docs/mmi/contracts/004_immune_federation_mesh_contract.md` (MMI-DEC-134 · CONTRACT_DRAFT). Matt §11 before build. No mesh bus implementation.
+**Contract draft filed.** Stage B **`b03`** promoted hardening requirements to `docs/mmi/contracts/004_immune_federation_mesh_contract.md` (MMI-DEC-134 · §11 MMI-DEC-140). Pilot wiring plan: `mmi/research/MMI_FEDERATION_MESH_PILOT_WIRING_PLAN_MMI-DEC-142.md`. No mesh bus implementation.
 
 Matt Nichol — research closeout register 2026-06-24; contract draft pointer updated b03 closeout.

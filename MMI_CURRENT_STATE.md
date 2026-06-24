@@ -24,16 +24,15 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Stage C c01 — Operator Lung Dial promotion gate (MMI-DEC-141 · PARK)
-  (`mmi/research/MMI_OPERATOR_LUNG_DIAL_PROMOTION_GATE_MMI-DEC-141.md`;
-  MMI-DEC-133 prerequisites not met — spec **not** promoted; no §11; blocking:
-  tenant data, Playhouse UI, `#90`/`#103` dial wiring, spec §6 open items;
-  **not** build authorization).
+LAST_COMPLETED: Stage C c02 — Federation mesh pilot wiring plan (MMI-DEC-142)
+  (`mmi/research/MMI_FEDERATION_MESH_PILOT_WIRING_PLAN_MMI-DEC-142.md`;
+  opt-in MSP pool; P0–P3 phases; synthetic-first; Todd intake separate;
+  **not** mesh bus build; **not** cross-tenant truth; **not** build authorization).
 
-PRIOR_LAST_COMPLETED: Stage B END — federation economics + mesh contract fork (MMI-DEC-140)
-  (Matt §11 June 24th 2026; mesh contract + swarm charter signed; **not** mesh bus build).
+PRIOR_LAST_COMPLETED: Stage C c01 — Operator Lung Dial promotion gate (MMI-DEC-141 · PARK)
+  (MMI-DEC-133 prerequisites not met; spec not promoted).
 
-PRIOR: Stage B b04 — Governed swarm program charter (MMI-DEC-136)
+PRIOR: Stage B END — federation economics + mesh contract fork (MMI-DEC-140)
   (`mmi/research/MMI_BRAIN_IMMUNE_LUNG_PREREQ_AUDIT_MMI-DEC-133.md`;
   Lung production BLOCKED; tenant calibration + Playhouse + signed Load Multiplier
   contract remain open).

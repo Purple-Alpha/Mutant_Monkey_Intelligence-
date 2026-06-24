@@ -44,8 +44,8 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Active stage** | **Stage C** — Lung production, federation scale, governed production loop |
-| **Next waypoint** | **c02** — Federation mesh pilot wiring plan → **Cursor** |
-| **Last closed** | MMI-DEC-141 Operator Lung Dial promotion gate (**PARK**) |
+| **Next waypoint** | **c03** — Governed production organism loop → **Matt §11** |
+| **Last closed** | MMI-DEC-142 Federation mesh pilot wiring plan |
 
 ---
 
@@ -144,8 +144,8 @@ END    Federation economics anchored + mesh contract path ready
 ```text
 START  Stage B complete (MMI-DEC-140)
   · c01  Operator Lung Dial spec → signed contract              ✓ [MMI-DEC-141 · PARK]
-  · c02  Federation mesh pilot wiring plan (opt-in MSP pool)      → Cursor
-  · c03  Governed production organism loop                      → Matt
+  · c02  Federation mesh pilot wiring plan (opt-in MSP pool)      ✓ [MMI-DEC-142]
+  · c03  Governed production organism loop                      → Matt §11
 END    Self-evolving organism in governed production posture
 ```
 
