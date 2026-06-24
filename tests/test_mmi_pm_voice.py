@@ -115,7 +115,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
 
     def test_route_next_step_gate_review_before_draft_keyword(self):
         routed = self.mod._route_next_step(
-            "Run Grok pre-build gate review on #61 contract draft"
+            "Run pre-build gate review via audit_tools/complete_gate.py on #61 contract draft"
         )
         self.assertEqual(routed, "Codex")
 
@@ -206,7 +206,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 repo_root=self.mod._repo_root(),
             )
         self.assertEqual(fields["HAND_IT_TO"], "Codex")
-        self.assertIn("Grok pre-build gate review", fields["YOU_DO"])
+        self.assertIn("pre-build gate review via audit_tools/complete_gate.py", fields["YOU_DO"])
         self.assertIn("#105", fields["YOU_DO"])
         self.assertNotIn("contract draft lane", fields["YOU_DO"].lower())
 
@@ -289,7 +289,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 repo_root=self.mod._repo_root(),
             )
         self.assertEqual(fields["HAND_IT_TO"], "Codex")
-        self.assertIn("Grok pre-build gate review", fields["YOU_DO"])
+        self.assertIn("pre-build gate review via audit_tools/complete_gate.py", fields["YOU_DO"])
 
     def test_t7e2_routing_annex_gate_clean_routes_matt(self):
         evidence = self.mod.VoiceEvidence(
@@ -303,17 +303,18 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             with patch.object(
                 self.mod, "_routing_policy_annex_pending", return_value=True
             ):
-                with patch.object(
-                    self.mod,
-                    "_routing_policy_annex_gate_clean",
-                    return_value=(
-                        "audit_outputs/routing_policy_annex_pre_build_gate_20260624T015713Z.md"
-                    ),
-                ):
-                    fields = self.mod.compose_voice(
-                        evidence,
-                        repo_root=self.mod._repo_root(),
-                    )
+                with patch.object(self.mod, "_is_contract_signed", return_value=False):
+                    with patch.object(
+                        self.mod,
+                        "_routing_policy_annex_gate_clean",
+                        return_value=(
+                            "audit_outputs/routing_policy_annex_pre_build_gate_20260624T015713Z.md"
+                        ),
+                    ):
+                        fields = self.mod.compose_voice(
+                            evidence,
+                            repo_root=self.mod._repo_root(),
+                        )
         self.assertEqual(fields["HAND_IT_TO"], "Matt")
         self.assertIn("Optional Matt §11 signature on #1 routing-policy annex", fields["WHAT_NEEDS_MATT"])
         self.assertIn("Pre-build gate clean 0/0", fields["IN_FLIGHT"])
@@ -412,7 +413,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         )
         if self.mod._command_spine_wrappers_gated(self.mod._repo_root()):
             annex = self.mod._repo_root() / self.mod.ROUTING_POLICY_ANNEX_REL
-            if annex.is_file():
+            if annex.is_file() and self.mod._routing_policy_annex_pending(
+                self.mod._repo_root()
+            ):
                 if self.mod._routing_policy_annex_gate_clean(self.mod._repo_root()):
                     self.assertEqual(fields["HAND_IT_TO"], "Matt")
                     self.assertIn(
@@ -424,13 +427,17 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                     self.assertIn(
                         "routing-policy annex", fields["WHAT_NEEDS_MATT"].lower()
                     )
+                    self.assertIn(
+                        "pre-build gate review via audit_tools/complete_gate.py",
+                        fields["YOU_DO"],
+                    )
             else:
-                self.assertEqual(fields["HAND_IT_TO"], "Claude")
-                self.assertIn("routing-policy annex", fields["WHAT_NEEDS_MATT"].lower())
-            if self.mod._routing_policy_annex_gate_clean(self.mod._repo_root()):
-                self.assertIn("MMI-DEC-120", fields["WHY"])
-            else:
-                self.assertIn("MMI-DEC-116", fields["WHY"])
+                self.assertIn("Chain-of-command", fields["WHAT_NEEDS_MATT"])
+            if self.mod._routing_policy_annex_pending(self.mod._repo_root()):
+                if self.mod._routing_policy_annex_gate_clean(self.mod._repo_root()):
+                    self.assertIn("MMI-DEC-120", fields["WHY"])
+                else:
+                    self.assertIn("MMI-DEC-116", fields["WHY"])
         else:
             self.assertIn("MMI-DEC-095", fields["WHY"])
             self.assertIn("MMI-DEC-098", fields["WHY"])
@@ -519,18 +526,6 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         )
         fields = self.mod.compose_voice(evidence, repo_root=root)
         if self.mod._command_spine_wrappers_gated(root):
-            annex = root / self.mod.ROUTING_POLICY_ANNEX_REL
-            if annex.is_file():
-                if self.mod._routing_policy_annex_gate_clean(root):
-                    self.assertEqual(fields["HAND_IT_TO"], "Matt")
-                    self.assertIn("routing-policy annex", fields["YOU_DO"])
-                else:
-                    self.assertEqual(fields["HAND_IT_TO"], "Codex")
-                    self.assertIn("routing-policy annex", fields["YOU_DO"])
-            else:
-                self.assertEqual(fields["HAND_IT_TO"], "Claude")
-                self.assertIn("routing-policy annex", fields["YOU_DO"])
-        else:
             self.assertEqual(fields["HAND_IT_TO"], "Matt")
             self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
             self.assertIn("MMI-DEC-098", fields["IN_FLIGHT"])
@@ -621,18 +616,6 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         )
         root = self.mod._repo_root()
         if self.mod._command_spine_wrappers_gated(root):
-            annex = root / self.mod.ROUTING_POLICY_ANNEX_REL
-            if annex.is_file():
-                if self.mod._routing_policy_annex_gate_clean(root):
-                    self.assertEqual(fields["HAND_IT_TO"], "Matt")
-                    self.assertIn("routing-policy annex", fields["YOU_DO"])
-                else:
-                    self.assertEqual(fields["HAND_IT_TO"], "Codex")
-                    self.assertIn("routing-policy annex", fields["YOU_DO"])
-            else:
-                self.assertEqual(fields["HAND_IT_TO"], "Claude")
-                self.assertIn("routing-policy annex", fields["YOU_DO"])
-        else:
             self.assertEqual(fields["HAND_IT_TO"], "Matt")
             self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
             self.assertIn("MMI-DEC-102", fields["IN_FLIGHT"])
@@ -758,7 +741,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertEqual(code, 0)
         if "Pre-build gate review is needed for #105" in out:
             self.assertIn("HAND_IT_TO:\nCodex", out)
-            self.assertIn("Grok pre-build gate review", out)
+            self.assertIn("pre-build gate review via audit_tools/complete_gate.py", out)
             self.assertIn("Lane 1 probe shipped", out)
         elif "Pre-build gate review is needed for #1 routing-policy annex" in out:
             self.assertIn("HAND_IT_TO:\nCodex", out)
@@ -790,7 +773,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         elif "#52 Plain-English Explanation is already GATED" in out:
             self.assertNotIn("Authorize build lane for #52", out)
         elif "estimator feedstock rank" in out or "SCORED_FEEDSTOCK" in out:
-            if "#105" in out and "Grok pre-build gate review" in out:
+            if "#105" in out and "pre-build gate review via audit_tools/complete_gate.py" in out:
                 self.assertIn("HAND_IT_TO:\nCodex", out)
             else:
                 self.assertIn("HAND_IT_TO:\nClaude", out)

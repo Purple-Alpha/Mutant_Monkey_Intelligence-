@@ -388,7 +388,7 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
                 RubricCandidate(
                     action_id="routing_policy_annex_gate",
                     label=(
-                        "Run Grok pre-build gate on #1 routing-policy annex "
+                        "Run pre-build gate via complete_gate.py on #1 routing-policy annex "
                         "(draft on disk; §11 UNSIGNED)"
                     ),
                     primary_scope="#1",

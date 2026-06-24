@@ -42,7 +42,7 @@ For operator-facing terminal basics, see `LINUX_WORKFLOW_QUICKSTART.md`.
 
 - **Matt decides.** Every promotion, commit, sign-off, and direction change is the operator's call.
 - **You build, and you make build-layer calls.** Specs, drafts, code, audits, scoring. You also **make and report** mechanical / build-layer choices yourself — naming, default values, file paths, which of several equivalent approaches, isolation/packet mechanics, ordering. State the call in one line with your reason and move on; do not ask. What you never make are **operator-authority decisions**: commits, pushes, §11/§13 sign-offs, direction/track changes, scope changes, pricing, and anything touching a signed spec or the seven non-negotiables. See §3.1 for how to surface those.
-- **Grok audits.** `audit_tools/complete_gate.py` is the negative-feedback layer. You are not the auditor.
+- **Completion gate audits.** `audit_tools/complete_gate.py` is the negative-feedback layer (auditor: xAI Grok or Google Gemini per `COMPLETION_GATE_PROVIDER`; default `auto`). You are not the auditor.
 - **Rubrics are advisory.** Both `think_sheet.md` and the Client-Facing 5-Axis Email Scoring Rubric and the new Next-Action Decision Rubric. See `4. Product_Roadmap/Compliance_and_Trend_Watch_Process.md` §1.1 supersession. A rubric ranks; the human chooses. A score is never a decision.
 - **No shortcuts on discipline.** Use **every** scoring, verification, and gate layer that applies to the work — Next-Action Rubric, Build Sequencer/scoreboard, Agent Health Score, client-facing rubrics, detector scoring bands, Estimator posture reads, pre-build contract gates, completion gate (`complete_gate.py`), consequence matrix when path-setting, pytest/probes where scripted — stacked in order, not "pick one and skip the rest." Skipping an applicable engine to save time is a doctrine violation. Scores still do not authorize; Matt decides.
 
@@ -69,8 +69,8 @@ Authored 2026-06-06 by Matt Nichol. The team is now multi-model. The rule is sim
 ### Matt (operator) — decides
 - Owns every promotion, commit, push, sign-off, direction change, scope, and pricing call. Lives the build himself. Not a delegator.
 
-### Grok / `complete_gate.py` — independent auditor
-- The negative-feedback layer. No partner is the auditor. A clean gate is required evidence, not a courtesy. See §5.
+### `complete_gate.py` — independent completion auditor
+- The negative-feedback layer. No partner is the auditor. Provider is configured in `.env` (`COMPLETION_GATE_PROVIDER`: `xai`, `gemini`, or `auto`). A clean gate is required evidence, not a courtesy. See §5.
 
 ### Codex — builder / spec-builder / implementation / code worker
 **Strong, build here:**
@@ -128,7 +128,7 @@ The pipeline phases:
 |---|---|---|---|
 | 1. Design & Spec | Claude leads; Codex co-reviews | Draft/pressure-test the markdown spec; both Claude and Codex may pressure-test boundaries and wording here (Codex's claim-overreach / authority-drift catching is a *design-phase* asset, not benched). | Advisory only. No production code is written in this phase. |
 | 2. Logic drafting | Codex | Draft production file contents from the locked spec. | Codex does **not** write production code until the spec is §11-signed. Boundary review (Phase 1) is allowed earlier; code is not. |
-| 3. Audit & gate | `complete_gate.py` | Deterministic local validation + Grok audit. | No AI guesswork. A clean gate is required evidence (§5). |
+| 3. Audit & gate | `complete_gate.py` | Deterministic local validation + independent model audit (Grok/Gemini). | No AI guesswork. A clean gate is required evidence (§5). |
 | 4. Execute & commit | Execution lane (Cursor + Matt) | Stage, gate-confirm, commit, push. | Carries out commits/pushes **on operator authorization** (§2/§4) — the execution lane executes; it does not hold commit/push *authority*. Sits out until Phase 3 is clean. |
 
 **Away rule.** While Matt is away, the execution lane **queues proposals only — no commits, no pushes.** Work is staged as drafts/patches and described in the handshake for Matt to authorize on return.

@@ -273,6 +273,8 @@ MMI-DEC-122 | 2026-06-24 | #1 routing-policy annex §6 runtime wiring | `3. Swar
 
 MMI-DEC-123 | 2026-06-24 | #1 routing-policy annex §6 wiring completion gate | `audit_outputs/swarm_commander_routing_policy_annex_wiring_20260624T022634Z.md` (0 blocking / 0 warnings; Gemini `gemini-2.5-pro`; packet SHA256 `844231fee1e6ad4d2c31cb91398ae523d24cd257b10da78fe8db9665cfc91513`) | ACCEPT | Post-commit completion gate clean 0/0 on MMI-DEC-122 wiring slice. Auditor confirmed §3 forbidden-key rejection, §4 conservative hint escalation, RC-AUTH DER boundary, 27 focused tests evidenced. **Not GOVERNED_AGENT** promotion; **not** default registry; **not** AUTH-5 | Matt selects next lane | Run mmi_dispatch --sync + --verify after commit | Cursor (completion gate — annex §6 wiring)
 
+MMI-DEC-124 | 2026-06-24 | PMV completion-gate terminology + annex lane guard | `scripts/mmi_pm_voice.py`; `scripts/mmi_next_action_rubric.py`; `scripts/mmi_dispatch.py`; `AGENTS.md`; tests | ACCEPT | Replace vendor-specific “Grok pre-build gate” PMV/dispatch wording with provider-neutral `audit_tools/complete_gate.py` language (auditor: xAI Grok or Gemini per `COMPLETION_GATE_PROVIDER`). Stop redirecting signed #1/#3 feedstock to closed annex voice when `_routing_policy_annex_pending` is false. **Not** build; **not** AUTH-5 | Matt selects next lane | Run lane_board_sync + mmi_dispatch --sync + --verify + probe pytest after commit | Cursor (PMV gate naming accuracy)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

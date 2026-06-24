@@ -60,6 +60,14 @@ ROSTER_BUILD = "Cursor"
 ROSTER_REVIEW = "Codex"
 ROSTER_RESEARCH = "Gemini+ChatGPT"
 ROSTER_MATT = "Matt"
+
+# complete_gate.py selects the auditor via COMPLETION_GATE_PROVIDER (xai / gemini / auto).
+# PMV names the gate tool and crew handoff — not a single model vendor.
+COMPLETION_GATE_TOOL = "audit_tools/complete_gate.py"
+PRE_BUILD_GATE_REVIEW_YOU_DO = (
+    f"Run pre-build gate review via {COMPLETION_GATE_TOOL}"
+)
+COMPLETION_GATE_LABEL = "completion gate (independent auditor)"
 ROSTER_MULTI_LANE_ADVISORY = (
     "Matt orchestrates; Claude + Gemini + ChatGPT per "
     "4. Product_Roadmap/MMI_Governance_Invariants_Testing_Advisory_Lane_Brief.md"
@@ -282,7 +290,7 @@ def _chain_relay_for_action(action_id: str, label: str, root: Path) -> tuple[str
         return (
             ROSTER_REVIEW,
             (
-                f"Run Grok pre-build gate review on routing-policy annex at "
+                f"{PRE_BUILD_GATE_REVIEW_YOU_DO} on routing-policy annex at "
                 f"{ROUTING_POLICY_ANNEX_REL}; optional Matt §11 when gate clean 0/0."
             ),
         )
@@ -869,7 +877,8 @@ def _compose_awaiting_audit_gated_voice(
         "YOU_DO": you_do,
         "WHY": (
             f"dispatcher: MODE:AUDIT; {option.candidate_id} is "
-            f"{option.source_lifecycle}; superintendent must confirm Grok "
+            f"{option.source_lifecycle}; superintendent must confirm "
+            f"{COMPLETION_GATE_LABEL} clean "
             f"completion gate 0/0 before GATED reconcile."
         ),
         "IGNORE_FOR_NOW": _ignore_block(evidence),
@@ -897,7 +906,9 @@ def _feedstock_hand_it_to(lane_type: str) -> str:
 def _compose_signed_swarm_commander_contract_voice(
     evidence: VoiceEvidence, contract_rel: str, repo_root: Path
 ) -> dict[str, str]:
-    if _command_spine_wrappers_gated(repo_root):
+    if _command_spine_wrappers_gated(repo_root) and _routing_policy_annex_pending(
+        repo_root
+    ):
         return _compose_command_spine_routing_annex_voice(evidence, repo_root)
     gate_rel = _contract_gate_clean(repo_root, "#1") or ""
     gate_note = f" gate {gate_rel}" if gate_rel else ""
@@ -933,7 +944,9 @@ def _compose_signed_swarm_commander_contract_voice(
 def _compose_signed_risk_triage_contract_voice(
     evidence: VoiceEvidence, contract_rel: str, repo_root: Path
 ) -> dict[str, str]:
-    if _command_spine_wrappers_gated(repo_root):
+    if _command_spine_wrappers_gated(repo_root) and _routing_policy_annex_pending(
+        repo_root
+    ):
         return _compose_command_spine_routing_annex_voice(evidence, repo_root)
     gate_rel = _contract_gate_clean(repo_root, "#3") or ""
     gate_note = f" gate {gate_rel}" if gate_rel else ""
@@ -979,7 +992,7 @@ def _compose_unsigned_contract_draft_voice(
         "IN_FLIGHT": f"Contract draft on disk at {contract_rel}; §11 UNSIGNED.",
         "HAND_IT_TO": ROSTER_REVIEW,
         "YOU_DO": (
-            f"Run Grok pre-build gate review on {candidate_id} "
+            f"{PRE_BUILD_GATE_REVIEW_YOU_DO} on {candidate_id} "
             f"{candidate_name} contract draft at {contract_rel}."
         ),
         "WHY": (
@@ -1076,7 +1089,7 @@ def _compose_unsigned_contract_review_voice(
             ),
             "HAND_IT_TO": ROSTER_REVIEW,
             "YOU_DO": (
-                f"Run Grok pre-build gate review on {candidate_id} "
+                f"{PRE_BUILD_GATE_REVIEW_YOU_DO} on {candidate_id} "
                 f"{candidate_name} at {contract_rel}; optional Matt §11 when ready. "
                 f"Maintain drift defense: pytest {INVARIANTS_PROBE_TEST_REL} after "
                 f"any scripts/mmi_*.py change."
@@ -1098,7 +1111,7 @@ def _compose_unsigned_contract_review_voice(
         "IN_FLIGHT": "none",
         "HAND_IT_TO": ROSTER_REVIEW,
         "YOU_DO": (
-            f"Run Grok pre-build gate review on {candidate_id} "
+            f"{PRE_BUILD_GATE_REVIEW_YOU_DO} on {candidate_id} "
             f"{candidate_name} contract review draft at {contract_rel}."
         ),
         "WHY": (
@@ -1167,7 +1180,8 @@ def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
     elif lane_type == "CONTRACT_REVIEW":
         you_do = (
             f"Review unsigned invariants framework contract for {candidate_id} "
-            f"{candidate_name}; run Grok pre-build gate when Matt chooses §11 path."
+            f"{candidate_name}; run pre-build gate via {COMPLETION_GATE_TOOL} "
+            f"when Matt chooses §11 path."
         )
         what = (
             f"Invariants framework contract review is available for "
@@ -1309,7 +1323,7 @@ def _compose_command_spine_routing_annex_voice(
             }
 
         you_do = (
-            f"Run Grok pre-build gate review on routing-policy annex at "
+            f"{PRE_BUILD_GATE_REVIEW_YOU_DO} on routing-policy annex at "
             f"{ROUTING_POLICY_ANNEX_REL}; optional Matt §11 when gate clean 0/0."
         )
         return {

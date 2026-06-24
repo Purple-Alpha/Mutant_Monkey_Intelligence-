@@ -176,7 +176,7 @@ def get_signed_unbuilt():
 def get_awaiting_audit():
     """Rows whose runtime status starts AWAITING_AUDIT: built + tested, not yet
     gated. This is the lifecycle state between SIGNED_UNBUILT and GATED — the
-    point at which MMI routes the work to the Grok completion gate.
+    point at which MMI routes the work to the completion gate (complete_gate.py).
     """
     scoreboard = read_file("agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md")
     if not scoreboard:
@@ -195,7 +195,7 @@ def get_awaiting_audit():
     return matches
 
 def audit_task_slug(name):
-    """Stable task id for the Grok gate manifest, derived from the row name.
+    """Stable task id for the completion gate manifest, derived from the row name.
     e.g. 'Safe-Stop State Machine' -> 'safe_stop_state_machine'.
     """
     return re.sub(r"[^a-z0-9]+", "_", name.strip().lower()).strip("_")
@@ -1190,7 +1190,7 @@ def build_route_lines():
     awaiting = get_awaiting_audit()
     if awaiting:
         # A build is implemented + tested but not yet gated. Route it to the
-        # Grok completion gate before starting any new build. The exact command
+        # completion gate (complete_gate.py) before starting any new build. The exact command
         # is emitted so the audit step is not tribal memory.
         name = awaiting[0]
         slug = audit_task_slug(name)
@@ -1198,10 +1198,10 @@ def build_route_lines():
         manifest_ok = os.path.exists(os.path.join(REPO, manifest_rel))
         return derived, [
             ("MODE", "AUDIT"),
-            ("AUTHORIZED_TASK", f"Run Grok completion gate for {name}"),
-            ("ASSIGNED_TO", "Grok (negative-feedback auditor)"),
+            ("AUTHORIZED_TASK", f"Run completion gate for {name}"),
+            ("ASSIGNED_TO", "completion gate auditor (complete_gate.py)"),
             ("NEXT_PROMPT_GOES_TO", "Cursor stages the build, runs the gate, then commits"),
-            ("OPERATOR_ACTION_REQUIRED", "NO  (Grok activation is standing; no per-run permission)"),
+            ("OPERATOR_ACTION_REQUIRED", "NO  (completion gate activation is standing; no per-run permission)"),
             ("RUN", f'python3 audit_tools/complete_gate.py --pre-commit --task {slug} --claim "{name} build implemented + tested; ready for audit"'),
             ("MANIFEST", f"{manifest_rel} ({'present' if manifest_ok else 'MISSING - create before gate'})"),
             ("BLOCKED_UNTIL", "complete_gate.py reports blocking=0 (0/0) AND build committed"),
