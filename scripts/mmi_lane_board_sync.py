@@ -68,7 +68,7 @@ def _dispatcher_mode(root: Path) -> str:
 
 def build_ranked_board(root: Path, limit: int = 7) -> str:
     rubric = _load_module("mmi_next_action_rubric", "mmi_next_action_rubric.py")
-    scored = rubric.analyze(root, limit=limit)
+    scored = rubric.analyze(root, limit=limit, board_sync=True)
     mode = _dispatcher_mode(root)
     stamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     head = _git_head(root)

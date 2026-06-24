@@ -273,7 +273,7 @@ def _ranked_board_stale(root: Path) -> bool:
     return bool(current) and pinned != current
 
 
-def generate_candidates(root: Path) -> list[RubricCandidate]:
+def generate_candidates(root: Path, *, board_sync: bool = False) -> list[RubricCandidate]:
     scoreboard = _read_text(root / SCOREBOARD_REL)
     bor = _read_text(root / BOR_PATH_REL)
     out: list[RubricCandidate] = []
@@ -397,7 +397,7 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
                 )
             )
 
-    if _ranked_board_stale(root):
+    if _ranked_board_stale(root) and not board_sync:
         add(
             RubricCandidate(
                 action_id="admin_lane_board_sync",
@@ -518,9 +518,9 @@ def score_candidate(
     return ScoredAction(candidate=candidate, axes=axes)
 
 
-def analyze(root: Path, limit: int = 7) -> list[ScoredAction]:
+def analyze(root: Path, limit: int = 7, *, board_sync: bool = False) -> list[ScoredAction]:
     scoreboard = _read_text(root / SCOREBOARD_REL)
-    candidates = generate_candidates(root)
+    candidates = generate_candidates(root, board_sync=board_sync)
     scored = [score_candidate(c, root, scoreboard) for c in candidates]
     scored.sort(key=lambda item: (-item.axes.total, item.candidate.action_id))
     hold = [item for item in scored if item.candidate.action_id == "hold_all_clear"]
