@@ -432,6 +432,8 @@ In security, "back door" means a covert / unauthorized access path. The concept 
 
 **Next step (operator choice):** When ready, paste the fuller Gemini writeup so it can be captured properly, or pick this up into `think_sheet.md` for operator-driven stress-testing. Until then it sits here as a preserved operator idea.
 
+**Architecture evolution (2026-06-24):** Operator federation + pooled Lung vision and mesh hardening requirements captured in `mmi/concepts/MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md` and `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md`. The governed model is synchronized immune response (sanitized pathogen pulses), not literal cross-tenant inbox piggyback.
+
 ---
 
 ### 2026-06-03 — Todd Chapman / CMIT Solutions reply: credible door, not a D10 yes

@@ -840,6 +840,8 @@ These verdicts support operator §11 on `Score_Sheet_Candidate_Review_Promotion_
 
 **Status:** Future design note only (Stage C / Wave 4+). Not scored, not a `think_sheet` idea-table candidate yet, not a spec, not §11, not implementation authorization. Captured verbatim from operator concept on 2026-06-02 for long-term research. Does **not** alter the current strict boundary: no code until Wave 3 specification sign-off. This note authorizes nothing.
 
+**Superseded for architecture detail by (2026-06-24):** `mmi/concepts/MMI_PNEUMATIC_LUNG_IMMUNE_FEDERATION_MESH_CONCEPT.md` + `mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md` — operator vision + Phase B/C hardening; this think_sheet stub remains historical capture only.
+
 **Concept name:** "The Pneumatic Lung" (Crowdsourced Swarm Defense).
 
 ### Core metaphor (Inhale / Exhale)
