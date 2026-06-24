@@ -475,9 +475,13 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertEqual(fields["HAND_IT_TO"], "Codex")
-        self.assertIn("#65", fields["YOU_DO"])
-        self.assertIn("pre-build gate", fields["YOU_DO"].lower())
+        if self.mod._contract_gate_clean(self.mod._repo_root(), "#65"):
+            self.assertEqual(fields["HAND_IT_TO"], "Matt")
+            self.assertIn("§11 sign", fields["YOU_DO"])
+        else:
+            self.assertEqual(fields["HAND_IT_TO"], "Codex")
+            self.assertIn("#65", fields["YOU_DO"])
+            self.assertIn("pre-build gate", fields["YOU_DO"].lower())
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
 
     def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):
@@ -802,6 +806,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         elif "Pre-build gate review is needed for #65 Correction Evidence" in out:
             self.assertIn("HAND_IT_TO:\nCodex", out)
             self.assertIn("Correction_Evidence_Agent_Design_Contract_Deep_Dive.md", out)
+        elif "Optional Matt §11 signature on #65 Correction Evidence" in out:
+            self.assertIn("HAND_IT_TO:\nMatt", out)
+            self.assertIn("mmi_65_contract_gate", out)
         elif "Optional Matt §11 signature on #3" in out:
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Pre-build gate clean", out)

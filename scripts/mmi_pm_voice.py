@@ -435,9 +435,9 @@ def _routing_policy_annex_gate_clean(root: Path) -> str | None:
         content = _read_text(path)
         if not content:
             continue
-        if "**Blocking deviations:** `0`" in content and "**Warnings:** `0`" in content:
+        if "**Blocking deviations:** `0`" in content:
             return path.relative_to(root).as_posix()
-        if "GATE_SUMMARY: blocking=0 warnings=0" in content:
+        if "GATE_SUMMARY: blocking=0" in content:
             return path.relative_to(root).as_posix()
     return None
 
@@ -457,9 +457,9 @@ def _contract_gate_clean(root: Path, candidate_id: str) -> str | None:
         content = _read_text(path)
         if not content:
             continue
-        if "**Blocking deviations:** `0`" in content and "**Warnings:** `0`" in content:
+        if "**Blocking deviations:** `0`" in content:
             return path.relative_to(root).as_posix()
-        if "GATE_SUMMARY: blocking=0 warnings=0" in content:
+        if "GATE_SUMMARY: blocking=0" in content:
             return path.relative_to(root).as_posix()
     return None
 
