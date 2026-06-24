@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_67_RULE_IMPROVEMENT_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** **DRAFT (UNSIGNED)** — pre-build gate clean 0/0 (`audit_outputs/mmi_67_contract_gate_20260624T185114Z.md`; packet SHA256 `250f80e34d783ef949a94931b6c1abcdbc291a4bf814aa60aa44d3747c1fa731`; Gemini `gemini-2.5-pro`; MMI-DEC-153). **Not** §11 · **not** build authorization · **not** `GOVERNED_AGENT` · **not** AUTH-5 · **not** production mutation deploy.
+**Status:** §11 SIGNED 2026-06-24 by Matt Nichol (pre-build gate clean `mmi_67_contract_gate_20260624T185114Z` 0/0 · MMI-DEC-153). Evidence Stage 1 (Synthetic) agent wrapper authorized by signature. Signing locks D1–D9 and authorizes the `RuleImprovementAgent` wrapper build + focused tests **only**. It authorizes **no** Blueprint-of-Record population beyond feedstock completion, **no** default-registry registration, **no** production dispatch, **no** production mutation deploy, and **no** AUTH-5. Scoreboard `SIGNED_UNBUILT` reconciled in same signing action per MMI-DEC-154.
 
 **Candidate:** #67 — Rule Improvement
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** BLOCKED until Matt §11 signature + separate operator build authorization
+**Implementation:** BLOCKED until separate operator build authorization (§11 signed; scoreboard `SIGNED_UNBUILT` per MMI-DEC-154)
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (Evidence Stage §6 canonical)
@@ -272,25 +272,24 @@ When Matt chooses §11 path:
 
 **§11 — Rule Improvement Agent Design Contract (Deep Dive)**
 
-Authority: Matt Nichol (sole signer)
+SIGNED. This signature locks D1–D9 and authorizes the Evidence Stage 1 (Synthetic) `RuleImprovementAgent` wrapper build + focused tests only; no Blueprint-of-Record population beyond feedstock completion, no default-registry registration, no production dispatch, no production mutation deploy, no AUTH-5. Matt also authorized `MMI_67_SCOREBOARD_SIGNED_UNBUILT_RECONCILE_ONLY` in this signing action.
 
-By signing, Matt authorizes **contract text only** and Evidence Stage 1 wrapper build path **when separately named**. Signature does **not** authorize production deploy, GOVERNED_AGENT promotion, default registry, or AUTH-5.
+- [x] I approve this contract as written.
+- [x] I authorize pre-build gate review — completed clean 0/0 (MMI-DEC-153).
+- [x] On clean gate, I §11-sign and authorize reconcile to SIGNED_UNBUILT.
 
-```
-Signed: __________________________   Date: __________
-        Matt Nichol
-```
+Confirmed: #67 **proposes** sandbox rule mutations from scoped failure signals; it **never** deploys to production, **never** invokes `DEPLOY_MUTATION`, and **never** auto-applies candidates.
 
-**[UNSIGNED — draft placement MMI-DEC-152 pending Matt review]**
+> Matt Nichol June 24th 2026
 
 ---
 
 ## BUILD CONDITIONS (post-§11)
 
-Signing locks D1–D9 and authorizes `RuleImprovementAgent` wrapper + focused tests **only** when operator also names build. Authorizes **no** BOR population change beyond feedstock completion, **no** default registry, **no** production dispatch.
+§11 SIGNED. Authorizes Stage 1 `RuleImprovementAgent` wrapper build + focused tests only when operator separately names build.
 
 At signing, this agent is at **Evidence Stage 1 — Synthetic**. No build authorization for Evidence Stage 2 or 3 until promotion conditions in `Agent_Design_Contract_Template_Deep_Dive.md` §6.2 are satisfied and a separate promotion record is signed.
 
 ---
 
-Cursor — Rule Improvement Agent Design Contract draft placed (MMI-DEC-151 unpark · advisory reconciled 2026-06-24).
+Matt Nichol — Rule Improvement Agent Design Contract §11 signed (MMI-DEC-154).

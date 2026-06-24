@@ -44,9 +44,9 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
-| **Active stage** | **Post–Stage C** — BOR feedstock rank 1: `#67 Rule Improvement` CONTRACT_DRAFT |
-| **Next waypoint** | **#67 contract** — Matt §11 when ready (pre-build gate clean MMI-DEC-153) |
-| **Last closed** | MMI-DEC-153 `#67` pre-build gate 0/0 |
+| **Active stage** | **Post–Stage C** — `#67` SIGNED_UNBUILT (§11 MMI-DEC-154) |
+| **Next waypoint** | **#67 build** — separate operator build authorization required |
+| **Last closed** | MMI-DEC-154 `#67` §11 sign + SIGNED_UNBUILT reconcile |
 
 ---
 
