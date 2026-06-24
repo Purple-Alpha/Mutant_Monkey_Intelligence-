@@ -451,7 +451,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         self.assertIn("003_risk_triage_contract.md", fields["IGNORE_FOR_NOW"])
         self.assertIn("rubric_calibration: MMI-DEC-095", fields["SOURCE"])
 
-    def test_t7i_all_clear_mission_map_routes_matt_a06_authority_fork(self):
+    def test_t7i_all_clear_mission_map_routes_b02_brain_immune_audit(self):
         evidence = self.mod.VoiceEvidence(
             dispatcher_mode="ALL_CLEAR",
             blueprint_status="CURRENT_PLAN_PRESENT",
@@ -463,9 +463,8 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertEqual(fields["HAND_IT_TO"], "Matt")
-        self.assertIn("authority fork", fields["WHAT_NEEDS_MATT"].lower())
-        self.assertIn("a06", fields["YOU_DO"])
+        self.assertEqual(fields["HAND_IT_TO"], "Cursor")
+        self.assertIn("b02", fields["YOU_DO"])
         self.assertIn("chain: mission_map", fields["SOURCE"])
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
 

@@ -703,3 +703,13 @@ Artifact: `mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md`; ad
 Classification: RESEARCH_CLOSEOUT — advisory memo; zero routing influence; simulation figures not repo-verified
 Routing outcome: Research lane closed for pricing/copy caps/consent/protobuf; Stage B b01 mesh contract draft next structural fork (blocked until MMI-DEC-130)
 Matt approval required: NO for research filing slice; YES for mesh contract §11/build when Stage B opens
+
+INTAKE-2026-06-23-005
+Component: Stage B b01 — Cybersecurity Poverty Line GTM thesis (operator capture)
+Request: Capture Matt operator direction on smash pricing, Canadian SMB tiers, poverty-line framing, Defender/BEC wedge
+Source: Matt Nichol competitive research session 2026-06-23; `scripts/mmi_smb_seat_pricing_research.py`
+Assigned to: Cursor (intake + research memo update)
+Artifact: `mmi/intake/MMI_INTAKE_2026-06-23-005_Cybersecurity_Poverty_Line_GTM_Thesis.md`; `mmi/research/MMI_FEDERATION_SMB_SEAT_ECONOMICS_RESEARCH_MMI-DEC-132.md`
+Classification: GTM_THESIS_ADVISORY — not locked pricing; not build; feeds MMI-DEC-132 pending Matt review
+Routing outcome: ADVISORY — b01 research enriched; **CLOSED** MMI-DEC-132 2026-06-23
+Matt approval required: YES before locked MSRP/GTM claims; NO for research closeout slice (MMI-DEC-132 filed)

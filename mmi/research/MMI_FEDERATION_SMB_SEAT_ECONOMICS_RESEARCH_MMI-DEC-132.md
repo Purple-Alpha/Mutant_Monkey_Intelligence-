@@ -1,0 +1,101 @@
+# MMI Research — Federation SMB Seat Economics (Stage B · b01 · MMI-DEC-132)
+
+**Classification:** `RESEARCH_INPUT` · `ADVISORY_MEMO` · `ZERO_ROUTING_INFLUENCE` · `NOT_BUILD_AUTHORIZATION`
+
+**Generated:** 2026-06-23 · git `cabd531363e8`
+
+**Source:** `scripts/mmi_smb_seat_pricing_research.py --write`
+
+**Boundary:** Hypothesis bands only. Not locked MSRP. Not GTM claims. Matt §11 before commercial lock.
+
+---
+
+## 1. Executive summary
+Operator thesis: cross the **Cybersecurity Poverty Line** — Barracuda-class inbox fraud defense for Canadian SMBs at smash per-seat economics.
+Corporate league band: ~$3.40–6.50/user/mo (Barracuda mid-market) + minimum-seat walls (~50+) + TCO (SOC analyst $80k–110k CAD).
+Mutant Monkey smash hypothesis: ~$1.25–1.75/seat SMB; ~$1.00/seat federation pool — beside Defender, not replacing it.
+Canadian StatCan small = 5–99 employees; micro = 1–4. Primary wedge: BEC/vendor pain Defender misses.
+Federation pool makes repeat-campaign recognition cheap (addendum §11) — structural margin incumbents cannot match at SMB scale.
+Lung production remains downstream of brain/immune + tenant data (mission map b02).
+
+## 2. Cybersecurity Poverty Line thesis (operator capture · MMI-INTAKE-2026-06-23-005)
+Industry term (Sophos + sector literature): SMBs below a price/feature floor get retail AV or nothing — prime ransomware targets.
+Two walls create the gap:
+  · Minimum Seat Wall — enterprise quotes require 50–500 seats; 25-employee shop cannot pay $50k entry.
+  · TCO Wall — license + alert firehose + analyst salary; true cost 200–400% above sticker.
+Enterprise blind spots Mutant Monkey addresses (beside Defender):
+  · Keys to the castle — BEC uses valid-looking mail, not malware attachments.
+  · Alert fatigue — decision-support + evidence, not SOC noise.
+  · No business context — Dial 1 documented override when evidence says legit deal.
+  · Defender BEC gap — look-alike domain, forged thread, vendor wire fraud without malicious code.
+GTM frame: pull Canadian SMB above poverty line through MSP federation — quality in evidence chain, not corporate logo.
+
+## 3. Per-vendor pricing table
+Vendor              Product                       Price     Channel         Confidence  
+------------------  ----------------------------  --------  --------------  ------------
+Mutant Monkey (hyp  Inbox Shield — beside Defend  $1.50/mo  MSP-first · Ca  UNVERIFIED  
+Microsoft           Defender for Office 365 Plan  $2.00/mo  direct + CSP/M  VERIFIED_PUB
+Abnormal Security   Inbound Email Security        $2.50/mo  direct enterpr  THIRD_PARTY_
+IRONSCALES          Email Security Platform       $3.00/mo  MSP + direct    THIRD_PARTY_
+Graphus             Graphus for MSP               $3.00/mo  MSP-only        UNVERIFIED  
+Proofpoint          Essentials Business (PP-ESS-  $3.03/mo  MSP + distribu  VERIFIED_PUB
+Check Point         Harmony Email (Avanan)        $4.00/mo  MSP + direct    THIRD_PARTY_
+VIPRE               Email Security (AWS Marketpl  $4.33/mo  marketplace     MARKETPLACE_
+Mimecast            Email Security (Advanced tie  $4.50/mo  direct + MSP    THIRD_PARTY_
+Hornetsecurity      365 Total Protection          $4.50/mo  MSP-first       UNVERIFIED  
+Barracuda           Email Protection (mid-market  $4.95/mo  direct mid-mar  THIRD_PARTY_
+Microsoft           Defender for Office 365 Plan  $5.00/mo  direct + CSP/M  VERIFIED_PUB
+Barracuda           Email Protection Advanced (d  $5.00/mo  direct SMB + M  THIRD_PARTY_
+Proofpoint          Essentials Advanced+ (PP-ESS  $5.13/mo  MSP + distribu  VERIFIED_PUB
+Proofpoint          Essentials Professional+ (PP  $6.86/mo  MSP + distribu  VERIFIED_PUB
+Barracuda           Email Protection MSP          quote     MSP-only        VERIFIED_PUB
+Acronis             Advanced Email Security (Per  quote     MSP marketplac  VERIFIED_PUB
+Bitdefender         GravityZone Extended Email S  quote     MSP-only        VERIFIED_PUB
+
+## 4. Federation / pool analog table
+Company           Product                     Pool model                            Data cross  Confidence  
+----------------  --------------------------  ------------------------------------  ----------  ------------
+Barracuda         Email Protection MSP        MSP multi-tenant monthly usage billi  no — per-t  VERIFIED_PUB
+Bitdefender       GravityZone Extended Email  Multi-tenant MSP console; cross-cust  no — polic  VERIFIED_PUB
+IRONSCALES        Community threat intellige  Community-sourced phishing intel fee  partial —   THIRD_PARTY_
+Acronis / Percep  Advanced Email Security     MSP consumption pricing + fused mult  no — per-c  VERIFIED_PUB
+ESET              MSP Program / PROTECT Hub   Volume tier breaks — more licenses s  no — custo  VERIFIED_PUB
+Pax8 / Sherweb /  Cloud marketplace email SK  Distributor pool passes through vend  no — billi  THIRD_PARTY_
+Mutant Monkey (c  Immune Federation Mesh      Opted-in MSP pool; first tenant pays  no — HMAC   UNVERIFIED  
+
+## 5. MSP marketplace observations
+- Barracuda MSP: monthly usage-based per account — pool billing at MSP layer.
+- Bitdefender / Acronis: multi-tenant + cross-customer remediation; quote per seat.
+- ESET MSP: explicit volume tier breaks (more seats → lower unit).
+- Pax8/Sherweb: distributor pool for Hornetsecurity, Proofpoint, VIPRE SKUs — verify live.
+
+## 6. Canadian tier scenario bands — smash hypothesis (not locked)
+- Micro SMB — StatCan 1–4 employees (~10 mailboxes) (10 seats)
+  Incumbent band: $3.40/seat → $34/mo – $6.50/seat → $65/mo (Barracuda-class band)
+  Federation hypothesis: $1.25/seat → $12/mo (smash + pool hypothesis)
+  Notes: Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum §11 at pool scale.
+- Typical small — StatCan 5–99 (~40 mailboxes) (40 seats)
+  Incumbent band: $3.40/seat → $136/mo – $6.50/seat → $260/mo (Barracuda-class band)
+  Federation hypothesis: $1.50/seat → $60/mo (smash + pool hypothesis)
+  Notes: Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum §11 at pool scale.
+- Upper small / MSP client (~80 mailboxes) (80 seats)
+  Incumbent band: $3.40/seat → $272/mo – $6.50/seat → $520/mo (Barracuda-class band)
+  Federation hypothesis: $1.75/seat → $140/mo (smash + pool hypothesis)
+  Notes: Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum §11 at pool scale.
+- MSP federation pool (sum of many small tenants) (500 seats)
+  Incumbent band: $3.40/seat → $1700/mo – $6.50/seat → $3250/mo (Barracuda-class band)
+  Federation hypothesis: $1.00/seat → $500/mo (smash + pool hypothesis)
+  Notes: Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum §11 at pool scale.
+
+## 7. UNVERIFIED / manual follow-up
+- Barracuda / Email Protection MSP — VERIFIED_PUBLIC: https://www.barracuda.com/products/email-protection/msp
+- Hornetsecurity / 365 Total Protection — UNVERIFIED: https://www.hornetsecurity.com/
+- Graphus / Graphus for MSP — UNVERIFIED: https://graphus.ai/
+- Acronis / Advanced Email Security (Perception Point) — VERIFIED_PUBLIC: https://www.acronis.com/en/products/cloud/cyber-protect/email-security/
+- Bitdefender / GravityZone Extended Email Security MSP — VERIFIED_PUBLIC: https://www.bitdefender.com/en-us/business/products/gravityzone-extended-email-security-for-msp
+- Mutant Monkey (hypothesis) / Inbox Shield — beside Defender (smash band) — UNVERIFIED: mmi/intake/MMI_INTAKE_2026-06-23-005_Cybersecurity_Poverty_Line_GTM_Thesis.md
+- Mutant Monkey (concept) / Immune Federation Mesh — mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md
+
+## 9. Boundary
+Advisory research only. Matt §11 required before any locked pricing or GTM claim.
+Does not advance MMI-DEC-132 in decision log — operator review after --write.

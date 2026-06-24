@@ -24,12 +24,23 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Stage A a05 — mesh hardening research closeout (MMI-DEC-131)
+LAST_COMPLETED: Stage B b01 — federation SMB seat economics + poverty-line thesis (MMI-DEC-132)
+  (`mmi/research/MMI_FEDERATION_SMB_SEAT_ECONOMICS_RESEARCH_MMI-DEC-132.md`;
+  `mmi/intake/MMI_INTAKE_2026-06-23-005_Cybersecurity_Poverty_Line_GTM_Thesis.md`;
+  smash pricing hypothesis; conditional price framing — base = decision layer only;
+  swarm/Lung/federation separate; **not** locked MSRP; **not** build authorization).
+
+PRIOR_LAST_COMPLETED: Stage A end — platform credibility closeout (MMI-DEC-130)
+  (`mmi/research/MMI_STAGE_A_PLATFORM_CREDIBILITY_CLOSEOUT_MMI-DEC-130.md`;
+  GATED stack + docs posture; Todd intake historical — not end gate;
+  re-staged to Stage B federation-first per MMI-DEC-135).
+
+PRIOR: Mission map re-stage — federation-first Stage B (MMI-DEC-135)
   (`mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md`;
   hardening addendum research register; pricing/copy caps/consent/protobuf closed;
-  **advisory only** — no mesh production code; **not** build authorization).
+  **advisory only** — no mesh production code).
 
-PRIOR_LAST_COMPLETED: Stage A a04 — MSP pilot motion intake Todd / CMIT (MMI-DEC-129 VERIFY)
+PRIOR: Stage A a04 — MSP pilot motion intake Todd / CMIT (MMI-DEC-129 VERIFY)
   (`mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`; `scripts/mmi_mission_map.py`;
   `mmi/MMI_MISSION_MAP.md` v2; PMV ALL_CLEAR relay to mission map).
 

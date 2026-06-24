@@ -3,6 +3,7 @@
 # Owner: Matt Nichol · Matt §11 only on requires_matt_escalation waypoints
 # Human view: mmi/MMI_MISSION_MAP.md
 # Engine: python3 scripts/mmi_mission_map.py [--position]
+# Re-staged: MMI-DEC-135 (2026-06-23) — Stage A platform credibility closeout + Stage B federation-first
 
 version: 1
 map_id: mmi_chain_of_command_mission_map
@@ -36,14 +37,14 @@ stages:
     waypoints: []
 
   - id: stage_a
-    name: Stage A — decision-support + first MSP motion
+    name: Stage A — platform credibility (GATED stack + docs)
     start:
       label: Organism concept captured (MMI-DEC-125)
       complete_when:
         - type: decision_log_contains
           pattern: MMI-DEC-125
     end:
-      label: One MSP pilot proof milestone (buyer motion, not empty repo)
+      label: Real cyber platform credibility closeout (GATED stack + docs)
       complete_when:
         - type: decision_log_contains
           pattern: MMI-DEC-130
@@ -85,13 +86,11 @@ stages:
         requires_matt_escalation: false
 
       - id: a04
-        label: MSP pilot motion intake (Todd path / commercial lane)
+        label: MSP pilot motion intake (historical — superseded by re-stage)
         hand_to: Claude
         you_do: >-
-          Draft MSP pilot motion intake aligned to mission map commercial lane
-          (beside Defender, BEC/vendor pain, billable-time recovery); file under
-          mmi/intake/; closeout MMI-DEC-129. Matt §11 only if signed contract
-          emerges — not for draft intake.
+          Historical intake filed MMI-DEC-129 (Todd path). Superseded as Stage A
+          end gate by MMI-DEC-135 re-stage; not direction; not Todd-quiz milestone.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-129
@@ -111,76 +110,90 @@ stages:
         requires_matt_escalation: false
 
       - id: a06
-        label: Stage A end — MSP pilot buyer proof milestone
-        hand_to: Matt
+        label: Stage A closeout — platform credibility (GATED stack + docs)
+        hand_to: Cursor
         you_do: >-
-          Operator sign-off on first MSP pilot proof (buyer motion milestone).
-          Separate from build authorization; records Stage A complete (MMI-DEC-130).
+          File Stage A platform credibility closeout inventory (GATED stack, signed
+          contracts, docs posture); records Stage A complete (MMI-DEC-130). Not
+          Todd buyer proof; not NorthStar naming; not build authorization.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-130
-        requires_matt_escalation: true
+        requires_matt_escalation: false
 
   - id: stage_b
-    name: Stage B — wire spine to pilot, Purple v1, mesh contract
+    name: Stage B — federation-first SMB seat economics + swarm program
     start:
       label: Stage A complete (MMI-DEC-130)
       complete_when:
         - type: decision_log_contains
           pattern: MMI-DEC-130
     end:
-      label: Signed mesh contract + Purple v1 slice in pilot posture
+      label: Federation economics anchored + mesh contract path ready
       complete_when:
         - type: decision_log_contains
           pattern: MMI-DEC-140
     waypoints:
       - id: b01
-        label: Immune Federation Mesh contract draft (research-gated)
-        hand_to: Claude
+        label: Federation-first SMB seat economics model
+        hand_to: Gemini+ChatGPT
         you_do: >-
-          Draft signed-contract lane for Immune Federation Mesh using hardened
-          addendum; CONCEPT → CONTRACT_DRAFT only; Matt §11 before build;
-          closeout MMI-DEC-132.
+          Model federation pool seat economics for MSP SMB motion per hardening
+          addendum §11; advisory memo only; closeout MMI-DEC-132. Lung production
+          remains downstream of brain/immune + tenant data.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-132
         requires_matt_escalation: false
 
       - id: b02
-        label: Purple Team attacker-cost v1 slice spec
-        hand_to: Claude
+        label: Brain/immune + tenant-data prerequisite audit (Lung prod gate)
+        hand_to: Cursor
         you_do: >-
-          Spec Purple v1 slice (friction + memory + hardening loop) aligned to
-          parked Purple_Team_Attacker_Cost_Doctrine.md; closeout MMI-DEC-133.
+          Audit brain/HQ + immune GATED stack readiness vs Lung production
+          prerequisites; tenant-data dependency inventory; closeout MMI-DEC-133.
+          Lung prod blocked until this audit passes.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-133
         requires_matt_escalation: false
 
       - id: b03
-        label: Spine-to-pilot wiring plan (no production promotion)
-        hand_to: Cursor
+        label: Immune Federation Mesh contract draft (research-gated)
+        hand_to: Claude
         you_do: >-
-          Draft wiring plan connecting GATED command spine to MSP pilot posture;
-          no registry promotion; no production; closeout MMI-DEC-134.
+          Draft signed-contract lane for Immune Federation Mesh using hardened
+          addendum; CONCEPT → CONTRACT_DRAFT only; Matt §11 before build;
+          closeout MMI-DEC-134.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-134
         requires_matt_escalation: false
 
       - id: b04
-        label: Stage B end — mesh contract signed + pilot wiring authorized
+        label: Governed swarm program charter (70-agent motion)
+        hand_to: Claude
+        you_do: >-
+          Charter federation-adjacent governed swarm program motion aligned to
+          scoreboard; not Todd pilot; not buyer-proof quiz; closeout MMI-DEC-136.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-136
+        requires_matt_escalation: false
+
+      - id: b05
+        label: Stage B end — federation economics + mesh contract fork
         hand_to: Matt
         you_do: >-
-          Matt §11 on mesh contract + authorize pilot wiring fork when ready
-          (MMI-DEC-140). Not implied by draft lanes.
+          Matt §11 on federation SMB seat economics model + mesh contract when
+          ready (MMI-DEC-140). Not implied by draft lanes; not Todd-quiz gate.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-140
         requires_matt_escalation: true
 
   - id: stage_c
-    name: Stage C — federation economics, full Lung dials, production loop
+    name: Stage C — Lung production, federation scale, governed production loop
     start:
       label: Stage B complete (MMI-DEC-140)
       complete_when:
@@ -196,19 +209,21 @@ stages:
         label: Operator Lung Dial wiring spec → signed contract
         hand_to: Claude
         you_do: >-
-          Promote MMI_OPERATOR_LUNG_DIAL_SPEC.md to signed contract lane when
-          Playhouse/tenant calibration inputs exist; closeout MMI-DEC-141.
+          Promote MMI_OPERATOR_LUNG_DIAL_SPEC.md to signed contract lane only
+          after brain/immune + tenant-data prerequisites (MMI-DEC-133) satisfied;
+          closeout MMI-DEC-141.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-141
         requires_matt_escalation: false
 
       - id: c02
-        label: Federation economics model (mesh bus TCO / pulse economics)
-        hand_to: Gemini+ChatGPT
+        label: Federation mesh pilot wiring plan (opt-in MSP pool)
+        hand_to: Cursor
         you_do: >-
-          Model federation pulse economics per hardening addendum; advisory only;
-          closeout MMI-DEC-142.
+          Draft federation mesh pilot wiring plan for opted-in MSP pool; no
+          production promotion; no cross-tenant truth sharing; closeout
+          MMI-DEC-142.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-142
@@ -219,7 +234,7 @@ stages:
         hand_to: Matt
         you_do: >-
           Operator authorization for governed production organism loop
-          (MMI-DEC-150). Not implied by prior stages.
+          (MMI-DEC-150). Lung production not implied without prior stages.
         complete_when:
           - type: decision_log_contains
             pattern: MMI-DEC-150

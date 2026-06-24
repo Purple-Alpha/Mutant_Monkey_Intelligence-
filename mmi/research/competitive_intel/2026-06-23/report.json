@@ -1,0 +1,353 @@
+{
+  "envelope": "SMB_SEAT_PRICING_RESEARCH",
+  "generated_at": "2026-06-23",
+  "git_head": "cabd531363e8",
+  "vendors": [
+    {
+      "vendor": "Microsoft",
+      "product": "Defender for Office 365 Plan 1",
+      "price_model": "per user / month",
+      "usd_per_seat_month": 2.0,
+      "usd_per_seat_year": 24.0,
+      "min_seats": "1",
+      "channel": "direct + CSP/MSP",
+      "includes": "Safe Links, Safe Attachments, anti-phish baseline",
+      "source_url": "https://www.microsoft.com/en-us/security/business/microsoft-defender-office-365-plans",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": "Often bundled in M365 Business Premium; standalone list ~$2/user/mo."
+    },
+    {
+      "vendor": "Microsoft",
+      "product": "Defender for Office 365 Plan 2",
+      "price_model": "per user / month",
+      "usd_per_seat_month": 5.0,
+      "usd_per_seat_year": 60.0,
+      "min_seats": "1",
+      "channel": "direct + CSP/MSP",
+      "includes": "Plan 1 + automation investigation/response, threat trackers",
+      "source_url": "https://www.microsoft.com/en-us/security/business/microsoft-defender-office-365-plans",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": "Bundled in M365 E5; incremental list ~$5/user/mo."
+    },
+    {
+      "vendor": "Proofpoint",
+      "product": "Essentials Business (PP-ESS-BUS)",
+      "price_model": "per active user / month",
+      "usd_per_seat_month": 3.03,
+      "usd_per_seat_year": 36.36,
+      "min_seats": "SMB tier",
+      "channel": "MSP + distributor",
+      "includes": "Inbound/outbound filter, URL defense, DLP filters, 30d emergency inbox",
+      "source_url": "https://www.spambrella.com/wp-content/uploads/2024/05/Proofpoint-Essentials-Pricing-USD.pdf",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": ""
+    },
+    {
+      "vendor": "Proofpoint",
+      "product": "Essentials Advanced+ (PP-ESS-ADV2)",
+      "price_model": "per active user / month",
+      "usd_per_seat_month": 5.13,
+      "usd_per_seat_year": 61.56,
+      "min_seats": "SMB tier",
+      "channel": "MSP + distributor",
+      "includes": "Sandboxing, encryption, BEC defense, warning tags",
+      "source_url": "https://www.spambrella.com/wp-content/uploads/2024/05/Proofpoint-Essentials-Pricing-USD.pdf",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": ""
+    },
+    {
+      "vendor": "Proofpoint",
+      "product": "Essentials Professional+ (PP-ESS-PRO2)",
+      "price_model": "per active user / month",
+      "usd_per_seat_month": 6.86,
+      "usd_per_seat_year": 82.32,
+      "min_seats": "SMB tier",
+      "channel": "MSP + distributor",
+      "includes": "Archiving + full Essentials advanced stack",
+      "source_url": "https://www.spambrella.com/wp-content/uploads/2024/05/Proofpoint-Essentials-Pricing-USD.pdf",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": ""
+    },
+    {
+      "vendor": "Barracuda",
+      "product": "Email Protection (mid-market direct)",
+      "price_model": "per user / month",
+      "usd_per_seat_month": 4.95,
+      "usd_per_seat_year": 59.4,
+      "min_seats": "~50 direct quote floor cited",
+      "channel": "direct mid-market + MSP",
+      "includes": "Email security bundle; $3.40\u20136.50/user/mo band cited",
+      "source_url": "https://www.barracuda.com/products/email-protection/plans",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "Mid-market packaging 100\u20131000 users; sub-20 employee shops buy via MSP not direct."
+    },
+    {
+      "vendor": "Barracuda",
+      "product": "Email Protection Advanced (direct list)",
+      "price_model": "per user / month",
+      "usd_per_seat_month": 5.0,
+      "usd_per_seat_year": 60.0,
+      "min_seats": "<50 users published band",
+      "channel": "direct SMB + MSP monthly usage",
+      "includes": "Email security + awareness + backup bundle positioning",
+      "source_url": "https://www.barracuda.com/pricing",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "Barracuda page shows tiered bands; $5/user/mo cited by cost benchmarks for Advanced bundle."
+    },
+    {
+      "vendor": "Barracuda",
+      "product": "Email Protection MSP",
+      "price_model": "per account / usage-based monthly",
+      "usd_per_seat_month": null,
+      "usd_per_seat_year": null,
+      "min_seats": "MSP program",
+      "channel": "MSP-only",
+      "includes": "Multi-tenant MSP console, monthly billable model",
+      "source_url": "https://www.barracuda.com/products/email-protection/msp",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": "Per-seat USD not published on MSP page \u2014 quote required."
+    },
+    {
+      "vendor": "Mimecast",
+      "product": "Email Security (Advanced tier)",
+      "price_model": "custom quote",
+      "usd_per_seat_month": 4.5,
+      "usd_per_seat_year": 54.0,
+      "min_seats": "quote",
+      "channel": "direct + MSP",
+      "includes": "SEG + CyberGraph + continuity (varies by bundle)",
+      "source_url": "https://costbench.com/compare/mimecast-vs-proofpoint/",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "Mid-market estimate $3\u20136/user/mo; median ACV ~$32k/yr per Vendr deal flow."
+    },
+    {
+      "vendor": "Abnormal Security",
+      "product": "Inbound Email Security",
+      "price_model": "quote + platform fee",
+      "usd_per_seat_month": 2.5,
+      "usd_per_seat_year": 30.0,
+      "min_seats": "enterprise bands",
+      "channel": "direct enterprise",
+      "includes": "API-native M365/GWS BEC/ATO detection",
+      "source_url": "https://underdefense.com/blog/abnormal-security-pricing-guide/",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "List ~$20\u201335/mailbox/yr + $5k\u201315k platform fee; SMB headline $3/mo from benchmarks."
+    },
+    {
+      "vendor": "IRONSCALES",
+      "product": "Email Security Platform",
+      "price_model": "custom quote",
+      "usd_per_seat_month": 3.0,
+      "usd_per_seat_year": 36.0,
+      "min_seats": "quote",
+      "channel": "MSP + direct",
+      "includes": "Mailbox-level AI + community threat feeds",
+      "source_url": "https://underdefense.com/blog/abnormal-security-pricing-guide/",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "Benchmark range $2\u20134/user/mo."
+    },
+    {
+      "vendor": "Check Point",
+      "product": "Harmony Email (Avanan)",
+      "price_model": "custom quote",
+      "usd_per_seat_month": 4.0,
+      "usd_per_seat_year": 48.0,
+      "min_seats": "quote",
+      "channel": "MSP + direct",
+      "includes": "API mailbox security, inline + post-delivery",
+      "source_url": "https://underdefense.com/blog/abnormal-security-pricing-guide/",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "Benchmark $3\u20135/user/mo."
+    },
+    {
+      "vendor": "Hornetsecurity",
+      "product": "365 Total Protection",
+      "price_model": "per user / month (EU list bands)",
+      "usd_per_seat_month": 4.5,
+      "usd_per_seat_year": 54.0,
+      "min_seats": "varies",
+      "channel": "MSP-first",
+      "includes": "Email security + backup + awareness bundle",
+      "source_url": "https://www.hornetsecurity.com/",
+      "confidence": "UNVERIFIED",
+      "notes": "USD list not verified tonight \u2014 EU MSP bundle common in Pax8/Sherweb."
+    },
+    {
+      "vendor": "Graphus",
+      "product": "Graphus for MSP",
+      "price_model": "per mailbox / month",
+      "usd_per_seat_month": 3.0,
+      "usd_per_seat_year": 36.0,
+      "min_seats": "MSP",
+      "channel": "MSP-only",
+      "includes": "AI phishing defense for M365",
+      "source_url": "https://graphus.ai/",
+      "confidence": "UNVERIFIED",
+      "notes": "Public MSP pricing often quote-only; $3 placeholder from SMB benchmark band."
+    },
+    {
+      "vendor": "VIPRE",
+      "product": "Email Security (AWS Marketplace 1\u201399 seats)",
+      "price_model": "per seat / year contract",
+      "usd_per_seat_month": 4.33,
+      "usd_per_seat_year": 52.0,
+      "min_seats": "1\u201399",
+      "channel": "marketplace",
+      "includes": "Inbound/outbound/internal email threat protection",
+      "source_url": "https://aws.amazon.com/marketplace/pp/prodview-tibxt7x327ew6",
+      "confidence": "MARKETPLACE_LIST",
+      "notes": ""
+    },
+    {
+      "vendor": "Acronis",
+      "product": "Advanced Email Security (Perception Point)",
+      "price_model": "consumption-based",
+      "usd_per_seat_month": null,
+      "usd_per_seat_year": null,
+      "min_seats": "MSP",
+      "channel": "MSP marketplace",
+      "includes": "API M365 email security + threat intel fusion",
+      "source_url": "https://www.acronis.com/en/products/cloud/cyber-protect/email-security/",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": "Per-seat USD not on public page; consumption pricing for MSPs."
+    },
+    {
+      "vendor": "Bitdefender",
+      "product": "GravityZone Extended Email Security MSP",
+      "price_model": "MSP add-on (quote)",
+      "usd_per_seat_month": null,
+      "usd_per_seat_year": null,
+      "min_seats": "MSP multi-tenant",
+      "channel": "MSP-only",
+      "includes": "Gateway + API dual-layer; cross-customer remediation",
+      "source_url": "https://www.bitdefender.com/en-us/business/products/gravityzone-extended-email-security-for-msp",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": "Multi-tenant pool management; USD per seat not published."
+    },
+    {
+      "vendor": "Mutant Monkey (hypothesis)",
+      "product": "Inbox Shield \u2014 beside Defender (smash band)",
+      "price_model": "per seat / federation pool tier (DRAFT)",
+      "usd_per_seat_month": 1.5,
+      "usd_per_seat_year": 18.0,
+      "min_seats": "no enterprise minimum \u2014 MSP pool",
+      "channel": "MSP-first \u00b7 Canadian SMB",
+      "includes": "Poverty-line crossing: BEC/vendor evidence beside Defender; federation pool discount",
+      "source_url": "mmi/intake/MMI_INTAKE_2026-06-23-005_Cybersecurity_Poverty_Line_GTM_Thesis.md",
+      "confidence": "UNVERIFIED",
+      "notes": "SMASH HYPOTHESIS ~$1\u20132/seat; pool ~$1/seat at federation scale. NOT locked MSRP. Matt 2026-06-23."
+    }
+  ],
+  "federation_analogs": [
+    {
+      "company": "Barracuda",
+      "product": "Email Protection MSP",
+      "pool_model": "MSP multi-tenant monthly usage billing across customer accounts",
+      "tenant_data_crosses": "no \u2014 per-tenant mailboxes; centralized MSP ops",
+      "pricing_note": "Monthly per-account usage; pool economics via MSP margin stack",
+      "source_url": "https://www.barracuda.com/products/email-protection/msp",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": ""
+    },
+    {
+      "company": "Bitdefender",
+      "product": "GravityZone Extended Email Security MSP",
+      "pool_model": "Multi-tenant MSP console; cross-customer threat response from one pane",
+      "tenant_data_crosses": "no \u2014 policies per customer; shared intel across tenants",
+      "pricing_note": "MSP add-on to GravityZone MSP stack; quote-based pool licensing",
+      "source_url": "https://www.bitdefender.com/en-us/business/products/gravityzone-extended-email-security-for-msp",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": ""
+    },
+    {
+      "company": "IRONSCALES",
+      "product": "Community threat intelligence",
+      "pool_model": "Community-sourced phishing intel feeds mailbox-level detection",
+      "tenant_data_crosses": "partial \u2014 anonymized campaign indicators; not raw mail sharing",
+      "pricing_note": "Custom quote; community model lowers repeat-campaign cost",
+      "source_url": "https://ironscales.com/",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "Closest commercial analog to shared threat shape without shared inbox."
+    },
+    {
+      "company": "Acronis / Perception Point",
+      "product": "Advanced Email Security",
+      "pool_model": "MSP consumption pricing + fused multi-source threat intel",
+      "tenant_data_crosses": "no \u2014 per-client forensics; pooled analyst ops for MSP",
+      "pricing_note": "Consumption-based MSP billing; intel pooled at service layer",
+      "source_url": "https://www.acronis.com/en/products/cloud/cyber-protect/email-security/",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": ""
+    },
+    {
+      "company": "ESET",
+      "product": "MSP Program / PROTECT Hub",
+      "pool_model": "Volume tier breaks \u2014 more licenses sold \u2192 better unit price",
+      "tenant_data_crosses": "no \u2014 customer structure synced; no cross-tenant mail access",
+      "pricing_note": "Classic MSP pooled seat discount ladder",
+      "source_url": "https://www.eset.com/us/business/partners/msp/",
+      "confidence": "VERIFIED_PUBLIC",
+      "notes": ""
+    },
+    {
+      "company": "Pax8 / Sherweb / marketplace",
+      "product": "Cloud marketplace email SKU aggregation",
+      "pool_model": "Distributor pool passes through vendor tiers + MSP markup band",
+      "tenant_data_crosses": "no \u2014 billing aggregation only",
+      "pricing_note": "Effective pool pricing via distributor tiers; SKU-specific",
+      "source_url": "https://www.pax8.com/",
+      "confidence": "THIRD_PARTY_ESTIMATE",
+      "notes": "Check live marketplace for Hornetsecurity, Proofpoint, VIPRE SKUs."
+    },
+    {
+      "company": "Mutant Monkey (concept)",
+      "product": "Immune Federation Mesh",
+      "pool_model": "Opted-in MSP pool; first tenant pays synthesis, peers pay deterministic match",
+      "tenant_data_crosses": "no \u2014 HMAC pathogen pulses only; Guardrail 11",
+      "pricing_note": "Draft: marginal cost drops on repeat campaigns per addendum \u00a711",
+      "source_url": "mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md",
+      "confidence": "UNVERIFIED",
+      "notes": "Target model \u2014 not a market comp; federation-first Stage B hypothesis."
+    }
+  ],
+  "scenarios": [
+    {
+      "name": "Micro SMB \u2014 StatCan 1\u20134 employees (~10 mailboxes)",
+      "seat_count": 10,
+      "incumbent_range_usd_month": "$3.40/seat \u2192 $34/mo \u2013 $6.50/seat \u2192 $65/mo (Barracuda-class band)",
+      "federation_hypothesis_usd_month": "$1.25/seat \u2192 $12/mo (smash + pool hypothesis)",
+      "notes": "Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum \u00a711 at pool scale."
+    },
+    {
+      "name": "Typical small \u2014 StatCan 5\u201399 (~40 mailboxes)",
+      "seat_count": 40,
+      "incumbent_range_usd_month": "$3.40/seat \u2192 $136/mo \u2013 $6.50/seat \u2192 $260/mo (Barracuda-class band)",
+      "federation_hypothesis_usd_month": "$1.50/seat \u2192 $60/mo (smash + pool hypothesis)",
+      "notes": "Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum \u00a711 at pool scale."
+    },
+    {
+      "name": "Upper small / MSP client (~80 mailboxes)",
+      "seat_count": 80,
+      "incumbent_range_usd_month": "$3.40/seat \u2192 $272/mo \u2013 $6.50/seat \u2192 $520/mo (Barracuda-class band)",
+      "federation_hypothesis_usd_month": "$1.75/seat \u2192 $140/mo (smash + pool hypothesis)",
+      "notes": "Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum \u00a711 at pool scale."
+    },
+    {
+      "name": "MSP federation pool (sum of many small tenants)",
+      "seat_count": 500,
+      "incumbent_range_usd_month": "$3.40/seat \u2192 $1700/mo \u2013 $6.50/seat \u2192 $3250/mo (Barracuda-class band)",
+      "federation_hypothesis_usd_month": "$1.00/seat \u2192 $500/mo (smash + pool hypothesis)",
+      "notes": "Cross Cybersecurity Poverty Line: no minimum-seat wall; repeat-campaign marginal cost drops per addendum \u00a711 at pool scale."
+    }
+  ],
+  "unverified": [
+    "Barracuda / Email Protection MSP \u2014 VERIFIED_PUBLIC: https://www.barracuda.com/products/email-protection/msp",
+    "Hornetsecurity / 365 Total Protection \u2014 UNVERIFIED: https://www.hornetsecurity.com/",
+    "Graphus / Graphus for MSP \u2014 UNVERIFIED: https://graphus.ai/",
+    "Acronis / Advanced Email Security (Perception Point) \u2014 VERIFIED_PUBLIC: https://www.acronis.com/en/products/cloud/cyber-protect/email-security/",
+    "Bitdefender / GravityZone Extended Email Security MSP \u2014 VERIFIED_PUBLIC: https://www.bitdefender.com/en-us/business/products/gravityzone-extended-email-security-for-msp",
+    "Mutant Monkey (hypothesis) / Inbox Shield \u2014 beside Defender (smash band) \u2014 UNVERIFIED: mmi/intake/MMI_INTAKE_2026-06-23-005_Cybersecurity_Poverty_Line_GTM_Thesis.md",
+    "Mutant Monkey (concept) / Immune Federation Mesh \u2014 mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md"
+  ],
+  "refresh_notes": []
+}

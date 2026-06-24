@@ -1,6 +1,6 @@
 # MMI Mission Map — Staged Chain of Command
 
-**Status:** **Chain-of-command routing authority** for ALL_CLEAR delegable lanes (MMI-DEC-126)
+**Status:** **Chain-of-command routing authority** for ALL_CLEAR delegable lanes (MMI-DEC-126 · re-staged MMI-DEC-135)
 
 **Machine map:** `mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`
 
@@ -8,7 +8,7 @@
 
 **Owner:** Matt Nichol — Matt §11 only on `requires_matt_escalation` waypoints
 
-**Last updated:** 2026-06-24
+**Last updated:** 2026-06-23
 
 **Rule:** Every stage has a **START → waypoints (dots) → END**. PMV reads the engine; Matt is not asked to pick direction on delegable waypoints.
 
@@ -31,7 +31,7 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 
 **Matt is NOT the direction-picker** on delegable lanes. He sniffs markers; the map connects the dots.
 
-**Matt IS required** for: §11 signatures, BOR unpark, GOVERNED_AGENT promotion, Stage A/B/C end milestones.
+**Matt IS required** for: §11 signatures, BOR unpark, GOVERNED_AGENT promotion, Stage B/C end milestones.
 
 ---
 
@@ -41,9 +41,10 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 |---|---|
 | **Dispatcher** | ALL_CLEAR — 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT |
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
-| **Active stage** | **Stage A** — decision-support + first MSP motion |
-| **Next waypoint** | **a06** — MSP pilot buyer proof milestone → **Matt only** (MMI-DEC-130) |
-| **Last closed** | MMI-DEC-131 mesh hardening research closeout |
+| **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
+| **Active stage** | **Stage B** — federation-first SMB seat economics + swarm program |
+| **Next waypoint** | **b02** — Brain/immune + tenant-data audit (Lung prod gate) → **Cursor** |
+| **Last closed** | MMI-DEC-132 federation SMB seat economics + poverty-line thesis |
 
 ---
 
@@ -54,7 +55,7 @@ Brain/HQ     → Commander #1, Mission Context #2, Reconciliation #84
 Limbs        → 70 scoreboard specialists
 Shadow       → Shadow Watcher Swarm (fraud sensors, back line)
 Nervous      → W1–W3 #85–87 (swarm health; multiplier trigger)
-Lung         → Load Multiplier #90/#103 (inflate / exhale)
+Lung         → Load Multiplier #90/#103 (inflate / exhale) — prod downstream of brain/immune + tenant data
 Immune       → CIS, Safe-Stop, Mode Controller, BRC
 Purple       → friction + memory + hardening (attacker cost)
 Mesh (B/C)   → Immune Federation — shared threat shape, never shared tenant truth
@@ -64,11 +65,15 @@ Mesh (B/C)   → Immune Federation — shared threat shape, never shared tenant 
 
 ## Commercial lane (honest)
 
+**GTM frame:** **Cybersecurity Poverty Line** — Canadian SMBs (StatCan 5–99 employees; micro 1–4) deserve Barracuda-**quality** inbox defense but hit **Minimum Seat** and **TCO** walls. Mutant Monkey crosses that line: smash per-seat economics via MSP federation pools, quality in the evidence chain. See `mmi/intake/MMI_INTAKE_2026-06-23-005_Cybersecurity_Poverty_Line_GTM_Thesis.md`.
+
 **Sell:** explain without blocking · documented override · MSP billable-time recovery · BEC/vendor payment pain
 
-**Do not lead with:** cyber insurance mandatory narrative · beating Barracuda on price · replacing Microsoft Defender filter
+**Do not lead with:** cyber insurance mandatory narrative · beating Barracuda on feature parity · replacing Microsoft Defender filter · Todd buyer-quiz gate · corporate-league price matching
 
-**Position:** **Beside** Defender — decision layer + Lung dials
+**Position:** **Beside** Defender — decision layer + Lung dials · **smash** pricing (~$1–2/seat hypothesis), not mid-market nibbling
+
+**Price framing (conditional):** If smash price hurts credibility, package explicitly — base seat = **Inbox Shield decision layer only**; full agentic swarm + Lung scale + federation mesh = **separate tiers**, not implied in base. Default pitch stays simple; use framing only when buyer needs “serious product boundary.” See INTAKE-2026-06-23-005 §9.
 
 **Buyer voice (MMI-DEC-128):** say **Lung Multiplier** for elastic capacity — not "fission" or "Agent Fission" in GTM copy. Scoreboard rows `#90` / `#91` and `core/fission/` stay engineering names on disk.
 
@@ -100,33 +105,36 @@ END    Spine wrappers GATED; annex in force; no production wiring
 
 ---
 
-### Stage A — ACTIVE (decision-support + first MSP motion)
+### Stage A — COMPLETE (platform credibility · GATED stack + docs)
 
 ```text
 START  Organism concept captured (MMI-DEC-125)
   · a01  Chain-of-command mission map engine + PMV wiring      → Cursor   [MMI-DEC-126]
   · a02  Swarm Build Map reconciliation                        → Cursor   [MMI-DEC-127]
   · a03  Terminology purge → Lung Multiplier (buyer voice)           ✓ [MMI-DEC-128]
-  · a04  MSP pilot motion intake (Todd / commercial lane)          ✓ [MMI-DEC-129 VERIFY]
+  · a04  MSP pilot motion intake (historical — superseded)           ✓ [MMI-DEC-129]
   · a05  Mesh hardening research closeout (Phase B prep)            ✓ [MMI-DEC-131]
-  · a06  MSP pilot buyer proof milestone                        → Matt     [MMI-DEC-130]
-END    One MSP pilot proof — buyer motion, not empty repo
+  · a06  Platform credibility closeout (GATED stack + docs)         ✓ [MMI-DEC-130]
+END    Real cyber platform credibility — not Todd buyer proof
 ```
 
-Research lane on mesh pricing / copy caps / legal consent / protobuf **closed at MMI-DEC-131**. Stage B mesh contract draft (`b01`) blocked until Stage A end (MMI-DEC-130).
+Re-staged per MMI-DEC-135. Todd intake remains on file; not Stage A end gate.
 
 ---
 
-### Stage B — BLOCKED until Stage A END (MMI-DEC-130)
+### Stage B — ACTIVE (federation-first SMB seat economics + swarm program)
 
 ```text
-START  Stage A complete
-  · b01  Immune Federation Mesh contract draft                  → Claude
-  · b02  Purple Team attacker-cost v1 slice spec                → Claude
-  · b03  Spine-to-pilot wiring plan (no production)             → Cursor
-  · b04  Mesh contract §11 + pilot wiring fork                  → Matt
-END    Signed mesh contract + Purple v1 in pilot posture
+START  Stage A complete (MMI-DEC-130)
+  · b01  Federation-first SMB seat economics + poverty-line thesis     ✓ [MMI-DEC-132]
+  · b02  Brain/immune + tenant-data audit (Lung prod gate)            → Cursor
+  · b03  Immune Federation Mesh contract draft                         → Claude
+  · b04  Governed swarm program charter (70-agent motion)              → Claude
+  · b05  Federation economics + mesh contract fork                     → Matt
+END    Federation economics anchored + mesh contract path ready
 ```
+
+**Lung production** remains downstream of brain/immune GATED stack + tenant data (`b02` gate).
 
 ---
 
@@ -135,14 +143,14 @@ END    Signed mesh contract + Purple v1 in pilot posture
 ```text
 START  Stage B complete
   · c01  Operator Lung Dial spec → signed contract              → Claude
-  · c02  Federation economics model                             → Research
+  · c02  Federation mesh pilot wiring plan (opt-in MSP pool)      → Cursor
   · c03  Governed production organism loop                      → Matt
 END    Self-evolving organism in governed production posture
 ```
 
 ---
 
-## Concept docs (research — not build until map reaches Stage B)
+## Concept docs (research — not build until map reaches Stage B/C)
 
 | Doc | Role |
 |---|---|
@@ -156,4 +164,4 @@ END    Self-evolving organism in governed production posture
 
 BOR unpark (#67), GOVERNED_AGENT promotion reviews, and rubric-ranked alternates remain **hold unless Matt unparks** — they do not override the mission map chain.
 
-Matt Nichol — mission map v2 (chain-of-command).
+Matt Nichol — mission map v3 (federation-first re-stage · MMI-DEC-135).
