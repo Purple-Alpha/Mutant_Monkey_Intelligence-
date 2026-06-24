@@ -311,14 +311,17 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             ],
         )
         with patch.object(self.mod, "_is_contract_signed", return_value=True):
-            fields = self.mod.compose_voice(
-                evidence,
-                repo_root=self.mod._repo_root(),
-            )
-        self.assertEqual(fields["HAND_IT_TO"], "Matt")
-        self.assertIn("Select one ranked lane", fields["WHAT_NEEDS_MATT"])
-        self.assertEqual(fields["IN_FLIGHT"], "none")
-        self.assertIn("ranked lane", fields["YOU_DO"].lower())
+            with patch.object(self.mod, "_command_spine_wrappers_gated", return_value=True):
+                with patch.object(
+                    self.mod, "_routing_policy_annex_pending", return_value=True
+                ):
+                    fields = self.mod.compose_voice(
+                        evidence,
+                        repo_root=self.mod._repo_root(),
+                    )
+        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertIn("Chain-of-command next lane", fields["WHAT_NEEDS_MATT"])
+        self.assertIn("routing-policy annex", fields["YOU_DO"])
         self.assertNotIn("Grok pre-build gate", fields["YOU_DO"])
         self.assertNotIn("§11 signed", fields["WHAT_NEEDS_MATT"])
 
@@ -341,14 +344,16 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             ],
         )
         with patch.object(self.mod, "_is_contract_signed", return_value=True):
-            fields = self.mod.compose_voice(
-                evidence,
-                repo_root=self.mod._repo_root(),
-            )
-        self.assertEqual(fields["HAND_IT_TO"], "Matt")
-        self.assertIn("Select one ranked lane", fields["WHAT_NEEDS_MATT"])
-        self.assertEqual(fields["IN_FLIGHT"], "none")
-        self.assertIn("ranked lane", fields["YOU_DO"].lower())
+            with patch.object(self.mod, "_command_spine_wrappers_gated", return_value=True):
+                with patch.object(
+                    self.mod, "_routing_policy_annex_pending", return_value=True
+                ):
+                    fields = self.mod.compose_voice(
+                        evidence,
+                        repo_root=self.mod._repo_root(),
+                    )
+        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertIn("Chain-of-command next lane", fields["WHAT_NEEDS_MATT"])
         self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
         self.assertNotIn("Authorize reconcile", fields["YOU_DO"])
         self.assertNotIn("§11 signed", fields["WHAT_NEEDS_MATT"])
@@ -376,9 +381,14 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertIn("MMI-DEC-095", fields["WHY"])
-        self.assertIn("MMI-DEC-098", fields["WHY"])
-        self.assertIn("MMI-DEC-102", fields["WHY"])
+        if self.mod._command_spine_wrappers_gated(self.mod._repo_root()):
+            self.assertEqual(fields["HAND_IT_TO"], "Claude")
+            self.assertIn("routing-policy annex", fields["WHAT_NEEDS_MATT"].lower())
+            self.assertIn("MMI-DEC-116", fields["WHY"])
+        else:
+            self.assertIn("MMI-DEC-095", fields["WHY"])
+            self.assertIn("MMI-DEC-098", fields["WHY"])
+            self.assertIn("MMI-DEC-102", fields["WHY"])
         self.assertIn("§11 SIGNED", fields["IGNORE_FOR_NOW"])
         self.assertIn("001_swarm_commander_contract.md", fields["IGNORE_FOR_NOW"])
         self.assertIn("003_risk_triage_contract.md", fields["IGNORE_FOR_NOW"])
@@ -462,11 +472,15 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             ],
         )
         fields = self.mod.compose_voice(evidence, repo_root=root)
-        self.assertEqual(fields["HAND_IT_TO"], "Matt")
-        self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
-        self.assertIn("MMI-DEC-098", fields["IN_FLIGHT"])
-        self.assertNotIn("Matt §11 sign", fields["YOU_DO"])
-        self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
+        if self.mod._command_spine_wrappers_gated(root):
+            self.assertEqual(fields["HAND_IT_TO"], "Claude")
+            self.assertIn("routing-policy annex", fields["YOU_DO"])
+        else:
+            self.assertEqual(fields["HAND_IT_TO"], "Matt")
+            self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
+            self.assertIn("MMI-DEC-098", fields["IN_FLIGHT"])
+            self.assertNotIn("Matt §11 sign", fields["YOU_DO"])
+            self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
 
     def test_t7k_unparked_1_draft_on_disk_routes_codex_gate(self):
         evidence = self.mod.VoiceEvidence(
@@ -550,11 +564,16 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertEqual(fields["HAND_IT_TO"], "Matt")
-        self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
-        self.assertIn("MMI-DEC-102", fields["IN_FLIGHT"])
-        self.assertNotIn("Matt §11 sign", fields["YOU_DO"])
-        self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
+        root = self.mod._repo_root()
+        if self.mod._command_spine_wrappers_gated(root):
+            self.assertEqual(fields["HAND_IT_TO"], "Claude")
+            self.assertIn("routing-policy annex", fields["YOU_DO"])
+        else:
+            self.assertEqual(fields["HAND_IT_TO"], "Matt")
+            self.assertIn("§11 signed", fields["WHAT_NEEDS_MATT"])
+            self.assertIn("MMI-DEC-102", fields["IN_FLIGHT"])
+            self.assertNotIn("Matt §11 sign", fields["YOU_DO"])
+            self.assertNotIn("SIGNED_UNBUILT", fields["WHAT_NEEDS_MATT"])
 
     def test_t7l_unparked_1_no_draft_routes_claude_contract_draft(self):
         evidence = self.mod.VoiceEvidence(
@@ -684,6 +703,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Pre-build gate clean", out)
             self.assertIn("mmi_01_contract_gate", out)
+        elif "Chain-of-command next lane" in out and "routing-policy annex" in out:
+            self.assertIn("HAND_IT_TO:\nClaude", out)
+            self.assertIn("001_swarm_commander_routing_policy_annex.md", out)
         elif "Select one ranked lane" in out and "#1 Swarm Commander contract §11 signed" in out:
             pass
         elif "Select one ranked lane" in out:

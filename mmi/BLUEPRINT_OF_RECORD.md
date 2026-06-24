@@ -1,6 +1,6 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-22 (MMI-DEC-102). #1 contract §11 signed; spine pair (#1 routes / #3 scores) locked; hold-only feedstock.
+**Status:** CURRENT_PLAN populated 2026-06-24 (MMI-DEC-117). Command spine #1–#3 GATED at wrapper layer; PMV chain relay to routing-policy annex fork.
 
 **Classification:** Shared crew artifact · Blueprint of Record
 
@@ -10,16 +10,16 @@
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v10
+## CURRENT_PLAN — ALL_CLEAR feedstock v11
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v10
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v10
-population_decision: MMI-DEC-102
-created_at: 2026-06-22
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v11
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v11
+population_decision: MMI-DEC-117
+created_at: 2026-06-24
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: scoreboard print + #1 contract §11 sign (MMI-DEC-102) + signed #3 sibling (MMI-DEC-098)
-revision_reason: #1 Swarm Commander contract §11 signed; remove active CONTRACT_DRAFT feedstock rank; restore hold-only; spine contracts complete at review layer
+architect_blueprint_source: Command spine #1–#3 GATED at wrapper layer (MMI-DEC-112/109/116); PMV chain relay
+revision_reason: Command spine wrappers complete; chain-of-command next fork is routing-policy annex draft; hold-only feedstock unchanged
 non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, contract draft, promotion, or registry dispatch.
 
 When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
@@ -29,12 +29,30 @@ feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=
 feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
 Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  Command spine #1 Swarm Commander — GATED wrapper (MMI-DEC-112); not GOVERNED_AGENT; not wired
+  Command spine #2 Mission Context — GATED wrapper (MMI-DEC-109); not GOVERNED_AGENT; not wired
+  Command spine #3 Risk Triage — GATED wrapper (MMI-DEC-116); not GOVERNED_AGENT; not wired
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
-  #1 Swarm Commander Agent — contract §11 signed at docs/mmi/contracts/001_swarm_commander_contract.md (MMI-DEC-102); **not** build / **not** SIGNED_UNBUILT
-  #3 Risk Triage Agent — contract §11 signed at docs/mmi/contracts/003_risk_triage_contract.md (MMI-DEC-098); **not** build / **not** SIGNED_UNBUILT
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
-Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock; no active unparked spine contract lanes.
+Chain-of-command next fork (PMV relay; not feedstock authorization): routing-policy annex draft for #1 (`docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`) per MMI-DEC-116.
+
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock; spine wrappers GATED; PMV reads live rubric for chain relay.
+
+---
+
+## Prior ALL_CLEAR v10 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v10
+supersedes: BOR-ALL-CLEAR-FEEDSTOCK-v9
+population_decision: MMI-DEC-102
+revision_reason: Superseded by v11 after Command spine #1–#3 GATED (MMI-DEC-116) + PMV chain relay (MMI-DEC-117)
+
+Historical v10 feedstock (inactive — do not parse):
+  feedstock_entry: priority=hold candidate_id=#67 lane_type=CONTRACT_DRAFT name=Rule Improvement hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#47 lane_type=PROMOTION_REVIEW name=Case Timeline hold_unless_matt=true
+  feedstock_entry: priority=hold candidate_id=#52 lane_type=PROMOTION_REVIEW name=Plain-English Explanation hold_unless_matt=true
 
 ---
 

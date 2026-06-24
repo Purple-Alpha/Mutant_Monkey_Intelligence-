@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import importlib.util
 import re
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -43,6 +44,12 @@ CONTRACT_REVIEW_ON_DISK = {
     "#2": "docs/mmi/contracts/002_mission_context_contract.md",
     "#3": "docs/mmi/contracts/003_risk_triage_contract.md",
 }
+ROUTING_POLICY_ANNEX_REL = (
+    "docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md"
+)
+RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
+COMMAND_SPINE_IDS = ("#1", "#2", "#3")
+CLOSED_LIFECYCLE_PREFIXES = ("GATED", "GOVERNED_AGENT", "INFRASTRUCTURE_BUILT")
 
 
 def _spine_contract_signed(root: Path, candidate_id: str) -> bool:
@@ -184,6 +191,72 @@ def _scoreboard_row_blockers(scoreboard: str, candidate_id: str) -> str:
     return ""
 
 
+def _scoreboard_runtime_prefix(scoreboard: str, candidate_id: str) -> str:
+    num = candidate_id.lstrip("#")
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 3:
+            continue
+        if parts[0].lstrip("#") != num:
+            continue
+        cell = parts[2]
+        head = cell.split("—")[0].strip("` ")
+        for prefix in CLOSED_LIFECYCLE_PREFIXES + (
+            "SIGNED_UNBUILT",
+            "AWAITING_AUDIT",
+            "SIGNED_CONTRACT",
+            "DETECTOR_FUNCTION",
+        ):
+            if head.startswith(prefix) or f"`{prefix}`" in cell:
+                return prefix
+        token = head.split()[0] if head else ""
+        return token.strip("`")
+    return ""
+
+
+def _is_closed_lifecycle(scoreboard: str, candidate_id: str) -> bool:
+    prefix = _scoreboard_runtime_prefix(scoreboard, candidate_id)
+    return prefix.startswith(CLOSED_LIFECYCLE_PREFIXES)
+
+
+def command_spine_wrappers_gated(scoreboard: str) -> bool:
+    for candidate_id in COMMAND_SPINE_IDS:
+        if not _scoreboard_runtime_prefix(scoreboard, candidate_id).startswith("GATED"):
+            return False
+    return True
+
+
+def _git_head_short(root: Path) -> str:
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=root,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if proc.returncode == 0:
+            return proc.stdout.strip()
+    except OSError:
+        pass
+    return ""
+
+
+def _ranked_board_stale(root: Path) -> bool:
+    ranked_path = root / RANKED_ACTIONS_REL
+    if not ranked_path.is_file():
+        return True
+    text = _read_text(ranked_path)
+    match = re.search(r"^git_head:\s*(\S+)", text, re.MULTILINE)
+    if not match:
+        return True
+    pinned = match.group(1)
+    current = _git_head_short(root)
+    return bool(current) and pinned != current
+
+
 def generate_candidates(root: Path) -> list[RubricCandidate]:
     scoreboard = _read_text(root / SCOREBOARD_REL)
     bor = _read_text(root / BOR_PATH_REL)
@@ -196,8 +269,12 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
         seen.add(candidate.action_id)
         out.append(candidate)
 
+    spine_gated = command_spine_wrappers_gated(scoreboard)
+
     for entry in _parse_bor_hold_entries(bor):
         cid = entry["candidate_id"]
+        if _is_closed_lifecycle(scoreboard, cid):
+            continue
         add(
             RubricCandidate(
                 action_id=f"bor_unpark_{cid}",
@@ -227,6 +304,8 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
     for cid, rel in CONTRACT_REVIEW_ON_DISK.items():
         path = root / rel
         if path.is_file() and _is_contract_signed(_read_text(path)):
+            if _is_closed_lifecycle(scoreboard, cid):
+                continue
             add(
                 RubricCandidate(
                     action_id=f"build_auth_{cid}",
@@ -243,6 +322,8 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
             )
 
     for cid in ("#47", "#52"):
+        if not _scoreboard_runtime_prefix(scoreboard, cid).startswith("GATED"):
+            continue
         if f"| {cid.lstrip('#')} " in scoreboard or f"| {cid} " in scoreboard:
             add(
                 RubricCandidate(
@@ -255,15 +336,31 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
                 )
             )
 
-    add(
-        RubricCandidate(
-            action_id="admin_lane_board_sync",
-            label="Refresh ranked lane board (mmi_lane_board_sync + handshake pin)",
-            primary_scope="admin",
-            kind="admin",
-            edit_path_count=2,
+    annex_path = root / ROUTING_POLICY_ANNEX_REL
+    if spine_gated and not annex_path.is_file():
+        add(
+            RubricCandidate(
+                action_id="routing_policy_annex_draft",
+                label=(
+                    "Draft #1 routing-policy annex (Command spine GATED; "
+                    "read-only #3 telemetry wiring)"
+                ),
+                primary_scope="#1",
+                kind="routing_annex",
+                edit_path_count=1,
+            )
         )
-    )
+
+    if _ranked_board_stale(root):
+        add(
+            RubricCandidate(
+                action_id="admin_lane_board_sync",
+                label="Refresh ranked lane board (mmi_lane_board_sync + handshake pin)",
+                primary_scope="admin",
+                kind="admin",
+                edit_path_count=2,
+            )
+        )
 
     add(
         RubricCandidate(
@@ -279,6 +376,8 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
 
 
 def _score_leverage(candidate: RubricCandidate, scoreboard: str) -> int:
+    if candidate.kind == "routing_annex":
+        return 2
     if candidate.kind in ("hold", "admin"):
         return 0
     if candidate.downstream_ids:
@@ -296,6 +395,8 @@ def _score_leverage(candidate: RubricCandidate, scoreboard: str) -> int:
 
 
 def _score_risk_reduction(candidate: RubricCandidate, root: Path) -> int:
+    if candidate.kind == "routing_annex":
+        return 2
     if candidate.kind == "admin":
         return 1
     if candidate.kind == "hold":
@@ -308,6 +409,8 @@ def _score_risk_reduction(candidate: RubricCandidate, root: Path) -> int:
 
 def _score_evidence(candidate: RubricCandidate, root: Path) -> int:
     scope = candidate.primary_scope
+    if candidate.kind == "routing_annex":
+        return 2
     if candidate.kind == "hold":
         return 0
     if scope.startswith("#"):
@@ -464,6 +567,10 @@ def parse_ranked_markdown(text: str) -> list[dict[str, str]]:
             continue
         if line.startswith("**") and line.endswith("**") and "ACTION" not in line:
             current["label"] = line.strip("*")
+        if line.startswith("- action_id:"):
+            match = re.search(r"`([^`]+)`", line)
+            if match:
+                current["action_id"] = match.group(1)
         if line.startswith("- **TOTAL:"):
             current["total"] = line.split(":")[-1].strip().strip("*")
     if current.get("label"):

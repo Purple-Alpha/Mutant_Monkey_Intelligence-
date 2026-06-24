@@ -79,6 +79,11 @@ RUBRIC_BINARY_CALIBRATION_AMENDMENT_REL = (
     "4. Product_Roadmap/Next_Action_Decision_Rubric_Binary_Calibration_Amendment_Deep_Dive.md"
 )
 RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
+SCOREBOARD_REL = "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md"
+ROUTING_POLICY_ANNEX_REL = (
+    "docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md"
+)
+COMMAND_SPINE_IDS = ("#1", "#2", "#3")
 
 CONTRACT_SIGNED_DECISION: dict[str, str] = {
     "#1": "MMI-DEC-102",
@@ -213,6 +218,121 @@ def _read_text(path: Path) -> str:
         return ""
 
 
+def _scoreboard_runtime_prefix(scoreboard: str, candidate_id: str) -> str:
+    num = candidate_id.lstrip("#")
+    for line in scoreboard.splitlines():
+        if not line.startswith("|"):
+            continue
+        parts = [p.strip() for p in line.strip().strip("|").split("|")]
+        if len(parts) < 3:
+            continue
+        if parts[0].lstrip("#") != num:
+            continue
+        cell = parts[2]
+        head = cell.split("—")[0].strip("` ")
+        for prefix in CLOSED_LIFECYCLE_PREFIXES + (
+            "SIGNED_UNBUILT",
+            "AWAITING_AUDIT",
+            "SIGNED_CONTRACT",
+            "DETECTOR_FUNCTION",
+        ):
+            if head.startswith(prefix) or f"`{prefix}`" in cell:
+                return prefix
+        token = head.split()[0] if head else ""
+        return token.strip("`")
+    return ""
+
+
+def _command_spine_wrappers_gated(root: Path) -> bool:
+    scoreboard = _read_text(root / SCOREBOARD_REL)
+    rubric = _load_module("mmi_next_action_rubric", "mmi_next_action_rubric.py")
+    return rubric.command_spine_wrappers_gated(scoreboard)
+
+
+def _routing_policy_annex_pending(root: Path) -> bool:
+    path = root / ROUTING_POLICY_ANNEX_REL
+    if not path.is_file():
+        return True
+    return not _is_contract_signed(root, ROUTING_POLICY_ANNEX_REL)
+
+
+def _live_chain_actions(root: Path) -> list[dict[str, str]]:
+    rubric = _load_module("mmi_next_action_rubric", "mmi_next_action_rubric.py")
+    scored = rubric.analyze(root, limit=7)
+    rows: list[dict[str, str]] = []
+    for index, item in enumerate(scored, start=1):
+        if item.candidate.action_id == "hold_all_clear":
+            continue
+        rows.append(
+            {
+                "rank": str(index),
+                "total": str(item.axes.total),
+                "label": item.candidate.label,
+                "action_id": item.candidate.action_id,
+                "kind": item.candidate.kind,
+            }
+        )
+    return rows
+
+
+def _chain_relay_for_action(action_id: str, label: str, root: Path) -> tuple[str, str]:
+    if action_id == "routing_policy_annex_draft":
+        return (
+            ROSTER_CONTRACT_DRAFT,
+            (
+                f"Draft routing-policy annex at {ROUTING_POLICY_ANNEX_REL} for "
+                f"#1 Swarm Commander — read-only consumption of #3 "
+                f"RiskScoreTelemetry per "
+                f"{CONTRACT_DRAFTS_ON_DISK['#1']} §10 Q1; no score-only "
+                f"auto-routing without signed annex."
+            ),
+        )
+    if action_id == "admin_lane_board_sync":
+        return (
+            ROSTER_BUILD,
+            (
+                "Run `python3 scripts/mmi_lane_board_sync.py` and commit "
+                f"{RANKED_ACTIONS_REL} + routing-authority files."
+            ),
+        )
+    if action_id.startswith("promotion_"):
+        return (
+            ROSTER_MATT,
+            (
+                f"Optional promotion review lane: {label}. Separate operator "
+                f"authorization required; not implied by GATED status."
+            ),
+        )
+    if action_id.startswith("bor_unpark"):
+        return (
+            ROSTER_MATT,
+            f"Hold — BOR feedstock is hold-only unless Matt unparks: {label}.",
+        )
+    if action_id.startswith("build_auth_"):
+        return (
+            ROSTER_BUILD,
+            f"Scoreboard reconcile to SIGNED_UNBUILT for {label} when Matt names build.",
+        )
+    return (ROSTER_MATT, label)
+
+
+def _last_completed_summary(root: Path) -> str:
+    state = _read_text(root / "MMI_CURRENT_STATE.md")
+    capture = False
+    lines: list[str] = []
+    for line in state.splitlines():
+        if line.startswith("LAST_COMPLETED:"):
+            capture = True
+            lines.append(line.replace("LAST_COMPLETED:", "").strip())
+            continue
+        if capture:
+            if line.startswith("PRIOR") or line.startswith("REVIEW_"):
+                break
+            if line.strip():
+                lines.append(line.strip())
+    return " ".join(lines) if lines else "Command spine work complete."
+
+
 def _load_ranked_rows(repo_root: Path) -> list[dict[str, str]]:
     """Load persisted ranked lanes; compute in-memory if board file is absent."""
     ranked_path = repo_root / RANKED_ACTIONS_REL
@@ -228,6 +348,8 @@ def _load_ranked_rows(repo_root: Path) -> list[dict[str, str]]:
             "rank": str(index),
             "total": str(item.axes.total),
             "label": item.candidate.label,
+            "action_id": item.candidate.action_id,
+            "kind": item.candidate.kind,
         }
         for index, item in enumerate(scored, start=1)
     ]
@@ -543,10 +665,18 @@ def _ignore_lines(options: list, root: Path, feedstock_first: str = "") -> list[
                     label = f"{option.candidate_id} {option.candidate_name}"
                     break
             decision = CONTRACT_SIGNED_DECISION.get(candidate_id, "MMI-DEC")
-            add_line(
-                f"{label} contract §11 SIGNED at {draft_rel} ({decision}); not build / not "
-                f"SIGNED_UNBUILT."
-            )
+            scoreboard = _read_text(root / SCOREBOARD_REL)
+            runtime = _scoreboard_runtime_prefix(scoreboard, candidate_id)
+            if runtime.startswith("GATED"):
+                add_line(
+                    f"{label} is already GATED at wrapper layer ({decision}); "
+                    f"not GOVERNED_AGENT; not wired."
+                )
+            else:
+                add_line(
+                    f"{label} contract §11 SIGNED at {draft_rel} ({decision}); not build / not "
+                    f"SIGNED_UNBUILT."
+                )
 
     for option in options:
         if option.candidate_id == "#105" and (
@@ -732,6 +862,8 @@ def _feedstock_hand_it_to(lane_type: str) -> str:
 def _compose_signed_swarm_commander_contract_voice(
     evidence: VoiceEvidence, contract_rel: str, repo_root: Path
 ) -> dict[str, str]:
+    if _command_spine_wrappers_gated(repo_root):
+        return _compose_command_spine_routing_annex_voice(evidence, repo_root)
     gate_rel = _contract_gate_clean(repo_root, "#1") or ""
     gate_note = f" gate {gate_rel}" if gate_rel else ""
     ranked = evidence.ranked_rows or _load_ranked_rows(repo_root)
@@ -766,6 +898,8 @@ def _compose_signed_swarm_commander_contract_voice(
 def _compose_signed_risk_triage_contract_voice(
     evidence: VoiceEvidence, contract_rel: str, repo_root: Path
 ) -> dict[str, str]:
+    if _command_spine_wrappers_gated(repo_root):
+        return _compose_command_spine_routing_annex_voice(evidence, repo_root)
     gate_rel = _contract_gate_clean(repo_root, "#3") or ""
     gate_note = f" gate {gate_rel}" if gate_rel else ""
     ranked = evidence.ranked_rows or _load_ranked_rows(repo_root)
@@ -1094,56 +1228,127 @@ def _compose_missing_contract_voice(
     }
 
 
+def _compose_command_spine_routing_annex_voice(
+    evidence: VoiceEvidence, repo_root: Path
+) -> dict[str, str]:
+    hand_it_to, you_do = _chain_relay_for_action(
+        "routing_policy_annex_draft",
+        "Draft #1 routing-policy annex",
+        repo_root,
+    )
+    chain = _live_chain_actions(repo_root)
+    alternates = [
+        f"  {row['rank']}. [{row['total']}/10] {row['label']}"
+        for row in chain[1:4]
+    ]
+    alt_block = "\n".join(alternates) if alternates else ""
+    return {
+        "WHAT_NEEDS_MATT": (
+            "Chain-of-command next lane after Command spine #1–#3 GATED: "
+            "routing-policy annex draft (MMI-DEC-116 follow-on)."
+        ),
+        "IN_FLIGHT": (
+            f"Command spine #1–#3 GATED at wrapper layer (MMI-DEC-112/109/116); "
+            f"annex absent at {ROUTING_POLICY_ANNEX_REL}; not GOVERNED_AGENT; "
+            f"not default registry."
+        ),
+        "HAND_IT_TO": hand_it_to,
+        "YOU_DO": you_do
+        + (
+            f"\nAlternate ranked lanes (hold unless unparked):\n{alt_block}"
+            if alt_block
+            else ""
+        ),
+        "WHY": (
+            f"dispatcher={evidence.dispatcher_mode}; buildable_count="
+            f"{evidence.buildable_count}; spine wrappers GATED; "
+            f"MMI-DEC-116 names routing-policy annex as next fork; "
+            f"LAST_COMPLETED: {_last_completed_summary(repo_root)}"
+        ),
+        "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+        "SOURCE": _source_line(evidence, repo_root=repo_root)
+        + "; chain: command_spine_complete_routing_annex",
+        "BOUNDARY": _boundary_line(),
+    }
+
+
 def _compose_all_clear_hold_voice(
     evidence: VoiceEvidence, repo_root: Path
 ) -> dict[str, str]:
+    chain = _live_chain_actions(repo_root)
+    if (
+        _command_spine_wrappers_gated(repo_root)
+        and _routing_policy_annex_pending(repo_root)
+    ):
+        return _compose_command_spine_routing_annex_voice(evidence, repo_root)
+
+    top = chain[0] if chain else None
+    if top:
+        action_id = top.get("action_id", "")
+        top_label = top.get("label", "Hold ALL_CLEAR")
+        top_total = top.get("total", "?")
+        hand_it_to, you_do = _chain_relay_for_action(action_id, top_label, repo_root)
+        alternates = [
+            f"  {row['rank']}. [{row['total']}/10] {row['label']}"
+            for row in chain[1:5]
+        ]
+        you_do_parts = [
+            f"Chain-of-command top lane [{top_total}/10]: {you_do}",
+        ]
+        if alternates:
+            you_do_parts.append("Alternate ranked lanes:")
+            you_do_parts.extend(alternates)
+        you_do_parts.append(
+            f"Persisted board: {RANKED_ACTIONS_REL} — refresh via "
+            f"`python3 scripts/mmi_lane_board_sync.py` after material repo changes."
+        )
+        you_do_parts.append(
+            f"Maintain drift defense: pytest {INVARIANTS_PROBE_TEST_REL} after any "
+            f"scripts/mmi_*.py change."
+        )
+        why = (
+            f"dispatcher={evidence.dispatcher_mode}; buildable_count="
+            f"{evidence.buildable_count}; missing_contract_count="
+            f"{evidence.missing_contract_count}; chain relay from live rubric; "
+            f"#105 SIGNED_CONTRACT + Lane 1 probe complete (MMI-DEC-092)."
+        )
+        if _command_spine_wrappers_gated(repo_root):
+            why += " Command spine #1–#3 GATED (MMI-DEC-112/109/116)."
+        if _is_rubric_binary_calibration_in_force(repo_root):
+            why += " Next-Action Rubric §3.A binary calibration in force (MMI-DEC-095)."
+        return {
+            "WHAT_NEEDS_MATT": (
+                f"Chain-of-command next lane [{top_total}/10]: {top_label}."
+            ),
+            "IN_FLIGHT": "none",
+            "HAND_IT_TO": hand_it_to,
+            "YOU_DO": "\n".join(you_do_parts),
+            "WHY": why,
+            "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+            "SOURCE": _source_line(evidence, repo_root=repo_root)
+            + f"; ranked_board: {RANKED_ACTIONS_REL}; chain: live_rubric",
+            "BOUNDARY": _boundary_line(),
+        }
+
     why = (
         f"dispatcher={evidence.dispatcher_mode}; buildable_count="
         f"{evidence.buildable_count}; missing_contract_count="
         f"{evidence.missing_contract_count}; BOR hold-only feedstock; "
         f"#105 SIGNED_CONTRACT + Lane 1 probe complete (MMI-DEC-092)."
     )
-    if (repo_root / CONTRACT_REVIEW_DRAFTS_ON_DISK["#3"]).is_file() and _is_contract_signed(
-        repo_root, CONTRACT_REVIEW_DRAFTS_ON_DISK["#3"]
-    ):
-        why += " #3 contract §11 SIGNED (MMI-DEC-098); not build."
-    if (repo_root / CONTRACT_DRAFTS_ON_DISK["#1"]).is_file() and _is_contract_signed(
-        repo_root, CONTRACT_DRAFTS_ON_DISK["#1"]
-    ):
-        why += " #1 contract §11 SIGNED (MMI-DEC-102); not build."
     if _is_rubric_binary_calibration_in_force(repo_root):
         why += (
             " Next-Action Rubric §3.A binary calibration in force "
             "(MMI-DEC-095)."
         )
-
-    ranked = evidence.ranked_rows or _load_ranked_rows(repo_root)
-    ranked_lines = _format_ranked_lane_lines(ranked)
-    top = ranked[0] if ranked else None
-    top_label = top.get("label", "Hold ALL_CLEAR") if top else "Hold ALL_CLEAR"
-    top_total = top.get("total", "?") if top else "?"
-
-    you_do_parts = [
-        "Select one ranked lane (rubric ranks; Matt selects; not authorization):",
-        *ranked_lines,
-        f"Persisted board: {RANKED_ACTIONS_REL} — refresh with "
-        f"`python3 scripts/mmi_lane_board_sync.py` after repo changes.",
-        f"Maintain drift defense: pytest {INVARIANTS_PROBE_TEST_REL} after any "
-        f"scripts/mmi_*.py change.",
-    ]
-
     return {
-        "WHAT_NEEDS_MATT": (
-            f"Select one ranked lane — top [{top_total}/10]: {top_label}. "
-            f"Dispatcher ALL_CLEAR; buildable_count=0."
-        ),
+        "WHAT_NEEDS_MATT": "Chain-of-command hold: ALL_CLEAR; no ranked lane surfaced.",
         "IN_FLIGHT": "none",
         "HAND_IT_TO": ROSTER_MATT,
-        "YOU_DO": "\n".join(you_do_parts),
+        "YOU_DO": "Hold ALL_CLEAR — dispatcher queue empty; await new signed evidence.",
         "WHY": why,
         "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
-        "SOURCE": _source_line(evidence, repo_root=repo_root)
-        + f"; ranked_board: {RANKED_ACTIONS_REL}",
+        "SOURCE": _source_line(evidence, repo_root=repo_root),
         "BOUNDARY": _boundary_line(),
     }
 

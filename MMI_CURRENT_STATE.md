@@ -24,13 +24,15 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #3 Risk Triage Command spine wrapper GATED (MMI-DEC-116)
+LAST_COMPLETED: PMV chain-of-command relay after Command spine GATED (MMI-DEC-117)
+  (rubric + PMV route routing-policy annex draft to Claude; ranked board synced;
+  AGENTS.md mandatory PMV closeout loop pinned).
+
+PRIOR_LAST_COMPLETED: #3 Risk Triage Command spine wrapper GATED (MMI-DEC-116)
   (completion gate `audit_outputs/risk_triage_agent_20260624T003249Z.md` 0/0;
   build MMI-DEC-115; **Command spine #1–#3 GATED at wrapper layer**; **not GOVERNED_AGENT**).
 
-PRIOR_LAST_COMPLETED: Governance housekeeping + concept intake (MMI-DEC-113).
-
-PRIOR: #1 Swarm Commander GATED (MMI-DEC-112); #2 Mission Context GATED (MMI-DEC-109).
+PRIOR: Governance housekeeping + concept intake (MMI-DEC-113).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

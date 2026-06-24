@@ -48,6 +48,18 @@ For operator-facing terminal basics, see `LINUX_WORKFLOW_QUICKSTART.md`.
 
 Violations of the authority model are the highest-severity failure mode on this project. If you find yourself about to commit without being asked, or sign off in Matt's voice, or treat a rubric score as approval — stop.
 
+### Chain-of-command PMV closeout (mandatory — every completed slice)
+
+When you finish any worker slice that changes scoreboard lifecycle, contracts, `scripts/mmi_*.py`, routing state, or governance trackers, **you** close the loop — do not ask Matt what is next:
+
+1. Append evidence to the relevant MMI record (`MMI_DECISION_LOG.md`, intake, gate receipt) and update `MMI_CURRENT_STATE.md` `LAST_COMPLETED` prose when applicable.
+2. Run `python3 scripts/mmi_lane_board_sync.py` (refreshes `mmi/MMI_RANKED_NEXT_ACTIONS.md` + handshake ranked pin).
+3. Run `python3 scripts/mmi_dispatch.py --sync` then `python3 scripts/mmi_dispatch.py --verify` (must PASS).
+4. Commit routing-authority files (`MMI_CURRENT_STATE.md`, ranked board, handshake, PMV/rubric scripts if changed).
+5. Run `pmv` once and confirm output names the **chain next lane** with `HAND_IT_TO` + `YOU_DO` — not “Matt select one ranked lane” and not stale `build_auth_#N` for already-GATED rows.
+
+PMV reads live rubric + dispatcher posture; your job is to keep it accurate after every completion. Matt decides authority; the chain names the next crew handoff.
+
 ---
 
 ## 2.1 Partner lanes (model-strengths contract)

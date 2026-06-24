@@ -64,14 +64,29 @@ class TestMmiNextActionRubric(unittest.TestCase):
         self.assertEqual(hold.axes.future_cost, 1)
         self.assertEqual(hold.axes.reversibility, 2)
 
+    def test_gated_spine_excludes_build_auth_candidates(self):
+        root = self.mod._repo_root()
+        scoreboard = self.mod._read_text(root / self.mod.SCOREBOARD_REL)
+        if not self.mod.command_spine_wrappers_gated(scoreboard):
+            self.skipTest("Command spine wrappers not all GATED")
+        ids = {c.action_id for c in self.mod.generate_candidates(root)}
+        self.assertNotIn("build_auth_#1", ids)
+        self.assertNotIn("build_auth_#2", ids)
+        self.assertNotIn("build_auth_#3", ids)
+        self.assertIn("routing_policy_annex_draft", ids)
+
     def test_signed_spine_contract_2_excludes_draft_candidate(self):
         root = self.mod._repo_root()
         if not self.mod._spine_contract_signed(root, "#2"):
             self.skipTest("#2 contract not §11 signed on disk")
+        scoreboard = self.mod._read_text(root / self.mod.SCOREBOARD_REL)
         candidates = self.mod.generate_candidates(root)
         ids = {c.action_id for c in candidates}
         self.assertNotIn("draft_contract_2", ids)
-        self.assertIn("build_auth_#2", ids)
+        if self.mod.command_spine_wrappers_gated(scoreboard):
+            self.assertNotIn("build_auth_#2", ids)
+        else:
+            self.assertIn("build_auth_#2", ids)
 
 
 if __name__ == "__main__":

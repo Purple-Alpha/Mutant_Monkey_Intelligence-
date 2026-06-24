@@ -83,8 +83,8 @@ def build_ranked_board(root: Path, limit: int = 7) -> str:
 
 def _patch_handshake(handshake_text: str, top_label: str, top_total: str) -> str:
     replacement = (
-        "NEXT ACTION: Read ranked lanes on disk — rubric ranks; Matt selects one. "
-        f"Top ranked ({top_total}/10): {top_label}. "
+        "NEXT ACTION: Chain-of-command reads ranked lanes on disk — "
+        f"top ranked ({top_total}/10): {top_label}. "
         f"Full list: `{RANKED_REL}` (refresh: `python3 scripts/mmi_lane_board_sync.py`)."
     )
     next_action_re = re.compile(r"^NEXT ACTION:.*$", re.MULTILINE)
