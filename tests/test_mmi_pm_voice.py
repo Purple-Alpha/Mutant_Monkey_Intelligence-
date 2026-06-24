@@ -475,9 +475,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertEqual(fields["HAND_IT_TO"], "Codex")
         self.assertIn("#65", fields["YOU_DO"])
-        self.assertIn("Draft Agent Design Contract", fields["YOU_DO"])
+        self.assertIn("pre-build gate", fields["YOU_DO"].lower())
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
 
     def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):
@@ -799,6 +799,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("ranked lane", out.lower())
             self.assertIn("IN_FLIGHT:\nnone", out)
+        elif "Pre-build gate review is needed for #65 Correction Evidence" in out:
+            self.assertIn("HAND_IT_TO:\nCodex", out)
+            self.assertIn("Correction_Evidence_Agent_Design_Contract_Deep_Dive.md", out)
         elif "Optional Matt §11 signature on #3" in out:
             self.assertIn("HAND_IT_TO:\nMatt", out)
             self.assertIn("Pre-build gate clean", out)
@@ -809,7 +812,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         elif "#52 Plain-English Explanation is already GATED" in out:
             self.assertNotIn("Authorize build lane for #52", out)
         elif "estimator feedstock rank" in out or "SCORED_FEEDSTOCK" in out:
-            if "#105" in out and "pre-build gate review via audit_tools/complete_gate.py" in out:
+            if "pre-build gate review via audit_tools/complete_gate.py" in out:
                 self.assertIn("HAND_IT_TO:\nCodex", out)
             else:
                 self.assertIn("HAND_IT_TO:\nClaude", out)

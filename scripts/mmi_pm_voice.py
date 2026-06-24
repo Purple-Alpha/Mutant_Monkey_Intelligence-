@@ -114,6 +114,7 @@ CONTRACT_REVIEW_DRAFTS_ON_DISK: dict[str, str] = {
 
 CONTRACT_DRAFT_GATE_GLOBS: dict[str, str] = {
     "#1": "mmi_01_contract_gate_*.md",
+    "#65": "mmi_65_contract_gate_*.md",
     "#67": "mmi_67_contract_gate_*.md",
 }
 
@@ -1159,7 +1160,10 @@ def _compose_signed_invariants_framework_voice(
     }
 
 
-def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
+def _compose_feedstock_voice(
+    evidence: VoiceEvidence, repo_root: Path | None = None
+) -> dict[str, str]:
+    root = repo_root or _repo_root()
     candidate_id = evidence.feedstock_first
     candidate_name = evidence.feedstock_first_name
     lane_type = evidence.feedstock_lane_type
@@ -1169,6 +1173,14 @@ def _compose_feedstock_voice(evidence: VoiceEvidence) -> dict[str, str]:
         contract_rel = _contract_rel_for_candidate(candidate_id) or (
             f"4. Product_Roadmap/{candidate_name.replace(' ', '_')}_Agent_Design_Contract_Deep_Dive.md"
         )
+        contract_path = root / contract_rel
+        if contract_path.is_file() and not _is_contract_signed(root, contract_rel):
+            gate_rel = _contract_gate_clean(root, candidate_id)
+            if gate_rel:
+                return _compose_gate_clean_contract_draft_voice(
+                    evidence, contract_rel, gate_rel, root
+                )
+            return _compose_unsigned_contract_draft_voice(evidence, contract_rel)
         you_do = (
             f"Draft Agent Design Contract for {candidate_id} {candidate_name} "
             f"at `{contract_rel}`. Reconcile against scoreboard + repo; follow "
@@ -1649,7 +1661,7 @@ def compose_voice(
                     return _compose_signed_invariants_framework_voice(
                         evidence, contract_rel
                     )
-            return _compose_feedstock_voice(evidence)
+            return _compose_feedstock_voice(evidence, root)
 
     unreconciled = _relay_signed_unreconciled(root, evidence.menu_options)
     if unreconciled is not None:
