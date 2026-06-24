@@ -271,6 +271,8 @@ MMI-DEC-121 | 2026-06-23 | #1 routing-policy annex §11 signature | `docs/mmi/co
 
 MMI-DEC-122 | 2026-06-24 | #1 routing-policy annex §6 runtime wiring | `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/command/swarm_commander_agent.py`; `tests/test_swarm_commander_agent.py` (27 focused tests) | ACCEPT | Matt authorized annex §6 wiring after MMI-DEC-121 §11. `SwarmCommanderAgent.run_case` validates forbidden telemetry routing keys (commander + #3 sets), applies `mmi_rp_v1` conservative disposition hints after legacy base disposition, records `RoutePolicyAudit` metadata, preserves RC-AUTH DER probes (no scorer leakage). **Not GOVERNED_AGENT**; not default registry; not production dispatch; **not** AUTH-5 | Completion gate on wiring slice when Matt chooses | Run mmi_dispatch --sync + --verify + probe pytest after commit | Matt Nichol (authorize routing-policy annex §6 wiring)
 
+MMI-DEC-123 | 2026-06-24 | #1 routing-policy annex §6 wiring completion gate | `audit_outputs/swarm_commander_routing_policy_annex_wiring_20260624T022634Z.md` (0 blocking / 0 warnings; Gemini `gemini-2.5-pro`; packet SHA256 `844231fee1e6ad4d2c31cb91398ae523d24cd257b10da78fe8db9665cfc91513`) | ACCEPT | Post-commit completion gate clean 0/0 on MMI-DEC-122 wiring slice. Auditor confirmed §3 forbidden-key rejection, §4 conservative hint escalation, RC-AUTH DER boundary, 27 focused tests evidenced. **Not GOVERNED_AGENT** promotion; **not** default registry; **not** AUTH-5 | Matt selects next lane | Run mmi_dispatch --sync + --verify after commit | Cursor (completion gate — annex §6 wiring)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

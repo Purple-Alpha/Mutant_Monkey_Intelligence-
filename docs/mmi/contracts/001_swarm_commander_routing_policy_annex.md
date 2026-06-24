@@ -18,7 +18,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **WIRED 2026-06-24 (MMI-DEC-122).** `SwarmCommanderAgent.run_case` applies annex §3 validation and §4 `mmi_rp_v1` disposition hints after base `mmi_sc_v1` disposition. §11 signature (MMI-DEC-121) + Build Authorization satisfied. **Not GOVERNED_AGENT**; not default registry; not production dispatch.
+**Implementation:** **WIRED 2026-06-24 (MMI-DEC-122).** Completion gate clean **0 blocking / 0 warnings** at `audit_outputs/swarm_commander_routing_policy_annex_wiring_20260624T022634Z.md` (Gemini `gemini-2.5-pro`; packet SHA256 `844231fee1e6ad4d2c31cb91398ae523d24cd257b10da78fe8db9665cfc91513`; MMI-DEC-123). `SwarmCommanderAgent.run_case` applies annex §3 validation and §4 `mmi_rp_v1` disposition hints after base `mmi_sc_v1` disposition. **Not GOVERNED_AGENT**; not default registry; not production dispatch.
 
 **Source-of-truth links:**
 - `docs/mmi/contracts/001_swarm_commander_contract.md` (RC-AUTH parent; DER allowlist; disposition precedence `mmi_sc_v1`)
