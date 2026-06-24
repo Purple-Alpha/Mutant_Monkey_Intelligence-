@@ -41,7 +41,7 @@ DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
 
 LAST_COMPLETED (MMI authority repo):
   #1 routing-policy annex — draft at `docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`
-    (MMI-DEC-118; DRAFT UNSIGNED; pre-build gate pending; **not** runtime wiring)
+    (MMI-DEC-118/120; DRAFT UNSIGNED; pre-build gate clean 0/0; optional Matt §11; **not** runtime wiring)
   PMV chain relay (MMI-DEC-117) · Command spine #1–#3 GATED (MMI-DEC-112/109/116)
   Ranked lane board LIVE — `mmi/MMI_RANKED_NEXT_ACTIONS.md` + `scripts/mmi_next_action_rubric.py` (MMI-DEC-104)
   #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
@@ -54,8 +54,8 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
   BOR v11 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (9/10): Run Grok pre-build gate on #1 routing-policy annex (draft on disk; §11 UNSIGNED). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
-  Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, routing-policy annex §11 sign.
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (4/10): Optional Matt §11 sign on #1 routing-policy annex (pre-build gate clean 0/0). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+  Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, routing-policy annex runtime wiring.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`

@@ -74,7 +74,12 @@ class TestMmiNextActionRubric(unittest.TestCase):
         self.assertNotIn("build_auth_#2", ids)
         self.assertNotIn("build_auth_#3", ids)
         if (root / self.mod.ROUTING_POLICY_ANNEX_REL).is_file():
-            self.assertIn("routing_policy_annex_gate", ids)
+            if self.mod._routing_policy_annex_gate_clean(root):
+                self.assertIn("routing_policy_annex_sign", ids)
+                self.assertNotIn("routing_policy_annex_gate", ids)
+            else:
+                self.assertIn("routing_policy_annex_gate", ids)
+                self.assertNotIn("routing_policy_annex_sign", ids)
             self.assertNotIn("routing_policy_annex_draft", ids)
         else:
             self.assertIn("routing_policy_annex_draft", ids)

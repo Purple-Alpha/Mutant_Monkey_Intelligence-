@@ -47,6 +47,7 @@ CONTRACT_REVIEW_ON_DISK = {
 ROUTING_POLICY_ANNEX_REL = (
     "docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md"
 )
+ROUTING_POLICY_ANNEX_GATE_GLOB = "routing_policy_annex_pre_build_gate_*.md"
 RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
 COMMAND_SPINE_IDS = ("#1", "#2", "#3")
 CLOSED_LIFECYCLE_PREFIXES = ("GATED", "GOVERNED_AGENT", "INFRASTRUCTURE_BUILT")
@@ -175,6 +176,21 @@ def _gate_clean_for_scope(root: Path, candidate_id: str) -> bool:
             text = _read_text(path)
             if "blocking=0 warnings=0" in text or "**Blocking deviations:** `0`" in text:
                 return True
+    return False
+
+
+def _routing_policy_annex_gate_clean(root: Path) -> bool:
+    audit_dir = root / "audit_outputs"
+    if not audit_dir.is_dir():
+        return False
+    for path in sorted(audit_dir.glob(ROUTING_POLICY_ANNEX_GATE_GLOB), reverse=True):
+        text = _read_text(path)
+        if not text:
+            continue
+        if "**Blocking deviations:** `0`" in text and "**Warnings:** `0`" in text:
+            return True
+        if "GATE_SUMMARY: blocking=0 warnings=0" in text:
+            return True
     return False
 
 
@@ -353,18 +369,33 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
     elif spine_gated and annex_path.is_file() and not _is_contract_signed(
         _read_text(annex_path)
     ):
-        add(
-            RubricCandidate(
-                action_id="routing_policy_annex_gate",
-                label=(
-                    "Run Grok pre-build gate on #1 routing-policy annex "
-                    "(draft on disk; §11 UNSIGNED)"
-                ),
-                primary_scope="#1",
-                kind="contract_gate",
-                edit_path_count=1,
+        if _routing_policy_annex_gate_clean(root):
+            add(
+                RubricCandidate(
+                    action_id="routing_policy_annex_sign",
+                    label=(
+                        "Optional Matt §11 sign on #1 routing-policy annex "
+                        "(pre-build gate clean 0/0)"
+                    ),
+                    primary_scope="#1",
+                    kind="contract_sign",
+                    edit_path_count=1,
+                    requires_section11=True,
+                )
             )
-        )
+        else:
+            add(
+                RubricCandidate(
+                    action_id="routing_policy_annex_gate",
+                    label=(
+                        "Run Grok pre-build gate on #1 routing-policy annex "
+                        "(draft on disk; §11 UNSIGNED)"
+                    ),
+                    primary_scope="#1",
+                    kind="contract_gate",
+                    edit_path_count=1,
+                )
+            )
 
     if _ranked_board_stale(root):
         add(

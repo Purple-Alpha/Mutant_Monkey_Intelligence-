@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_01_SWARM_COMMANDER_ROUTING_POLICY_ANNEX_REVIEW_DRAFT`
 
-**Status:** DRAFT UNSIGNED — contract review storage only. Pre-build gate not run. §11 signature required before any Commander wiring consumes this annex.
+**Status:** DRAFT UNSIGNED — contract review storage only. Pre-build gate clean **0 blocking / 0 warnings** at `audit_outputs/routing_policy_annex_pre_build_gate_20260624T015713Z.md` (Gemini `gemini-2.5-pro`; packet SHA256 `474d2756fea42431ead9a9d957284c81ae21469a5a89512c84eb2533fc5ecac2`; MMI-DEC-120). Prior run **0 blocking / 1 warning** at `audit_outputs/routing_policy_annex_pre_build_gate_20260624T015436Z.md` (MMI-DEC-119; spine-boundary repair applied). **Optional Matt §11** when ready; no runtime wiring without separate Build Authorization.
 
 **Parent contract:** `docs/mmi/contracts/001_swarm_commander_contract.md` (§11 SIGNED MMI-DEC-102; `SwarmCommanderAgent` GATED MMI-DEC-112)
 
@@ -32,13 +32,26 @@
 
 ---
 
-## Spine boundary (unchanged)
+## Spine boundary (parent invariant — verbatim)
+
+Parent `001_swarm_commander_contract.md` core invariant block — **unchanged**:
 
 ```text
 #1 routes; it never scores.
-#2 classifies; it never routes, dispatches, or scores.
 #3 scores; it never routes, dispatches, recommends, alerts, blocks, quarantines, or triggers mitigation.
 ```
+
+**Interpretation (parent):** Swarm Commander (#1) owns routing, dispatch, registry-validated invocation order, conservative disposition assembly, and human-review path selection. Risk Triage (#3) owns numeric risk telemetry only. No agent may hold both authorities in one envelope. #1 may **read** #3 telemetry as optional evidence input to this **separate signed routing-policy annex**; #1 must **never** compute rubric-axis values, `aggregate_risk_score`, or scoring reason codes.
+
+### Command spine context (#2 sibling note — not parent invariant text)
+
+Mission Context (#2) is a **sibling** GATED wrapper (`002_mission_context_contract.md`; MMI-DEC-109). For orientation only:
+
+```text
+#2 classifies; it never routes, dispatches, scores, mitigates, or assembles disposition.
+```
+
+This annex does **not** modify the parent #1/#3 invariant block and does **not** bind `#2` classification to agent manifests in v1 (see §5).
 
 **Annex scope:** Defines **read-only consumption rules** for optional `#3 RiskScoreTelemetry` by `#1 Swarm Commander` when assembling disposition. This annex does **not** grant #1 scoring authority, registry mutation, or autonomous routing.
 

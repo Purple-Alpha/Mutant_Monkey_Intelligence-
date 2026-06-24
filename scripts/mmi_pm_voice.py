@@ -106,6 +106,8 @@ CONTRACT_REVIEW_GATE_GLOBS: dict[str, str] = {
     "#3": "mmi_03_contract_gate_*.md",
 }
 
+ROUTING_POLICY_ANNEX_GATE_GLOB = "routing_policy_annex_pre_build_gate_*.md"
+
 REVISION_ROWS = (
     (
         "What gets prioritized / ranked",
@@ -284,6 +286,14 @@ def _chain_relay_for_action(action_id: str, label: str, root: Path) -> tuple[str
                 f"{ROUTING_POLICY_ANNEX_REL}; optional Matt §11 when gate clean 0/0."
             ),
         )
+    if action_id == "routing_policy_annex_sign":
+        return (
+            ROSTER_MATT,
+            (
+                f"Matt §11 sign routing-policy annex at {ROUTING_POLICY_ANNEX_REL} "
+                f"when ready. No build authorization to wire SwarmCommanderAgent."
+            ),
+        )
     if action_id == "routing_policy_annex_draft":
         return (
             ROSTER_CONTRACT_DRAFT,
@@ -396,6 +406,23 @@ def _contract_review_draft_rel(candidate_id: str, root: Path) -> str | None:
         rel = mapping.get(candidate_id)
         if rel and (root / rel).is_file():
             return rel
+    return None
+
+
+def _routing_policy_annex_gate_clean(root: Path) -> str | None:
+    """Return newest clean pre-build gate artifact for routing-policy annex."""
+    audit_dir = root / "audit_outputs"
+    if not audit_dir.is_dir():
+        return None
+    matches = sorted(audit_dir.glob(ROUTING_POLICY_ANNEX_GATE_GLOB), reverse=True)
+    for path in matches:
+        content = _read_text(path)
+        if not content:
+            continue
+        if "**Blocking deviations:** `0`" in content and "**Warnings:** `0`" in content:
+            return path.relative_to(root).as_posix()
+        if "GATE_SUMMARY: blocking=0 warnings=0" in content:
+            return path.relative_to(root).as_posix()
     return None
 
 
@@ -1248,6 +1275,39 @@ def _compose_command_spine_routing_annex_voice(
     alt_block = "\n".join(alternates) if alternates else ""
 
     if annex_path.is_file() and not _is_contract_signed(repo_root, ROUTING_POLICY_ANNEX_REL):
+        gate_rel = _routing_policy_annex_gate_clean(repo_root) or ""
+        if gate_rel:
+            you_do = (
+                f"Matt §11 sign routing-policy annex at {ROUTING_POLICY_ANNEX_REL} "
+                f"when ready. Gate evidence: {gate_rel}. No build authorization to "
+                f"wire SwarmCommanderAgent; no GOVERNED_AGENT; no default registry."
+            )
+            return {
+                "WHAT_NEEDS_MATT": (
+                    "Optional Matt §11 signature on #1 routing-policy annex "
+                    "when ready (Command spine GATED follow-on)."
+                ),
+                "IN_FLIGHT": (
+                    f"Pre-build gate clean 0/0 at {gate_rel}; annex still UNSIGNED."
+                ),
+                "HAND_IT_TO": ROSTER_MATT,
+                "YOU_DO": you_do
+                + (
+                    f"\nAlternate ranked lanes (hold unless unparked):\n{alt_block}"
+                    if alt_block
+                    else ""
+                ),
+                "WHY": (
+                    f"pre-build gate 0/0 at {gate_rel}; annex draft at "
+                    f"{ROUTING_POLICY_ANNEX_REL}; spine wrappers GATED; "
+                    f"MMI-DEC-120 gate record."
+                ),
+                "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+                "SOURCE": _source_line(evidence, repo_root=repo_root)
+                + "; chain: routing_policy_annex_gate_clean_matt_sign",
+                "BOUNDARY": _boundary_line(),
+            }
+
         you_do = (
             f"Run Grok pre-build gate review on routing-policy annex at "
             f"{ROUTING_POLICY_ANNEX_REL}; optional Matt §11 when gate clean 0/0."

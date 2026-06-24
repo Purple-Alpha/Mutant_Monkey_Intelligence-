@@ -24,12 +24,13 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #1 routing-policy annex draft placed (MMI-DEC-118)
-  (`docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`; DRAFT UNSIGNED;
-  read-only #3 telemetry; `mmi_rp_v1` hint rules; pre-build gate pending).
+LAST_COMPLETED: #1 routing-policy annex pre-build gate clean 0/0 (MMI-DEC-120)
+  (`docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md`; spine-boundary repair;
+  gate `audit_outputs/routing_policy_annex_pre_build_gate_20260624T015713Z.md`; DRAFT UNSIGNED;
+  optional Matt §11; **not** runtime wiring).
 
-PRIOR_LAST_COMPLETED: PMV chain-of-command relay after Command spine GATED (MMI-DEC-117)
-  (commit `1b85ed9`; rubric + PMV route annex fork to Claude; AGENTS.md PMV closeout pinned).
+PRIOR_LAST_COMPLETED: #1 routing-policy annex draft placed (MMI-DEC-118)
+  (read-only #3 telemetry; `mmi_rp_v1` hint rules; first gate 0/1 MMI-DEC-119).
 
 PRIOR: #3 Risk Triage GATED (MMI-DEC-116); Command spine #1–#3 GATED at wrapper layer.
 

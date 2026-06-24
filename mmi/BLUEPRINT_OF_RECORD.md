@@ -35,7 +35,7 @@ Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows aut
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test, #64 Failure Classification — GATED
 
-Chain-of-command next fork (PMV relay; not feedstock authorization): routing-policy annex draft for #1 at `docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md` — **DRAFT on disk (MMI-DEC-118); pre-build gate pending; not §11**.
+Chain-of-command next fork (PMV relay; not feedstock authorization): routing-policy annex for #1 at `docs/mmi/contracts/001_swarm_commander_routing_policy_annex.md` — **DRAFT on disk (MMI-DEC-118); pre-build gate clean 0/0 (MMI-DEC-120); optional Matt §11; not runtime wiring**.
 
 Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): hold-only feedstock; spine wrappers GATED; PMV reads live rubric for chain relay.
 

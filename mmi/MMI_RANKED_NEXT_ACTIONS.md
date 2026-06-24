@@ -1,5 +1,5 @@
-generated_at: 2026-06-24T01:48:09Z
-git_head: d6de78a
+generated_at: 2026-06-24T02:04:46Z
+git_head: f61fe59
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
@@ -7,39 +7,26 @@ generator: scripts/mmi_lane_board_sync.py
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
 dispatcher_mode: ALL_CLEAR
-candidate_count: 6
+candidate_count: 5
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ---
 
-## ACTION 1 — TOTAL 9/10
+## ACTION 1 — TOTAL 4/10
 
-**Run Grok pre-build gate on #1 routing-policy annex (draft on disk; §11 UNSIGNED)**
+**Optional Matt §11 sign on #1 routing-policy annex (pre-build gate clean 0/0)**
 
-- action_id: `routing_policy_annex_gate`
+- action_id: `routing_policy_annex_sign`
 - primary_scope: `#1`
-- leverage: 2
-- risk_reduction: 2
-- evidence_strength: 2
-- future_cost: 1
-- reversibility: 2
-- **TOTAL: 9**
-
-## ACTION 2 — TOTAL 5/10
-
-**Refresh ranked lane board (mmi_lane_board_sync + handshake pin)**
-
-- action_id: `admin_lane_board_sync`
-- primary_scope: `admin`
 - leverage: 0
 - risk_reduction: 1
-- evidence_strength: 1
-- future_cost: 2
-- reversibility: 1
-- **TOTAL: 5**
+- evidence_strength: 2
+- future_cost: 1
+- reversibility: 0
+- **TOTAL: 4**
 
-## ACTION 3 — TOTAL 3/10
+## ACTION 2 — TOTAL 3/10
 
 **Unpark BOR feedstock #67 Rule Improvement (CONTRACT_DRAFT)**
 
@@ -52,7 +39,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 2
 - **TOTAL: 3**
 
-## ACTION 4 — TOTAL 0/10
+## ACTION 3 — TOTAL 0/10
 
 **Promotion review #47 (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -65,7 +52,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 0**
 
-## ACTION 5 — TOTAL 0/10
+## ACTION 4 — TOTAL 0/10
 
 **Promotion review #52 (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -78,7 +65,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 0**
 
-## ACTION 6 — TOTAL 3/10
+## ACTION 5 — TOTAL 3/10
 
 **Hold ALL_CLEAR — no new lane this cycle**
 
