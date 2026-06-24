@@ -45,7 +45,7 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
 | **Active stage** | **ALL_STAGES_COMPLETE** — breadth queue via BOR feedstock (MMI-DEC-159) |
-| **Next build lane** | **#65 Correction Evidence** — rank-1 `CONTRACT_DRAFT` (Claude → Codex → Cursor) |
+| **Next build lane** | **#65 Correction Evidence** — contract draft on disk (MMI-DEC-160); pre-build gate next |
 | **Last closed** | MMI-DEC-157 `#67` Rule Improvement GATED |
 
 ---

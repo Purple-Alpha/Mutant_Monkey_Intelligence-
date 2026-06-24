@@ -104,6 +104,7 @@ CONTRACT_SIGNED_DECISION: dict[str, str] = {
 
 CONTRACT_DRAFTS_ON_DISK: dict[str, str] = {
     "#1": "docs/mmi/contracts/001_swarm_commander_contract.md",
+    "#65": "4. Product_Roadmap/Correction_Evidence_Agent_Design_Contract_Deep_Dive.md",
     "#67": "4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md",
 }
 
