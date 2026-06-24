@@ -55,7 +55,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
   BOR v19 no hold-only promotion feedstock (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — hold ALL_CLEAR (no hold-only promotion feedstock). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (3/10): Hold ALL_CLEAR — no new lane this cycle. Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
