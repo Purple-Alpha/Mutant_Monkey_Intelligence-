@@ -24,12 +24,13 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #47 Case Timeline GOVERNED_AGENT promotion review (MMI-DEC-168)
+LAST_COMPLETED: #52 Plain-English Explanation GOVERNED_AGENT promotion review (MMI-DEC-169)
+  (§11 contract `379d0e6`; build `5953d1a`; 16 tests; Grok gate 0/0;
+  breadth runway 15 -> 16; **not** production dispatch / **not** default registry).
+
+PRIOR_LAST_COMPLETED: #47 Case Timeline GOVERNED_AGENT promotion review (MMI-DEC-168)
   (§11 contract `4eec76a`; build `4d7fba2`; 22 tests; Grok gate 0/0;
   breadth runway 14 -> 15; **not** production dispatch / **not** default registry).
-
-PRIOR_LAST_COMPLETED: Ranked lane board refresh after #65 GATED (2026-06-24T22:40:26Z)
-  (`mmi/MMI_RANKED_NEXT_ACTIONS.md` git_head dcaa47a; top ranked #47 promotion review 0/10).
 
 PRIOR: #65 Correction Evidence GATED closeout (MMI-DEC-165/166)
   (`audit_outputs/correction_evidence_20260624T223220Z.md` 0 blocking / 1 warning;

@@ -343,6 +343,8 @@ MMI-DEC-167 | 2026-06-24 | Ranked lane board refresh post–#65 GATED | `mmi/MMI
 
 MMI-DEC-168 | 2026-06-24 | #47 Case Timeline GOVERNED_AGENT promotion review | scoreboard #47 row; decision_cycles_log CYCLE 28; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v18 | ACCEPT | Repo evidence supports promotion: §11 contract `4eec76a`, build `4d7fba2`, 22 focused tests, Grok completion gate 0/0 (`audit_outputs/case_timeline_20260620T233212Z.md`), L4 bar cleared; #47 GATED -> GOVERNED_AGENT; breadth runway 14 -> 15; governed input from #48 `VerificationOutcomeAgent`; BOR feedstock #47 retired | No production dispatch, default registry wiring, AUTH-5 unlock, or #52 promotion | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize GOVERNED_AGENT promotion review #47)
 
+MMI-DEC-169 | 2026-06-24 | #52 Plain-English Explanation GOVERNED_AGENT promotion review | scoreboard #52 row; decision_cycles_log CYCLE 29; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v19 | ACCEPT | Repo evidence supports promotion: §11 contract `379d0e6`, build `5953d1a`, 16 focused tests, Grok completion gate 0/0 (`audit_outputs/plain_english_explanation_20260621T061124Z.md`), L4 bar cleared; #52 GATED -> GOVERNED_AGENT; breadth runway 15 -> 16; projection-only from signed `client_facing_rubric` upstream; BOR feedstock #52 retired | No production dispatch, default registry wiring, or AUTH-5 unlock | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize GOVERNED_AGENT promotion review #52)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

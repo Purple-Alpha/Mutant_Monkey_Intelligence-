@@ -33,14 +33,15 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: (verify at session start — #47 Case Timeline GOVERNED_AGENT MMI-DEC-168)
+HEAD: (verify at session start — #52 Plain-English Explanation GOVERNED_AGENT MMI-DEC-169)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  BOR v18: hold-only feedstock #52 (MMI-DEC-168 cleared #47)
+  BOR v19: no hold-only promotion feedstock (MMI-DEC-169 cleared #52)
   Team 9 chain #64/#67/#65 GATED at wrapper layer (not GOVERNED_AGENT)
   Command spine #1–#3 GATED · #67 Rule Improvement GATED (MMI-DEC-157)
 
 LAST_COMPLETED (MMI authority repo):
+  #52 Plain-English Explanation — GOVERNED_AGENT promotion review (MMI-DEC-169)
   #47 Case Timeline — GOVERNED_AGENT promotion review (MMI-DEC-168)
   #65 Correction Evidence — GATED closeout (MMI-DEC-165/166)
   Ranked lane board refreshed (2026-06-24T22:40:26Z · git_head dcaa47a)
@@ -48,22 +49,22 @@ LAST_COMPLETED (MMI authority repo):
   Command spine #1–#3 GATED (MMI-DEC-112/109/116)
   #64 Failure Classification — GATED (MMI-DEC-088)
   Challenge/red-team wrappers #61–#63 — GATED (2026-06-21)
-  Evidence wrappers #47 Case Timeline — GOVERNED_AGENT (MMI-DEC-168); #52 Plain-English Explanation — GATED
+  Evidence wrappers #47 Case Timeline — GOVERNED_AGENT (MMI-DEC-168); #52 Plain-English Explanation — GOVERNED_AGENT (MMI-DEC-169)
 
 ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2+#3 (not GOVERNED_AGENT)
-  BOR v18 hold-only (refresh via `python3 scripts/mmi_estimator.py`)
+  BOR v19 no hold-only promotion feedstock (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (0/10): Promotion review #52 (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — hold ALL_CLEAR (no hold-only promotion feedstock). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`
 
-PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 15 GOVERNED_AGENT at ES1 Synthetic;
+PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 16 GOVERNED_AGENT at ES1 Synthetic;
   depth gate CLOSED · Stage B gate CLOSED · revenue milestones mostly open (see MILESTONE_ARC.md)
 
-LAST UPDATED: 2026-06-24 (#47 GOVERNED_AGENT promotion MMI-DEC-168)
+LAST UPDATED: 2026-06-24 (#52 GOVERNED_AGENT promotion MMI-DEC-169)
 ═══════════════════════════════════════════════
 
 ─────────────────────────────────────────────────
