@@ -43,8 +43,8 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Foundation** | COMPLETE — spine GATED; annex §11 signed; MMI-DEC-123 closed |
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Active stage** | **Stage B** — federation-first SMB seat economics + swarm program |
-| **Next waypoint** | **b02** — Brain/immune + tenant-data audit (Lung prod gate) → **Cursor** |
-| **Last closed** | MMI-DEC-132 federation SMB seat economics + poverty-line thesis |
+| **Next waypoint** | **b03** — Immune Federation Mesh contract draft → **Claude** |
+| **Last closed** | MMI-DEC-133 brain/immune Lung prerequisite audit |
 
 ---
 
@@ -127,7 +127,7 @@ Re-staged per MMI-DEC-135. Todd intake remains on file; not Stage A end gate.
 ```text
 START  Stage A complete (MMI-DEC-130)
   · b01  Federation-first SMB seat economics + poverty-line thesis     ✓ [MMI-DEC-132]
-  · b02  Brain/immune + tenant-data audit (Lung prod gate)            → Cursor
+  · b02  Brain/immune + tenant-data audit (Lung prod gate)            ✓ [MMI-DEC-133]
   · b03  Immune Federation Mesh contract draft                         → Claude
   · b04  Governed swarm program charter (70-agent motion)              → Claude
   · b05  Federation economics + mesh contract fork                     → Matt

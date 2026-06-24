@@ -24,11 +24,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Stage B b01 — federation SMB seat economics + poverty-line thesis (MMI-DEC-132)
-  (`mmi/research/MMI_FEDERATION_SMB_SEAT_ECONOMICS_RESEARCH_MMI-DEC-132.md`;
-  `mmi/intake/MMI_INTAKE_2026-06-23-005_Cybersecurity_Poverty_Line_GTM_Thesis.md`;
-  smash pricing hypothesis; conditional price framing — base = decision layer only;
-  swarm/Lung/federation separate; **not** locked MSRP; **not** build authorization).
+LAST_COMPLETED: Stage B b02 — brain/immune + tenant-data Lung prerequisite audit (MMI-DEC-133)
+  (`mmi/research/MMI_BRAIN_IMMUNE_LUNG_PREREQ_AUDIT_MMI-DEC-133.md`;
+  Lung production BLOCKED; b03/b04 cleared; tenant calibration + Playhouse + signed
+  Load Multiplier contract remain open; **not** build authorization).
 
 PRIOR_LAST_COMPLETED: Stage A end — platform credibility closeout (MMI-DEC-130)
   (`mmi/research/MMI_STAGE_A_PLATFORM_CREDIBILITY_CLOSEOUT_MMI-DEC-130.md`;
