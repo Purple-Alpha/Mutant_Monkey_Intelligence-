@@ -1,5 +1,5 @@
-generated_at: 2026-06-24T23:16:56Z
-git_head: 1a76476
+generated_at: 2026-06-24T23:19:40Z
+git_head: 0a096c4
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -12,8 +12,8 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 ## Where we are
 
 - **Dispatcher:** `ALL_CLEAR` — nothing waiting to be built or audited right now
-- **Governed agents:** 16 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
-- **Promotion queue:** 21 built-and-audited agents waiting for your promotion review
+- **Governed agents:** 17 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
+- **Promotion queue:** 20 built-and-audited agents waiting for your promotion review
 
 ## Why it keeps stalling
 
@@ -27,29 +27,29 @@ until you name the next lane.
 
 ## What's next (ranked — not authorized until you say so)
 
-1. **Promotion review #1 Swarm Commander Agent (GATED -> GOVERNED_AGENT when authorized)** — score 5/10
-2. **Promotion review #2 Mission Context Agent (GATED -> GOVERNED_AGENT when authorized)** — score 5/10
-3. **Promotion review #3 Risk Triage Agent (GATED -> GOVERNED_AGENT when authorized)** — score 5/10
-4. **Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
-5. **Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+1. **Promotion review #2 Mission Context Agent (GATED -> GOVERNED_AGENT when authorized)** — score 5/10
+2. **Promotion review #3 Risk Triage Agent (GATED -> GOVERNED_AGENT when authorized)** — score 5/10
+3. **Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+4. **Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+5. **Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
 
 ## Promotion queue (built, audited, needs your review)
 
-1. **#1 Swarm Commander Agent** — GATED, ready for promotion review
-2. **#2 Mission Context Agent** — GATED, ready for promotion review
-3. **#3 Risk Triage Agent** — GATED, ready for promotion review
-4. **#64 Failure Classification** — GATED, ready for promotion review
-5. **#67 Rule Improvement** — GATED, ready for promotion review
-6. **#65 Correction Evidence** — GATED, ready for promotion review
-7. **#61 Test Case Generator** — GATED, ready for promotion review
-8. **#62 Regression Test** — GATED, ready for promotion review
-9. **#63 Adversarial Test** — GATED, ready for promotion review
-10. **#72 PhishIntelAgent** — GATED, ready for promotion review
+1. **#2 Mission Context Agent** — GATED, ready for promotion review
+2. **#3 Risk Triage Agent** — GATED, ready for promotion review
+3. **#64 Failure Classification** — GATED, ready for promotion review
+4. **#67 Rule Improvement** — GATED, ready for promotion review
+5. **#65 Correction Evidence** — GATED, ready for promotion review
+6. **#61 Test Case Generator** — GATED, ready for promotion review
+7. **#62 Regression Test** — GATED, ready for promotion review
+8. **#63 Adversarial Test** — GATED, ready for promotion review
+9. **#72 PhishIntelAgent** — GATED, ready for promotion review
+10. **#73 RansomwareIntelAgent** — GATED, ready for promotion review
 
 ## What to say to unstick (copy-paste)
 
 ```text
-Authorize GOVERNED_AGENT promotion review #1 (Swarm Commander Agent)
+Authorize GOVERNED_AGENT promotion review #2 (Mission Context Agent)
 ```
 
 ## What the crew can do without you

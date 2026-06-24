@@ -1,5 +1,5 @@
-generated_at: 2026-06-24T23:16:56Z
-git_head: 1a76476
+generated_at: 2026-06-24T23:19:40Z
+git_head: 0a096c4
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
@@ -15,19 +15,6 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ## ACTION 1 — TOTAL 5/10
 
-**Promotion review #1 Swarm Commander Agent (GATED -> GOVERNED_AGENT when authorized)**
-
-- action_id: `promotion_#1`
-- primary_scope: `#1`
-- leverage: 2
-- risk_reduction: 1
-- evidence_strength: 2
-- future_cost: 0
-- reversibility: 0
-- **TOTAL: 5**
-
-## ACTION 2 — TOTAL 5/10
-
 **Promotion review #2 Mission Context Agent (GATED -> GOVERNED_AGENT when authorized)**
 
 - action_id: `promotion_#2`
@@ -39,7 +26,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 5**
 
-## ACTION 3 — TOTAL 5/10
+## ACTION 2 — TOTAL 5/10
 
 **Promotion review #3 Risk Triage Agent (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -52,7 +39,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 5**
 
-## ACTION 4 — TOTAL 4/10
+## ACTION 3 — TOTAL 4/10
 
 **Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -65,7 +52,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 4**
 
-## ACTION 5 — TOTAL 4/10
+## ACTION 4 — TOTAL 4/10
 
 **Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -78,12 +65,25 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 4**
 
-## ACTION 6 — TOTAL 4/10
+## ACTION 5 — TOTAL 4/10
 
 **Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)**
 
 - action_id: `promotion_#63`
 - primary_scope: `#63`
+- leverage: 1
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 4**
+
+## ACTION 6 — TOTAL 4/10
+
+**Promotion review #64 Failure Classification (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#64`
+- primary_scope: `#64`
 - leverage: 1
 - risk_reduction: 1
 - evidence_strength: 2
