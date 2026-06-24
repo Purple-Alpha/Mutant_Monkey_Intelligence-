@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_03_RISK_TRIAGE_AGENT_DESIGN_CONTRACT_REVIEW_DRAFT`
 
-**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Pre-build gate clean 0/0 (`audit_outputs/mmi_03_contract_gate_20260622T015428Z.md`; packet SHA256 `1555e24e65cef67ecc238ae8afc3a374f8c60f4de9a92c5959d8dfef9dc6e37e`). Locks D1–D9 spine boundary and AUTH-4 telemetry-scorer scope. Authorizes **contract text only** — **no** build, **no** `SIGNED_UNBUILT`, **no** scoreboard lifecycle promotion, **no** AUTH-5.
+**Status:** §11 SIGNED 2026-06-21 by Matt Nichol. Pre-build gate clean 0/0 (`audit_outputs/mmi_03_contract_gate_20260622T015428Z.md`; MMI-DEC-097). **GATED 2026-06-24 (MMI-DEC-116).** Stage 1 `RiskTriageAgent` wrapper at `core/command/risk_triage_agent.py`; completion gate 0/0 `audit_outputs/risk_triage_agent_20260624T003249Z.md` (packet SHA256 `48bf16d04202086412e6417bf94842502b9d7dc9099379828d0de5fcb1a28b82`). **Not GOVERNED_AGENT**; not production dispatch; not default registry.
 
 **Candidate:** #3 — Risk Triage
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** **BLOCKED** until separate operator Build Authorization. §11 signature does not authorize wrapper build, registry dispatch, or `SIGNED_UNBUILT` reconcile.
+**Implementation:** **BUILD AUTHORIZED 2026-06-23 (MMI-DEC-115).** Separate operator build authorization required before governed wrapper implementation was satisfied by Matt authorize complete Command spine (#3). Legacy `email_risk_scoring_agent.py` remains out of contract until separate retrofit authorization.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md` (template shape only — this draft is not §11-signed)
@@ -250,13 +250,22 @@ Every emitted score must satisfy:
 
 ---
 
-## §9 Build path (not authorized)
+## §9 Build path — AUTHORIZED 2026-06-23 (MMI-DEC-115)
 
-**Proposed future path (frozen for review only):**
+Matt authorized wrapper build 2026-06-23. Implemented path:
 
 `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/command/risk_triage_agent.py`
 
-No file creation, registry entry, or scoreboard `SIGNED_UNBUILT` reconcile is authorized by this draft.
+Build decisions locked at authorization:
+
+- Separate `RiskScoreTelemetry` envelope with strict §6 allowlist enforcement (`assert_telemetry_auth4_compliant`).
+- Interim signal→axis mapping under `SCORING_POLICY_VERSION=mmi_rt_v1`; aggregate = max(axis scores).
+- Inbound `detector_outputs` validated for provenance; routing keys fail closed.
+- Not in `build_default_registry`; legacy `email_risk_scoring_agent.py` unchanged.
+
+Prior superintendent slices: scoreboard reconcile MMI-DEC-114; pre-build gate MMI-DEC-097; completion gate MMI-DEC-116 (`audit_outputs/risk_triage_agent_20260624T003249Z.md`; 0 blocking / 0 warnings).
+
+Not authorized by this build slice: registry/default dispatch, GOVERNED_AGENT promotion, legacy scorer retrofit, or AUTH-5.
 
 ---
 

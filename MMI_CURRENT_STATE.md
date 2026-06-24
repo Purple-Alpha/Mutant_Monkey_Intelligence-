@@ -24,15 +24,13 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Governance housekeeping + concept intake classification
-  (MMI-DEC-113; concepts index; Lung Multiplier vs fission pin; handshake/CURRENT_STATE prose sync;
-  **not** build authorization).
+LAST_COMPLETED: #3 Risk Triage Command spine wrapper GATED (MMI-DEC-116)
+  (completion gate `audit_outputs/risk_triage_agent_20260624T003249Z.md` 0/0;
+  build MMI-DEC-115; **Command spine #1–#3 GATED at wrapper layer**; **not GOVERNED_AGENT**).
 
-PRIOR_LAST_COMPLETED: #1 Swarm Commander reconciled to GATED
-  (MMI-DEC-112; completion gate `audit_outputs/swarm_commander_agent_20260623T061720Z.md` 0 blocking / 1 warning;
-  build MMI-DEC-111; **not GOVERNED_AGENT**; **not** AUTH-5).
+PRIOR_LAST_COMPLETED: Governance housekeeping + concept intake (MMI-DEC-113).
 
-PRIOR: #2 Mission Context GATED (MMI-DEC-109); Executive ASM concept (MMI-CON-2026-06-22; commit `15275a1`).
+PRIOR: #1 Swarm Commander GATED (MMI-DEC-112); #2 Mission Context GATED (MMI-DEC-109).
 
 REVIEW_ACCEPTED_ITEMS:
   - Mode Controller Adversarial #99 evidence accepted June 15th 2026; #92 marked ADVERSARIALLY HARDENED

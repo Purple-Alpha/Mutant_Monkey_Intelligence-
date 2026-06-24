@@ -35,21 +35,15 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
 BRANCH: safety/queue-drift-cleanup-20260528
 HEAD: f73599e (verify at session start — housekeeping commit follows)
 
-DISPATCHER: MODE ALL_CLEAR — `python3 scripts/mmi_dispatch.py --verify` PASS after sync
-  #1 Swarm Commander GATED (MMI-DEC-112) · #2 Mission Context GATED (MMI-DEC-109)
-  Ranked lanes on disk — `mmi/MMI_RANKED_NEXT_ACTIONS.md`
+DISPATCHER: run `python3 scripts/mmi_dispatch.py --sync` + `--verify` after commit
+  Command spine #1–#3 GATED (MMI-DEC-112/109/116) · **not GOVERNED_AGENT** · not wired
 
 LAST_COMPLETED (MMI authority repo):
-  #1 Swarm Commander — `SwarmCommanderAgent` GATED (MMI-DEC-112); completion gate
-    `audit_outputs/swarm_commander_agent_20260623T061720Z.md` (0 blocking / 1 warning);
-    build MMI-DEC-111; §11 contract `docs/mmi/contracts/001_swarm_commander_contract.md`
-    (MMI-DEC-102); pre-build gate (MMI-DEC-101); **not GOVERNED_AGENT**
-  #2 Mission Context — `MissionContextAgent` GATED (MMI-DEC-109); completion gate
-    `audit_outputs/mission_context_agent_20260623T052118Z.md` (0 blocking / 1 warning);
-    build MMI-DEC-108; §11 contract `docs/mmi/contracts/002_mission_context_contract.md`
-    (MMI-DEC-105); pre-build gate (MMI-DEC-107); **not GOVERNED_AGENT**
+  #3 Risk Triage — `RiskTriageAgent` GATED (MMI-DEC-116); completion gate
+    `audit_outputs/risk_triage_agent_20260624T003249Z.md` (0 blocking / 0 warnings);
+    build MMI-DEC-115; **Command spine #1–#3 complete at wrapper layer**; **not GOVERNED_AGENT**
+  #1 Swarm Commander — GATED (MMI-DEC-112) · #2 Mission Context — GATED (MMI-DEC-109)
   Ranked lane board LIVE — `mmi/MMI_RANKED_NEXT_ACTIONS.md` + `scripts/mmi_next_action_rubric.py` (MMI-DEC-104)
-  #3 Risk Triage — spine contract §11 signed (`docs/mmi/contracts/003_risk_triage_contract.md` MMI-DEC-098); **not** build / **not** SIGNED_UNBUILT
   #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
     (MMI-DEC-092); Lane 1 Authority Escalation Probe on disk (MMI-DEC-082); Lane 2+ held
   #64 Failure Classification — GATED (MMI-DEC-088)
