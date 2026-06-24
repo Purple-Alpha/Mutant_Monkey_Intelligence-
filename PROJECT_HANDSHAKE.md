@@ -36,7 +36,7 @@ BRANCH: safety/queue-drift-cleanup-20260528
 HEAD: 5b465b1 (verify at session start — #67 Rule Improvement GATED MMI-DEC-157)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  BOR v16: #65 Correction Evidence built AWAITING_AUDIT (MMI-DEC-163/164)
+  BOR v17: #65 Correction Evidence GATED (MMI-DEC-166)
   PMV relays Claude contract draft — not Matt direction-pick
   Command spine #1–#3 GATED · #67 Rule Improvement GATED (MMI-DEC-157)
 

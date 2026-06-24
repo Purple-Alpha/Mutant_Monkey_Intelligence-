@@ -335,6 +335,10 @@ MMI-DEC-163 | 2026-06-24 | #65 Correction Evidence build authorization + impleme
 
 MMI-DEC-164 | 2026-06-24 | #65 Correction Evidence AWAITING_AUDIT scoreboard reconcile | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #65 row | ACCEPT | Separate superintendent slice after SIGNED_UNBUILT (`MMI-DEC-162`) and build (`MMI-DEC-163`); lifecycle `SIGNED_UNBUILT` -> `AWAITING_AUDIT`; completion gate pending. **Not GATED** until Gemini/Grok 0 blocking; **not GOVERNED_AGENT**; not production dispatch; not AUTH-5. | Completion gate then GATED reconcile | Run mmi_dispatch.py --sync + --verify + pmv after commit | Cursor (superintendent AWAITING_AUDIT reconcile)
 
+MMI-DEC-165 | 2026-06-24 | #65 Correction Evidence completion gate | `audit_outputs/correction_evidence_20260624T223220Z.md` (0 blocking / 1 warning); packet SHA256 `e26b0a62ac5b57d6f671eaa5ada4ab061eb9c0c1bd7562b0315f6819b6e21801`; Gemini verdict clean | ACCEPT | Completion gate clean 0 blocking; sandbox `run_sandbox_cycle` + target corpus replay + corpus no-regression proof bars confirmed; 1 warning: silent fallback when corpus_refs miss (non-blocking). **Not GATED** until scoreboard reconcile; **not GOVERNED_AGENT**; not production dispatch; not AUTH-5 | GATED reconcile | Run mmi_dispatch.py --sync + --verify + pmv after commit | Cursor (completion gate #65)
+
+MMI-DEC-166 | 2026-06-24 | #65 Correction Evidence reconciled to GATED | `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` #65 row; `audit_outputs/correction_evidence_20260624T223220Z.md` (MMI-DEC-165) | ACCEPT | Matt authorized GATED reconcile via PM Voice relay; completion gate clean 0 blocking (Gemini; 1 warning on corpus_refs fallback); lifecycle `AWAITING_AUDIT` -> `GATED`. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing. | Chain-of-command next breadth lane via BOR feedstock | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (PMV GATED reconcile #65)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

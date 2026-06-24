@@ -1,12 +1,18 @@
-MODE: AUDIT
-AUTHORIZED_TASK: Run completion gate for Correction Evidence
-ASSIGNED_TO: completion gate auditor (complete_gate.py)
-NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits
-OPERATOR_ACTION_REQUIRED: NO  (completion gate activation is standing; no per-run permission)
-RUN: python3 audit_tools/complete_gate.py --pre-commit --task correction_evidence --claim "Correction Evidence build implemented + tested; ready for audit"
-MANIFEST: audit_outputs/pending/correction_evidence.manifest.json (MISSING - create before gate)
-BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed
-NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit
+MODE: ALL_CLEAR
+AUTHORIZED_TASK: No delegable tasks in routing queue
+OPERATOR_NAMES_TARGET: Matt
+MMI_ASSIGNS_LANE: YES
+LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
+BUILD_AUTHORIZATION_IMPLIED: NO
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 44 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
+ASSIGNED_TO: Matt
+NEXT_PROMPT_GOES_TO: Matt
+OPERATOR_ACTION_REQUIRED: YES — supply next evidence or run Estimator for read-only candidate ranking
+CANDIDATES_NOT_AUTHORIZATION: YES — Estimator ranks candidates; output is not authorization, selection, or routing authority
+REQUIRED_UPDATE_AFTER_COMPLETION: MMI first after any worker completion: append evidence to the relevant MMI record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit routing-authority files, then python3 scripts/mmi_dispatch.py --verify
+NEXT_GATE: new signed contract, scoreboard row, intake evidence, or operator-selected next action
+TASK_SCOREBOARD: (empty — queue has no delegable tasks)
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -18,14 +24,12 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #65 Correction Evidence build + AWAITING_AUDIT reconcile (MMI-DEC-163/164)
-  (`CorrectionEvidenceAgent` wrapper + 19 tests; **not GATED** until completion gate).
+LAST_COMPLETED: #65 Correction Evidence GATED closeout (MMI-DEC-165/166)
+  (`audit_outputs/correction_evidence_20260624T223220Z.md` 0 blocking / 1 warning;
+  Gemini; **not GOVERNED_AGENT**).
 
-PRIOR_LAST_COMPLETED: #65 Correction Evidence §11 sign + SIGNED_UNBUILT reconcile (MMI-DEC-162)
-  (`Matt Nichol June 24th 2026`; **not** build authorization by itself).
-
-PRIOR: #65 Correction Evidence pre-build gate (MMI-DEC-161)
-  (`audit_outputs/mmi_65_contract_gate_20260624T221330Z.md` 0 blocking / 1 warning).
+PRIOR_LAST_COMPLETED: #65 Correction Evidence build + AWAITING_AUDIT (MMI-DEC-163/164)
+  (`CorrectionEvidenceAgent` wrapper + 19 tests).
 
 PRIOR: #67 Rule Improvement pre-build gate (MMI-DEC-153)
   (Gemini pre-build gate 0/0; contract signable).
