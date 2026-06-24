@@ -10,6 +10,8 @@
 
 **Reconciled against disk:** 2026-06-19 via `find mmi/research -maxdepth 1 -type f`
 
+**Concepts register (sibling, not duplicate):** `mmi/concepts/MMI_CONCEPTS_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md` (MMI-DEC-113).
+
 ---
 
 ## 1. Title

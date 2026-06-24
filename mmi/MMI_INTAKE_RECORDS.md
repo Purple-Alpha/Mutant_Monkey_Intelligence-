@@ -593,6 +593,17 @@ Classification: INFRASTRUCTURE_BUILT (Lane 1 probe) + CONTRACT_REVIEW hold (#105
 Routing outcome: Regular feedstock rank 1 → #64 Failure Classification CONTRACT_DRAFT; #105 and #67 on hold
 Matt approval required: YES for §11 on invariants framework; YES to unpark #67 or authorize #64 contract draft
 
+INTAKE-2026-06-23-001
+Component: Governance housekeeping — concept intake + prose sync
+Request: Classify all mmi/concepts/ files; file Lung Multiplier vs fission pin; sync stale handshake/CURRENT_STATE
+Source: Matt Nichol session 2026-06-23 — "all housekeeping get everything in order"
+Artifact: `mmi/concepts/MMI_CONCEPTS_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md`;
+  `mmi/concepts/MMI_LUNG_MULTIPLIER_VS_FISSION_GOVERNANCE_ADDENDUM.md`;
+  `PROJECT_HANDSHAKE.md`; `MMI_CURRENT_STATE.md`; `MASTER_INDEX.md`; MMI-DEC-113
+Classification: GOVERNANCE_HOUSEKEEPING — concept classification only; zero routing influence
+Routing outcome: ALL_CLEAR posture re-read; Matt selects next lane via Estimator/ranked board
+Matt approval required: NO for this housekeeping slice (authorization granted)
+
 INTAKE-2026-06-21-009
 Component: #64 Failure Classification Agent Design Contract
 Request: File Matt-authored contract draft with Cursor §5/§7 reconciliation

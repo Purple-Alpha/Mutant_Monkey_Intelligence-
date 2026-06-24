@@ -10,6 +10,8 @@
 
 **Sibling concept:** `mmi/concepts/MMI_MULTI_DOMAIN_EXPANSION_CONCEPT_SHEET.md` — this addendum narrows the *bridge* path only; it does not replace or supersede the parent sheet.
 
+**Governance index:** `mmi/concepts/MMI_CONCEPTS_INTAKE_INDEX_AND_CLASSIFICATION_REVIEW.md` (MMI-DEC-113).
+
 **Boundary:** This is a future-direction concept addendum. It selects nothing, authorizes nothing, and changes no current build. Email / Inbox Shield remains domain one and the current build focus.
 
 ---

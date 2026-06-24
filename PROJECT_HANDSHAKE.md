@@ -33,9 +33,9 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: 4f81f1b (spine bundle 772fbb7; verify at session start)
+HEAD: d44e747 (verify at session start — housekeeping commit follows)
 
-DISPATCHER: run `python3 scripts/mmi_dispatch.py --sync` + `--verify` after commit
+DISPATCHER: MODE ALL_CLEAR — `python3 scripts/mmi_dispatch.py --verify` PASS after sync
   #1 Swarm Commander GATED (MMI-DEC-112) · #2 Mission Context GATED (MMI-DEC-109)
   Ranked lanes on disk — `mmi/MMI_RANKED_NEXT_ACTIONS.md`
 
@@ -49,8 +49,7 @@ LAST_COMPLETED (MMI authority repo):
     build MMI-DEC-108; §11 contract `docs/mmi/contracts/002_mission_context_contract.md`
     (MMI-DEC-105); pre-build gate (MMI-DEC-107); **not GOVERNED_AGENT**
   Ranked lane board LIVE — `mmi/MMI_RANKED_NEXT_ACTIONS.md` + `scripts/mmi_next_action_rubric.py` (MMI-DEC-104)
-  #1 Swarm Commander + #3 Risk Triage — spine contract-review §11 signed at
-    `docs/mmi/contracts/` (MMI-DEC-098/102); #1 `SIGNED_UNBUILT` (MMI-DEC-110); #3 **not** build / **not** SIGNED_UNBUILT
+  #3 Risk Triage — spine contract §11 signed (`docs/mmi/contracts/003_risk_triage_contract.md` MMI-DEC-098); **not** build / **not** SIGNED_UNBUILT
   #105 MMI Governance Invariants Testing Framework — §11 signed + SIGNED_CONTRACT
     (MMI-DEC-092); Lane 1 Authority Escalation Probe on disk (MMI-DEC-082); Lane 2+ held
   #64 Failure Classification — GATED (MMI-DEC-088)
@@ -58,11 +57,12 @@ LAST_COMPLETED (MMI authority repo):
   Evidence wrappers #47 Case Timeline, #52 Plain-English Explanation — GATED
 
 ESTIMATOR (advisory only — not authorization):
-  buildable_count=1 (#1 Swarm Commander SIGNED_UNBUILT) · awaiting_audit_count=0 · missing_contract_count=0
-  BOR hold-only (BOR-ALL-CLEAR-FEEDSTOCK-v10, MMI-DEC-102)
+  buildable_count=0 · awaiting_audit_count=0 · gated_command_spine=#1+#2 (not GOVERNED_AGENT)
+  BOR hold-only (refresh via `python3 scripts/mmi_estimator.py`)
 
 NEXT ACTION: Read ranked lanes on disk — rubric ranks; Matt selects one. Top ranked (5/10): Refresh ranked lane board (mmi_lane_board_sync + handshake pin). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
-  Held unless authorized: wrapper implementation, BOR unpark, GOVERNED_AGENT promotion for GATED rows.
+  Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+  Held unless authorized: GOVERNED_AGENT promotion, default registry, lung spawn wiring, #3 build.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`
@@ -70,7 +70,7 @@ PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
 PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 14 GOVERNED_AGENT at ES1 Synthetic;
   depth gate CLOSED · Stage B gate CLOSED · revenue milestones mostly open (see MILESTONE_ARC.md)
 
-LAST UPDATED: 2026-06-23 (#1 Swarm Commander SIGNED_UNBUILT MMI-DEC-110)
+LAST UPDATED: 2026-06-23 (governance housekeeping MMI-DEC-113; #1 GATED MMI-DEC-112)
 ═══════════════════════════════════════════════
 
 ─────────────────────────────────────────────────
