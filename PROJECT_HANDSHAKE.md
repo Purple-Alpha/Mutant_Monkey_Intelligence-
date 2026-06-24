@@ -33,7 +33,7 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: 1b85ed9 (verify at session start — PMV chain relay MMI-DEC-117)
+HEAD: be21bf9 (verify at session start — MMI records synced for MMI-DEC-117)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
   Command spine #1–#3 GATED (MMI-DEC-112/109/116) · PMV chain relay (MMI-DEC-117)
