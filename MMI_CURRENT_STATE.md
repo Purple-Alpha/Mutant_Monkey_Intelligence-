@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #65 Correction Evidence Agent Design Contract draft placement (MMI-DEC-160)
-  (`4. Product_Roadmap/Correction_Evidence_Agent_Design_Contract_Deep_Dive.md` DRAFT UNSIGNED;
-  reconciled `#64`/`#67` handoffs + sandbox harness; **not** §11; **not** build).
+LAST_COMPLETED: #65 Correction Evidence pre-build gate (MMI-DEC-161)
+  (`audit_outputs/mmi_65_contract_gate_20260624T221330Z.md` 0 blocking / 1 warning;
+  Gemini SIGNABLE; **not** §11; **not** build).
 
-PRIOR_LAST_COMPLETED: #67 Rule Improvement build + GATED closeout (MMI-DEC-155–157)
+PRIOR_LAST_COMPLETED: #65 Correction Evidence contract draft placement (MMI-DEC-160)
   (`4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md` §11 SIGNED;
   Matt Nichol June 24th 2026).
 
