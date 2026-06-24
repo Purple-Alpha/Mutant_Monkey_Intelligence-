@@ -233,21 +233,24 @@ def default_evaluation_runner(
         for item in cycle_result.item_results
     )
 
+    failure_ref_bound = request.failure_ref in proposal.rationale
     fix_passed = (
         proposal.proposal_id == request.proposal_ref
+        and failure_ref_bound
         and cycle_result.processed_count > 0
         and proposal.candidate_confidence > proposal.baseline_confidence
         and bool(proposal.sandbox_evidence_ids)
     )
     fix_proof = (
-        f"sandbox replay processed {cycle_result.processed_count} weakness case(s) "
-        f"for failure_ref {request.failure_ref}; confidence "
-        f"{proposal.baseline_confidence:.4f} -> {proposal.candidate_confidence:.4f}; "
+        f"failure_ref {request.failure_ref} bound in proposal rationale; "
+        f"sandbox replay processed {cycle_result.processed_count} weakness case(s); "
+        f"confidence {proposal.baseline_confidence:.4f} -> "
+        f"{proposal.candidate_confidence:.4f}; "
         f"cycle_evidence_ids={', '.join(cycle_evidence_ids) or 'none'}"
         if fix_passed
         else (
-            "fix proof failed: sandbox replay empty or missing proposal confidence "
-            "delta / sandbox evidence ids"
+            "fix proof failed: failure_ref not bound in proposal rationale, "
+            "sandbox replay empty, or missing confidence delta / sandbox evidence ids"
         )
     )
 
