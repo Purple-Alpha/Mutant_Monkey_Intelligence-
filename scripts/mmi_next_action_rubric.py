@@ -350,6 +350,21 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
                 edit_path_count=1,
             )
         )
+    elif spine_gated and annex_path.is_file() and not _is_contract_signed(
+        _read_text(annex_path)
+    ):
+        add(
+            RubricCandidate(
+                action_id="routing_policy_annex_gate",
+                label=(
+                    "Run Grok pre-build gate on #1 routing-policy annex "
+                    "(draft on disk; §11 UNSIGNED)"
+                ),
+                primary_scope="#1",
+                kind="contract_gate",
+                edit_path_count=1,
+            )
+        )
 
     if _ranked_board_stale(root):
         add(
@@ -376,7 +391,7 @@ def generate_candidates(root: Path) -> list[RubricCandidate]:
 
 
 def _score_leverage(candidate: RubricCandidate, scoreboard: str) -> int:
-    if candidate.kind == "routing_annex":
+    if candidate.kind in ("routing_annex", "contract_gate"):
         return 2
     if candidate.kind in ("hold", "admin"):
         return 0
@@ -395,7 +410,7 @@ def _score_leverage(candidate: RubricCandidate, scoreboard: str) -> int:
 
 
 def _score_risk_reduction(candidate: RubricCandidate, root: Path) -> int:
-    if candidate.kind == "routing_annex":
+    if candidate.kind in ("routing_annex", "contract_gate"):
         return 2
     if candidate.kind == "admin":
         return 1
@@ -409,7 +424,7 @@ def _score_risk_reduction(candidate: RubricCandidate, root: Path) -> int:
 
 def _score_evidence(candidate: RubricCandidate, root: Path) -> int:
     scope = candidate.primary_scope
-    if candidate.kind == "routing_annex":
+    if candidate.kind in ("routing_annex", "contract_gate"):
         return 2
     if candidate.kind == "hold":
         return 0

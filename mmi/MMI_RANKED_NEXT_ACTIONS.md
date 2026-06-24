@@ -1,5 +1,5 @@
-generated_at: 2026-06-24T01:44:32Z
-git_head: 1b85ed9
+generated_at: 2026-06-24T01:48:03Z
+git_head: 9e99bb4
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
@@ -7,7 +7,7 @@ generator: scripts/mmi_lane_board_sync.py
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
 dispatcher_mode: ALL_CLEAR
-candidate_count: 5
+candidate_count: 6
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
@@ -15,9 +15,9 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ## ACTION 1 — TOTAL 9/10
 
-**Draft #1 routing-policy annex (Command spine GATED; read-only #3 telemetry wiring)**
+**Run Grok pre-build gate on #1 routing-policy annex (draft on disk; §11 UNSIGNED)**
 
-- action_id: `routing_policy_annex_draft`
+- action_id: `routing_policy_annex_gate`
 - primary_scope: `#1`
 - leverage: 2
 - risk_reduction: 2
@@ -26,7 +26,20 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 2
 - **TOTAL: 9**
 
-## ACTION 2 — TOTAL 3/10
+## ACTION 2 — TOTAL 5/10
+
+**Refresh ranked lane board (mmi_lane_board_sync + handshake pin)**
+
+- action_id: `admin_lane_board_sync`
+- primary_scope: `admin`
+- leverage: 0
+- risk_reduction: 1
+- evidence_strength: 1
+- future_cost: 2
+- reversibility: 1
+- **TOTAL: 5**
+
+## ACTION 3 — TOTAL 3/10
 
 **Unpark BOR feedstock #67 Rule Improvement (CONTRACT_DRAFT)**
 
@@ -39,7 +52,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 2
 - **TOTAL: 3**
 
-## ACTION 3 — TOTAL 0/10
+## ACTION 4 — TOTAL 0/10
 
 **Promotion review #47 (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -52,7 +65,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 0**
 
-## ACTION 4 — TOTAL 0/10
+## ACTION 5 — TOTAL 0/10
 
 **Promotion review #52 (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -65,7 +78,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 0**
 
-## ACTION 5 — TOTAL 3/10
+## ACTION 6 — TOTAL 3/10
 
 **Hold ALL_CLEAR — no new lane this cycle**
 

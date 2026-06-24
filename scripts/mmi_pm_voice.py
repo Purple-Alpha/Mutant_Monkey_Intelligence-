@@ -276,6 +276,14 @@ def _live_chain_actions(root: Path) -> list[dict[str, str]]:
 
 
 def _chain_relay_for_action(action_id: str, label: str, root: Path) -> tuple[str, str]:
+    if action_id == "routing_policy_annex_gate":
+        return (
+            ROSTER_REVIEW,
+            (
+                f"Run Grok pre-build gate review on routing-policy annex at "
+                f"{ROUTING_POLICY_ANNEX_REL}; optional Matt §11 when gate clean 0/0."
+            ),
+        )
     if action_id == "routing_policy_annex_draft":
         return (
             ROSTER_CONTRACT_DRAFT,
@@ -1231,17 +1239,50 @@ def _compose_missing_contract_voice(
 def _compose_command_spine_routing_annex_voice(
     evidence: VoiceEvidence, repo_root: Path
 ) -> dict[str, str]:
-    hand_it_to, you_do = _chain_relay_for_action(
-        "routing_policy_annex_draft",
-        "Draft #1 routing-policy annex",
-        repo_root,
-    )
+    annex_path = repo_root / ROUTING_POLICY_ANNEX_REL
     chain = _live_chain_actions(repo_root)
     alternates = [
         f"  {row['rank']}. [{row['total']}/10] {row['label']}"
         for row in chain[1:4]
     ]
     alt_block = "\n".join(alternates) if alternates else ""
+
+    if annex_path.is_file() and not _is_contract_signed(repo_root, ROUTING_POLICY_ANNEX_REL):
+        you_do = (
+            f"Run Grok pre-build gate review on routing-policy annex at "
+            f"{ROUTING_POLICY_ANNEX_REL}; optional Matt §11 when gate clean 0/0."
+        )
+        return {
+            "WHAT_NEEDS_MATT": (
+                "Pre-build gate review is needed for #1 routing-policy annex "
+                "(Command spine GATED follow-on)."
+            ),
+            "IN_FLIGHT": (
+                f"Annex draft on disk at {ROUTING_POLICY_ANNEX_REL}; §11 UNSIGNED."
+            ),
+            "HAND_IT_TO": ROSTER_REVIEW,
+            "YOU_DO": you_do
+            + (
+                f"\nAlternate ranked lanes (hold unless unparked):\n{alt_block}"
+                if alt_block
+                else ""
+            ),
+            "WHY": (
+                f"dispatcher={evidence.dispatcher_mode}; buildable_count="
+                f"{evidence.buildable_count}; spine wrappers GATED; annex draft "
+                f"placed; MMI-DEC-116 fork advances to Codex gate before §11."
+            ),
+            "IGNORE_FOR_NOW": _ignore_block(evidence, repo_root=repo_root),
+            "SOURCE": _source_line(evidence, repo_root=repo_root)
+            + "; chain: routing_policy_annex_pre_build_gate",
+            "BOUNDARY": _boundary_line(),
+        }
+
+    hand_it_to, you_do = _chain_relay_for_action(
+        "routing_policy_annex_draft",
+        "Draft #1 routing-policy annex",
+        repo_root,
+    )
     return {
         "WHAT_NEEDS_MATT": (
             "Chain-of-command next lane after Command spine #1–#3 GATED: "

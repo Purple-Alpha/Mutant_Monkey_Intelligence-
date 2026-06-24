@@ -73,7 +73,11 @@ class TestMmiNextActionRubric(unittest.TestCase):
         self.assertNotIn("build_auth_#1", ids)
         self.assertNotIn("build_auth_#2", ids)
         self.assertNotIn("build_auth_#3", ids)
-        self.assertIn("routing_policy_annex_draft", ids)
+        if (root / self.mod.ROUTING_POLICY_ANNEX_REL).is_file():
+            self.assertIn("routing_policy_annex_gate", ids)
+            self.assertNotIn("routing_policy_annex_draft", ids)
+        else:
+            self.assertIn("routing_policy_annex_draft", ids)
 
     def test_signed_spine_contract_2_excludes_draft_candidate(self):
         root = self.mod._repo_root()
