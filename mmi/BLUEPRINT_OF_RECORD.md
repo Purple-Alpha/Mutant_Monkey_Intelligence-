@@ -1,42 +1,42 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-173). #64 Failure Classification GOVERNED_AGENT; dynamic promotion queue via Operator Map.
-
-**Classification:** Shared crew artifact · Blueprint of Record
-
-**Owner:** Matt Nichol
-
-**Authority repo:** `/home/socialarchitect/northstar`
+**Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-174). #67 Rule Improvement GOVERNED_AGENT; Team 9 chain rolling.
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v23
+## CURRENT_PLAN — ALL_CLEAR feedstock v24
 
 plan_status: CURRENT_PLAN
-version_id: BOR-ALL-CLEAR-FEEDSTOCK-v23
-population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v23
-population_decision: MMI-DEC-173
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v24
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v24
+population_decision: MMI-DEC-174
 created_at: 2026-06-25
 source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
-architect_blueprint_source: Team 9 #64 GOVERNED_AGENT — dynamic promotion queue via Operator Map
-revision_reason: #64 Failure Classification GOVERNED_AGENT promotion review
+architect_blueprint_source: Team 9 #67 GOVERNED_AGENT — pick-and-continue promotion queue
+revision_reason: #67 Rule Improvement GOVERNED_AGENT; operator directed no stall
 non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
-
-When dispatcher is ALL_CLEAR and Estimator has no SIGNED_UNBUILT/AWAITING_AUDIT rows, Estimator reads feedstock_entry lines below and emits SCORED_FEEDSTOCK for PM Voice relay.
 
 (no hold-only promotion feedstock entries — dynamic promotion queue via `mmi/MMI_OPERATOR_MAP.md`)
 
 Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #67 Rule Improvement — GOVERNED_AGENT (MMI-DEC-174); not production mutation deploy; not default registry
   #64 Failure Classification — GOVERNED_AGENT (MMI-DEC-173); not production dispatch; not default registry
   Command spine #1–#3 — GOVERNED_AGENT (MMI-DEC-170/171/172); not production dispatch; not default registry
-  #52 Plain-English Explanation — GOVERNED_AGENT (MMI-DEC-169); not production dispatch; not default registry
-  #47 Case Timeline — GOVERNED_AGENT (MMI-DEC-168); not production dispatch; not default registry
-  #67 Rule Improvement — GATED wrapper (MMI-DEC-157); not GOVERNED_AGENT; not wired; sandbox-only proposal
-  #65 Correction Evidence — GATED wrapper (MMI-DEC-166); not GOVERNED_AGENT; not wired; evidence-only validation
+  #52, #47 — GOVERNED_AGENT (MMI-DEC-169/168)
+  #65 Correction Evidence — GATED wrapper (MMI-DEC-166); not GOVERNED_AGENT; not wired
   #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
   #61 Test Case Generator, #62 Regression Test, #63 Adversarial Test — GATED
 
 Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): dynamic promotion queue via Operator Map.
+
+---
+
+## Prior ALL_CLEAR v23 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v23
+population_decision: MMI-DEC-173
+revision_reason: Superseded by v24 after #67 GOVERNED_AGENT (MMI-DEC-174)
 
 ---
 

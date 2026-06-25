@@ -353,6 +353,8 @@ MMI-DEC-172 | 2026-06-25 | #3 Risk Triage GOVERNED_AGENT promotion review | scor
 
 MMI-DEC-173 | 2026-06-25 | #64 Failure Classification GOVERNED_AGENT promotion review | scoreboard #64 row; decision_cycles_log CYCLE 33; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v23 | ACCEPT | Repo evidence supports promotion: §11 contract 2026-06-21, build `872b972`, 16 focused tests, Grok completion gate 0/0 (`audit_outputs/failure_classification_20260621T220552Z.md`; MMI-DEC-088), L5 Challenge/Red-Team bar cleared; #64 GATED -> GOVERNED_AGENT; breadth runway 19 -> 20; first governed Layer 5 agent | No production dispatch, default registry wiring, or AUTH-5 unlock | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize GOVERNED_AGENT promotion review #64)
 
+MMI-DEC-174 | 2026-06-25 | #67 Rule Improvement GOVERNED_AGENT promotion review | scoreboard #67 row; decision_cycles_log CYCLE 34; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v24 | ACCEPT | Matt directed crew to pick next lane and keep rolling; repo evidence supports promotion: §11 contract MMI-DEC-154, build MMI-DEC-155, 16 focused tests, completion gate 0 blocking / 1 warning (`audit_outputs/rule_improvement_agent_20260624T185625Z.md`; MMI-DEC-157), L6 Governance sandbox-only bar cleared; #67 GATED -> GOVERNED_AGENT; breadth runway 20 -> 21; first governed Layer 6 agent | No production mutation deploy, default registry wiring, or AUTH-5 unlock | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (directed pick-and-continue — #67 Team 9 chain)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

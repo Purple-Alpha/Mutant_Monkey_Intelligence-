@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #64 Failure Classification GOVERNED_AGENT promotion review (MMI-DEC-173)
-  (§11 contract 2026-06-21; build `872b972`; 16 tests; Grok gate 0/0; breadth runway
-  19 -> 20; first governed Layer 5; **not** production dispatch / **not** default registry).
+LAST_COMPLETED: #67 Rule Improvement GOVERNED_AGENT promotion (MMI-DEC-174)
+  (Matt directed pick-and-continue; §11 MMI-DEC-154; 16 tests; gate 0 blocking;
+  breadth 20 -> 21; **not** production mutation deploy).
 
-PRIOR_LAST_COMPLETED: #3 Risk Triage GOVERNED_AGENT promotion review (MMI-DEC-172)
+PRIOR_LAST_COMPLETED: #64 Failure Classification GOVERNED_AGENT promotion review (MMI-DEC-173)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).
