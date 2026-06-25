@@ -54,6 +54,7 @@ EVIDENCE_PATHS = (
 MESH_CLOSEOUT_REL = "mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md"
 MESH_CONTRACT_REL = "docs/mmi/contracts/004_immune_federation_mesh_contract.md"
 MESH_ADDENDUM_REL = "mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md"
+IFM_AUDIT_CHECKLIST_REL = "mmi/reviews/MMI_IFM_MESH_HARDENING_ADVERSARIAL_CHECKLIST.md"
 IFM_S13_KEY_EPOCH_REL = (
     "mmi/research/MMI_IFM_S13_KEY_EPOCH_ROTATION_RESOLUTION_MMI-DEC-140.md"
 )
@@ -387,6 +388,29 @@ def _resolve_audit_lane(root: Path, log: str) -> LaneView:
             evidence=f"Scoreboard AWAITING_AUDIT row; {len(awaiting)} pending",
             next_action=f"Run completion gate review for {awaiting[0]}",
             actor="Gemini / Grok / Codex",
+            authority=DEFAULT_AUTHORITY,
+        )
+
+    checklist_exists = _file_exists(root, IFM_AUDIT_CHECKLIST_REL)
+    if (
+        checklist_exists
+        and closeout
+        and _decision_present(log, "MMI-DEC-131")
+        and _decision_present(log, "MMI-DEC-140")
+    ):
+        return LaneView(
+            lane="AUDIT",
+            active="IFM mesh hardening adversarial checklist (pre-build)",
+            state="COMPLETED",
+            evidence=(
+                f"{IFM_AUDIT_CHECKLIST_REL} filed; 48 IFM-AUD-* scenarios; "
+                "MMI-DEC-131 closeout + MMI-DEC-140 contract anchors"
+            ),
+            next_action=(
+                "Execute checklist against runtime when mesh build authorized; "
+                "design review optional — no Matt pick required pre-build"
+            ),
+            actor="Gemini / ChatGPT / security reviewer",
             authority=DEFAULT_AUTHORITY,
         )
 

@@ -355,6 +355,8 @@ MMI-DEC-173 | 2026-06-25 | #64 Failure Classification GOVERNED_AGENT promotion r
 
 MMI-DEC-174 | 2026-06-25 | #67 Rule Improvement GOVERNED_AGENT promotion review | scoreboard #67 row; decision_cycles_log CYCLE 34; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v24 | ACCEPT | Matt directed crew to pick next lane and keep rolling; repo evidence supports promotion: §11 contract MMI-DEC-154, build MMI-DEC-155, 16 focused tests, completion gate 0 blocking / 1 warning (`audit_outputs/rule_improvement_agent_20260624T185625Z.md`; MMI-DEC-157), L6 Governance sandbox-only bar cleared; #67 GATED -> GOVERNED_AGENT; breadth runway 20 -> 21; first governed Layer 6 agent | No production mutation deploy, default registry wiring, or AUTH-5 unlock | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (directed pick-and-continue — #67 Team 9 chain)
 
+MMI-DEC-175 | 2026-06-25 | IFM mesh hardening adversarial checklist (AUDIT lane pre-build) | `mmi/reviews/MMI_IFM_MESH_HARDENING_ADVERSARIAL_CHECKLIST.md`; `scripts/mmi_active_lanes.py` AUDIT lane completion pin | ACCEPT | Matt authorized AUDIT lane. Filed 48-scenario IFM-AUD-* checklist covering Guardrail 11, HMAC/key epoch, anti-poisoning, replay/TTL/skew, consent/revocation, RA egress boundary. Pre-implementation only — all rows UNTESTED until mesh build. **Not** mesh bus build; **not** GOVERNED_AGENT; **not** AUTH-5 | Execute checklist against runtime when mesh build separately authorized | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize IFM audit checklist)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

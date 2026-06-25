@@ -97,6 +97,14 @@ class ActiveLaneConsoleTests(unittest.TestCase):
             self.assertEqual(design.state, "READY_FOR_REVIEW")
             self.assertIn("Matt §11 review", design.next_action)
 
+    def test_audit_lane_ifm_checklist_complete(self):
+        audit = next(
+            lane for lane in self.mod.gather_lanes(self.mod._repo_root()) if lane.lane == "AUDIT"
+        )
+        self.assertEqual(audit.state, "COMPLETED")
+        self.assertIn("IFM-AUD", audit.evidence)
+        self.assertNotIn("Create adversarial review checklist", audit.next_action)
+
     def test_pugh_forbidden_auto_build(self):
         pugh, risk = self.mod._classify_pugh("Auto-run build after research evidence appears", "BUILD")
         self.assertEqual(pugh, "-")

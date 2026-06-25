@@ -51,7 +51,7 @@ Concepts that are theoretically interesting but currently lack a signed authorit
 |------|---------------------|
 | **RESEARCH** | No active fork — IFM §11 signed (MMI-DEC-140); park unless new research intake |
 | **DESIGN** | Hardening review **complete** (MMI-DEC-140); resolve remaining §13 items when Matt selects (copy cap, legal consent, pool boundary, pilot, protobuf) |
-| **AUDIT** | Populate adversarial review checklist for mesh controls (HMAC, replay, anti-poisoning) |
+| **AUDIT** | Checklist **filed** — execute IFM-AUD-* rows when mesh build authorized |
 | **BUILD** | Blocked — no separate build authorization |
 
 ---
