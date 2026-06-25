@@ -397,6 +397,8 @@ MMI-DEC-196 | 2026-06-25 | #18 Callback Verification GOVERNED_AGENT promotion re
 
 MMI-DEC-197 | 2026-06-25 | BOR v30 Estimator-weighted feedstock pivot | `mmi/BLUEPRINT_OF_RECORD.md` v30; `scripts/mmi_estimator.py` SCORED_FEEDSTOCK relay | ACCEPT | #18 retired from feedstock after GOVERNED_AGENT (MMI-DEC-196). Rank-1 **#49 Audit Trail** **27.00** (F1=8 F4=3). **Not** contract draft execution; **not** §11; **not** build | Contract draft lane #49 Audit Trail (rank-1 feedstock) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize feedstock pivot after #18 GOVERNED_AGENT)
 
+MMI-DEC-198 | 2026-06-25 | #49 Audit Trail Agent Design Contract draft placement | `4. Product_Roadmap/Audit_Trail_Agent_Design_Contract_Deep_Dive.md`; scoreboard #49 row; Step 00 PASS 31/31 | ACCEPT | Matt directed keep rolling on rank-1 feedstock; UNSIGNED contract draft placed; locks D1–D10 ledger/packet split (Canonical Evidence Ledger immutable · audit-packet assembly #46 only · distinct from #47/#88). **DRAFT UNSIGNED**; pre-build gate not run; **not** §11; **not** build; **not** SIGNED_UNBUILT | Codex pre-build gate on #49 contract when Matt chooses §11 path | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (keep rolling — BOR rank-1 #49 feedstock)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
