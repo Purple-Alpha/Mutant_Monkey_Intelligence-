@@ -1,5 +1,5 @@
-generated_at: 2026-06-25T00:34:27Z
-git_head: 2dfb957
+generated_at: 2026-06-25T00:36:13Z
+git_head: 6507b0c
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
@@ -54,19 +54,6 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ## ACTION 4 — TOTAL 4/10
 
-**Promotion review #64 Failure Classification (GATED -> GOVERNED_AGENT when authorized)**
-
-- action_id: `promotion_#64`
-- primary_scope: `#64`
-- leverage: 1
-- risk_reduction: 1
-- evidence_strength: 2
-- future_cost: 0
-- reversibility: 0
-- **TOTAL: 4**
-
-## ACTION 5 — TOTAL 4/10
-
 **Promotion review #65 Correction Evidence (GATED -> GOVERNED_AGENT when authorized)**
 
 - action_id: `promotion_#65`
@@ -78,7 +65,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 4**
 
-## ACTION 6 — TOTAL 4/10
+## ACTION 5 — TOTAL 4/10
 
 **Promotion review #67 Rule Improvement (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -90,6 +77,19 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - future_cost: 0
 - reversibility: 0
 - **TOTAL: 4**
+
+## ACTION 6 — TOTAL 3/10
+
+**Authorize #1 wrapper build lane (SIGNED_UNBUILT scoreboard reconcile)**
+
+- action_id: `build_auth_#1`
+- primary_scope: `#1`
+- leverage: 0
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 3**
 
 ## ACTION 7 — TOTAL 3/10
 
