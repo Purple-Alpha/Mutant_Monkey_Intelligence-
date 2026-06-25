@@ -17,9 +17,9 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **#1 TARGET:** full 70-agent governed blue-team swarm (non-reducible).
 
-**BREADTH RUNWAY:** **41** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, #10, #11, **#18**, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, **#49**, **#50**, #52, #61, #62, #63, #64, #65, #67, #71, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
+**BREADTH RUNWAY:** **40** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, #11, **#18**, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, **#49**, **#50**, #52, #61, #62, #63, #64, #65, #67, #71, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** Q5 step 3 — **#21 Executive Impersonation** next (MMI-DEC-215 closed #10 at GATED) — `audit_outputs/lookalike_domain_agent_20260625T231106Z.md` (unsigned contract; §11 pending) · **BREADTH runway 41/70 GOVERNED_AGENT**. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3).
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** Q5 step 3 — **#21 Executive Impersonation** next (MMI-DEC-215 closed #10 at GATED; gate 0/0 `audit_outputs/lookalike_domain_agent_20260625T231713Z.md`) · **BREADTH runway 40/70 GOVERNED_AGENT**. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3).
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -74,7 +74,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 82 | AttachmentSandbox | 2 | ES2 | 86 | baseline 2026-06-25 — Phase 3 Layer 1 detection |
 | 83 | ImageClassifier | 2 | ES2 | 86 | baseline 2026-06-25 — Phase 3 Layer 1 detection |
 
-**Watch list (Phase 1):** #10 (80) is the weakest-governed agent — give it a full per-agent contract to reach parity. #46 (86) sits one low as first-of-layer. The rest cluster at the ES1 ceiling (87); the score earns its keep as agents diverge under testing.
+**Watch list (Phase 1):** #10 (80) is GATED after Q5 step 3 retrofit — GOVERNED_AGENT promotion review when authorized. #46 (86) sits one low as first-of-layer. The rest cluster at the ES1 ceiling (87); the score earns its keep as agents diverge under testing.
 
 ---
 
