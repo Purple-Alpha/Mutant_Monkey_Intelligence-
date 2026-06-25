@@ -478,9 +478,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertEqual(fields["HAND_IT_TO"], "Codex")
         self.assertIn("#18", fields["YOU_DO"])
-        self.assertIn("Draft Agent Design Contract", fields["YOU_DO"])
+        self.assertIn("pre-build gate", fields["YOU_DO"].lower())
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
 
     def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):

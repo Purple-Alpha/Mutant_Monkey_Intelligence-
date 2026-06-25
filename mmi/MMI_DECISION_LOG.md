@@ -383,6 +383,8 @@ MMI-DEC-189 | 2026-06-25 | #71 Token Usage Tracker GOVERNED_AGENT promotion revi
 
 MMI-DEC-190 | 2026-06-25 | BOR v29 Estimator-weighted feedstock pivot | `mmi/BLUEPRINT_OF_RECORD.md` v29; `scripts/mmi_estimator.py` SCORED_FEEDSTOCK relay | ACCEPT | #71 retired from feedstock after GOVERNED_AGENT (MMI-DEC-189). Estimator measured scores reprioritize standing queue: rank-1 #18 Callback Verification **38.00** (F1=7 F3=7 F4=3); rank-2 #49 Audit Trail **27.00** (F1=8 F4=3). **Not** contract draft execution; **not** §11; **not** build | Contract draft lane #18 Callback Verification (rank-1 feedstock) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize Estimator-weighted BOR feedstock pivot)
 
+MMI-DEC-191 | 2026-06-25 | #18 Callback Verification Agent Design Contract draft placement | `4. Product_Roadmap/Callback_Verification_Agent_Design_Contract_Deep_Dive.md`; scoreboard #18 row; Step 00 PASS 31/31 | ACCEPT | Matt directed keep rolling on rank-1 feedstock; UNSIGNED contract draft placed; locks D1–D10 detector/workflow split (Layer 2 TOAD immutable · Layer 3 two-channel read-only · distinct from #48). **DRAFT UNSIGNED**; pre-build gate not run; **not** §11; **not** build; **not** SIGNED_UNBUILT | Codex pre-build gate on #18 contract when Matt chooses §11 path | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Cursor (BOR rank-1 feedstock — keep rolling)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
