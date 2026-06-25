@@ -601,6 +601,28 @@ AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
 
 ---
 
+---
+
+CYCLE 31 — 2026-06-25T00:30Z   [type: TACTICAL]
+  OBSERVE: #2 Mission Context built (MMI-DEC-108), completion gate 0 blocking /
+           1 warning (`audit_outputs/mission_context_agent_20260623T052118Z.md`),
+           scoreboard row at `GATED` pending GOVERNED_AGENT promotion review.
+  SELECTED:      Operator-authorized GOVERNED_AGENT promotion review #2 only.
+  EXPECTED:      Promote #2 to GOVERNED_AGENT at Evidence Stage 1 if repo evidence
+                 and doctrine support it; record health score; no production dispatch.
+  EXECUTED AT:   2026-06-25T00:30Z
+  AUDIT VERDICT: PASS — §11 contract MMI-DEC-105; 16 focused tests; L1 Command
+                 MC-AUTH classify-only bar cleared; completion gate 0 blocking;
+                 #2 promoted GOVERNED_AGENT; breadth runway 17 -> 18; health score 87.
+
+AGENT HEALTH SCORE — #2 Mission Context   2026-06-25T00:30Z   [type: GOVERNANCE]
+  EVENT: #2 promoted to GOVERNED_AGENT at Evidence Stage 1 after build MMI-DEC-108
+         + completion gate (`mission_context_agent_20260623T052118Z.md`).
+  SCORE: 87 (Layer 1 Command; ES1 ceiling; second governed L1 agent after #1).
+  NEXT:  #3 Risk Triage promotion review only — no build authorized.
+
+---
+
 CYCLE 30 — 2026-06-25T00:00Z   [type: TACTICAL]
   OBSERVE: #1 Swarm Commander built (MMI-DEC-111/122), completion gate 0 blocking /
            1 warning (`audit_outputs/swarm_commander_agent_20260623T061720Z.md`),
