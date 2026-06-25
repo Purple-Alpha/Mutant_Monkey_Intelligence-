@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** Built — `AuditTrailAgent` at `core/orchestrator/audit_trail_agent.py` (MMI-DEC-200); scoreboard `AWAITING_AUDIT`; completion gate pending
+**Implementation:** Built — `AuditTrailAgent` at `core/orchestrator/audit_trail_agent.py` (`27ea39f` MMI-DEC-200); completion gate 0/0 `audit_outputs/audit_trail_20260625T193137Z.md` (MMI-DEC-201); scoreboard `GOVERNED_AGENT`
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
