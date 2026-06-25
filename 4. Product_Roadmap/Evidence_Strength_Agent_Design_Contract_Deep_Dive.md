@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** Built — `EvidenceStrengthAgent` at `core/orchestrator/evidence_strength_agent.py` (`fddccbd`, MMI-DEC-207); completion gate 0/0 — `audit_outputs/evidence_strength_20260625T213536Z.md` (MMI-DEC-208); scoreboard `GATED`
+**Implementation:** Built — `EvidenceStrengthAgent` at `core/orchestrator/evidence_strength_agent.py` (`fddccbd`, MMI-DEC-207); completion gate 0/0 — `audit_outputs/evidence_strength_20260625T213536Z.md` (MMI-DEC-208); scoreboard `GOVERNED_AGENT` (MMI-DEC-209)
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
