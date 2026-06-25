@@ -32,21 +32,47 @@
 
 ## Agent Design Contract block
 
-**Boundary:** #71 is an **infrastructure ledger**, not a detection/verification agent. It records per-tenant token consumption for the Playhouse cost-attribution dashboard. It **never** gates, blocks, throttles, or modifies any agent operation (P1-D6). It emits **no** `AgentContribution` and participates in **no** verdict or evidence chain (P1-D8).
+Infrastructure ledger — not a detection/verification agent. Records per-tenant token consumption for Playhouse cost attribution only (P1-D6 reporting-only; P1-D8 no `AgentContribution`).
 
-| Field | Value |
-|---|---|
-| Component name | Token Usage Tracker (`TokenUsageTracker`) |
-| Swarm inventory ID | #71 — Token Usage Tracker |
-| Canonical layer | 6 — Learning / Governance (infrastructure) |
-| Authority level | Infrastructure component — observe/record only |
-| Stage posture | VISION Stage A — analyze / recommend / evidence only |
-| Evidence Stage (current) | **Stage 1 — Synthetic** at §11 signature, if signed |
-| Role | Append-only, tenant-isolated token-usage ledger + read-only per-tenant aggregates for Playhouse |
-| Boundary | Ledger-in, reporting-out. No decision surface. No cross-tenant reads |
-| Inputs | Validated `TokenUsageRecord` writes (caller-supplied closed schema) |
-| Outputs | Append-only JSONL ledger rows; tenant-scoped reads; `TenantTokenUsageSummary` aggregates |
-| Explicit non-authorities | No gate/block/throttle; no AgentContribution; no blackboard evidence writes; no scoring; no production dispatch; no default registry; no Playhouse UI build; no real-billing integration at ES1; no AUTH-5 |
+## Agent Design Contract
+
+Agent name: Token Usage Tracker (`TokenUsageTracker`)
+Swarm inventory ID: #71 — Token Usage Tracker
+Canonical layer: 6 — Learning / Governance (infrastructure)
+Canonical team / case type: N/A — infrastructure ledger (Playhouse cost attribution; not a case-type agent)
+Authority level: Infrastructure component — observe/record only
+Stage posture: VISION Stage A — analyze / recommend / evidence only
+Evidence Stage (current): Stage 1 — Synthetic (at §11 signature, if signed)
+
+Role: Append-only, tenant-isolated token-usage ledger + read-only per-tenant aggregates for Playhouse
+Boundary: Ledger-in, reporting-out. No decision surface. No cross-tenant reads
+Explicit non-authorities: No gate/block/throttle; no AgentContribution; no blackboard evidence writes; no scoring; no production dispatch; no default registry; no Playhouse UI build; no real-billing integration at ES1; no AUTH-5
+
+Inputs: Validated `TokenUsageRecord` writes (caller-supplied closed schema)
+Outputs: Append-only JSONL ledger rows; tenant-scoped reads; `TenantTokenUsageSummary` aggregates
+Evidence emitted: none — infrastructure ledger; not a DER participant (P1-D8)
+Data minimization: No raw prompt/content storage; closed enum fields only; caller-supplied metadata tokens
+Tenant isolation: `read_for_tenant` and `aggregate_for_tenant` scoped to single `tenant_id`; no cross-tenant API
+
+Two-pass role: N/A — not a two-pass detection/verification agent
+Decision Evidence Record contribution: none (P1-D8)
+Human review trigger: N/A at ES1 — operator GOVERNED_AGENT promotion review after §11 + clean gate
+Verification trigger: Existing pytest suite (`test_token_usage_tracker.py`) + pre-build gate 0 blocking on contract
+
+Scoring / action posture: No scoring; no action surface; observe/record only
+Default rollout: Infrastructure built at `fe355da`; promotion gated on this contract + §11 + operator review
+Autonomous action: none
+
+Promotion conditions: §11 signed; Step 00 validator PASS; pre-build gate 0 blocking; tests green; operator promotion MMI-DEC
+Demotion conditions: Cross-tenant leak; silent drop of rejected writes; ledger mutation; throttle/gate side effect introduced
+Retest evidence: Permanent regression for any demotion trigger per template §6.5
+Calibration requirement: N/A at ES1 — synthetic fixtures only until Stage 2 promotion authorization
+
+Failure modes: Cross-tenant read; mutable ledger; throttle side effect; DER pollution; schema bypass
+Required tests: `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/tests/test_token_usage_tracker.py` (12 pass + 1 documented xfail)
+Audit requirements: Step 00 `scripts/validate_agent_contract_block.py` PASS; pre-build gate via `audit_tools/complete_gate.py`; completion gate if code touched
+Signed-spec dependencies: `4. Product_Roadmap/Phase1_Infrastructure_Agent_Design_Contract.md` (§11 signed 2026-06-09 · P1-D5, P1-D6, P1-D8)
+Build Authorization dependency: Build complete at `fe355da` — §11 authorizes GOVERNED_AGENT promotion review only (not SIGNED_UNBUILT re-build). At signing, Evidence Stage 1 — Synthetic.
 
 ---
 
@@ -66,8 +92,9 @@ Cursor reconciliation applied 2026-06-25 (draft placement · MMI-DEC-184):
 | Playhouse consumer | CostAttributionDashboard reads aggregates only — separate contract | Swarm Build Map Playhouse table |
 
 **Open before §11 (PARK sign if unresolved):**
-1. Pre-build gate on this contract via `audit_tools/complete_gate.py` (0 blocking target).
-2. Confirm ES1 caps Agent Health Score at ~87 until Stage 2 promotion (template §6).
+1. Step 00 PASS — `python3 scripts/validate_agent_contract_block.py` on this contract (required before gate).
+2. Pre-build gate on this contract via `audit_tools/complete_gate.py` (0 blocking target).
+3. Confirm ES1 caps Agent Health Score at ~87 until Stage 2 promotion (template §6).
 
 Repo-reconciliation placeholders: **resolved for draft review.** §11 unsigned; promotion review only after clean gate + signature.
 
@@ -179,9 +206,10 @@ No new tests required for contract draft placement. Gate may require manifest pr
 ## §8 Pre-Build Gate Plan
 
 When Matt chooses §11 path:
-1. Pre-build gate via `audit_tools/complete_gate.py` on this contract (0 blocking target).
-2. Adversarial focus: can a crafted record bypass tenant isolation or append without schema validation?
-3. Worker manifest must prove no gate/throttle API and no AgentContribution path in module.
+1. Step 00: `python3 scripts/validate_agent_contract_block.py` on this contract (exit 0 required).
+2. Pre-build gate via `audit_tools/complete_gate.py` on this contract (0 blocking target).
+3. Adversarial focus: can a crafted record bypass tenant isolation or append without schema validation?
+4. Worker manifest must prove no gate/throttle API and no AgentContribution path in module.
 
 Gate glob: `mmi_71_contract_gate_*.md`
 

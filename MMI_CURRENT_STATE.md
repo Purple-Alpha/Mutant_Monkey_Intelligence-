@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #71 Token Usage Tracker pre-build gate BLOCKED (MMI-DEC-185)
-  (Codex/Gemini 1 blocking / 0 warnings — contract draft 11/26 template fields;
-  packet SHA256 4bf2fe1c…; **not SIGNABLE**; **not** §11; **not** promotion).
+LAST_COMPLETED: #71 Token Usage Tracker pre-build gate SIGNABLE (MMI-DEC-187)
+  (Gemini 0 blocking / 2 warnings — `audit_outputs/mmi_71_contract_gate_20260625T165335Z.md`;
+  packet SHA256 794c4500…; Step 00 + §3 repair MMI-DEC-186; **Matt §11 next**; **not** promotion).
 
-PRIOR_LAST_COMPLETED: #71 contract draft placement (MMI-DEC-184)
+PRIOR_LAST_COMPLETED: Zero-guesswork pipeline — Step 00 validator + transition map (MMI-DEC-186)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).

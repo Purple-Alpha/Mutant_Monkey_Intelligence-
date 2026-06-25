@@ -4,6 +4,8 @@
 
 **Machine map:** `mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml`
 
+**Transition gates:** `mmi/MMI_TRANSITION_GATE_MAP.md` (Step 00–06 · MMI-DEC-186)
+
 **Engine:** `python3 scripts/mmi_mission_map.py --position`
 
 **Owner:** Matt Nichol — Matt §11 only on `requires_matt_escalation` waypoints
