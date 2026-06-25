@@ -234,7 +234,7 @@ Net-new foundational infrastructure components authorized by `4. Product_Roadmap
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 71 | Token Usage Tracker | `INFRASTRUCTURE_BUILT` (Phase 1 C3 — append-only, tenant-isolated, reporting-only; per-component contract draft `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md` MMI-DEC-184 DRAFT UNSIGNED; **not** GOVERNED_AGENT until §11 + promotion review) | `core/blackboard/token_usage_tracker.py` + `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md` (DRAFT UNSIGNED MMI-DEC-184; governs existing `TokenUsageTracker` — promotion path only, not re-build) | 6 Learning/Governance | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | fe355da |
+| 71 | Token Usage Tracker | `INFRASTRUCTURE_BUILT` (Phase 1 C3 — append-only, tenant-isolated, reporting-only; per-component contract §11 SIGNED 2026-06-25 Matt Nichol MMI-DEC-188; pre-build gate 0 blocking `mmi_71_contract_gate_20260625T165335Z.md`; **not** GOVERNED_AGENT until operator promotion review) | `core/blackboard/token_usage_tracker.py` + `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED MMI-DEC-188; governs existing `TokenUsageTracker` — promotion path only, not re-build) | 6 Learning/Governance | A |  | BREADTH | — | Matt Nichol June 25th 2026 |
 
 ---
 

@@ -377,6 +377,8 @@ MMI-DEC-186 | 2026-06-25 | Zero-guesswork pipeline closeout — Step 00 + #71 re
 
 MMI-DEC-187 | 2026-06-25 | #71 Token Usage Tracker pre-build gate (SIGNABLE) | `audit_outputs/mmi_71_contract_gate_20260625T165335Z.md` (0 blocking / 2 warnings); packet SHA256 `794c450004c30bce1428de1321e1fb6a11b34e1a60891b3a91b2e454283c02f2`; Gemini `gemini-2.5-pro` | ACCEPT | Pre-build gate SIGNABLE after §3 repair (MMI-DEC-186): 0 blocking; warnings — (1) Authority level uses infrastructure label not template §4 six-value enum (intent clear); (2) §8 list numbering typo (fixed post-gate). **Not** §11 signed by this record; **not** promotion; **not** build | Matt §11 sign #71 contract | Codex gate relay — no scoreboard/registry mutation | Cursor (terminal pre-build gate re-run)
 
+MMI-DEC-188 | 2026-06-25 | #71 Token Usage Tracker Agent Design Contract §11 signature | `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md`; scoreboard #71 row; gate `audit_outputs/mmi_71_contract_gate_20260625T165335Z.md` (0 blocking / 2 warnings; MMI-DEC-187) | ACCEPT | Matt §11 signed (`Matt Nichol June 25th 2026`); locks D1–D10; Evidence Stage 1 (Synthetic); authorizes **GOVERNED_AGENT promotion review only** — **not** SIGNED_UNBUILT reconcile, **not** re-build, **not** default registry, **not** production dispatch, **not** AUTH-5. Scoreboard #71 `NEEDS_SIGNED_CONTRACT` cleared. **Not** GOVERNED_AGENT by this record | Operator GOVERNED_AGENT promotion review for #71 when Matt chooses | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (§11 sign #71 Token Usage Tracker contract)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

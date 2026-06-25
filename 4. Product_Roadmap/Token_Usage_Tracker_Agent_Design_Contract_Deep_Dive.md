@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_71_TOKEN_USAGE_TRACKER_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT UNSIGNED — pre-§11. Repo evidence: implementation built under Phase 1 (`fe355da`); 12 focused tests + 1 documented xfail (`tests/test_token_usage_tracker.py`). Signing locks D1–D10 and authorizes **GOVERNED_AGENT promotion review only** — **not** a wrapper re-build, **not** `SIGNED_UNBUILT` reconcile, **not** default-registry wiring, **not** production dispatch, **not** AUTH-5.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (Gemini pre-build gate clean `mmi_71_contract_gate_20260625T165335Z.md` 0 blocking / 2 warnings; MMI-DEC-187). Evidence Stage 1 (Synthetic). Signing locks D1–D10 and authorizes **GOVERNED_AGENT promotion review only** — **not** a wrapper re-build, **not** `SIGNED_UNBUILT` reconcile, **not** default-registry wiring, **not** production dispatch, **not** AUTH-5. Separate operator promotion review record required before `GOVERNED_AGENT` (MMI-DEC pattern).
 
 **Candidate:** #71 — Token Usage Tracker
 
@@ -229,13 +229,13 @@ Gate glob: `mmi_71_contract_gate_*.md`
 
 **§11 — Token Usage Tracker Agent Design Contract (Deep Dive)**
 
-- [ ] I approve this contract as written.
-- [ ] I authorize pre-build gate review when ready.
-- [ ] On clean gate, I §11-sign and authorize **GOVERNED_AGENT promotion review** (not SIGNED_UNBUILT, not re-build).
+- [x] I approve this contract as written.
+- [x] I authorize pre-build gate review when ready.
+- [x] On clean gate, I §11-sign and authorize **GOVERNED_AGENT promotion review** (not SIGNED_UNBUILT, not re-build).
 
 Confirmed: #71 **records** token usage for cost attribution; it **never** gates, blocks, or modifies agent operations.
 
-> _(unsigned — Matt Nichol §11 pending)_
+> Matt Nichol June 25th 2026
 
 ---
 
