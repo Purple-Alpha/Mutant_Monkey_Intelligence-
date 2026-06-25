@@ -405,6 +405,8 @@ MMI-DEC-200 | 2026-06-25 | #49 Audit Trail Mode A wrapper build | `core/orchestr
 
 MMI-DEC-201 | 2026-06-25 | #49 Audit Trail GOVERNED_AGENT promotion | scoreboard #49 row; `audit_outputs/audit_trail_20260625T193137Z.md`; build `27ea39f` | ACCEPT | Completion gate 0 blocking / 0 warnings; 19 focused tests; ES1 attestation-only `AuditTrailAgent`; no Blackboard read, no evidence_package/mutation import; #49 AWAITING_AUDIT -> GOVERNED_AGENT; breadth runway 39 -> 40. **Not** production dispatch or default registry | BOR v31 feedstock pivot (operator) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (completion gate + GOVERNED_AGENT promotion #49 Audit Trail)
 
+MMI-DEC-202 | 2026-06-25 | BOR v31 Estimator-weighted feedstock pivot | `mmi/BLUEPRINT_OF_RECORD.md` v31; `scripts/mmi_estimator.py` NO_BUILDABLE_CANDIDATES | ACCEPT | #49 retired from feedstock after GOVERNED_AGENT (MMI-DEC-201). Estimator reports NO_BUILDABLE_CANDIDATES for BREADTH CONTRACT_DRAFT lanes (#105 SIGNED_CONTRACT probe excluded). BOR feedstock empty; hold ALL_CLEAR until operator unparks/specifies next contract lane. **Not** build authorization | Operator unpark next CONTRACT_DRAFT candidate (#50, #19, #21, #43, or #105 Lane 2+) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (BOR v31 feedstock pivot after #49 GOVERNED_AGENT)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
