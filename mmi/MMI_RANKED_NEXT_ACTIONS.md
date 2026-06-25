@@ -1,5 +1,5 @@
-generated_at: 2026-06-25T00:33:12Z
-git_head: bc6b665
+generated_at: 2026-06-25T00:34:27Z
+git_head: 2dfb957
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
@@ -13,20 +13,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ---
 
-## ACTION 1 — TOTAL 5/10
-
-**Promotion review #3 Risk Triage Agent (GATED -> GOVERNED_AGENT when authorized)**
-
-- action_id: `promotion_#3`
-- primary_scope: `#3`
-- leverage: 2
-- risk_reduction: 1
-- evidence_strength: 2
-- future_cost: 0
-- reversibility: 0
-- **TOTAL: 5**
-
-## ACTION 2 — TOTAL 4/10
+## ACTION 1 — TOTAL 4/10
 
 **Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -39,7 +26,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 4**
 
-## ACTION 3 — TOTAL 4/10
+## ACTION 2 — TOTAL 4/10
 
 **Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -52,7 +39,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 4**
 
-## ACTION 4 — TOTAL 4/10
+## ACTION 3 — TOTAL 4/10
 
 **Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -65,7 +52,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 4**
 
-## ACTION 5 — TOTAL 4/10
+## ACTION 4 — TOTAL 4/10
 
 **Promotion review #64 Failure Classification (GATED -> GOVERNED_AGENT when authorized)**
 
@@ -78,12 +65,25 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 4**
 
-## ACTION 6 — TOTAL 4/10
+## ACTION 5 — TOTAL 4/10
 
 **Promotion review #65 Correction Evidence (GATED -> GOVERNED_AGENT when authorized)**
 
 - action_id: `promotion_#65`
 - primary_scope: `#65`
+- leverage: 1
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 4**
+
+## ACTION 6 — TOTAL 4/10
+
+**Promotion review #67 Rule Improvement (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#67`
+- primary_scope: `#67`
 - leverage: 1
 - risk_reduction: 1
 - evidence_strength: 2

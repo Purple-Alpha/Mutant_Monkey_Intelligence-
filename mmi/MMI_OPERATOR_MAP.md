@@ -1,5 +1,5 @@
-generated_at: 2026-06-25T00:33:12Z
-git_head: bc6b665
+generated_at: 2026-06-25T00:34:27Z
+git_head: 2dfb957
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -12,8 +12,8 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 ## Where we are
 
 - **Dispatcher:** `ALL_CLEAR` — nothing waiting to be built or audited right now
-- **Governed agents:** 18 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
-- **Promotion queue:** 19 built-and-audited agents waiting for your promotion review
+- **Governed agents:** 19 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
+- **Promotion queue:** 18 built-and-audited agents waiting for your promotion review
 
 ## Why it keeps stalling
 
@@ -27,29 +27,29 @@ until you name the next lane.
 
 ## What's next (ranked — not authorized until you say so)
 
-1. **Promotion review #3 Risk Triage Agent (GATED -> GOVERNED_AGENT when authorized)** — score 5/10
-2. **Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
-3. **Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
-4. **Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
-5. **Promotion review #64 Failure Classification (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+1. **Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+2. **Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+3. **Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+4. **Promotion review #64 Failure Classification (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+5. **Promotion review #65 Correction Evidence (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
 
 ## Promotion queue (built, audited, needs your review)
 
-1. **#3 Risk Triage Agent** — GATED, ready for promotion review
-2. **#64 Failure Classification** — GATED, ready for promotion review
-3. **#67 Rule Improvement** — GATED, ready for promotion review
-4. **#65 Correction Evidence** — GATED, ready for promotion review
-5. **#61 Test Case Generator** — GATED, ready for promotion review
-6. **#62 Regression Test** — GATED, ready for promotion review
-7. **#63 Adversarial Test** — GATED, ready for promotion review
-8. **#72 PhishIntelAgent** — GATED, ready for promotion review
-9. **#73 RansomwareIntelAgent** — GATED, ready for promotion review
-10. **#74 BECIntelAgent** — GATED, ready for promotion review
+1. **#64 Failure Classification** — GATED, ready for promotion review
+2. **#67 Rule Improvement** — GATED, ready for promotion review
+3. **#65 Correction Evidence** — GATED, ready for promotion review
+4. **#61 Test Case Generator** — GATED, ready for promotion review
+5. **#62 Regression Test** — GATED, ready for promotion review
+6. **#63 Adversarial Test** — GATED, ready for promotion review
+7. **#72 PhishIntelAgent** — GATED, ready for promotion review
+8. **#73 RansomwareIntelAgent** — GATED, ready for promotion review
+9. **#74 BECIntelAgent** — GATED, ready for promotion review
+10. **#75 TrojanDeliveryIntelAgent** — GATED, ready for promotion review
 
 ## What to say to unstick (copy-paste)
 
 ```text
-Authorize GOVERNED_AGENT promotion review #3 (Risk Triage Agent)
+Authorize GOVERNED_AGENT promotion review #64 (Failure Classification)
 ```
 
 ## What the crew can do without you
