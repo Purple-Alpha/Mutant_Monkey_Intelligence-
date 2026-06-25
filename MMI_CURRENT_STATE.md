@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #49 Audit Trail GOVERNED_AGENT promotion + BOR v31 feedstock pivot (MMI-DEC-201 / MMI-DEC-202)
-  (build `27ea39f`; 19 focused tests; completion gate 0/0 `audit_outputs/audit_trail_20260625T193137Z.md`;
-  breadth runway 39 -> 40; Estimator NO_BUILDABLE_CANDIDATES; **not** production dispatch).
+LAST_COMPLETED: #50 Evidence Strength CONTRACT_DRAFT unpark + BOR v32 feedstock restore (MMI-DEC-203)
+  (Matt operator pick over #19/#21/#43 tie; Estimator 17.00; Layer 4 Evidence successor to #49;
+  source `Email_Security_Testing_Evidence_Framework_Deep_Dive.md`; **not** §11; **not** build).
 
-PRIOR_LAST_COMPLETED: #49 Audit Trail §11 sign + pre-build gate (MMI-DEC-199)
+PRIOR_LAST_COMPLETED: #49 Audit Trail GOVERNED_AGENT + BOR v31 feedstock pivot (MMI-DEC-201 / MMI-DEC-202)
   (contract `f1f0164`; Gemini pre-build gate 0/0; **not** build at sign).
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /

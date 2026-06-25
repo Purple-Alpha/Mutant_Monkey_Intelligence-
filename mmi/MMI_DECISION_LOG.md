@@ -407,6 +407,8 @@ MMI-DEC-201 | 2026-06-25 | #49 Audit Trail GOVERNED_AGENT promotion | scoreboard
 
 MMI-DEC-202 | 2026-06-25 | BOR v31 Estimator-weighted feedstock pivot | `mmi/BLUEPRINT_OF_RECORD.md` v31; `scripts/mmi_estimator.py` NO_BUILDABLE_CANDIDATES | ACCEPT | #49 retired from feedstock after GOVERNED_AGENT (MMI-DEC-201). Estimator reports NO_BUILDABLE_CANDIDATES for BREADTH CONTRACT_DRAFT lanes (#105 SIGNED_CONTRACT probe excluded). BOR feedstock empty; hold ALL_CLEAR until operator unparks/specifies next contract lane. **Not** build authorization | Operator unpark next CONTRACT_DRAFT candidate (#50, #19, #21, #43, or #105 Lane 2+) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (BOR v31 feedstock pivot after #49 GOVERNED_AGENT)
 
+MMI-DEC-203 | 2026-06-25 | Unpark #50 Evidence Strength CONTRACT_DRAFT feedstock | `mmi/BLUEPRINT_OF_RECORD.md` BOR-ALL-CLEAR-FEEDSTOCK-v32; `scripts/mmi_estimator.py` feedstock rank-1 17.00 | ACCEPT | Matt operator authorization: unpark BOR feedstock #50 Evidence Strength as rank-1 CONTRACT_DRAFT after BOR v31 ALL_CLEAR hold (MMI-DEC-202). Estimator tie at 15.00 with #19/#21/#43; #105 excluded (SIGNED_CONTRACT probe). Layer 4 Evidence successor to #49 Audit Trail. Source deep dive `4. Product_Roadmap/Email_Security_Testing_Evidence_Framework_Deep_Dive.md`. **Not** §11; **not** build; **not** GOVERNED_AGENT; **not** AUTH-5 | Claude `#50 Evidence Strength` Agent Design Contract draft when PMV relays feedstock lane | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (BOR #50 Evidence Strength unpark)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
