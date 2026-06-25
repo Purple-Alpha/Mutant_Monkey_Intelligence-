@@ -49,8 +49,8 @@ Concepts that are theoretically interesting but currently lack a signed authorit
 
 | Lane | Suggested next work |
 |------|---------------------|
-| **RESEARCH** | Cross-check IFM/Pneumatic Lung proposals against VISION.md Guardrail 11 and `#105` LAW 1–9 |
-| **DESIGN** | Resolve §13 open items on signed IFM contract (copy cap, legal consent, key rotation) |
+| **RESEARCH** | No active fork — IFM §11 signed (MMI-DEC-140); park unless new research intake |
+| **DESIGN** | Hardening review **complete** (MMI-DEC-140); resolve remaining §13 items when Matt selects (copy cap, legal consent, pool boundary, pilot, protobuf) |
 | **AUDIT** | Populate adversarial review checklist for mesh controls (HMAC, replay, anti-poisoning) |
 | **BUILD** | Blocked — no separate build authorization |
 

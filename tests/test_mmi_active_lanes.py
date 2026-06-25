@@ -63,8 +63,39 @@ class ActiveLaneConsoleTests(unittest.TestCase):
         design = next(
             lane for lane in self.mod.gather_lanes(self.mod._repo_root()) if lane.lane == "DESIGN"
         )
-        self.assertIn("Mesh", design.active)
-        self.assertEqual(design.state, "READY_FOR_REVIEW")
+        self.assertIn("MMI-DEC-140", design.active)
+        self.assertEqual(design.state, "COMPLETED")
+        self.assertIn("§13", design.next_action)
+        self.assertNotIn("Review Immune Federation Mesh contract addendum", design.next_action)
+
+    def test_research_lane_no_fork_after_ifm_signed(self):
+        research = next(
+            lane
+            for lane in self.mod.gather_lanes(self.mod._repo_root())
+            if lane.lane == "RESEARCH"
+        )
+        self.assertEqual(research.state, "COMPLETED")
+        self.assertIn("MMI-DEC-140", research.next_action)
+        self.assertNotIn("advance to DESIGN review", research.next_action)
+
+    def test_design_lane_unsigned_draft_stays_ready_for_review(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "docs" / "mmi" / "contracts").mkdir(parents=True)
+            (root / "mmi").mkdir(parents=True)
+            (root / "docs" / "mmi" / "contracts" / "004_immune_federation_mesh_contract.md").write_text(
+                "CONTRACT_DRAFT\nNOT BUILD AUTHORIZED\n",
+                encoding="utf-8",
+            )
+            (root / "mmi" / "MMI_DECISION_LOG.md").write_text(
+                "MMI-DEC-134 | draft only\n",
+                encoding="utf-8",
+            )
+            design = next(
+                lane for lane in self.mod.gather_lanes(root) if lane.lane == "DESIGN"
+            )
+            self.assertEqual(design.state, "READY_FOR_REVIEW")
+            self.assertIn("Matt §11 review", design.next_action)
 
     def test_pugh_forbidden_auto_build(self):
         pugh, risk = self.mod._classify_pugh("Auto-run build after research evidence appears", "BUILD")

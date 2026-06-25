@@ -54,6 +54,13 @@ EVIDENCE_PATHS = (
 MESH_CLOSEOUT_REL = "mmi/research/MMI_MESH_HARDENING_RESEARCH_CLOSEOUT_MMI-DEC-131.md"
 MESH_CONTRACT_REL = "docs/mmi/contracts/004_immune_federation_mesh_contract.md"
 MESH_ADDENDUM_REL = "mmi/concepts/MMI_IMMUNE_FEDERATION_MESH_HARDENING_ADDENDUM.md"
+IFM_S13_KEY_EPOCH_REL = (
+    "mmi/research/MMI_IFM_S13_KEY_EPOCH_ROTATION_RESOLUTION_MMI-DEC-140.md"
+)
+IFM_S13_OPEN_NEXT = (
+    "Resolve remaining IFM §13 forks when Matt selects "
+    "(copy cap, legal consent, pool boundary, pilot, protobuf); no build"
+)
 DECISION_LOG_REL = "mmi/MMI_DECISION_LOG.md"
 CURRENT_STATE_REL = "MMI_CURRENT_STATE.md"
 SCOREBOARD_REL = "agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md"
@@ -161,6 +168,13 @@ def _mesh_contract_build_blocked(contract: str) -> bool:
     return "NOT BUILD AUTHORIZED" in upper or "IMPLEMENTATION:** **BLOCKED" in contract
 
 
+def _ifm_hardening_design_complete(log: str, contract: str) -> bool:
+    """True after Matt §11 signed IFM (MMI-DEC-140) — hardening addendum review closed."""
+    if _decision_present(log, "MMI-DEC-140"):
+        return True
+    return _mesh_contract_signed(contract) and _decision_present(log, "MMI-DEC-134")
+
+
 def _classify_pugh(next_action: str, lane: str) -> tuple[str, str]:
     for pattern in FORBIDDEN_NEXT_PATTERNS:
         if pattern.search(next_action):
@@ -183,7 +197,18 @@ def _classify_pugh(next_action: str, lane: str) -> tuple[str, str]:
 def _resolve_research_lane(root: Path, log: str) -> LaneView:
     closeout_exists = _file_exists(root, MESH_CLOSEOUT_REL)
     dec131 = _decision_present(log, "MMI-DEC-131")
+    dec140 = _decision_present(log, "MMI-DEC-140")
     if closeout_exists and dec131:
+        if dec140:
+            next_action = (
+                "No active research fork — IFM §11 signed (MMI-DEC-140); "
+                "§13 design forks and AUDIT checklist are downstream"
+            )
+        else:
+            next_action = (
+                "Decide whether mesh hardening inputs advance to DESIGN review "
+                "or remain PARKED_RESEARCH"
+            )
         return LaneView(
             lane="RESEARCH",
             active="a05 Mesh hardening closeout → MMI-DEC-131",
@@ -192,11 +217,8 @@ def _resolve_research_lane(root: Path, log: str) -> LaneView:
                 "Research closeout memo on disk; MMI-DEC-131 filed; "
                 "findings transferred; mesh shares threat shape never tenant truth"
             ),
-            next_action=(
-                "Decide whether mesh hardening inputs advance to DESIGN review "
-                "or remain PARKED_RESEARCH"
-            ),
-            actor="Matt",
+            next_action=next_action,
+            actor="Matt" if not dec140 else "None",
             authority=DEFAULT_AUTHORITY,
         )
     if closeout_exists or dec131:
@@ -240,34 +262,44 @@ def _resolve_design_lane(root: Path, log: str) -> LaneView:
     dec140 = _decision_present(log, "MMI-DEC-140")
 
     if contract_exists and (dec134 or dec140 or _mesh_contract_signed(contract)):
-        blocked = _mesh_contract_build_blocked(contract)
-        state = "READY_FOR_REVIEW"
-        if blocked:
-            authority = DEFAULT_AUTHORITY
-            next_action = (
-                "Review Immune Federation Mesh contract addendum "
-                "(Guardrail 11, HMAC, replay/TTL, anti-poisoning); no build"
-            )
-        else:
-            authority = DEFAULT_AUTHORITY
-            next_action = "Review mesh architecture contract before any build authorization"
+        design_complete = _ifm_hardening_design_complete(log, contract)
         evidence_parts = []
         if contract_exists:
             evidence_parts.append(MESH_CONTRACT_REL)
         if addendum_exists:
-            evidence_parts.append("hardening addendum drafted")
+            evidence_parts.append("hardening addendum promoted")
         if dec140:
             evidence_parts.append("MMI-DEC-140 §11 signed")
         elif dec134:
             evidence_parts.append("MMI-DEC-134 contract draft filed")
+        if _file_exists(root, IFM_S13_KEY_EPOCH_REL):
+            evidence_parts.append("§13 #3 key epoch defaults filed (90/14/90)")
+
+        if design_complete:
+            return LaneView(
+                lane="DESIGN",
+                active="IFM hardening contract §11 signed (MMI-DEC-140)",
+                state="COMPLETED",
+                evidence=(
+                    "; ".join(evidence_parts)
+                    + "; Guardrail 11 / HMAC / replay-TTL / anti-poisoning locked at §11"
+                ),
+                next_action=IFM_S13_OPEN_NEXT,
+                actor="Matt / design worker (§13 forks only)",
+                authority=DEFAULT_AUTHORITY,
+            )
+
         return LaneView(
             lane="DESIGN",
             active="Immune Federation Mesh / Pneumatic Lung hardening",
-            state=state,
+            state="READY_FOR_REVIEW",
             evidence="; ".join(evidence_parts) or "contract draft on disk",
-            next_action=next_action,
+            next_action=(
+                "Matt §11 review: Immune Federation Mesh contract "
+                "(Guardrail 11, HMAC, replay/TTL, anti-poisoning); no build"
+            ),
             actor="Matt / design worker",
-            authority=authority,
+            authority=DEFAULT_AUTHORITY,
         )
 
     if addendum_exists:

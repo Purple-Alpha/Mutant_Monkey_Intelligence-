@@ -320,7 +320,7 @@ Not authorized by this draft: mesh bus code, federation pricing engine, GOVERNED
 
 1. **Numeric copy cap** — per-tenant max concurrent mesh-triggered inflated copies by trust tier (research TBD).
 2. **Legal consent artifact** — MSP pool agreement vs per-tenant addendum; counsel review scope.
-3. **Key epoch rotation schedule** — default interval and emergency rotation procedure.
+3. **Key epoch rotation schedule** — **RESOLVED (advisory, 2026-06-25):** 90-day rotation, 14-day dual-verify overlap, 90-day retired-key retention; emergency revoke Matt-only. See `mmi/research/MMI_IFM_S13_KEY_EPOCH_ROTATION_RESOLUTION_MMI-DEC-140.md`. Optional formal contract amendment if Matt wants numbers on the signed surface.
 4. **MSP pool boundary** — single regional pool vs federated pool-of-pools; billing attribution model at b05.
 5. **Pilot scope** — Stage C c02 opt-in MSP pool wiring plan vs Todd intake historical motion.
 6. **Protobuf authority** — whether schema lives in authority repo or sibling runtime repo at build time.
