@@ -19,7 +19,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **BREADTH RUNWAY:** **38** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, #10, #11, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, #52, #61, #62, #63, #64, #65, #67, #71, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **BOR feedstock rank-1 #18 Callback Verification** — contract draft on disk (MMI-DEC-191; DRAFT UNSIGNED; Estimator **38.00**) · rank-2 **#49 Audit Trail** (Estimator **27.00**). **#71 Token Usage Tracker** — `GOVERNED_AGENT` (MMI-DEC-189). **BREADTH promotion queue empty** (38/70 GOVERNED_AGENT). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3).
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **BOR feedstock rank-1 #18 Callback Verification** — pre-build gate SIGNABLE (MMI-DEC-192; **Matt §11 next**) · rank-2 **#49 Audit Trail** (Estimator **27.00**). **#71 Token Usage Tracker** — `GOVERNED_AGENT` (MMI-DEC-189). **BREADTH promotion queue empty** (38/70 GOVERNED_AGENT). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3).
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 

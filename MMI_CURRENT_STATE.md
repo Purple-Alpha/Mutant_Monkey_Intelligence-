@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #18 Callback Verification Agent Design Contract draft placement (MMI-DEC-191)
-  (Step 00 PASS 31/31; detector/workflow split locked; **DRAFT UNSIGNED**;
-  pre-build gate next; rank-2 #49 Audit Trail score 27.00 on deck).
+LAST_COMPLETED: #18 Callback Verification pre-build gate SIGNABLE (MMI-DEC-192)
+  (Gemini 0 blocking / 1 warning — `audit_outputs/mmi_18_contract_gate_20260625T175158Z.md`;
+  packet SHA256 aa25e283…; **Matt §11 next**; rank-2 #49 on deck).
 
-PRIOR_LAST_COMPLETED: #71 GOVERNED_AGENT promotion + BOR v29 Estimator feedstock pivot (MMI-DEC-189/190)
+PRIOR_LAST_COMPLETED: #18 Callback Verification contract draft placement (MMI-DEC-191)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).

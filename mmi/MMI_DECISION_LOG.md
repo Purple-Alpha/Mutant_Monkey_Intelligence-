@@ -385,6 +385,8 @@ MMI-DEC-190 | 2026-06-25 | BOR v29 Estimator-weighted feedstock pivot | `mmi/BLU
 
 MMI-DEC-191 | 2026-06-25 | #18 Callback Verification Agent Design Contract draft placement | `4. Product_Roadmap/Callback_Verification_Agent_Design_Contract_Deep_Dive.md`; scoreboard #18 row; Step 00 PASS 31/31 | ACCEPT | Matt directed keep rolling on rank-1 feedstock; UNSIGNED contract draft placed; locks D1–D10 detector/workflow split (Layer 2 TOAD immutable · Layer 3 two-channel read-only · distinct from #48). **DRAFT UNSIGNED**; pre-build gate not run; **not** §11; **not** build; **not** SIGNED_UNBUILT | Codex pre-build gate on #18 contract when Matt chooses §11 path | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Cursor (BOR rank-1 feedstock — keep rolling)
 
+MMI-DEC-192 | 2026-06-25 | #18 Callback Verification pre-build gate (SIGNABLE) | `audit_outputs/mmi_18_contract_gate_20260625T175158Z.md` (0 blocking / 1 warning); packet SHA256 `aa25e283f823cbb082047506f6fafe023288ea04f38925d8f7428bb68cf54f1f`; Gemini `gemini-2.5-pro` | ACCEPT | Pre-build gate SIGNABLE after MMI-DEC-191: 0 blocking; warning — template §3.1 vs §5 DER field-count inconsistency surfaced (draft follows §3.1; parent template ambiguity only). **Not** §11 signed by this record; **not** build; **not** SIGNED_UNBUILT | Matt §11 sign #18 contract | Codex gate relay — no scoreboard/registry mutation | Cursor (terminal pre-build gate #18)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
