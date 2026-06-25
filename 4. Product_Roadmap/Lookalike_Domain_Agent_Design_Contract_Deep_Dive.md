@@ -1,12 +1,12 @@
 # Lookalike Domain Agent Design Contract — Spec-First Deep Dive
 
-**Status:** DRAFT UNSIGNED — Q5 step 3 metadata-only retrofit (Build Sequencer pinned order). Authored 2026-06-25 by Cursor on Matt operator authorization to execute Q5 step 3 — #10 Lookalike metadata retrofit. Promotes the implemented lookalike detector + new governed wrapper to full Agent Design Contract parity with #6/#8/#27 peers. **Not** §11 signed; **not** detector-logic change; **not** default-registry registration; **not** production dispatch; **not** scoring-pipeline default-on change.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-214). Q5 step 3 metadata-only retrofit complete at Agent Design Contract layer. Promotes `LookalikeDomainAgent` wrapper to governed parity with #6/#8/#27 peers. **Not** detector-logic change; **not** default-registry registration; **not** production dispatch; **not** scoring-pipeline default-on change.
 
 **Owner:** Matt Nichol
 
 **Candidate:** #10 — Lookalike Domain
 
-**Implementation:** Built — `LookalikeDomainAgent` at `core/orchestrator/lookalike_domain_agent.py` (MMI-DEC-212); 13 focused tests; scoreboard `AWAITING_AUDIT`
+**Implementation:** Built — `LookalikeDomainAgent` at `core/orchestrator/lookalike_domain_agent.py` (MMI-DEC-212); 13 focused tests; scoreboard `AWAITING_AUDIT` pending completion gate
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -83,7 +83,7 @@ Complete the Q5 step 3 metadata-only retrofit for swarm #10: place a full Agent 
 
 ---
 
-## §2 Locked Design Decisions (draft — lock at §11)
+## §2 Locked Design Decisions
 
 - **D1 — Identity.** Lookalike Domain is Layer 2 Detection, Authority Level 3, VISION Stage A, Evidence Stage 1 at signing. `agent_id = lookalike_domain_001`.
 - **D2 — Detector immutability.** Wrapper-only; detector D1–D9 immutable (template §7.0).
@@ -137,6 +137,6 @@ Complete the Q5 step 3 metadata-only retrofit for swarm #10: place a full Agent 
 
 ## §11 Sign-off
 
-**DRAFT UNSIGNED** — pending pre-build gate + Matt §11 signature.
+SIGNED. This locks D1–D9 for swarm agent #10 Lookalike Domain at **Evidence Stage 1 (Synthetic)**. Signing authorizes the existing `LookalikeDomainAgent` wrapper + focused tests as the governed runtime surface. Signing authorizes **no** detector-logic change, **no** default-registry registration, **no** production dispatch, **no** scoring/rubric change, and **no** autonomous action.
 
-> §11 SIGNATURE — (pending)
+> §11 SIGNATURE — Matt Nichol June 25th 2026

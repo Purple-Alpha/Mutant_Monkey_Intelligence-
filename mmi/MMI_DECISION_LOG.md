@@ -430,6 +430,12 @@ MMI-DEC-211 | 2026-06-25 | #10 Lookalike Domain Agent Design Contract draft plac
 MMI-DEC-212 | 2026-06-25 | #10 Lookalike Domain Mode A wrapper build (Q5 step 3) | `core/orchestrator/lookalike_domain_agent.py`; `tests/test_lookalike_domain_agent.py` (13 passed); scoreboard #10 row | ACCEPT | `LookalikeDomainAgent` read-only `detect_lookalike_domains`; caller-owned `known_good_domains`; facts-only closed indicator; no detector mutation; #10 -> `AWAITING_AUDIT`. **Not** §11; **not** default registry | Completion gate (`lookalike_domain_agent` task) | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (Q5 step 3 #10 Lookalike metadata retrofit)
 
 
+MMI-DEC-213 | 2026-06-25 | #10 Lookalike Domain completion gate (blocked — unsigned contract) | `audit_outputs/lookalike_domain_agent_20260625T231106Z.md` (1 blocking / 0 warnings; Gemini; packet SHA256 `d83bfd3266bc20e3d15d95fd521b9c9e5eda9e2c212eaa4ecf24697d1d37970b`; MMI-DEC-212 build `af96250`) | ACCEPT | Completion gate run; blocking: Agent Design Contract DRAFT UNSIGNED (§11 pending). Implementation/tests match draft contract; detector §11 immutable. **Not GATED** until §11 sign + clean 0/0 re-gate | Matt §11 sign on #10 Agent Design Contract then re-run completion gate | Run mmi_dispatch --verify after commit | Cursor (#10 completion gate blocked pending §11)
+
+
+MMI-DEC-214 | 2026-06-25 | #10 Lookalike Domain Agent Design Contract §11 signature | `4. Product_Roadmap/Lookalike_Domain_Agent_Design_Contract_Deep_Dive.md`; MMI-DEC-212 build `af96250`; gate blocked MMI-DEC-213 | ACCEPT | Matt §11 signed (`Matt Nichol June 25th 2026`); locks D1–D9; Evidence Stage 1 (Synthetic); authorizes existing `LookalikeDomainAgent` wrapper + 13 focused tests as governed surface — **not** detector mutation, **not** default registry, **not** production dispatch, **not** AUTH-5. **Not GATED** until completion gate clean 0/0 | Re-run completion gate (`lookalike_domain_agent` task) | Run mmi_dispatch --verify after gate | Matt Nichol (§11 sign #10 Lookalike Domain contract — Q5 step 3)
+
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
