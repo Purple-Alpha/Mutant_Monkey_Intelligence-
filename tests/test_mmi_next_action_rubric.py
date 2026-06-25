@@ -42,10 +42,13 @@ class TestMmiNextActionRubric(unittest.TestCase):
         self.assertIn("TOTAL:", proc.stdout)
         self.assertIn("hold_all_clear", proc.stdout)
 
-    def test_candidate_count_between_3_and_7(self):
+    def test_candidate_count_between_1_and_7(self):
         scored = self.mod.analyze(self.mod._repo_root())
-        self.assertGreaterEqual(len(scored), 3)
+        self.assertGreaterEqual(len(scored), 1)
         self.assertLessEqual(len(scored), 7)
+        self.assertTrue(
+            any(item.candidate.action_id == "hold_all_clear" for item in scored)
+        )
 
     def test_forbidden_tokens_absent(self):
         scored = self.mod.analyze(self.mod._repo_root())
@@ -98,7 +101,8 @@ class TestMmiNextActionRubric(unittest.TestCase):
         candidates = self.mod.generate_candidates(root)
         ids = {c.action_id for c in candidates}
         self.assertNotIn("draft_contract_2", ids)
-        if self.mod.command_spine_wrappers_gated(scoreboard):
+        prefix = self.mod._scoreboard_runtime_prefix(scoreboard, "#2")
+        if prefix.startswith(("GATED", "GOVERNED_AGENT")):
             self.assertNotIn("build_auth_#2", ids)
         else:
             self.assertIn("build_auth_#2", ids)

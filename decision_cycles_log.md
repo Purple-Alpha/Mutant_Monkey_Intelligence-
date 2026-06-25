@@ -609,6 +609,38 @@ AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
 
 ---
 
+---
+
+CYCLE 40 — 2026-06-25T04:30Z   [type: TACTICAL]
+  OBSERVE: Phase 3 detection agents #78–#83 at `GATED` with phase closure
+           86 ELITE (`6deffd9`); operator directed keep rolling.
+  SELECTED:      Phase 3 #78–#83 GOVERNED_AGENT promotion batch.
+  EXPECTED:      Promote six Layer 1 detection agents; breadth 31 -> 37.
+  EXECUTED AT:   2026-06-25T04:30Z
+  AUDIT VERDICT: PASS — §11 Phase 3 contract + Amendment 1; gate-clean 0/0;
+                 #78–#83 promoted GOVERNED_AGENT.
+
+AGENT HEALTH SCORE — Phase 3 batch #78–#83   2026-06-25T04:30Z   [type: GOVERNANCE]
+  SCORE: 86 each (Layer 2 Detection; ES2 synthetic).
+  NEXT:  Breadth BREADTH-track promotion queue empty; DEPTH rows remain.
+
+---
+
+CYCLE 39 — 2026-06-25T04:15Z   [type: TACTICAL]
+  OBSERVE: Phase 2 knowledge agents #72–#77 at `GATED` with phase closure
+           72 HEALTHY (`43b5511`); operator directed keep rolling.
+  SELECTED:      Phase 2 #72–#77 GOVERNED_AGENT promotion batch.
+  EXPECTED:      Promote six Layer 0 brief-only agents; breadth 25 -> 31.
+  EXECUTED AT:   2026-06-25T04:15Z
+  AUDIT VERDICT: PASS — §11 Phase 2 contract; gate-clean 0/0; brief-only bar
+                 cleared; #72–#77 promoted GOVERNED_AGENT.
+
+AGENT HEALTH SCORE — Phase 2 batch #72–#77   2026-06-25T04:15Z   [type: GOVERNANCE]
+  SCORE: 72 each (Layer 0 knowledge; ES1 synthetic).
+  NEXT:  Phase 3 #78–#83 promotion batch.
+
+---
+
 CYCLE 38 — 2026-06-25T04:00Z   [type: TACTICAL]
   OBSERVE: #65 Correction Evidence built (MMI-DEC-163), completion gate 0 blocking /
            1 warning (`audit_outputs/correction_evidence_20260624T223220Z.md`),

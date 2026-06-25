@@ -63,6 +63,18 @@ PROMOTION_PRIORITY = (
     "#61",
     "#62",
     "#63",
+    "#72",
+    "#73",
+    "#74",
+    "#75",
+    "#76",
+    "#77",
+    "#78",
+    "#79",
+    "#80",
+    "#81",
+    "#82",
+    "#83",
     "#47",
     "#52",
 )
@@ -287,7 +299,7 @@ def _scoreboard_runtime_prefix(scoreboard: str, candidate_id: str) -> str:
         if not line.startswith("|"):
             continue
         parts = [p.strip() for p in line.strip().strip("|").split("|")]
-        if len(parts) < 3:
+        if len(parts) < 8:
             continue
         if parts[0].lstrip("#") != num:
             continue

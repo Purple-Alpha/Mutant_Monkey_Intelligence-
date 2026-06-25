@@ -1,12 +1,53 @@
 # Blueprint of Record
 
+**Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-181). Phase 2/3 #72–#83 GOVERNED_AGENT; breadth 37/70.
+
+---
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v26
+
+plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v26
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v26
+population_decision: MMI-DEC-181
+created_at: 2026-06-25
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Phase 2/3 promotion queue complete — Matt directed keep rolling
+revision_reason: #72–#83 GOVERNED_AGENT (MMI-DEC-180/181); breadth promotion queue cleared
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
+
+(no hold-only promotion feedstock entries — dynamic promotion queue via `mmi/MMI_OPERATOR_MAP.md`)
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  Phase 3 #78–#83 — GOVERNED_AGENT (MMI-DEC-181); not production dispatch; not default registry
+  Phase 2 #72–#77 — GOVERNED_AGENT (MMI-DEC-180)
+  Team 9 #61–#65, #64, #67 — GOVERNED_AGENT (MMI-DEC-176–179 / MMI-DEC-173–174)
+  Command spine #1–#3 — GOVERNED_AGENT (MMI-DEC-170/171/172)
+  #52, #47 — GOVERNED_AGENT (MMI-DEC-169/168)
+  #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
+
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): dynamic promotion queue via Operator Map.
+
+---
+
+## Prior ALL_CLEAR v25 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v25
+population_decision: MMI-DEC-179
+revision_reason: Superseded by v26 after Phase 2/3 #72–#83 GOVERNED_AGENT (MMI-DEC-180/181)
+
+---
+
+## Prior ALL_CLEAR v25 body (superseded)
+
 **Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-179). Team 9 #61–#65 GOVERNED_AGENT; breadth 25/70.
 
 ---
 
 ## CURRENT_PLAN — ALL_CLEAR feedstock v25
 
-plan_status: CURRENT_PLAN
+plan_status: SUPERSEDED_PLAN
 version_id: BOR-ALL-CLEAR-FEEDSTOCK-v25
 population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v25
 population_decision: MMI-DEC-179

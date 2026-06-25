@@ -35,13 +35,14 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: (verify at session start — Team 9 #61–#65 GOVERNED_AGENT MMI-DEC-176–179)
+HEAD: (verify at session start — Phase 2/3 #72–#83 GOVERNED_AGENT MMI-DEC-180/181)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  Team 9 chain #61–#65 + #64 + #67 all GOVERNED_AGENT (breadth 25/70)
+  Breadth 37/70 GOVERNED_AGENT · BREADTH promotion queue cleared (#72–#83)
 
 LAST_COMPLETED (MMI authority repo):
-  Team 9 #61–#65 — GOVERNED_AGENT (MMI-DEC-176–179; Matt directed keep rolling)
+  Phase 2/3 #72–#83 — GOVERNED_AGENT (MMI-DEC-180/181; Matt directed keep rolling)
+  Team 9 #61–#65 — GOVERNED_AGENT (MMI-DEC-176–179)
   #67 Rule Improvement — GOVERNED_AGENT (MMI-DEC-174)
   #64 Failure Classification — GOVERNED_AGENT (MMI-DEC-173)
   #2 Mission Context — GOVERNED_AGENT promotion review (MMI-DEC-171)
@@ -59,7 +60,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · command_spine=#1+#2+#3 GOVERNED_AGENT
   BOR v23 dynamic promotion queue (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (3/10): Authorize #1 wrapper build lane (SIGNED_UNBUILT scoreboard reconcile). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (3/10): Hold ALL_CLEAR — no new lane this cycle. Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Operator map: `mmi/MMI_OPERATOR_MAP.md`
   Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.
 

@@ -4,7 +4,7 @@ OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
 BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 33 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 21 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
 WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
 ASSIGNED_TO: Matt
 NEXT_PROMPT_GOES_TO: Matt
@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Team 9 promotion chain #61–#65 GOVERNED_AGENT (MMI-DEC-176–179)
-  (Matt directed keep rolling; §11 contracts + clean gates; breadth 21 -> 25;
-  **not** production dispatch; **not** default registry; **not** rule apply).
+LAST_COMPLETED: Phase 2/3 promotion #72–#83 GOVERNED_AGENT (MMI-DEC-180/181)
+  (Matt directed keep rolling; Phase 2 72 HEALTHY + Phase 3 86 ELITE;
+  breadth 25 -> 37; **not** production dispatch; **not** default registry).
 
-PRIOR_LAST_COMPLETED: #67 Rule Improvement GOVERNED_AGENT promotion (MMI-DEC-174)
+PRIOR_LAST_COMPLETED: Team 9 promotion chain #61–#65 GOVERNED_AGENT (MMI-DEC-176–179)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).
