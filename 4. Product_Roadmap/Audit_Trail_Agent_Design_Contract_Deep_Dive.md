@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** BLOCKED until separate operator build-lane authorization (§11 signed MMI-DEC-199; pre-build gate clean 2026-06-25 `mmi_49_contract_gate_20260625T191119Z.md` 0/0)
+**Implementation:** Built — `AuditTrailAgent` at `core/orchestrator/audit_trail_agent.py` (MMI-DEC-200); scoreboard `AWAITING_AUDIT`; completion gate pending
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -28,7 +28,7 @@
 - `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/agent_contract.py`
 - `VISION.md` (Stage A — analyze / recommend / evidence only)
 
-**Proposed future build path (not authorized here):** `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/audit_trail_agent.py`
+**Build path:** `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/audit_trail_agent.py` — **built MMI-DEC-200**
 
 ---
 
@@ -53,7 +53,7 @@ Explicit non-authorities: No `assemble_audit_packet`, `write_audit_packet`, `gen
 Inputs: One explicit request: `tenant_id`, `case_id`, optional explicit anchor booleans (`policy_hash_attested_present`, `override_separation_attested_valid`, `append_only_chain_attested_present` — omitted means unknown/not attested, `false` means caller attests absent/invalid), optional bounded `attested_record_types` (max 8 names from `RecordType` in `core/blackboard/models.py` — caller attested only; unknown names rejected). No Blackboard root/environment at ES1. Caller supplies case identity — agent does not discover from raw email, ledger paths, package artifacts, or external systems
 Outputs: One `AgentContribution` (layer 4): closed audit-trail attestation facts + bounded `control_mapping` (`audit_trail:stage_a_synthetic` at ES1) + optional bounded Stage 1 `underwriter_note`. No verification/challenge fields at Stage 1
 Evidence emitted: Closed facts only: `audit_trail_synthetic_attestation_only` (always at ES1), `audit_trail_missing`, `audit_trail_policy_hash_attested_present`, `audit_trail_policy_hash_attested_missing`, `audit_trail_override_separation_attested_present`, `audit_trail_override_separation_attested_missing`, `audit_trail_append_only_chain_attested_present`, `audit_trail_append_only_chain_attested_missing`, `audit_trail_attestation_all_anchors_present` (only when all three anchors explicitly attested present — not a §14.3.4 stage pass), optional bounded `audit_trail_record_type:<type>` (max 8, `RecordType` enum names from `core/blackboard/models.py` only). Never emit `audit_trail_posture_complete`, `audit_trail_policy_hash_present`, or other facts that imply on-disk hash match, `signed_by` resolution, or Cyber §14.3.4 pass. No policy hash values, operator names, override text, record payloads, package paths, or audit-packet file lists
-Data minimization: No raw blackboard payloads, policy file contents, override requested_by/approved_by strings, signed_by paths, email bodies, tenant secrets, or audit-packet chunk bodies in the contribution. Optional `underwriter_note` is max 240 chars, facts-only posture summary — no operator names, hash fragments, override text, or §14.3.4 pass language
+Data minimization: No raw blackboard payloads, policy file contents, override requested_by/approved_by strings, signed_by paths, email bodies, tenant secrets, or audit-packet chunk bodies in the contribution. Optional `underwriter_note` is max 160 chars (shared `AgentContribution` cap), facts-only posture summary — no operator names, hash fragments, override text, or §14.3.4 pass language
 Tenant isolation: Uses only caller-supplied `tenant_id` and `case_id`; tenant A attestation never verifies tenant B; no cross-tenant anchor reuse
 
 Two-pass role: Pass 1 Evidence only. `challenge()` returns `None`
@@ -189,7 +189,7 @@ This contract is governance + signed spec placement. §11 signed 2026-06-25 (MMI
 13. Never calls `write_audit_packet` or any `core.evidence_package.audit_packet` export helper.
 14. Never calls `CanonicalEvidenceLedger.append`, `storage.append_record`, or `verdict_ledger.append` (mock/spy all three write paths).
 15. Import guard: importing `audit_trail_agent` does not import `core.evidence_package` or `core.mutation.audit_trail` at module load.
-16. `underwriter_note` when present respects 240-char cap and contains no forbidden substrings (hash hex, operator labels, §14.3.4 pass phrasing).
+16. `underwriter_note` when present respects 160-char cap and contains no forbidden substrings (hash hex, operator labels, §14.3.4 pass phrasing).
 
 ---
 
