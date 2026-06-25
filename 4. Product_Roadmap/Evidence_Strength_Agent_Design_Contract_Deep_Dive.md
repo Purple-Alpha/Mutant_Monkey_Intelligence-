@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_50_EVIDENCE_STRENGTH_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT UNSIGNED (contract placement · MMI-DEC-204). Step 00 validator target before Grok pre-build gate. Signing locks D1–D10 for `EvidenceStrengthAgent` (Layer 4 Evidence, ES1 Synthetic). **Not** §11 signed; **not** build; **not** SIGNED_UNBUILT reconcile; **not** default-registry registration; **not** production dispatch; **not** AUTH-5. BOR feedstock rank-1 (Estimator **17.00** · MMI-DEC-203). Authorizes **no** eval-harness execution, **no** metric computation from fixtures, **no** `pre_ship_audit.py` invocation, **no** Blackboard reads at ES1, **no** evidence/workflow ledger append/update/delete (except registry-gated `AGENT_CONTRIBUTION`), **no** capability-registry mutation, **no** accuracy/compliance/certification claim, and **no** autonomous action.
+**Status:** DRAFT UNSIGNED (contract placement · MMI-DEC-204). Step 00 validator target before Gemini pre-build gate (`complete_gate.py`; COMPLETION_GATE_PROVIDER=gemini). Signing locks D1–D11 for `EvidenceStrengthAgent` (Layer 4 Evidence, ES1 Synthetic). **Not** §11 signed; **not** build; **not** SIGNED_UNBUILT reconcile; **not** default-registry registration; **not** production dispatch; **not** AUTH-5. BOR feedstock rank-1 (Estimator **17.00** · MMI-DEC-203). Authorizes **no** eval-harness execution, **no** metric computation from fixtures, **no** `pre_ship_audit.py` invocation, **no** Blackboard reads at ES1, **no** evidence/workflow ledger append/update/delete (except registry-gated `AGENT_CONTRIBUTION`), **no** capability-registry mutation, **no** accuracy/compliance/certification claim, and **no** autonomous action.
 
 **Candidate:** #50 — Evidence Strength
 
@@ -84,7 +84,7 @@ Cursor reconciliation applied 2026-06-25 (draft placement · MMI-DEC-204):
 
 | Placeholder | Resolved value | Repo evidence |
 |---|---|---|
-| Parent framework | `Email_Security_Testing_Evidence_Framework_Deep_Dive.md` — DRAFT pre-§11; four-value category status + evidence-required discipline | Scoreboard #50 row; MMI-DEC-203 unpark source |
+| Parent framework | `Email_Security_Testing_Evidence_Framework_Deep_Dive.md` — DRAFT pre-§11; four-value category status + evidence-required discipline; D27 `attestation` ban is red-team mission field names only (not Layer 4 ES1 caller-asserted facts) | Scoreboard #50 row; MMI-DEC-203 unpark source |
 | Eval harness surface | `core/scoring/eval/fraud_eval_harness.py`, `runner.py`, `fraud_eval_dataset.jsonl` — execution outside #50 at ES1 | Framework §1 in-scope wrap of existing harness |
 | Pre-ship gate | `audit_tools/pre_ship_audit.py` — commit-completeness consumer; not invoked by #50 | Framework §4.5.9 D22 |
 | Category status enum | `supported`, `not_supported_yet`, `not_present_in_sample`, `evidence_missing` | Framework D1 |
@@ -140,6 +140,7 @@ This contract is governance + draft placement only. It does not build runtime co
 | D8 | **Stage A / no autonomy.** No block/quarantine/test execution; no autonomous action. |
 | D9 | **No gate side effects.** No `pre_ship_audit.py`, subprocess test runners, or network calls. |
 | D10 | **Tests are Stage 1 evidence.** Suite must prove D2–D9 before build close. |
+| D11 | **Attestation vocabulary carve-out (D27 scope).** Internal Layer 4 fact prefixes `evidence_strength_*_attested_*` and `evidence_strength_synthetic_attestation_only` denote caller-supplied boolean discipline anchors only — the same ES1 pattern as #49 `audit_trail_*_attested_*` (MMI-DEC-199). This is **not** carrier-jargon "control attestation," **not** Email Security Testing framework D27 red-team mission **field naming**, and **not** a buyer-facing compliance/warranty claim per `Compliance_and_Trend_Watch_Process.md`. |
 
 ---
 

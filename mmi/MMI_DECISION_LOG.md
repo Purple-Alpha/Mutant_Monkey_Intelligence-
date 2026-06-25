@@ -411,6 +411,8 @@ MMI-DEC-203 | 2026-06-25 | Unpark #50 Evidence Strength CONTRACT_DRAFT feedstock
 
 MMI-DEC-204 | 2026-06-25 | #50 Evidence Strength Agent Design Contract draft placement | `4. Product_Roadmap/Evidence_Strength_Agent_Design_Contract_Deep_Dive.md`; Step 00 PASS 31/31; repo reconciliation vs Email Security Testing framework + eval harness split | ACCEPT | Cursor execution of unparked feedstock lane (MMI-DEC-203): Agent Design Contract draft placed with REPO_RECONCILIATION (framework/harness split, attestation-only ES1, five tri-state discipline anchors, closed fact vocabulary). **DRAFT UNSIGNED**; pre-build gate not run; **not** §11; **not** build; **not** GOVERNED_AGENT; **not** AUTH-5 | Optional Grok pre-build gate when Matt chooses; §11 sign after clean gate | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Cursor (#50 Evidence Strength contract draft placement)
 
+MMI-DEC-205 | 2026-06-25 | #50 Evidence Strength contract pre-build gate (Gemini) | `audit_outputs/mmi_50_contract_gate_20260625T210447Z.md`; `4. Product_Roadmap/Evidence_Strength_Agent_Design_Contract_Deep_Dive.md` D11 carve-out | ACCEPT | Gemini pre-build gate 0 blocking / 0 warnings after D11 attestation vocabulary carve-out (Email Security Testing D27 red-team field-name scope vs Layer 4 ES1 caller-asserted facts; #49 pattern). First run blocked on attestation/D27 false conflict (`210222Z`). **Not** §11; **not** build; **not** GOVERNED_AGENT | Matt §11 sign on #50 contract when ready | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Cursor (#50 contract gate 0/0 Gemini)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
