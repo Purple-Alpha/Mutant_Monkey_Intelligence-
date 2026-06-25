@@ -387,6 +387,8 @@ MMI-DEC-191 | 2026-06-25 | #18 Callback Verification Agent Design Contract draft
 
 MMI-DEC-192 | 2026-06-25 | #18 Callback Verification pre-build gate (SIGNABLE) | `audit_outputs/mmi_18_contract_gate_20260625T175158Z.md` (0 blocking / 1 warning); packet SHA256 `aa25e283f823cbb082047506f6fafe023288ea04f38925d8f7428bb68cf54f1f`; Gemini `gemini-2.5-pro` | ACCEPT | Pre-build gate SIGNABLE after MMI-DEC-191: 0 blocking; warning — template §3.1 vs §5 DER field-count inconsistency surfaced (draft follows §3.1; parent template ambiguity only). **Not** §11 signed by this record; **not** build; **not** SIGNED_UNBUILT | Matt §11 sign #18 contract | Codex gate relay — no scoreboard/registry mutation | Cursor (terminal pre-build gate #18)
 
+MMI-DEC-193 | 2026-06-25 | #18 Callback Verification Agent Design Contract §11 signature | `4. Product_Roadmap/Callback_Verification_Agent_Design_Contract_Deep_Dive.md`; scoreboard #18 row; gate `audit_outputs/mmi_18_contract_gate_20260625T175158Z.md` (0 blocking / 1 warning; MMI-DEC-192) | ACCEPT | Matt §11 signed (`Matt Nichol June 25th 2026`); locks D1–D10; Evidence Stage 1 (Synthetic); authorizes `CallbackVerificationAgent` wrapper build + focused tests **only** — **not** TOAD/workflow mutation, **not** default registry, **not** production dispatch, **not** AUTH-5. Scoreboard #18 `DETECTOR_FUNCTION`/`NEEDS_SIGNED_CONTRACT` -> `SIGNED_UNBUILT`; BLOCKERS cleared. **Not** build by this record | Separate operator build authorization for #18 wrapper | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (§11 sign #18 Callback Verification contract)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

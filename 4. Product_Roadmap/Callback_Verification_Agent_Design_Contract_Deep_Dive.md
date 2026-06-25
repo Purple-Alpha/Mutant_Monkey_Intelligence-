@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_18_CALLBACK_VERIFICATION_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT UNSIGNED — pre-§11. BOR feedstock rank-1 (Estimator **38.00** · MMI-DEC-190). Signing locks D1–D10 and authorizes the `CallbackVerificationAgent` Stage 1 wrapper build + focused tests **only**. It authorizes **no** TOAD detector change, **no** Two-Channel Confirmation workflow write-path change, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (Gemini pre-build gate clean `mmi_18_contract_gate_20260625T175158Z.md` 0 blocking / 1 warning; MMI-DEC-192). Evidence Stage 1 (Synthetic) agent wrapper authorized by signature. Signing locks D1–D10 and authorizes the `CallbackVerificationAgent` wrapper build + focused tests **only**. It authorizes **no** TOAD detector change, **no** Two-Channel Confirmation workflow write-path change, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5. Scoreboard `SIGNED_UNBUILT` reconciled in this signing action (MMI-DEC-193).
 
 **Candidate:** #18 — Callback Verification
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** BLOCKED until §11 signature + separate build authorization
+**Implementation:** BLOCKED until separate operator build authorization (§11 signed · scoreboard `SIGNED_UNBUILT` per MMI-DEC-193)
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -183,13 +183,13 @@ Gate glob: `mmi_18_contract_gate_*.md`
 
 **§11 — Callback Verification Agent Design Contract (Deep Dive)**
 
-- [ ] I approve this contract as written.
-- [ ] I authorize pre-build gate review when ready.
-- [ ] On clean gate, I §11-sign and authorize Stage 1 wrapper build + focused tests only.
+- [x] I approve this contract as written.
+- [x] I authorize pre-build gate review when ready.
+- [x] On clean gate, I §11-sign and authorize Stage 1 wrapper build + focused tests only.
 
 Confirmed: #18 projects callback-phishing OOB verification state only; it never detects TOAD patterns and never records workflow outcomes.
 
-> _(unsigned — Matt Nichol §11 pending)_
+> Matt Nichol June 25th 2026
 
 ---
 
