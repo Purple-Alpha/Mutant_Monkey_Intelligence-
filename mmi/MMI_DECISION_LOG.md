@@ -349,6 +349,8 @@ MMI-DEC-170 | 2026-06-24 | #1 Swarm Commander GOVERNED_AGENT promotion review | 
 
 MMI-DEC-171 | 2026-06-25 | #2 Mission Context GOVERNED_AGENT promotion review | scoreboard #2 row; decision_cycles_log CYCLE 31; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v21 | ACCEPT | Repo evidence supports promotion: §11 contract MMI-DEC-105, build MMI-DEC-108, 16 focused tests, completion gate 0 blocking / 1 warning (`audit_outputs/mission_context_agent_20260623T052118Z.md`; Gemini; MMI-DEC-109), L1 Command MC-AUTH bar cleared; #2 GATED -> GOVERNED_AGENT; breadth runway 17 -> 18; second governed Layer 1 Command agent | No production dispatch, default registry wiring, AUTH-5 unlock, or #3 promotion | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize GOVERNED_AGENT promotion review #2)
 
+MMI-DEC-172 | 2026-06-25 | #3 Risk Triage GOVERNED_AGENT promotion review | scoreboard #3 row; decision_cycles_log CYCLE 32; health score board; `mmi/BLUEPRINT_OF_RECORD.md` v22 | ACCEPT | Repo evidence supports promotion: §11 contract MMI-DEC-098, build MMI-DEC-115, 16 focused tests, completion gate 0 blocking / 0 warnings (`audit_outputs/risk_triage_agent_20260624T003249Z.md`; Gemini; MMI-DEC-116), L1 Command AUTH-4 score-only bar cleared; #3 GATED -> GOVERNED_AGENT; breadth runway 18 -> 19; command spine #1–#3 all GOVERNED_AGENT at ES1 | No production dispatch, default registry wiring, or AUTH-5 unlock | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (authorize GOVERNED_AGENT promotion review #3)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

@@ -603,6 +603,29 @@ AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
 
 ---
 
+---
+
+CYCLE 32 — 2026-06-25T01:00Z   [type: TACTICAL]
+  OBSERVE: #3 Risk Triage built (MMI-DEC-115), completion gate 0 blocking / 0 warnings
+           (`audit_outputs/risk_triage_agent_20260624T003249Z.md`), scoreboard row at
+           `GATED` pending GOVERNED_AGENT promotion review; command spine #1–#2 already
+           GOVERNED_AGENT (MMI-DEC-170/171).
+  SELECTED:      Operator-authorized GOVERNED_AGENT promotion review #3 only.
+  EXPECTED:      Promote #3 to GOVERNED_AGENT at Evidence Stage 1; complete command
+                 spine GOVERNED_AGENT trio; no production dispatch.
+  EXECUTED AT:   2026-06-25T01:00Z
+  AUDIT VERDICT: PASS — §11 contract MMI-DEC-098; 16 focused tests; L1 Command AUTH-4
+                 score-only bar cleared; completion gate 0/0; #3 promoted GOVERNED_AGENT;
+                 breadth runway 18 -> 19; command spine #1–#3 all GOVERNED_AGENT.
+
+AGENT HEALTH SCORE — #3 Risk Triage   2026-06-25T01:00Z   [type: GOVERNANCE]
+  EVENT: #3 promoted to GOVERNED_AGENT at Evidence Stage 1 after build MMI-DEC-115
+         + completion gate 0/0 (`risk_triage_agent_20260624T003249Z.md`).
+  SCORE: 87 (Layer 1 Command; ES1 ceiling; third governed L1 agent; spine complete).
+  NEXT:  #64 Failure Classification promotion review — no build authorized.
+
+---
+
 CYCLE 31 — 2026-06-25T00:30Z   [type: TACTICAL]
   OBSERVE: #2 Mission Context built (MMI-DEC-108), completion gate 0 blocking /
            1 warning (`audit_outputs/mission_context_agent_20260623T052118Z.md`),
