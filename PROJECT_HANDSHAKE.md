@@ -35,13 +35,14 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: (verify at session start — #3 Risk Triage GOVERNED_AGENT MMI-DEC-172)
+HEAD: (verify at session start — #64 Failure Classification GOVERNED_AGENT MMI-DEC-173)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  BOR v22: command spine #1–#3 GOVERNED_AGENT (MMI-DEC-172)
-  Team 9 chain #64/#67/#65 GATED at wrapper layer (not GOVERNED_AGENT)
+  BOR v23: dynamic promotion queue via Operator Map (MMI-DEC-173 cleared #64)
+  Team 9 chain #64 GOVERNED_AGENT · #67/#65 GATED at wrapper layer
 
 LAST_COMPLETED (MMI authority repo):
+  #64 Failure Classification — GOVERNED_AGENT promotion review (MMI-DEC-173); first L5
   #3 Risk Triage — GOVERNED_AGENT promotion review (MMI-DEC-172); command spine complete
   #2 Mission Context — GOVERNED_AGENT promotion review (MMI-DEC-171)
   #1 Swarm Commander — GOVERNED_AGENT promotion review (MMI-DEC-170)
@@ -50,25 +51,25 @@ LAST_COMPLETED (MMI authority repo):
   Ranked lane board refreshed (2026-06-24T22:40:26Z · git_head dcaa47a)
   #67 Rule Improvement — build + GATED closeout (MMI-DEC-155–157)
   Command spine #1–#3 GOVERNED_AGENT (MMI-DEC-170/171/172)
-  #64 Failure Classification — GATED (MMI-DEC-088)
+  #64 Failure Classification — GOVERNED_AGENT (MMI-DEC-173)
   Challenge/red-team wrappers #61–#63 — GATED (2026-06-21)
   Evidence wrappers #47 Case Timeline — GOVERNED_AGENT (MMI-DEC-168); #52 Plain-English Explanation — GOVERNED_AGENT (MMI-DEC-169)
 
 ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · command_spine=#1+#2+#3 GOVERNED_AGENT
-  BOR v22 dynamic promotion queue (refresh via `python3 scripts/mmi_estimator.py`)
+  BOR v23 dynamic promotion queue (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (4/10): Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
+NEXT ACTION: See `mmi/MMI_OPERATOR_MAP.md` — top ranked: Promotion review #67 Rule Improvement.
   Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.
 
 PROBE DISCIPLINE: after any `scripts/mmi_*.py` change run
   `pytest tests/test_mmi_authority_escalation_probe.py`
 
-PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 19 GOVERNED_AGENT at ES1 Synthetic;
+PRODUCT RUNTIME (Stage A): Inbox Shield stack landed; 20 GOVERNED_AGENT at ES1 Synthetic;
   depth gate CLOSED · Stage B gate CLOSED · revenue milestones mostly open (see MILESTONE_ARC.md)
 
-LAST UPDATED: 2026-06-25 (#3 GOVERNED_AGENT promotion MMI-DEC-172; command spine complete)
+LAST UPDATED: 2026-06-25 (#64 GOVERNED_AGENT promotion MMI-DEC-173; first Layer 5)
 ═══════════════════════════════════════════════
 
 ─────────────────────────────────────────────────
