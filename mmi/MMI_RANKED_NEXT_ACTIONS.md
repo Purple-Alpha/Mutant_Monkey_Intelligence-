@@ -1,4 +1,4 @@
-generated_at: 2026-06-25T21:52:28Z
+generated_at: 2026-06-25T23:08:53Z
 git_head: 5f707db
 generator: scripts/mmi_lane_board_sync.py
 
@@ -6,7 +6,7 @@ generator: scripts/mmi_lane_board_sync.py
 
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
-dispatcher_mode: ALL_CLEAR
+dispatcher_mode: UNKNOWN
 candidate_count: 1
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
