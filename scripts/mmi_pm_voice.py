@@ -1742,7 +1742,7 @@ def _validate_output(text: str) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="MMI PM Voice Layer Mode A — read-only single owner voice (stdout only)."
+        description="MMI PM Voice Layer Mode A — read-only operator feed (stdout only)."
     )
     parser.add_argument("--root", type=Path, default=None, help="Repository root")
     parser.add_argument(
@@ -1751,10 +1751,20 @@ def main(argv: list[str] | None = None) -> int:
         help="Read-only revision address map",
     )
     parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Legacy governance envelope (HAND_IT_TO / ranked board / WHY dump)",
+    )
+    parser.add_argument(
+        "--lanes",
+        action="store_true",
+        help="Active-lane console (default since MMI_ACTIVE_LANE_CONSOLE_MODE_A)",
+    )
+    parser.add_argument(
         "--limit",
         type=int,
         default=30,
-        help="Max next_lane menu rows to read for relay",
+        help="Max next_lane menu rows to read for verbose relay",
     )
     args = parser.parse_args(argv)
 
@@ -1763,23 +1773,29 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     repo_root = args.root.resolve() if args.root else _repo_root()
-    evidence = gather_evidence(repo_root, menu_limit=max(1, args.limit))
-    handoff_mod = _load_module("mmi_handoff", "mmi_handoff.py")
-    handoff = handoff_mod.latest_open_handoff(repo_root)
 
-    critical = [
-        g
-        for g in evidence.gaps
-        if g.startswith("missing_dispatcher_state")
-        or g.startswith("missing_or_unreadable")
-    ]
-    if critical and evidence.dispatcher_mode == "UNKNOWN":
-        sys.stdout.write(format_insufficient(evidence.gaps))
-        return 2
+    if args.verbose:
+        evidence = gather_evidence(repo_root, menu_limit=max(1, args.limit))
+        handoff_mod = _load_module("mmi_handoff", "mmi_handoff.py")
+        handoff = handoff_mod.latest_open_handoff(repo_root)
 
-    sys.stdout.write(
-        format_voice(compose_voice(evidence, handoff=handoff, repo_root=repo_root))
-    )
+        critical = [
+            g
+            for g in evidence.gaps
+            if g.startswith("missing_dispatcher_state")
+            or g.startswith("missing_or_unreadable")
+        ]
+        if critical and evidence.dispatcher_mode == "UNKNOWN":
+            sys.stdout.write(format_insufficient(evidence.gaps))
+            return 2
+
+        sys.stdout.write(
+            format_voice(compose_voice(evidence, handoff=handoff, repo_root=repo_root))
+        )
+        return 0
+
+    lanes_mod = _load_module("mmi_active_lanes", "mmi_active_lanes.py")
+    sys.stdout.write(lanes_mod.format_console(lanes_mod.gather_lanes(repo_root)))
     return 0
 
 

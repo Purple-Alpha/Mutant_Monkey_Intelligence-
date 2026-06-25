@@ -57,6 +57,8 @@ def _run_voice(extra: list[str] | None = None) -> tuple[int, str, str]:
     cmd = [sys.executable, SCRIPT_PATH]
     if extra:
         cmd.extend(extra)
+    else:
+        cmd.append("--verbose")
     proc = subprocess.run(cmd, cwd=REPO, capture_output=True, text=True, check=False)
     return proc.returncode, proc.stdout, proc.stderr
 
@@ -773,7 +775,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         with patch.object(self.mod, "_load_module", side_effect=side_effect):
             buffer = io.StringIO()
             with redirect_stdout(buffer):
-                code = self.mod.main([])
+                code = self.mod.main(["--verbose"])
         out = buffer.getvalue()
         self.assertEqual(code, 0)
         if "Pre-build gate review is needed for #105" in out:
@@ -859,6 +861,22 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             if stripped in FORBIDDEN_CONCLUSIONS:
                 self.fail(f"forbidden conclusion: {stripped}")
 
+    def test_pm_voice_default_emits_active_lanes(self):
+        proc = subprocess.run(
+            [sys.executable, SCRIPT_PATH],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(proc.returncode, 0)
+        self.assertIn("MMI ACTIVE LANES", proc.stdout)
+        self.assertNotIn("MMI_PM_VOICE", proc.stdout)
+
+    def test_pm_voice_verbose_emits_legacy_envelope(self):
+        _, out, _ = _run_voice()
+        self.assertTrue(out.startswith("MMI_PM_VOICE"))
+
     def test_revision_mode_read_only(self):
         code, out, _ = _run_voice(["--revision"])
         self.assertEqual(code, 0)
@@ -872,7 +890,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
         with patch.object(self.mod, "gather_evidence", return_value=evidence):
             buffer = io.StringIO()
             with redirect_stdout(buffer):
-                code = self.mod.main([])
+                code = self.mod.main(["--verbose"])
         self.assertEqual(code, 2)
         self.assertTrue(buffer.getvalue().startswith("INPUTS_INSUFFICIENT"))
 

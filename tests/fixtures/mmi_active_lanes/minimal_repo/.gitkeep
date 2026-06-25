@@ -1,0 +1,3 @@
+# Fixture root for mmi_active_lanes tests (minimal evidence set).
+# Live-repo tests use the authority repo directly; this directory documents
+# the expected on-disk shape for lane resolution.
