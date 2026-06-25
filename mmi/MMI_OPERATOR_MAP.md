@@ -1,5 +1,5 @@
-generated_at: 2026-06-25T00:36:13Z
-git_head: 6507b0c
+generated_at: 2026-06-25T00:39:39Z
+git_head: bd08018
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -12,8 +12,8 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 ## Where we are
 
 - **Dispatcher:** `ALL_CLEAR` — nothing waiting to be built or audited right now
-- **Governed agents:** 20 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
-- **Promotion queue:** 17 built-and-audited agents waiting for your promotion review
+- **Governed agents:** 21 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
+- **Promotion queue:** 16 built-and-audited agents waiting for your promotion review
 
 ## Why it keeps stalling
 
@@ -31,25 +31,25 @@ until you name the next lane.
 2. **Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
 3. **Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
 4. **Promotion review #65 Correction Evidence (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
-5. **Promotion review #67 Rule Improvement (GATED -> GOVERNED_AGENT when authorized)** — score 4/10
+5. **Authorize #1 wrapper build lane (SIGNED_UNBUILT scoreboard reconcile)** — score 3/10
 
 ## Promotion queue (built, audited, needs your review)
 
-1. **#67 Rule Improvement** — GATED, ready for promotion review
-2. **#65 Correction Evidence** — GATED, ready for promotion review
-3. **#61 Test Case Generator** — GATED, ready for promotion review
-4. **#62 Regression Test** — GATED, ready for promotion review
-5. **#63 Adversarial Test** — GATED, ready for promotion review
-6. **#72 PhishIntelAgent** — GATED, ready for promotion review
-7. **#73 RansomwareIntelAgent** — GATED, ready for promotion review
-8. **#74 BECIntelAgent** — GATED, ready for promotion review
-9. **#75 TrojanDeliveryIntelAgent** — GATED, ready for promotion review
-10. **#76 GeoIntelAgent** — GATED, ready for promotion review
+1. **#65 Correction Evidence** — GATED, ready for promotion review
+2. **#61 Test Case Generator** — GATED, ready for promotion review
+3. **#62 Regression Test** — GATED, ready for promotion review
+4. **#63 Adversarial Test** — GATED, ready for promotion review
+5. **#72 PhishIntelAgent** — GATED, ready for promotion review
+6. **#73 RansomwareIntelAgent** — GATED, ready for promotion review
+7. **#74 BECIntelAgent** — GATED, ready for promotion review
+8. **#75 TrojanDeliveryIntelAgent** — GATED, ready for promotion review
+9. **#76 GeoIntelAgent** — GATED, ready for promotion review
+10. **#77 AIGenContentIntelAgent** — GATED, ready for promotion review
 
 ## What to say to unstick (copy-paste)
 
 ```text
-Authorize GOVERNED_AGENT promotion review #67 (Rule Improvement)
+Authorize GOVERNED_AGENT promotion review #65 (Correction Evidence)
 ```
 
 ## What the crew can do without you
