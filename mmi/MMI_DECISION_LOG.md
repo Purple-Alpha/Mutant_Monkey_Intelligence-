@@ -413,6 +413,8 @@ MMI-DEC-204 | 2026-06-25 | #50 Evidence Strength Agent Design Contract draft pla
 
 MMI-DEC-205 | 2026-06-25 | #50 Evidence Strength contract pre-build gate (Gemini) | `audit_outputs/mmi_50_contract_gate_20260625T210447Z.md`; `4. Product_Roadmap/Evidence_Strength_Agent_Design_Contract_Deep_Dive.md` D11 carve-out | ACCEPT | Gemini pre-build gate 0 blocking / 0 warnings after D11 attestation vocabulary carve-out (Email Security Testing D27 red-team field-name scope vs Layer 4 ES1 caller-asserted facts; #49 pattern). First run blocked on attestation/D27 false conflict (`210222Z`). **Not** §11; **not** build; **not** GOVERNED_AGENT | Matt §11 sign on #50 contract when ready | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Cursor (#50 contract gate 0/0 Gemini)
 
+MMI-DEC-206 | 2026-06-25 | #50 Evidence Strength Agent Design Contract §11 signature | `4. Product_Roadmap/Evidence_Strength_Agent_Design_Contract_Deep_Dive.md`; scoreboard #50 row; gate `audit_outputs/mmi_50_contract_gate_20260625T210447Z.md` (0 blocking / 0 warnings; MMI-DEC-205) | ACCEPT | Matt §11 signed (`Matt Nichol June 25th 2026`); locks D1–D11; Evidence Stage 1 (Synthetic); authorizes `EvidenceStrengthAgent` wrapper build + focused tests **only** — **not** eval-harness/metric execution, **not** default registry, **not** production dispatch, **not** AUTH-5. Scoreboard #50 `NEEDS_SIGNED_CONTRACT` -> `SIGNED_UNBUILT`; BLOCKERS cleared. **Not** build by this record | Separate operator build authorization for #50 wrapper | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (§11 sign #50 Evidence Strength contract)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

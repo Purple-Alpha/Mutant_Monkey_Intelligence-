@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_50_EVIDENCE_STRENGTH_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT UNSIGNED (contract placement · MMI-DEC-204). Step 00 validator target before Gemini pre-build gate (`complete_gate.py`; COMPLETION_GATE_PROVIDER=gemini). Signing locks D1–D11 for `EvidenceStrengthAgent` (Layer 4 Evidence, ES1 Synthetic). **Not** §11 signed; **not** build; **not** SIGNED_UNBUILT reconcile; **not** default-registry registration; **not** production dispatch; **not** AUTH-5. BOR feedstock rank-1 (Estimator **17.00** · MMI-DEC-203). Authorizes **no** eval-harness execution, **no** metric computation from fixtures, **no** `pre_ship_audit.py` invocation, **no** Blackboard reads at ES1, **no** evidence/workflow ledger append/update/delete (except registry-gated `AGENT_CONTRIBUTION`), **no** capability-registry mutation, **no** accuracy/compliance/certification claim, and **no** autonomous action.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (Gemini pre-build gate clean `audit_outputs/mmi_50_contract_gate_20260625T210447Z.md` 0 blocking / 0 warnings; MMI-DEC-205). Step 00 PASS 31/31. **SIGNED CONTRACT — BUILD NOT AUTHORIZED** until separate operator build-lane authorization (MMI-DEC). Signing locks D1–D11 for `EvidenceStrengthAgent` (Layer 4 Evidence, ES1 Synthetic). Pre-build gate review complete. Wrapper build + focused tests authorized **only** after separate MMI-DEC build lane. BOR feedstock rank-1 (Estimator **17.00** · MMI-DEC-203). Authorizes **no** eval-harness execution, **no** metric computation from fixtures, **no** `pre_ship_audit.py` invocation, **no** Blackboard reads at ES1, **no** evidence/workflow ledger append/update/delete (except registry-gated `AGENT_CONTRIBUTION`), **no** capability-registry mutation, **no** accuracy/compliance/certification claim, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5.
 
 **Candidate:** #50 — Evidence Strength
 
@@ -44,7 +44,7 @@ Canonical layer: 4 — Evidence
 Canonical team / case type: Evidence / testing discipline — stage-4 evidence-strength posture for one governed eval/test run (capability honesty, denominator discipline, evidence-required rule)
 Authority level: Level 3 — Specialist Agent
 Stage posture: VISION Stage A — analyze / recommend / evidence only
-Evidence Stage (current): Stage 1 — Synthetic (at §11 signature, if signed)
+Evidence Stage (current): Stage 1 — Synthetic (§11 signed 2026-06-25)
 
 Role: For one caller-supplied evidence-strength request, project which governed testing-framework discipline anchors the caller attests for the eval run and emit bounded Layer 4 evidence-strength attestation facts
 Boundary: Caller-attested anchors-in, evidence-strength contribution-out. No Blackboard reads at ES1; no eval-harness or pre-ship audit invocation; no metric computation; no evidence/workflow ledger append/update/delete except registry-gated `AGENT_CONTRIBUTION` via `submit_agent_contribution`; no capability-registry write; no done declaration
@@ -92,7 +92,7 @@ Cursor reconciliation applied 2026-06-25 (draft placement · MMI-DEC-204):
 | #46 relationship | `EvidencePackageAgent` GOVERNED_AGENT — package assembly | Distinct builder path |
 | #62 relationship | `RegressionTestAgent` — Layer 5 regression-case generator | Generate-only; distinct slot |
 
-Repo-reconciliation placeholders: **resolved for draft review.** §11 unsigned; pre-build gate not run.
+Repo-reconciliation placeholders: **resolved.** §11 signed MMI-DEC-206 2026-06-25; pre-build gate clean `audit_outputs/mmi_50_contract_gate_20260625T210447Z.md` 0 blocking / 0 warnings.
 
 ---
 
@@ -102,7 +102,7 @@ Unblock swarm #50 Evidence Strength by placing the Agent Design Contract that se
 
 #50 is the caller-attestation-only Evidence agent for stage-4 evidence-strength posture: it tells the swarm which governed testing-discipline anchors the caller attests for an eval run — not whether tests passed, not whether accuracy improved, and not whether the framework is §11 signed.
 
-This contract is governance + draft placement only. It does not build runtime code, sign §11, reconcile scoreboard lifecycle, or unlock AUTH-5.
+This contract is governance + signed spec placement. §11 signed 2026-06-25 (MMI-DEC-206). It does not build runtime code or unlock AUTH-5 without separate build-lane authorization. **Scoreboard posture:** row #50 §11 signed; `SPEC_ONLY` -> `SIGNED_UNBUILT` (MMI-DEC-206); wrapper build next.
 
 ---
 
@@ -188,13 +188,13 @@ Gate glob: `mmi_50_contract_gate_*.md`
 
 **§11 — Evidence Strength Agent Design Contract (Deep Dive)**
 
-- [ ] I approve this contract as written.
-- [ ] I authorize pre-build gate review when ready.
-- [ ] On clean gate, I §11-sign and authorize Stage 1 wrapper build + focused tests only.
+- [x] I approve this contract as written.
+- [x] I authorize pre-build gate review when ready.
+- [x] On clean gate, I §11-sign and authorize Stage 1 wrapper build + focused tests only.
 
 Confirmed: #50 projects testing-framework evidence-strength attestation only; it never runs the eval harness, never computes metrics, and never claims framework compliance.
 
-> Matt Nichol _______________
+> Matt Nichol June 25th 2026
 
 ---
 
