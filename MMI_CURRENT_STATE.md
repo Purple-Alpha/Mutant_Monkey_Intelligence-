@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Phase 2/3 promotion #72–#83 GOVERNED_AGENT (MMI-DEC-180/181)
-  (Matt directed keep rolling; Phase 2 72 HEALTHY + Phase 3 86 ELITE;
-  breadth 25 -> 37; **not** production dispatch; **not** default registry).
+LAST_COMPLETED: Chain-of-command breadth rollout closeout (MMI-DEC-182)
+  (post_stage_c br01–br05 synced; breadth 37/70; BREADTH queue empty;
+  DEPTH gate CLOSED — #84+ immune stack held per BS-D3; **not** production dispatch).
 
-PRIOR_LAST_COMPLETED: Team 9 promotion chain #61–#65 GOVERNED_AGENT (MMI-DEC-176–179)
+PRIOR_LAST_COMPLETED: Phase 2/3 promotion #72–#83 GOVERNED_AGENT (MMI-DEC-180/181)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).

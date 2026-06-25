@@ -24,6 +24,15 @@ class MissionMapTests(unittest.TestCase):
     def setUpClass(cls):
         cls.mod = _load_module()
 
+    def test_post_stage_c_breadth_rollout_complete(self):
+        position = self.mod.analyze(self.mod._repo_root())
+        self.assertTrue(position.active)
+        self.assertTrue(position.all_stages_complete)
+        log = self.mod._read_text(self.mod._repo_root() / self.mod.DECISION_LOG_REL)
+        self.assertIn("MMI-DEC-182", log)
+        self.assertIn("MMI-DEC-179", log)
+        self.assertIn("MMI-DEC-181", log)
+
     def test_analyze_all_stages_complete_after_stage_c(self):
         position = self.mod.analyze(self.mod._repo_root())
         self.assertTrue(position.active)

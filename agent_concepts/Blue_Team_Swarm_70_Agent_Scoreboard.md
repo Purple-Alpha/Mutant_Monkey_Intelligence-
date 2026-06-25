@@ -19,7 +19,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **BREADTH RUNWAY:** **37** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, #10, #11, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, #52, #61, #62, #63, #64, #65, #67, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **Phase 2/3 Layer 0–1 promotion queue complete at GOVERNED_AGENT** (#72–#83 · MMI-DEC-180/181). **Team 9 L5/L6 chain complete** (#61–#65/#64/#67). **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — `SIGNED_CONTRACT` + Lane 1 probe (MMI-DEC-092); Lane 2+ held. (#7/#13/#15/#17/#20/#25/#37 remain RECLASSIFY; #16/#32/#44 remain merged; depth gate CLOSED).
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **BREADTH promotion queue empty** (37/70 GOVERNED_AGENT · MMI-DEC-182). **Team 9 + Phase 2/3 chains complete** (#61–#65/#64/#67/#72–#83). **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — `SIGNED_CONTRACT` + Lane 1 probe (MMI-DEC-092); Lane 2+ held. **DEPTH stack (#84–#94)** — built GATED rows; promotion blocked while DEPTH gate CLOSED (BS-D3). (#7/#13/#15/#17/#20/#25/#37 remain RECLASSIFY; #16/#32/#44 remain merged).
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 

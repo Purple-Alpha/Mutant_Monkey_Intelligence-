@@ -8,7 +8,7 @@
 
 **Owner:** Matt Nichol — Matt §11 only on `requires_matt_escalation` waypoints
 
-**Last updated:** 2026-06-24
+**Last updated:** 2026-06-25
 
 **Rule:** Every stage has a **START → waypoints (dots) → END**. PMV reads the engine; Matt is not asked to pick direction on delegable waypoints.
 
@@ -44,9 +44,10 @@ EXECUTE  → PMV relays HAND_IT_TO + YOU_DO; Matt only on authority forks
 | **Stage A** | **COMPLETE** — platform credibility closeout (MMI-DEC-130) |
 | **Stage B** | **COMPLETE** — federation economics + mesh contract fork (MMI-DEC-140) |
 | **Stage C** | **COMPLETE** — governed organism program direction (MMI-DEC-150 · Matt §11) |
-| **Active stage** | **ALL_STAGES_COMPLETE** — breadth queue via BOR feedstock (MMI-DEC-159) |
-| **Next build lane** | **Team 9 complete** — #61–#65 + #64 + #67 all `GOVERNED_AGENT` (MMI-DEC-176–179); next breadth from BOR / Operator Map |
-| **Last closed** | MMI-DEC-157 `#67` Rule Improvement GATED |
+| **Active stage** | **ALL_STAGES_COMPLETE** — post–Stage C breadth rollout closed (MMI-DEC-182) |
+| **Breadth runway** | **37/70** `GOVERNED_AGENT` — BREADTH promotion queue **empty** (#61–#65, #72–#83) |
+| **Depth posture** | **DEPTH gate CLOSED** — immune/evidence stack (#84–#94) held per BS-D3 until real-data intake or explicit depth-gate fork |
+| **Last closed** | MMI-DEC-182 chain-of-command breadth rollout closeout |
 
 ---
 
@@ -154,13 +155,29 @@ END    Governed organism program direction accepted — production loop downstre
 
 ---
 
-## Post–Stage C breadth queue (BOR feedstock — not Matt direction-pick)
+## Post–Stage C breadth rollout — COMPLETE (MMI-DEC-182)
 
-After mission map stages complete, **BOR CURRENT_PLAN feedstock** names the next breadth lane. Estimator scores feedstock; PMV relays `HAND_IT_TO` + `YOU_DO` to the crew (typically Claude contract draft → Codex review → Cursor build).
+```text
+START  Stage C complete (MMI-DEC-150)
+  · br01  Team 9 sandbox promotions #61–#65                         ✓ [MMI-DEC-176–179]
+  · br02  Phase 2 Layer 0 promotions #72–#77                        ✓ [MMI-DEC-180]
+  · br03  Phase 3 Layer 1 promotions #78–#83                        ✓ [MMI-DEC-181]
+  · br04  IFM mesh hardening audit closeout                         ✓ [MMI-DEC-175]
+  · br05  Chain-of-command refresh — breadth milestone              ✓ [MMI-DEC-182]
+END    Breadth 37/70; BREADTH queue empty; DEPTH gate CLOSED
+```
 
-**Current rank-1:** Team 9 complete — next breadth from BOR / Operator Map (MMI-DEC-179)
+---
 
-Matt is required only for: §11 signatures, explicit build authorization, GOVERNED_AGENT promotion, BOR unpark of hold-only rows, authority forks.
+## Post–Stage C crew queue (BOR feedstock — not Matt direction-pick)
+
+After mission map stages complete, **BOR CURRENT_PLAN feedstock** names the next crew lane. Estimator scores feedstock; PMV relays `HAND_IT_TO` + `YOU_DO` to the crew (typically Claude contract draft → Codex review → Cursor build).
+
+**Current rank-1:** Hold ALL_CLEAR — BOR feedstock scan for next signed contract or unparked hold row; **no** BREADTH promotion candidates remain.
+
+**DEPTH track (#84 ReconciliationAgent, #85–#94 immune stack):** rubric-excluded while DEPTH gate CLOSED (BS-D3). Not implied by breadth rollout complete.
+
+Matt is required only for: §11 signatures, explicit build authorization, GOVERNED_AGENT promotion on DEPTH rows, BOR unpark of hold-only rows, authority forks, depth-gate open.
 
 ---
 
@@ -178,4 +195,4 @@ Matt is required only for: §11 signatures, explicit build authorization, GOVERN
 
 GOVERNED_AGENT promotion reviews (#47/#52) remain **hold unless Matt names promotion** — they do not override BOR rank-1 feedstock.
 
-Matt Nichol — mission map v4 (ALL_STAGES_COMPLETE · BOR feedstock breadth queue · MMI-DEC-159).
+Matt Nichol — mission map v5 (post_stage_c breadth rollout COMPLETE · ALL_STAGES_COMPLETE · MMI-DEC-182).

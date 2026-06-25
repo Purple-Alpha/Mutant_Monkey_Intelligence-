@@ -4,7 +4,7 @@
 # Human view: mmi/MMI_MISSION_MAP.md
 # Engine: python3 scripts/mmi_mission_map.py [--position]
 # Re-staged: MMI-DEC-135 (2026-06-23) — Stage A platform credibility closeout + Stage B federation-first
-# Breadth queue: BOR feedstock + Estimator + PMV after stage C (MMI-DEC-159); not Matt hold fork
+# Breadth queue: BOR feedstock + Estimator + PMV after post_stage_c (MMI-DEC-182); not Matt hold fork
 
 version: 1
 map_id: mmi_chain_of_command_mission_map
@@ -240,3 +240,72 @@ stages:
           - type: decision_log_contains
             pattern: MMI-DEC-150
         requires_matt_escalation: true
+
+  - id: post_stage_c
+    name: Post–Stage C — breadth GOVERNED_AGENT rollout
+    start:
+      label: Stage C complete (MMI-DEC-150)
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-150
+    end:
+      label: Breadth promotion queue cleared + chain-of-command synced
+      complete_when:
+        - type: decision_log_contains
+          pattern: MMI-DEC-182
+    waypoints:
+      - id: br01
+        label: Team 9 sandbox promotion chain (#61–#65)
+        hand_to: Cursor
+        you_do: >-
+          Record GOVERNED_AGENT promotions #61–#65 (MMI-DEC-176–179); sync
+          scoreboard + BOR; run lane_board_sync + mmi_dispatch --verify + pmv.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-179
+        requires_matt_escalation: false
+
+      - id: br02
+        label: Phase 2 Layer 0 promotion batch (#72–#77)
+        hand_to: Cursor
+        you_do: >-
+          Promote #72–#77 GOVERNED_AGENT per Phase 2 contract evidence;
+          closeout MMI-DEC-180.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-180
+        requires_matt_escalation: false
+
+      - id: br03
+        label: Phase 3 Layer 1 promotion batch (#78–#83)
+        hand_to: Cursor
+        you_do: >-
+          Promote #78–#83 GOVERNED_AGENT per Phase 3 contract evidence;
+          closeout MMI-DEC-181.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-181
+        requires_matt_escalation: false
+
+      - id: br04
+        label: IFM mesh hardening audit closeout
+        hand_to: Cursor
+        you_do: >-
+          Close IFM AUDIT lane with adversarial checklist (MMI-DEC-175);
+          DESIGN lane COMPLETED per MMI-DEC-140 §11 + active-lanes patch.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-175
+        requires_matt_escalation: false
+
+      - id: br05
+        label: Chain-of-command refresh — breadth milestone recorded
+        hand_to: Cursor
+        you_do: >-
+          Sync MMI_MISSION_MAP.md v5, YAML post_stage_c stage, handshake,
+          LAST_COMPLETED; closeout MMI-DEC-182; run lane_board_sync +
+          mmi_dispatch --sync + --verify + pmv after commit.
+        complete_when:
+          - type: decision_log_contains
+            pattern: MMI-DEC-182
+        requires_matt_escalation: false

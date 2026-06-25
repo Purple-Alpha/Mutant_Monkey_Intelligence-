@@ -24,7 +24,7 @@ Historical "NorthStar" / "NorthStar Inbox Shield" references in signed specs =
 ═══════════════════════════════════════════════
 
 ═══════════════════════════════════════════════
-CURRENT NEXT ACTION (verify HEAD at session start — chain-of-command post–Stage C · MMI-DEC-158)
+CURRENT NEXT ACTION (verify HEAD at session start — chain-of-command post_stage_c · MMI-DEC-182)
 ═══════════════════════════════════════════════
 OPERATOR MAP (plain English — read first): `mmi/MMI_OPERATOR_MAP.md`
   Auto-sync: `python3 scripts/mmi_operator_map_sync.py` (also runs with lane_board_sync)
@@ -35,12 +35,13 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: (verify at session start — Phase 2/3 #72–#83 GOVERNED_AGENT MMI-DEC-180/181)
+HEAD: (verify at session start — chain-of-command breadth rollout MMI-DEC-182)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  Breadth 37/70 GOVERNED_AGENT · BREADTH promotion queue cleared (#72–#83)
+  Breadth 37/70 GOVERNED_AGENT · BREADTH promotion queue cleared · DEPTH gate CLOSED
 
 LAST_COMPLETED (MMI authority repo):
+  Chain-of-command breadth rollout — post_stage_c br01–br05 (MMI-DEC-182)
   Phase 2/3 #72–#83 — GOVERNED_AGENT (MMI-DEC-180/181; Matt directed keep rolling)
   Team 9 #61–#65 — GOVERNED_AGENT (MMI-DEC-176–179)
   #67 Rule Improvement — GOVERNED_AGENT (MMI-DEC-174)

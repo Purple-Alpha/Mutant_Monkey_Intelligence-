@@ -611,6 +611,24 @@ AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
 
 ---
 
+CYCLE 41 — 2026-06-25T05:00Z   [type: GOVERNANCE]
+  OBSERVE: BREADTH promotion queue empty at 37/70 GOVERNED_AGENT;
+           post_stage_c breadth rollout waypoints br01–br04 already closed
+           (MMI-DEC-176–181, MMI-DEC-175); operator directed keep rolling +
+           chain-of-command sync.
+  SELECTED:      Chain-of-command refresh — post_stage_c br05 (MMI-DEC-182).
+  EXPECTED:      Mission map v5 + YAML post_stage_c stage; BOR v27; DEPTH
+                 gate posture documented; ALL_STAGES_COMPLETE restored.
+  EXECUTED AT:   2026-06-25T05:00Z
+  AUDIT VERDICT: PASS — MMI-DEC-182 filed; breadth milestone recorded;
+                 DEPTH rows (#84+) remain GATED per BS-D3.
+
+AGENT HEALTH SCORE — chain closeout   2026-06-25T05:00Z   [type: GOVERNANCE]
+  SCORE: (no agent score change — routing/doc closeout only).
+  NEXT:  BOR feedstock scan; DEPTH gate fork when operator opens real-data intake.
+
+---
+
 CYCLE 40 — 2026-06-25T04:30Z   [type: TACTICAL]
   OBSERVE: Phase 3 detection agents #78–#83 at `GATED` with phase closure
            86 ELITE (`6deffd9`); operator directed keep rolling.
