@@ -83,6 +83,9 @@ ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
     "#49": (
         "4. Product_Roadmap/Audit_Trail_Agent_Design_Contract_Deep_Dive.md"
     ),
+    "#50": (
+        "4. Product_Roadmap/Evidence_Strength_Agent_Design_Contract_Deep_Dive.md"
+    ),
     "#71": (
         "4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md"
     ),
