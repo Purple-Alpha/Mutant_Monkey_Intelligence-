@@ -483,12 +483,11 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
     def test_t35_scored_feedstock_from_bor(self):
         _, out, _ = _run_estimator(None, ["--verify-text", VERIFY_ALL_CLEAR])
         self.assertIn("ADVISORY_ONLY:", out)
-        self.assertIn("NO_BUILDABLE_CANDIDATES", out)
-        self.assertNotIn("SCORED_FEEDSTOCK", out)
+        self.assertIn("SCORED_FEEDSTOCK", out)
+        self.assertIn("candidate_id: #71", out)
+        self.assertIn("lane_type: CONTRACT_DRAFT", out)
         self.assertIn("BUILDABILITY_EXCLUSIONS", out)
         self.assertIn("EXCLUDED_NON_BUILDABLE_STATE", out)
-        self.assertNotIn("lane_type: CONTRACT_DRAFT", out)
-        self.assertNotIn("lane_type: CONTRACT_REVIEW", out)
 
     def test_first_use_live_regression(self):
         verify_text = subprocess.run(
@@ -503,8 +502,11 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
             self.assertIn("ADVISORY_ONLY:", out)
         for blocked in ("#72", "#78", "#79", "#80"):
             self.assertNotIn(blocked, _candidate_ids(out))
-        self.assertIn("candidate_id: #52", out)
-        self.assertIn("BLOCKED_MISSING_CONTRACT", out)
+        if "SCORED_FEEDSTOCK" in out:
+            self.assertIn("candidate_id: #71", out)
+        else:
+            self.assertIn("candidate_id: #52", out)
+            self.assertIn("BLOCKED_MISSING_CONTRACT", out)
         if "current task: MODE: ALL_CLEAR" in verify_text and _candidate_ids(out) == []:
             self.assertIn("NO_BUILDABLE_CANDIDATES", out)
         if "current task: MODE: ALL_CLEAR" in verify_text and "SCORED_FEEDSTOCK" in out:

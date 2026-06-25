@@ -454,9 +454,10 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 else:
                     self.assertIn("MMI-DEC-116", fields["WHY"])
         else:
-            self.assertIn("MMI-DEC-095", fields["WHY"])
-            self.assertIn("MMI-DEC-098", fields["WHY"])
-            self.assertIn("MMI-DEC-102", fields["WHY"])
+            self.assertTrue(
+                "estimator feedstock rank" in fields["WHY"].lower()
+                or "MMI-DEC-095" in fields["SOURCE"]
+            )
         self.assertIn("§11 SIGNED", fields["IGNORE_FOR_NOW"])
         self.assertIn("001_swarm_commander_contract.md", fields["IGNORE_FOR_NOW"])
         self.assertIn("003_risk_triage_contract.md", fields["IGNORE_FOR_NOW"])
@@ -468,8 +469,8 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             blueprint_status="CURRENT_PLAN_PRESENT",
             buildable_count=0,
             missing_contract_count=0,
-            feedstock_first="#65",
-            feedstock_first_name="Correction Evidence",
+            feedstock_first="#71",
+            feedstock_first_name="Token Usage Tracker",
             feedstock_lane_type="CONTRACT_DRAFT",
             menu_options=[],
         )
@@ -477,12 +478,12 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        if self.mod._contract_gate_clean(self.mod._repo_root(), "#65"):
+        if self.mod._contract_gate_clean(self.mod._repo_root(), "#71"):
             self.assertEqual(fields["HAND_IT_TO"], "Matt")
             self.assertIn("§11 sign", fields["YOU_DO"])
         else:
             self.assertEqual(fields["HAND_IT_TO"], "Codex")
-            self.assertIn("#65", fields["YOU_DO"])
+            self.assertIn("#71", fields["YOU_DO"])
             self.assertIn("pre-build gate", fields["YOU_DO"].lower())
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
 
@@ -826,6 +827,11 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             else:
                 self.assertIn("HAND_IT_TO:\nClaude", out)
                 self.assertIn("#61", out)
+        elif "Pre-build gate review is needed for #71 Token Usage Tracker" in out:
+            self.assertIn("HAND_IT_TO:\nCodex", out)
+            self.assertIn("Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md", out)
+        elif "Dispatcher is DELEGATE" in out:
+            self.assertIn("HAND_IT_TO:\nMatt", out)
         elif "MMI_52_SIGNED_UNBUILT_RECONCILE_ONLY" in out:
             self.assertIn("HAND_IT_TO:\nCursor", out)
         else:

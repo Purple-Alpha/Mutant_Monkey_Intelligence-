@@ -35,12 +35,13 @@ AUTHORITY: This WSL repo (`/home/socialarchitect/northstar`) is the **Mutant Mon
   is secondary/reference only.
 
 BRANCH: safety/queue-drift-cleanup-20260528
-HEAD: (verify at session start — chain-of-command breadth rollout MMI-DEC-182)
+HEAD: (verify at session start — BOR v28 #71 CONTRACT_DRAFT MMI-DEC-183/184)
 
 DISPATCHER: `python3 scripts/mmi_dispatch.py --verify` PASS — MODE ALL_CLEAR
-  Breadth 37/70 GOVERNED_AGENT · BREADTH promotion queue cleared · DEPTH gate CLOSED
+  Breadth 37/70 · BOR feedstock rank-1 #71 Token Usage Tracker CONTRACT_DRAFT
 
 LAST_COMPLETED (MMI authority repo):
+  #71 Token Usage Tracker — contract draft on disk (MMI-DEC-184; BOR v28 rank-1)
   Chain-of-command breadth rollout — post_stage_c br01–br05 (MMI-DEC-182)
   Phase 2/3 #72–#83 — GOVERNED_AGENT (MMI-DEC-180/181; Matt directed keep rolling)
   Team 9 #61–#65 — GOVERNED_AGENT (MMI-DEC-176–179)

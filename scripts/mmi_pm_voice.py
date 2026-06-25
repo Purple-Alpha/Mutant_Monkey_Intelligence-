@@ -108,6 +108,7 @@ CONTRACT_DRAFTS_ON_DISK: dict[str, str] = {
     "#1": "docs/mmi/contracts/001_swarm_commander_contract.md",
     "#65": "4. Product_Roadmap/Correction_Evidence_Agent_Design_Contract_Deep_Dive.md",
     "#67": "4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md",
+    "#71": "4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md",
 }
 
 CONTRACT_REVIEW_DRAFTS_ON_DISK: dict[str, str] = {
@@ -118,6 +119,7 @@ CONTRACT_DRAFT_GATE_GLOBS: dict[str, str] = {
     "#1": "mmi_01_contract_gate_*.md",
     "#65": "mmi_65_contract_gate_*.md",
     "#67": "mmi_67_contract_gate_*.md",
+    "#71": "mmi_71_contract_gate_*.md",
 }
 
 CONTRACT_REVIEW_GATE_GLOBS: dict[str, str] = {

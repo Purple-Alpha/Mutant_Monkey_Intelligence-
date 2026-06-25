@@ -869,6 +869,24 @@ def _parse_bor_feedstock(bor_text: str) -> list[FeedstockEntry]:
     return entries
 
 
+def _feedstock_closed_lifecycle_skip(
+    candidate: Candidate, entry: FeedstockEntry
+) -> bool:
+    """Skip closed lifecycle rows unless per-component contract feedstock applies."""
+    if not any(
+        _cell_matches_prefix(candidate.status_cell, prefix)
+        for prefix in CLOSED_STATE_PREFIXES
+    ):
+        return False
+    if (
+        entry.lane_type == "CONTRACT_DRAFT"
+        and _cell_matches_prefix(candidate.status_cell, "INFRASTRUCTURE_BUILT")
+        and "NEEDS_SIGNED_CONTRACT" in candidate.blockers
+    ):
+        return False
+    return True
+
+
 def _score_feedstock(
     candidates: list[Candidate],
     feedstock_entries: list[FeedstockEntry],
@@ -891,10 +909,7 @@ def _score_feedstock(
         candidate = by_id.get(entry.candidate_id)
         if candidate is None:
             continue
-        if any(
-            _cell_matches_prefix(candidate.status_cell, prefix)
-            for prefix in CLOSED_STATE_PREFIXES
-        ):
+        if _feedstock_closed_lifecycle_skip(candidate, entry):
             continue
         scored = _score_candidate(
             candidate,

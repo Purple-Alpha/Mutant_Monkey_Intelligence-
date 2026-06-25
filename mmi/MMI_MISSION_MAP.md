@@ -173,7 +173,7 @@ END    Breadth 37/70; BREADTH queue empty; DEPTH gate CLOSED
 
 After mission map stages complete, **BOR CURRENT_PLAN feedstock** names the next crew lane. Estimator scores feedstock; PMV relays `HAND_IT_TO` + `YOU_DO` to the crew (typically Claude contract draft → Codex review → Cursor build).
 
-**Current rank-1:** Hold ALL_CLEAR — BOR feedstock scan for next signed contract or unparked hold row; **no** BREADTH promotion candidates remain.
+**Current rank-1:** `#71 Token Usage Tracker` — per-component CONTRACT_DRAFT on disk (MMI-DEC-184); Codex pre-build gate next; rank-2 `#18` Callback Verification queued in BOR v28.
 
 **DEPTH track (#84 ReconciliationAgent, #85–#94 immune stack):** rubric-excluded while DEPTH gate CLOSED (BS-D3). Not implied by breadth rollout complete.
 

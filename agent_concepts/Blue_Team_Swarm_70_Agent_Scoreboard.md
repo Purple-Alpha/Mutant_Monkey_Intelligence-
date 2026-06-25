@@ -19,7 +19,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **BREADTH RUNWAY:** **37** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, #10, #11, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, #52, #61, #62, #63, #64, #65, #67, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **BREADTH promotion queue empty** (37/70 GOVERNED_AGENT · MMI-DEC-182). **Team 9 + Phase 2/3 chains complete** (#61–#65/#64/#67/#72–#83). **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — `SIGNED_CONTRACT` + Lane 1 probe (MMI-DEC-092); Lane 2+ held. **DEPTH stack (#84–#94)** — built GATED rows; promotion blocked while DEPTH gate CLOSED (BS-D3). (#7/#13/#15/#17/#20/#25/#37 remain RECLASSIFY; #16/#32/#44 remain merged).
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **BOR feedstock rank-1 #71 Token Usage Tracker** — per-component contract draft on disk (MMI-DEC-184; DRAFT UNSIGNED; infra built `fe355da`; pre-build gate next). **BREADTH promotion queue empty** (37/70 GOVERNED_AGENT). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3).
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -234,7 +234,7 @@ Net-new foundational infrastructure components authorized by `4. Product_Roadmap
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 71 | Token Usage Tracker | `INFRASTRUCTURE_BUILT` (Phase 1 C3 — append-only, tenant-isolated, reporting-only; **not** promoted to `GOVERNED_AGENT`, still needs own per-component contract per section rule) | `core/blackboard/token_usage_tracker.py` (`TokenUsageTracker`, `TokenUsageRecord`, closed `TokenActionType`, per-tenant `aggregate_for_tenant` batch summary for the Playhouse cost-attribution dashboard; append-only JSONL, tenant isolation identical to evidence ledger, malformed writes rejected + logged to governance audit trail; reporting only — no gate/block/allow surface per P1-D6; 12 focused tests + 1 documented xfail). Authorized by `Phase1_Infrastructure_Agent_Design_Contract.md` §3 Component 3 / P1-D5, P1-D6, P1-D8. | 6 Learning/Governance | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | fe355da |
+| 71 | Token Usage Tracker | `INFRASTRUCTURE_BUILT` (Phase 1 C3 — append-only, tenant-isolated, reporting-only; per-component contract draft `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md` MMI-DEC-184 DRAFT UNSIGNED; **not** GOVERNED_AGENT until §11 + promotion review) | `core/blackboard/token_usage_tracker.py` + `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md` (DRAFT UNSIGNED MMI-DEC-184; governs existing `TokenUsageTracker` — promotion path only, not re-build) | 6 Learning/Governance | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | fe355da |
 
 ---
 
