@@ -403,6 +403,8 @@ MMI-DEC-199 | 2026-06-25 | #49 Audit Trail Agent Design Contract §11 signature 
 
 MMI-DEC-200 | 2026-06-25 | #49 Audit Trail Mode A wrapper build | `core/orchestrator/audit_trail_agent.py`; `tests/test_audit_trail_agent.py` (19 passed); scoreboard #49 row | ACCEPT | Matt authorized build lane via dispatcher BUILD mode; Stage 1 ES1 `AuditTrailAgent` attestation-only wrapper; no Blackboard read, no evidence_package/mutation import, persistence via `submit_agent_contribution` only; #49 `SIGNED_UNBUILT` -> `AWAITING_AUDIT`. **Not** GOVERNED_AGENT; **not** production dispatch | Completion gate on #49 build slice (`audit_trail` task) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (build lane #49 Audit Trail)
 
+MMI-DEC-201 | 2026-06-25 | #49 Audit Trail GOVERNED_AGENT promotion | scoreboard #49 row; `audit_outputs/audit_trail_20260625T193137Z.md`; build `27ea39f` | ACCEPT | Completion gate 0 blocking / 0 warnings; 19 focused tests; ES1 attestation-only `AuditTrailAgent`; no Blackboard read, no evidence_package/mutation import; #49 AWAITING_AUDIT -> GOVERNED_AGENT; breadth runway 39 -> 40. **Not** production dispatch or default registry | BOR v31 feedstock pivot (operator) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (completion gate + GOVERNED_AGENT promotion #49 Audit Trail)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
