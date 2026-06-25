@@ -24,7 +24,7 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #50 Evidence Strength §11 sign + SIGNED_UNBUILT reconcile (MMI-DEC-206)
+LAST_COMPLETED: #50 Evidence Strength Mode A wrapper build (MMI-DEC-207)
   (Matt operator pick over #19/#21/#43 tie; Estimator 17.00; Layer 4 Evidence successor to #49;
   source `Email_Security_Testing_Evidence_Framework_Deep_Dive.md`; **not** §11; **not** build).
 

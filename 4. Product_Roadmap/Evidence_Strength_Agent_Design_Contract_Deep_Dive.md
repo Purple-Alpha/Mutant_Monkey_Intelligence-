@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** Not built — proposed wrapper only after §11 + operator build authorization
+**Implementation:** Built — `EvidenceStrengthAgent` at `core/orchestrator/evidence_strength_agent.py` (MMI-DEC-207); scoreboard `AWAITING_AUDIT`
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -28,7 +28,7 @@
 - `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/agent_contract.py`
 - `VISION.md` (Stage A — analyze / recommend / evidence only)
 
-**Proposed future build path (not authorized here):** `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/evidence_strength_agent.py`
+**Build path:** `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/evidence_strength_agent.py` — **built MMI-DEC-207**
 
 ---
 
