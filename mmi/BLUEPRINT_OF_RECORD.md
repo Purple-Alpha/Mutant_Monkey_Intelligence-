@@ -1,12 +1,54 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-190). BOR feedstock rank-1 #18 Callback Verification active (Estimator 38.00).
+**Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-197). BOR feedstock rank-1 #49 Audit Trail active (Estimator 27.00).
 
 ---
 
-## CURRENT_PLAN — ALL_CLEAR feedstock v29
+## CURRENT_PLAN — ALL_CLEAR feedstock v30
 
 plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v30
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v30
+population_decision: MMI-DEC-197
+created_at: 2026-06-25
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Estimator-weighted feedstock pivot after #18 GOVERNED_AGENT (MMI-DEC-196)
+revision_reason: #18 retired from feedstock; rank-1 #49 Audit Trail 27.00 (F1=8 F4=3)
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
+
+feedstock_entry: priority=1 candidate_id=#49 lane_type=CONTRACT_DRAFT name=Audit Trail
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #18 Callback Verification — GOVERNED_AGENT (MMI-DEC-196; §11 MMI-DEC-193; build `880d477`)
+  #71 Token Usage Tracker — GOVERNED_AGENT (MMI-DEC-189; §11 MMI-DEC-188; infra `fe355da`)
+  Post–Stage C breadth rollout — br01–br05 complete (MMI-DEC-176–182)
+  Phase 3 #78–#83 — GOVERNED_AGENT (MMI-DEC-181)
+  Phase 2 #72–#77 — GOVERNED_AGENT (MMI-DEC-180)
+  Team 9 #61–#65, #64, #67 — GOVERNED_AGENT (MMI-DEC-176–179 / MMI-DEC-173–174)
+  Command spine #1–#3 — GOVERNED_AGENT (MMI-DEC-170/171/172)
+  #52, #47 — GOVERNED_AGENT (MMI-DEC-169/168)
+  #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
+
+DEPTH posture (not feedstock — gate CLOSED): #84 ReconciliationAgent, #85–#94 immune stack remain GATED until depth gate opens or explicit operator fork.
+
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): dynamic promotion queue via Operator Map.
+
+---
+
+## Prior ALL_CLEAR v29 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v29
+population_decision: MMI-DEC-190
+revision_reason: Superseded by v30 after #18 GOVERNED_AGENT + feedstock pivot (MMI-DEC-197)
+
+---
+
+## Prior ALL_CLEAR v29 detail (superseded)
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v29
+
+plan_status: SUPERSEDED_PLAN
 version_id: BOR-ALL-CLEAR-FEEDSTOCK-v29
 population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v29
 population_decision: MMI-DEC-190

@@ -24,11 +24,10 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #18 Callback Verification GATED closeout (MMI-DEC-195)
-  (build `880d477` + 22 tests; completion gate 0/0
-  `callback_verification_20260625T180007Z.md`; **not GOVERNED_AGENT**; rank-2 #49 on deck).
+LAST_COMPLETED: #18 Callback Verification GOVERNED_AGENT promotion (MMI-DEC-196)
+  (breadth 38 -> 39; health score 87 ES1; BOR v30 rank-1 #49 Audit Trail 27.00).
 
-PRIOR_LAST_COMPLETED: #18 Callback Verification build + AWAITING_AUDIT (MMI-DEC-194)
+PRIOR_LAST_COMPLETED: #18 Callback Verification GATED closeout (MMI-DEC-195)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).
