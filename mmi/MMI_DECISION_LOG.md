@@ -425,6 +425,11 @@ MMI-DEC-209 | 2026-06-25 | #50 Evidence Strength GOVERNED_AGENT promotion review
 MMI-DEC-210 | 2026-06-25 | BOR v33 Estimator-weighted feedstock pivot | `mmi/BLUEPRINT_OF_RECORD.md` v33; `scripts/mmi_estimator.py` NO_BUILDABLE_CANDIDATES | ACCEPT | #50 retired from feedstock after GOVERNED_AGENT (MMI-DEC-209). Estimator reports NO_BUILDABLE_CANDIDATES for BREADTH CONTRACT_DRAFT lanes (#105 SIGNED_CONTRACT probe excluded). BOR feedstock empty; hold ALL_CLEAR until operator unparks/specifies next contract lane. **Not** build authorization | Operator unpark next CONTRACT_DRAFT candidate (#19, #21, #43, or #105 Lane 2+) | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (BOR v33 feedstock pivot after #50 GOVERNED_AGENT)
 
 
+MMI-DEC-211 | 2026-06-25 | #10 Lookalike Domain Agent Design Contract draft placement (Q5 step 3) | `4. Product_Roadmap/Lookalike_Domain_Agent_Design_Contract_Deep_Dive.md`; Step 00 PASS 31/31; Build Sequencer Q5 step 3 | ACCEPT | Matt operator authorization (`Execute Q5 step 3 — #10 Lookalike metadata retrofit`); Agent Design Contract draft placed; detector §11 immutable; wrapper-only ES1 facts-only `lookalike_sender_domain`; caller-owned known-good domains. **DRAFT UNSIGNED**; **not** §11; **not** default registry | Wrapper build MMI-DEC-212 then completion gate | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (Q5 step 3 #10 Lookalike metadata retrofit)
+
+MMI-DEC-212 | 2026-06-25 | #10 Lookalike Domain Mode A wrapper build (Q5 step 3) | `core/orchestrator/lookalike_domain_agent.py`; `tests/test_lookalike_domain_agent.py` (13 passed); scoreboard #10 row | ACCEPT | `LookalikeDomainAgent` read-only `detect_lookalike_domains`; caller-owned `known_good_domains`; facts-only closed indicator; no detector mutation; #10 -> `AWAITING_AUDIT`. **Not** §11; **not** default registry | Completion gate (`lookalike_domain_agent` task) | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (Q5 step 3 #10 Lookalike metadata retrofit)
+
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

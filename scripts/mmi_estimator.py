@@ -77,6 +77,9 @@ ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
     "#67": (
         "4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md"
     ),
+    "#10": (
+        "4. Product_Roadmap/Lookalike_Domain_Agent_Design_Contract_Deep_Dive.md"
+    ),
     "#18": (
         "4. Product_Roadmap/Callback_Verification_Agent_Design_Contract_Deep_Dive.md"
     ),
