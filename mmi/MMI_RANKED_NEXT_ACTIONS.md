@@ -1,5 +1,5 @@
-generated_at: 2026-06-25T03:55:21Z
-git_head: bf53f6e
+generated_at: 2026-06-25T03:59:42Z
+git_head: 2c58c1e
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
@@ -13,59 +13,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ---
 
-## ACTION 1 — TOTAL 4/10
-
-**Promotion review #61 Test Case Generator (GATED -> GOVERNED_AGENT when authorized)**
-
-- action_id: `promotion_#61`
-- primary_scope: `#61`
-- leverage: 1
-- risk_reduction: 1
-- evidence_strength: 2
-- future_cost: 0
-- reversibility: 0
-- **TOTAL: 4**
-
-## ACTION 2 — TOTAL 4/10
-
-**Promotion review #62 Regression Test (GATED -> GOVERNED_AGENT when authorized)**
-
-- action_id: `promotion_#62`
-- primary_scope: `#62`
-- leverage: 1
-- risk_reduction: 1
-- evidence_strength: 2
-- future_cost: 0
-- reversibility: 0
-- **TOTAL: 4**
-
-## ACTION 3 — TOTAL 4/10
-
-**Promotion review #63 Adversarial Test (GATED -> GOVERNED_AGENT when authorized)**
-
-- action_id: `promotion_#63`
-- primary_scope: `#63`
-- leverage: 1
-- risk_reduction: 1
-- evidence_strength: 2
-- future_cost: 0
-- reversibility: 0
-- **TOTAL: 4**
-
-## ACTION 4 — TOTAL 4/10
-
-**Promotion review #65 Correction Evidence (GATED -> GOVERNED_AGENT when authorized)**
-
-- action_id: `promotion_#65`
-- primary_scope: `#65`
-- leverage: 1
-- risk_reduction: 1
-- evidence_strength: 2
-- future_cost: 0
-- reversibility: 0
-- **TOTAL: 4**
-
-## ACTION 5 — TOTAL 3/10
+## ACTION 1 — TOTAL 3/10
 
 **Authorize #1 wrapper build lane (SIGNED_UNBUILT scoreboard reconcile)**
 
@@ -78,7 +26,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 3**
 
-## ACTION 6 — TOTAL 3/10
+## ACTION 2 — TOTAL 3/10
 
 **Authorize #2 wrapper build lane (SIGNED_UNBUILT scoreboard reconcile)**
 
@@ -90,6 +38,58 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - future_cost: 0
 - reversibility: 0
 - **TOTAL: 3**
+
+## ACTION 3 — TOTAL 3/10
+
+**Authorize #3 wrapper build lane (SIGNED_UNBUILT scoreboard reconcile)**
+
+- action_id: `build_auth_#3`
+- primary_scope: `#3`
+- leverage: 0
+- risk_reduction: 1
+- evidence_strength: 2
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 3**
+
+## ACTION 4 — TOTAL 1/10
+
+**Promotion review #72 PhishIntelAgent (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#72`
+- primary_scope: `#72`
+- leverage: 1
+- risk_reduction: 0
+- evidence_strength: 0
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 1**
+
+## ACTION 5 — TOTAL 1/10
+
+**Promotion review #73 RansomwareIntelAgent (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#73`
+- primary_scope: `#73`
+- leverage: 1
+- risk_reduction: 0
+- evidence_strength: 0
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 1**
+
+## ACTION 6 — TOTAL 1/10
+
+**Promotion review #74 BECIntelAgent (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#74`
+- primary_scope: `#74`
+- leverage: 1
+- risk_reduction: 0
+- evidence_strength: 0
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 1**
 
 ## ACTION 7 — TOTAL 3/10
 

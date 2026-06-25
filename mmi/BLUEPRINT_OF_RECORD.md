@@ -1,12 +1,56 @@
 # Blueprint of Record
 
+**Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-179). Team 9 #61–#65 GOVERNED_AGENT; breadth 25/70.
+
+---
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v25
+
+plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v25
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v25
+population_decision: MMI-DEC-179
+created_at: 2026-06-25
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Team 9 promotion chain complete — Matt directed keep rolling
+revision_reason: #61/#62/#63/#65 GOVERNED_AGENT (MMI-DEC-176–179); Team 9 L5/L6 chain closed
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
+
+(no hold-only promotion feedstock entries — dynamic promotion queue via `mmi/MMI_OPERATOR_MAP.md`)
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #65 Correction Evidence — GOVERNED_AGENT (MMI-DEC-179); not rule promotion/apply; not default registry
+  #63 Adversarial Test — GOVERNED_AGENT (MMI-DEC-178)
+  #62 Regression Test — GOVERNED_AGENT (MMI-DEC-177)
+  #61 Test Case Generator — GOVERNED_AGENT (MMI-DEC-176)
+  #67 Rule Improvement — GOVERNED_AGENT (MMI-DEC-174); not production mutation deploy; not default registry
+  #64 Failure Classification — GOVERNED_AGENT (MMI-DEC-173); not production dispatch; not default registry
+  Command spine #1–#3 — GOVERNED_AGENT (MMI-DEC-170/171/172); not production dispatch; not default registry
+  #52, #47 — GOVERNED_AGENT (MMI-DEC-169/168)
+  #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
+
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): dynamic promotion queue via Operator Map.
+
+---
+
+## Prior ALL_CLEAR v24 (superseded)
+
+plan_status: SUPERSEDED_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v24
+population_decision: MMI-DEC-174
+revision_reason: Superseded by v25 after Team 9 #61–#65 GOVERNED_AGENT (MMI-DEC-176–179)
+
+---
+
+## Prior ALL_CLEAR v24 body (superseded)
+
 **Status:** CURRENT_PLAN populated 2026-06-25 (MMI-DEC-174). #67 Rule Improvement GOVERNED_AGENT; Team 9 chain rolling.
 
 ---
 
 ## CURRENT_PLAN — ALL_CLEAR feedstock v24
 
-plan_status: CURRENT_PLAN
+plan_status: SUPERSEDED_PLAN
 version_id: BOR-ALL-CLEAR-FEEDSTOCK-v24
 population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v24
 population_decision: MMI-DEC-174

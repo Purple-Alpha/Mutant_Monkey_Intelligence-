@@ -609,6 +609,66 @@ AGENT HEALTH SCORE — BASELINE   2026-06-09T05:35Z   [type: GOVERNANCE]
 
 ---
 
+CYCLE 38 — 2026-06-25T04:00Z   [type: TACTICAL]
+  OBSERVE: #65 Correction Evidence built (MMI-DEC-163), completion gate 0 blocking /
+           1 warning (`audit_outputs/correction_evidence_20260624T223220Z.md`),
+           scoreboard row at `GATED`; operator directed keep rolling.
+  SELECTED:      #65 Correction Evidence GOVERNED_AGENT promotion review (Team 9 chain).
+  EXPECTED:      Promote #65; complete Team 9 L5/L6 chain; no rule apply.
+  EXECUTED AT:   2026-06-25T04:00Z
+  AUDIT VERDICT: PASS — §11 MMI-DEC-162; 19 focused tests; L6 sandbox four-proof bar
+                 cleared; #65 promoted GOVERNED_AGENT; breadth 24 -> 25.
+
+AGENT HEALTH SCORE — #65 Correction Evidence   2026-06-25T04:00Z   [type: GOVERNANCE]
+  EVENT: #65 promoted GOVERNED_AGENT after build MMI-DEC-163 + completion gate.
+  SCORE: 86 (Layer 6 Governance; ES1; Team 9 chain complete with #67).
+  NEXT:  Team 9 promotion queue empty — next breadth from Operator Map / BOR.
+
+---
+
+CYCLE 37 — 2026-06-25T03:45Z   [type: TACTICAL]
+  OBSERVE: #63 Adversarial Test at `GATED` with Grok gate 0/0; operator keep rolling.
+  SELECTED:      #63 Adversarial Test GOVERNED_AGENT promotion review.
+  EXPECTED:      Promote #63; continue Team 9 chain.
+  EXECUTED AT:   2026-06-25T03:45Z
+  AUDIT VERDICT: PASS — §11 2026-06-21; 16 tests; L5 harness-generation bar cleared;
+                 #63 promoted GOVERNED_AGENT; breadth 23 -> 24.
+
+AGENT HEALTH SCORE — #63 Adversarial Test   2026-06-25T03:45Z   [type: GOVERNANCE]
+  SCORE: 86 (Layer 5 Challenge/Red-Team; ES1).
+  NEXT:  #65 Correction Evidence promotion.
+
+---
+
+CYCLE 36 — 2026-06-25T03:30Z   [type: TACTICAL]
+  OBSERVE: #62 Regression Test at `GATED` with Grok gate 0/0; operator keep rolling.
+  SELECTED:      #62 Regression Test GOVERNED_AGENT promotion review.
+  EXPECTED:      Promote #62; continue Team 9 chain.
+  EXECUTED AT:   2026-06-25T03:30Z
+  AUDIT VERDICT: PASS — §11 2026-06-21; 16 tests; L5 recorded-baseline bar cleared;
+                 #62 promoted GOVERNED_AGENT; breadth 22 -> 23.
+
+AGENT HEALTH SCORE — #62 Regression Test   2026-06-25T03:30Z   [type: GOVERNANCE]
+  SCORE: 86 (Layer 5 Challenge/Red-Team; ES1).
+  NEXT:  #63 Adversarial Test promotion.
+
+---
+
+CYCLE 35 — 2026-06-25T03:15Z   [type: TACTICAL]
+  OBSERVE: #61 Test Case Generator at `GATED` with Grok gate 0/0; operator directed
+           keep rolling (standing queue order — no equivalent-item pick).
+  SELECTED:      #61 Test Case Generator GOVERNED_AGENT promotion review.
+  EXPECTED:      Promote #61; advance Team 9 chain; no production dispatch.
+  EXECUTED AT:   2026-06-25T03:15Z
+  AUDIT VERDICT: PASS — §11 2026-06-21; 16 tests; L5 contract-only generation bar
+                 cleared; #61 promoted GOVERNED_AGENT; breadth 21 -> 22.
+
+AGENT HEALTH SCORE — #61 Test Case Generator   2026-06-25T03:15Z   [type: GOVERNANCE]
+  SCORE: 86 (Layer 5 Challenge/Red-Team; ES1).
+  NEXT:  #62 Regression Test promotion — continue chain without stall.
+
+---
+
 CYCLE 34 — 2026-06-25T02:00Z   [type: TACTICAL]
   OBSERVE: #67 Rule Improvement built (MMI-DEC-155), completion gate 0 blocking /
            1 warning (`audit_outputs/rule_improvement_agent_20260624T185625Z.md`),
