@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** Built — `CallbackVerificationAgent` at `core/orchestrator/callback_verification_agent.py` (MMI-DEC-194); scoreboard `AWAITING_AUDIT`; completion gate pending
+**Implementation:** Built — `CallbackVerificationAgent` at `core/orchestrator/callback_verification_agent.py` (`880d477`; MMI-DEC-194); scoreboard **`GATED`** (completion gate 0/0 MMI-DEC-195)
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
