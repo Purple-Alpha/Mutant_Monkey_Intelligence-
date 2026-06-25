@@ -1,19 +1,32 @@
-generated_at: 2026-06-25T23:08:53Z
-git_head: 5f707db
+generated_at: 2026-06-25T23:20:02Z
+git_head: 526fe4d
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
 
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
-dispatcher_mode: UNKNOWN
-candidate_count: 1
+dispatcher_mode: ALL_CLEAR
+candidate_count: 2
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ---
 
-## ACTION 1 — TOTAL 3/10
+## ACTION 1 — TOTAL 1/10
+
+**Promotion review #10 Lookalike Domain (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#10`
+- primary_scope: `#10`
+- leverage: 1
+- risk_reduction: 0
+- evidence_strength: 0
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 1**
+
+## ACTION 2 — TOTAL 3/10
 
 **Hold ALL_CLEAR — no new lane this cycle**
 
