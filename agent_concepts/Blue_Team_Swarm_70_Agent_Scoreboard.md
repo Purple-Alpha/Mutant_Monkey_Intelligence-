@@ -17,9 +17,9 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **#1 TARGET:** full 70-agent governed blue-team swarm (non-reducible).
 
-**BREADTH RUNWAY:** **37** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, #10, #11, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, #52, #61, #62, #63, #64, #65, #67, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
+**BREADTH RUNWAY:** **38** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, #10, #11, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, #52, #61, #62, #63, #64, #65, #67, #71, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **BOR feedstock rank-1 #71 Token Usage Tracker** — per-component contract draft on disk (MMI-DEC-184; DRAFT UNSIGNED; infra built `fe355da`; pre-build gate next). **BREADTH promotion queue empty** (37/70 GOVERNED_AGENT). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3).
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** **BOR feedstock rank-1 #18 Callback Verification** (Estimator **38.00** — highest measured; F1=7 F3=7) · rank-2 **#49 Audit Trail** (Estimator **27.00**). **#71 Token Usage Tracker** — `GOVERNED_AGENT` (MMI-DEC-189). **BREADTH promotion queue empty** (38/70 GOVERNED_AGENT). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3).
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -234,7 +234,7 @@ Net-new foundational infrastructure components authorized by `4. Product_Roadmap
 
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
-| 71 | Token Usage Tracker | `INFRASTRUCTURE_BUILT` (Phase 1 C3 — append-only, tenant-isolated, reporting-only; per-component contract §11 SIGNED 2026-06-25 Matt Nichol MMI-DEC-188; pre-build gate 0 blocking `mmi_71_contract_gate_20260625T165335Z.md`; **not** GOVERNED_AGENT until operator promotion review) | `core/blackboard/token_usage_tracker.py` + `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED MMI-DEC-188; governs existing `TokenUsageTracker` — promotion path only, not re-build) | 6 Learning/Governance | A |  | BREADTH | — | Matt Nichol June 25th 2026 |
+| 71 | Token Usage Tracker | `GOVERNED_AGENT` (Phase 1 C3 infrastructure, ES1 Synthetic; **§11-signed per-component contract** MMI-DEC-188; pre-build gate 0 blocking / 2 warnings `mmi_71_contract_gate_20260625T165335Z.md`; build `fe355da`; 12 pass + 1 xfail `tests/test_token_usage_tracker.py`; not in `build_default_registry` / no production dispatch at ES1) | `4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED MMI-DEC-188) + `core/blackboard/token_usage_tracker.py` (`TokenUsageTracker`; GOVERNED_AGENT promotion MMI-DEC-189) | 6 Learning/Governance | ES1 |  | BREADTH | — | Matt Nichol June 25th 2026 |
 
 ---
 

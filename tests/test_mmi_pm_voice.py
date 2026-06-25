@@ -469,8 +469,8 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             blueprint_status="CURRENT_PLAN_PRESENT",
             buildable_count=0,
             missing_contract_count=0,
-            feedstock_first="#71",
-            feedstock_first_name="Token Usage Tracker",
+            feedstock_first="#18",
+            feedstock_first_name="Callback Verification",
             feedstock_lane_type="CONTRACT_DRAFT",
             menu_options=[],
         )
@@ -478,13 +478,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             evidence,
             repo_root=self.mod._repo_root(),
         )
-        if self.mod._contract_gate_clean(self.mod._repo_root(), "#71"):
-            self.assertEqual(fields["HAND_IT_TO"], "Matt")
-            self.assertIn("§11 sign", fields["YOU_DO"])
-        else:
-            self.assertEqual(fields["HAND_IT_TO"], "Codex")
-            self.assertIn("#71", fields["YOU_DO"])
-            self.assertIn("pre-build gate", fields["YOU_DO"].lower())
+        self.assertEqual(fields["HAND_IT_TO"], "Claude")
+        self.assertIn("#18", fields["YOU_DO"])
+        self.assertIn("Draft Agent Design Contract", fields["YOU_DO"])
         self.assertNotIn("Unpark BOR feedstock", fields["YOU_DO"])
 
     def test_t7h_unparked_3_feedstock_routes_codex_contract_review(self):
@@ -826,7 +822,9 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
                 self.assertIn("HAND_IT_TO:\nCodex", out)
             else:
                 self.assertIn("HAND_IT_TO:\nClaude", out)
-                self.assertIn("#61", out)
+                self.assertIn("#18", out)
+        elif "Pre-build gate review is needed for #18 Callback Verification" in out:
+            self.assertIn("HAND_IT_TO:\nCodex", out)
         elif "Pre-build gate review is needed for #71 Token Usage Tracker" in out:
             self.assertIn("HAND_IT_TO:\nCodex", out)
             self.assertIn("Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md", out)

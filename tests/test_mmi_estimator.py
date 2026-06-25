@@ -484,7 +484,7 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
         _, out, _ = _run_estimator(None, ["--verify-text", VERIFY_ALL_CLEAR])
         self.assertIn("ADVISORY_ONLY:", out)
         self.assertIn("SCORED_FEEDSTOCK", out)
-        self.assertIn("candidate_id: #71", out)
+        self.assertIn("candidate_id: #18", out)
         self.assertIn("lane_type: CONTRACT_DRAFT", out)
         self.assertIn("BUILDABILITY_EXCLUSIONS", out)
         self.assertIn("EXCLUDED_NON_BUILDABLE_STATE", out)
@@ -503,7 +503,7 @@ class EstimatorBuildabilityGateTests(unittest.TestCase):
         for blocked in ("#72", "#78", "#79", "#80"):
             self.assertNotIn(blocked, _candidate_ids(out))
         if "SCORED_FEEDSTOCK" in out:
-            self.assertIn("candidate_id: #71", out)
+            self.assertIn("candidate_id: #18", out)
         else:
             self.assertIn("candidate_id: #52", out)
             self.assertIn("BLOCKED_MISSING_CONTRACT", out)

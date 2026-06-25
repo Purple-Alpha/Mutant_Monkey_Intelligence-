@@ -24,12 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #71 Token Usage Tracker Agent Design Contract §11 signed (MMI-DEC-188)
-  (Matt Nichol June 25th 2026; gate 0 blocking / 2 warnings MMI-DEC-187;
-  scoreboard #71 NEEDS_SIGNED_CONTRACT cleared; **GOVERNED_AGENT promotion review next**;
-  **not** re-build; **not** production dispatch).
+LAST_COMPLETED: #71 GOVERNED_AGENT promotion + BOR v29 Estimator feedstock pivot (MMI-DEC-189/190)
+  (#71 INFRASTRUCTURE_BUILT -> GOVERNED_AGENT; breadth 37 -> 38; BOR rank-1 #18 score 38.00;
+  rank-2 #49 score 27.00; **not** build; **not** production dispatch).
 
-PRIOR_LAST_COMPLETED: #71 Token Usage Tracker pre-build gate SIGNABLE (MMI-DEC-187)
+PRIOR_LAST_COMPLETED: #71 Token Usage Tracker Agent Design Contract §11 signed (MMI-DEC-188)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).
