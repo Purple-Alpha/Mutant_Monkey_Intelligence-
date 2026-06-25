@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #18 Callback Verification Agent Design Contract §11 signed (MMI-DEC-193)
-  (Matt Nichol June 25th 2026; gate 0 blocking / 1 warning MMI-DEC-192;
-  scoreboard #18 SIGNED_UNBUILT; **build authorization separate**; rank-2 #49 on deck).
+LAST_COMPLETED: #18 Callback Verification build + AWAITING_AUDIT (MMI-DEC-194)
+  (`CallbackVerificationAgent` wrapper + 22 tests; read-only callback-OOB posture;
+  completion gate pending; rank-2 #49 on deck).
 
-PRIOR_LAST_COMPLETED: #18 Callback Verification pre-build gate SIGNABLE (MMI-DEC-192)
+PRIOR_LAST_COMPLETED: #18 Callback Verification Agent Design Contract §11 signed (MMI-DEC-193)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).

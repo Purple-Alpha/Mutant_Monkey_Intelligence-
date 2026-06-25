@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** BLOCKED until separate operator build authorization (§11 signed · scoreboard `SIGNED_UNBUILT` per MMI-DEC-193)
+**Implementation:** Built — `CallbackVerificationAgent` at `core/orchestrator/callback_verification_agent.py` (MMI-DEC-194); scoreboard `AWAITING_AUDIT`; completion gate pending
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -27,7 +27,7 @@
 - `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/agent_contract.py`
 - `VISION.md` (Stage A — analyze / recommend / evidence only)
 
-**Proposed future build path (not authorized here):** `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/callback_verification_agent.py`
+**Proposed future build path (not authorized here):** `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/callback_verification_agent.py` — **built MMI-DEC-194**
 
 ---
 
