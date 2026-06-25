@@ -58,7 +58,7 @@ ESTIMATOR (advisory only — not authorization):
   buildable_count=0 · awaiting_audit_count=0 · command_spine=#1+#2 GOVERNED_AGENT · #3 GATED
   BOR v21 dynamic promotion queue (refresh via `python3 scripts/mmi_estimator.py`)
 
-NEXT ACTION: See `mmi/MMI_OPERATOR_MAP.md` — top ranked: Promotion review #3 Risk Triage Agent.
+NEXT ACTION: Chain-of-command reads ranked lanes on disk — top ranked (5/10): Promotion review #3 Risk Triage Agent (GATED -> GOVERNED_AGENT when authorized). Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Full list: `mmi/MMI_RANKED_NEXT_ACTIONS.md` (refresh: `python3 scripts/mmi_lane_board_sync.py`).
   Matt only for §11, build auth, promotion, hold unpark — not routine next-lane surfacing.
 
