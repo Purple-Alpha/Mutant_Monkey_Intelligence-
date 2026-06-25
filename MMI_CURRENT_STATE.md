@@ -24,11 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #71 Token Usage Tracker contract draft placement (MMI-DEC-184)
-  (BOR v28 feedstock rank-1; per-component contract DRAFT UNSIGNED;
-  infra built fe355da; promotion path only — **not** re-build; **not** GOVERNED_AGENT).
+LAST_COMPLETED: #71 Token Usage Tracker pre-build gate BLOCKED (MMI-DEC-185)
+  (Codex/Gemini 1 blocking / 0 warnings — contract draft 11/26 template fields;
+  packet SHA256 4bf2fe1c…; **not SIGNABLE**; **not** §11; **not** promotion).
 
-PRIOR_LAST_COMPLETED: Chain-of-command breadth rollout closeout (MMI-DEC-182)
+PRIOR_LAST_COMPLETED: #71 contract draft placement (MMI-DEC-184)
   (§11 contract MMI-DEC-102; annex §6 wired MMI-DEC-122; 27 tests; completion gate
   0 blocking / 1 warning; breadth runway 16 -> 17; **not** production dispatch /
   **not** default registry).
