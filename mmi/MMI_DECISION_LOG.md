@@ -399,6 +399,8 @@ MMI-DEC-197 | 2026-06-25 | BOR v30 Estimator-weighted feedstock pivot | `mmi/BLU
 
 MMI-DEC-198 | 2026-06-25 | #49 Audit Trail Agent Design Contract draft placement | `4. Product_Roadmap/Audit_Trail_Agent_Design_Contract_Deep_Dive.md`; scoreboard #49 row; Step 00 PASS 31/31 | ACCEPT | Matt directed keep rolling on rank-1 feedstock; UNSIGNED contract draft placed; locks D1–D10 ledger/packet split (Canonical Evidence Ledger immutable · audit-packet assembly #46 only · distinct from #47/#88). **DRAFT UNSIGNED**; pre-build gate not run; **not** §11; **not** build; **not** SIGNED_UNBUILT | Codex pre-build gate on #49 contract when Matt chooses §11 path | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (keep rolling — BOR rank-1 #49 feedstock)
 
+MMI-DEC-199 | 2026-06-25 | #49 Audit Trail Agent Design Contract §11 signature + pre-build gate | `4. Product_Roadmap/Audit_Trail_Agent_Design_Contract_Deep_Dive.md` `f1f0164`; scoreboard #49 row; Step 00 PASS 31/31; `audit_outputs/mmi_49_contract_gate_20260625T191119Z.md` | ACCEPT | Matt §11-signed contract (Matt Nichol June 25th 2026); Red Team-tightened D1–D10 (ES1 attestation-only · no Blackboard read · no audit-packet/mutation import · `write_audit_packet` forbidden); Gemini pre-build gate 0 blocking / 0 warnings; #49 `NEEDS_SIGNED_CONTRACT` -> `SIGNED_UNBUILT`. **Not** wrapper build; **not** GOVERNED_AGENT; **not** production dispatch | Operator build-lane authorization for `AuditTrailAgent` Mode A wrapper + focused tests | Run lane_board_sync + mmi_dispatch --sync + --verify + pmv after commit | Matt Nichol (§11 signature + pre-build gate #49 Audit Trail)
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
