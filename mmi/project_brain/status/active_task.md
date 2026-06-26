@@ -2,30 +2,33 @@
 
 ## Current State
 
-status: `ALL_CLEAR`
+status: `ACTION`
 
-task: `#70 Final Review Agent — boundary review complete (MMI-DEC-240)`
+task: `#70 Final Review Agent — contract DRAFT placed (MMI-DEC-242); pre-build gate pending`
 
-for: `Matt — MMI-DEC-222 depth queue complete; #43 research hold or next contract lane`
+for: `Codex` (pre-build gate) then `Matt` (§11)
 
-score: `100`
+score: `7/10`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `DRIFT_CHECK` (closed)
+lane: `CONTRACT`
 
 ## Why This Is Active
 
-Matt depth lane per MMI-DEC-222 step 3 closed (MMI-DEC-240). #70 is not RECLASSIFY:
-artifact-audit slice satisfied by `complete_gate.py` + `package_auditor.py`; case-level DER
-final-review slice needs signed contract before any build. **Not** build authorization.
+Claude advisory draft reconciled and placed at
+`4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md` (Slice B only).
+Slice A gates remain separate infrastructure (MMI-DEC-240). Step 00 validation pending
+confirm. **Not** build authorization.
 
 ## Done When
 
-- [x] Boundary review doc: slices mapped vs complete_gate / package_auditor / agent_contract
-- [x] Scoreboard #70 blocker `NEEDS_BUILD_AUTH` → `NEEDS_SIGNED_CONTRACT`
-- [x] `mmi_dispatch.py --verify` PASS after commit
+- [x] Contract DRAFT placed with REPO_RECONCILIATION (Slice A/B, gate registry, stages)
+- [x] Step 00 `validate_agent_contract_block.py` PASS (31/31)
+- [ ] Codex pre-build gate 0 blocking on contract
+- [ ] Matt §11 signature (separate from placement)
+- [ ] `mmi_dispatch.py --verify` PASS after commit
 
 ## Closeout
 
-MMI-DEC-240/241. Depth queue steps 1–3 complete. Build requires Matt §11 + explicit build auth.
+MMI-DEC-242. §11 + explicit build auth required before `FinalReviewAgent` implementation.

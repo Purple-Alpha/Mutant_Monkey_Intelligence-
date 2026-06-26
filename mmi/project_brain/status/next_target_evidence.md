@@ -93,19 +93,21 @@ Boundary:
 - Needs contract draft, pre-build gate, Matt §11, then explicit build
   authorization.
 
-### 2. `#70 Final Review Agent` contract/boundary lane — **COMPLETE (MMI-DEC-240)**
+### 2. `#70 Final Review Agent` contract/boundary lane — **CONTRACT DRAFT PLACED (MMI-DEC-242)**
 
-**Verdict:** `GOVERNANCE_DOC_ONLY (partial — surfaces mapped)`. Not RECLASSIFY. Slice A
-(artifact audit) satisfied by `complete_gate.py` + `package_auditor.py`; Slice B (case DER
-`audit_record_id` writer) needs signed contract. Blocker `NEEDS_SIGNED_CONTRACT`.
+**Boundary review (MMI-DEC-240):** `GOVERNANCE_DOC_ONLY (partial — surfaces mapped)`. Slice A satisfied;
+Slice B needs contract.
 
-**Artifact:** `mmi/project_brain/status/final_review_70_boundary.md`
+**Contract (MMI-DEC-242):** `4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`
+— DRAFT pre-§11; Step 00 31/31 PASS. FR-DER + FR-GOV modes; `READY-FOR-§11` ≠ authorization.
 
-Recommended owner: `Claude` for contract draft **if** Matt selects Slice B build path.
+**Artifact:** `mmi/project_brain/status/final_review_70_boundary.md` + contract deep dive.
 
-Lane: `DESIGN` (closed)
+Recommended owner: `Codex` pre-build gate → `Matt` §11.
 
-Score: `7/10` (review complete)
+Lane: `CONTRACT` (active)
+
+Score: `7/10`
 
 Evidence:
 
