@@ -24,7 +24,7 @@ final-review slice needs signed contract before any build. **Not** build authori
 
 - [x] Boundary review doc: slices mapped vs complete_gate / package_auditor / agent_contract
 - [x] Scoreboard #70 blocker `NEEDS_BUILD_AUTH` → `NEEDS_SIGNED_CONTRACT`
-- [ ] `mmi_dispatch.py --verify` PASS after commit
+- [x] `mmi_dispatch.py --verify` PASS after commit
 
 ## Closeout
 
