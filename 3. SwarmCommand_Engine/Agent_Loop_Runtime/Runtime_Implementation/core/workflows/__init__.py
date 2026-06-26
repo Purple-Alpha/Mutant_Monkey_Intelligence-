@@ -13,11 +13,25 @@ from .two_channel_confirmation import (
     record_confirmation_request,
     summarize_confirmation_status,
 )
+from .vendor_payment_verification import (
+    ENGINE_VERSION,
+    SCHEMA_VERSION,
+    VPVEvidencePacket,
+    VPVPaymentRequest,
+    VPVReproducibility,
+    run_vendor_payment_verification,
+)
 
 __all__ = [
     "ConfirmationRecord",
+    "ENGINE_VERSION",
+    "SCHEMA_VERSION",
+    "VPVEvidencePacket",
+    "VPVPaymentRequest",
+    "VPVReproducibility",
     "list_pending_confirmations",
     "record_confirmation_outcome",
     "record_confirmation_request",
+    "run_vendor_payment_verification",
     "summarize_confirmation_status",
 ]

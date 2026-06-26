@@ -969,6 +969,10 @@ def _synthetic_build_route():
     lines = [
         ("MODE", "BUILD"),
         ("AUTHORIZED_TASK", "Build Example Component"),
+        (
+            "TASK_SCORE",
+            str(DELEGATION_SCORES["SCOREBOARD_READY"]),
+        ),
         ("ASSIGNED_TO", "Cursor → Codex → Cursor"),
         ("PRE_BUILD_REVIEW", "Codex"),
         ("NEXT_PROMPT_GOES_TO", "Cursor (draft plan) → Codex (review) → Cursor (build)"),
@@ -1214,6 +1218,10 @@ def build_route_lines():
         lines = [
             ("MODE", "BUILD"),
             ("AUTHORIZED_TASK", f"Build {name}"),
+            (
+                "TASK_SCORE",
+                str(DELEGATION_SCORES["SCOREBOARD_READY"]),
+            ),
             ("PROJECT_IDENTITY", PROJECT_IDENTITY),
             ("MMI_BRAIN", MMI_BRAIN_LABEL),
             ("AUTHORITY_REPO", f"{PROJECT_IDENTITY} authority repo (legacy path {LEGACY_AUTHORITY_REPO_PATH})"),

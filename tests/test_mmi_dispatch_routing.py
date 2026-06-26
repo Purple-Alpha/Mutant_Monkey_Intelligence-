@@ -100,6 +100,21 @@ class MmiDispatchRoutingTests(unittest.TestCase):
         pairs = dict(self.mmi._synthetic_build_route())
         self.assertEqual(pairs["PRE_BUILD_REVIEW"], "Codex")
         self.assertIn("Codex", pairs["ASSIGNED_TO"])
+        self.assertEqual(
+            pairs["TASK_SCORE"],
+            str(self.mmi.DELEGATION_SCORES["SCOREBOARD_READY"]),
+        )
+
+    def test_build_route_includes_scoreboard_ready_score(self):
+        if not self.mmi.get_signed_unbuilt():
+            self.skipTest("no SIGNED_UNBUILT rows in this repo snapshot")
+        _, lines = self.mmi.build_route_lines()
+        pairs = dict(lines)
+        self.assertEqual(pairs["MODE"], "BUILD")
+        self.assertEqual(
+            pairs["TASK_SCORE"],
+            str(self.mmi.DELEGATION_SCORES["SCOREBOARD_READY"]),
+        )
 
     def test_synthetic_review_route_assigns_codex(self):
         pairs = dict(self.mmi._synthetic_review_route())

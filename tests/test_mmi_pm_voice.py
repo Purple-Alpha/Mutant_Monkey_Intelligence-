@@ -907,6 +907,8 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             self.assertIn("status: ACTION", out)
             self.assertIn("for:", out)
             self.assertIn("score:", out)
+            if "task: Build " in out:
+                self.assertIn("score: 100", out)
 
     def test_project_brain_active_task_loads_for_operator_console(self):
         with tempfile.TemporaryDirectory() as temp_dir:
