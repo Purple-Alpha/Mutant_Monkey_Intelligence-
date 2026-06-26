@@ -7,31 +7,32 @@ match the short operator console.
 
 status: `ACTION`
 
-task: `Pick the next project-brain milestone target now that operator routing is restored`
+task: `Reconcile project-brain next-target evidence against dispatcher, estimator, scoreboard, and mission map`
 
-for: `Matt`
+for: `Codex`
 
 score: `8/10`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `DESIGN`
+lane: `DRIFT_CHECK`
 
 ## Why This Is Active
 
 The Codex routing restoration task is complete and recorded in MMI-DEC-220.
-The next control-plane move is an operator choice: pick the next milestone target
-so the project brain can rank useful work instead of falling back to weak
-backlog cleanup.
+Matt should not be asked to pick the next milestone blind. The next control-plane
+move is to reconcile live dispatcher/estimator/scoreboard truth against the
+mission map and produce a short evidence-backed target list.
 
 ## Done When
 
-- Matt chooses the next active milestone target
-- `mmi/project_brain/status/active_task.md` is updated with the selected target
+- `mmi/project_brain/status/next_target_evidence.md` is current
+- stale chain-of-command / BOR feedstock language is identified
+- Matt has a short ranked list of evidence-backed next targets
 - PM Voice and dispatch show the selected target as task/owner/score
 
 ## Closeout
 
 MMI-DEC-220 records the completed Codex operator-console and project-brain
-restoration. This follow-on task is an operator decision only. It does not
+restoration. This follow-on task is evidence reconciliation only. It does not
 authorize build, promotion, signing, production wiring, or AUTH-5.
