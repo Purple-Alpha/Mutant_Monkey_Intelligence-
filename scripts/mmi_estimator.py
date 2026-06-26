@@ -80,6 +80,9 @@ ARCHITECT_MANIFEST_CONTRACTS: dict[str, str] = {
     "#10": (
         "4. Product_Roadmap/Lookalike_Domain_Agent_Design_Contract_Deep_Dive.md"
     ),
+    "#21": (
+        "4. Product_Roadmap/Executive_Impersonation_Agent_Design_Contract_Deep_Dive.md"
+    ),
     "#18": (
         "4. Product_Roadmap/Callback_Verification_Agent_Design_Contract_Deep_Dive.md"
     ),

@@ -110,6 +110,7 @@ CONTRACT_DRAFTS_ON_DISK: dict[str, str] = {
     "#67": "4. Product_Roadmap/Rule_Improvement_Agent_Design_Contract_Deep_Dive.md",
     "#71": "4. Product_Roadmap/Token_Usage_Tracker_Agent_Design_Contract_Deep_Dive.md",
     "#10": "4. Product_Roadmap/Lookalike_Domain_Agent_Design_Contract_Deep_Dive.md",
+    "#21": "4. Product_Roadmap/Executive_Impersonation_Agent_Design_Contract_Deep_Dive.md",
     "#18": "4. Product_Roadmap/Callback_Verification_Agent_Design_Contract_Deep_Dive.md",
     "#49": "4. Product_Roadmap/Audit_Trail_Agent_Design_Contract_Deep_Dive.md",
     "#50": "4. Product_Roadmap/Evidence_Strength_Agent_Design_Contract_Deep_Dive.md",
