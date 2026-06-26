@@ -1,12 +1,12 @@
 # Executive Impersonation Agent Design Contract — Spec-First Deep Dive
 
-**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-217). Q5 step 3 metadata-only retrofit at Agent Design Contract layer. Governs future `ExecutiveImpersonationAgent` wrapper over §11-signed detector blueprint. **Not** detector implementation; **not** wrapper build until detector exists + explicit Build Authorization; **not** default-registry registration; **not** production dispatch; **not** scoring-pipeline default-on change.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-217). Q5 step 3 metadata-only retrofit; detector + wrapper built MMI-DEC-218 (`1600c86`). Governs `ExecutiveImpersonationAgent` over §11-signed detector blueprint. **Not** default-registry registration; **not** production dispatch; **not** scoring-pipeline default-on change.
 
 **Owner:** Matt Nichol
 
 **Candidate:** #21 — Executive Impersonation
 
-**Implementation:** **Not built** — detector code absent (`core/scoring/executive_impersonation_detector.py` does not exist). Wrapper path reserved at `core/orchestrator/executive_impersonation_agent.py`. Scoreboard `SIGNED_UNBUILT` pending detector Build Authorization + wrapper build lane.
+**Implementation:** Built — `detect_executive_impersonation` at `core/scoring/executive_impersonation_detector.py` + `ExecutiveImpersonationAgent` at `core/orchestrator/executive_impersonation_agent.py` (MMI-DEC-218); 19 focused tests; scoreboard `AWAITING_AUDIT` pending completion gate.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
