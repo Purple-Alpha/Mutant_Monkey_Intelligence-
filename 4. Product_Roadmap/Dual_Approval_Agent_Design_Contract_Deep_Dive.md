@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_19_DUAL_APPROVAL_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT (pre-§11). Advisory placement only — **not** §11 signed, **not** build authorized, **not** scoreboard lifecycle mutation, **not** production dispatch. Routed by MMI-DEC-222 (Matt selected #19 contract lane).
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-232). Pre-build gate clean 0/0 (MMI-DEC-230). Upstream VPV Workflow Design Contract §11 SIGNED (MMI-DEC-231). Governs future `DualApprovalAgent` at ES1. **Not** build authorized by signature alone; **not** production dispatch; **not** AUTH-5.
 
 **Owner:** Matt Nichol
 
@@ -14,7 +14,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** Not built. Scoreboard `SPEC_ONLY` · blocker `NEEDS_SIGNED_CONTRACT`.
+**Implementation:** Not built. Scoreboard `SIGNED_UNBUILT` · blocker `NEEDS_BUILD_AUTH` (MMI-DEC-232).
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -274,14 +274,9 @@ This component sits on a money-loss surface. Binding posture:
 
 ## §11 Sign-off
 
-```
-§11 — Dual-Approval Agent (#19) Design Contract (Deep Dive)
-Authority: Matt Nichol (sole signer)
-Signature: __________________________   Date: __________
-[UNSIGNED — advisory lane; pre-build gate not run; not build authorization]
-```
+SIGNED. This locks D1–D11 for swarm agent #19 Dual-Approval at **Evidence Stage 1 (Synthetic)**. Signing authorizes future `DualApprovalAgent` wrapper build + focused tests **only** after separate operator Build Authorization (VPV workflow module may be a prerequisite). Signing authorizes **no** payment movement, **no** auto-approval, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5.
 
-**Signing locks D1–D10 and authorizes Evidence Stage 1 wrapper build + focused tests only.** It authorizes **no** upstream workflow/detector change, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5.
+> §11 SIGNATURE — Matt Nichol June 25th 2026
 
 ---
 

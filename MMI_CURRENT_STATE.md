@@ -1,18 +1,18 @@
-MODE: ALL_CLEAR
-AUTHORIZED_TASK: No delegable tasks in routing queue
+MODE: BUILD
+AUTHORIZED_TASK: Build Dual-Approval
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 23 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
-WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
-ASSIGNED_TO: Matt
-NEXT_PROMPT_GOES_TO: Matt
-OPERATOR_ACTION_REQUIRED: YES — supply next evidence or run Estimator for read-only candidate ranking
-CANDIDATES_NOT_AUTHORIZATION: YES — Estimator ranks candidates; output is not authorization, selection, or routing authority
-REQUIRED_UPDATE_AFTER_COMPLETION: MMI first after any worker completion: append evidence to the relevant MMI record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit routing-authority files, then python3 scripts/mmi_dispatch.py --verify
-NEXT_GATE: new signed contract, scoreboard row, intake evidence, or operator-selected next action
-TASK_SCOREBOARD: (empty — queue has no delegable tasks)
+BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
+PROJECT_IDENTITY: Mutant Monkey Security
+MMI_BRAIN: Mutant Monkey Intelligence (MMI)
+AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
+ASSIGNED_TO: Cursor → Codex → Cursor
+PRE_BUILD_REVIEW: Codex
+NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
+BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
+OPERATOR_ACTION_REQUIRED: NO
+NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -24,14 +24,12 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: VPV Workflow Design Contract placement + #19 re-gate + clean pre-build gates (MMI-DEC-228/229/230)
+LAST_COMPLETED: VPV + #19 Dual-Approval §11 signatures (MMI-DEC-231/232)
   (`4. Product_Roadmap/Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md`;
-  `#19` re-gated to `vpv_evidence_packet_v1`;
-  VPV gate `audit_outputs/mmi_vpv_workflow_design_contract_gate_20260626T050754Z.md` 0/0 blocking;
-  #19 gate `audit_outputs/mmi_19_contract_gate_20260626T051139Z.md` 0/0 blocking;
-  MMI-DEC-225 upstream blocker cleared for ES1 packet layer;
-  **not** §11 signed yet; **not** build authorization;
-  **not** scoreboard lifecycle promotion; **not** production dispatch; **not** AUTH-5).
+  `4. Product_Roadmap/Dual_Approval_Agent_Design_Contract_Deep_Dive.md`;
+  Matt §11 signed `Matt Nichol June 25th 2026`;
+  #19 scoreboard `SPEC_ONLY` -> `SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH`;
+  **not** build authorization; **not** GATED; **not** production dispatch; **not** AUTH-5).
 
 PRIOR_LAST_COMPLETED: #19 Dual-Approval contract draft placement (MMI-DEC-224)
   (`4. Product_Roadmap/Dual_Approval_Agent_Design_Contract_Deep_Dive.md`;

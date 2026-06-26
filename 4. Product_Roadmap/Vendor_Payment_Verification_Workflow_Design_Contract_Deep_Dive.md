@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_VPV_WORKFLOW_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT (pre-§11). Advisory placement only — **not** §11 signed, **not** build authorized, **not** scoreboard promotion. Upstream repair lane for `#19` Dual-Approval (MMI-DEC-225 pre-build gate BLOCKED on prior ergonomics-only feedstock).
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-231). Pre-build gate clean 0/0 (MMI-DEC-229). Governs future `vendor_payment_verification` workflow module at ES1 Tier A. **Not** build authorized by signature alone; **not** production dispatch; **not** AUTH-5.
 
 **Owner:** Matt Nichol
 
@@ -224,12 +224,9 @@ Money-loss surface. Binding posture:
 
 ## §11 Sign-off
 
-```
-§11 — Vendor Payment Verification Workflow Design Contract (Deep Dive)
-Authority: Matt Nichol (sole signer)
-Signature: __________________________   Date: __________
-[UNSIGNED — advisory lane; pre-build gate not run; not build authorization]
-```
+SIGNED. This locks D1–D10 for the Vendor Payment Verification Workflow at **Evidence Stage 1 (Synthetic), Tier A only**. Signing authorizes future `vendor_payment_verification.py` workflow module build + focused tests **only** after separate operator Build Authorization. Signing authorizes **no** payment movement/hold/approval/block, **no** Tier B without OQ-5 authorization, **no** production dispatch, and **no** autonomous action.
+
+> §11 SIGNATURE — Matt Nichol June 25th 2026
 
 ---
 

@@ -1,40 +1,34 @@
 # Active Task
 
-This file records what the project brain believes is active right now. It should
-match the short operator console.
-
 ## Current State
 
 status: `ACTION`
 
-task: `Matt §11 review — Vendor Payment Verification Workflow Design Contract + #19 Dual-Approval contract (both pre-build gates CLEAN 0/0)`
+task: `Authorize build lane — VPV workflow module then #19 DualApprovalAgent (both §11 signed MMI-DEC-231/232)`
 
 for: `Matt`
 
-score: `8/10`
+score: `n/a`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `CONTRACT_SIGN`
+lane: `BUILD_AUTH`
 
 ## Why This Is Active
 
-MMI-DEC-228 placed the upstream Vendor Payment Verification Workflow Design
-Contract and re-gated `#19` to `vpv_evidence_packet_v1`. MMI-DEC-229 and
-MMI-DEC-230 record clean pre-build gates (0 blocking / 1 warning each). The
-MMI-DEC-225 upstream blocker is cleared for the ES1 packet layer. Ergonomics
-sibling disposition spec remains UNSIGNED for Stage 2 integration only.
+Matt §11 signed both the Vendor Payment Verification Workflow Design Contract
+(MMI-DEC-231) and #19 Dual-Approval Agent Design Contract (MMI-DEC-232) on
+2026-06-25. Scoreboard #19 is `SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH`. Pre-build
+gates were already clean (MMI-DEC-229/230). No Cursor build until Matt explicitly
+authorizes the build lane.
 
 ## Done When
 
-- Matt §11 signs `Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md`
-- Matt §11 signs `Dual_Approval_Agent_Design_Contract_Deep_Dive.md`
-- legal scoping (§8/§10) acknowledged for money-loss surface
-- explicit build authorization recorded before any Cursor wrapper build
-- ergonomics §10 Q1–Q6 resolved before disposition-layer integration (Stage 2)
+- Matt authorizes VPV workflow build (`core/workflows/vendor_payment_verification.py`)
+- Matt authorizes #19 wrapper build after VPV ES1 exists or in declared order
+- Codex pre-build on implementation slices as required
+- completion gates 0/0 before GATED reconcile
 
 ## Closeout
 
-MMI-DEC-228 / MMI-DEC-229 / MMI-DEC-230. Pre-build gates used Gemini via
-`audit_tools/complete_gate.py`. This task does not authorize build, promotion,
-production wiring, or AUTH-5.
+MMI-DEC-231 / MMI-DEC-232. §11 does not authorize build, promotion, or AUTH-5.
