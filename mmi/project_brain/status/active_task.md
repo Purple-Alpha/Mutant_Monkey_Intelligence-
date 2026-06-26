@@ -2,30 +2,29 @@
 
 ## Current State
 
-status: `ACTION`
+status: `ALL_CLEAR`
 
-task: `Run completion gate for #19 Dual-Approval (VPV upstream + wrapper built)`
+task: `#19 Dual-Approval GATED — completion gate closeout done (MMI-DEC-235)`
 
-for: `Cursor → completion gate auditor`
+for: `Matt — next depth target per MMI-DEC-222 (#66 Drift Watch re-triage)`
 
 score: `100`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `AUDIT`
+lane: `REVIEW`
 
 ## Why This Is Active
 
-Matt authorized build (MMI-DEC-233). VPV workflow ES1 + #19 DualApprovalAgent wrapper
-implemented (MMI-DEC-234). Scoreboard #19 is `AWAITING_AUDIT`. Next: completion gate
-0 blocking before GATED reconcile.
+Completion gate 0 blocking / 1 warning on #19 build (MMI-DEC-235). Scoreboard reconciled
+`AWAITING_AUDIT` -> `GATED`. BREADTH runway includes #19 GATED alongside #10/#21.
 
 ## Done When
 
-- `complete_gate.py` reports 0 blocking for #19 build
-- Scoreboard reconciles `AWAITING_AUDIT` → `GATED` on clean audit + commit
-- `mmi_dispatch.py --verify` PASS
+- [x] `complete_gate.py` reports 0 blocking for #19 build
+- [x] Scoreboard reconciles `AWAITING_AUDIT` → `GATED`
+- [ ] `mmi_dispatch.py --verify` PASS after commit of routing-authority files
 
 ## Closeout
 
-MMI-DEC-234. Build does not imply production dispatch or AUTH-5.
+MMI-DEC-235. **GATED** does not imply production dispatch, GOVERNED_AGENT, or AUTH-5.
