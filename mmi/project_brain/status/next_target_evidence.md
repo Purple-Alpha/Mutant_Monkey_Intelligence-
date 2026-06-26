@@ -122,30 +122,27 @@ Boundary:
 - Must not authorize its own outputs.
 - Needs contract before build.
 
-### 3. `#66 Drift Watch` re-triage lane
+### 3. `#66 Drift Watch` re-triage lane — **COMPLETE (MMI-DEC-236)**
+
+**Verdict:** `RECLASSIFY` — operator process only (`Compliance_and_Trend_Watch_Process.md` + `Frontier_Intake_Log.md`). Not buildable agent. Distinct from #86 W2 DriftWatcher.
+
+**Artifact:** `mmi/project_brain/status/drift_watch_66_re_triage.md`
 
 Recommended owner: `Codex`.
 
 Lane: `DRIFT_CHECK`
 
-Score: `6/10`
+Score: `6/10` (at time of original evidence; triage now closed)
 
 Evidence:
 
-- Scoreboard row `#66` is `GOVERNANCE_DOC_ONLY`.
-- Source evidence is signed `Compliance_and_Trend_Watch_Process.md`.
-- Runtime already contains watcher drift logic under watcher surfaces
-  (`DriftWatcher`), so this needs re-triage before any new build.
-
-Why useful:
-
-- It addresses the operator concern about project drift.
-- It may be a reconcile/contract task rather than fresh implementation.
+- Scoreboard row `#66` was `GOVERNANCE_DOC_ONLY` with stale `NEEDS_BUILD_AUTH`.
+- Source evidence is signed `Compliance_and_Trend_Watch_Process.md` (no runtime path per spec §1).
+- Runtime `#86 W2 DriftWatcher` is unrelated (confidence drift observer, GATED).
 
 Boundary:
 
-- Do not build blindly; first determine whether `#66` is already covered by
-  watcher row `#86` or needs a separate governed surface.
+- No build unless Matt authorizes new contract for intake automation.
 
 ### 4. `#43 Geo-Context` reconcile lane
 

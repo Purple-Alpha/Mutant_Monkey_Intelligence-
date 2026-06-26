@@ -2,29 +2,30 @@
 
 ## Current State
 
-status: `ALL_CLEAR`
+status: `ACTION`
 
-task: `#19 Dual-Approval GATED — completion gate closeout done (MMI-DEC-235)`
+task: `#70 Final Review Agent — boundary/design review`
 
-for: `Matt — next depth target per MMI-DEC-222 (#66 Drift Watch re-triage)`
+for: `Codex`
 
-score: `100`
+score: `7/10`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `REVIEW`
+lane: `DRIFT_CHECK`
 
 ## Why This Is Active
 
-Completion gate 0 blocking / 1 warning on #19 build (MMI-DEC-235). Scoreboard reconciled
-`AWAITING_AUDIT` -> `GATED`. BREADTH runway includes #19 GATED alongside #10/#21.
+Matt continued depth lane per MMI-DEC-222 (MMI-DEC-237). #66 Drift Watch re-triage
+complete (MMI-DEC-236): RECLASSIFY — operator process only, not buildable agent;
+distinct from #86 W2 DriftWatcher. Next queued target is #70 Final Review.
 
 ## Done When
 
-- [x] `complete_gate.py` reports 0 blocking for #19 build
-- [x] Scoreboard reconciles `AWAITING_AUDIT` → `GATED`
-- [ ] `mmi_dispatch.py --verify` PASS after commit of routing-authority files
+- Boundary review doc: what #70 owns vs `complete_gate.py` / `package_auditor.py`
+- Clear recommendation: contract draft, RECLASSIFY, or hold
+- No build authorization without Matt explicit pick
 
 ## Closeout
 
-MMI-DEC-235. **GATED** does not imply production dispatch, GOVERNED_AGENT, or AUTH-5.
+MMI-DEC-236 (#66). MMI-DEC-237 (#70 lane open). Not build authorization.
