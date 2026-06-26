@@ -7,9 +7,9 @@ match the short operator console.
 
 status: `ACTION`
 
-task: `Select next target from evidence board: recommended #19 Dual-Approval contract lane`
+task: `Start #19 Dual-Approval contract lane from Vendor Payment Verification evidence`
 
-for: `Matt`
+for: `Claude`
 
 score: `8/10`
 
@@ -19,20 +19,21 @@ lane: `CONTRACT`
 
 ## Why This Is Active
 
-The Codex evidence reconciliation is complete. Live dispatch has no buildable
-rows, so the next move is an operator selection from the evidence board. The
-recommended path is `#19 Dual-Approval` contract lane because it has spec-only
-evidence, a clear signed-contract blocker, and vendor-payment integrity value.
+Matt selected the evidence-board order: `#19` first, then `#66`, then `#70`.
+`#43` is held for more research/design instead of build. The active lane is now
+the `#19 Dual-Approval` contract lane because it has spec-only evidence, a clear
+signed-contract blocker, and vendor-payment integrity value.
 
 ## Done When
 
-- Matt selects `#19`, `#70`, another listed target, or hold
-- selected target is written into project brain active task
-- PM Voice and dispatch show the selected target as task/owner/score
+- Claude drafts or refreshes the `#19 Dual-Approval` Agent Design Contract
+- Codex runs pre-build gate review after draft is ready
+- Matt reviews §11 only after a clean gate
+- Cursor receives no build task until signed authority and explicit build
+  authorization exist
 
 ## Closeout
 
-MMI-DEC-220 records the completed Codex operator-console and project-brain
-restoration. The next-target evidence board is now present and current. This
-operator selection task does not authorize build, promotion, signing, production
-wiring, or AUTH-5.
+MMI-DEC-222 records Matt's target order: `#19` then `#66` then `#70`, with
+`#43` research/design requested. This contract-lane task does not authorize
+build, promotion, signing, production wiring, or AUTH-5.

@@ -192,3 +192,21 @@ score: 7/10
 
 Do not send a build to Cursor until one of these paths produces signed
 authority and explicit build authorization.
+
+## Matt Selection
+
+Matt selected the following order:
+
+1. `#19 Dual-Approval` contract lane
+2. `#66 Drift Watch` re-triage lane
+3. `#70 Final Review Agent` boundary/design lane
+
+Matt also requested more research/design on `#43 Geo-Context`.
+
+Routing consequence:
+
+- Active task becomes `#19` contract lane for Claude.
+- `#66` and `#70` stay queued behind `#19`.
+- `#43` stays research/design only until its relationship to governed
+  `#79 GeoVelocityAgent` is reconciled.
+- No Cursor build is authorized by this selection.

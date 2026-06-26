@@ -24,14 +24,22 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Project brain next-target evidence reconciliation (MMI-DEC-221)
+LAST_COMPLETED: Matt selected project-brain target order (MMI-DEC-222)
+  (`mmi/project_brain/status/active_task.md`;
+  `mmi/project_brain/status/next_target_evidence.md`; selected order is #19
+  Dual-Approval contract lane, then #66 Drift Watch re-triage, then #70 Final
+  Review boundary/design; #43 Geo-Context held for more research/design; **not**
+  build authorization; **not** §11; **not** scoreboard lifecycle change; **not**
+  AUTH-5).
+
+PRIOR_LAST_COMPLETED: Project brain next-target evidence reconciliation (MMI-DEC-221)
   (`mmi/project_brain/status/next_target_evidence.md`; reconciled dispatcher
   ALL_CLEAR, Estimator NO_BUILDABLE_CANDIDATES, scoreboard status, mission-map
   drift, and runtime evidence; recommended #19 Dual-Approval contract lane as
   strongest next target; **not** build authorization; **not** §11; **not**
   scoreboard lifecycle change; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: Project brain milestone-aware operator routing restored (MMI-DEC-220)
+PRIOR: Project brain milestone-aware operator routing restored (MMI-DEC-220)
   (`mmi/project_brain/`; `scripts/mmi_pm_voice.py`; `tests/test_mmi_pm_voice.py`;
   default PM Voice now surfaces the active milestone task over weak `1/10` backlog
   fallback when stronger project-brain evidence exists; advisory only; **not** build
