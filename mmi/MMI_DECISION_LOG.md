@@ -451,6 +451,9 @@ MMI-DEC-218 | 2026-06-25 | #21 Executive Impersonation detector + wrapper build 
 MMI-DEC-219 | 2026-06-25 | #21 Executive Impersonation reconciled to GATED | scoreboard #21 row; `audit_outputs/executive_impersonation_20260626T022031Z.md` (0 blocking / 0 warnings; Gemini; MMI-DEC-218 build `2907802`; MMI-DEC-217 §11) | ACCEPT | Completion gate clean 0/0; lifecycle `AWAITING_AUDIT` -> `GATED`. Q5 step 3 #21 metadata retrofit lane closed at wrapper layer. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing | No GOVERNED_AGENT promotion without separate authorization | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Cursor (superintendent #21 GATED reconcile after clean gate)
 
 
+MMI-DEC-220 | 2026-06-26 | Project brain milestone-aware operator routing restored | `mmi/project_brain/README.md`; `mmi/project_brain/mission/milestone_map.md`; `mmi/project_brain/lanes/README.md`; `mmi/project_brain/status/active_task.md`; `mmi/project_brain/runbooks/operator_console.md`; `mmi/project_brain/status/next_actions.md`; `scripts/mmi_pm_voice.py`; `tests/test_mmi_pm_voice.py` | ACCEPT | Added an operator-facing project brain and wired PM Voice short console to prefer an active project-brain milestone task when it has stronger score evidence than weak live-rubric backlog output. Default `python3 scripts/mmi_pm_voice.py` now shows task/owner/score for the active milestone instead of the prior `1/10` fallback. Focused tests passed: `6 passed, 34 deselected`. **Advisory only**; **not** build authorization; **not** §11 signing; **not** scoreboard lifecycle mutation; **not** production dispatch; **not** AUTH-5 | Sync dispatch and verify routing-authority posture | Run mmi_dispatch.py --sync + --verify after closeout | Codex (operator control-plane closeout)
+
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
@@ -474,4 +477,3 @@ For governed MMI / swarm runtime work, use:
 `/home/socialarchitect/northstar/core/orchestrator/verification_outcome_agent.py`
 
 Do not build governed MMI / swarm runtime artifacts in Architectapp.
-

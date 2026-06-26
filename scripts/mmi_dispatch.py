@@ -1357,6 +1357,18 @@ def build_route_lines():
     return derived, lines
 
 
+def _print_operator_console():
+    """Emit the single-action operator console (shared with pm_voice)."""
+    script = Path(__file__).resolve().parent / "mmi_pm_voice.py"
+    spec = importlib.util.spec_from_file_location("mmi_pm_voice", script)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    repo_root = Path(REPO)
+    payload = module.compose_operator_console(repo_root)
+    print(module.format_operator_console(payload).rstrip("\n"))
+
+
 def main(argv=None):
     argv = sys.argv[1:] if argv is None else argv
 
@@ -1364,6 +1376,7 @@ def main(argv=None):
         return run_verify()
 
     do_sync = "--sync" in argv
+    route_detail = "--route-detail" in argv
 
     pin = get_manual_pin()
     if pin is not None:
@@ -1371,11 +1384,18 @@ def main(argv=None):
     else:
         source, lines = build_route_lines()
 
-    print("=" * 60)
-    for key, value in lines:
-        print(f"{key}: {value}")
-    print(f"SOURCE: {source}")
-    print("=" * 60)
+    if route_detail:
+        print("=" * 60)
+        for key, value in lines:
+            print(f"{key}: {value}")
+        print(f"SOURCE: {source}")
+        print("=" * 60)
+    else:
+        _print_operator_console()
+        print("=" * 60)
+        print(f"MODE: {dict(lines).get('MODE', '')}")
+        print(f"SOURCE: {source}")
+        print("=" * 60)
 
     if do_sync:
         if pin is not None:

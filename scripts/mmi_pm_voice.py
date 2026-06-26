@@ -16,6 +16,22 @@ from pathlib import Path
 
 ENVELOPE_VOICE = "MMI_PM_VOICE"
 ENVELOPE_INSUFFICIENT = "INPUTS_INSUFFICIENT_CANNOT_RENDER_PM_VOICE"
+ENVELOPE_OPERATOR_CONSOLE = "MMI_OPERATOR_CONSOLE"
+ENVELOPE_OPERATOR_INSUFFICIENT = "INPUTS_INSUFFICIENT_CANNOT_RENDER_OPERATOR_CONSOLE"
+
+MECHANICAL_DISPATCH_MODES = frozenset(
+    {
+        "BUILD",
+        "AUDIT",
+        "DESIGN",
+        "RESEARCH",
+        "REVIEW",
+        "AWAITING §11 SIGNATURE",
+        "OPERATOR_LOCK",
+        "DELEGATE",
+        "STOP",
+    }
+)
 
 FORBIDDEN_CONCLUSIONS = frozenset(
     {
@@ -89,6 +105,7 @@ RUBRIC_BINARY_CALIBRATION_AMENDMENT_REL = (
     "4. Product_Roadmap/Next_Action_Decision_Rubric_Binary_Calibration_Amendment_Deep_Dive.md"
 )
 RANKED_ACTIONS_REL = "mmi/MMI_RANKED_NEXT_ACTIONS.md"
+PROJECT_BRAIN_ACTIVE_TASK_REL = "mmi/project_brain/status/active_task.md"
 MISSION_MAP_REL = "mmi/MMI_CHAIN_OF_COMMAND_MISSION_MAP.yaml"
 MISSION_MAP_HUMAN_REL = "mmi/MMI_MISSION_MAP.md"
 MISSION_MAP_SCRIPT_REL = "scripts/mmi_mission_map.py"
@@ -292,7 +309,7 @@ def _live_chain_actions(root: Path) -> list[dict[str, str]]:
     scored = rubric.analyze(root, limit=7)
     rows: list[dict[str, str]] = []
     for index, item in enumerate(scored, start=1):
-        if item.candidate.action_id == "hold_all_clear":
+        if item.candidate.action_id in {"admin_lane_board_sync", "hold_all_clear"}:
             continue
         rows.append(
             {
@@ -1707,6 +1724,258 @@ def compose_voice(
     return _compose_fallback_voice(evidence)
 
 
+
+def _route_pairs_from_dispatch(repo_root: Path) -> tuple[str, dict[str, str]]:
+    dispatch = _load_module("mmi_dispatch", "mmi_dispatch.py")
+    source, lines = dispatch.build_route_lines()
+    return source, dict(lines)
+
+
+def _estimator_posture(
+    repo_root: Path,
+) -> tuple[bool, bool, list[str]]:
+    estimator = _load_module("mmi_estimator", "mmi_estimator.py")
+    scored, errors, _, _, feedstock = estimator.analyze(repo_root)
+    no_buildable = not scored and not feedstock and not errors
+    return no_buildable, bool(feedstock or scored), errors
+
+
+def _gate_for_action(action_id: str, you_do: str) -> str:
+    if action_id == "routing_policy_annex_gate":
+        return "Codex pre-build gate 0/0 on routing-policy annex"
+    if action_id == "routing_policy_annex_sign":
+        return "Matt §11 signature on routing-policy annex"
+    if action_id == "routing_policy_annex_draft":
+        return "Contract draft committed; then Codex pre-build gate"
+    if action_id == "admin_lane_board_sync":
+        return "Ranked board + routing-authority files committed after sync"
+    if action_id.startswith("promotion_"):
+        return "Matt authorizes GOVERNED_AGENT promotion when ready"
+    if action_id.startswith("bor_unpark"):
+        return "Matt unparks BOR feedstock hold"
+    if action_id.startswith("build_auth_"):
+        return "Matt authorizes scoreboard reconcile to SIGNED_UNBUILT"
+    return you_do
+
+
+def _matt_decision_for_rubric(action_id: str, hand_it_to: str) -> str:
+    if hand_it_to == ROSTER_MATT:
+        return "YES"
+    if action_id.startswith(("promotion_", "bor_unpark", "build_auth_")):
+        return "YES — Matt authorization required"
+    return "NO"
+
+
+def _console_from_dispatch(
+    pairs: dict[str, str], source: str, *, status: str = "ACTION"
+) -> dict[str, str]:
+    gate_parts: list[str] = []
+    for key in ("BLOCKED_UNTIL", "NEXT_GATE", "RUN", "MANIFEST"):
+        value = pairs.get(key, "").strip()
+        if value:
+            gate_parts.append(f"{key}: {value}")
+    gate = " | ".join(gate_parts) if gate_parts else "n/a"
+    evidence = (
+        pairs.get("SOURCE_EVIDENCE")
+        or pairs.get("WHY_THIS_TASK")
+        or pairs.get("WHY_QUEUE_IS_EMPTY")
+        or pairs.get("CURRENT_PROJECT_TRUTH")
+        or ""
+    )
+    return {
+        "status": status,
+        "dispatcher_mode": pairs.get("MODE", "UNKNOWN"),
+        "action_id": pairs.get("ACTION_ID", ""),
+        "action_label": pairs.get("AUTHORIZED_TASK", ""),
+        "score": pairs.get("TASK_SCORE", "n/a"),
+        "worker_lane": pairs.get("ASSIGNED_TO")
+        or pairs.get("ASSIGNED_WORKER", "n/a"),
+        "gate_requirement": gate,
+        "matt_decision_needed": pairs.get("OPERATOR_ACTION_REQUIRED", "NO"),
+        "evidence": evidence,
+        "source": f"dispatcher:{source}",
+    }
+
+
+def _console_from_rubric(
+    repo_root: Path, dispatcher_mode: str, dispatch_source: str
+) -> dict[str, str]:
+    chain = _live_chain_actions(repo_root)
+    if not chain:
+        return {
+            "status": "NO_BUILDABLE",
+            "dispatcher_mode": dispatcher_mode,
+            "matt_decision_needed": "YES — supply next evidence or unpark feedstock",
+            "gate_requirement": "new signed contract, scoreboard row, or intake evidence",
+            "evidence": "next_action_rubric returned no actionable candidates",
+            "source": f"dispatcher:{dispatch_source}; rubric:empty",
+        }
+    top = chain[0]
+    action_id = top.get("action_id", "")
+    label = top.get("label", "")
+    hand_it_to, you_do = _chain_relay_for_action(action_id, label, repo_root)
+    return {
+        "status": "ACTION",
+        "dispatcher_mode": dispatcher_mode,
+        "action_id": action_id,
+        "action_label": label,
+        "score": f"{top.get("total", "?")}/10",
+        "worker_lane": hand_it_to,
+        "gate_requirement": _gate_for_action(action_id, you_do),
+        "matt_decision_needed": _matt_decision_for_rubric(action_id, hand_it_to),
+        "evidence": (
+            f"next_action_rubric rank=1 action_id={action_id}; "
+            "primary_scope from rubric analyze()"
+        ),
+        "you_do": you_do,
+        "source": f"dispatcher:{dispatch_source}; rubric:rank=1",
+    }
+
+
+def _parse_project_brain_fields(text: str) -> dict[str, str]:
+    fields: dict[str, str] = {}
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        normalized_key = key.strip().lower().replace(" ", "_")
+        normalized_value = value.strip().strip("`").strip()
+        if normalized_key and normalized_value:
+            fields[normalized_key] = normalized_value
+    return fields
+
+
+def _load_project_brain_active_task(repo_root: Path) -> dict[str, str] | None:
+    path = repo_root / PROJECT_BRAIN_ACTIVE_TASK_REL
+    if not path.is_file():
+        return None
+    fields = _parse_project_brain_fields(_read_text(path))
+    task = fields.get("task", "")
+    owner = fields.get("for", fields.get("owner", ""))
+    score = fields.get("score", "")
+    if not task or not owner or not score:
+        return None
+    milestone = fields.get("milestone", "")
+    lane = fields.get("lane", "")
+    evidence_parts = ["project_brain active_task.md"]
+    if milestone:
+        evidence_parts.append(f"milestone={milestone}")
+    if lane:
+        evidence_parts.append(f"lane={lane}")
+    return {
+        "status": fields.get("status", "ACTION"),
+        "dispatcher_mode": "PROJECT_BRAIN",
+        "action_id": "project_brain_active_task",
+        "action_label": task,
+        "score": score,
+        "worker_lane": owner,
+        "gate_requirement": "active milestone task; advisory only",
+        "matt_decision_needed": "NO" if owner != ROSTER_MATT else "YES",
+        "evidence": "; ".join(evidence_parts),
+        "source": "project_brain:active_task",
+        "milestone": milestone,
+        "lane": lane,
+    }
+
+
+def _score_value(score: str | None) -> int:
+    if not score:
+        return -1
+    head = str(score).strip().split("/", 1)[0]
+    try:
+        return int(head)
+    except ValueError:
+        return -1
+
+
+def _prefer_project_brain_console(
+    project_brain: dict[str, str] | None, current: dict[str, str]
+) -> dict[str, str]:
+    if not project_brain:
+        return current
+    if project_brain.get("status") != "ACTION":
+        return current
+    if current.get("status") == "NO_BUILDABLE":
+        return project_brain
+    if _score_value(project_brain.get("score")) > _score_value(current.get("score")):
+        return project_brain
+    return current
+
+
+def _console_no_buildable(
+    pairs: dict[str, str], source: str
+) -> dict[str, str]:
+    return {
+        "status": "NO_BUILDABLE",
+        "dispatcher_mode": pairs.get("MODE", "ALL_CLEAR"),
+        "matt_decision_needed": pairs.get(
+            "OPERATOR_ACTION_REQUIRED",
+            "YES — supply next evidence or unpark feedstock",
+        ),
+        "gate_requirement": pairs.get(
+            "NEXT_GATE",
+            "new signed contract, scoreboard row, or intake evidence",
+        ),
+        "evidence": pairs.get("WHY_QUEUE_IS_EMPTY", "estimator: NO_BUILDABLE_CANDIDATES"),
+        "project_truth": pairs.get("CURRENT_PROJECT_TRUTH", ""),
+        "source": f"dispatcher:{source}; estimator:NO_BUILDABLE_CANDIDATES",
+    }
+
+
+def compose_operator_console(repo_root: Path) -> dict[str, str]:
+    source, pairs = _route_pairs_from_dispatch(repo_root)
+    mode = pairs.get("MODE", "UNKNOWN")
+
+    if mode in MECHANICAL_DISPATCH_MODES and mode != "ALL_CLEAR":
+        return _console_from_dispatch(pairs, source)
+
+    if mode == "ALL_CLEAR":
+        no_buildable, _has_candidates, est_errors = _estimator_posture(repo_root)
+        if est_errors:
+            return {"status": "INSUFFICIENT", "gaps": est_errors}
+        project_brain = _load_project_brain_active_task(repo_root)
+        rubric_console = _console_from_rubric(repo_root, mode, source)
+        if rubric_console.get("status") != "NO_BUILDABLE":
+            return _prefer_project_brain_console(project_brain, rubric_console)
+        if no_buildable:
+            return _prefer_project_brain_console(
+                project_brain, _console_no_buildable(pairs, source)
+            )
+        return _prefer_project_brain_console(project_brain, rubric_console)
+
+    if mode == "UNKNOWN":
+        return {"status": "INSUFFICIENT", "gaps": ["missing_dispatcher_state: unknown MODE"]}
+
+    return _console_from_rubric(repo_root, mode, source)
+
+
+def format_operator_console(payload: dict[str, str]) -> str:
+    status = payload.get("status", "ACTION")
+    if status == "INSUFFICIENT":
+        return format_insufficient(payload.get("gaps", [])).replace(
+            ENVELOPE_INSUFFICIENT, ENVELOPE_OPERATOR_INSUFFICIENT
+        )
+
+    if status == "NO_BUILDABLE":
+        task = "No buildable task"
+    else:
+        task = (
+            payload.get("action_label")
+            or payload.get("you_do")
+            or payload.get("gate_requirement")
+            or "No buildable task"
+        )
+    worker = payload.get("worker_lane") or "Matt"
+    score = payload.get("score") or "n/a"
+    lines = [
+        ENVELOPE_OPERATOR_CONSOLE,
+        f"status: {status}",
+        f"task: {task}",
+        f"for: {worker}",
+        f"score: {score}",
+    ]
+    return _validate_output("\n".join(lines) + "\n")
 def format_voice(fields: dict[str, str]) -> str:
     lines = [
         ENVELOPE_VOICE,
@@ -1769,7 +2038,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--lanes",
         action="store_true",
-        help="Active-lane console (default since MMI_ACTIVE_LANE_CONSOLE_MODE_A)",
+        help="Five-lane active-lane console (legacy; default is operator console)",
     )
     parser.add_argument(
         "--limit",
@@ -1786,6 +2055,11 @@ def main(argv: list[str] | None = None) -> int:
     repo_root = args.root.resolve() if args.root else _repo_root()
 
     if args.verbose:
+        payload = compose_operator_console(repo_root)
+        if payload.get("status") in ("NO_BUILDABLE", "INSUFFICIENT"):
+            sys.stdout.write(format_operator_console(payload))
+            return 2 if payload.get("status") == "INSUFFICIENT" else 0
+
         evidence = gather_evidence(repo_root, menu_limit=max(1, args.limit))
         handoff_mod = _load_module("mmi_handoff", "mmi_handoff.py")
         handoff = handoff_mod.latest_open_handoff(repo_root)
@@ -1805,8 +2079,16 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    lanes_mod = _load_module("mmi_active_lanes", "mmi_active_lanes.py")
-    sys.stdout.write(lanes_mod.format_console(lanes_mod.gather_lanes(repo_root)))
+    if args.lanes:
+        lanes_mod = _load_module("mmi_active_lanes", "mmi_active_lanes.py")
+        sys.stdout.write(lanes_mod.format_console(lanes_mod.gather_lanes(repo_root)))
+        return 0
+
+    payload = compose_operator_console(repo_root)
+    if payload.get("status") == "INSUFFICIENT":
+        sys.stdout.write(format_operator_console(payload))
+        return 2
+    sys.stdout.write(format_operator_console(payload))
     return 0
 
 

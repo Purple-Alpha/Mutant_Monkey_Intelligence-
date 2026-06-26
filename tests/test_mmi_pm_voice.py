@@ -8,6 +8,7 @@ import io
 import os
 import subprocess
 import sys
+import tempfile
 import unittest
 from contextlib import redirect_stdout
 from pathlib import Path
@@ -869,7 +870,7 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             if stripped in FORBIDDEN_CONCLUSIONS:
                 self.fail(f"forbidden conclusion: {stripped}")
 
-    def test_pm_voice_default_emits_active_lanes(self):
+    def test_pm_voice_default_emits_operator_console(self):
         proc = subprocess.run(
             [sys.executable, SCRIPT_PATH],
             cwd=REPO,
@@ -878,12 +879,99 @@ class TestMmiPmVoiceAlwaysRoutes(unittest.TestCase):
             check=False,
         )
         self.assertEqual(proc.returncode, 0)
-        self.assertIn("MMI ACTIVE LANES", proc.stdout)
+        self.assertIn("MMI_OPERATOR_CONSOLE", proc.stdout)
+        self.assertIn("task:", proc.stdout)
+        self.assertIn("for:", proc.stdout)
+        self.assertIn("score:", proc.stdout)
+        self.assertNotIn("MMI ACTIVE LANES", proc.stdout)
         self.assertNotIn("MMI_PM_VOICE", proc.stdout)
+        self.assertNotIn("Alternate ranked lanes", proc.stdout)
+        self.assertNotIn("evidence:", proc.stdout)
+        self.assertNotIn("source:", proc.stdout)
+        self.assertNotIn("boundary:", proc.stdout)
+
+    def test_operator_console_no_buildable_when_all_clear(self):
+        proc = subprocess.run(
+            [sys.executable, SCRIPT_PATH],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        out = proc.stdout
+        if "status: NO_BUILDABLE" in out:
+            self.assertIn("task: ", out)
+            self.assertIn("for: Matt", out)
+            self.assertIn("score: n/a", out)
+        else:
+            self.assertIn("status: ACTION", out)
+            self.assertIn("for:", out)
+            self.assertIn("score:", out)
+
+    def test_project_brain_active_task_loads_for_operator_console(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            active = root / self.mod.PROJECT_BRAIN_ACTIVE_TASK_REL
+            active.parent.mkdir(parents=True)
+            active.write_text(
+                "\n".join(
+                    [
+                        "status: `ACTION`",
+                        "task: `Restore milestone-aware routing`",
+                        "for: `Codex`",
+                        "score: `8/10`",
+                        "milestone: `M1_CONTROL_PLANE_RESTORED`",
+                        "lane: `DRIFT_CHECK`",
+                    ]
+                ),
+                encoding="utf-8",
+            )
+
+            payload = self.mod._load_project_brain_active_task(root)
+
+        self.assertIsNotNone(payload)
+        self.assertEqual(payload["action_label"], "Restore milestone-aware routing")
+        self.assertEqual(payload["worker_lane"], "Codex")
+        self.assertEqual(payload["score"], "8/10")
+        self.assertEqual(payload["milestone"], "M1_CONTROL_PLANE_RESTORED")
+
+    def test_project_brain_active_task_beats_weak_rubric_console(self):
+        project_brain = {
+            "status": "ACTION",
+            "action_label": "Restore milestone-aware routing",
+            "worker_lane": "Codex",
+            "score": "8/10",
+        }
+        current = {
+            "status": "ACTION",
+            "action_label": "Promotion review #10",
+            "worker_lane": "Matt",
+            "score": "1/10",
+        }
+
+        selected = self.mod._prefer_project_brain_console(project_brain, current)
+
+        self.assertEqual(selected["action_label"], "Restore milestone-aware routing")
+        self.assertEqual(selected["score"], "8/10")
+
+    def test_pm_voice_lanes_flag_emits_active_lanes(self):
+        proc = subprocess.run(
+            [sys.executable, SCRIPT_PATH, "--lanes"],
+            cwd=REPO,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(proc.returncode, 0)
+        self.assertIn("MMI ACTIVE LANES", proc.stdout)
 
     def test_pm_voice_verbose_emits_legacy_envelope(self):
         _, out, _ = _run_voice()
-        self.assertTrue(out.startswith("MMI_PM_VOICE"))
+        if "status: NO_BUILDABLE" in out:
+            self.assertTrue(out.startswith("MMI_OPERATOR_CONSOLE"))
+            self.assertNotIn("Alternate ranked lanes", out)
+        else:
+            self.assertTrue(out.startswith("MMI_PM_VOICE"))
 
     def test_revision_mode_read_only(self):
         code, out, _ = _run_voice(["--revision"])
