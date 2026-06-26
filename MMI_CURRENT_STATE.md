@@ -24,13 +24,14 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #19 Dual-Approval GOVERNED_AGENT (MMI-DEC-238)
-  (`core/orchestrator/dual_approval_agent.py` + upstream `core/workflows/vendor_payment_verification.py`;
-  §11 MMI-DEC-232 + VPV MMI-DEC-231; build `0b78503`; completion gate 0 blocking / 1 warning MMI-DEC-235;
-  scoreboard #19 `GATED` -> `GOVERNED_AGENT`; breadth runway 40 -> 41;
-  **not** production dispatch; **not** default registry; **not** AUTH-5).
+LAST_COMPLETED: #70 Final Review boundary review (MMI-DEC-240)
+  (`mmi/project_brain/status/final_review_70_boundary.md`; Slice A satisfied by
+  `audit_tools/complete_gate.py` + `core/evidence_package/package_auditor.py`;
+  Slice B unbuilt — `FINAL_REVIEW_AGENT_ID` schema hook only; scoreboard #70
+  `NEEDS_BUILD_AUTH` -> `NEEDS_SIGNED_CONTRACT`; MMI-DEC-222 depth queue complete MMI-DEC-241;
+  **not** build authorization; **not** §11; **not** production dispatch).
 
-PRIOR_LAST_COMPLETED: #19 Dual-Approval GATED (MMI-DEC-235)
+PRIOR_LAST_COMPLETED: #19 Dual-Approval GOVERNED_AGENT (MMI-DEC-238)
   (`core/workflows/vendor_payment_verification.py` + `core/orchestrator/dual_approval_agent.py`;
   MMI-DEC-234 build `0b78503`; 21 focused tests; completion gate 0 blocking / 1 warning —
   `audit_outputs/dual_approval_20260626T212610Z.md`; scoreboard #19 `AWAITING_AUDIT` -> `GATED`;

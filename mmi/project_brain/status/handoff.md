@@ -105,11 +105,13 @@ See also: `mmi/project_brain/status/active_task.md`
 
 ---
 
-## Queue after #19
+## Queue after depth lane (MMI-DEC-241)
 
-MMI-DEC-222 depth order: #66 Drift Watch → #70 Final Review; #43 held.
+MMI-DEC-222 **complete**: #19 GOVERNED_AGENT · #66 RECLASSIFY · #70 surfaces mapped · #43 held.
 
-BREADTH: 40/70 `GOVERNED_AGENT`. #10/#21 GATED — promotion reviews separate.
+BREADTH: 41/70 `GOVERNED_AGENT`. #10/#21 GATED — promotion reviews separate.
+
+Next optional lanes: #70 Slice B contract draft (`NEEDS_SIGNED_CONTRACT`), #43 research, #21 promotion.
 
 ---
 

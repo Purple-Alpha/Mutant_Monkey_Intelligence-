@@ -93,34 +93,39 @@ Boundary:
 - Needs contract draft, pre-build gate, Matt §11, then explicit build
   authorization.
 
-### 2. `#70 Final Review Agent` contract/boundary lane
+### 2. `#70 Final Review Agent` contract/boundary lane — **COMPLETE (MMI-DEC-240)**
 
-Recommended owner: `Codex` for boundary review, then `Claude` for contract draft
-if Matt selects it.
+**Verdict:** `GOVERNANCE_DOC_ONLY (partial — surfaces mapped)`. Not RECLASSIFY. Slice A
+(artifact audit) satisfied by `complete_gate.py` + `package_auditor.py`; Slice B (case DER
+`audit_record_id` writer) needs signed contract. Blocker `NEEDS_SIGNED_CONTRACT`.
 
-Lane: `DESIGN`
+**Artifact:** `mmi/project_brain/status/final_review_70_boundary.md`
 
-Score: `7/10`
+Recommended owner: `Claude` for contract draft **if** Matt selects Slice B build path.
+
+Lane: `DESIGN` (closed)
+
+Score: `7/10` (review complete)
 
 Evidence:
 
-- Scoreboard row `#70` is `GOVERNANCE_DOC_ONLY (partial)`.
-- Code evidence exists: `complete_gate.py` plus
-  `core/evidence_package/package_auditor.py`.
-- The user need is explicit: "audit / check over / drift" visibility.
-- Final Review belongs in Learning/Governance, not Command, so it needs a tight
-  authority boundary before build.
+- Scoreboard row `#70` surfaces mapped; stale `NEEDS_BUILD_AUTH` cleared.
+- Code evidence: `audit_tools/complete_gate.py` plus
+  `core/evidence_package/package_auditor.py` (Slice A); `agent_contract.py`
+  `FINAL_REVIEW_AGENT_ID` hook (Slice B unbuilt).
+- Final Review belongs in Learning/Governance, not Command — self-approval risk
+  documented.
 
 Why useful:
 
-- It could become the "check over everything before done" brain component.
-- It directly addresses completion-quality anxiety.
+- Clarifies what existing gate tools cover vs what still needs a contract.
+- Unblocks honest contract drafting without pretending gates are the agent.
 
 Boundary:
 
 - Must not become self-approval.
 - Must not authorize its own outputs.
-- Needs contract before build.
+- Needs contract before Slice B build.
 
 ### 3. `#66 Drift Watch` re-triage lane — **COMPLETE (MMI-DEC-236)**
 

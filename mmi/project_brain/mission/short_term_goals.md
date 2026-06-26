@@ -64,17 +64,18 @@
 
 ---
 
-### 4. Execute Matt's depth queue (#66, #70)
+### 4. Execute Matt's depth queue (#66, #70) — **COMPLETE (MMI-DEC-241)**
 
-**What:** After #19 lane closes, continue MMI-DEC-222 selected order:
+**What:** MMI-DEC-222 selected order executed:
 
-| Order | Agent | Work type |
-|-------|-------|-----------|
-| 2 | #66 Drift Watch | Re-triage |
-| 3 | #70 Final Review | Boundary / design |
-| hold | #43 Geo-Context | More research before contract |
+| Order | Agent | Outcome |
+|-------|-------|---------|
+| 1 | #19 Dual-Approval | GOVERNED_AGENT (MMI-DEC-238) |
+| 2 | #66 Drift Watch | RECLASSIFY (MMI-DEC-236) |
+| 3 | #70 Final Review | Surfaces mapped (MMI-DEC-240) |
+| hold | #43 Geo-Context | Research only |
 
-**Done when:** Each item has a clear contract or triage outcome recorded; no silent queue drift.
+**Done when:** Each item has a clear contract or triage outcome recorded — **met**.
 
 ---
 

@@ -4,28 +4,28 @@
 
 status: `ALL_CLEAR`
 
-task: `#19 Dual-Approval GOVERNED_AGENT — promotion review complete (MMI-DEC-238)`
+task: `#70 Final Review Agent — boundary review complete (MMI-DEC-240)`
 
-for: `Matt — next depth target per MMI-DEC-222 (#66 Drift Watch re-triage)`
+for: `Matt — MMI-DEC-222 depth queue complete; #43 research hold or next contract lane`
 
 score: `100`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `PROMOTION` (closed)
+lane: `DRIFT_CHECK` (closed)
 
 ## Why This Is Active
 
-Matt authorized GOVERNED_AGENT promotion review for #19. Repo evidence accepted:
-§11 MMI-DEC-232, VPV upstream MMI-DEC-231, build MMI-DEC-234, gate MMI-DEC-235.
-Scoreboard #19 promoted; breadth runway 41/70.
+Matt depth lane per MMI-DEC-222 step 3 closed (MMI-DEC-240). #70 is not RECLASSIFY:
+artifact-audit slice satisfied by `complete_gate.py` + `package_auditor.py`; case-level DER
+final-review slice needs signed contract before any build. **Not** build authorization.
 
 ## Done When
 
-- [x] Promotion review evidence verified
-- [x] Scoreboard #19 `GATED` → `GOVERNED_AGENT`
+- [x] Boundary review doc: slices mapped vs complete_gate / package_auditor / agent_contract
+- [x] Scoreboard #70 blocker `NEEDS_BUILD_AUTH` → `NEEDS_SIGNED_CONTRACT`
 - [ ] `mmi_dispatch.py --verify` PASS after commit
 
 ## Closeout
 
-MMI-DEC-238/239. GOVERNED_AGENT does not imply production dispatch or AUTH-5.
+MMI-DEC-240/241. Depth queue steps 1–3 complete. Build requires Matt §11 + explicit build auth.

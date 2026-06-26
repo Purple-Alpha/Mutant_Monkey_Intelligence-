@@ -228,7 +228,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | # | SPARK agent | Runtime status | Code evidence | Canonical 6-layer (pinned) | Stage | BLOCKERS | TRACK | LAST_RUBRIC_SCORE | LAST_UPDATED |
 |---|---|---|---|---|---|---|---|---|---|
 | 69 | Swarm Health | `NOT_STARTED` | none | 6 Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 70 | Final Review Agent | `GOVERNANCE_DOC_ONLY` (partial) | `complete_gate.py` + `core/evidence_package/package_auditor.py` | 6 Learning/Governance | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
+| 70 | Final Review Agent | `GOVERNANCE_DOC_ONLY` (partial — surfaces mapped; MMI-DEC-240) | **Slice A (artifact audit — satisfied):** `audit_tools/complete_gate.py` (readiness-boundary negative-feedback gate; infra, not agent) + `core/evidence_package/package_auditor.py` (Stage 9 package audit; synthetic v1; separate invocation). **Slice B (case DER final review — unbuilt):** `FINAL_REVIEW_AGENT_ID` (`final_review_001`) in `core/orchestrator/agent_contract.py` reserves sole `audit_record_id` writer; no `FinalReviewAgent` wrapper. Distinct from #5 Decision Integrity, #69 Swarm Health, #46 Evidence Package (builder). Boundary review: `mmi/project_brain/status/final_review_70_boundary.md` | 6 Learning/Governance | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | MMI-DEC-240 |
 
 ## Phase 1 Infrastructure (net-new, beyond SPARK #1-#70)
 
