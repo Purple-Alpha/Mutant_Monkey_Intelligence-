@@ -205,8 +205,31 @@ Matt also requested more research/design on `#43 Geo-Context`.
 
 Routing consequence:
 
-- Active task becomes `#19` contract lane for Claude.
+- `#19` contract draft is now placed at
+  `4. Product_Roadmap/Dual_Approval_Agent_Design_Contract_Deep_Dive.md`.
+- Active task becomes Codex pre-build gate review for the #19 draft.
 - `#66` and `#70` stay queued behind `#19`.
 - `#43` stays research/design only until its relationship to governed
   `#79 GeoVelocityAgent` is reconciled.
 - No Cursor build is authorized by this selection.
+
+## Purple Team Research Branch
+
+Matt supplied a defensive-first Purple Team design concept. It is captured at:
+
+`mmi/project_brain/architecture/purple_translation_layer.md`
+
+Classification:
+
+- lane: `RESEARCH` / `DESIGN`
+- related targets: `#43` and `#70`
+- build status: not authorized
+
+Design direction:
+
+- build Blue/Purple evidence handling before Red/safe simulation
+- start with a Unified Fact Schema
+- keep Red and Blue logic separate
+- MLLM role is evidence translation/correlation, not autonomous action
+- no active probing, exploitation, customer scanning, rule deployment, or AUTH-5
+  from this research branch
