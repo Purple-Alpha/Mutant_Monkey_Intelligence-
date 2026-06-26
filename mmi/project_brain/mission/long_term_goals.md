@@ -96,6 +96,7 @@ Captured under `mmi/project_brain/architecture/` — **not build authorization:*
 | Topic | DEC refs | Status |
 |-------|----------|--------|
 | Purple Translation Layer | MMI-DEC-223 | Defensive-first; unified fact schema draft |
+| Swarm Command Reality Controller | merged 2026-06-26 | Lab-only deception stack — `architecture/reality_controller/` |
 | Agentic Swarm Command Center | MMI-DEC-226 | Orchestrator / sub-agent research |
 | Adversarial Resilience Harness | MMI-DEC-227 | Lab-only breaker concept |
 | Geo-Context (#43) | MMI-DEC-222 hold | Needs more research |

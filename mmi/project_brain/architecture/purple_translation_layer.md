@@ -157,6 +157,9 @@ These ideas may be useful research, but they are not buildable until a separate
 legal/safety contract exists:
 
 - AI counter-scam or dynamic honeypot engagement with real attackers.
+- **Swarm Command Reality Controller** stack — see
+  `architecture/reality_controller/` (beacon injection, tarpits, network mutation,
+  trap/hack/rot bots). Lab research only; merged from venture-side folder 2026-06-26.
 - Collecting mule bank accounts, wallets, or drop locations through autonomous
   interaction.
 - Autonomous global clawback, account lockout, token revocation, or mailbox

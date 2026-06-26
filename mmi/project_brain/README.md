@@ -4,6 +4,12 @@ This folder is the operator-facing project brain for Mutant Monkey Intelligence.
 It exists to keep the build pointed at a real milestone instead of letting the
 queue drift into whatever file changed last.
 
+## Brain Map (canonical)
+
+There is **one** operator project brain: this folder (`mmi/project_brain/`).
+The former Windows folder `project-brainarchitecturereality-controller` was merged
+into `architecture/reality_controller/` (2026-06-26). Do not maintain a second copy.
+
 ## Daily Command
 
 Use this first:
@@ -42,6 +48,8 @@ is clarified.
   - `milestone_map.md` — M1–M5 engineering milestones
 - `lanes/`: categories for routing work
 - `architecture/`: system boundaries and technical maps
+  - `purple_translation_layer.md` — defensive-first Blue/Purple research
+  - `reality_controller/` — merged lab-only deception stack (RESEARCH_DESIGN; not build)
 - `decisions/`: links to decision records and signed authority
 - `runbooks/`: how to operate the control plane
 - `status/`: current task, blocked items, and next actions
