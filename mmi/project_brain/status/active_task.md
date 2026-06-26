@@ -7,9 +7,9 @@ match the short operator console.
 
 status: `ACTION`
 
-task: `Run pre-build gate review on #19 Dual-Approval contract draft`
+task: `Resolve upstream Vendor Payment Verification workflow draft before #19 Dual-Approval re-gate`
 
-for: `Codex`
+for: `Claude`
 
 score: `8/10`
 
@@ -20,19 +20,26 @@ lane: `CONTRACT`
 ## Why This Is Active
 
 Matt selected the evidence-board order: `#19` first, then `#66`, then `#70`.
-`#43` is held for more research/design instead of build. The `#19 Dual-Approval`
-contract draft is now on disk and must receive pre-build gate review before any
-Matt §11 consideration.
+`#43` is held for more research/design instead of build. Codex ran the `#19`
+pre-build gate and it blocked because `#19` depends on the upstream Vendor
+Payment Verification workflow ergonomics draft, which is still pre-§11 and has
+open questions.
 
 ## Done When
 
-- Codex runs pre-build gate review on the `#19` contract draft
-- findings are recorded in an audit output / evidence packet
+- upstream Vendor Payment Verification workflow ergonomics open questions are
+  resolved or explicitly carved out
+- the upstream workflow dependency is no longer an unsigned/open blocker for
+  `#19`
+- the `#19` contract warning language is cleaned up (`substitute controls` ->
+  plain wording)
+- Codex re-runs the `#19` pre-build gate
 - Matt reviews §11 only after a clean gate
 - Cursor receives no build task until signed authority and explicit build
   authorization exist
 
 ## Closeout
 
-MMI-DEC-224 records #19 contract draft placement. This pre-build gate task does
-not authorize build, promotion, signing, production wiring, or AUTH-5.
+MMI-DEC-225 records the blocked #19 pre-build gate: 1 blocking finding and 1
+warning. This upstream repair task does not authorize build, promotion, signing,
+production wiring, or AUTH-5.

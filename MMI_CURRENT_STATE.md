@@ -24,14 +24,24 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #19 Dual-Approval contract draft placement (MMI-DEC-224)
+LAST_COMPLETED: #19 Dual-Approval pre-build gate BLOCKED (MMI-DEC-225)
+  (`audit_outputs/mmi_19_contract_gate_20260626T045557Z.md`;
+  1 blocking / 1 warning; packet SHA256
+  `46cad25e3bf1d96616f459a988ade024651c73d1c898081368f4fb8a9772dd57`;
+  blocker: upstream Vendor Payment Verification workflow ergonomics draft is
+  still pre-§11 and open; next action is upstream dependency repair before #19
+  re-gate; **not SIGNABLE**; **not** §11; **not** build authorization;
+  **not** scoreboard lifecycle change; **not** production dispatch; **not**
+  AUTH-5).
+
+PRIOR_LAST_COMPLETED: #19 Dual-Approval contract draft placement (MMI-DEC-224)
   (`4. Product_Roadmap/Dual_Approval_Agent_Design_Contract_Deep_Dive.md`;
   DRAFT pre-§11; #19 contract lane advanced from Claude draft placement to
   Codex pre-build gate review; **not** §11; **not** build authorization;
   **not** scoreboard lifecycle change; **not** production dispatch; **not**
   AUTH-5).
 
-PRIOR_LAST_COMPLETED: Matt selected project-brain target order (MMI-DEC-222)
+PRIOR: Matt selected project-brain target order (MMI-DEC-222)
   (`mmi/project_brain/status/active_task.md`;
   `mmi/project_brain/status/next_target_evidence.md`; selected order is #19
   Dual-Approval contract lane, then #66 Drift Watch re-triage, then #70 Final

@@ -207,11 +207,29 @@ Routing consequence:
 
 - `#19` contract draft is now placed at
   `4. Product_Roadmap/Dual_Approval_Agent_Design_Contract_Deep_Dive.md`.
-- Active task becomes Codex pre-build gate review for the #19 draft.
+- Codex pre-build gate review for the #19 draft completed and BLOCKED.
+- Gate artifact:
+  `audit_outputs/mmi_19_contract_gate_20260626T045557Z.md`
+- Gate result: `1 blocking / 1 warning`; packet SHA256
+  `46cad25e3bf1d96616f459a988ade024651c73d1c898081368f4fb8a9772dd57`.
+- Active task becomes upstream Vendor Payment Verification workflow dependency
+  repair before #19 can be re-gated.
 - `#66` and `#70` stay queued behind `#19`.
 - `#43` stays research/design only until its relationship to governed
   `#79 GeoVelocityAgent` is reconciled.
 - No Cursor build is authorized by this selection.
+
+Blocking reason:
+
+- `#19` depends on
+  `4. Product_Roadmap/Vendor_Payment_Verification_Workflow_Ergonomics_Deep_Dive.md`.
+- That upstream workflow is still DRAFT pre-§11 and has open questions Q1-Q6.
+- #19 is therefore not signable until that dependency is signed or explicitly
+  carved out.
+
+Warning:
+
+- Replace the phrase `substitute controls` with plainer wording before re-gate.
 
 ## Purple Team Research Branch
 
