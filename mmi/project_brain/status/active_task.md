@@ -18,8 +18,7 @@ lane: `CONTRACT`
 
 Claude advisory draft reconciled and placed at
 `4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md` (Slice B only).
-Slice A gates remain separate infrastructure (MMI-DEC-240). Step 00 validation pending
-confirm. **Not** build authorization.
+Slice A gates remain separate infrastructure (MMI-DEC-240). Step 00 31/31 PASS. **Not** build authorization.
 
 ## Done When
 
@@ -27,7 +26,7 @@ confirm. **Not** build authorization.
 - [x] Step 00 `validate_agent_contract_block.py` PASS (31/31)
 - [ ] Codex pre-build gate 0 blocking on contract
 - [ ] Matt §11 signature (separate from placement)
-- [ ] `mmi_dispatch.py --verify` PASS after commit
+- [x] `mmi_dispatch.py --verify` PASS after commit
 
 ## Closeout
 
