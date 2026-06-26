@@ -343,6 +343,7 @@ BehavioralDeviationFlag: TypeAlias = Literal[
     "urgency_paired_with_finance",
     "unusual_unicode_obfuscation",
     "callback_phishing_pattern",
+    "executive_impersonation_pattern",
 ]
 
 # Ransomware precursor indicators surfaced by the deterministic detectors in
@@ -899,6 +900,86 @@ class LookalikeDomainAssessment(StrictModel):
                 "recommended_risk_floor_lift >= 1"
             )
         return self
+
+
+class ExecutiveImpersonationFinding(StrictModel):
+    """One deterministic executive-impersonation finding.
+
+    Locked by ``4. Product_Roadmap/Executive_Impersonation_Detector_Deep_Dive.md``
+    (§11 SIGNED 2026-06-06). Findings carry bounded generic evidence only: no raw
+    mailbox body, no roster secrets, and no phone digits.
+    """
+
+    technique: Literal[
+        "roster_name_domain_mismatch",
+        "free_mail_executive_claim",
+        "lookalike_domain_executive_claim",
+        "authority_pressure",
+        "task_directive",
+    ]
+    claimed_principal_role: Literal[
+        "executive", "finance_authority", "owner", "other_authority"
+    ]
+    domain_relationship: Literal[
+        "mismatch", "free_provider", "lookalike", "not_applicable"
+    ]
+    pressure_category: Literal[
+        "authority", "secrecy", "urgency", "task_directive", "none"
+    ]
+    evidence: str = Field(min_length=1, max_length=160)
+
+
+class ExecutiveImpersonationAssessment(StrictModel):
+    """Deterministic executive-impersonation detector overlay.
+
+    Pure-function output of ``core/scoring/executive_impersonation_detector.py``.
+    Default-off at the scoring-agent integration boundary; max-merges
+    ``recommended_risk_floor_lift`` when explicitly enabled.
+    """
+
+    detector_version: Literal["v1"] = "v1"
+    fired: bool
+    executive_impersonation_score: int = Field(ge=0, le=100)
+    findings: tuple[ExecutiveImpersonationFinding, ...]
+    recommended_risk_floor_lift: int = Field(ge=0, le=100)
+
+    @model_validator(mode="after")
+    def enforce_fired_invariants(self) -> ExecutiveImpersonationAssessment:
+        if not self.fired:
+            if self.executive_impersonation_score != 0:
+                raise ValueError(
+                    "executive_impersonation_assessment with fired=False must have "
+                    "executive_impersonation_score == 0"
+                )
+            if self.findings:
+                raise ValueError(
+                    "executive_impersonation_assessment with fired=False must have "
+                    "findings == ()"
+                )
+            if self.recommended_risk_floor_lift != 0:
+                raise ValueError(
+                    "executive_impersonation_assessment with fired=False must have "
+                    "recommended_risk_floor_lift == 0"
+                )
+            return self
+
+        if not self.findings:
+            raise ValueError(
+                "executive_impersonation_assessment with fired=True must have at "
+                "least one finding"
+            )
+        if self.executive_impersonation_score < 1:
+            raise ValueError(
+                "executive_impersonation_assessment with fired=True must have "
+                "executive_impersonation_score >= 1"
+            )
+        if self.recommended_risk_floor_lift < 1:
+            raise ValueError(
+                "executive_impersonation_assessment with fired=True must have "
+                "recommended_risk_floor_lift >= 1"
+            )
+        return self
+
 
 
 class EmailAnalysisPayload(StrictModel):

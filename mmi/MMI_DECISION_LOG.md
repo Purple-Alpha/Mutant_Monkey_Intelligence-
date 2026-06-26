@@ -445,6 +445,9 @@ MMI-DEC-216 | 2026-06-25 | #21 Executive Impersonation Agent Design Contract dra
 MMI-DEC-217 | 2026-06-25 | #21 Executive Impersonation Agent Design Contract §11 signature | `4. Product_Roadmap/Executive_Impersonation_Agent_Design_Contract_Deep_Dive.md`; MMI-DEC-216 contract draft `502d665` | ACCEPT | Matt §11 signed (`Matt Nichol June 25th 2026`); locks D1–D9; Evidence Stage 1 (Synthetic); authorizes future `ExecutiveImpersonationAgent` wrapper + focused tests **only** after detector implementation + separate Build Authorization — **not** detector mutation, **not** default registry, **not** production dispatch, **not** AUTH-5. Scoreboard #21 `NEEDS_SIGNED_CONTRACT` -> `SIGNED_UNBUILT`; BLOCKERS cleared to `NEEDS_BUILD_AUTH` (detector absent). **Not** build by this record | Separate detector Build Authorization then wrapper build lane | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (§11 sign #21 Executive Impersonation contract)
 
 
+MMI-DEC-218 | 2026-06-25 | #21 Executive Impersonation detector + wrapper build (Q5 step 3) | `core/scoring/executive_impersonation_detector.py`; `core/orchestrator/executive_impersonation_agent.py`; `tests/test_executive_impersonation_detector.py` (8 passed); `tests/test_executive_impersonation_agent.py` (11 passed); blackboard models | ACCEPT | BUILD lane on §11-signed contract MMI-DEC-217; `detect_executive_impersonation` + `ExecutiveImpersonationAgent` ES1 facts-only `executive_impersonation_pattern`; caller-owned principal roster; optional lookalike cue; detector spec immutable; #21 `SIGNED_UNBUILT` -> `AWAITING_AUDIT`. **Not** default registry | Completion gate (`executive_impersonation_agent` task) | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (BUILD lane #21 Executive Impersonation)
+
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
