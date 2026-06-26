@@ -277,3 +277,29 @@ Routing impact:
 - deception, payload modification, mailbox clawback, account lockout, prompt
   mutation, generated-rule deployment, and external reporting stay parked behind
   separate legal/safety authority
+
+## Adversarial Resilience Harness Research Note
+
+Matt also raised the need for an internal system that pushes Mutant Monkey
+Security software to its limits before release. Captured as:
+
+`MMI Adversarial Resilience Harness`
+
+Location:
+
+`mmi/project_brain/architecture/purple_translation_layer.md`
+
+Classification:
+
+- lane: `RESEARCH` / `DESIGN`
+- related targets: `#70` and governance testing
+- build status: not authorized
+
+Safe framing:
+
+- not an autonomous hack bot
+- owned local repo and lab fixtures only
+- first buildable slice should be deterministic breaker tests for routing,
+  contracts, tenant isolation, evidence-chain handling, and gate-skipping drift
+- no real targets, internet scanning, exploit deployment, malware behavior,
+  credential harvesting, destructive action, production dispatch, or AUTH-5

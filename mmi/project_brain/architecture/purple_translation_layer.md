@@ -195,3 +195,91 @@ The first buildable contract should not be the full swarm. The safer first
 contract is a Blue Analysis Module that accepts bounded evidence packets and
 emits normalized facts plus an explainable analyst summary. Response,
 deception, external lookup, and production action remain out of scope.
+
+## Adversarial Resilience Harness Concept
+
+Status: `RESEARCH_DESIGN`
+
+Working name: `MMI Adversarial Resilience Harness`
+
+Matt's concept: build an internal adversarial system that pushes Mutant Monkey
+Security software to its safe limits before production or customer exposure.
+This should not be framed as an autonomous hack bot. The safer design is a
+lab-only test harness that stresses contracts, permissions, dispatch routing,
+tenant isolation, evidence handling, and agent behavior under hostile inputs.
+
+### Purpose
+
+- Find brittle assumptions before customers or attackers do.
+- Stress-test MMI governance, dispatcher routing, evidence packets, and agent
+  boundaries.
+- Generate reproducible adversarial test cases.
+- Feed findings back into contracts, tests, and project-brain drift records.
+
+### Allowed First Scope
+
+- Owned local repo and lab fixtures only.
+- Synthetic emails, synthetic logs, synthetic tenants, and generated test
+  packets.
+- Prompt-injection, malformed-input, permission-boundary, tenant-isolation,
+  stale-state, and routing-drift tests.
+- No network attack traffic.
+- No real customer data.
+- No real third-party targets.
+- No persistence, credential harvesting, malware behavior, exploit deployment,
+  account takeover, or destructive action.
+
+### Candidate Test Modes
+
+- Contract breaker: tries to find gaps between signed contracts and code paths.
+- Routing breaker: tries to make PM Voice, dispatcher, estimator, or scoreboard
+  disagree.
+- Tenant-isolation breaker: tries cross-tenant reads, aggregates, or evidence
+  leakage in synthetic fixtures.
+- Evidence-chain breaker: submits malformed, partial, duplicated, or stale
+  evidence packets and checks whether the system rejects them.
+- Prompt-boundary breaker: tests whether agents can be induced to claim
+  authority, approve work, or skip gates.
+- Load/failure breaker: pushes timeout, retry, and partial-output cases in local
+  harnesses.
+
+### Output Shape
+
+Every finding should become a structured packet:
+
+```json
+{
+  "finding_id": "adrh_000001",
+  "mode": "routing_breaker",
+  "target_surface": "scripts/mmi_pm_voice.py",
+  "tenant_id": "synthetic_lab",
+  "severity": "blocking|warning|info",
+  "reproduction_ref": "test_or_fixture_path",
+  "expected_boundary": "dispatcher and PM Voice must agree on active task",
+  "observed_gap": "short summary only",
+  "recommended_next_step": "contract_fix|test_fix|code_fix|park"
+}
+```
+
+### Hard Boundary
+
+- Research/design only until a signed contract exists.
+- No offensive capability against real systems.
+- No autonomous exploitation.
+- No internet scanning.
+- No payload generation for real-world compromise.
+- No AUTH-5.
+- No production dispatch.
+- No build until Matt explicitly authorizes a scoped harness contract.
+
+### Likely First Buildable Slice
+
+The safest first build is not a general adversarial agent. It is a deterministic
+local test harness for MMI routing and governance drift:
+
+```text
+synthetic fixtures -> breaker tests -> structured finding packets -> human review
+```
+
+That slice belongs closer to `#70 Final Review Agent` / governance testing than
+to active Red Team tooling.
