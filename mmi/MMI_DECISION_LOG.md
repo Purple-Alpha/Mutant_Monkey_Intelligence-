@@ -448,6 +448,9 @@ MMI-DEC-217 | 2026-06-25 | #21 Executive Impersonation Agent Design Contract §1
 MMI-DEC-218 | 2026-06-25 | #21 Executive Impersonation detector + wrapper build (Q5 step 3) | `core/scoring/executive_impersonation_detector.py`; `core/orchestrator/executive_impersonation_agent.py`; `tests/test_executive_impersonation_detector.py` (8 passed); `tests/test_executive_impersonation_agent.py` (11 passed); blackboard models | ACCEPT | BUILD lane on §11-signed contract MMI-DEC-217; `detect_executive_impersonation` + `ExecutiveImpersonationAgent` ES1 facts-only `executive_impersonation_pattern`; caller-owned principal roster; optional lookalike cue; detector spec immutable; #21 `SIGNED_UNBUILT` -> `AWAITING_AUDIT`. **Not** default registry | Completion gate (`executive_impersonation_agent` task) | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (BUILD lane #21 Executive Impersonation)
 
 
+MMI-DEC-219 | 2026-06-25 | #21 Executive Impersonation reconciled to GATED | scoreboard #21 row; `audit_outputs/executive_impersonation_20260626T022031Z.md` (0 blocking / 0 warnings; Gemini; MMI-DEC-218 build `2907802`; MMI-DEC-217 §11) | ACCEPT | Completion gate clean 0/0; lifecycle `AWAITING_AUDIT` -> `GATED`. Q5 step 3 #21 metadata retrofit lane closed at wrapper layer. **GATED** means built and completion-gate clean only; **not GOVERNED_AGENT**, not production dispatch, not default registry wiring, not AUTH-5 unlock, not autonomous routing | No GOVERNED_AGENT promotion without separate authorization | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Cursor (superintendent #21 GATED reconcile after clean gate)
+
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.
