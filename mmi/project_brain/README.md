@@ -53,6 +53,8 @@ is clarified.
 - `decisions/`: links to decision records and signed authority
 - `runbooks/`: how to operate the control plane
 - `status/`: current task, blocked items, and next actions
+  - `handoff.md` — paste-ready session handoff for new Cursor agents
+  - `active_task.md` — current operator task
 
 ## Score Meaning
 
