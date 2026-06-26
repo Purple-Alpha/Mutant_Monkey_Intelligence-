@@ -1033,6 +1033,7 @@ class EmailAnalysisPayload(StrictModel):
     client_facing_rubric: ClientFacingRubricPayload | None = None
     callback_phishing_assessment: CallbackPhishingAssessment | None = None
     lookalike_domain_assessment: LookalikeDomainAssessment | None = None
+    executive_impersonation_assessment: ExecutiveImpersonationAssessment | None = None
 
     @model_validator(mode="after")
     def cap_summary_length(self) -> EmailAnalysisPayload:
