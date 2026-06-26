@@ -1,13 +1,13 @@
-generated_at: 2026-06-26T02:15:09Z
-git_head: fe6add7
+generated_at: 2026-06-26T02:20:54Z
+git_head: f6ad9ba
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
 
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
-dispatcher_mode: AUDIT
-candidate_count: 2
+dispatcher_mode: ALL_CLEAR
+candidate_count: 3
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
@@ -26,7 +26,20 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 1**
 
-## ACTION 2 — TOTAL 3/10
+## ACTION 2 — TOTAL 1/10
+
+**Promotion review #21 Executive Impersonation (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#21`
+- primary_scope: `#21`
+- leverage: 1
+- risk_reduction: 0
+- evidence_strength: 0
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 1**
+
+## ACTION 3 — TOTAL 3/10
 
 **Hold ALL_CLEAR — no new lane this cycle**
 
