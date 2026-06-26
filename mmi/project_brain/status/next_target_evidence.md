@@ -251,3 +251,29 @@ Design direction:
 - MLLM role is evidence translation/correlation, not autonomous action
 - no active probing, exploitation, customer scanning, rule deployment, or AUTH-5
   from this research branch
+
+## Agentic Swarm Command Center Research Addendum
+
+Matt supplied additional Blue Team Swarm Command Center research covering
+orchestrator/sub-agent structure, forensic/header analysis, behavioral context,
+threat-intel enrichment, ERP/accounting checks, HITL gates, analyst evidence
+trails, deception concepts, and active-response concepts.
+
+Captured at:
+
+`mmi/project_brain/architecture/purple_translation_layer.md`
+
+Classification:
+
+- lane: `RESEARCH` / `DESIGN`
+- related targets: `#43` and `#70`
+- build status: not authorized
+
+Routing impact:
+
+- does not interrupt the active Claude task for #19 upstream dependency repair
+- future safe first contract should be a read-only Blue Analysis Module, not
+  the full autonomous swarm
+- deception, payload modification, mailbox clawback, account lockout, prompt
+  mutation, generated-rule deployment, and external reporting stay parked behind
+  separate legal/safety authority

@@ -49,10 +49,13 @@ PRIOR: Matt selected project-brain target order (MMI-DEC-222)
   build authorization; **not** §11; **not** scoreboard lifecycle change; **not**
   AUTH-5).
 
-CURRENT_RESEARCH_BRANCH: Purple Translation Layer research/design captured
+CURRENT_RESEARCH_BRANCH: Purple Translation Layer + Agentic Swarm Command Center
+  research/design captured (MMI-DEC-223 / MMI-DEC-226)
   (`mmi/project_brain/architecture/purple_translation_layer.md`; Blue/Purple
-  defensive-first; Unified Fact Schema draft; related #43/#70; **not** build
-  authorization; **not** active probing; **not** AUTH-5).
+  defensive-first; Unified Fact Schema draft; orchestrator/sub-agent research;
+  high-liability active response and deception concepts parked behind separate
+  legal/safety authority; related #43/#70; **not** build authorization;
+  **not** active probing; **not** production dispatch; **not** AUTH-5).
 
 PRIOR: Project brain next-target evidence reconciliation (MMI-DEC-221)
   (`mmi/project_brain/status/next_target_evidence.md`; reconciled dispatcher

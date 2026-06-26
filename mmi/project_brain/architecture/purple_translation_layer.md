@@ -112,3 +112,86 @@ Draft a dedicated Blue Analysis Module contract or design brief that defines:
 - tenant isolation
 - review and audit path
 
+## Agentic Swarm Blue Team Command Center Addendum
+
+Status: `RESEARCH_DESIGN`
+
+This addendum captures the agentic Blue Team command-center concept as a
+future architecture direction. It does not authorize autonomous response,
+customer scanning, production mailbox actions, deception engagement, or build.
+
+### Candidate Swarm Roles
+
+- Orchestrator: receives an email alert or evidence packet, assigns bounded
+  analysis tasks, aggregates findings, and emits an operator-facing decision
+  packet.
+- Forensic Agent: parses structural email evidence such as headers, SPF, DKIM,
+  DMARC, hop path, attachment metadata, and sender infrastructure.
+- Behavioral Context Agent: reviews language, urgency, authority pressure, and
+  relationship-pattern evidence against approved enterprise context.
+- Threat Intel Agent: enriches domains, registrars, indicators, and known
+  reputation signals from approved feeds or operator-supplied data.
+- Response Planner: drafts possible containment actions, but does not execute
+  them without signed authority and human approval.
+- Deception Research Module: parks honeypot/counter-engagement ideas behind
+  legal and operator authorization. No autonomous replies to attackers.
+
+### Safe Feature Classes
+
+- Parallel read-only analysis of the same email/evidence packet.
+- Agent disagreement summary with evidence references.
+- Business-risk translation for BEC, invoice diversion, impersonation, and
+  vendor-payment anomalies.
+- ERP/accounting cross-check design for purchase order, invoice amount, and
+  known bank-detail matching.
+- Human-in-the-loop approval matrix for any mailbox, account, ERP, or external
+  reporting action.
+- Explainable evidence trail for analysts. Do not expose hidden chain-of-thought;
+  provide concise rationale, evidence references, confidence, and rule hits.
+- Threat repository update proposals that require review before merge or
+  deployment.
+
+### Parked / High-Liability Ideas
+
+These ideas may be useful research, but they are not buildable until a separate
+legal/safety contract exists:
+
+- AI counter-scam or dynamic honeypot engagement with real attackers.
+- Collecting mule bank accounts, wallets, or drop locations through autonomous
+  interaction.
+- Autonomous global clawback, account lockout, token revocation, or mailbox
+  deletion.
+- Polymorphic malware or payload modification.
+- Automatic prompt mutation across production agents.
+- Automatic deployment of generated YARA, Suricata, SIEM, mail-rule, or EDR
+  rules.
+
+### Guardrail Direction
+
+- Read-only first.
+- Draft-only response planning.
+- Human approval for all destructive, customer-facing, external, or production
+  actions.
+- Tenant isolation on every fact, enrichment, and decision packet.
+- Approved-tool registry before any external lookup.
+- No hidden autonomous escalation from analysis to action.
+
+### Candidate Project-Brain Structure
+
+Future architecture files can be split when this branch becomes active:
+
+```text
+mmi/project_brain/architecture/agentic_swarm/
+  swarm_hierarchy.md
+  agent_role_boundaries.md
+  tool_registry.md
+  hitl_governance_matrix.md
+  safety_guardrails.md
+```
+
+### Contract Direction
+
+The first buildable contract should not be the full swarm. The safer first
+contract is a Blue Analysis Module that accepts bounded evidence packets and
+emits normalized facts plus an explainable analyst summary. Response,
+deception, external lookup, and production action remain out of scope.
