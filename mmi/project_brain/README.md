@@ -37,6 +37,9 @@ is clarified.
 ## Brain Map
 
 - `mission/`: what we are building toward
+  - `short_term_goals.md` — ~30–90 day direction (read weekly)
+  - `long_term_goals.md` — 12 mo → 5 yr strategic arc (read each major cycle)
+  - `milestone_map.md` — M1–M5 engineering milestones
 - `lanes/`: categories for routing work
 - `architecture/`: system boundaries and technical maps
 - `decisions/`: links to decision records and signed authority

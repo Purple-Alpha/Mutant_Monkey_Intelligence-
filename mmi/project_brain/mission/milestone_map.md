@@ -3,6 +3,9 @@
 This file defines what the project is building toward. The dispatcher and PM
 voice should prefer work that advances the active milestone.
 
+For operator-facing direction sheets see `short_term_goals.md` and
+`long_term_goals.md` in this folder.
+
 ## Active Milestone
 
 `M1_CONTROL_PLANE_RESTORED`
