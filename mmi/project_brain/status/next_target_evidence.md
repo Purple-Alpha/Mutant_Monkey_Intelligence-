@@ -53,78 +53,142 @@ dispatcher reports no buildable candidates.
 This means Matt should not be asked to pick from the old mission-map text alone.
 The next target needs a fresh evidence-backed candidate board.
 
-## Evidence-Based Options
+## Reconciliation Result
 
-### Option A: Repair next-target evidence board
+The apparent "build next" queue is empty. The next useful action is not Cursor
+implementation. It is selecting the next target lane and preparing the correct
+contract/review path.
 
-Owner: `Codex`
+The next target should be chosen from the evidence below.
 
-Lane: `DRIFT_CHECK`
+## Ranked Next Targets
+
+### 1. `#19 Dual-Approval` contract lane
+
+Recommended owner: `Claude` for contract drafting, then `Codex` for pre-build
+gate review.
+
+Lane: `CONTRACT`
 
 Score: `8/10`
 
-Why:
+Evidence:
 
-- Prevents blind operator picks.
-- Reconciles stale mission-map language against live dispatcher/estimator truth.
-- Gives Matt a short ranked choice set with evidence.
+- Scoreboard row `#19` is `SPEC_ONLY`.
+- Blocker is `NEEDS_SIGNED_CONTRACT`.
+- Source evidence is `Vendor Payment Verification Workflow (draft)`.
+- SPARK map explicitly marks Dual-Approval as specced/partial.
+- Vendor-payment integrity is a strong business spine already referenced in
+  product-roadmap material.
+
+Why this is strongest:
+
+- It creates real buildable feedstock after contract/gate/sign.
+- It advances vendor-payment / BEC controls rather than admin cleanup.
+- It avoids pretending `GATED` cleanup is a new build.
 
 Boundary:
 
-- Advisory only.
-- No build authorization.
-- No scoreboard lifecycle mutation without separate authorization.
+- Not a Cursor build yet.
+- Needs contract draft, pre-build gate, Matt §11, then explicit build
+  authorization.
 
-### Option B: Promotion cleanup for #10 or #21
+### 2. `#70 Final Review Agent` contract/boundary lane
 
-Owner: `Matt`
-
-Lane: `PROMOTION`
-
-Score: `1/10`
-
-Why:
-
-- Both are GATED and have clean gates.
-- Promotion review is available if Matt explicitly wants cleanup.
-
-Why weak:
-
-- Current rubric gives each only `1/10`.
-- Promotion does not create a new build target.
-- Promotion is not the same as production dispatch.
-
-### Option C: Start next Build Sequencer Q5 step 4 selection
-
-Owner: `Codex`
+Recommended owner: `Codex` for boundary review, then `Claude` for contract draft
+if Matt selects it.
 
 Lane: `DESIGN`
 
 Score: `7/10`
 
-Why:
+Evidence:
 
-- Build Sequencer says Q5 step 4 is wrapping existing detector functions into
-  governed agents by evidence value.
-- This is likely the next real build direction, but it needs a candidate review
-  before Cursor gets implementation.
+- Scoreboard row `#70` is `GOVERNANCE_DOC_ONLY (partial)`.
+- Code evidence exists: `complete_gate.py` plus
+  `core/evidence_package/package_auditor.py`.
+- The user need is explicit: "audit / check over / drift" visibility.
+- Final Review belongs in Learning/Governance, not Command, so it needs a tight
+  authority boundary before build.
+
+Why useful:
+
+- It could become the "check over everything before done" brain component.
+- It directly addresses completion-quality anxiety.
 
 Boundary:
 
-- Codex can prepare the candidate evidence packet.
-- Matt must authorize the selected target.
-- Cursor should only build after signed authority and scoped implementation.
+- Must not become self-approval.
+- Must not authorize its own outputs.
+- Needs contract before build.
 
-## Recommended Next Action
+### 3. `#66 Drift Watch` re-triage lane
 
-Use Option A first:
+Recommended owner: `Codex`.
+
+Lane: `DRIFT_CHECK`
+
+Score: `6/10`
+
+Evidence:
+
+- Scoreboard row `#66` is `GOVERNANCE_DOC_ONLY`.
+- Source evidence is signed `Compliance_and_Trend_Watch_Process.md`.
+- Runtime already contains watcher drift logic under watcher surfaces
+  (`DriftWatcher`), so this needs re-triage before any new build.
+
+Why useful:
+
+- It addresses the operator concern about project drift.
+- It may be a reconcile/contract task rather than fresh implementation.
+
+Boundary:
+
+- Do not build blindly; first determine whether `#66` is already covered by
+  watcher row `#86` or needs a separate governed surface.
+
+### 4. `#43 Geo-Context` reconcile lane
+
+Recommended owner: `Codex`.
+
+Lane: `DRIFT_CHECK`
+
+Score: `4/10`
+
+Evidence:
+
+- Scoreboard row `#43` is `SPEC_ONLY`.
+- It references Sender Provenance / Geo-Velocity proof protocol.
+- Runtime already has governed `#79 GeoVelocityAgent`.
+
+Why weak:
+
+- This appears likely stale or partially superseded by `#79`.
+- It should not become a build target until reconciled.
+
+## Weak Cleanup Options
+
+`#10` and `#21` promotion reviews remain available, but live rubric gives each
+only `1/10`. They are cleanup, not the next build direction.
+
+## Recommendation
+
+Recommended next operator pick:
 
 ```text
-task: Reconcile project-brain next-target evidence against dispatcher, estimator, scoreboard, and mission map
-for: Codex
+task: Start #19 Dual-Approval contract lane from Vendor Payment Verification evidence
+for: Claude
 score: 8/10
 ```
 
-Done when Matt sees a short ranked list of 2-4 next targets with evidence and
-can choose without guessing.
+If Matt wants to focus on the project-control problem instead of product build
+feedstock, choose:
 
+```text
+task: Boundary review for #70 Final Review Agent
+for: Codex
+score: 7/10
+```
+
+Do not send a build to Cursor until one of these paths produces signed
+authority and explicit build authorization.

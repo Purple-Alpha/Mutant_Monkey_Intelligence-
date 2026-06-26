@@ -24,13 +24,20 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: Project brain milestone-aware operator routing restored (MMI-DEC-220)
+LAST_COMPLETED: Project brain next-target evidence reconciliation (MMI-DEC-221)
+  (`mmi/project_brain/status/next_target_evidence.md`; reconciled dispatcher
+  ALL_CLEAR, Estimator NO_BUILDABLE_CANDIDATES, scoreboard status, mission-map
+  drift, and runtime evidence; recommended #19 Dual-Approval contract lane as
+  strongest next target; **not** build authorization; **not** §11; **not**
+  scoreboard lifecycle change; **not** AUTH-5).
+
+PRIOR_LAST_COMPLETED: Project brain milestone-aware operator routing restored (MMI-DEC-220)
   (`mmi/project_brain/`; `scripts/mmi_pm_voice.py`; `tests/test_mmi_pm_voice.py`;
   default PM Voice now surfaces the active milestone task over weak `1/10` backlog
   fallback when stronger project-brain evidence exists; advisory only; **not** build
   authorization; **not** scoreboard lifecycle change; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: #50 Evidence Strength Mode A wrapper build (MMI-DEC-207)
+PRIOR: #50 Evidence Strength Mode A wrapper build (MMI-DEC-207)
   (Matt operator pick over #19/#21/#43 tie; Estimator 17.00; Layer 4 Evidence successor to #49;
   source `Email_Security_Testing_Evidence_Framework_Deep_Dive.md`; **not** §11; **not** build).
 
