@@ -1,19 +1,12 @@
-MODE: BUILD
-AUTHORIZED_TASK: Build Final Review Agent
-OPERATOR_NAMES_TARGET: Matt
-MMI_ASSIGNS_LANE: YES
-LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
-TASK_SCORE: 100
-PROJECT_IDENTITY: Mutant Monkey Security
-MMI_BRAIN: Mutant Monkey Intelligence (MMI)
-AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
-ASSIGNED_TO: Cursor → Codex → Cursor
-PRE_BUILD_REVIEW: Codex
-NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
-BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
-OPERATOR_ACTION_REQUIRED: NO
-NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
+MODE: AUDIT
+AUTHORIZED_TASK: Run completion gate for Final Review Agent
+ASSIGNED_TO: completion gate auditor (complete_gate.py)
+NEXT_PROMPT_GOES_TO: Cursor stages the build, runs the gate, then commits
+OPERATOR_ACTION_REQUIRED: NO  (completion gate activation is standing; no per-run permission)
+RUN: python3 audit_tools/complete_gate.py --pre-commit --task final_review_agent --claim "Final Review Agent build implemented + tested; ready for audit"
+MANIFEST: audit_outputs/pending/final_review_agent.manifest.json (MISSING - create before gate)
+BLOCKED_UNTIL: complete_gate.py reports blocking=0 (0/0) AND build committed
+NEXT_GATE: flip scoreboard row AWAITING_AUDIT -> GATED after clean audit + commit
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
@@ -25,7 +18,12 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #70 Final Review contract §11 + superintendent merge (MMI-DEC-244/247)
+LAST_COMPLETED: #70 FinalReviewAgent ES1 build (MMI-DEC-248)
+  (`core/orchestrator/final_review_agent.py`; `final_review_001`; FR-DER + FR-GOV;
+  build `aa38ca3`; 15 focused tests; scoreboard #70 `AWAITING_AUDIT`;
+  **not** GATED; **not** GOVERNED_AGENT; **not** production dispatch).
+
+PRIOR_LAST_COMPLETED: #70 Final Review contract §11 + superintendent merge (MMI-DEC-244/247)
   (`4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`; Matt Nichol June 26th 2026;
   scoreboard #70 `SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH`; #10 promotion renumbered MMI-DEC-245;
   active task -> #43 Geo-Context research; **not** build authorization).

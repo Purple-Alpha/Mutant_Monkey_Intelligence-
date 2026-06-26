@@ -16,7 +16,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** Not built. Scoreboard `SIGNED_UNBUILT` · blocker `NEEDS_BUILD_AUTH` (MMI-DEC-244).
+**Implementation:** Built `aa38ca3` — scoreboard `AWAITING_AUDIT` (MMI-DEC-248). **Not** GATED; **not** production dispatch.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
