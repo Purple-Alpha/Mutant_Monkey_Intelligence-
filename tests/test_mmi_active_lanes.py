@@ -145,7 +145,7 @@ class ActiveLaneConsoleTests(unittest.TestCase):
         for lane in self.mod.LANES:
             self.assertIn(f"[{lane}]", proc.stdout)
 
-    def test_pm_voice_lanes_flag(self):
+    def test_pm_voice_default_emits_operator_console(self):
         proc = subprocess.run(
             [sys.executable, PMV_SCRIPT],
             cwd=REPO,
@@ -154,8 +154,8 @@ class ActiveLaneConsoleTests(unittest.TestCase):
             check=False,
         )
         self.assertEqual(proc.returncode, 0)
-        self.assertIn("MMI ACTIVE LANES", proc.stdout)
-        self.assertNotIn("MMI_PM_VOICE", proc.stdout)
+        self.assertIn("MMI_OPERATOR_CONSOLE", proc.stdout)
+        self.assertNotIn("MMI ACTIVE LANES", proc.stdout)
 
     def test_pm_voice_explicit_lanes_flag(self):
         proc = subprocess.run(

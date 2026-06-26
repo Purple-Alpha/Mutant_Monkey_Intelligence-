@@ -7,39 +7,34 @@ match the short operator console.
 
 status: `ACTION`
 
-task: `Resolve upstream Vendor Payment Verification workflow draft before #19 Dual-Approval re-gate`
+task: `Matt §11 review — Vendor Payment Verification Workflow Design Contract + #19 Dual-Approval contract (both pre-build gates CLEAN 0/0)`
 
-for: `Claude`
+for: `Matt`
 
 score: `8/10`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `CONTRACT`
+lane: `CONTRACT_SIGN`
 
 ## Why This Is Active
 
-Matt selected the evidence-board order: `#19` first, then `#66`, then `#70`.
-`#43` is held for more research/design instead of build. Codex ran the `#19`
-pre-build gate and it blocked because `#19` depends on the upstream Vendor
-Payment Verification workflow ergonomics draft, which is still pre-§11 and has
-open questions.
+MMI-DEC-228 placed the upstream Vendor Payment Verification Workflow Design
+Contract and re-gated `#19` to `vpv_evidence_packet_v1`. MMI-DEC-229 and
+MMI-DEC-230 record clean pre-build gates (0 blocking / 1 warning each). The
+MMI-DEC-225 upstream blocker is cleared for the ES1 packet layer. Ergonomics
+sibling disposition spec remains UNSIGNED for Stage 2 integration only.
 
 ## Done When
 
-- upstream Vendor Payment Verification workflow ergonomics open questions are
-  resolved or explicitly carved out
-- the upstream workflow dependency is no longer an unsigned/open blocker for
-  `#19`
-- the `#19` contract warning language is cleaned up (`substitute controls` ->
-  plain wording)
-- Codex re-runs the `#19` pre-build gate
-- Matt reviews §11 only after a clean gate
-- Cursor receives no build task until signed authority and explicit build
-  authorization exist
+- Matt §11 signs `Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md`
+- Matt §11 signs `Dual_Approval_Agent_Design_Contract_Deep_Dive.md`
+- legal scoping (§8/§10) acknowledged for money-loss surface
+- explicit build authorization recorded before any Cursor wrapper build
+- ergonomics §10 Q1–Q6 resolved before disposition-layer integration (Stage 2)
 
 ## Closeout
 
-MMI-DEC-225 records the blocked #19 pre-build gate: 1 blocking finding and 1
-warning. This upstream repair task does not authorize build, promotion, signing,
+MMI-DEC-228 / MMI-DEC-229 / MMI-DEC-230. Pre-build gates used Gemini via
+`audit_tools/complete_gate.py`. This task does not authorize build, promotion,
 production wiring, or AUTH-5.

@@ -1,5 +1,5 @@
-generated_at: 2026-06-26T02:15:09Z
-git_head: fe6add7
+generated_at: 2026-06-26T05:12:49Z
+git_head: 2633685
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -11,9 +11,9 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 
 ## Where we are
 
-- **Dispatcher:** `AUDIT` — nothing waiting to be built or audited right now
+- **Dispatcher:** `DELEGATE` — nothing waiting to be built or audited right now
 - **Governed agents:** 40 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
-- **Promotion queue:** 1 built-and-audited agents waiting for your promotion review
+- **Promotion queue:** 2 built-and-audited agents waiting for your promotion review
 
 ## Why it keeps stalling
 
@@ -28,11 +28,13 @@ until you name the next lane.
 ## What's next (ranked — not authorized until you say so)
 
 1. **Promotion review #10 Lookalike Domain (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
-2. **Hold ALL_CLEAR — no new lane this cycle** — score 3/10
+2. **Promotion review #21 Executive Impersonation (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
+3. **Hold ALL_CLEAR — no new lane this cycle** — score 3/10
 
 ## Promotion queue (built, audited, needs your review)
 
 1. **#10 Lookalike Domain** — GATED, ready for promotion review
+2. **#21 Executive Impersonation** — GATED, ready for promotion review
 
 ## What to say to unstick (copy-paste)
 

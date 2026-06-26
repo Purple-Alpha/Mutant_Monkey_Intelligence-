@@ -18,7 +18,8 @@
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
-- `4. Product_Roadmap/Vendor_Payment_Verification_Workflow_Ergonomics_Deep_Dive.md` (upstream workflow ergonomics — DRAFT pre-§11; trigger feedstock)
+- `4. Product_Roadmap/Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md` (**primary upstream** — `vpv_evidence_packet_v1`; DRAFT pre-§11; re-gate 2026-06-26)
+- `4. Product_Roadmap/Vendor_Payment_Verification_Workflow_Ergonomics_Deep_Dive.md` (sibling — human disposition after OOB; DRAFT pre-§11)
 - `4. Product_Roadmap/Two_Channel_Confirmation_Enforcement_Deep_Dive.md` (§11 signed workflow — read-only boundary)
 - `4. Product_Roadmap/Callback_Verification_Agent_Design_Contract_Deep_Dive.md` (#18 sibling — callback OOB projector)
 - `4. Product_Roadmap/Verification_Outcome_Agent_Design_Contract_Deep_Dive.md` (#48 sibling — generic two-channel projector)
@@ -69,7 +70,7 @@
 | Failure modes | See §5. |
 | Required tests | `tests/test_dual_approval_agent.py` — wrapper protocol, trigger/skip paths, read-only upstream consumption, no workflow writes, no payment path, tenant isolation, no registry default. |
 | Audit requirements | Step 00 `scripts/validate_agent_contract_block.py` PASS; pre-build gate via `audit_tools/complete_gate.py`; completion gate on implementation slice. |
-| Signed-spec dependencies | `Agent_Design_Contract_Template_Deep_Dive.md`, `Vendor_Payment_Verification_Workflow_Ergonomics_Deep_Dive.md`, `Two_Channel_Confirmation_Enforcement_Deep_Dive.md`, `VISION.md`, `Compliance_and_Trend_Watch_Process.md`. |
+| Signed-spec dependencies | `Agent_Design_Contract_Template_Deep_Dive.md`, `Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md` (primary upstream — DRAFT pre-§11), `Two_Channel_Confirmation_Enforcement_Deep_Dive.md`, `VISION.md`, `Compliance_and_Trend_Watch_Process.md`. Ergonomics sibling is contextual only — not a §11 signing blocker for `#19` ES1. |
 | Build Authorization dependency | Contract placement only. No build until §11 + operator build authorization. Upstream workflow/detector behavior remains immutable. Distinct from #18 callback OOB and #48 generic two-channel projectors — #19 owns the dual-approval governed slot only. |
 
 ---
@@ -81,9 +82,9 @@ Cursor reconciliation applied 2026-06-26 (draft placement · MMI-DEC-222 lane):
 | GAP (advisory draft) | Resolved value | Repo evidence |
 |---|---|---|
 | **#19 repo home** | `4. Product_Roadmap/Dual_Approval_Agent_Design_Contract_Deep_Dive.md` | All Agent Design Contracts live in `4. Product_Roadmap/` per template §1; runtime wrapper under `core/orchestrator/`, not `core/scoring/` |
-| **Vendor Payment Verification feedstock** | `Vendor_Payment_Verification_Workflow_Ergonomics_Deep_Dive.md` — operator disposition workflow after Delta Tripwire flags a vendor-payment change; **not** a separate swarm agent ID | Scoreboard code-evidence label; FSL deferral §1; workflow §0–§5 |
-| **§3 trigger set (authoritative)** | Raise `dual_approval_required` when **all** hold: (a) upstream payment-change finding is open/`awaiting_disposition` or has active two-channel `pending` without terminal outcome; **and** (b) at least one risk signal from the closed set in §3.1 is present in upstream evidence. Agent does **not** invent triggers from raw mail. | Workflow §0–§4; Two-Channel §0–§3; design-tree missing-evidence example |
-| **Evidence schema (upstream)** | Disposition record §5.1 (`finding_id`, `disposition`, `verification_channel`, `what_was_confirmed`, `recorded_by`, `recorded_at_utc`, linkage refs) + `TwoChannelConfirmationPayload` (`event_type`, `finding_id`, `detector`, `outcome_status`, `channel_kind`) — read-only consumption | Workflow ergonomics §5; Two-Channel §3 |
+| **Vendor Payment Verification feedstock** | **Primary:** `Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md` — verification checks + `vpv_evidence_packet_v1` + `risk_verdict`. **Sibling:** ergonomics doc — disposition after human OOB. **Not** a separate swarm agent ID | MMI-DEC-225 re-gate; scoreboard code-evidence label |
+| **§3 trigger set (authoritative)** | Raise `dual_approval_required` when upstream `vpv_evidence_packet_v1.risk_verdict` is `HIGH` (and `ELEVATED` per joint policy OQ-2). Agent consumes §4 fields — does **not** re-run detectors or invent triggers from raw mail. | `Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md` §4; §4.1 binding table |
+| **Evidence schema (upstream)** | `vpv_evidence_packet_v1` per workflow design contract §4 (`schema_version`, `sender_auth`, `domain_similarity`, `thread_integrity`, `banking_delta`, `vendor_known`, `payment_pattern_anomaly`, `oob_confirmation`, `urgency_markers`, `risk_verdict`, `reproducibility`) — read-only consumption. Disposition + two-channel schemas remain contextual siblings only. | Workflow design §4; versioned jointly with `#19` |
 | **Template section numbering** | This file follows template §0–§11 + Agent Design Contract block per #18/#21 pattern | `Agent_Design_Contract_Template_Deep_Dive.md` |
 | **Evidence Stage 2/3 naming** | Stage 2 = Supervised; Stage 3 = Production per template §6.1 (not "Historical-real" / "Production-adjacent" informal labels) | Template §6.0–§6.1 |
 | **Legal advise framing** | Inherited from `Compliance_and_Trend_Watch_Process.md` + workflow D5/D8 + `VISION.md` — MMI advises; customer decides and carries liability | See §8 |
@@ -95,7 +96,7 @@ Cursor reconciliation applied 2026-06-26 (draft placement · MMI-DEC-222 lane):
 | Workflow ergonomics §10 Q1–Q6 | Follow-up SLA, relation to two-channel enum, on-disk surface, false-positive auto-link, who may record, idempotency — workflow spec pre-§11 |
 | Workflow ergonomics §11 | Upstream feedstock UNSIGNED |
 | Locked payment-amount / tier thresholds for #19 | Research report advisory only; design tree says "larger payment changes" without numeric lock |
-| Single-owner business fallback policy | Research notes substitute controls; product policy choice for `dual_approval_not_applicable` |
+| Single-owner business fallback policy | Research notes alternate owner-only controls (callback + delay + micro-deposit); product policy choice for `dual_approval_not_applicable` |
 | Contract §11 signature | Scoreboard `NEEDS_SIGNED_CONTRACT` |
 | Explicit build authorization | Separate from §11 per established MMI pattern |
 
@@ -142,36 +143,54 @@ Complete the contract lane for swarm #19: place a full Agent Design Contract gov
 - **D8 — Evidence Stage governance.** Template §6.2 / §6.3 / §6.5 apply; false-negatives weighted heaviest in Health Score.
 - **D9 — Data minimization + tenant isolation.** Per-tenant evidence reads; no cross-tenant approval state.
 - **D10 — Tests are promotion-bar evidence.** `tests/test_dual_approval_agent.py` is the ES1 runtime proof baseline once wrapper is built.
+- **D11 — Schema version lock.** Consumes only `vpv_evidence_packet_v1`; joint version bumps with workflow design contract §4.
 
 ---
 
 ## §3 Trigger logic and upstream evidence
 
-### §3.1 Closed trigger signal set
+**Re-gated 2026-06-26** against `Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md` §4 (`vpv_evidence_packet_v1`).
 
-Raised when upstream Vendor Payment Verification evidence shows risk on a payment or banking-detail change. Typical upstream signals (house-pattern intent reconciled to repo — agent consumes evidence refs, does not re-derive):
+### §3.1 Packet field → trigger mapping
 
-| Signal class | Upstream source |
+`#19` reads the upstream packet only. It does **not** re-run Tier A/B checks.
+
+| Packet field (`vpv_evidence_packet_v1`) | Trigger relevance |
 |---|---|
-| New or changed payee banking details | Delta Tripwire / #14 payment-change facts (`Financial_State_Ledger_Delta_Tripwire_Deep_Dive.md`) |
-| Open payment-change finding awaiting disposition | Workflow ergonomics §4 step 1 (`awaiting_disposition`) |
-| Active two-channel `pending` without terminal `outcome` | `Two_Channel_Confirmation_Enforcement_Deep_Dive.md` §3 |
-| New/unrecognized vendor (when surfaced in upstream evidence) | Vendor-payment pipeline / baseline mismatch facts |
-| Look-alike or mismatched sender domain (when cited in upstream packet) | Layer 2 facts from #10 / related detection — by reference only |
-| Reply-chain / thread-forgery indicators (when cited) | Upstream BEC evidence packet — by reference only |
-| Executive / urgency pressure markers (when cited) | Layer 2 facts from #21 / pressure vocabulary — by reference only |
+| `risk_verdict` | **Primary raise driver** — see §3.3 |
+| `banking_delta` | new/changed banking details |
+| `vendor_known` | new/unrecognized vendor |
+| `domain_similarity` | look-alike / mismatched sender domain |
+| `thread_integrity` | reply-chain / thread-forgery |
+| `urgency_markers` | pressure / out-of-band-change language |
+| `oob_confirmation` | `absent` or `pending` strengthens raise; `present` is context only (not auto-clear) |
+| `sender_auth` | auth-failure context (never auto-clear on pass alone) |
 
-**Research advisory (not locked D-decisions):** second-person approval when a second approver exists; bank-detail changes treated as high risk regardless of amount; stronger controls at higher payment tiers (`Vendor_Payment_Change_Verification_Research_Report.md`).
+**Research advisory (not locked):** second-person approval when second approver exists; bank-detail changes high risk regardless of amount (`Vendor_Payment_Change_Verification_Research_Report.md`).
 
 ### §3.2 Upstream evidence schema (read-only)
 
-**Disposition-side (workflow ergonomics §5.1):** `disposition_id`, `tenant_id`, `finding_id`, `disposition` (`verified` \| `unresolved` \| `false_positive` \| `follow_up_needed`), `verification_channel`, `what_was_confirmed`, `recorded_by`, `recorded_at_utc`, linkage refs.
+Bind to workflow design contract §4 — `schema_version: vpv_evidence_packet_v1`:
 
-**Two-channel-side (§3 schema):** `TwoChannelConfirmationPayload` with `event_type` (`pending` \| `outcome`), `finding_id`, `detector`, `outcome_status` (`confirmed` \| `rejected` \| `unable_to_verify` \| `expired`), `channel_kind` (closed enum).
+`tenant_id`, `finding_id`, `sender_auth`, `domain_similarity`, `thread_integrity`, `banking_delta`, `vendor_known`, `payment_pattern_anomaly`, `oob_confirmation`, `urgency_markers`, `risk_verdict`, `reproducibility`.
 
-### §3.3 Skip / not-applicable
+**Version rule:** any §4 field change requires joint `schema_version` bump in both contracts before build.
 
-Emit `dual_approval_not_applicable` only when a signed customer policy marks single-owner fallback (§9 OQ-1). Default when uncertain: raise requirement or `dual_approval_missing` — never silently skip on ambiguous upstream evidence.
+**Sibling context (not primary triggers):** disposition ergonomics §5.1; `TwoChannelConfirmationPayload` — used by workflow to populate `oob_confirmation`, not read directly by `#19` at ES1.
+
+### §3.3 Raise / skip from `risk_verdict`
+
+| `risk_verdict` | `#19` emission |
+|---|---|
+| `HIGH` | `dual_approval_required` |
+| `ELEVATED` | `dual_approval_required` unless Matt signs carve-out (workflow OQ-1 / `#19` OQ-2) |
+| `CLEAR` | `dual_approval_not_applicable` — **not** "safe to pay" |
+
+Emit `dual_approval_missing` when policy requires two approvals and customer-side satisfaction records are absent (when integrated). Default when packet missing or `schema_version` mismatch: fail closed → treat as raise-required, never silent skip.
+
+### §3.4 Single-owner fallback
+
+Emit `dual_approval_not_applicable` only when upstream packet is `CLEAR` **and** a signed customer policy marks single-owner fallback (§9 OQ-1). Default when uncertain: raise requirement or `dual_approval_missing` — never silently skip on ambiguous upstream evidence.
 
 ---
 
@@ -237,7 +256,7 @@ This component sits on a money-loss surface. Binding posture:
 
 ## §9 Open questions (operator-only)
 
-- **OQ-1 — Single-owner fallback:** When no second approver exists, what substitute controls are required before emitting `dual_approval_not_applicable` vs `dual_approval_required` with owner-only delay? (Research suggests callback + delay + micro-deposit — product policy choice.)
+- **OQ-1 — Single-owner fallback:** When no second approver exists, what alternate owner-only controls are required before emitting `dual_approval_not_applicable` vs `dual_approval_required` with owner-only delay? (Research suggests callback + delay + micro-deposit — product policy choice.)
 - **OQ-2 — Amount / tier thresholds:** Lock numeric tiers for dual-approval trigger, or treat all bank-detail changes as triggering regardless of amount? (ICAEW / research favor all bank-detail changes; design tree mentions "larger payment changes" only.)
 - **OQ-3 — Workflow ergonomics §10:** Resolve Q1–Q6 on upstream workflow spec before treating disposition records as authoritative feedstock for Stage 2.
 - **OQ-4 — Customer approval record surface:** Where customer-side dual-approval satisfaction is recorded for read-only projection (external to MMI vs future tenant workflow module).

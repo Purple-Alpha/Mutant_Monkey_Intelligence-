@@ -31,15 +31,14 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #19 Dual-Approval pre-build gate BLOCKED (MMI-DEC-225)
-  (`audit_outputs/mmi_19_contract_gate_20260626T045557Z.md`;
-  1 blocking / 1 warning; packet SHA256
-  `46cad25e3bf1d96616f459a988ade024651c73d1c898081368f4fb8a9772dd57`;
-  blocker: upstream Vendor Payment Verification workflow ergonomics draft is
-  still pre-§11 and open; next action is upstream dependency repair before #19
-  re-gate; **not SIGNABLE**; **not** §11; **not** build authorization;
-  **not** scoreboard lifecycle change; **not** production dispatch; **not**
-  AUTH-5).
+LAST_COMPLETED: VPV Workflow Design Contract placement + #19 re-gate + clean pre-build gates (MMI-DEC-228/229/230)
+  (`4. Product_Roadmap/Vendor_Payment_Verification_Workflow_Design_Contract_Deep_Dive.md`;
+  `#19` re-gated to `vpv_evidence_packet_v1`;
+  VPV gate `audit_outputs/mmi_vpv_workflow_design_contract_gate_20260626T050754Z.md` 0/0 blocking;
+  #19 gate `audit_outputs/mmi_19_contract_gate_20260626T051139Z.md` 0/0 blocking;
+  MMI-DEC-225 upstream blocker cleared for ES1 packet layer;
+  **not** §11 signed yet; **not** build authorization;
+  **not** scoreboard lifecycle promotion; **not** production dispatch; **not** AUTH-5).
 
 PRIOR_LAST_COMPLETED: #19 Dual-Approval contract draft placement (MMI-DEC-224)
   (`4. Product_Roadmap/Dual_Approval_Agent_Design_Contract_Deep_Dive.md`;
