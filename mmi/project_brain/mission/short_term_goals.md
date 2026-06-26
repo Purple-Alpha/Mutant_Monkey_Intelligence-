@@ -108,7 +108,7 @@
 | Metric | Value |
 |--------|-------|
 | BREADTH runway | 40 / 70 `GOVERNED_AGENT` |
-| #19 Dual-Approval | `SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH` |
+| #19 Dual-Approval | GOVERNED_AGENT MMI-DEC-236 | depth lane closed at ES1 |
 | DEPTH gate (#84–#94) | CLOSED (BS-D3) |
 | STAGE_B gate (#38 etc.) | CLOSED |
 

@@ -2,30 +2,30 @@
 
 ## Current State
 
-status: `ACTION`
+status: `ALL_CLEAR`
 
-task: `#70 Final Review Agent — boundary/design review`
+task: `#19 Dual-Approval GOVERNED_AGENT — promotion review complete (MMI-DEC-238)`
 
-for: `Codex`
+for: `Matt — next depth target per MMI-DEC-222 (#66 Drift Watch re-triage)`
 
-score: `7/10`
+score: `100`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `DRIFT_CHECK`
+lane: `PROMOTION` (closed)
 
 ## Why This Is Active
 
-Matt continued depth lane per MMI-DEC-222 (MMI-DEC-237). #66 Drift Watch re-triage
-complete (MMI-DEC-236): RECLASSIFY — operator process only, not buildable agent;
-distinct from #86 W2 DriftWatcher. Next queued target is #70 Final Review.
+Matt authorized GOVERNED_AGENT promotion review for #19. Repo evidence accepted:
+§11 MMI-DEC-232, VPV upstream MMI-DEC-231, build MMI-DEC-234, gate MMI-DEC-235.
+Scoreboard #19 promoted; breadth runway 41/70.
 
 ## Done When
 
-- Boundary review doc: what #70 owns vs `complete_gate.py` / `package_auditor.py`
-- Clear recommendation: contract draft, RECLASSIFY, or hold
-- No build authorization without Matt explicit pick
+- [x] Promotion review evidence verified
+- [x] Scoreboard #19 `GATED` → `GOVERNED_AGENT`
+- [ ] `mmi_dispatch.py --verify` PASS after commit
 
 ## Closeout
 
-MMI-DEC-236 (#66). MMI-DEC-237 (#70 lane open). Not build authorization.
+MMI-DEC-238/239. GOVERNED_AGENT does not imply production dispatch or AUTH-5.

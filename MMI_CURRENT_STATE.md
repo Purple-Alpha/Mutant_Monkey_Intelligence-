@@ -4,7 +4,7 @@ OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
 BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 24 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 23 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
 WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
 ASSIGNED_TO: Matt
 NEXT_PROMPT_GOES_TO: Matt
@@ -24,7 +24,13 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #19 Dual-Approval GATED (MMI-DEC-235)
+LAST_COMPLETED: #19 Dual-Approval GOVERNED_AGENT (MMI-DEC-238)
+  (`core/orchestrator/dual_approval_agent.py` + upstream `core/workflows/vendor_payment_verification.py`;
+  §11 MMI-DEC-232 + VPV MMI-DEC-231; build `0b78503`; completion gate 0 blocking / 1 warning MMI-DEC-235;
+  scoreboard #19 `GATED` -> `GOVERNED_AGENT`; breadth runway 40 -> 41;
+  **not** production dispatch; **not** default registry; **not** AUTH-5).
+
+PRIOR_LAST_COMPLETED: #19 Dual-Approval GATED (MMI-DEC-235)
   (`core/workflows/vendor_payment_verification.py` + `core/orchestrator/dual_approval_agent.py`;
   MMI-DEC-234 build `0b78503`; 21 focused tests; completion gate 0 blocking / 1 warning —
   `audit_outputs/dual_approval_20260626T212610Z.md`; scoreboard #19 `AWAITING_AUDIT` -> `GATED`;
