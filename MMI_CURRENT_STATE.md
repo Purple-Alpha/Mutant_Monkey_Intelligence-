@@ -1,18 +1,18 @@
-MODE: ALL_CLEAR
-AUTHORIZED_TASK: No delegable tasks in routing queue
+MODE: BUILD
+AUTHORIZED_TASK: Build Executive Impersonation
 OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
-BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 22 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
-WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
-ASSIGNED_TO: Matt
-NEXT_PROMPT_GOES_TO: Matt
-OPERATOR_ACTION_REQUIRED: YES — supply next evidence or run Estimator for read-only candidate ranking
-CANDIDATES_NOT_AUTHORIZATION: YES — Estimator ranks candidates; output is not authorization, selection, or routing authority
-REQUIRED_UPDATE_AFTER_COMPLETION: MMI first after any worker completion: append evidence to the relevant MMI record (intake/gate/decision log as applicable), update MMI_CURRENT_STATE.md LAST_COMPLETED prose, run python3 scripts/mmi_dispatch.py --sync, commit routing-authority files, then python3 scripts/mmi_dispatch.py --verify
-NEXT_GATE: new signed contract, scoreboard row, intake evidence, or operator-selected next action
-TASK_SCOREBOARD: (empty — queue has no delegable tasks)
+BUILD_AUTHORIZATION_IMPLIED: YES — §11 signed on scoreboard SIGNED_UNBUILT row
+PROJECT_IDENTITY: Mutant Monkey Security
+MMI_BRAIN: Mutant Monkey Intelligence (MMI)
+AUTHORITY_REPO: Mutant Monkey Security authority repo (legacy path /home/socialarchitect/northstar)
+ASSIGNED_TO: Cursor → Codex → Cursor
+PRE_BUILD_REVIEW: Codex
+NEXT_PROMPT_GOES_TO: Cursor (draft plan) → Codex (review) → Cursor (build)
+BLOCKED_UNTIL: Codex clears build plan; then implementation + tests complete
+OPERATOR_ACTION_REQUIRED: NO
+NEXT_GATE: Codex review → Cursor build → gate 0/0 + health score 85+ + hash reported
 
 AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_dispatch.py
   and must remain as emitted. MODE: BUILD means the scoreboard has a visible SIGNED_UNBUILT
