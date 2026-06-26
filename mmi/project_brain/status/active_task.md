@@ -4,32 +4,35 @@
 
 status: `ACTION`
 
-task: `#70 Final Review Agent — Matt §11 signature pending (MMI-DEC-243 gate clean)`
+task: `#43 Geo-Context — research / reconcile lane (MMI-DEC-222 hold)`
 
-for: `Matt`
+for: `Matt` — geo tracking / Agent B parallel research
 
-score: `8/10`
+score: `4/10`
 
 milestone: `M1_CONTROL_PLANE_RESTORED`
 
-lane: `CONTRACT`
+lane: `RESEARCH`
 
 ## Why This Is Active
 
-Pre-build gate on `4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`
-complete: **0 blocking / 2 warnings** (MMI-DEC-243). Codex verdict SIGNABLE. Warnings
-non-blocking (empty BUILD_QUEUE; worktree changed paths). **Not** build authorization.
+Agent A lane closed: #70 Final Review contract §11 signed (MMI-DEC-244); scoreboard
+`SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH` — **not** build authorized. Agent B lane closed:
+#10 GOVERNED_AGENT (MMI-DEC-245); breadth 42/70. Superintendent renumbered duplicate
+MMI-DEC-243 collision (MMI-DEC-247). Next per MMI-DEC-222 hold: **#43 Geo-Context**
+reconcile vs governed `#79 GeoVelocityAgent` + `reality_controller/geo_fence_manager.md`.
 
 ## Done When
 
-- [x] Contract DRAFT placed (MMI-DEC-242)
-- [x] Step 00 `validate_agent_contract_block.py` PASS (31/31)
-- [x] Codex pre-build gate 0 blocking (MMI-DEC-243)
-- [ ] Matt §11 signature on contract
-- [ ] Scoreboard `NEEDS_SIGNED_CONTRACT` cleared after §11 + reconcile
-- [x] `mmi_dispatch.py --verify` PASS after commit
+- [ ] Relationship #43 ↔ #79 documented
+- [ ] Research artifact updated under `mmi/project_brain/architecture/`
+- [ ] Clear contract-or-hold recommendation for Matt
+- [ ] `mmi_dispatch.py --verify` PASS after commit
+
+## Prior lane (closed)
+
+#70 contract: MMI-DEC-242 placement · MMI-DEC-243 pre-build gate · MMI-DEC-244 §11.
 
 ## Closeout
 
-MMI-DEC-243. §11 unlocks SIGNED_UNBUILT path only; explicit build auth still required
-for `FinalReviewAgent` implementation.
+MMI-DEC-247 superintendent merge. #70 build requires separate Matt authorization.

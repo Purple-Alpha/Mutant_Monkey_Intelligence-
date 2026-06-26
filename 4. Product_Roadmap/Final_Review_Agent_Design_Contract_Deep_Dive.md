@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_70_FINAL_REVIEW_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** DRAFT pre-§11 (advisory placement · MMI-DEC-242). Pre-build gate clean **0 blocking / 2 warnings** (MMI-DEC-243; `logs/complete_gate_report.json`). **Not** §11 signed. **Not** build authorization. **Not** scoreboard promotion.
+**Status:** §11 SIGNED 2026-06-26 by Matt Nichol (MMI-DEC-244). Pre-build gate clean **0 blocking / 2 warnings** (MMI-DEC-243; `logs/complete_gate_report.json`). Governs future `FinalReviewAgent` at ES1. **Not** build authorized by signature alone; **not** production dispatch; **not** AUTH-5.
 
 **Scope:** swarm #70 **Slice B only** — case-level DER final review + governance finalization packet assembly. **Slice A** (`audit_tools/complete_gate.py`, `core/evidence_package/package_auditor.py`) remains separate infrastructure per `mmi/project_brain/status/final_review_70_boundary.md` (MMI-DEC-240).
 
@@ -16,7 +16,7 @@
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
-**Implementation:** Not built. Scoreboard `GOVERNANCE_DOC_ONLY (partial)` · blocker `NEEDS_SIGNED_CONTRACT`.
+**Implementation:** Not built. Scoreboard `SIGNED_UNBUILT` · blocker `NEEDS_BUILD_AUTH` (MMI-DEC-244).
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -97,7 +97,7 @@ Cursor reconciliation applied 2026-06-26 (draft placement · MMI-DEC-242):
 |---|---|
 | FR-GOV candidate envelope final field list | PARK build until ES1 schema frozen in implementation |
 | FR-DER coherence rules vs `client_facing_rubric` | Confirm non-duplication with #5 Decision Integrity doc surface |
-| Contract §11 signature | Scoreboard `NEEDS_SIGNED_CONTRACT` |
+| Contract §11 signature | **Done** — MMI-DEC-244 (`Matt Nichol June 26th 2026`) |
 | Pre-build gate on this contract | **Done** — 0 blocking / 2 warnings MMI-DEC-243 (BUILD_QUEUE empty; worktree changed paths — cosmetic) |
 | Explicit build authorization | Separate from §11 per established MMI pattern |
 
@@ -270,13 +270,9 @@ Per `Agent_Design_Contract_Template_Deep_Dive.md` §6:
 
 ## §11 Sign-off
 
-**UNSIGNED — advisory placement does not sign.**
+SIGNED. This locks D1–D10 for swarm agent #70 Final Review at **Evidence Stage 1 (Synthetic)**. Signing authorizes future `FinalReviewAgent` wrapper build + focused tests **only** after separate operator Build Authorization. Signing authorizes **no** §11 on other contracts, **no** scoreboard promotion to `GOVERNED_AGENT`, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5.
 
-> §11 SIGNATURE — Matt Nichol __________________________   Date: __________
->
-> [UNSIGNED — DRAFT pre-§11 · MMI-DEC-242 placement only]
-
-Signing would lock D1–D10 for swarm agent #70 Final Review at **Evidence Stage 1 (Synthetic)**. Signing would authorize future `FinalReviewAgent` wrapper build + focused tests **only** after separate operator Build Authorization. Signing authorizes **no** §11 on other contracts, **no** scoreboard promotion, **no** default-registry registration, **no** production dispatch, **no** autonomous action, and **no** AUTH-5.
+> §11 SIGNATURE — Matt Nichol June 26th 2026
 
 ---
 
@@ -289,5 +285,5 @@ Signing would lock D1–D10 for swarm agent #70 Final Review at **Evidence Stage
 5. [x] Adversarial cross-check documented: false-ready path (§5, §10).
 6. [x] Scoreboard row #70 + Health Score weighting noted (post-build).
 7. [x] MMI-DEC-242 placement decision recorded.
-8. [x] Matt routing: pre-build gate **PASS** (MMI-DEC-243) → **Matt §11** to enter sign lane.
-9. [ ] Closeout after §11: `lane_board_sync` → `dispatch --sync` → `dispatch --verify` → `pmv`.
+8. [x] Matt routing: pre-build gate **PASS** (MMI-DEC-243) → **Matt §11** (MMI-DEC-244).
+9. [x] Closeout after §11: `lane_board_sync` → `dispatch --sync` → `dispatch --verify` → `pmv`.

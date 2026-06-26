@@ -93,39 +93,10 @@ Boundary:
 - Needs contract draft, pre-build gate, Matt §11, then explicit build
   authorization.
 
-### 2. `#70 Final Review Agent` contract/boundary lane — **CONTRACT DRAFT PLACED (MMI-DEC-242)**
+### 2. `#70 Final Review Agent` — **CONTRACT §11 SIGNED (MMI-DEC-244)**
 
-**Boundary review (MMI-DEC-240):** `GOVERNANCE_DOC_ONLY (partial — surfaces mapped)`. Slice A satisfied;
-Slice B needs contract.
-
-**Contract (MMI-DEC-242):** `4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`
-— DRAFT pre-§11; Step 00 31/31 PASS. Pre-build gate **0 blocking / 2 warnings** (MMI-DEC-243).
-
-Recommended owner: `Matt` §11 signature.
-
-Lane: `CONTRACT` (active — SIGNABLE)
-
-Score: `8/10`
-
-Evidence:
-
-- Scoreboard row `#70` surfaces mapped; stale `NEEDS_BUILD_AUTH` cleared.
-- Code evidence: `audit_tools/complete_gate.py` plus
-  `core/evidence_package/package_auditor.py` (Slice A); `agent_contract.py`
-  `FINAL_REVIEW_AGENT_ID` hook (Slice B unbuilt).
-- Final Review belongs in Learning/Governance, not Command — self-approval risk
-  documented.
-
-Why useful:
-
-- Clarifies what existing gate tools cover vs what still needs a contract.
-- Unblocks honest contract drafting without pretending gates are the agent.
-
-Boundary:
-
-- Must not become self-approval.
-- Must not authorize its own outputs.
-- Needs contract before Slice B build.
+Contract: `4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`
+Scoreboard: `SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH` — **not** build authorized.
 
 ### 3. `#66 Drift Watch` re-triage lane — **COMPLETE (MMI-DEC-236)**
 
@@ -149,7 +120,7 @@ Boundary:
 
 - No build unless Matt authorizes new contract for intake automation.
 
-### 4. `#43 Geo-Context` reconcile lane
+### 4. `#43 Geo-Context` reconcile lane — **ACTIVE (MMI-DEC-247)**
 
 Recommended owner: `Codex`.
 

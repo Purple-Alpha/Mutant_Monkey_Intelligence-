@@ -105,13 +105,15 @@ See also: `mmi/project_brain/status/active_task.md`
 
 ---
 
-## Queue after depth lane (MMI-DEC-241)
+## Queue after superintendent merge (MMI-DEC-247)
 
-MMI-DEC-222 **complete**: #19 GOVERNED_AGENT · #66 RECLASSIFY · #70 surfaces mapped · #43 held.
+| Lane | Status |
+|------|--------|
+| **Agent A** | #70 contract §11 MMI-DEC-244 · `SIGNED_UNBUILT` · build **not** authorized |
+| **Agent B** | #10 GOVERNED_AGENT MMI-DEC-245 · breadth **42/70** |
+| **Next** | **#43 Geo-Context** research (active_task) |
 
-BREADTH: 41/70 `GOVERNED_AGENT`. #10/#21 GATED — promotion reviews separate.
-
-Next optional lanes: #70 Slice B contract draft (`NEEDS_SIGNED_CONTRACT`), #43 research, #21 promotion.
+Optional: #21 promotion (~1/10) · #70 build when Matt authorizes.
 
 ---
 
