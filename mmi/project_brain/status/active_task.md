@@ -27,7 +27,7 @@ non-blocking (empty BUILD_QUEUE; worktree changed paths). **Not** build authoriz
 - [x] Codex pre-build gate 0 blocking (MMI-DEC-243)
 - [ ] Matt §11 signature on contract
 - [ ] Scoreboard `NEEDS_SIGNED_CONTRACT` cleared after §11 + reconcile
-- [ ] `mmi_dispatch.py --verify` PASS after commit
+- [x] `mmi_dispatch.py --verify` PASS after commit
 
 ## Closeout
 
