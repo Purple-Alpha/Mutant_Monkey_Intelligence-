@@ -4,7 +4,7 @@ OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
 BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 23 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 22 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
 WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
 ASSIGNED_TO: Matt
 NEXT_PROMPT_GOES_TO: Matt
@@ -24,7 +24,11 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #70 Final Review Slice B contract DRAFT placement (MMI-DEC-242)
+LAST_COMPLETED: #70 Final Review pre-build gate (MMI-DEC-243)
+  (`4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`; 0 blocking / 2 warnings;
+  `logs/complete_gate_report.json`; Codex SIGNABLE; **not** §11 signed; **not** build authorization).
+
+PRIOR_LAST_COMPLETED: #70 Final Review Slice B contract DRAFT placement (MMI-DEC-242)
   (`4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`; Step 00 31/31;
   Slice A gates remain separate infra; FR-DER + FR-GOV modes; DRAFT pre-§11;
   **not** build authorization; **not** §11 signed).

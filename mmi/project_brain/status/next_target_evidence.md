@@ -99,15 +99,13 @@ Boundary:
 Slice B needs contract.
 
 **Contract (MMI-DEC-242):** `4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`
-— DRAFT pre-§11; Step 00 31/31 PASS. FR-DER + FR-GOV modes; `READY-FOR-§11` ≠ authorization.
+— DRAFT pre-§11; Step 00 31/31 PASS. Pre-build gate **0 blocking / 2 warnings** (MMI-DEC-243).
 
-**Artifact:** `mmi/project_brain/status/final_review_70_boundary.md` + contract deep dive.
+Recommended owner: `Matt` §11 signature.
 
-Recommended owner: `Codex` pre-build gate → `Matt` §11.
+Lane: `CONTRACT` (active — SIGNABLE)
 
-Lane: `CONTRACT` (active)
-
-Score: `7/10`
+Score: `8/10`
 
 Evidence:
 
