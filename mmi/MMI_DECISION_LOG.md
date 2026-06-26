@@ -442,6 +442,9 @@ MMI-DEC-215 | 2026-06-25 | #10 Lookalike Domain reconciled to GATED | scoreboard
 MMI-DEC-216 | 2026-06-25 | #21 Executive Impersonation Agent Design Contract draft placement (Q5 step 3) | `4. Product_Roadmap/Executive_Impersonation_Agent_Design_Contract_Deep_Dive.md`; Step 00 PASS 31/31; Build Sequencer Q5 step 3 | ACCEPT | Q5 step 3 contract placement after #10 GATED (MMI-DEC-215); Agent Design Contract draft placed; detector spec §11 immutable; ES1 facts-only `executive_impersonation_pattern` wrapper design; **no detector code**; **no wrapper build** until detector Build Authorization + §11. **DRAFT UNSIGNED** | Matt §11 sign on #21 Agent Design Contract; detector Build Authorization separate | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (Q5 step 3 #21 Executive Impersonation metadata retrofit)
 
 
+MMI-DEC-217 | 2026-06-25 | #21 Executive Impersonation Agent Design Contract §11 signature | `4. Product_Roadmap/Executive_Impersonation_Agent_Design_Contract_Deep_Dive.md`; MMI-DEC-216 contract draft `502d665` | ACCEPT | Matt §11 signed (`Matt Nichol June 25th 2026`); locks D1–D9; Evidence Stage 1 (Synthetic); authorizes future `ExecutiveImpersonationAgent` wrapper + focused tests **only** after detector implementation + separate Build Authorization — **not** detector mutation, **not** default registry, **not** production dispatch, **not** AUTH-5. Scoreboard #21 `NEEDS_SIGNED_CONTRACT` -> `SIGNED_UNBUILT`; BLOCKERS cleared to `NEEDS_BUILD_AUTH` (detector absent). **Not** build by this record | Separate detector Build Authorization then wrapper build lane | Run lane_board_sync + mmi_dispatch --sync + --verify after commit | Matt Nichol (§11 sign #21 Executive Impersonation contract)
+
+
 ## Active Project Identity Guard
 
 Active project identity: **Mutant Monkey Security**.

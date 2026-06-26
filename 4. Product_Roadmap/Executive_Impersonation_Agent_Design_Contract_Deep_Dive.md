@@ -1,12 +1,12 @@
 # Executive Impersonation Agent Design Contract — Spec-First Deep Dive
 
-**Status:** DRAFT UNSIGNED — Q5 step 3 metadata-only retrofit (Build Sequencer pinned order). Authored 2026-06-25 by Cursor on Matt operator authorization to continue Q5 step 3 after #10 GATED closeout (MMI-DEC-215). Places a full Agent Design Contract over the §11-signed detector blueprint and future `ExecutiveImpersonationAgent` wrapper. **Not** §11 signed; **not** detector implementation; **not** wrapper build until detector exists + explicit Build Authorization; **not** default-registry registration; **not** production dispatch; **not** scoring-pipeline default-on change.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-217). Q5 step 3 metadata-only retrofit at Agent Design Contract layer. Governs future `ExecutiveImpersonationAgent` wrapper over §11-signed detector blueprint. **Not** detector implementation; **not** wrapper build until detector exists + explicit Build Authorization; **not** default-registry registration; **not** production dispatch; **not** scoring-pipeline default-on change.
 
 **Owner:** Matt Nichol
 
 **Candidate:** #21 — Executive Impersonation
 
-**Implementation:** **Not built** — detector code absent (`core/scoring/executive_impersonation_detector.py` does not exist). Wrapper path reserved at `core/orchestrator/executive_impersonation_agent.py`. Scoreboard `NEEDS_SIGNED_CONTRACT` pending §11 + detector Build Authorization.
+**Implementation:** **Not built** — detector code absent (`core/scoring/executive_impersonation_detector.py` does not exist). Wrapper path reserved at `core/orchestrator/executive_impersonation_agent.py`. Scoreboard `SIGNED_UNBUILT` pending detector Build Authorization + wrapper build lane.
 
 **Source-of-truth links:**
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -85,7 +85,7 @@ Complete the Q5 step 3 metadata-only retrofit for swarm #21: place a full Agent 
 
 ---
 
-## §2 Locked Design Decisions (draft — lock at §11)
+## §2 Locked Design Decisions
 
 - **D1 — Identity.** Executive Impersonation is Layer 2 Detection, Authority Level 3, VISION Stage A, Evidence Stage 1 at signing. `agent_id = executive_impersonation_001`.
 - **D2 — Detector immutability.** Wrapper-only; detector D1–D9 + §10.A immutable (template §7.0).
@@ -141,6 +141,6 @@ Complete the Q5 step 3 metadata-only retrofit for swarm #21: place a full Agent 
 
 ## §11 Sign-off
 
-**DRAFT UNSIGNED** — pending pre-build gate + Matt §11 signature. Wrapper build remains blocked until detector implementation + separate Build Authorization.
+SIGNED. This locks D1–D9 for swarm agent #21 Executive Impersonation at **Evidence Stage 1 (Synthetic)**. Signing authorizes future `ExecutiveImpersonationAgent` wrapper build + focused tests **only** after detector implementation and separate operator Build Authorization. Signing authorizes **no** detector-logic change, **no** default-registry registration, **no** production dispatch, **no** scoring/rubric change, and **no** autonomous action.
 
-> §11 SIGNATURE — (pending)
+> §11 SIGNATURE — Matt Nichol June 25th 2026
