@@ -1,0 +1,34 @@
+{
+  "version": "v1",
+  "contract": "4. Product_Roadmap/Blackboard_Mesh_Governance_Foundation_Contract_Deep_Dive.md",
+  "evidence_tokens": [
+    "approved",
+    "authorized",
+    "cleared",
+    "safe",
+    "verdict",
+    "conclusion",
+    "decision",
+    "outcome",
+    "final",
+    "action",
+    "route",
+    "block",
+    "release",
+    "disposition",
+    "gate_satisfied",
+    "low_risk",
+    "suppression_applied",
+    "approval_recommended"
+  ],
+  "verdict_narrative_tokens": [
+    "approved",
+    "authorized",
+    "cleared",
+    "safe_to_process",
+    "gate_satisfied",
+    "suppression_applied",
+    "approval_recommended",
+    "cleared_for_release"
+  ]
+}

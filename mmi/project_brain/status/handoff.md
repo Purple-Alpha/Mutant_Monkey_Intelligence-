@@ -44,7 +44,7 @@ python3 scripts/mmi_dispatch.py --verify
 
 ## Next operator actions
 
-1. **Blackboard-Mesh** — Matt build authorization for Mode A ledger gate (§11 MMI-DEC-271; pre-build gate MMI-DEC-270).
+1. **Blackboard-Mesh** — Mode A ledger gate built (MMI-DEC-272); completion gate then Evidence Backer slice.
 2. Iterative Crucible / Phoenix: synthetic harness only until Evidence Backer v1 exists.
 3. DEPTH stack (#84–#94) held until BS-D3 gate opens.
 4. BREADTH runway 46/70; no agent build without separate unpark.

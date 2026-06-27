@@ -2,11 +2,11 @@
 
 ## Current State
 
-status: NEEDS_BUILD_AUTH
+status: AWAITING_AUDIT
 
-task: Blackboard-Mesh Governance Foundation — operator build authorization
+task: Blackboard-Mesh Mode A ledger gate — completion gate
 
-for: Matt — authorize Mode A ledger gate build slice when ready
+for: Matt — completion gate review; then Evidence Backer slice
 
 score: n/a
 
@@ -16,13 +16,15 @@ lane: INFRASTRUCTURE / Iterative Crucible
 
 ## Why This Is Active
 
-§11 signed (MMI-DEC-271): `Blackboard_Mesh_Governance_Foundation_Contract_Deep_Dive.md`.
-Pre-build gate PASS (MMI-DEC-270). BM-D1–BM-D10 locked.
-**Not** build until Matt authorizes. **Not** production dispatch. **Not** live chaos.
+Mode A ledger gate built (MMI-DEC-272): fail-closed append on evidence + verdict writer allowlist.
+Completion gate: `mode_a_ledger_gate_20260627T202331Z.md`.
+**Not** Evidence Backer yet. **Not** crucible log yet.
 
 ## Done When
 
-- [x] CONTRACT_DRAFT placed (`Blackboard_Mesh_Governance_Foundation_Contract_Deep_Dive.md`)
-- [x] Pre-build gate (infrastructure template; Step 00 agent template N/A)
-- [x] Matt §11 signature (MMI-DEC-271)
-- [ ] Build authorization: Mode A ledger gate → `evidence_backer.py` → crucible failure log
+- [x] CONTRACT_DRAFT placed
+- [x] Pre-build gate (MMI-DEC-270)
+- [x] Matt §11 (MMI-DEC-271)
+- [x] Build authorization Mode A ledger gate (MMI-DEC-272)
+- [ ] Completion gate 0 blocking
+- [ ] Build authorization: `evidence_backer.py` → crucible failure log

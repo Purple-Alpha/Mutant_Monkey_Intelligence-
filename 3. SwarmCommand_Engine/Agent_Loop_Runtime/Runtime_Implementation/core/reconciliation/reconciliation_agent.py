@@ -176,7 +176,7 @@ class ReconciliationAgent:
             r3_confidence=r3.confidence,
             minority_opinion=minority,
             contributing_evidence=[
-                f"{c.evidence_type.value}:{c.entry_id}" for c in contributions
+                f"{c.evidence_type.value}:{c.agent_id}:{c.email_id}" for c in contributions
             ],
             plain_english_chain=chain,
             cirt_individual=cirt_individual,
@@ -184,7 +184,9 @@ class ReconciliationAgent:
             delivery_problem_path=delivery_problem_path,
             zero_day_referred=zero_day_referred,
         )
-        return self._verdict_ledger.append(verdict)
+        return self._verdict_ledger.append(
+            verdict, writer_agent_id="reconciliation_agent_001"
+        )
 
     def analyze_bundle(
         self,

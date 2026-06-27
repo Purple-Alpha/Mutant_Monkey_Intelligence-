@@ -592,7 +592,8 @@ def test_verdict_ledger_rejects_extra_fields():
                 "r3_confidence": 0.9,
                 "plain_english_chain": "test",
                 "smuggled_field": True,
-            }
+            },
+            writer_agent_id="reconciliation_agent_001",
         )
 
 

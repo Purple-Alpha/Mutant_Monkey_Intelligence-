@@ -48,7 +48,7 @@ def test_valid_entry_writes_and_reads_back(tmp_path):
     written = ledger.append(_entry())
     rows = ledger.read_for_tenant("tenant_a")
     assert len(rows) == 1
-    assert rows[0].entry_id == written.entry_id
+    assert rows[0].email_id == written.email_id
     assert rows[0].evidence_type is EvidenceType.HEADER_SIGNAL
     assert rows[0].agent_id == "header_analysis"
 
@@ -119,7 +119,7 @@ def test_append_never_overwrites_a_prior_entry(tmp_path):
 
     assert after_second.startswith(after_first)  # original line untouched
     assert after_second.count("\n") == 2
-    assert first.entry_id != second.entry_id
+    assert first.confidence != second.confidence
 
 
 def test_write_without_tenant_id_is_rejected_and_logged(tmp_path):

@@ -1,26 +1,4 @@
-"""Reconciliation Verdict surface — Phase 4 (Layer 4).
-
-Governing contract
-------------------
-``4. Product_Roadmap/Phase4_ReconciliationAgent_Contract.md`` — §11 SIGNED
-2026-06-11 (Matt Nichol), commit ``d0cc849``. §13 relationship: "the verdict is
-written to ``core/blackboard/`` (new verdict surface to be defined in build)."
-This module is that surface.
-
-What this is
-------------
-The ReconciliationAgent is the swarm's **only** verdict producer (P4-D5). A
-verdict is **not** an ``EvidenceType`` — the Phase 1 ``CanonicalEvidenceLedger``
-records detection *contributions* (no verdict field, P3-D1) and its
-``EvidenceType`` enum is closed. So the verdict gets its own append-only,
-tenant-isolated store here in ``core/blackboard/`` rather than corrupting the
-signed Phase 1 evidence schema. Same append-only mechanics (P1-D2) and
-tenant-isolation discipline (P1-D3/P4-D8) as the evidence ledger.
-
-The ``Verdict`` enum is **closed** (§5). Schema validation rejects any value
-outside the five members; ``StrictModel`` forbids extra fields. There is no
-update or delete API — append-only holds structurally, not by convention.
-"""
+"""Reconciliation Verdict surface — Phase 4 (Layer 4) with Mode A writer allowlist."""
 
 from __future__ import annotations
 
@@ -32,18 +10,20 @@ from uuid import UUID, uuid4
 
 from pydantic import Field, ValidationError
 
+from .mode_a_gate import (
+    RECONCILIATION_WRITER_AGENT_ID,
+    ModeAGateError,
+    assert_verdict_writer_allowed,
+    load_authority_shadow_tokens,
+    load_verdict_narrative_shadow_tokens,
+    validate_verdict_semantics,
+)
 from .models import StrictModel
 
 VERDICT_LEDGER_SCHEMA_VERSION = "v1"
 
 
 class Verdict(str, Enum):
-    """Closed verdict enum (Phase 4 contract §5).
-
-    No verdict value exists outside this set; schema validation rejects any
-    other value at write time.
-    """
-
     HIGH_RISK = "HIGH_RISK"
     MEDIUM_RISK = "MEDIUM_RISK"
     LOW_RISK = "LOW_RISK"
@@ -52,8 +32,6 @@ class Verdict(str, Enum):
 
 
 class EnsembleOutcome(str, Enum):
-    """How the three-voter ensemble resolved (§4)."""
-
     UNANIMOUS = "unanimous"
     MAJORITY = "majority"
     ESCALATE = "escalate"
@@ -68,16 +46,6 @@ class VerdictLedgerSchemaError(VerdictLedgerError):
 
 
 class ReconciliationVerdict(StrictModel):
-    """One ReconciliationAgent verdict (Phase 4 contract §7 schema).
-
-    ``StrictModel`` forbids extra fields and the ``Verdict`` enum is closed, so
-    a malformed verdict (unknown field, bad verdict value, out-of-range
-    confidence, empty tenant) fails validation rather than landing on the
-    ledger. The per-voter votes and confidences are persisted so the minority
-    opinion is never discarded (§4). ``plain_english_chain`` is the
-    operator-readable narrative required by §7 — not a raw signal dump.
-    """
-
     verdict_id: UUID = Field(default_factory=uuid4)
     schema_version: str = VERDICT_LEDGER_SCHEMA_VERSION
 
@@ -105,21 +73,22 @@ class ReconciliationVerdict(StrictModel):
 
 
 class VerdictLedger:
-    """Named, schema-enforced, tenant-isolated, append-only verdict store.
+    """Append-only verdict store; only ``reconciliation_agent_001`` may write (BM-D4)."""
 
-    Mirrors ``CanonicalEvidenceLedger``: backed by a JSONL file, exposes only
-    ``append`` and ``read_for_tenant`` (no update/delete, P1-D2), and reads are
-    filtered by ``tenant_id`` and never span tenants (P4-D8). The verdict is the
-    sole verdict surface in the system (P4-D5).
-    """
-
-    def __init__(self, ledger_path: Path) -> None:
+    def __init__(self, ledger_path: Path, shadow_token_config: Path | None = None) -> None:
         self.ledger_path = Path(ledger_path)
+        self._shadow_tokens = load_verdict_narrative_shadow_tokens(shadow_token_config)
 
     def append(
-        self, verdict: ReconciliationVerdict | dict[str, Any]
+        self,
+        verdict: ReconciliationVerdict | dict[str, Any],
+        *,
+        writer_agent_id: str,
     ) -> ReconciliationVerdict:
-        """Validate and append one verdict. Append-only; never overwrites."""
+        try:
+            assert_verdict_writer_allowed(writer_agent_id)
+        except ModeAGateError as exc:
+            raise VerdictLedgerSchemaError(str(exc)) from exc
 
         if isinstance(verdict, ReconciliationVerdict):
             validated = verdict
@@ -131,14 +100,17 @@ class VerdictLedger:
                     "verdict write rejected: schema validation failed"
                 ) from exc
 
+        try:
+            validate_verdict_semantics(validated, shadow_tokens=self._shadow_tokens)
+        except ModeAGateError as exc:
+            raise VerdictLedgerSchemaError(str(exc)) from exc
+
         self.ledger_path.parent.mkdir(parents=True, exist_ok=True)
         with self.ledger_path.open("a", encoding="utf-8") as handle:
             handle.write(validated.model_dump_json() + "\n")
         return validated
 
     def read_for_tenant(self, tenant_id: str) -> list[ReconciliationVerdict]:
-        """Return every verdict for ``tenant_id`` only (P4-D8 tenant isolation)."""
-
         if not tenant_id:
             raise VerdictLedgerError("tenant_id is required to read the verdict ledger")
         if not self.ledger_path.exists():
@@ -153,3 +125,14 @@ class VerdictLedger:
                 if record.tenant_id == tenant_id:
                     verdicts.append(record)
         return verdicts
+
+
+__all__ = [
+    "RECONCILIATION_WRITER_AGENT_ID",
+    "EnsembleOutcome",
+    "ReconciliationVerdict",
+    "Verdict",
+    "VerdictLedger",
+    "VerdictLedgerError",
+    "VerdictLedgerSchemaError",
+]
