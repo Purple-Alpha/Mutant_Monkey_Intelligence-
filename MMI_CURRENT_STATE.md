@@ -24,12 +24,14 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #22 Payroll Diversion contract DRAFT placement (MMI-DEC-262)
-  (`4. Product_Roadmap/Payroll_Diversion_Agent_Design_Contract_Deep_Dive.md`; Step 00 31/31 PASS;
-  research `payroll_diversion_22_research_lanes.md`; employee scope vs #14/#21; **DRAFT UNSIGNED**;
-  **not** §11; **not** build).
+LAST_COMPLETED: #22 Payroll Diversion pre-build gate (MMI-DEC-263)
+  (`4. Product_Roadmap/Payroll_Diversion_Agent_Design_Contract_Deep_Dive.md`; 0 blocking / 0 warnings;
+  `audit_outputs/mmi_22_contract_gate_20260627T071131Z.md`; SIGNABLE; **not** §11 signed; **not** build).
 
-PRIOR_LAST_COMPLETED: #22 Payroll Diversion CONTRACT_DRAFT unpark (MMI-DEC-261)
+PRIOR_LAST_COMPLETED: #22 Payroll Diversion contract DRAFT placement (MMI-DEC-262)
+  (Step 00 31/31; **DRAFT UNSIGNED**; **not** build).
+
+PRIOR_PRIOR_LAST_COMPLETED: #22 Payroll Diversion CONTRACT_DRAFT unpark (MMI-DEC-261)
   (BOR v38 feedstock; Estimator 14.00; **not** §11; **not** build).
 
 PRIOR_PRIOR_LAST_COMPLETED: #70 Final Review GOVERNED_AGENT (MMI-DEC-259)
