@@ -62,6 +62,13 @@ from .rings import (
     RingController,
     RingError,
 )
+from .enact_gate import EnactmentBlockedError, enact_block, enact_contain
+from .reasoning_budget import (
+    ReasoningTier,
+    REASONING_TOKEN_CAPS,
+    resolve_reasoning_tier,
+    reasoning_token_cap,
+)
 from .gateway import (
     AllowAllModeCheck,
     GatewayController,
@@ -129,4 +136,12 @@ __all__ = [
     "GatewayRejected",
     "GatewayRequest",
     "ModeCheck",
+    # brain acceleration
+    "EnactmentBlockedError",
+    "enact_block",
+    "enact_contain",
+    "ReasoningTier",
+    "REASONING_TOKEN_CAPS",
+    "resolve_reasoning_tier",
+    "reasoning_token_cap",
 ]

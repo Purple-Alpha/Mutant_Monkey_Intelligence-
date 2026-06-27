@@ -32,6 +32,7 @@ class ControlPlaneEvent(str, Enum):
     RING_PROMOTION_REJECTED = "ring_promotion_rejected"
     RING_PROMOTED = "ring_promoted"
     GATEWAY_REJECTED = "gateway_rejected"
+    TRIAGE_SCORED = "triage_scored"
     GATEWAY_DISPATCHED = "gateway_dispatched"
 
 

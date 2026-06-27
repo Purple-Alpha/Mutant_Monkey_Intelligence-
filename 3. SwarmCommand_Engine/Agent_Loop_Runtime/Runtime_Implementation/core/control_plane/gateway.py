@@ -30,6 +30,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any, ClassVar, Protocol
 
+from core.control_plane.reasoning_budget import (
+    resolve_reasoning_tier,
+    reasoning_token_cap,
+)
+from core.control_plane.triage_prefilter import TriagePreFilter
+
 from core.control_plane.audit import ControlPlaneAuditTrail, ControlPlaneEvent
 from core.control_plane.breaker import BreakerKey, BreakerStore, TripClass
 from core.control_plane.budget import SessionBudgetStore
@@ -102,6 +108,7 @@ class GatewayController:
     segmentation: TenantSegmentationController
     audit: ControlPlaneAuditTrail
     mode_check: ModeCheck = field(default_factory=AllowAllModeCheck)
+    triage_prefilter: TriagePreFilter | None = None
 
     _CONTROL_AUTHORITY_KEYS: ClassVar[frozenset[str]] = frozenset(
         {
@@ -279,6 +286,38 @@ class GatewayController:
                 agent_id=resolved.agent_id,
             )
             raise GatewayRejected("mode", reason)
+
+
+        # --- Brain Acceleration: reasoning tier (audit only; verdict path HIGH) ---
+        reasoning_tier = resolve_reasoning_tier(resolved.agent_id, resolved.tool)
+        reasoning_cap = reasoning_token_cap(reasoning_tier)
+        if isinstance(request.args, dict):
+            requested_tier = request.args.get("reasoning_tier")
+            if requested_tier is not None and str(requested_tier) != reasoning_tier.value:
+                reason = (
+                    f"reasoning tier mismatch: requested {requested_tier!r} "
+                    f"resolved {reasoning_tier.value}"
+                )
+                self.audit.record(
+                    ControlPlaneEvent.GATEWAY_REJECTED,
+                    reason,
+                    tenant_id=resolved.tenant_id,
+                    agent_id=resolved.agent_id,
+                )
+                raise GatewayRejected("reasoning_tier", reason)
+
+        # --- Brain Acceleration: triage pre-filter (flag-not-drop) ------------
+        if self.triage_prefilter is not None:
+            telemetry = self.triage_prefilter.score_gateway_request(
+                request, resolved.tenant_id
+            )
+            if telemetry is not None:
+                self.audit.record(
+                    ControlPlaneEvent.TRIAGE_SCORED,
+                    f"aggregate_risk_score={telemetry.aggregate_risk_score}",
+                    tenant_id=resolved.tenant_id,
+                    agent_id=resolved.agent_id,
+                )
 
         # --- dispatch + telemetry -------------------------------------------
         self.audit.record(

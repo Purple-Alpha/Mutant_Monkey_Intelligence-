@@ -71,6 +71,8 @@ class MissionContext(StrictModel):
     tenant_id: str = Field(min_length=1)
     inputs_digest: str = Field(min_length=1)  # SHA-256 of the raw email/package under review
     source_record_id: UUID | None = None
+  # Brain Acceleration: set when Commander slices context per dispatched agent.
+    dispatch_agent_id: str | None = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
@@ -232,3 +234,19 @@ class Agent(Protocol):
     def challenge(
         self, contributions: tuple[AgentContribution, ...]
     ) -> ChallengeResult | None: ...
+
+def slice_mission_context_for_agent(
+    context: MissionContext,
+    agent_id: str,
+) -> MissionContext:
+    """Least-privilege MissionContext for one dispatched agent (Brain Acceleration)."""
+
+    if not agent_id.strip():
+        raise ValueError("agent_id is required for context slice")
+    if context.dispatch_agent_id is not None and context.dispatch_agent_id != agent_id:
+        raise ValueError(
+            f"context already sliced for {context.dispatch_agent_id!r}, "
+            f"cannot re-slice for {agent_id!r}"
+        )
+    return context.model_copy(update={"dispatch_agent_id": agent_id})
+

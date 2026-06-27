@@ -39,6 +39,7 @@ from .agent_contract import (
     DecisionTimestamps,
     MissionContext,
     SwarmDisposition,
+    slice_mission_context_for_agent,
 )
 from .routes import validate_agent_dispatch
 
@@ -144,7 +145,10 @@ class SwarmCommander:
         contributions: list[AgentContribution] = []
         for agent in agents:
             self._validate_agent_for_dispatch(agent, stage=stage)
-            contribution = agent.analyze(context)
+            agent_context = slice_mission_context_for_agent(
+                context, agent.agent_id
+            )
+            contribution = agent.analyze(agent_context)
             if contribution.agent_id != agent.agent_id:
                 raise GovernanceError(
                     f"contribution agent_id {contribution.agent_id!r} does not "
