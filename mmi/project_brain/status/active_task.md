@@ -30,8 +30,8 @@ Reconciliation vs #76/#79 in `geo_context_43_research_lanes.md`.
 - [x] Matt confirms Lane 1 scope (MMI-DEC-250)
 - [x] Formal contract DRAFT placed (MMI-DEC-250)
 - [x] Contract expanded — full template block + frozen TenantGeoContextRosterV1
-- [ ] Codex pre-build gate clean on formal contract (re-run after expansion)
-- [ ] Matt §11 when gate clean
+- [x] Codex pre-build gate clean on formal contract (`geo_context_contract_gate` 0 blocking)
+- [ ] Matt §11 when ready
 - [ ] mmi_dispatch.py --verify PASS after commit
 
 ## Prior lanes (closed)

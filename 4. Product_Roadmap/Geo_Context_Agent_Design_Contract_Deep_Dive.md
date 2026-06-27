@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_43_GEO_CONTEXT_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** **DRAFT (pre-§11).** Matt confirmed Lane 1 scope 2026-06-27 (MMI-DEC-250). Pre-build gate **blocked** (2 blockers) — contract expanded for re-gate. Not §11 signed. Not build authorization. Not production dispatch.
+**Status:** **DRAFT (pre-§11).** Matt confirmed Lane 1 scope 2026-06-27 (MMI-DEC-250). Pre-build gate **PASS** (`geo_context_contract_gate` 0 blocking / 1 warning). Not §11 signed. Not build authorization. Not production dispatch.
 
 **Scope:** Scoreboard #43 — **Lanes 1–2 + Lane 3 privacy bar only.** Lane 4 deception explicitly excluded — see `mmi/project_brain/architecture/reality_controller/README.md` and `geo_context_43_research_lanes.md`.
 
@@ -196,7 +196,7 @@ Do not import from `geo_fence_manager.md`: Reality Anchor, synthetic telemetry, 
 1. ~~Matt confirms Lane 1 scope~~ — **confirmed** MMI-DEC-250
 2. ~~Reconciliation appendix~~ — **documented** §5 + research artifact
 3. ~~Roster schema (§3 `TenantGeoContextRosterV1`)~~ — **complete**
-4. Pre-build gate clean on this formal contract file (re-run after expansion)
+4. ~~Pre-build gate clean on this formal contract file~~ — **PASS** (`geo_context_contract_gate` 0 blocking)
 
 ---
 
