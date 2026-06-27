@@ -58,13 +58,28 @@ class TenantGeoContextRosterV1(StrictModel):
 
 
 def digest_roster(roster: TenantGeoContextRosterV1) -> str:
-    payload = roster.model_dump(mode="json")
+    return digest_inputs(roster)
+
+
+def digest_inputs(
+    roster: TenantGeoContextRosterV1,
+    geo_briefing: GeoBriefing | None = None,
+) -> str:
+    payload: dict[str, object] = {"roster": roster.model_dump(mode="json")}
+    if geo_briefing is not None:
+        payload["geo_briefing"] = geo_briefing.model_dump(mode="json")
     canonical = json.dumps(payload, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def _normalized_tokens(tokens: tuple[str, ...]) -> set[str]:
     return {token.strip().upper() for token in tokens if token.strip()}
+
+
+def _observed_country_classes_from_brief(brief: GeoBriefing) -> set[str]:
+    """Read-only #76 country-class tokens used for declared-vs-observed compare."""
+
+    return _normalized_tokens(brief.high_risk_countries)
 
 
 class GeoContextAgent:
@@ -97,12 +112,10 @@ class GeoContextAgent:
         context: MissionContext,
         *,
         geo_briefing: GeoBriefing | None = None,
-        observed_country_class: str | None = None,
     ) -> AgentContribution:
-        """Emit Lane 1 closed facts from roster and optional comparison surface."""
+        """Emit Lane 1 closed facts from roster and optional #76 brief compare."""
 
         self._validate_tenant(context)
-        _ = geo_briefing  # optional read-only context for future ES2 wiring
         facts: list[str] = []
         roster = self._roster
 
@@ -115,10 +128,11 @@ class GeoContextAgent:
         if roster.compliance_policy_pack_refs:
             facts.append(POLICY_PACK_REF)
 
-        observed = (observed_country_class or "").strip().upper()
         declared_areas = _normalized_tokens(roster.declared_service_areas)
-        if observed and declared_areas and observed not in declared_areas:
-            facts.append(DECLARED_VS_OBSERVED_MISMATCH)
+        if geo_briefing is not None and declared_areas:
+            observed = _observed_country_classes_from_brief(geo_briefing)
+            if observed and not observed.issubset(declared_areas):
+                facts.append(DECLARED_VS_OBSERVED_MISMATCH)
 
         return AgentContribution(
             agent_id=self.agent_id,

@@ -8,7 +8,7 @@ from uuid import uuid4
 import pytest
 
 from core.blackboard import GovernanceError
-from core.knowledge.geo_intel_agent import GeoBriefing, GeoIntelAgent
+from core.knowledge.geo_intel_agent import GeoBriefing
 from core.orchestrator.agent_contract import AgentContribution, MissionContext
 from core.orchestrator.geo_context_agent import (
     CLOSED_GEO_CONTEXT_FACTS,
@@ -20,7 +20,7 @@ from core.orchestrator.geo_context_agent import (
     POLICY_PACK_REF,
     GeoContextAgent,
     TenantGeoContextRosterV1,
-    digest_roster,
+    digest_inputs,
 )
 from core.orchestrator.registry import build_default_registry
 
@@ -49,13 +49,22 @@ def _context(
     *,
     tenant_id: str = TENANT_A,
     roster: TenantGeoContextRosterV1 | None = None,
+    geo_briefing: GeoBriefing | None = None,
 ) -> MissionContext:
     roster = roster or _roster(tenant_id=tenant_id)
     return MissionContext(
         tenant_id=tenant_id,
-        inputs_digest=digest_roster(roster),
+        inputs_digest=digest_inputs(roster, geo_briefing),
         case_id=uuid4(),
         source_record_id=uuid4(),
+    )
+
+
+def _briefing(*, high_risk_countries: tuple[str, ...] = ()) -> GeoBriefing:
+    return GeoBriefing(
+        high_risk_countries=high_risk_countries,
+        last_updated="2026-06-27T00:00:00+00:00",
+        confidence_floor=0.55,
     )
 
 
@@ -93,28 +102,28 @@ class TestDeclaredFacts:
 
 
 class TestMismatchObservation:
-    def test_mismatch_when_observed_country_not_in_declared_areas(
+    def test_mismatch_when_brief_country_not_in_declared_areas(
         self, tmp_path: Path
     ) -> None:
         roster = _roster(service_areas=("CA", "US"))
         agent = _agent(tmp_path, roster)
-        brief = GeoIntelAgent().brief()
+        brief = _briefing(high_risk_countries=("DE",))
         contribution = agent.analyze(
-            _context(roster=roster),
+            _context(roster=roster, geo_briefing=brief),
             geo_briefing=brief,
-            observed_country_class="DE",
         )
         assert DECLARED_VS_OBSERVED_MISMATCH in contribution.observed_facts
         assert DECLARED_SERVICE_AREA in contribution.observed_facts
 
-    def test_no_mismatch_when_observed_country_in_declared_areas(
+    def test_no_mismatch_when_brief_countries_subset_of_declared_areas(
         self, tmp_path: Path
     ) -> None:
         roster = _roster(service_areas=("CA", "US"))
         agent = _agent(tmp_path, roster)
+        brief = _briefing(high_risk_countries=("CA",))
         contribution = agent.analyze(
-            _context(roster=roster),
-            observed_country_class="ca",
+            _context(roster=roster, geo_briefing=brief),
+            geo_briefing=brief,
         )
         assert DECLARED_VS_OBSERVED_MISMATCH not in contribution.observed_facts
 
@@ -136,9 +145,11 @@ class TestBoundaries:
         roster = _roster()
         agent = _agent(tmp_path, roster)
         contribution = agent.analyze(
-            _context(roster=roster),
-            geo_briefing=GeoIntelAgent().brief(),
-            observed_country_class="DE",
+            _context(
+                roster=roster,
+                geo_briefing=_briefing(high_risk_countries=("DE",)),
+            ),
+            geo_briefing=_briefing(high_risk_countries=("DE",)),
         )
         assert all(fact in CLOSED_GEO_CONTEXT_FACTS for fact in contribution.observed_facts)
         forbidden = (
