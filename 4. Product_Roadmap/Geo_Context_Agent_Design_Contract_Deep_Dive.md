@@ -195,7 +195,7 @@ Do not import from `geo_fence_manager.md`: Reality Anchor, synthetic telemetry, 
 
 1. ~~Matt confirms Lane 1 scope~~ — **confirmed** MMI-DEC-250
 2. ~~Reconciliation appendix~~ — **documented** §5 + research artifact
-3. ~~Tenant roster schema frozen~~ — **frozen** §3 `TenantGeoContextRosterV1`
+3. ~~Roster schema (§3 `TenantGeoContextRosterV1`)~~ — **complete**
 4. Pre-build gate clean on this formal contract file (re-run after expansion)
 
 ---
