@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_BLACKBOARD_MESH_GOVERNANCE_FOUNDATION_DRAFT`
 
-**Status:** **DRAFT UNSIGNED** — placed 2026-06-27 (Matt Nichol, 44th birthday / Iterative Crucible Mode intent). **Not** §11. **Not** build. **Not** production dispatch. **Not** AUTH-5. **Not** cryptographic signing (`MMI_CRYPTOGRAPHIC_SIGNING_CONTRACT` remains parked).
+**Status:** §11 SIGNED 2026-06-27 by Matt Nichol (MMI-DEC-271). Pre-build gate 0/0 MMI-DEC-270. Governs future infrastructure build slices (Mode A ledger gate, Evidence Backer, Crucible failure log). **Not** build until separate Build Authorization. **Not** production dispatch. **Not** AUTH-5. **Not** cryptographic signing (`MMI_CRYPTOGRAPHIC_SIGNING_CONTRACT` remains parked).
 
 **Lane type:** Infrastructure / cross-cutting governance (not a swarm agent scoreboard row).
 
@@ -46,7 +46,7 @@ Other prose may mislabel scoreboard rows. This contract uses **repo-accurate IDs
 
 ---
 
-## §2 Locked design decisions (candidate — confirm at §11)
+## §2 Locked design decisions (BM-D1–BM-D10 — §11 MMI-DEC-271)
 
 - **BM-D1 — Mode A schema gate (structural).** `EvidenceLedgerEntry` top-level keys are exactly the closed Phase 1 Component 1 set — no additions at this contract layer: `agent_id`, `tenant_id`, `email_id`, `evidence_type`, `details`, `confidence`, `timestamp`, `stage` (per `Phase1_Infrastructure_Agent_Design_Contract.md` §3 Component 1). Any forbidden top-level key → reject. Unknown extra top-level keys (including `entry_id`, `schema_version`, or other metadata) → reject until a signed Phase 1 amendment adds them. `StrictModel(extra="forbid")` is necessary but not sufficient.
 
@@ -176,13 +176,13 @@ Each entry: `crucible_run_id`, `failure_class`, `agents_involved`, `evidence_bac
 
 ---
 
-## §8 Open before §11
+## §8 Open before build (§11 signed — resolve at build authorization)
 
-1. Matt confirms forbidden-key set vs Phase 1 §3 Component 1 allowlist (no legit field collision).
+1. ~~Matt confirms forbidden-key set vs Phase 1 §3 Component 1 allowlist~~ — confirmed at §11 (MMI-DEC-271).
 2. Operator decision: reject vs quarantine-and-log on semantic scan hit.
 3. Authority-shadow token list location + version pin (`mmi/config/authority_shadow_tokens_v1.json` candidate).
 4. `details` closed sub-schema per `evidence_type` vs observation-bag + Gate 2 only.
-5. Pre-build gate on this contract file (Codex 0/0).
+5. ~~Pre-build gate on this contract file (Codex 0/0)~~ — PASS MMI-DEC-270.
 6. Reconciliation voter amendment for omission-as-safety — separate Phase 4 amendment or bundled DEC?
 7. Dual write path declared: blackboard `AgentContribution` JSONL vs `CanonicalEvidenceLedger` — backer must read both or unify.
 
@@ -190,7 +190,6 @@ Each entry: `crucible_run_id`, `failure_class`, `agents_involved`, `evidence_bac
 
 ## §9 Boundaries (this contract)
 
-- DRAFT only until Matt §11
 - No live production chaos
 - No AUTH-5
 - No crypto signing
@@ -199,28 +198,12 @@ Each entry: `crucible_run_id`, `failure_class`, `agents_involved`, `evidence_bac
 
 ---
 
-## §10 Matt §11 Signature Block (DRAFT — do not sign until §8 clear)
+## §11 Sign-off
 
-```
-§11 SIGN-OFF — BLACKBOARD_MESH_GOVERNANCE_FOUNDATION
+SIGNED. This locks BM-D1–BM-D10 for Blackboard-Mesh infrastructure governance. Signing authorizes future build slices (Mode A ledger gate, Evidence Backer read-only verifier, Crucible failure log) **only** after separate operator Build Authorization. Signing authorizes **no** production dispatch, **no** live SIGKILL chaos, **no** AUTH-5 unlock, and **no** cryptographic signing (LAW 9 parked).
 
-I, Matt Nichol, have reviewed this infrastructure governance contract draft.
-
-[ ] I approve this contract as written.
-[ ] I authorize pre-build gate (Codex) on this contract.
-[ ] On clean gate, I §11-sign and authorize future infrastructure build slices
-    (Mode A ledger gate, Evidence Backer read-only verifier, Crucible failure log)
-    only after separate Build Authorization.
-
-Confirmed: crypto signing remains a separate future contract (LAW 9).
-[ ] yes
-
-Confirmed: #99 is Mode Controller Adversarial Suite, not Chaos Controller.
-[ ] yes
-
-Signature: Matt Nichol June ___ 2026
-```
+> §11 SIGNATURE — Matt Nichol June 27th 2026
 
 ---
 
-**End of draft.** Next steps: Step 00 field validation → pre-build gate → Matt §11 → unpark infrastructure feedstock → build authorization (hot lane).
+**End.** Next steps: operator build authorization → Mode A ledger gate → `evidence_backer.py` → crucible failure log (hot lane).

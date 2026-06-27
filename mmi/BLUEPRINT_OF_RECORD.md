@@ -1,9 +1,28 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-269). BOR feedstock rank-1 Blackboard-Mesh infrastructure CONTRACT_DRAFT (Iterative Crucible / Phoenix).
+**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-271). BOR feedstock rank-1 Blackboard-Mesh infrastructure SIGNED_UNBUILT (NEEDS_BUILD_AUTH).
 
 ---
 
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v41
+
+plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v41
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v41
+population_decision: MMI-DEC-271
+created_at: 2026-06-27
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Matt §11 Blackboard-Mesh infrastructure contract; Iterative Crucible / Evidence Backer lane
+revision_reason: Pre-build gate PASS (MMI-DEC-270); §11 signed (MMI-DEC-271); infrastructure build slices await operator build authorization
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
+
+feedstock_entry: priority=1 lane_type=INFRASTRUCTURE_SIGNED_UNBUILT name=Blackboard-Mesh Governance Foundation status=NEEDS_BUILD_AUTH
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #22 Payroll Diversion — GOVERNED_AGENT (MMI-DEC-267; §11 MMI-DEC-264; build `83710f2`)
+
+---
 
 ## CURRENT_PLAN — ALL_CLEAR feedstock v40
 
