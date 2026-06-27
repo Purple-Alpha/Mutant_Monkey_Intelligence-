@@ -29,7 +29,8 @@ Reconciliation vs #76/#79 in `geo_context_43_research_lanes.md`.
 - [x] v2 geo-fence Reality Anchor doctrine committed
 - [x] Matt confirms Lane 1 scope (MMI-DEC-250)
 - [x] Formal contract DRAFT placed (MMI-DEC-250)
-- [ ] Codex pre-build gate clean on formal contract
+- [x] Contract expanded — full template block + frozen TenantGeoContextRosterV1
+- [ ] Codex pre-build gate clean on formal contract (re-run after expansion)
 - [ ] Matt §11 when gate clean
 - [ ] mmi_dispatch.py --verify PASS after commit
 
