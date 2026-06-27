@@ -1,12 +1,49 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-260). BOR feedstock empty — Estimator NO_BUILDABLE_CANDIDATES.
+**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-261). BOR feedstock rank-1 #22 Payroll Diversion active (CONTRACT_DRAFT).
+
+---
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v38
+
+plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v38
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v38
+population_decision: MMI-DEC-261
+created_at: 2026-06-27
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Operator unpark after BOR v37 ALL_CLEAR hold (MMI-DEC-260)
+revision_reason: Matt authorized unpark #22 Payroll Diversion as rank-1 CONTRACT_DRAFT feedstock; Layer 2 Detection follow-on to payment + executive-impersonation chain
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
+
+feedstock_entry: priority=1 candidate_id=#22 lane_type=CONTRACT_DRAFT name=Payroll Diversion
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #70 Final Review — GOVERNED_AGENT (MMI-DEC-259; §11 MMI-DEC-244; build `aa38ca3`; completion gate `audit_outputs/final_review_agent_20260627T054814Z.md`)
+  #43 Geo-Context — GOVERNED_AGENT (MMI-DEC-257; §11 MMI-DEC-252; build `fb0be77`; completion gate `audit_outputs/geo_context_20260627T062329Z.md`)
+  #21 Executive Impersonation — GOVERNED_AGENT (MMI-DEC-255; §11 MMI-DEC-217; build `fe6add7`; completion gate `audit_outputs/executive_impersonation_20260626T022031Z.md`)
+  #19 Dual-Approval — GOVERNED_AGENT (MMI-DEC-238; §11 MMI-DEC-232; VPV MMI-DEC-231; build `0b78503`; completion gate `audit_outputs/dual_approval_20260626T212610Z.md`)
+  #50 Evidence Strength — GOVERNED_AGENT (MMI-DEC-209; §11 MMI-DEC-206; build `fddccbd`; completion gate `audit_outputs/evidence_strength_20260625T213536Z.md`)
+  #49 Audit Trail — GOVERNED_AGENT (MMI-DEC-201; §11 MMI-DEC-199; build `27ea39f`; completion gate `audit_outputs/audit_trail_20260625T193137Z.md`)
+  #18 Callback Verification — GOVERNED_AGENT (MMI-DEC-196; §11 MMI-DEC-193; build `880d477`)
+  #71 Token Usage Tracker — GOVERNED_AGENT (MMI-DEC-189; §11 MMI-DEC-188; infra `fe355da`)
+  Post–Stage C breadth rollout — br01–br05 complete (MMI-DEC-176–182)
+  Phase 3 #78–#83 — GOVERNED_AGENT (MMI-DEC-181)
+  Phase 2 #72–#77 — GOVERNED_AGENT (MMI-DEC-180)
+  Team 9 #61–#65, #64, #67 — GOVERNED_AGENT (MMI-DEC-176–179 / MMI-DEC-173–174)
+  Command spine #1–#3 — GOVERNED_AGENT (MMI-DEC-170/171/172)
+  #52, #47 — GOVERNED_AGENT (MMI-DEC-169/168)
+  #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
+
+DEPTH posture (not feedstock — gate CLOSED): #84 ReconciliationAgent, #85–#94 immune stack remain GATED until depth gate opens or explicit operator fork.
+
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): #105 EXCLUDED_NON_BUILDABLE_STATE (SIGNED_CONTRACT probe); dynamic promotion queue via Operator Map.
 
 ---
 
 ## CURRENT_PLAN — ALL_CLEAR feedstock v37
 
-plan_status: CURRENT_PLAN
+plan_status: SUPERSEDED_PLAN
 version_id: BOR-ALL-CLEAR-FEEDSTOCK-v37
 population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v37
 population_decision: MMI-DEC-260

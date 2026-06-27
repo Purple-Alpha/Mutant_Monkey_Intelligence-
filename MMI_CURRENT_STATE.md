@@ -24,13 +24,14 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #70 Final Review GOVERNED_AGENT (MMI-DEC-259)
-  (`core/orchestrator/final_review_agent.py`; §11 MMI-DEC-244; build `aa38ca3`;
-  15 focused tests; completion gate 0/0 MMI-DEC-249 —
-  `audit_outputs/final_review_agent_20260627T054814Z.md`; scoreboard #70 `GATED` -> `GOVERNED_AGENT`;
-  breadth runway 44 -> 45; FR-DER + FR-GOV; Slice A not absorbed; **not** production dispatch; **not** default registry; **not** AUTH-5).
+LAST_COMPLETED: #22 Payroll Diversion CONTRACT_DRAFT unpark + BOR v38 feedstock restore (MMI-DEC-261)
+  (Matt operator pick; Layer 2 Detection; payment-chain follow-on to #14/#19 and exec-pressure #21;
+  source eval `ei-002` + `Phase_1_1_Fraud_Prevention_Deep_Dive.md`; **not** §11; **not** build).
 
-PRIOR_LAST_COMPLETED: #43 Geo-Context GOVERNED_AGENT (MMI-DEC-257)
+PRIOR_LAST_COMPLETED: #70 Final Review GOVERNED_AGENT (MMI-DEC-259)
+  (`core/orchestrator/final_review_agent.py`; breadth 44 -> 45; **not** production dispatch).
+
+PRIOR_PRIOR_LAST_COMPLETED: #43 Geo-Context GOVERNED_AGENT (MMI-DEC-257)
   (`core/orchestrator/geo_context_agent.py`; build `fb0be77`; gate 0/0;
   breadth 43 -> 44; Lane 1 only; **not** production dispatch).
 

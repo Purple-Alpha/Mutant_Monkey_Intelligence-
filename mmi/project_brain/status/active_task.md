@@ -2,33 +2,34 @@
 
 ## Current State
 
-status: ALL_CLEAR
+status: ACTION
 
-task: No delegable hot-lane task — #70 GOVERNED_AGENT (MMI-DEC-259)
+task: #22 Payroll Diversion — Agent Design Contract draft (MMI-DEC-261 unpark)
 
-for: Matt — next ranked lane or Estimator read-only ranking
+for: Cursor — contract draft lane
 
-score: n/a
+score: 6/10
 
 milestone: M1_CONTROL_PLANE_RESTORED
 
-lane: HOLD
+lane: CONTRACT
 
 ## Why This Is Active
 
-#70 Final Review promoted GATED -> GOVERNED_AGENT (MMI-DEC-259).
-Build `aa38ca3`; gate 0/0 MMI-DEC-249. Breadth 45/70. FR-DER + FR-GOV. **Not** production dispatch.
+Matt unparked #22 Payroll Diversion as rank-1 CONTRACT_DRAFT feedstock (MMI-DEC-261).
+BOR v38 active. Layer 2 Detection; upstream #14 + #21. **Not** §11; **not** build auth.
 
 ## Done When
 
-- [x] Matt authorized promotion review
-- [x] Scoreboard + DEC + BOR reconcile (MMI-DEC-259/260)
-- [ ] Matt selects next lane
+- [ ] Agent Design Contract draft placed under `4. Product_Roadmap/`
+- [ ] Step 00 contract block validation PASS
+- [ ] Pre-build gate clean (optional before §11)
+- [ ] `mmi_dispatch.py --verify` PASS after commit
 
 ## Prior lanes (closed)
 
-#21 GOVERNED_AGENT MMI-DEC-255 · #43 GOVERNED_AGENT MMI-DEC-257 · #70 GOVERNED_AGENT MMI-DEC-259.
+#70 GOVERNED_AGENT MMI-DEC-259 · #43 GOVERNED_AGENT MMI-DEC-257 · #21 GOVERNED_AGENT MMI-DEC-255.
 
 ## Closeout
 
-Promotion does not authorize production dispatch, default registry wiring, or AUTH-5.
+Unpark authorizes contract draft only. §11 + build require separate Matt authorization.
