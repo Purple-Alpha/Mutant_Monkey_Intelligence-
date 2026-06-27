@@ -1,9 +1,29 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-271). BOR feedstock rank-1 Blackboard-Mesh infrastructure SIGNED_UNBUILT (NEEDS_BUILD_AUTH).
+**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-277). Blackboard-Mesh infrastructure slice complete (Mode A + Evidence Backer + Crucible).
 
 ---
 
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v42
+
+plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v42
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v42
+population_decision: MMI-DEC-277
+created_at: 2026-06-27
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Blackboard-Mesh infrastructure trilogy complete; Iterative Crucible synthetic harness live
+revision_reason: Mode A ledger gate, Evidence Backer, and Crucible failure log all gated; infrastructure CONTRACT complete at hobby-grade proof layer
+non_authority_disclaimer: Advisory flow plan only. Does not authorize production dispatch or AUTH-5.
+
+feedstock_entry: (empty — hold ALL_CLEAR; infrastructure lane complete)
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  Blackboard-Mesh infrastructure — Mode A + Evidence Backer + Crucible (MMI-DEC-277)
+  #22 Payroll Diversion — GOVERNED_AGENT (MMI-DEC-267)
+
+---
 
 ## CURRENT_PLAN — ALL_CLEAR feedstock v41
 

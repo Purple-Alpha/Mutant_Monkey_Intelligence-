@@ -2,11 +2,11 @@
 
 ## Current State
 
-status: AWAITING_AUDIT
+status: INFRASTRUCTURE_COMPLETE
 
-task: Blackboard-Mesh Evidence Backer — completion gate
+task: Blackboard-Mesh infrastructure trilogy complete
 
-for: Matt — completion gate review; then crucible failure log slice
+for: Matt — unpark next lane when ready
 
 score: n/a
 
@@ -16,13 +16,12 @@ lane: INFRASTRUCTURE / Iterative Crucible
 
 ## Why This Is Active
 
-Evidence Backer built (MMI-DEC-274): read-only PROVABLE/INCOMPLETE/VIOLATION/NOT_APPLICABLE verifier.
-Completion gate: `evidence_backer_20260627T203312Z.md`.
-**Not** crucible log yet.
+Blackboard-Mesh infrastructure build complete (MMI-DEC-277):
+Mode A ledger gate + Evidence Backer + Crucible failure log.
+Dispatcher remains ALL_CLEAR until operator unparks next lane.
 
 ## Done When
 
 - [x] Mode A ledger gate (MMI-DEC-272/273)
-- [x] Build authorization Evidence Backer (MMI-DEC-274)
-- [ ] Completion gate 0 blocking
-- [ ] Build authorization: crucible failure log
+- [x] Evidence Backer (MMI-DEC-274/275)
+- [x] Crucible failure log (MMI-DEC-276/277)
