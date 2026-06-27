@@ -17,9 +17,9 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 
 **#1 TARGET:** full 70-agent governed blue-team swarm (non-reducible).
 
-**BREADTH RUNWAY:** **43** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, **#10**, #11, **#18**, **#19**, **#21**, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, **#49**, **#50**, #52, #61, #62, #63, #64, #65, #67, #71, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
+**BREADTH RUNWAY:** **44** of 70 agents at `GOVERNED_AGENT` (Evidence Stage 1–2 Synthetic): #1, #2, #3, #6, #6A, #8, **#10**, #11, **#18**, **#19**, **#21**, **#43**, #14, #23, #24, #27, #30, #31, #39, #46, #47, #48, **#49**, **#50**, #52, #61, #62, #63, #64, #65, #67, #71, #72, #73, #74, #75, #76, #77, #78, #79, #80, #81, #82, #83.
 
-**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** Q5 step 3 **complete** — #10 GOVERNED_AGENT MMI-DEC-245 · #21 GOVERNED_AGENT MMI-DEC-255 · **BREADTH runway 43/70 GOVERNED_AGENT** · #19 GOVERNED_AGENT MMI-DEC-238 · #70 GATED MMI-DEC-249 · #43 GATED MMI-DEC-254 (gate 0/0 `audit_outputs/geo_context_20260627T062329Z.md`). **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held.
+**Actionable-now (`BLOCKERS` empty, `TRACK=BREADTH`, dependencies satisfied):** Q5 step 3 **complete** — #10 GOVERNED_AGENT MMI-DEC-245 · #21 GOVERNED_AGENT MMI-DEC-255 · #43 GOVERNED_AGENT MMI-DEC-257 · **BREADTH runway 44/70 GOVERNED_AGENT** · #19 GOVERNED_AGENT MMI-DEC-238 · #70 GATED MMI-DEC-249. **DEPTH stack (#84–#94)** — promotion blocked while DEPTH gate CLOSED (BS-D3). **Team 9 + Phase 2/3 chains complete**. **Command spine #1–#3 GOVERNED_AGENT**. **#105 Invariants Framework** — Lane 1 probe only; Lane 2+ held.
 
 **DEPTH GATE: CLOSED.** Stage 2+ promotion blocked until real-data intake opens (Production Evidence Store infra + controls activation + separate operator authorization). Agents #54-#60 carry `NEEDS_REAL_DATA`.
 
@@ -43,6 +43,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 8 | Ghost Thread | 2 | ES1 | 87 | baseline 2026-06-08 |
 | 10 | Lookalike Domain | 2 | ES1 | 80 | 2026-06-25 — Q5 step 3 wrapper MMI-DEC-212; contract §11 MMI-DEC-214; GOVERNED_AGENT MMI-DEC-245 (0/0 gate) |
 | 21 | Executive Impersonation | 2 | ES1 | 80 | 2026-06-27 — Q5 step 3 wrapper MMI-DEC-218; contract §11 MMI-DEC-217; GOVERNED_AGENT MMI-DEC-255 (0/0 gate) |
+| 43 | Geo-Context | 2 | ES1 | 80 | 2026-06-27 — Lane 1 wrapper MMI-DEC-253; contract §11 MMI-DEC-252; GOVERNED_AGENT MMI-DEC-257 (0/0 gate) |
 | 11 | Known-Good Contact | 3 | ES1 | 87 | baseline 2026-06-08 |
 | 18 | Callback Verification | 3 | ES1 | 87 | baseline 2026-06-25 — third Layer 3; callback-OOB read-only chain tested |
 | 19 | Dual-Approval | 3 | ES1 | 87 | baseline 2026-06-26 — fourth Layer 3; VPV packet + dual-approval read-only chain tested |
@@ -182,7 +183,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 40 | Tone Drift | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 41 | Behavioral Baseline | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 42 | Timing Anomaly | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 43 | Geo-Context | `GATED` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract** MMI-DEC-252; built MMI-DEC-253 `fb0be77` + 10 focused tests + completion gate 0 blocking / 0 warnings — `audit_outputs/geo_context_20260627T062329Z.md`; GATED reconcile MMI-DEC-254; not in `build_default_registry` / no production dispatch at Stage 1) | `4. Product_Roadmap/Geo_Context_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED MMI-DEC-252) + `core/orchestrator/geo_context_agent.py` (`GeoContextAgent`, `geo_context_001`, `TenantGeoContextRosterV1`, `fb0be77`, 10 focused tests `tests/test_geo_context_agent.py`) + `mmi/project_brain/architecture/geo_context_43_research_lanes.md` | 2 Detection | A |  | BREADTH | — | fb0be77 |
+| 43 | Geo-Context | `GOVERNED_AGENT` (Evidence Stage 1 — Synthetic; **§11-signed Agent Design Contract** MMI-DEC-252; built MMI-DEC-253 `fb0be77` + 10 focused tests + completion gate 0 blocking / 0 warnings — `audit_outputs/geo_context_20260627T062329Z.md`; not in `build_default_registry` / no production dispatch at Stage 1) | `4. Product_Roadmap/Geo_Context_Agent_Design_Contract_Deep_Dive.md` (§11 SIGNED MMI-DEC-252) + `core/orchestrator/geo_context_agent.py` (`GeoContextAgent`, `geo_context_001`, `TenantGeoContextRosterV1`, `fb0be77`, 10 focused tests `tests/test_geo_context_agent.py`; GATED reconcile MMI-DEC-254; GOVERNED_AGENT promotion MMI-DEC-257) + `mmi/project_brain/architecture/geo_context_43_research_lanes.md` | 2 Detection | A |  | BREADTH | — | fb0be77 |
 | 44 | Social Engineering | `merged` (Build Map TRIAGE 2026-06-08) | **merged into #39 Language Pressure:** same `core/scoring/callback_phishing_detector.py` TOAD/body-language surface now governed by `LanguagePressureAgent`. Re-triage trigger: a distinct social-engineering detector exists outside #39's signed TOAD v1 boundary. | 2 Detection | A | merged | BREADTH | — | 626295f |
 | 45 | Process Bypass | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 

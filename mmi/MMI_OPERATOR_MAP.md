@@ -1,5 +1,5 @@
-generated_at: 2026-06-27T06:40:59Z
-git_head: 31edca6
+generated_at: 2026-06-27T06:47:48Z
+git_head: e11a720
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -12,8 +12,8 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 ## Where we are
 
 - **Dispatcher:** `ALL_CLEAR` — nothing waiting to be built or audited right now
-- **Governed agents:** 43 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
-- **Promotion queue:** 2 built-and-audited agents waiting for your promotion review
+- **Governed agents:** 44 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
+- **Promotion queue:** 1 built-and-audited agents waiting for your promotion review
 
 ## Why it keeps stalling
 
@@ -27,19 +27,17 @@ until you name the next lane.
 
 ## What's next (ranked — not authorized until you say so)
 
-1. **Promotion review #43 Geo-Context (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
-2. **Promotion review #70 Final Review Agent (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
-3. **Hold ALL_CLEAR — no new lane this cycle** — score 3/10
+1. **Promotion review #70 Final Review Agent (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
+2. **Hold ALL_CLEAR — no new lane this cycle** — score 3/10
 
 ## Promotion queue (built, audited, needs your review)
 
-1. **#43 Geo-Context** — GATED, ready for promotion review
-2. **#70 Final Review Agent** — GATED, ready for promotion review
+1. **#70 Final Review Agent** — GATED, ready for promotion review
 
 ## What to say to unstick (copy-paste)
 
 ```text
-Authorize GOVERNED_AGENT promotion review #43 (Geo-Context)
+Authorize GOVERNED_AGENT promotion review #70 (Final Review Agent)
 ```
 
 ## What the crew can do without you
