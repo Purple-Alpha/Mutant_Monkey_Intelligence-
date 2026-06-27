@@ -18,7 +18,7 @@ lane: RESEARCH
 
 Matt split geo-tracking into four research lanes. Artifact:
 mmi/project_brain/architecture/geo_context_43_research_lanes.md.
-geo_fence_manager.md is reference only — deception concepts PARK in Lane 4.
+geo_fence_manager.md v2 Reality Anchor doctrine committed (`448315a`) — reference only; Lane 4 PARK.
 Preferred direction: #43 = **Lane 1 legit geo-context** (tenant service area /
 jurisdiction facts), reconciled against governed **#79 GeoVelocityAgent** /
 **#76 GeoIntelAgent**. **Not** build authorization.
@@ -27,8 +27,9 @@ jurisdiction facts), reconciled against governed **#79 GeoVelocityAgent** /
 
 - [x] Relationship #43 ↔ #79 / #76 documented
 - [x] Research artifact under mmi/project_brain/architecture/
+- [x] v2 geo-fence Reality Anchor doctrine committed (`448315a`)
 - [ ] Matt confirms Lane 1 scope → contract draft or extended hold
-- [ ] mmi_dispatch.py --verify PASS after commit
+- [x] mmi_dispatch.py --verify PASS after commit
 
 ## Prior lanes (closed)
 

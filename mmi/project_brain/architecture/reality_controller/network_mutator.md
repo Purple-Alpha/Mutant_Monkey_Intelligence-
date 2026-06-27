@@ -41,7 +41,7 @@ When the mutator shifts, it logs the "Delta" to the MMI project brain:
 
 ## 4. Stealth and Integrity Protocols
 
-- **Synchronization:** Must stay synced with `geo-fence-manager` so regional persona stays consistent.
+- **Synchronization:** Must stay synced with `geo-fence-manager` (Reality Anchor) so regional persona, latency jitter, and synthetic telemetry remain consistent across hops (**Session Continuity Contract**).
 - **Non-Disruptive Mutation:** Shifts at the control-plane level; infrastructure remains "open" from the attacker's perspective.
 - **Attacker-Triggered Rotation:** "Aggressive Mode" mutates only when the attacker probes a specific asset.
 

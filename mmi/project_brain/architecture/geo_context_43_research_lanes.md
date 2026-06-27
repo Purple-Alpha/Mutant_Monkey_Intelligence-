@@ -151,3 +151,4 @@ geo_fence_manager.md (REFERENCE ONLY)
 - `mmi/project_brain/architecture/purple_translation_layer.md`  
 - Scoreboard #43, #76, #79  
 - MMI-DEC-222 (#43 held for research)
+- v2 Reality Anchor doctrine — commit `448315a` (entrapment-by-validation; Lane 4 PARK)

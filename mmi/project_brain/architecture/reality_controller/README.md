@@ -23,7 +23,7 @@ This folder is **not** a second project brain. Operator queue truth remains
 | Module | File | Role |
 |--------|------|------|
 | Beacon Injector | `beacon_injector.md` | Artifact telemetry / attribution (lab decoys) |
-| Geo-Fence Manager | `geo_fence_manager.md` | Regional decoy persona + geo-context |
+| Geo-Fence Manager | `geo_fence_manager.md` | **Reality Anchor (CORE TIER)** — entrapment by validation, synthetic telemetry |
 | Network Mutator | `network_mutator.md` | Moving-target defense topology |
 | Tarpit Orchestrator | `tarpit_orchestrator.md` | Session prolongation / resource exhaustion |
 | Trap / Hack / Rot Bots | `trap_hack_rot_bots.md` | Active engagement — highest liability |
@@ -60,3 +60,23 @@ override BREADTH/DEPTH build sequencing or signed agent contracts.
 3. Matt explicit authorization — distinct from §11 agent contracts
 4. First buildable slice likely mirrors **Adversarial Resilience Harness**
    (synthetic fixtures, governance drift) — not live tarpits or beacon injection
+
+---
+
+## Doctrine stack (v2 — 2026-06-27)
+
+**Anchor module:** `geo_fence_manager.md` (`RESEARCH_DESIGN — CORE TIER`, Lane 4 PARK)
+
+```
+Ingress metadata -> geo-fence-manager (Reality Anchor)
+    -> project brain: Reality Anchor + Entrapment Score
+    -> network-mutator: maintain regional persona (Session Continuity)
+    -> [optional, gated] trap_hack_rot_bots: Hack-Bot on Reality Mismatch
+```
+
+**#43 separation:** Production geo-context research lives in
+`geo_context_43_research_lanes.md` (Lanes 1–2 only). Do not import Lane 4 deception
+into #43 ES1 contracts.
+
+**Governance:** Doctrine changes require Founder review + MMI-DEC record. Never automate
+Reality Controller evolution.
