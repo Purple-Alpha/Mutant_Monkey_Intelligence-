@@ -27,7 +27,7 @@ python3 scripts/mmi_pm_voice.py
 python3 scripts/mmi_dispatch.py --verify
 ```
 
-**Expected at handoff:** `MODE: ALL_CLEAR` — BREADTH runway **46/70 GOVERNED_AGENT**; BOR v41 Blackboard-Mesh §11 SIGNED (MMI-DEC-271); NEEDS_BUILD_AUTH.
+**Expected at handoff:** `MODE: ALL_CLEAR` — BREADTH runway **46/70 GOVERNED_AGENT**; BOR v42 Blackboard-Mesh infrastructure complete (MMI-DEC-277).
 
 ---
 
