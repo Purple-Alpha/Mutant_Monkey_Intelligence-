@@ -152,3 +152,69 @@ geo_fence_manager.md (REFERENCE ONLY)
 - Scoreboard #43, #76, #79  
 - MMI-DEC-222 (#43 held for research)
 - v2 Reality Anchor doctrine — commit `448315a` (entrapment-by-validation; Lane 4 PARK)
+
+---
+
+## Superintendent action — Lane 1 scope
+
+### Product surface (Lane 1 only)
+
+**#43 Geo-Context Agent** (proposed) ingests **tenant-declared legitimate context** — service area, jurisdiction hints, expected language/locale, and compliance policy-pack references — and emits **closed facts only** for downstream agents to compare against observed session/network context. It does **not** detect anomalies, score fraud, block traffic, or route decoys.
+
+Example: an MSP declares clients in BC + AB; an inbound artifact shows EU hosting context. #43 emits `declared_service_area_mismatch` as an **observation**; **#79** (if invoked) emits `geo_velocity_anomaly`; scoring layers combine facts — none alone is a verdict.
+
+### Explicit out of scope
+
+- Lane 4 deception (Reality Controller, `geo_fence_manager.md`, tarpit, synthetic telemetry, Hack-Bot)
+- Person-level tracking or cross-session geo identity (Lane 3 bar)
+- Autonomous block / allow / payment / containment
+- Re-emitting #76 Layer 0 geo brief or #79 velocity detection logic
+- Production dispatch, AUTH-5, or scoreboard lifecycle change from this research pass
+
+### Yes / No question for Matt
+
+**Is tenant service area + jurisdiction context (Lane 1) the intended #43 product surface?**
+
+| Response | Next step |
+|----------|-----------|
+| **Yes** | Promote `Geo_Context_Agent_Design_Contract_Deep_Dive_DRAFT.md` to formal contract draft; pre-build gate; hold build until Matt authorization |
+| **No** | Record alternate surface in Superintendent action; extend hold (MMI-DEC-222) |
+| **Extended hold** | Document missing evidence: tenant roster schema, legal review on jurisdiction advisory text, or #79 overlap proof |
+
+### If extended hold — evidence still missing
+
+1. Canonical tenant service-area roster format (caller-owned, #10 lookalike pattern)
+2. Legal review DEC if jurisdiction output is customer-facing beyond internal facts
+3. Proof that Lane 1 facts integrate with #79 without duplicate `geo_signal` emission
+
+---
+
+## Reconciliation appendix: #43 vs #76 vs #79
+
+| Agent | Layer | Emits | Consumes | #43 must not duplicate |
+|-------|-------|-------|----------|------------------------|
+| **#76 GeoIntelAgent** | Layer 0 | `GeoBriefing` — brief-only geo intel from inbound artifact metadata | Raw headers / artifact metadata | Raw geo intel re-emission; Layer 0 brief assembly |
+| **#79 GeoVelocityAgent** | Layer 1 | `geo_signal` — impossible travel, region-hop anomalies | Layer 0 `GeoBriefing` + session timeline facts | Velocity detection, anomaly scoring, `geo_signal` writer role |
+| **#43 Geo-Context (proposed Lane 1)** | Context synthesis | `TenantGeoContextFacts` — declared service area, jurisdiction frame, expected locale, policy-pack ref | Tenant config roster (caller-supplied) + optional #76 brief for comparison | Detection logic, decoy routing, fraud verdict, block/allow |
+| **#43 (proposed Lane 2 boundary)** | Risk input only | May pass through anonymization observations already in #76 brief — only if gap proven | #76 output | Anything #79 or scoring pipeline already owns |
+
+### Fact vocabulary (no collision)
+
+| Fact type | Owner |
+|-----------|-------|
+| `observed_country`, `observed_asn_class`, header-chain parse | #76 |
+| `geo_velocity_anomaly`, impossible-travel signal | #79 |
+| `declared_service_area`, `declared_jurisdiction_frame`, `expected_locale`, `policy_pack_ref` | **#43 (Lane 1)** |
+| `declared_vs_observed_mismatch` (observation, not verdict) | **#43 (Lane 1)** |
+| `entrapment_score`, decoy persona, Reality Mismatch | Lane 4 **PARK** — not #43 |
+
+### Integration pattern (target)
+
+```
+Tenant roster (caller) -> #43 Geo-Context -> TenantGeoContextFacts
+#76 GeoBriefing (read)  ->       |              declared_vs_observed_mismatch (fact)
+                                 v
+                           Scoring / #79 / human review (downstream — not #43)
+```
+
+**Verdict:** Keep #43 as **Lane 1 context synthesis** reconciled with, not merged into, #76 and #79.
