@@ -1,13 +1,13 @@
-generated_at: 2026-06-26T23:52:12Z
-git_head: aa38ca3
+generated_at: 2026-06-27T05:50:52Z
+git_head: ebf1215
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
 
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
-dispatcher_mode: AUDIT
-candidate_count: 2
+dispatcher_mode: ALL_CLEAR
+candidate_count: 3
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
@@ -26,7 +26,20 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 1**
 
-## ACTION 2 — TOTAL 3/10
+## ACTION 2 — TOTAL 1/10
+
+**Promotion review #70 Final Review Agent (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#70`
+- primary_scope: `#70`
+- leverage: 1
+- risk_reduction: 0
+- evidence_strength: 0
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 1**
+
+## ACTION 3 — TOTAL 3/10
 
 **Hold ALL_CLEAR — no new lane this cycle**
 

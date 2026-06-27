@@ -127,7 +127,7 @@ python3 scripts/mmi_dispatch.py --verify
 
 | Lane | Row | Status | Owner |
 |------|-----|--------|-------|
-| **Hot** | #70 Final Review Agent | `AWAITING_AUDIT` — completion gate pending (`aa38ca3`) | Builder |
+| **Hot** | #70 Final Review Agent | `GATED` (MMI-DEC-249; gate 0/0 `final_review_agent_20260627T054814Z.md`) | Closed |
 | **Cold** | #43 Geo-Context | RESEARCH 4/10 — Lane 1 scope confirmation | DriftWatcher |
 
 Matt must **park** one lane or accept sequential merge if both agents need superintendent files in the same session.
