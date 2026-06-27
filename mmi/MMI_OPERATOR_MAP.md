@@ -1,5 +1,5 @@
-generated_at: 2026-06-27T07:19:52Z
-git_head: 9b19554
+generated_at: 2026-06-27T18:31:52Z
+git_head: 37bc4ac
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -11,8 +11,8 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 
 ## Where we are
 
-- **Dispatcher:** `BUILD` — nothing waiting to be built or audited right now
-- **Governed agents:** 45 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
+- **Dispatcher:** `ALL_CLEAR` — nothing waiting to be built or audited right now
+- **Governed agents:** 46 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
 - **Promotion queue:** 0 built-and-audited agents waiting for your promotion review
 
 ## Why it keeps stalling
