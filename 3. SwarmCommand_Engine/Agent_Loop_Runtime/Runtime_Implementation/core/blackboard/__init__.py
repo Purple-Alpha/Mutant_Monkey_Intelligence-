@@ -1,5 +1,11 @@
 """Blackboard models and storage adapters."""
 
+from .evidence_backer import (
+    EvidenceBacker,
+    EvidenceBackerReport,
+    EvidenceBackerVerdict,
+    evidence_ref,
+)
 from .canonical_ledger import (
     CANONICAL_EVIDENCE_LEDGER_CONTRACT,
     EVIDENCE_LEDGER_SCHEMA_VERSION,
@@ -97,6 +103,10 @@ from .models import (
 from .storage import append_record, read_records
 
 __all__ = [
+    "EvidenceBacker",
+    "EvidenceBackerReport",
+    "EvidenceBackerVerdict",
+    "evidence_ref",
     "CANONICAL_EVIDENCE_LEDGER_CONTRACT",
     "EVIDENCE_LEDGER_SCHEMA_VERSION",
     "CanonicalEvidenceLedger",

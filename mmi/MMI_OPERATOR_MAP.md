@@ -1,5 +1,5 @@
-generated_at: 2026-06-27T20:23:52Z
-git_head: c7762da
+generated_at: 2026-06-27T20:33:29Z
+git_head: 1b22078
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
