@@ -14,7 +14,6 @@ from core.blackboard import (
     RecordType,
     read_records,
 )
-from core.control_plane.enact_gate import enact_block, enact_contain
 from core.scoring.payroll_diversion_detector import detect_payroll_diversion
 
 from .agent_contract import AgentContribution, ChallengeResult, MissionContext
@@ -63,6 +62,7 @@ class PayrollDiversionAgent:
         blackboard_root: Path,
         payroll_mailbox_roster: tuple[str, ...] = (),
         employee_token_roster: tuple[str, ...] = (),
+        tenant_id: str | None = None,
         environment: Environment = Environment.PRODUCTION,
     ) -> None:
         self._blackboard_root = blackboard_root
@@ -72,7 +72,15 @@ class PayrollDiversionAgent:
         self._employee_token_roster = tuple(
             token.strip() for token in employee_token_roster
         )
+        self._tenant_id = tenant_id
         self._environment = environment
+
+    def _validate_tenant(self, context: MissionContext) -> None:
+        if self._tenant_id is not None and context.tenant_id != self._tenant_id:
+            raise GovernanceError(
+                f"PayrollDiversionAgent roster tenant {self._tenant_id!r} "
+                f"does not match MissionContext tenant {context.tenant_id!r}"
+            )
 
     def _load_email(self, context: MissionContext) -> EmailInboundPayload:
         if context.source_record_id is None:
@@ -90,6 +98,7 @@ class PayrollDiversionAgent:
         raise GovernanceError("email_inbound record not found")
 
     def analyze(self, context: MissionContext) -> AgentContribution:
+        self._validate_tenant(context)
         email = self._load_email(context)
         attachment_texts = tuple(
             attachment.extracted_text or ""
@@ -114,12 +123,6 @@ class PayrollDiversionAgent:
         self, contributions: tuple[AgentContribution, ...]
     ) -> ChallengeResult | None:
         return None
-
-    def enact_block(self, *_args, **_kwargs) -> None:
-        enact_block()
-
-    def enact_contain(self, *_args, **_kwargs) -> None:
-        enact_contain()
 
     def persist_contribution(
         self,
