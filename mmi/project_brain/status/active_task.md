@@ -4,34 +4,28 @@
 
 status: ACTION
 
-task: #43 Geo-Context — formal contract DRAFT placed (Lane 1 confirmed)
+task: #43 Geo-Context — §11 signed; awaiting build authorization
 
-for: Codex pre-build gate on `Geo_Context_Agent_Design_Contract_Deep_Dive.md`
+for: Matt — authorize build lane when ready (`MODE: BUILD`)
 
-score: 7/10
+score: 8/10
 
 milestone: M1_CONTROL_PLANE_RESTORED
 
-lane: CONTRACT
+lane: BUILD_HOLD
 
 ## Why This Is Active
 
-Matt confirmed Lane 1 scope (MMI-DEC-250): tenant service area + jurisdiction
-context. Cold feedstock `607d86f` merged; formal contract at
-`4. Product_Roadmap/Geo_Context_Agent_Design_Contract_Deep_Dive.md`.
-Reconciliation vs #76/#79 in `geo_context_43_research_lanes.md`.
-**Not** build authorization.
+Matt §11 signed #43 Geo-Context contract (MMI-DEC-252; `Matt Nichol June 25th 2026`).
+Pre-build gate PASS (MMI-DEC-251). Scoreboard `SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH`.
+**Not** build authorized until Matt names build lane.
 
 ## Done When
 
-- [x] Relationship #43 ↔ #79 / #76 documented
-- [x] Research artifact under mmi/project_brain/architecture/
-- [x] v2 geo-fence Reality Anchor doctrine committed
-- [x] Matt confirms Lane 1 scope (MMI-DEC-250)
-- [x] Formal contract DRAFT placed (MMI-DEC-250)
-- [x] Contract expanded — full template block + frozen TenantGeoContextRosterV1
-- [x] Codex pre-build gate clean on formal contract (`geo_context_contract_gate` 0 blocking)
-- [ ] Matt §11 when ready
+- [x] Lane 1 scope confirmed (MMI-DEC-250)
+- [x] Formal contract placed + gate PASS (MMI-DEC-251)
+- [x] Matt §11 signed (MMI-DEC-252)
+- [ ] Matt build authorization
 - [ ] mmi_dispatch.py --verify PASS after commit
 
 ## Prior lanes (closed)
@@ -41,4 +35,3 @@ Reconciliation vs #76/#79 in `geo_context_43_research_lanes.md`.
 ## Closeout
 
 Lane 4 deception stays PARK. No person-level tracking without legal DEC.
-No build until separate Matt build authorization after §11.

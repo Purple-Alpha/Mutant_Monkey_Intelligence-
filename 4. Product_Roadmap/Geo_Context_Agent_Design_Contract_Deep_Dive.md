@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_43_GEO_CONTEXT_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** **DRAFT (pre-§11).** Matt confirmed Lane 1 scope 2026-06-27 (MMI-DEC-250). Pre-build gate **PASS** (`geo_context_contract_gate` 0 blocking / 1 warning). Not §11 signed. Not build authorization. Not production dispatch.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-252). Pre-build gate **PASS** (`geo_context_contract_gate` 0 blocking / 1 warning — MMI-DEC-251). Governs future `GeoContextAgent` at ES1. **Not** build authorized by signature alone; **not** production dispatch; **not** AUTH-5.
 
 **Scope:** Scoreboard #43 — **Lanes 1–2 + Lane 3 privacy bar only.** Lane 4 deception explicitly excluded — see `mmi/project_brain/architecture/reality_controller/README.md` and `geo_context_43_research_lanes.md`.
 
@@ -202,15 +202,15 @@ Do not import from `geo_fence_manager.md`: Reality Anchor, synthetic telemetry, 
 
 ## §11 Sign-off
 
-**UNSIGNED.** Pre-build gate must report **0 blocking** before Matt §11. Signing locks D1–D9 for swarm #43 at **Evidence Stage 1 (Synthetic)**. Signing authorizes future `GeoContextAgent` wrapper + focused tests **only** after separate operator Build Authorization. Signing authorizes **no** production dispatch, **no** default-registry registration, **no** Lane 4 import, and **no** autonomous action.
+SIGNED. This locks D1–D9 for swarm agent #43 Geo-Context at **Evidence Stage 1 (Synthetic)**. Signing authorizes future `GeoContextAgent` wrapper + focused tests **only** after separate operator Build Authorization. Signing authorizes **no** production dispatch, **no** default-registry registration, **no** Lane 4 import, and **no** autonomous action.
 
-> §11 SIGNATURE — (pending clean pre-build gate)
+> §11 SIGNATURE — Matt Nichol June 25th 2026
 
 ---
 
 ## Boundaries (this contract)
 
-- Design / contract draft only until §11
-- No build authorization from this file alone
+- §11 signed — contract locked at ES1
+- No build authorization from signature alone
 - No production dispatch
 - No AUTH-5
