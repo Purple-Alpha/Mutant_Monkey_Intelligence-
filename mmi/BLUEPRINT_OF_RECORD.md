@@ -1,6 +1,26 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-261). BOR feedstock rank-1 #22 Payroll Diversion active (CONTRACT_DRAFT).
+**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-268). BOR feedstock ALL_CLEAR after #22 Payroll Diversion GOVERNED_AGENT (MMI-DEC-267).
+
+---
+
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v39
+
+plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v39
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v39
+population_decision: MMI-DEC-268
+created_at: 2026-06-27
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Operator GOVERNED_AGENT promotion #22 Payroll Diversion (MMI-DEC-267)
+revision_reason: #22 retired from promotion queue after GOVERNED_AGENT; Estimator NO_BUILDABLE_CANDIDATES for BREADTH CONTRACT_DRAFT lanes
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
+
+feedstock_entry: (empty — hold ALL_CLEAR until operator unparks/specifies next contract lane)
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #22 Payroll Diversion — GOVERNED_AGENT (MMI-DEC-267; §11 MMI-DEC-264; build `83710f2`; completion gate `audit_outputs/payroll_diversion_20260627T182904Z.md`)
 
 ---
 
