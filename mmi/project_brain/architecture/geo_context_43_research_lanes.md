@@ -175,9 +175,11 @@ Example: an MSP declares clients in BC + AB; an inbound artifact shows EU hostin
 
 **Is tenant service area + jurisdiction context (Lane 1) the intended #43 product surface?**
 
+**Matt answer:** **Yes** — 2026-06-27 (MMI-DEC-250). Formal contract placed at `4. Product_Roadmap/Geo_Context_Agent_Design_Contract_Deep_Dive.md`.
+
 | Response | Next step |
 |----------|-----------|
-| **Yes** | Promote `Geo_Context_Agent_Design_Contract_Deep_Dive_DRAFT.md` to formal contract draft; pre-build gate; hold build until Matt authorization |
+| **Yes** | ~~Promote DRAFT~~ **done** — pre-build gate; hold build until Matt §11 + separate build authorization |
 | **No** | Record alternate surface in Superintendent action; extend hold (MMI-DEC-222) |
 | **Extended hold** | Document missing evidence: tenant roster schema, legal review on jurisdiction advisory text, or #79 overlap proof |
 

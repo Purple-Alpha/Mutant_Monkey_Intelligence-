@@ -1,8 +1,8 @@
-# Geo-Context Agent Design Contract — Spec-First Deep Dive (DRAFT)
+# Geo-Context Agent Design Contract — Spec-First Deep Dive
 
 **Draft ID:** `MMI_43_GEO_CONTEXT_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** **DRAFT — RESEARCH FEEDSTOCK ONLY.** Not §11 signed. Not build authorization. Not production dispatch. Matt Lane 1 scope confirmation required before promotion to formal contract.
+**Status:** **DRAFT (pre-§11).** Matt confirmed Lane 1 scope 2026-06-27 (MMI-DEC-250). Not §11 signed. Not build authorization. Not production dispatch.
 
 **Scope:** Scoreboard #43 — **Lanes 1–2 + Lane 3 privacy bar only.** Lane 4 deception explicitly excluded — see `mmi/project_brain/architecture/reality_controller/README.md` and `geo_context_43_research_lanes.md`.
 
@@ -12,10 +12,12 @@
 
 **Track:** BREADTH
 
-**Authority repo:** `/home/socialarchitect/northstar` (feedstock drafted on cold worktree)
+**Lane:** Agent Design Contract (cold feedstock `607d86f` → hot formal placement MMI-DEC-250)
+
+**Authority repo:** `/home/socialarchitect/northstar`
 
 **Source-of-truth links:**
-- `mmi/project_brain/architecture/geo_context_43_research_lanes.md`
+- `mmi/project_brain/architecture/geo_context_43_research_lanes.md` (Lane 1 scope + #43 vs #76/#79 reconciliation)
 - `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Protocol.md`
 - `agent_concepts/Blue_Team_Swarm_70_Agent_Scoreboard.md` (#43, #76, #79 rows — read-only)
 - `4. Product_Roadmap/Agent_Design_Contract_Template_Deep_Dive.md`
@@ -44,18 +46,19 @@ Do not import from `geo_fence_manager.md`: Reality Anchor, synthetic telemetry, 
 
 ---
 
-## Open before formal contract
+## Open before §11
 
-1. Matt confirms Lane 1 scope (Superintendent action in research artifact)
-2. Reconciliation appendix signed off
+1. ~~Matt confirms Lane 1 scope~~ — **confirmed** MMI-DEC-250
+2. Reconciliation appendix signed off (documented in research artifact; superintendent acceptance MMI-DEC-250)
 3. Tenant roster schema frozen (caller-owned, #10 lookalike pattern)
-4. Pre-build gate clean on formal contract file (not this _DRAFT suffix)
+4. Pre-build gate clean on this formal contract file
 
 ---
 
-## Boundaries (this draft)
+## Boundaries (this contract)
 
-- Feedstock / design only
+- Design / contract draft only
 - No §11
 - No build authorization
-- No scoreboard lifecycle change from cold lane
+- No production dispatch
+- No AUTH-5

@@ -181,7 +181,7 @@ Updated each session at Step 6.5 (AGENTS.md §3.2). **This is the one-screen ans
 | 40 | Tone Drift | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 41 | Behavioral Baseline | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 | 42 | Timing Anomaly | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
-| 43 | Geo-Context | `SPEC_ONLY` | Sender Provenance / Geo-Velocity proof protocol; `received_chain_parser.py` foundation only | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
+| 43 | Geo-Context | `SPEC_ONLY` (Lane 1 scope confirmed MMI-DEC-250; **Agent Design Contract DRAFT** `4. Product_Roadmap/Geo_Context_Agent_Design_Contract_Deep_Dive.md` pre-§11; Lanes 1–2 + privacy; Lane 4 PARK; not build authorization) | `4. Product_Roadmap/Geo_Context_Agent_Design_Contract_Deep_Dive.md` (DRAFT pre-§11 MMI-DEC-250) + `mmi/project_brain/architecture/geo_context_43_research_lanes.md` (#43 vs #76/#79 reconciliation) + `received_chain_parser.py` foundation only | 2 Detection | A | NEEDS_SIGNED_CONTRACT | BREADTH | — | adoption |
 | 44 | Social Engineering | `merged` (Build Map TRIAGE 2026-06-08) | **merged into #39 Language Pressure:** same `core/scoring/callback_phishing_detector.py` TOAD/body-language surface now governed by `LanguagePressureAgent`. Re-triage trigger: a distinct social-engineering detector exists outside #39's signed TOAD v1 boundary. | 2 Detection | A | merged | BREADTH | — | 626295f |
 | 45 | Process Bypass | `NOT_STARTED` | none | 2 Detection | A | NEEDS_BUILD_AUTH | BREADTH | — | adoption |
 
