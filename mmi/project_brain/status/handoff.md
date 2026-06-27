@@ -44,6 +44,7 @@ python3 scripts/mmi_dispatch.py --verify
 
 ## Next operator actions
 
-1. Unpark next BREADTH CONTRACT_DRAFT candidate when ready (Estimator / Matt pin).
-2. DEPTH stack remains held until BS-D3 gate opens.
-3. Push branch if not yet on `github`.
+1. **Blackboard-Mesh** infrastructure contract — pre-build gate then Matt §11 (MMI-DEC-269).
+2. Iterative Crucible / Phoenix: synthetic harness only until Evidence Backer v1 exists.
+3. DEPTH stack (#84–#94) held until BS-D3 gate opens.
+4. BREADTH runway 46/70; no agent build without separate unpark.

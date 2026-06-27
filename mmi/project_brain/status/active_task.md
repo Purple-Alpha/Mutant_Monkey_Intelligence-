@@ -2,26 +2,27 @@
 
 ## Current State
 
-status: ALL_CLEAR
+status: CONTRACT_DRAFT
 
-task: No delegable hot-lane task — BREADTH runway 46/70 GOVERNED_AGENT
+task: Blackboard-Mesh Governance Foundation — infrastructure contract pre-build gate
 
-for: Matt — unpark next CONTRACT_DRAFT lane or Estimator ranking when ready
+for: Matt — §11 when pre-build gate clean; separate build auth for ledger gate + Evidence Backer
 
 score: n/a
 
 milestone: M1_CONTROL_PLANE_RESTORED
 
-lane: HOLD
+lane: INFRASTRUCTURE / Iterative Crucible
 
 ## Why This Is Active
 
-#22 Payroll Diversion build + cleanup complete (MMI-DEC-265/266/267).
-Scoreboard `GOVERNED_AGENT` at ES1 Synthetic. BOR v39 ALL_CLEAR feedstock (MMI-DEC-268).
-Single-agent hot lane — no cold DriftWatcher delegation unless Matt directs.
+Matt unparked Blackboard-Mesh infrastructure feedstock (MMI-DEC-269) on 2026-06-27.
+Phoenix / Iterative Crucible Mode: synthetic failure → Evidence Backer report → contract tighten.
+**Not** live production chaos. **Not** §11 yet. **Not** build.
 
 ## Done When
 
-- [x] Build + gate + GOVERNED_AGENT (#22 MMI-DEC-265–267)
-- [x] BOR v39 feedstock pivot (MMI-DEC-268)
-- [x] Operator map sync (`mmi_dispatch --sync --verify`)
+- [x] CONTRACT_DRAFT placed (`Blackboard_Mesh_Governance_Foundation_Contract_Deep_Dive.md`)
+- [ ] Pre-build gate (infrastructure template; Step 00 agent template N/A)
+- [ ] Matt §11 signature
+- [ ] Build authorization: Mode A ledger gate → `evidence_backer.py` → crucible failure log
