@@ -60,3 +60,25 @@ infrastructure from within the decoy environment — **lab blast-chamber only**.
 
 Listed under **Parked / High-Liability Ideas** in `purple_translation_layer.md`.
 Do not conflate with BREADTH agent builds or #19 / VPV verification lane.
+
+---
+
+## Escalation from Geo-Fence Manager
+
+When `geo_fence_manager.md` emits **Reality Mismatch** or **Entrapment Score ≥71**, the MMI
+project brain may recommend a **Hack-Bot (The Mirror)** profile — mirroring attacker tooling
+within the blast chamber only.
+
+**Signal path:**
+
+```
+geo-fence-manager → Reality Mismatch / Entrapment Score
+    → project brain: bot profile recommendation
+    → operator authorization (AUTH-5 equivalent for Reality Controller)
+    → Hack-Bot MAY engage (lab blast chamber only)
+```
+
+Geo-fence **senses**; Hack-Bot **strikes**. No autonomous enactment. No action against real
+third-party infrastructure.
+
+**Related:** `geo_fence_manager.md` §5–§6.3, `reality_controller/README.md` hard boundaries.
