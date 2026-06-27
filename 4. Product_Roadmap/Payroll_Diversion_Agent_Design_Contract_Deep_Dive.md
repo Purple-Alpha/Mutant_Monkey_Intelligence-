@@ -2,7 +2,7 @@
 
 **Draft ID:** `MMI_22_PAYROLL_DIVERSION_AGENT_DESIGN_CONTRACT_DRAFT`
 
-**Status:** **DRAFT (pre-§11).** Formal placement MMI-DEC-262 (feedstock unpark MMI-DEC-261). Step 00 validation target. Not §11 signed. Not build authorization. Not production dispatch.
+**Status:** §11 SIGNED 2026-06-25 by Matt Nichol (MMI-DEC-264). Pre-build gate 0/0 MMI-DEC-263. Governs future `PayrollDiversionAgent`. **Not** default-registry registration; **not** production dispatch; **not** build until separate Build Authorization.
 
 **Scope:** Scoreboard #22 — **employee payroll / direct-deposit diversion** only. Vendor payment destination change (#14), financial exposure estimation (#20), and executive identity spoof (#21) explicitly excluded.
 
@@ -12,7 +12,7 @@
 
 **Track:** BREADTH · Team 3 Vendor-payment / BEC (employee payroll sub-case)
 
-**Lane:** Agent Design Contract (CONTRACT_DRAFT feedstock MMI-DEC-261)
+**Lane:** Agent Design Contract (§11 MMI-DEC-264; unpark MMI-DEC-261)
 
 **Authority repo:** `/home/socialarchitect/northstar`
 
@@ -228,8 +228,8 @@ Full audit: `payroll_diversion_22_research_lanes.md` § Cross-link audit.
 
 ---
 
-## §11 Lockdown Signature
+## §11 Sign-off
 
-> **UNSIGNED — DRAFT.** Awaiting Matt review of research packet MMI-DEC-258 and explicit §11 authorization.
+SIGNED. This locks D1–D12 for swarm agent #22 Payroll Diversion at **Evidence Stage 1 (Synthetic)**. Signing authorizes future `PayrollDiversionAgent` wrapper + focused tests **only** after separate operator Build Authorization. Signing authorizes **no** default-registry registration, **no** production dispatch, **no** FSL/vendor-store scope (#14), **no** executive-identity scope (#21), and **no** autonomous action.
 
-> Matt Nichol — pending
+> §11 SIGNATURE — Matt Nichol June 25th 2026
