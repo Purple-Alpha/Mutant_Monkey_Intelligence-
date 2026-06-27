@@ -1,0 +1,2 @@
+{"agent_id":"header_analysis","tenant_id":"tenant_a","email_id":"email_001","evidence_type":"header_signal","details":{"signal":"reply_to_mismatch"},"confidence":0.72,"timestamp":"2026-06-27T20:40:56.115314Z","stage":"ES1"}
+{"agent_id":"email_authentication","tenant_id":"tenant_a","email_id":"email_001","evidence_type":"authentication_signal","details":{"spf":"neutral"},"confidence":0.65,"timestamp":"2026-06-27T20:40:56.118431Z","stage":"ES1"}
