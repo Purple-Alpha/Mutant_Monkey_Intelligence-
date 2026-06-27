@@ -4,11 +4,11 @@
 
 status: ACTION
 
-task: #22 Payroll Diversion — Agent Design Contract draft (MMI-DEC-261 unpark)
+task: #22 Payroll Diversion — pre-build gate or Matt §11 (MMI-DEC-262 contract DRAFT placed)
 
-for: Cursor — contract draft lane
+for: Matt — §11 sign when pre-build gate clean
 
-score: 6/10
+score: 7/10
 
 milestone: M1_CONTROL_PLANE_RESTORED
 
@@ -16,20 +16,20 @@ lane: CONTRACT
 
 ## Why This Is Active
 
-Matt unparked #22 Payroll Diversion as rank-1 CONTRACT_DRAFT feedstock (MMI-DEC-261).
-BOR v38 active. Layer 2 Detection; upstream #14 + #21. **Not** §11; **not** build auth.
+Contract DRAFT placed at `4. Product_Roadmap/Payroll_Diversion_Agent_Design_Contract_Deep_Dive.md`.
+Step 00 validation 31/31 PASS (MMI-DEC-262). **Not** §11 signed. **Not** build auth.
 
 ## Done When
 
-- [ ] Agent Design Contract draft placed under `4. Product_Roadmap/`
-- [ ] Step 00 contract block validation PASS
+- [x] Contract DRAFT placed + Step 00 PASS (MMI-DEC-262)
 - [ ] Pre-build gate clean (optional before §11)
+- [ ] Matt §11 signature
 - [ ] `mmi_dispatch.py --verify` PASS after commit
 
 ## Prior lanes (closed)
 
-#70 GOVERNED_AGENT MMI-DEC-259 · #43 GOVERNED_AGENT MMI-DEC-257 · #21 GOVERNED_AGENT MMI-DEC-255.
+Unpark MMI-DEC-261 · contract placement MMI-DEC-262.
 
 ## Closeout
 
-Unpark authorizes contract draft only. §11 + build require separate Matt authorization.
+§11 unlocks SIGNED_UNBUILT path only; explicit build auth still required for implementation.

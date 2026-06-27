@@ -1,5 +1,5 @@
-generated_at: 2026-06-27T06:58:37Z
-git_head: d592e47
+generated_at: 2026-06-27T07:07:25Z
+git_head: 745ac2a
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -11,7 +11,7 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 
 ## Where we are
 
-- **Dispatcher:** `ALL_CLEAR` — nothing waiting to be built or audited right now
+- **Dispatcher:** `DELEGATE` — nothing waiting to be built or audited right now
 - **Governed agents:** 45 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
 - **Promotion queue:** 0 built-and-audited agents waiting for your promotion review
 
