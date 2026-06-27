@@ -4,7 +4,7 @@ OPERATOR_NAMES_TARGET: Matt
 MMI_ASSIGNS_LANE: YES
 LANE_ESCALATION_TO_MATT: only on authority/scope/live-data/material-risk fork
 BUILD_AUTHORIZATION_IMPLIED: NO
-CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 24 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
+CURRENT_PROJECT_TRUTH: Mutant Monkey Security authority-repo control-plane queue: 0 SIGNED_UNBUILT, 0 AWAITING_AUDIT, 23 GATED rows; 0 untracked roadmap draft(s) in git status; legacy path /home/socialarchitect/northstar
 WHY_QUEUE_IS_EMPTY: 0 SIGNED_UNBUILT scoreboard rows; 0 AWAITING_AUDIT rows; parked roadmap drafts already classified (PARK — not delegable); no off-scoreboard signed authority-repo contracts; external lanes complete or unsigned; no specific research target beyond generic placeholder
 ASSIGNED_TO: Matt
 NEXT_PROMPT_GOES_TO: Matt
@@ -24,12 +24,17 @@ AUTHORITY NOTE (2026-06-16): The routing block above is derived by scripts/mmi_d
   is verified by `python3 scripts/mmi_dispatch.py --verify`. Prose below is human context;
   anything marked SUPERSEDED is historical only and is NOT routing authority.
 
-LAST_COMPLETED: #70 FinalReviewAgent ES1 build (MMI-DEC-248)
-  (`core/orchestrator/final_review_agent.py`; `final_review_001`; FR-DER + FR-GOV;
-  build `aa38ca3`; 15 focused tests; scoreboard #70 `AWAITING_AUDIT`;
-  **not** GATED; **not** GOVERNED_AGENT; **not** production dispatch).
+LAST_COMPLETED: #21 Executive Impersonation GOVERNED_AGENT (MMI-DEC-255)
+  (`core/orchestrator/executive_impersonation_agent.py`; §11 MMI-DEC-217; build `fe6add7`;
+  19 focused tests; completion gate 0/0 MMI-DEC-219 —
+  `audit_outputs/executive_impersonation_20260626T022031Z.md`; scoreboard #21 `GATED` -> `GOVERNED_AGENT`;
+  breadth runway 42 -> 43; **not** production dispatch; **not** default registry; **not** AUTH-5).
 
-PRIOR_LAST_COMPLETED: #70 Final Review contract §11 + superintendent merge (MMI-DEC-244/247)
+PRIOR_LAST_COMPLETED: #43 Geo-Context GATED (MMI-DEC-254)
+  (`core/orchestrator/geo_context_agent.py`; build `fb0be77`; gate 0/0;
+  **not** GOVERNED_AGENT; **not** production dispatch).
+
+PRIOR_PRIOR_LAST_COMPLETED: #70 Final Review contract §11 + superintendent merge (MMI-DEC-244/247)
   (`4. Product_Roadmap/Final_Review_Agent_Design_Contract_Deep_Dive.md`; Matt Nichol June 26th 2026;
   scoreboard #70 `SIGNED_UNBUILT` / `NEEDS_BUILD_AUTH`; #10 promotion renumbered MMI-DEC-245;
   active task -> #43 Geo-Context research; **not** build authorization).

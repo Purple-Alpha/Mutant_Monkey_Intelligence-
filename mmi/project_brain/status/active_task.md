@@ -4,9 +4,9 @@
 
 status: ALL_CLEAR
 
-task: No delegable hot-lane task — #43 GATED (MMI-DEC-254)
+task: No delegable hot-lane task — #21 GOVERNED_AGENT (MMI-DEC-255)
 
-for: Matt — next ranked lane or promotion review
+for: Matt — next ranked lane or Estimator read-only ranking
 
 score: n/a
 
@@ -16,18 +16,19 @@ lane: HOLD
 
 ## Why This Is Active
 
-#43 Geo-Context completion gate 0/0; scoreboard `GATED` (MMI-DEC-254).
-Build `fb0be77`. **Not** GOVERNED_AGENT. **Not** production dispatch.
+#21 Executive Impersonation promoted GATED -> GOVERNED_AGENT (MMI-DEC-255).
+Build `fe6add7`; gate 0/0 MMI-DEC-219. Breadth 43/70. **Not** production dispatch.
 
 ## Done When
 
-- [x] Build + gate + GATED reconcile (MMI-DEC-253/254)
+- [x] Matt authorized promotion review
+- [x] Scoreboard + DEC + BOR reconcile (MMI-DEC-255/256)
 - [ ] Matt selects next lane
 
 ## Prior lanes (closed)
 
-#70 GATED MMI-DEC-249 · #43 GATED MMI-DEC-254.
+#43 GATED MMI-DEC-254 · #70 GATED MMI-DEC-249 · #21 GOVERNED_AGENT MMI-DEC-255.
 
 ## Closeout
 
-Promotion to GOVERNED_AGENT requires separate Matt authorization.
+Promotion does not authorize production dispatch, default registry wiring, or AUTH-5.

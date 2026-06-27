@@ -1,12 +1,47 @@
 # Blueprint of Record
 
-**Status:** CURRENT_PLAN populated 2026-06-26 (MMI-DEC-239). BOR feedstock empty — Estimator NO_BUILDABLE_CANDIDATES.
+**Status:** CURRENT_PLAN populated 2026-06-27 (MMI-DEC-256). BOR feedstock empty — Estimator NO_BUILDABLE_CANDIDATES.
+
+---
+
+## CURRENT_PLAN — ALL_CLEAR feedstock v35
+
+plan_status: CURRENT_PLAN
+version_id: BOR-ALL-CLEAR-FEEDSTOCK-v35
+population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v35
+population_decision: MMI-DEC-256
+created_at: 2026-06-27
+source_contract: mmi/MMI_BLUEPRINT_OF_RECORD_GOVERNANCE_CONTRACT.md
+architect_blueprint_source: Estimator-weighted feedstock pivot after #21 GOVERNED_AGENT (MMI-DEC-255)
+revision_reason: #21 retired from promotion queue after GOVERNED_AGENT; Estimator NO_BUILDABLE_CANDIDATES for BREADTH CONTRACT_DRAFT lanes
+non_authority_disclaimer: Advisory flow plan only. Does not authorize build, routing, or registry dispatch.
+
+(no hold-only promotion feedstock entries — Estimator reports NO_BUILDABLE_CANDIDATES; dynamic promotion queue via `mmi/MMI_OPERATOR_MAP.md`)
+
+Completed rows omitted from feedstock (Estimator skips CLOSED lifecycle rows automatically):
+  #21 Executive Impersonation — GOVERNED_AGENT (MMI-DEC-255; §11 MMI-DEC-217; build `fe6add7`; completion gate `audit_outputs/executive_impersonation_20260626T022031Z.md`)
+  #19 Dual-Approval — GOVERNED_AGENT (MMI-DEC-238; §11 MMI-DEC-232; VPV MMI-DEC-231; build `0b78503`; completion gate `audit_outputs/dual_approval_20260626T212610Z.md`)
+  #50 Evidence Strength — GOVERNED_AGENT (MMI-DEC-209; §11 MMI-DEC-206; build `fddccbd`; completion gate `audit_outputs/evidence_strength_20260625T213536Z.md`)
+  #49 Audit Trail — GOVERNED_AGENT (MMI-DEC-201; §11 MMI-DEC-199; build `27ea39f`; completion gate `audit_outputs/audit_trail_20260625T193137Z.md`)
+  #18 Callback Verification — GOVERNED_AGENT (MMI-DEC-196; §11 MMI-DEC-193; build `880d477`)
+  #71 Token Usage Tracker — GOVERNED_AGENT (MMI-DEC-189; §11 MMI-DEC-188; infra `fe355da`)
+  Post–Stage C breadth rollout — br01–br05 complete (MMI-DEC-176–182)
+  Phase 3 #78–#83 — GOVERNED_AGENT (MMI-DEC-181)
+  Phase 2 #72–#77 — GOVERNED_AGENT (MMI-DEC-180)
+  Team 9 #61–#65, #64, #67 — GOVERNED_AGENT (MMI-DEC-176–179 / MMI-DEC-173–174)
+  Command spine #1–#3 — GOVERNED_AGENT (MMI-DEC-170/171/172)
+  #52, #47 — GOVERNED_AGENT (MMI-DEC-169/168)
+  #105 MMI Governance Invariants Testing Framework — SIGNED_CONTRACT + Lane 1 probe (MMI-DEC-092)
+
+DEPTH posture (not feedstock — gate CLOSED): #84 ReconciliationAgent, #85–#94 immune stack remain GATED until depth gate opens or explicit operator fork.
+
+Estimator BUILDABILITY_EXCLUSIONS advisory (not feedstock authorization): #105 EXCLUDED_NON_BUILDABLE_STATE (SIGNED_CONTRACT probe); dynamic promotion queue via Operator Map.
 
 ---
 
 ## CURRENT_PLAN — ALL_CLEAR feedstock v34
 
-plan_status: CURRENT_PLAN
+plan_status: SUPERSEDED_PLAN
 version_id: BOR-ALL-CLEAR-FEEDSTOCK-v34
 population_authorization: MMI_BOR_ALL_CLEAR_FEEDSTOCK_v34
 population_decision: MMI-DEC-239
