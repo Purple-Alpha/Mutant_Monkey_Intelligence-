@@ -2,35 +2,32 @@
 
 ## Current State
 
-status: ACTION
+status: ALL_CLEAR
 
-task: Run completion gate for Geo-Context Agent
+task: No delegable hot-lane task — #43 GATED (MMI-DEC-254)
 
-for: completion gate auditor (complete_gate.py)
+for: Matt — next ranked lane or promotion review
 
 score: n/a
 
 milestone: M1_CONTROL_PLANE_RESTORED
 
-lane: AUDIT
+lane: HOLD
 
 ## Why This Is Active
 
-#43 GeoContextAgent built MMI-DEC-253 (`0ea69ef`, 10 tests). Scoreboard
-`AWAITING_AUDIT`. Completion gate pending before GATED reconcile.
+#43 Geo-Context completion gate 0/0; scoreboard `GATED` (MMI-DEC-254).
+Build `fb0be77`. **Not** GOVERNED_AGENT. **Not** production dispatch.
 
 ## Done When
 
-- [x] Matt build authorization (MODE:BUILD)
-- [x] GeoContextAgent ES1 wrapper + 10 focused tests (`0ea69ef`)
-- [ ] Completion gate 0 blocking
-- [ ] GATED reconcile
-- [ ] mmi_dispatch.py --verify PASS after commit
+- [x] Build + gate + GATED reconcile (MMI-DEC-253/254)
+- [ ] Matt selects next lane
 
 ## Prior lanes (closed)
 
-#70 GATED MMI-DEC-249.
+#70 GATED MMI-DEC-249 · #43 GATED MMI-DEC-254.
 
 ## Closeout
 
-Not GOVERNED_AGENT. Not production dispatch. Not AUTH-5.
+Promotion to GOVERNED_AGENT requires separate Matt authorization.
