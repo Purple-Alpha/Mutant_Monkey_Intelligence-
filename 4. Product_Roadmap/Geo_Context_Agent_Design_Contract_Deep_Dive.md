@@ -18,6 +18,8 @@
 
 **Proposed future build path:** `3. SwarmCommand_Engine/Agent_Loop_Runtime/Runtime_Implementation/core/orchestrator/geo_context_agent.py` (`GeoContextAgent`, `geo_context_001`)
 
+**Implementation:** Built `0ea69ef` — scoreboard `AWAITING_AUDIT` (MMI-DEC-253). **Not** GATED; **not** production dispatch.
+
 **Source-of-truth links:**
 - `mmi/project_brain/architecture/geo_context_43_research_lanes.md` (Lane 1 scope + #43 vs #76/#79 reconciliation)
 - `4. Product_Roadmap/Sender_Provenance_GeoVelocity_Cheaper_Proof_Protocol.md`
