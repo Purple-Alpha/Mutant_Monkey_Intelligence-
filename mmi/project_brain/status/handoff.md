@@ -27,7 +27,7 @@ python3 scripts/mmi_pm_voice.py
 python3 scripts/mmi_dispatch.py --verify
 ```
 
-**Expected at handoff:** `MODE: HOLD` / `ALL_CLEAR` — BREADTH runway **46/70 GOVERNED_AGENT**; BOR v39 feedstock empty.
+**Expected at handoff:** `MODE: ALL_CLEAR` — BREADTH runway **46/70 GOVERNED_AGENT**; BOR v40 Blackboard-Mesh pre-build gate PASS (MMI-DEC-270); awaiting Matt §11.
 
 ---
 
@@ -44,7 +44,7 @@ python3 scripts/mmi_dispatch.py --verify
 
 ## Next operator actions
 
-1. **Blackboard-Mesh** infrastructure contract — pre-build gate then Matt §11 (MMI-DEC-269).
+1. **Blackboard-Mesh** — Matt §11 sign contract (pre-build gate PASS MMI-DEC-270); then build auth for Mode A ledger gate.
 2. Iterative Crucible / Phoenix: synthetic harness only until Evidence Backer v1 exists.
 3. DEPTH stack (#84–#94) held until BS-D3 gate opens.
 4. BREADTH runway 46/70; no agent build without separate unpark.

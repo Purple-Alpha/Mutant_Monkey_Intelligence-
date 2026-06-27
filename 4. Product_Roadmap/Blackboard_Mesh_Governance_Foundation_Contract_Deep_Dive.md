@@ -48,11 +48,11 @@ Other prose may mislabel scoreboard rows. This contract uses **repo-accurate IDs
 
 ## §2 Locked design decisions (candidate — confirm at §11)
 
-- **BM-D1 — Mode A schema gate (structural).** `EvidenceLedgerEntry` top-level keys must remain the closed Phase 1 set. Any forbidden top-level key → reject. Unknown extra top-level keys → reject (no silent passthrough). `StrictModel(extra="forbid")` is necessary but not sufficient.
+- **BM-D1 — Mode A schema gate (structural).** `EvidenceLedgerEntry` top-level keys are exactly the closed Phase 1 Component 1 set — no additions at this contract layer: `agent_id`, `tenant_id`, `email_id`, `evidence_type`, `details`, `confidence`, `timestamp`, `stage` (per `Phase1_Infrastructure_Agent_Design_Contract.md` §3 Component 1). Any forbidden top-level key → reject. Unknown extra top-level keys (including `entry_id`, `schema_version`, or other metadata) → reject until a signed Phase 1 amendment adds them. `StrictModel(extra="forbid")` is necessary but not sufficient.
 
 - **BM-D2 — Mode A schema gate (semantic).** Before evidence ledger append, scan `details` and observation strings for **authority-shadow tokens** from a **version-pinned config** (not inline hard-code). Hit → reject as governance failure; log `agent_id`. `confidence` is observation calibration only — never a release/clearance signal.
 
-- **BM-D3 — Forbidden top-level key set (evidence surface).** Closed reject set includes: `verdict`, `conclusion`, `decision`, `outcome`, `final`, `action`, `route`, `block`, `release`, `approved`, `authorized`, `cleared`, `safe`, `disposition`. Reconcile against `canonical_ledger.py` before §11; resolve any collision with legitimate field names.
+- **BM-D3 — Forbidden top-level key set (evidence surface).** Closed reject set includes: `verdict`, `conclusion`, `decision`, `outcome`, `final`, `action`, `route`, `block`, `release`, `approved`, `authorized`, `cleared`, `safe`, `disposition`. Matt confirms no collision with the Phase 1 §3 Component 1 allowlist before §11; implementation reconciliation at Mode A build.
 
 - **BM-D4 — Writer allowlist.** Verdict ledger writable only by ReconciliationAgent path (`reconciliation_agent_001` / Phase 4 contract). All other agents → evidence ledger only. Enforced at **ledger boundary**, not by convention.
 
@@ -72,17 +72,19 @@ Other prose may mislabel scoreboard rows. This contract uses **repo-accurate IDs
 
 ## §3 Data surfaces
 
-### §3.1 Evidence ledger (exists — harden)
+### §3.1 Evidence ledger (to formalize — Phase 1 §3 Component 1)
 
-`core/blackboard/canonical_ledger.py` — `EvidenceLedgerEntry`:
+Target: `core/blackboard/canonical_ledger.py` — `EvidenceLedgerEntry` with **exactly** the signed Phase 1 top-level schema:
 
-- `entry_id`, `schema_version`, `agent_id`, `tenant_id`, `email_id`, `evidence_type` (closed enum), `details`, `confidence`, `timestamp`, `stage`
+- `agent_id`, `tenant_id`, `email_id`, `evidence_type` (closed enum per Phase 1), `details`, `confidence`, `timestamp`, `stage`
 
-**Gap to close at build:** nested `details` validation; writer allowlist; semantic scan config.
+**Not in Phase 1 schema at this layer:** `entry_id`, `schema_version` — require a signed Phase 1 amendment before any Mode A build may add them.
 
-### §3.2 Verdict ledger (exists — harden)
+**Gap to close at build:** formalize ledger module; nested `details` validation; writer allowlist; semantic scan config.
 
-`core/blackboard/verdict_ledger.py` — `ReconciliationVerdict`:
+### §3.2 Verdict ledger (to formalize — Phase 4)
+
+Target: `core/blackboard/verdict_ledger.py` — `ReconciliationVerdict`:
 
 - `verdict`, `ensemble_outcome`, voter fields, `contributing_evidence`, `plain_english_chain`, state flags (`lockdown_applied`, `delivery_problem_path`)
 
@@ -120,7 +122,7 @@ Each entry: `crucible_run_id`, `failure_class`, `agents_involved`, `evidence_bac
 
 | Vector | Risk | Mitigation |
 |--------|------|------------|
-| **#1 Omission-as-safety** | No signals → treated as LOW_RISK | Reconciliation voters must support `INSUFFICIENT_EVIDENCE` / fail-closed path; no default-safe. Regression tests required. |
+| **#1 Omission-as-safety** | No signals → treated as LOW_RISK | **Target mitigation (Phase 4 amendment — not mandated by this contract):** voters should support `INSUFFICIENT_EVIDENCE` / fail-closed path; no default-safe. Crucible + Evidence Backer flag the live gap until amended. |
 | **#2 Confidence-as-clearance** | High `confidence` read as approved | Schema doc + consumer lint; R1 must not be sole clearance path. |
 | **#3 Status-flag leakage** | `lockdown_applied: false` read as cleared | Verdict schema doc: state flags ≠ authority. |
 | **#4 Unanimous ensemble finality** | `ensemble_outcome: unanimous` → gate satisfied | Label advisory; Evidence Backer flags if consumer treats as authority. |
@@ -152,7 +154,7 @@ Each entry: `crucible_run_id`, `failure_class`, `agents_involved`, `evidence_bac
 3. Non-reconciliation `agent_id` cannot append to `VerdictLedger` (boundary enforced).
 4. Evidence Backer returns `VIOLATION` on orphan `contributing_evidence` ref.
 5. Evidence Backer returns `INCOMPLETE` when human gate required but no DEC record.
-6. Omission fixture: sparse contributions → not default `LOW_RISK` without explicit insufficient path.
+6. Omission fixture: sparse contributions → Evidence Backer flags `VIOLATION` or `INCOMPLETE` for omission-as-safety gap; Phase 4 voter fail-closed behavior validated only after signed Phase 4 amendment.
 7. Cross-tenant leak fixture → `VIOLATION`.
 8. Crucible run appends one `CRUCIBLE_FAILURE_LOG` entry with backer report SHA.
 9. Gateway semantic filter + ledger gate do not double-reject benign observation payloads.
@@ -176,7 +178,7 @@ Each entry: `crucible_run_id`, `failure_class`, `agents_involved`, `evidence_bac
 
 ## §8 Open before §11
 
-1. Matt confirms forbidden-key set vs `canonical_ledger.py` (no legit field collision).
+1. Matt confirms forbidden-key set vs Phase 1 §3 Component 1 allowlist (no legit field collision).
 2. Operator decision: reject vs quarantine-and-log on semantic scan hit.
 3. Authority-shadow token list location + version pin (`mmi/config/authority_shadow_tokens_v1.json` candidate).
 4. `details` closed sub-schema per `evidence_type` vs observation-bag + Gate 2 only.
