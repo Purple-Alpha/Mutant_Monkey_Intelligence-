@@ -1,13 +1,13 @@
-generated_at: 2026-06-27T06:18:35Z
-git_head: fcaaf28
+generated_at: 2026-06-27T06:24:23Z
+git_head: ea140b7
 generator: scripts/mmi_lane_board_sync.py
 
 # MMI Ranked Next Actions
 
 **Auto-generated.** Rubric ranks; Matt selects. Not build authorization.
 
-dispatcher_mode: AUDIT
-candidate_count: 3
+dispatcher_mode: ALL_CLEAR
+candidate_count: 4
 
 Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
@@ -28,6 +28,19 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 
 ## ACTION 2 — TOTAL 1/10
 
+**Promotion review #43 Geo-Context (GATED -> GOVERNED_AGENT when authorized)**
+
+- action_id: `promotion_#43`
+- primary_scope: `#43`
+- leverage: 1
+- risk_reduction: 0
+- evidence_strength: 0
+- future_cost: 0
+- reversibility: 0
+- **TOTAL: 1**
+
+## ACTION 3 — TOTAL 1/10
+
 **Promotion review #70 Final Review Agent (GATED -> GOVERNED_AGENT when authorized)**
 
 - action_id: `promotion_#70`
@@ -39,7 +52,7 @@ Refresh: `python3 scripts/mmi_lane_board_sync.py`
 - reversibility: 0
 - **TOTAL: 1**
 
-## ACTION 3 — TOTAL 3/10
+## ACTION 4 — TOTAL 3/10
 
 **Hold ALL_CLEAR — no new lane this cycle**
 

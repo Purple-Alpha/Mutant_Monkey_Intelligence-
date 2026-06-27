@@ -1,5 +1,5 @@
-generated_at: 2026-06-27T06:18:35Z
-git_head: fcaaf28
+generated_at: 2026-06-27T06:24:24Z
+git_head: ea140b7
 generator: scripts/mmi_operator_map_sync.py
 
 # Operator Map — read this first
@@ -11,9 +11,9 @@ Not build authorization. Refresh: `python3 scripts/mmi_operator_map_sync.py`
 
 ## Where we are
 
-- **Dispatcher:** `AUDIT` — nothing waiting to be built or audited right now
+- **Dispatcher:** `ALL_CLEAR` — nothing waiting to be built or audited right now
 - **Governed agents:** 42 of 70 at production-quality Stage 1 (GOVERNED_AGENT)
-- **Promotion queue:** 2 built-and-audited agents waiting for your promotion review
+- **Promotion queue:** 3 built-and-audited agents waiting for your promotion review
 
 ## Why it keeps stalling
 
@@ -28,13 +28,15 @@ until you name the next lane.
 ## What's next (ranked — not authorized until you say so)
 
 1. **Promotion review #21 Executive Impersonation (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
-2. **Promotion review #70 Final Review Agent (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
-3. **Hold ALL_CLEAR — no new lane this cycle** — score 3/10
+2. **Promotion review #43 Geo-Context (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
+3. **Promotion review #70 Final Review Agent (GATED -> GOVERNED_AGENT when authorized)** — score 1/10
+4. **Hold ALL_CLEAR — no new lane this cycle** — score 3/10
 
 ## Promotion queue (built, audited, needs your review)
 
 1. **#21 Executive Impersonation** — GATED, ready for promotion review
-2. **#70 Final Review Agent** — GATED, ready for promotion review
+2. **#43 Geo-Context** — GATED, ready for promotion review
+3. **#70 Final Review Agent** — GATED, ready for promotion review
 
 ## What to say to unstick (copy-paste)
 
