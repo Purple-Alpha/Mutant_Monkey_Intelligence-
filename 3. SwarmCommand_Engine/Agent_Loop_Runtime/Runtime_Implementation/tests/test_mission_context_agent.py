@@ -194,3 +194,25 @@ def test_cyber_insurance_evidence_manifest():
     assert result.classification is not None
     assert result.classification.case_type == "cyber_insurance_evidence"
     assert "evidence_package" in result.classification.required_evidence
+
+
+def test_classify_payroll_diversion_uses_payroll_detector_ref():
+    result = classify_case(_payload(refs=("payroll_diversion_detection",)))
+    assert result.classification is not None
+    assert result.classification.case_type == "payroll_diversion"
+    assert "payroll_diversion_detection" in result.classification.required_evidence
+
+
+def test_map_es1_observations_to_evidence_ledger_evidence_only():
+    from core.command.mission_context_agent import map_es1_observations_to_evidence_ledger_entry
+
+    entry = map_es1_observations_to_evidence_ledger_entry(
+        agent_id="mission_context_001",
+        tenant_id="tenant_mission_context",
+        email_id="email-001",
+        observed_facts=("payroll_diversion_pattern", "payroll_vocabulary_signal"),
+    )
+    assert entry.details["record_kind"] == "Evidence"
+    assert "authority" not in entry.details
+    assert "verdict" not in entry.details
+    assert entry.evidence_type.value == "content_signal"

@@ -69,6 +69,7 @@ from .reasoning_budget import (
     resolve_reasoning_tier,
     reasoning_token_cap,
 )
+from .semantic_filter import SemanticFilter, SemanticFilterViolation
 from .gateway import (
     AllowAllModeCheck,
     GatewayController,
@@ -135,6 +136,8 @@ __all__ = [
     "GatewayDecision",
     "GatewayRejected",
     "GatewayRequest",
+    "SemanticFilter",
+    "SemanticFilterViolation",
     "ModeCheck",
     # brain acceleration
     "EnactmentBlockedError",

@@ -34,6 +34,7 @@ from core.control_plane.reasoning_budget import (
     resolve_reasoning_tier,
     reasoning_token_cap,
 )
+from core.control_plane.semantic_filter import SemanticFilter, SemanticFilterViolation, requires_der_scan
 from core.control_plane.triage_prefilter import TriagePreFilter
 
 from core.control_plane.audit import ControlPlaneAuditTrail, ControlPlaneEvent
@@ -109,6 +110,7 @@ class GatewayController:
     audit: ControlPlaneAuditTrail
     mode_check: ModeCheck = field(default_factory=AllowAllModeCheck)
     triage_prefilter: TriagePreFilter | None = None
+    semantic_filter: SemanticFilter = field(default_factory=SemanticFilter)
 
     _CONTROL_AUTHORITY_KEYS: ClassVar[frozenset[str]] = frozenset(
         {
@@ -182,6 +184,19 @@ class GatewayController:
                 agent_id=resolved.agent_id,
             )
             raise GatewayRejected("authority_payload", reason)
+
+        try:
+            if requires_der_scan(request.args):
+                self.semantic_filter.reject_if_forbidden(request.args)
+        except SemanticFilterViolation as exc:
+            reason = str(exc)
+            self.audit.record(
+                ControlPlaneEvent.GATEWAY_REJECTED,
+                reason,
+                tenant_id=resolved.tenant_id,
+                agent_id=resolved.agent_id,
+            )
+            raise GatewayRejected("semantic_filter", reason) from exc
 
         # Forged-tenant guard (BRC-D4): resolved tenant must match the segment
         # binding when a credential is presented.

@@ -18,7 +18,9 @@ from __future__ import annotations
 import re
 import uuid
 from dataclasses import dataclass
-from typing import Literal
+from typing import Any, Literal
+
+from core.blackboard import EvidenceLedgerEntry, EvidenceStage, EvidenceType
 
 from core.orchestrator.agent_contract import AgentContribution, ChallengeResult, MissionContext
 
@@ -66,6 +68,57 @@ _ROUTING_FORBIDDEN_KEYS = frozenset(
 
 _DIGEST_RE = re.compile(r"^[0-9a-f]{64}$")
 
+
+ES1_EVIDENCE_LEDGER_RECORD_KIND = "Evidence"
+
+_LEDGER_FORBIDDEN_DETAIL_KEYS = frozenset(
+    {
+        "authority",
+        "verdict",
+        "disposition",
+        "human_state",
+        "swarm_disposition",
+        "recommended_action",
+        "gate_satisfied",
+        "approved",
+        "authorized",
+    }
+)
+
+
+def es1_observation_details(observed_facts: tuple[str, ...]) -> dict[str, Any]:
+    return {
+        "record_kind": ES1_EVIDENCE_LEDGER_RECORD_KIND,
+        "observations": list(observed_facts),
+    }
+
+
+def map_es1_observations_to_evidence_ledger_entry(
+    *,
+    agent_id: str,
+    tenant_id: str,
+    email_id: str,
+    observed_facts: tuple[str, ...],
+    confidence: float = 0.5,
+    stage: EvidenceStage = EvidenceStage.ES1,
+) -> EvidenceLedgerEntry:
+    """Map ES1 observations to ledger Evidence entries only (no Authority/Verdict)."""
+
+    details = es1_observation_details(observed_facts)
+    for key in details:
+        if key.lower() in _LEDGER_FORBIDDEN_DETAIL_KEYS:
+            raise ValueError(f"forbidden ledger detail key: {key}")
+    return EvidenceLedgerEntry(
+        agent_id=agent_id,
+        tenant_id=tenant_id,
+        email_id=email_id,
+        evidence_type=EvidenceType.CONTENT_SIGNAL,
+        details=details,
+        confidence=confidence,
+        stage=stage,
+    )
+
+
 CASE_EVIDENCE: dict[CaseType, tuple[str, ...]] = {
     "phishing": ("header_analysis", "link_inspection", "credential_phishing"),
     "vendor_payment_fraud": (
@@ -88,7 +141,7 @@ CASE_EVIDENCE: dict[CaseType, tuple[str, ...]] = {
         "verification_outcome",
     ),
     "payroll_diversion": (
-        "payment_change_detection",
+        "payroll_diversion_detection",
         "verification_outcome",
     ),
     "ransomware_precursor": (
@@ -148,7 +201,7 @@ def _case_type_from_refs(refs: frozenset[str]) -> tuple[CaseType, tuple[str, ...
         return "executive_impersonation", ("policy_match:executive_impersonation",)
     if "pdf_fingerprint" in refs or "invoice_fraud" in refs:
         return "invoice_fraud", ("policy_match:pdf_fingerprint",)
-    if "payroll_diversion" in refs:
+    if "payroll_diversion_detection" in refs or "payroll_diversion" in refs:
         return "payroll_diversion", ("policy_match:payroll_diversion",)
     if "attachment_risk" in refs or "ransomware_precursor" in refs:
         return "ransomware_precursor", ("policy_match:ransomware_precursor",)
@@ -291,6 +344,22 @@ class MissionContextAgent:
             agent_id=self.agent_id,
             layer=self.layer,
             observed_facts=classification_to_observed_facts(result.classification),
+        )
+
+    def map_observations_to_evidence_ledger(
+        self,
+        *,
+        tenant_id: str,
+        email_id: str,
+        observed_facts: tuple[str, ...],
+        confidence: float = 0.5,
+    ) -> EvidenceLedgerEntry:
+        return map_es1_observations_to_evidence_ledger_entry(
+            agent_id=self.agent_id,
+            tenant_id=tenant_id,
+            email_id=email_id,
+            observed_facts=observed_facts,
+            confidence=confidence,
         )
 
     def challenge(
