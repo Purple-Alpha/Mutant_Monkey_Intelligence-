@@ -1,0 +1,75 @@
+# Codex Scope Override
+
+## Active Project
+
+The active project is MMI only.
+
+Repo root:
+
+- Windows: `C:\Architectapp_clean`
+- WSL: `/mnt/c/Architectapp_clean`
+
+Do not infer active scope from legacy repo-root files. This repository still contains old Social Architect material, but current work is controlled by the MMI project brain.
+
+## Authority Order
+
+For MMI work, follow these files before any root-level handoff, role, or swarm document:
+
+1. `mmi/project_brain/status/MMI_ACTIVE_SCOPE.md`
+2. `mmi/project_brain/status/MMI_PHASE2_START.md`
+3. `mmi/project_brain/architecture/MMI_PHASE2_MVP_ARCHITECTURE.md`
+4. `mmi/project_brain/status/MMI_LANE_ROUTING.md`
+5. `tasks.json`
+
+If those files conflict with `AGENTS.md`, `CLAUDE.md`, `CURRENT_PROJECT_HANDOFF.md`, `PROGRESS.md`, `HANDSHAKE_LEDGER.md`, `ops/run.py`, or `web/`, the MMI project-brain files win.
+
+## Required Task Completion (mandatory)
+
+After finishing any MMI task, **always** run one of these from repo root:
+
+```bash
+cd /mnt/c/Architectapp_clean
+python3 scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/output
+```
+
+Or if you already edited `tasks.json` manually:
+
+```bash
+python3 scripts/reload_mmi_pipes.py
+```
+
+**Never** stop after marking a task completed without running one of the above. Otherwise the pipe goes DRY until someone reloads.
+
+Pipeline source of truth for what comes next: `mmi/task_pipeline.json`
+
+## Cold backup push (Matt approved 2026-06-28)
+
+After meaningful changes to brain or `tasks.json`:
+
+```bash
+cd /mnt/c/Architectapp_clean
+python scripts/mmi_cold_backup.py --backup-and-push
+```
+
+See `mmi/project_brain/status/MMI_FIRST_B2_PUSH.md`.
+
+## Required Startup Check
+
+Before doing MMI work, run:
+
+```bash
+cd /mnt/c/Architectapp_clean
+python3 scripts/reload_mmi_pipes.py
+python3 scripts/next_task.py
+```
+
+If the task is not MMI-prefixed or does not start with `PROJECT: MMI.`, stop and report the mismatch.
+
+## Current Hard Stops
+
+- MMI only.
+- Do not run `npm`.
+- Do not run `ops/run.py`.
+- Do not edit `web/`.
+- Do not route active work to Social Architect Phase 1, DAX, Trades, SAGE, MAVEN, or HAVEN unless Matt explicitly reactivates that lane.
+- Do not use `/home/socialarchitect/northstar` for this task queue.

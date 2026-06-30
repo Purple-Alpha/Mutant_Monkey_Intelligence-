@@ -1,0 +1,576 @@
+[
+  {
+    "created_at": "2026-06-29T04:41:56.561546+00:00",
+    "source_root": "/mnt/c/Architectapp_clean",
+    "mode": "archive-and-push",
+    "files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "bc64ac8bbb5f836ffe3e69bed9cd42eb7973c7e3c1f24629dda493867733a6db",
+        "bytes": 5093
+      },
+      {
+        "path": "CODEX.md",
+        "sha256": "717b0c33cb959f1c3d19d7816a04892b46e8207e36565045eca97e32df92ccb3",
+        "bytes": 2237
+      },
+      {
+        "path": "mmi/command_center.py",
+        "sha256": "bba2e42c3526295f2fbeafcc3b9eb94eaf35425febdb3b3892c359cdef562742",
+        "bytes": 7690
+      },
+      {
+        "path": "mmi/project_brain/README.md",
+        "sha256": "59f26fb76e2ee4fe709281bee98f7272e71f8693df4f410e9fcad0934a53c319",
+        "bytes": 753
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_BACKUP_COLD_STORAGE_SPEC.md",
+        "sha256": "dbea4500762a088a3a52a61ef34ca0ee2e173fb4281ad2892c7b74be98e5cc44",
+        "bytes": 7627
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_COMMAND_CENTER_SPEC.md",
+        "sha256": "1a9222310c8d82813aafff7470569011f629295f49c84e4faea3f3f078c5cf22",
+        "bytes": 8407
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_LOCAL_CLOUD_POLICY.md",
+        "sha256": "df71d1f84a8d8919be9ca68ae450e25c084b8a1b4bcce49e7c60c46517457735",
+        "bytes": 2847
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_PHASE2_MVP_ARCHITECTURE.md",
+        "sha256": "1248a3a13976259e34d0bf3f6ef6969104cd7ebd3b07a95ee93b1f0be36c1b9f",
+        "bytes": 7893
+      },
+      {
+        "path": "mmi/project_brain/architecture/README.md",
+        "sha256": "d0effe81031e1fde7b7415c608d5bc951f205ba65b9d004bf0e31e72717355d8",
+        "bytes": 250
+      },
+      {
+        "path": "mmi/project_brain/lanes/README.md",
+        "sha256": "66f926626c98fe8dd070f5350aee566d63c28062bccb9a64ab3b761f8063d7b3",
+        "bytes": 253
+      },
+      {
+        "path": "mmi/project_brain/mission/MMI_MISSION_BRIEF.md",
+        "sha256": "e821d2b0a11235e308154f7b64b3dda31cad278a3ae40a215a59cb8bddbf9921",
+        "bytes": 4121
+      },
+      {
+        "path": "mmi/project_brain/mission/README.md",
+        "sha256": "6a80d5dd7eb310cb5936d39221bbe1d5076a5605516c50b6fbb0c0382ce2e63e",
+        "bytes": 206
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_SCOPE.md",
+        "sha256": "489da2955b979add121c71897898491024c4c7d65d163a156752886d9dfbb074",
+        "bytes": 1008
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_AUTOSEED_PIPE.md",
+        "sha256": "b1b24c99eaf58cb117f51bacbb74bec14af5adc14665be9dccbf2f91db1000ab",
+        "bytes": 1541
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BACKUP_MANIFEST.json",
+        "sha256": "9661218f605404f8a4fbdb2c2e080acb7526591853a7d5eeae3c4410e589e1a3",
+        "bytes": 5499
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BOOTSTRAP_CLOSEOUT.md",
+        "sha256": "a6844481d63b01c7c0e3fbf4a81aaa809368848be27dd6331c9713669ffefd57",
+        "bytes": 5525
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_DEPLOYER_QUEUE_CHECK.md",
+        "sha256": "44f044bef924cb0de75695f13692b6ffc6d0390f3c78d0e0f4d00230b11bd59f",
+        "bytes": 3439
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_B2_PUSH.md",
+        "sha256": "3b8124f1b07f8fe6dd8588deaae5c3c3a332151000bb1644e996c80c5ffb2726",
+        "bytes": 1734
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_BACKUP_RUN.md",
+        "sha256": "decc42ac514b523414ba5087690463e5e2b730bb1c0c84970c092b96872d1bfb",
+        "bytes": 1687
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_LANE_ROUTING.md",
+        "sha256": "6be2c015b77d8178b93e3cb6c62cb6497cb0089ad30566a58d08b39f9b792197",
+        "bytes": 6802
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_SAFE_TASK.md",
+        "sha256": "128e89db5c4ec9e9ffa692ebfcfb694cd5a515e3fe5d4d43db92934a3fff6003",
+        "bytes": 3761
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_WORK_PACKET.md",
+        "sha256": "823cd698204d9617758dc68bccb92b35224568f7839b2b93ff9198d9b68f1640",
+        "bytes": 5075
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PHASE2_START.md",
+        "sha256": "fb9ead5ad3307e5bc5c62ab89c28c15379bfdf9836ee645c06aaca4ccce0b93b",
+        "bytes": 2238
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_IDLE.md",
+        "sha256": "9b3b779e51df6d1cb23fc7a3eee1803bc23c2a9e115913957af598e4e9f1f8f1",
+        "bytes": 1742
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_QUEUE_HOLD.md",
+        "sha256": "54a395d84113158cafe44e6c13ac5c8a4d83e3e3753c071f68030553f8a50f6c",
+        "bytes": 1319
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_TASK_REGISTRY_LOCAL.md",
+        "sha256": "3e812dbb6972112c38beff99ade72a00ed511ff1f8cb6307934f8550d2a0d24f",
+        "bytes": 9106
+      },
+      {
+        "path": "mmi/project_brain/status/README.md",
+        "sha256": "a5cd1e6c45b89977a8b628e2a04267c6e9f995c0d9e0d381fe79e94f3f1354ea",
+        "bytes": 214
+      },
+      {
+        "path": "mmi/task_pipeline.json",
+        "sha256": "a2825539ff90b90857956eaf12510a60c14c6e2a62c38b9deecd6f9d5aea6e53",
+        "bytes": 4189
+      },
+      {
+        "path": "scripts/complete_task.py",
+        "sha256": "889581a58aced6c0a073fce8c8610d05e27120f60ddfe8fbaa8cb233f2c95845",
+        "bytes": 2156
+      },
+      {
+        "path": "scripts/keep_task_queue_warm.py",
+        "sha256": "45282691cf27f8eb4174c45d571c53d24df3201a4020badce714eef376f08d58",
+        "bytes": 7720
+      },
+      {
+        "path": "scripts/mmi_cold_backup.py",
+        "sha256": "29060b4a0b663cedd767b0284758ca112f38ff64fada6e50ae4047706fe64793",
+        "bytes": 12601
+      },
+      {
+        "path": "scripts/next_task.py",
+        "sha256": "16faa487e1a9801c8faa1b9ff2940afdbb9f71043f6d39dff4eef6e1bc4b96a8",
+        "bytes": 1398
+      },
+      {
+        "path": "scripts/reload_mmi_pipes.py",
+        "sha256": "697b308ce4101a3ccc4aa31bcfc6020c16f4f3c49fb5deafd14ead28ce9c0625",
+        "bytes": 3658
+      },
+      {
+        "path": "tasks.json",
+        "sha256": "fd07b1d4df44e2df7509436f4bf0c44c3afba6dffbe8109486cd26eb6886bac3",
+        "bytes": 28488
+      }
+    ],
+    "archive": "/tmp/mmi_backup_20260628_214156.tar.gz",
+    "archive_bytes": 45529,
+    "archive_sha256": "eab1eb17df49ce85260bf1b042af10e44d963fac3e82cb4c3c0802a993b7258c",
+    "push_status": "PASS",
+    "push_remote": "matt:mmi-cold-storage/archives/",
+    "push_file": "mmi_backup_20260628_214156.tar.gz",
+    "local_bytes": 45529,
+    "local_sha256": "eab1eb17df49ce85260bf1b042af10e44d963fac3e82cb4c3c0802a993b7258c",
+    "remote_bytes": 45529,
+    "push_errors": [],
+    "rclone_copy_exit": 0
+  },
+  {
+    "created_at": "2026-06-29T04:48:12.204061+00:00",
+    "source_root": "/mnt/c/Architectapp_clean",
+    "mode": "archive-and-push",
+    "files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "bc64ac8bbb5f836ffe3e69bed9cd42eb7973c7e3c1f24629dda493867733a6db",
+        "bytes": 5093
+      },
+      {
+        "path": "CODEX.md",
+        "sha256": "717b0c33cb959f1c3d19d7816a04892b46e8207e36565045eca97e32df92ccb3",
+        "bytes": 2237
+      },
+      {
+        "path": "mmi/command_center.py",
+        "sha256": "bba2e42c3526295f2fbeafcc3b9eb94eaf35425febdb3b3892c359cdef562742",
+        "bytes": 7690
+      },
+      {
+        "path": "mmi/project_brain/README.md",
+        "sha256": "59f26fb76e2ee4fe709281bee98f7272e71f8693df4f410e9fcad0934a53c319",
+        "bytes": 753
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_BACKUP_COLD_STORAGE_SPEC.md",
+        "sha256": "dbea4500762a088a3a52a61ef34ca0ee2e173fb4281ad2892c7b74be98e5cc44",
+        "bytes": 7627
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_COMMAND_CENTER_SPEC.md",
+        "sha256": "1a9222310c8d82813aafff7470569011f629295f49c84e4faea3f3f078c5cf22",
+        "bytes": 8407
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_LOCAL_CLOUD_POLICY.md",
+        "sha256": "df71d1f84a8d8919be9ca68ae450e25c084b8a1b4bcce49e7c60c46517457735",
+        "bytes": 2847
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_PHASE2_MVP_ARCHITECTURE.md",
+        "sha256": "1248a3a13976259e34d0bf3f6ef6969104cd7ebd3b07a95ee93b1f0be36c1b9f",
+        "bytes": 7893
+      },
+      {
+        "path": "mmi/project_brain/architecture/README.md",
+        "sha256": "d0effe81031e1fde7b7415c608d5bc951f205ba65b9d004bf0e31e72717355d8",
+        "bytes": 250
+      },
+      {
+        "path": "mmi/project_brain/lanes/README.md",
+        "sha256": "66f926626c98fe8dd070f5350aee566d63c28062bccb9a64ab3b761f8063d7b3",
+        "bytes": 253
+      },
+      {
+        "path": "mmi/project_brain/mission/MMI_MISSION_BRIEF.md",
+        "sha256": "e821d2b0a11235e308154f7b64b3dda31cad278a3ae40a215a59cb8bddbf9921",
+        "bytes": 4121
+      },
+      {
+        "path": "mmi/project_brain/mission/README.md",
+        "sha256": "6a80d5dd7eb310cb5936d39221bbe1d5076a5605516c50b6fbb0c0382ce2e63e",
+        "bytes": 206
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_SCOPE.md",
+        "sha256": "489da2955b979add121c71897898491024c4c7d65d163a156752886d9dfbb074",
+        "bytes": 1008
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_AUTOSEED_PIPE.md",
+        "sha256": "b1b24c99eaf58cb117f51bacbb74bec14af5adc14665be9dccbf2f91db1000ab",
+        "bytes": 1541
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BACKUP_MANIFEST.json",
+        "sha256": "9661218f605404f8a4fbdb2c2e080acb7526591853a7d5eeae3c4410e589e1a3",
+        "bytes": 5499
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BACKUP_PUSH_LOG.json",
+        "sha256": "adaaf1e13418fb67895044496b780285d15f34cd0d2f25808b73bc82eb729cf3",
+        "bytes": 6896
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BOOTSTRAP_CLOSEOUT.md",
+        "sha256": "a6844481d63b01c7c0e3fbf4a81aaa809368848be27dd6331c9713669ffefd57",
+        "bytes": 5525
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_DEPLOYER_QUEUE_CHECK.md",
+        "sha256": "44f044bef924cb0de75695f13692b6ffc6d0390f3c78d0e0f4d00230b11bd59f",
+        "bytes": 3439
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_B2_PUSH.md",
+        "sha256": "3b8124f1b07f8fe6dd8588deaae5c3c3a332151000bb1644e996c80c5ffb2726",
+        "bytes": 1734
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_BACKUP_RUN.md",
+        "sha256": "decc42ac514b523414ba5087690463e5e2b730bb1c0c84970c092b96872d1bfb",
+        "bytes": 1687
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_LANE_ROUTING.md",
+        "sha256": "6be2c015b77d8178b93e3cb6c62cb6497cb0089ad30566a58d08b39f9b792197",
+        "bytes": 6802
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_SAFE_TASK.md",
+        "sha256": "128e89db5c4ec9e9ffa692ebfcfb694cd5a515e3fe5d4d43db92934a3fff6003",
+        "bytes": 3761
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_WORK_PACKET.md",
+        "sha256": "823cd698204d9617758dc68bccb92b35224568f7839b2b93ff9198d9b68f1640",
+        "bytes": 5075
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PHASE2_START.md",
+        "sha256": "fb9ead5ad3307e5bc5c62ab89c28c15379bfdf9836ee645c06aaca4ccce0b93b",
+        "bytes": 2238
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_IDLE.md",
+        "sha256": "9b3b779e51df6d1cb23fc7a3eee1803bc23c2a9e115913957af598e4e9f1f8f1",
+        "bytes": 1742
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_QUEUE_HOLD.md",
+        "sha256": "54a395d84113158cafe44e6c13ac5c8a4d83e3e3753c071f68030553f8a50f6c",
+        "bytes": 1319
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_TASK_REGISTRY_LOCAL.md",
+        "sha256": "3e812dbb6972112c38beff99ade72a00ed511ff1f8cb6307934f8550d2a0d24f",
+        "bytes": 9106
+      },
+      {
+        "path": "mmi/project_brain/status/README.md",
+        "sha256": "a5cd1e6c45b89977a8b628e2a04267c6e9f995c0d9e0d381fe79e94f3f1354ea",
+        "bytes": 214
+      },
+      {
+        "path": "mmi/task_pipeline.json",
+        "sha256": "a2825539ff90b90857956eaf12510a60c14c6e2a62c38b9deecd6f9d5aea6e53",
+        "bytes": 4189
+      },
+      {
+        "path": "scripts/complete_task.py",
+        "sha256": "889581a58aced6c0a073fce8c8610d05e27120f60ddfe8fbaa8cb233f2c95845",
+        "bytes": 2156
+      },
+      {
+        "path": "scripts/keep_task_queue_warm.py",
+        "sha256": "45282691cf27f8eb4174c45d571c53d24df3201a4020badce714eef376f08d58",
+        "bytes": 7720
+      },
+      {
+        "path": "scripts/mmi_cold_backup.py",
+        "sha256": "29060b4a0b663cedd767b0284758ca112f38ff64fada6e50ae4047706fe64793",
+        "bytes": 12601
+      },
+      {
+        "path": "scripts/next_task.py",
+        "sha256": "16faa487e1a9801c8faa1b9ff2940afdbb9f71043f6d39dff4eef6e1bc4b96a8",
+        "bytes": 1398
+      },
+      {
+        "path": "scripts/reload_mmi_pipes.py",
+        "sha256": "697b308ce4101a3ccc4aa31bcfc6020c16f4f3c49fb5deafd14ead28ce9c0625",
+        "bytes": 3658
+      },
+      {
+        "path": "tasks.json",
+        "sha256": "fd07b1d4df44e2df7509436f4bf0c44c3afba6dffbe8109486cd26eb6886bac3",
+        "bytes": 28488
+      }
+    ],
+    "archive": "/tmp/mmi_backup_20260628_214811.tar.gz",
+    "archive_bytes": 46941,
+    "archive_sha256": "ba274ce6a9fd81cf45e6c4207842bfd82e33725bf18e822ff3efe3c1ae10fd24",
+    "push_status": "PASS",
+    "push_remote": "matt:mmi-cold-storage/archives/",
+    "push_file": "mmi_backup_20260628_214811.tar.gz",
+    "local_bytes": 46941,
+    "local_sha256": "ba274ce6a9fd81cf45e6c4207842bfd82e33725bf18e822ff3efe3c1ae10fd24",
+    "remote_bytes": 46941,
+    "push_errors": [],
+    "rclone_copy_exit": 0
+  },
+  {
+    "created_at": "2026-06-29T04:48:26.319116+00:00",
+    "source_root": "/mnt/c/Architectapp_clean",
+    "mode": "archive-and-push",
+    "files": [
+      {
+        "path": "AGENTS.md",
+        "sha256": "bc64ac8bbb5f836ffe3e69bed9cd42eb7973c7e3c1f24629dda493867733a6db",
+        "bytes": 5093
+      },
+      {
+        "path": "CODEX.md",
+        "sha256": "717b0c33cb959f1c3d19d7816a04892b46e8207e36565045eca97e32df92ccb3",
+        "bytes": 2237
+      },
+      {
+        "path": "mmi/command_center.py",
+        "sha256": "bba2e42c3526295f2fbeafcc3b9eb94eaf35425febdb3b3892c359cdef562742",
+        "bytes": 7690
+      },
+      {
+        "path": "mmi/project_brain/README.md",
+        "sha256": "59f26fb76e2ee4fe709281bee98f7272e71f8693df4f410e9fcad0934a53c319",
+        "bytes": 753
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_BACKUP_COLD_STORAGE_SPEC.md",
+        "sha256": "dbea4500762a088a3a52a61ef34ca0ee2e173fb4281ad2892c7b74be98e5cc44",
+        "bytes": 7627
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_COMMAND_CENTER_SPEC.md",
+        "sha256": "1a9222310c8d82813aafff7470569011f629295f49c84e4faea3f3f078c5cf22",
+        "bytes": 8407
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_LOCAL_CLOUD_POLICY.md",
+        "sha256": "df71d1f84a8d8919be9ca68ae450e25c084b8a1b4bcce49e7c60c46517457735",
+        "bytes": 2847
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_PHASE2_MVP_ARCHITECTURE.md",
+        "sha256": "1248a3a13976259e34d0bf3f6ef6969104cd7ebd3b07a95ee93b1f0be36c1b9f",
+        "bytes": 7893
+      },
+      {
+        "path": "mmi/project_brain/architecture/README.md",
+        "sha256": "d0effe81031e1fde7b7415c608d5bc951f205ba65b9d004bf0e31e72717355d8",
+        "bytes": 250
+      },
+      {
+        "path": "mmi/project_brain/lanes/README.md",
+        "sha256": "66f926626c98fe8dd070f5350aee566d63c28062bccb9a64ab3b761f8063d7b3",
+        "bytes": 253
+      },
+      {
+        "path": "mmi/project_brain/mission/MMI_MISSION_BRIEF.md",
+        "sha256": "e821d2b0a11235e308154f7b64b3dda31cad278a3ae40a215a59cb8bddbf9921",
+        "bytes": 4121
+      },
+      {
+        "path": "mmi/project_brain/mission/README.md",
+        "sha256": "6a80d5dd7eb310cb5936d39221bbe1d5076a5605516c50b6fbb0c0382ce2e63e",
+        "bytes": 206
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_SCOPE.md",
+        "sha256": "489da2955b979add121c71897898491024c4c7d65d163a156752886d9dfbb074",
+        "bytes": 1008
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_AUTOSEED_PIPE.md",
+        "sha256": "b1b24c99eaf58cb117f51bacbb74bec14af5adc14665be9dccbf2f91db1000ab",
+        "bytes": 1541
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BACKUP_MANIFEST.json",
+        "sha256": "9661218f605404f8a4fbdb2c2e080acb7526591853a7d5eeae3c4410e589e1a3",
+        "bytes": 5499
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BACKUP_PUSH_LOG.json",
+        "sha256": "a49acaac3ca34ddd522fb739a102459093854dc39d51b509a40476767322bc32",
+        "bytes": 13983
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BOOTSTRAP_CLOSEOUT.md",
+        "sha256": "a6844481d63b01c7c0e3fbf4a81aaa809368848be27dd6331c9713669ffefd57",
+        "bytes": 5525
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_DEPLOYER_QUEUE_CHECK.md",
+        "sha256": "44f044bef924cb0de75695f13692b6ffc6d0390f3c78d0e0f4d00230b11bd59f",
+        "bytes": 3439
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_B2_PUSH.md",
+        "sha256": "3b8124f1b07f8fe6dd8588deaae5c3c3a332151000bb1644e996c80c5ffb2726",
+        "bytes": 1734
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_BACKUP_RUN.md",
+        "sha256": "decc42ac514b523414ba5087690463e5e2b730bb1c0c84970c092b96872d1bfb",
+        "bytes": 1687
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_LANE_ROUTING.md",
+        "sha256": "6be2c015b77d8178b93e3cb6c62cb6497cb0089ad30566a58d08b39f9b792197",
+        "bytes": 6802
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_SAFE_TASK.md",
+        "sha256": "128e89db5c4ec9e9ffa692ebfcfb694cd5a515e3fe5d4d43db92934a3fff6003",
+        "bytes": 3761
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_WORK_PACKET.md",
+        "sha256": "823cd698204d9617758dc68bccb92b35224568f7839b2b93ff9198d9b68f1640",
+        "bytes": 5075
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PHASE2_START.md",
+        "sha256": "fb9ead5ad3307e5bc5c62ab89c28c15379bfdf9836ee645c06aaca4ccce0b93b",
+        "bytes": 2238
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_IDLE.md",
+        "sha256": "9b3b779e51df6d1cb23fc7a3eee1803bc23c2a9e115913957af598e4e9f1f8f1",
+        "bytes": 1742
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_QUEUE_HOLD.md",
+        "sha256": "54a395d84113158cafe44e6c13ac5c8a4d83e3e3753c071f68030553f8a50f6c",
+        "bytes": 1319
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_TASK_REGISTRY_LOCAL.md",
+        "sha256": "3e812dbb6972112c38beff99ade72a00ed511ff1f8cb6307934f8550d2a0d24f",
+        "bytes": 9106
+      },
+      {
+        "path": "mmi/project_brain/status/README.md",
+        "sha256": "a5cd1e6c45b89977a8b628e2a04267c6e9f995c0d9e0d381fe79e94f3f1354ea",
+        "bytes": 214
+      },
+      {
+        "path": "mmi/task_pipeline.json",
+        "sha256": "a2825539ff90b90857956eaf12510a60c14c6e2a62c38b9deecd6f9d5aea6e53",
+        "bytes": 4189
+      },
+      {
+        "path": "scripts/complete_task.py",
+        "sha256": "889581a58aced6c0a073fce8c8610d05e27120f60ddfe8fbaa8cb233f2c95845",
+        "bytes": 2156
+      },
+      {
+        "path": "scripts/keep_task_queue_warm.py",
+        "sha256": "45282691cf27f8eb4174c45d571c53d24df3201a4020badce714eef376f08d58",
+        "bytes": 7720
+      },
+      {
+        "path": "scripts/mmi_cold_backup.py",
+        "sha256": "29060b4a0b663cedd767b0284758ca112f38ff64fada6e50ae4047706fe64793",
+        "bytes": 12601
+      },
+      {
+        "path": "scripts/next_task.py",
+        "sha256": "16faa487e1a9801c8faa1b9ff2940afdbb9f71043f6d39dff4eef6e1bc4b96a8",
+        "bytes": 1398
+      },
+      {
+        "path": "scripts/reload_mmi_pipes.py",
+        "sha256": "697b308ce4101a3ccc4aa31bcfc6020c16f4f3c49fb5deafd14ead28ce9c0625",
+        "bytes": 3658
+      },
+      {
+        "path": "tasks.json",
+        "sha256": "fd07b1d4df44e2df7509436f4bf0c44c3afba6dffbe8109486cd26eb6886bac3",
+        "bytes": 28488
+      }
+    ],
+    "archive": "/tmp/mmi_backup_20260628_214825.tar.gz",
+    "archive_bytes": 47573,
+    "archive_sha256": "adff31ec99ed3fb9bd1d9130aca3cc301575e148920121e606ca0ed1721b8e96",
+    "push_status": "PASS",
+    "push_remote": "matt:mmi-cold-storage/archives/",
+    "push_file": "mmi_backup_20260628_214825.tar.gz",
+    "local_bytes": 47573,
+    "local_sha256": "adff31ec99ed3fb9bd1d9130aca3cc301575e148920121e606ca0ed1721b8e96",
+    "remote_bytes": 47573,
+    "push_errors": [],
+    "rclone_copy_exit": 0
+  }
+]
