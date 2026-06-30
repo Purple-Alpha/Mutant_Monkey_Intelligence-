@@ -539,5 +539,17 @@
         "output_files": [
             "mmi/project_brain/lanes/RESEARCH_VERIFICATION_2026-06.md"
         ]
+    },
+    {
+        "id": "mmi-security-intel-evaluator-pass",
+        "instruction": "PROJECT: MMI Security Intel — EVALUATOR PASS (Crucible-grade). Read lanes/MMI_RESEARCH_RIGOR_PROTOCOL.md, lanes/RESEARCH_VERIFICATION_2026-06.md, and lanes/RESEARCH_*.md. PDF/page-check outstanding gaps: IBM $2.66M IR savings, Verizon 88% SMB framing, BEC %, MSSP 40% budget, manufacturing 72-84h, $53k/hour downtime, SEG 120-180s. Per gap: VERIFIED (with page) | Insufficient Data | PURGE. Output lanes/RESEARCH_EVALUATOR_PASS_2026-06.md. Verdict PASS | FAIL | NEEDS_MATT. No product scope; audit only.",
+        "status": "pending",
+        "assignee": "Gemini Paid API",
+        "tier": "Audit",
+        "score": 74,
+        "score_reason": "Matt — Crucible-grade PDF/page-check on verification gaps before INTEL_BRIEF_TEMPLATE.",
+        "source": "Matt rigor + evaluator sequencing 2026-06-29",
+        "created_at": "2026-06-29T14:00:00",
+        "created_by": "Cursor PM"
     }
 ]
