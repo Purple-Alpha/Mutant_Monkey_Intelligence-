@@ -1,0 +1,1 @@
+PASS WITH REVISIONS — ok=false on FAULT brief; section_1_threat_summary violation; live briefs SHA256 unchanged; intel-briefs batch ok=true.

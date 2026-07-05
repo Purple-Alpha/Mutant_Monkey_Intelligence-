@@ -1,0 +1,1 @@
+SIMULATED: MFA push denied at 02:14 from unknown device (drill inject — not a live provider alert).

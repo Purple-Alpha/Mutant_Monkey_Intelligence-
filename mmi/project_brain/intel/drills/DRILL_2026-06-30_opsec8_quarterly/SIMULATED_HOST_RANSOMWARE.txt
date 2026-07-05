@@ -1,0 +1,7 @@
+[DRILL INJECT — host/filesystem family — NOT REAL]
+
+T+0 simulated observation:
+- Two project files in this folder renamed with extension `.locked-simulated`
+- Simulated ransom note text present in README_SIMULATION.txt context
+
+Operator action under drill: classify as T1486 indicator (simulated); open war room; start decision log.

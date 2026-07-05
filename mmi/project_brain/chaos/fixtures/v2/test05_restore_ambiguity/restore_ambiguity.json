@@ -1,0 +1,13 @@
+{
+  "archives": [
+    {
+      "push_file": "mmi_backup_20260630_154854.tar.gz",
+      "archive_sha256": "f1762050..."
+    },
+    {
+      "push_file": "mmi_backup_20260630_162035.tar.gz",
+      "archive_sha256": "f262e3e7..."
+    }
+  ],
+  "latest_good_pointer": null
+}

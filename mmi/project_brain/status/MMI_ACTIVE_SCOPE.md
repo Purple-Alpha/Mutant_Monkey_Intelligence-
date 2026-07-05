@@ -1,10 +1,14 @@
 # MMI Active Scope
 
-Last updated: 2026-06-29
+Last updated: 2026-07-02
 
 ## Current Directive
 
-We are strictly working on MMI.
+We are strictly working on MMI. **Operator roadmap:** `status/MMI_PROJECT_ROADMAP_2026-07.md` · **Moat:** `architecture/MMI_DIFFERENTIATOR_2026-07.md`
+
+## Matt rule — concepts stay on the map
+
+**PARKED ≠ rejected.** Ideas that feel like fantasy remain in `architecture/MMI_CONCEPT_INVENTORY_AND_GAPS_2026-07.md` and the roadmap PARKED table until chaos-lab falsification or explicit Matt retirement. Build order controls **when**, not **whether**.
 
 ## Operating Roles
 
@@ -24,10 +28,13 @@ We are strictly working on MMI.
 - Do not route active work to DAX or Trades unless Matt explicitly reactivates that lane.
 - Do not seed non-MMI tasks into `tasks.json`.
 - Do not treat old role docs as current if they conflict with this file.
+- Do not drop PARKED concepts for sounding unrealistic — route to research or inventory.
 
 ## Current Queue Rule
 
 `scripts/next_task.py` and `task_runner.py` should show MMI tasks only for active work.
+
+**Active (2026-07-02):** Cryptolalia lab wire **BUILT** — iceberg `MIRROR_DIMENSION` diverts emit cryptolalia in lab when `mirror_lab_root` set. Next: Option B provisioner wire + full iceberg chaos re-run.
 
 ## Local-First Policy
 

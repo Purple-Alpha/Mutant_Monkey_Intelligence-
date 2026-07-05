@@ -1,0 +1,8 @@
+{
+  "id": "mmi-fake-closeout",
+  "status": "completed",
+  "result_summary": "PASS",
+  "output_files": [
+    "mmi/project_brain/chaos/fixtures/v2/test10_false_pass_closeout/MISSING_OUTPUT.md"
+  ]
+}

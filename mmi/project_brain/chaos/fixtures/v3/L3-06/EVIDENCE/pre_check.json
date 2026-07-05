@@ -1,0 +1,11 @@
+{
+  "live_checklist": "mmi/project_brain/opsec/OPERATOR_OPSEC_CHECKLIST.md",
+  "live_sha256_pre": "fbdab2d504acef91d2578b4468dcb3f489c7920269f58cc985c060ba9d68aab2",
+  "opsec_4_5_9_states_pre": {
+    "OPSEC-4": "NOT_STARTED",
+    "OPSEC-5": "NOT_STARTED",
+    "OPSEC-9": "NOT_STARTED"
+  },
+  "before_copy": "mmi/project_brain/chaos/fixtures/v3/L3-06/BEFORE/opsec/OPERATOR_OPSEC_CHECKLIST.md",
+  "fault_copy": "mmi/project_brain/chaos/fixtures/v3/L3-06/FAULT/opsec/OPERATOR_OPSEC_CHECKLIST.md"
+}

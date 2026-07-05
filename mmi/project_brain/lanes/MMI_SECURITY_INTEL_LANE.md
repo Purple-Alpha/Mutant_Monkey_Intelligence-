@@ -20,8 +20,8 @@ This lane does **not** replace Social Architect, DAX, Trades, or NorthStar.
 |------|-------|----------|
 | Super | Matt | Product direction, build auth, external claims approval |
 | PM | Cursor | Research intake, pipeline, scope hygiene |
-| Research | Gemini | Primary threat landscape / ATT&CK research |
-| Deep research | ChatGPT | Source verification, counter-evidence |
+| Research | Gemini | Primary threat landscape / ATT&CK research — **Canada-first** per `MMI_RESEARCH_RIGOR_PROTOCOL.md` |
+| Deep research | ChatGPT | Source verification, counter-evidence — **Canada-first cross-ref** |
 | Design | Claude | MVP architecture, intel brief templates |
 | Audit | Gemini Paid API | Fact-check pass on stats before publish |
 | Backbone | Codex | Local tools only when MVP spec authorizes (e.g. intel index CLI) |

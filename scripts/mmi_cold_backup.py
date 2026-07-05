@@ -62,7 +62,9 @@ BACKUP_ALLOWLIST = [
     "mmi/__init__.py",
     "mmi/m4/",
     "scripts/m4_import_ban_test.py",
+    "scripts/m4_invariant_check.py",
     "tests/test_m4_import_ban.py",
+    "tests/test_m4_invariant_check.py",
 ]
 
 DENY_PATTERNS = [

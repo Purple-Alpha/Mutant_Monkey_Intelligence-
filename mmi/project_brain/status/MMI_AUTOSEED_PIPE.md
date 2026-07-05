@@ -1,10 +1,18 @@
 # MMI Auto-Seed Pipe
 
-Last updated: 2026-06-28
+Last updated: 2026-07-01
 
 ## Problem (fixed)
 
 The queue went **DRY** after every task completion because `keep_task_queue_warm.py` only knew bootstrap tasks and a one-time hold. Nothing seeded the next bounded step automatically.
+
+## Pipeline warm rule (2026-07)
+
+**No silent DRY.** After every closeout, Cursor PM must seed the next Matt-approved pending task **or** record an explicit DRY reason. See **`mmi/project_brain/status/MMI_PIPELINE_WARM_RULE_2026-07.md`**.
+
+Staging record: **`mmi/project_brain/status/MMI_PIPE_STAGING.json`** (updated by warmer on seed/peek).
+
+Seeded tasks default to `build_authorization: NOT_AUTHORIZED` — seeding is not build authorization.
 
 ## How it works now
 

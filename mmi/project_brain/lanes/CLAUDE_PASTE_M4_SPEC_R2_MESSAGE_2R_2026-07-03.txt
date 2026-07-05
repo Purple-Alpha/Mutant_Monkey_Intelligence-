@@ -1,0 +1,41 @@
+# COPY INTO CLAUDE AFTER MESSAGE 1R OUTPUT
+
+OJECT: MMI
+TASK ID: mmi-m4-evolution-gate-spec-r2-review
+ASSIGNEE: Claude (Design)
+BUILD AUTHORIZATION: NOT_AUTHORIZED — spec revision only
+
+<review_mode>
+Act as a hostile distributed-systems architect reviewing your own R2 superset
+MMI_M4_EVOLUTION_GATE_SPEC from MESSAGE 1R.
+
+Do NOT praise the draft. Attack it.
+
+CODEX R1 BLOCKER CHECKLIST — fail if ANY unresolved:
+  [ ] 1. Full 17 sections present (not narrow slice)
+  [ ] 2. M3 min slice: pass criteria + artifact + terminal state
+  [ ] 3. Formal invariants + fuzz harness with CLI contract
+  [ ] 4. §17 phases TCB (stage_attestation, KEY_CUSTODY, boundary daemon) before endurance
+  [ ] 5. V-009: correlated-failure rules + falsifier + fixtures
+  [ ] 6. ≥20 M4-CANARY-* IDs + §4.2 blind-spot table
+  [ ] 7. T1–T12 complete (T10 clock, T11 budget, T12 scoped-reset violation)
+  [ ] 8. §17 build phasing table; 48h runner LAST
+  [ ] 9. L8 import ban enforceable (H-rule + harness check)
+
+MANDATORY REVIEW AXES (fix inline):
+
+1. STAGED LADDER — can implementer skip to M4 via code path or missing §17 gate?
+2. HIDDEN COUPLING — M3_REQUIRED_FOR_* enforced in phasing not prose?
+3. CANARY BLIND SPOTS — any findings §4.2 category without canary ID?
+4. CLOCK HONESTY — scoped reset impossible on M4 final? critical vs diagnostic closed?
+5. EVIDENCE & AFE — hash chain anti-backfill? hostile attribution audit specified?
+6. HOST BOUNDARY — EVIDENCE_ROOT off /tmp? FileId not path-only? WSL insufficiency stated?
+7. FAKE-PASS — HARNESS_READY ≠ PERFECT? INDETERMINATE ≠ CLEAN? build_authorized always FALSE?
+8. R1 REGRESSION — any V-001..V-011 or V-1..V-11 remediations dropped during expansion?
+
+Output ONE complete revised spec (architecture/MMI_M4_EVOLUTION_GATE_SPEC_2026-07.md).
+Add REVISION LOG: MESSAGE 2R adversarial pass.
+Add "Codex R1 resolution map" table if missing.
+SIGN-OFF: PASS | PASS WITH REVISIONS | FAIL
+No chat prose outside the spec file.
+</review_mode>

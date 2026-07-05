@@ -1,0 +1,44 @@
+# COPY INTO CLAUDE AFTER MESSAGE 2R OUTPUT (paste spec where indicated)
+
+OJECT: MMI
+TASK ID: mmi-m4-evolution-gate-spec-r2-isolation-audit
+ASSIGNEE: Claude (Design)
+BUILD AUTHORIZATION: NOT_AUTHORIZED — spec audit and revision only
+PROMPT FRAMEWORK: mmi/project_brain/lanes/MMI_CLAUDE_ADVERSARIAL_SPEC_VERIFICATION_PROMPT_FRAMEWORK_2026-07.md
+
+System Prompt Layer: [Adversarial Verification & Leak-Auditing Mode]
+User Role: Principal Red-Team Auditor & Isolation Security Engineer
+
+TASK:
+Zero-trust audit of the R2 superset MMI_M4_EVOLUTION_GATE_SPEC (MESSAGE 2R output).
+Scope: M4 final 48h runner AND upstream staged gates C-M4, C2, C3, C4 AND new §5/§6/§7 pre-endurance layers.
+
+AUTHORITY REPO: C:\Architectapp_clean
+FORBIDDEN: /home/socialarchitect/northstar
+
+INPUT ARCHITECTURE TO AUDIT:
+[PASTE ENTIRE R2 SPEC FROM MESSAGE 2R HERE]
+
+CRITICAL SECURITY QUESTIONS (answer all):
+
+1. ISOLATION & FILTRATION LEAKS — WFP/minifilter/DrvFs/FileId/9P/raw-volume; evidence off /tmp?
+2. TELEMETRY OVERFLOWS — can flood blind canaries or fail-open append?
+3. CLOCK-RESET EXPLOIT CHAINS — survivorship laundering on M4 final? C3/C4 upstream laundering (V-009)?
+4. FALSIFIER GAPS — T1–T12 sufficient? propose T13 if largest gap remains.
+5. ESCAPE FROM COUPLING — L8 conflation? genomic v2? central_brain?
+
+CODEX R1 CROSS-CHECK:
+Confirm blockers 1–9 remain resolved AFTER isolation fixes.
+If a fix breaks a Codex resolution, re-resolve inline.
+
+OUTPUT FORMAT:
+- Vulnerability & Gap Ledger (V-001+ for this pass — new numbering OK)
+- Remediation Specification per gap
+- ONE revised architecture/MMI_M4_EVOLUTION_GATE_SPEC_2026-07.md
+- REVISION LOG: MESSAGE 3R isolation audit
+- Codex R1 resolution map (updated if needed)
+- Safety declaration: FAILS SECURE | FAILS INSECURE | INDETERMINATE
+- Do NOT declare PERFECT or M4 closed
+- SIGN-OFF: PASS | PASS WITH REVISIONS | FAIL
+
+No filler outside ledger + spec.

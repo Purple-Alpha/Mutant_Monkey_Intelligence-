@@ -48,6 +48,8 @@ Until `war_room.py` exists, use:
 python mmi/command_center.py --watch --seconds 30
 ```
 
+**Update (2026-06-30):** `mmi/war_room.py` is shipped. Use war room on monitor 2. See `architecture/MMI_WAR_ROOM_SPEC.md` (V1.1-PROTOTYPE).
+
 ---
 
 ## Agent tab roles (monitor 2)

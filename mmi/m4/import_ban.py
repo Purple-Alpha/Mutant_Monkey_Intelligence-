@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import ast
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -10,11 +11,12 @@ CANARY_METADATA_LAYER_IMPORT = re.compile(
     r"^\s*(?:import\s+.*canary_metadata_layer|from\s+.*canary_metadata_layer)",
     re.MULTILINE,
 )
-# Fail-closed: block dynamic import paths to L8 on the same line (H-L8-001 Phase 0).
 DYNAMIC_IMPORT_MECHANISM = re.compile(
     r"(?:importlib(?:\.\w+)*\.import_module|__import__|\bimport_module\b)"
 )
 MMI_L8_SYMBOL = re.compile(r"\bmmi\.l8(?:\.|\b)")
+CANARY_MODULE_MARKER = "canary_metadata_layer"
+CHECKER_EXEMPT = frozenset({"import_ban.py"})
 
 
 @dataclass
@@ -36,20 +38,65 @@ class ImportBanScanResult:
         return not self.violations
 
 
-def _canary_metadata_layer_coupling(line: str) -> bool:
-    if "canary_metadata_layer" not in line:
-        return False
-    if CANARY_METADATA_LAYER_IMPORT.search(line):
-        return True
-    return bool(DYNAMIC_IMPORT_MECHANISM.search(line))
+def _line_at(text: str, line_no: int) -> str:
+    lines = text.splitlines()
+    if 1 <= line_no <= len(lines):
+        return lines[line_no - 1].strip()
+    return ""
 
 
-def _scan_file(path: Path, package_root: Path) -> list[ImportBanViolation]:
-    rel = path.relative_to(package_root).as_posix()
-    text = path.read_text(encoding="utf-8")
+def _ast_canary_violations(path: Path, rel: str, text: str) -> list[ImportBanViolation]:
+    if path.name in CHECKER_EXEMPT:
+        return []
+    try:
+        tree = ast.parse(text, filename=str(path))
+    except SyntaxError:
+        return []
+
+    hits: list[ImportBanViolation] = []
+    seen: set[tuple[int, str]] = set()
+
+    def add(line_no: int, rule: str, detail: str) -> None:
+        key = (line_no, rule)
+        if key in seen:
+            return
+        seen.add(key)
+        hits.append(
+            ImportBanViolation(
+                path=rel,
+                line_no=line_no,
+                rule=rule,
+                line=_line_at(text, line_no) or detail,
+            )
+        )
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Constant) and isinstance(node.value, str):
+            if CANARY_MODULE_MARKER in node.value:
+                add(
+                    node.lineno,
+                    "H-L8-001-canary_metadata_layer",
+                    "string literal references canary_metadata_layer",
+                )
+
+    return hits
+
+
+def _line_canary_violations(rel: str, text: str) -> list[ImportBanViolation]:
+    if rel.split("/")[-1] in CHECKER_EXEMPT:
+        return []
     hits: list[ImportBanViolation] = []
     for idx, line in enumerate(text.splitlines(), start=1):
-        if _canary_metadata_layer_coupling(line):
+        if CANARY_METADATA_LAYER_IMPORT.search(line):
+            hits.append(
+                ImportBanViolation(
+                    path=rel,
+                    line_no=idx,
+                    rule="H-L8-001-canary_metadata_layer",
+                    line=line.strip(),
+                )
+            )
+        elif CANARY_MODULE_MARKER in line and DYNAMIC_IMPORT_MECHANISM.search(line):
             hits.append(
                 ImportBanViolation(
                     path=rel,
@@ -68,6 +115,23 @@ def _scan_file(path: Path, package_root: Path) -> list[ImportBanViolation]:
                 )
             )
     return hits
+
+
+def _scan_file(path: Path, package_root: Path) -> list[ImportBanViolation]:
+    rel = path.relative_to(package_root).as_posix()
+    text = path.read_text(encoding="utf-8")
+    hits = _line_canary_violations(rel, text)
+    hits.extend(_ast_canary_violations(path, rel, text))
+    # De-dupe same line+rule
+    seen: set[tuple[str, int, str]] = set()
+    unique: list[ImportBanViolation] = []
+    for hit in hits:
+        key = (hit.rule, hit.line_no, hit.line)
+        if key in seen:
+            continue
+        seen.add(key)
+        unique.append(hit)
+    return unique
 
 
 def scan_m4_package(authority_root: Path) -> ImportBanScanResult:

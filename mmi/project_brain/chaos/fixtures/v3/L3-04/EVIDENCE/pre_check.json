@@ -1,0 +1,9 @@
+{
+  "live_briefs": {
+    "mmi/project_brain/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md": "112d282b30bcac6d18b383178f0a2ffa32fff3b02b30b2daeccc43627c6c1898",
+    "mmi/project_brain/intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md": "7d0564a137e29609b13449e6bb7192f610bd38a7ff49b17e5968bd9f8c7ce070"
+  },
+  "injected_fault": "Verizon reports 88% of Canadian SMB breaches involve ransomware.",
+  "before_copy": "mmi/project_brain/chaos/fixtures/v3/L3-04/BEFORE/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md",
+  "fault_copy": "mmi/project_brain/chaos/fixtures/v3/L3-04/FAULT/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md"
+}

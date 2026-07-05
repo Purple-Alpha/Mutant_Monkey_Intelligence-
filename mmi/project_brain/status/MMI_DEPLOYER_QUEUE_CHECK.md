@@ -1,10 +1,32 @@
 # MMI Deployer Queue Check
 
-Last updated: 2026-06-28
+Last updated: 2026-07-01
 
 ## Verdict
 
-**PASS** — Local deployer commands currently emit MMI-only active work with task id, score, and assignee. Non-MMI tasks remain paused or completed and are not surfaced as the next active task.
+**PASS** — Local deployer commands emit MMI-only active work with task id, score, and assignee. Active task routes to **Codex** (not Cursor PM by default). Non-MMI tasks remain paused or completed.
+
+## Active task (2026-07-01)
+
+| Field | Value |
+|-------|--------|
+| Task | `mmi-quality-slice-p1-closeout-gate` |
+| Assignee | **Codex** |
+| Tier | Backbone / runtime support |
+| Build auth | **NOT_AUTHORIZED** (see `tasks.json`) |
+| Cursor PM role | Route/monitor/closeout hygiene only |
+
+Live `next_task.py`:
+
+```text
+TASK: mmi-quality-slice-p1-closeout-gate
+SCORE: 88
+GOES TO: Codex (Backbone / runtime support)
+```
+
+See `MMI_ACTIVE_TASK_ROUTING_P1_2026-07.md` and `MMI_LANE_ROUTING.md` § Active task routing — P1.
+
+**Warning:** `task_runner.py` prints `EXECUTING:` for any pending task — Cursor PM must **not** use it to auto-run Codex-assigned backbone work.
 
 ## Commands Checked
 
@@ -59,7 +81,20 @@ Fixed backlog (all MMI, all Cursor PM):
 
 Fallback seed (only when entire queue is finished): instruction is `PROJECT: MMI` and output is `MMI_NEXT_SAFE_TASK.md`. Id prefix `phase1-next-safe-increment-*` is legacy naming only; content is MMI-only.
 
-## `tasks.json` Active Queue — PASS
+## Pipe status (2026-07-01)
+
+**Rule:** `mmi/project_brain/status/MMI_PIPELINE_WARM_RULE_2026-07.md` — no silent DRY.
+
+**Current:** `LOADED` — `mmi-promote-latest-good-stub-110548` | **Matt** | manual stub update  
+**Restore-check `110548`:** PASS | **validate-promotion:** ALLOWED  
+**Last B2 mirror:** `mmi_backup_20260701_104504.tar.gz` (P1–P5)  
+**Last B2 mirror:** `mmi_backup_20260701_103517.tar.gz` (P1–P4)  
+**Restore-proven:** `mmi_backup_20260630_163709.tar.gz`  
+**Last B2 mirror:** `mmi_backup_20260630_195144.tar.gz` (P1 + P2 gates + tests)  
+**Last B2 mirror:** `mmi_backup_20260630_194435.tar.gz` (P1 gate + tests)
+
+Staging file: `mmi/project_brain/status/MMI_PIPE_STAGING.json`
+
 
 | id | status | MMI? | Surfaced? |
 |---|---|---|---|

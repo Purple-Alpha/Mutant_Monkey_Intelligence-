@@ -1,6 +1,6 @@
 # MMI Lane Routing
 
-Last updated: 2026-06-28  
+Last updated: 2026-07-01  
 Authority: Matt (Super)  
 Maintained by: Cursor PM  
 Source: `MMI_ACTIVE_SCOPE.md` and Matt directives 2026-06-28
@@ -8,6 +8,8 @@ Source: `MMI_ACTIVE_SCOPE.md` and Matt directives 2026-06-28
 ## Purpose
 
 This file tells Cursor PM **who owns what** and **when to route work** to another lane. Cursor PM owns the queue — it does not implement every task itself.
+
+**New agent sessions:** start with `mmi/project_brain/lanes/MMI_AI_LANE_SCOPE_2026-07-03.md` (canonical lane map + build loop + filing rules).
 
 If this file conflicts with `MMI_ACTIVE_SCOPE.md`, follow `MMI_ACTIVE_SCOPE.md` and ask Matt.
 
@@ -46,7 +48,17 @@ Cursor PM **does not** (unless Matt explicitly assigns that lane for a specific 
 - Act as Super (product direction, GATED, build auth)
 - Deploy, call external services, scrape, spend money, or contact people
 
-**Rule:** If the task assignee is not Cursor PM, Cursor PM routes it — it does not do the work.
+**Rule:** If the task assignee is not Cursor PM, Cursor PM **routes and monitors** — it does **not** perform the assigned lane's work unless Matt explicitly reroutes the task.
+
+**Hard rule (2026-07-01):** Seeded/pending status is **not** build authorization. Backbone tasks (e.g. P1 closeout gate) remain **blocked for implementation** until Matt gives explicit build auth.
+
+| If assignee is… | Cursor PM does… | Cursor PM does NOT… |
+|-----------------|-----------------|---------------------|
+| Cursor PM | Execute bounded PM work + queue hygiene | Absorb Codex/Claude/research lanes |
+| Codex | Handoff, queue state, status, closeout after review | Implement scripts by default |
+| Claude | Handoff, monitor | Write design specs by default |
+| Matt | Hold queue, document `NEEDS MATT` | Decide product direction |
+| Gemini / ChatGPT / Gemini Paid | Handoff per task | Run research or audit by default |
 
 ---
 
@@ -148,13 +160,70 @@ REQUIRED OUTPUT: <path(s)>
 HARD STOPS: MMI only; no Phase 1/DAX/Trades; no scope expansion
 ```
 
+**Claude (Design lane):** Also attach `lanes/MMI_CLAUDE_ENGINEERING_PROMPT_FRAMEWORK_2026-07.md` — use XML-wrapped template (§5), multi-shot pattern (§3), and no-explanations directive (§2) for code/spec generation tasks.
+
 Matt relays to the target lane. Cursor PM does not impersonate other lanes.
 
 ---
 
-## Current Queue Priority (from work packet)
+## Active task routing — Claude L4 spec (2026-07-02)
 
-After this doc, seed in order:
+| Field | Value |
+|-------|--------|
+| **Task id** | `mmi-iceberg-l4-behavioral-fingerprint-spec` |
+| **Assignee** | **Claude** (Design) |
+| **Build auth** | **NOT_AUTHORIZED** — spec only |
+| **Handoff** | `lanes/CLAUDE_HANDOFF_L4_BEHAVIORAL_FINGERPRINT_2026-07-02.md` |
+| **Phase 1** | **PASS** (recorded) |
+
+Matt → Claude: paste XML block from handoff file. Cursor PM closeout when spec lands.
+
+**Codex:** idle until Matt authorizes L4 implementation after spec review.
+
+---
+
+## Archived — P1 closeout gate routing (2026-07-01, complete)
+
+| Field | Value |
+|-------|--------|
+| **Task id** | `mmi-quality-slice-p1-closeout-gate` |
+| **Status** | **COMPLETE** (P1–P8 quality ladder done) |
+
+<details>
+<summary>Original P1 handoff (historical)</summary>
+
+PROJECT: MMI
+TASK ID: mmi-quality-slice-p1-closeout-gate
+ASSIGNEE: Codex
+LANE: Backbone / runtime support
+SCORE: 88
+BUILD AUTHORIZATION: [Matt fills when authorizing]
+WORK: Implement Slice P1 only per MMI_QUALITY_ELEVATION_REDESIGN_2026-07.md §13 Slice 1.
+      Extend complete_task.py — mandatory H1 for artifact tiers; block on missing outputs.
+      Optional --verify-json artifact path. Do not implement P2/P3/L3-05.
+REQUIRED OUTPUT: scripts/complete_task.py (+ tests/verification notes as appropriate)
+HARD STOPS: MMI only; local-first; no Level 3; no OPSEC-4/5/9 changes; no scope expansion
+```
+
+</details>
+
+---
+
+## Current queue snapshot (2026-07-01)
+
+| Field | Value |
+|-------|--------|
+| **Active** | `mmi-weapon-phase1-stability-harness` → Codex (pending build auth) |
+| **Quality ladder** | P1–P8 **COMPLETE** |
+| **P9 / L3** | **HOLD** |
+| **Latest B2 mirror** | `mmi_backup_20260701_110548.tar.gz` |
+| **Restore-proven / latest-good** | `mmi_backup_20260701_110548.tar.gz` |
+
+---
+
+## Archived — initial seed order (2026-06-28)
+
+After lane routing doc was first written, seed order was:
 
 | # | Task id | Assignee | Score |
 |---|---|---|---|

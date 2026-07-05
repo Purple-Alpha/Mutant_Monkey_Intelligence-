@@ -1,0 +1,3 @@
+PIPE STATUS: LOADED
+TASK: mmi-chaos-tabletop-v1
+SCORE: 80

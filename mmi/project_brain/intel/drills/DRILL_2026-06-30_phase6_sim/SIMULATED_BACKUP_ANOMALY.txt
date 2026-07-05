@@ -1,0 +1,1 @@
+SIMULATED: rclone dry-run shows unexpected delete candidate (drill inject — verify with real mmi_cold_backup.py --dry-run separately).

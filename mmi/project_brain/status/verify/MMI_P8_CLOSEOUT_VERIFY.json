@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "check": "P8_closeout_evidence_contract",
+  "task": "mmi-quality-slice-p8-closeout-evidence-contract",
+  "verified_at": "2026-07-01",
+  "commands": [
+    {
+      "command": "python3 -m py_compile scripts/complete_task.py scripts/mmi_verify.py scripts/mmi_cold_backup.py tests/test_complete_task_gate.py",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -m unittest tests/test_complete_task_gate.py tests/test_intel_closeout_gate.py tests/test_opsec_amend_helper.py tests/test_backup_push_integrity.py",
+      "exit_code": 0,
+      "tests": 19
+    }
+  ],
+  "evidence": [
+    "scripts/complete_task.py records sign_off, sign_off_tier, verification_commands, verification_artifact, closeout_verification, and closeout_evidence_contract.",
+    "Invalid verification artifact blocks closeout before tasks.json write.",
+    "Existing H1/H2/verify-json closeout gates still pass regression tests."
+  ]
+}

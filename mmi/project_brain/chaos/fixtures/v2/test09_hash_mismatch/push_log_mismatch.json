@@ -1,0 +1,7 @@
+{
+  "push_file": "mmi_backup_FAKE.tar.gz",
+  "local_sha256": "aaa",
+  "remote_bytes": 100,
+  "local_bytes": 200,
+  "push_status": "PASS"
+}

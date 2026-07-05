@@ -1,0 +1,10 @@
+{
+  "live_sha256_post": "fbdab2d504acef91d2578b4468dcb3f489c7920269f58cc985c060ba9d68aab2",
+  "matches_pre": true,
+  "opsec_4_5_9_states_post": {
+    "OPSEC-4": "NOT_STARTED",
+    "OPSEC-5": "NOT_STARTED",
+    "OPSEC-9": "NOT_STARTED"
+  },
+  "rollback": "FAULT tree retained as staged evidence; live file never written"
+}

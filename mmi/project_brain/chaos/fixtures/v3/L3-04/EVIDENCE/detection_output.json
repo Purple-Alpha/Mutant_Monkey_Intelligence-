@@ -1,0 +1,12 @@
+{
+  "check": "H2_intel_brief_headline",
+  "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/FAULT/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md",
+  "ok": false,
+  "violations": [
+    {
+      "context": "section_1_threat_summary",
+      "line": "Verizon reports 88% of Canadian SMB breaches involve ransomware.",
+      "pattern": "\\b\\d+\\s*(?:\\.\\d+)?\\s*%"
+    }
+  ]
+}

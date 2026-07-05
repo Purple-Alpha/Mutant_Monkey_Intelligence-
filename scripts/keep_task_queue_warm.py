@@ -22,6 +22,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 TASK_FILE = ROOT / "tasks.json"
 PIPELINE_FILE = ROOT / "mmi" / "task_pipeline.json"
+STAGING_FILE = ROOT / "mmi" / "project_brain" / "status" / "MMI_PIPE_STAGING.json"
 
 ACTIVE_STATUSES = {"pending", "queued", "todo", "in-progress", "in_progress"}
 DONE_STATUSES = {"completed", "done", "cancelled", "canceled", "skipped", "paused"}
@@ -121,7 +122,7 @@ def load_pipeline() -> list[dict[str, Any]]:
 
 def make_pending_task(item: dict[str, Any]) -> dict[str, Any]:
     now = datetime.now().isoformat(timespec="seconds")
-    return {
+    task = {
         "id": item["id"],
         "instruction": item["instruction"],
         "status": "pending",
@@ -132,7 +133,38 @@ def make_pending_task(item: dict[str, Any]) -> dict[str, Any]:
         "source": item.get("source", "mmi/task_pipeline.json"),
         "created_at": now,
         "created_by": "scripts/keep_task_queue_warm.py",
+        "build_authorization": item.get("build_authorization", "NOT_AUTHORIZED"),
     }
+    if item.get("routing_note"):
+        task["routing_note"] = item["routing_note"]
+    return task
+
+
+def write_pipe_staging(
+    pipe: str,
+    reason: str,
+    *,
+    active_task: dict[str, Any] | None = None,
+    next_candidate: dict[str, Any] | None = None,
+) -> None:
+    """Record pipe state so DRY is never silent (MMI_PIPELINE_WARM_RULE_2026-07)."""
+    payload: dict[str, Any] = {
+        "updated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+        "pipe": pipe,
+        "reason": reason,
+    }
+    if active_task:
+        payload["active_task_id"] = active_task.get("id")
+        payload["assignee"] = active_task.get("assignee")
+        payload["build_authorization"] = active_task.get("build_authorization", "NOT_AUTHORIZED")
+    if next_candidate:
+        payload["next_candidate"] = {
+            "id": next_candidate.get("id"),
+            "assignee": next_candidate.get("assignee"),
+            "build_authorization": next_candidate.get("build_authorization", "NOT_AUTHORIZED"),
+        }
+    STAGING_FILE.parent.mkdir(parents=True, exist_ok=True)
+    STAGING_FILE.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
 
 def next_pipeline_task(tasks: list[dict[str, Any]]) -> dict[str, Any] | None:
@@ -177,14 +209,17 @@ def seed_if_dry() -> dict[str, Any]:
             for task in tasks
             if str(task.get("status", "")).lower() in ACTIVE_STATUSES
         )
+        write_pipe_staging("LOADED", "active pending task", active_task=active)
         return {"changed": False, "reason": "active task exists", "task": active}
 
     task = next_backlog_task(tasks)
     if task is None:
+        write_pipe_staging("DRY", "PIPELINE_EXHAUSTED_AWAITING_PM_EXTEND", next_candidate=None)
         return {"changed": False, "reason": "no eligible backlog or pipeline task", "task": None}
 
     tasks.append(task)
     save_tasks(tasks)
+    write_pipe_staging("LOADED", "seeded pending task", active_task=task)
     return {"changed": True, "reason": "queue was dry; seeded from pipeline", "task": task}
 
 
@@ -200,20 +235,27 @@ def main() -> int:
     tasks = load_tasks()
     if args.peek:
         if has_active_task(tasks):
+            active = next(
+                task
+                for task in tasks
+                if str(task.get("status", "")).lower() in ACTIVE_STATUSES
+            )
+            write_pipe_staging("LOADED", "active pending task", active_task=active)
             result = {
                 "changed": False,
                 "reason": "active task exists",
-                "task": next(
-                    task
-                    for task in tasks
-                    if str(task.get("status", "")).lower() in ACTIVE_STATUSES
-                ),
+                "task": active,
             }
         else:
+            next_task = next_backlog_task(tasks)
+            if next_task:
+                write_pipe_staging("READY", "next candidate staged (not yet written)", next_candidate=next_task)
+            else:
+                write_pipe_staging("DRY", "PIPELINE_EXHAUSTED_AWAITING_PM_EXTEND", next_candidate=None)
             result = {
                 "changed": False,
                 "reason": "queue is dry; next seed preview",
-                "task": next_backlog_task(tasks),
+                "task": next_task,
             }
     else:
         result = seed_if_dry()

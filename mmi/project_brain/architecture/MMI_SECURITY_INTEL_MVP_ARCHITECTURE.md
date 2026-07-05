@@ -1,8 +1,9 @@
 # MMI Security Intel — MVP Architecture
 
-Engine: Mutant Monkey  
+Project: MMI (Architectapp_clean)  
 Lane: Design  
 Status: Draft — design spec, not runtime  
+Repo root: `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`  
 Deliverable path: `mmi/project_brain/architecture/MMI_SECURITY_INTEL_MVP_ARCHITECTURE.md`
 
 ## Purpose

@@ -1,0 +1,29 @@
+{
+  "live_briefs_sha256_post": {
+    "mmi/project_brain/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md": "112d282b30bcac6d18b383178f0a2ffa32fff3b02b30b2daeccc43627c6c1898",
+    "mmi/project_brain/intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md": "7d0564a137e29609b13449e6bb7192f610bd38a7ff49b17e5968bd9f8c7ce070"
+  },
+  "matches_pre": true,
+  "live_intel_briefs_scan": {
+    "check": "H2_intel_briefs_batch",
+    "ok": true,
+    "briefs_scanned": 2,
+    "failed": 0,
+    "results": [
+      {
+        "check": "H2_intel_brief_headline",
+        "path": "mmi/project_brain/intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md",
+        "ok": true,
+        "violations": []
+      },
+      {
+        "check": "H2_intel_brief_headline",
+        "path": "mmi/project_brain/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md",
+        "ok": true,
+        "violations": []
+      }
+    ]
+  },
+  "live_scan_ok": true,
+  "rollback": "FAULT tree retained as staged evidence; live briefs never written"
+}

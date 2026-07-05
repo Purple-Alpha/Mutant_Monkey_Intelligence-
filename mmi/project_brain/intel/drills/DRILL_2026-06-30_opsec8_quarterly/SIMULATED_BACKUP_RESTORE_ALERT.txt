@@ -1,0 +1,10 @@
+[DRILL INJECT — backup/recovery family — NOT REAL]
+
+T+2 simulated observation:
+- Alert: "B2 archive delete candidate detected" (inject only)
+- Operator cross-check: reference status/MMI_RESTORE_CHECK_WAR_ROOM_PROOF_2026-06.md
+  - Archive: mmi_backup_20260629_203555.tar.gz
+  - Restore-check: PASS (2026-06-30, isolated scratch)
+  - war_room.py recovered: 7889 bytes
+
+No new backup push run this drill. Recovery proof referenced, not re-executed.

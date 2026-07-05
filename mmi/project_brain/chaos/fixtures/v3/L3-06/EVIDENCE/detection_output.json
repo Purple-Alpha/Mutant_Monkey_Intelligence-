@@ -1,0 +1,47 @@
+{
+  "check": "L3_opsec_false_done",
+  "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/FAULT/opsec/OPERATOR_OPSEC_CHECKLIST.md",
+  "ok": false,
+  "fault_detected": true,
+  "violations": [
+    {
+      "item": "OPSEC-4",
+      "reason": "DONE without last_done"
+    },
+    {
+      "item": "OPSEC-4",
+      "reason": "DONE with worksheet-only verify_method"
+    },
+    {
+      "item": "OPSEC-5",
+      "reason": "DONE with dry-run-only verify_method"
+    },
+    {
+      "item": "OPSEC-9",
+      "reason": "DONE with dry-run-only verify_method"
+    }
+  ],
+  "monitored_items": {
+    "OPSEC-4": {
+      "state": "DONE",
+      "last_done": "",
+      "verify_method": "worksheet exists only \u2014 human-gate worksheet filed date + one weekly spot-check note (no PII). Habit defined in drill \u00a74.2\u2013\u00a74.4"
+    },
+    "OPSEC-5": {
+      "state": "DONE",
+      "last_done": "2026-06-30",
+      "verify_method": "dry-run only \u2014 worksheet \u00a76 insufficient alone + decision-log entry when invoked (real preferred; drill dry-run in \u00a76 is worksheet evidence only, insufficient alone for DONE)"
+    },
+    "OPSEC-9": {
+      "state": "DONE",
+      "last_done": "2026-06-30",
+      "verify_method": "worksheet dry-run only \u2014 no real decision log for worksheet phase; DONE requires real incident or quarterly drill entry with timestamp before further investigation"
+    }
+  },
+  "live_truth": {
+    "OPSEC-4": "NOT_STARTED",
+    "OPSEC-5": "NOT_STARTED",
+    "OPSEC-9": "NOT_STARTED"
+  },
+  "live_unchanged_ok": true
+}

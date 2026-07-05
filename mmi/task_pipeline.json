@@ -106,9 +106,389 @@
       "assignee": "Claude",
       "tier": "Design",
       "score": 73,
-      "score_reason": "Build INTEL_BRIEF_TEMPLATE only after Evaluator PASS on research baseline.",
-      "instruction": "PROJECT: MMI Security Intel. Read architecture/MMI_SECURITY_INTEL_MVP_ARCHITECTURE.md, lanes/MMI_RESEARCH_RIGOR_PROTOCOL.md, lanes/RESEARCH_EVALUATOR_PASS_2026-06.md (must exist and PASS). Produce mmi/project_brain/intel/templates/INTEL_BRIEF_TEMPLATE.md: ATT&CK fields, source-status, Confidence score, Crucible limitations block. VERIFIED claims only; NEEDS VERIFY forbidden in template examples. No endpoint swarm; local-first.",
+      "score_reason": "Build INTEL_BRIEF_TEMPLATE after ChatGPT verification baseline (Option B — evaluator dep removed 2026-06-30).",
+      "instruction": "PROJECT: MMI Security Intel. Read architecture/MMI_SECURITY_INTEL_MVP_ARCHITECTURE.md, lanes/MMI_RESEARCH_RIGOR_PROTOCOL.md, lanes/RESEARCH_VERIFICATION_2026-06.md (PASS with Revisions — accepted research baseline). Produce mmi/project_brain/intel/templates/INTEL_BRIEF_TEMPLATE.md: ATT&CK fields, source-status, Confidence score, Crucible limitations block. VERIFIED claims only; NEEDS VERIFY forbidden in template examples. No endpoint swarm; local-first.",
       "source": "Matt intel build sequence 2026-06-29"
+    },
+    {
+      "id": "mmi-restore-drill-quarterly",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 71,
+      "score_reason": "Phase 6 drill A7 gap — restore path identified but not tested in 90 days; closes WAR_ROOM_SCORING_MATRIX_v2 Axis A7.",
+      "instruction": "PROJECT: MMI. Quarterly B2 restore drill. Read intel/drills/DRILL_2026-06-30_phase6_sim/DRILL_WORKSHEET_2026-06-30.md (A7 gap). Verify latest archive in MMI_BACKUP_PUSH_LOG.json; extract or point to a scratch restore copy; run scripts/mmi_cold_backup.py --restore-check on restored mmi/ tree. Record pass/fail, date, archive used in mmi/project_brain/status/MMI_RESTORE_DRILL_2026-06.md. Local only; no cloud changes. If full extract not practical tonight, document exact steps Matt will run and mark NEEDS_MATT for extract path.",
+      "source": "Phase 6 drill 2026-06-30 — Matt seed"
+    },
+    {
+      "id": "mmi-operator-opsec-checklist",
+      "assignee": "Claude",
+      "tier": "Design",
+      "score": 72,
+      "score_reason": "MVP deliverable #4 — unblocks INTEL_BRIEF_TEMPLATE mitigation_ref placeholders; restore drill is highest-value control.",
+      "instruction": "PROJECT: MMI Security Intel. Read architecture/MMI_SECURITY_INTEL_MVP_ARCHITECTURE.md (Operator OpSec Checklist Structure), lanes/MMI_RESEARCH_RIGOR_PROTOCOL.md, intel/templates/INTEL_BRIEF_TEMPLATE.md (mitigation_ref OPSEC-<n> pattern). Create mmi/project_brain/opsec/ if missing. Produce mmi/project_brain/opsec/OPERATOR_OPSEC_CHECKLIST.md: seeded items for MFA, PHISH, BACKUP, RESTORE, DISCIPLINE categories per MVP spec; each row has item_id (OPSEC-<n>), control, category, why (ATT&CK techniques blunted), cadence, state (NOT_STARTED default), last_done blank, verify_method. Include quarterly RESTORE drill item (highest-value control per MVP). Map techniques from INTEL_BRIEF_TEMPLATE §6 worked example (T1486, T1027.006) to real OPSEC IDs. No endpoint swarm; local-first; no runtime code.",
+      "source": "Matt intel roll 2026-06-30"
+    },
+    {
+      "id": "mmi-intel-index",
+      "assignee": "Claude",
+      "tier": "Design",
+      "score": 71,
+      "score_reason": "MVP deliverable #3 — traceability spine; requires opsec checklist + brief template.",
+      "instruction": "PROJECT: MMI Security Intel. Read architecture/MMI_SECURITY_INTEL_MVP_ARCHITECTURE.md (Research Index Structure), intel/templates/INTEL_BRIEF_TEMPLATE.md, opsec/OPERATOR_OPSEC_CHECKLIST.md (must exist). Create mmi/project_brain/intel/briefs/ if missing. Produce mmi/project_brain/intel/INTEL_INDEX.md: table with brief_id, threat, source_lanes, attack_ids, recommendations (linked OPSEC-<n>), source_status, updated. Seed one row from INTEL_BRIEF_TEMPLATE §6 worked example (INTEL-ransomware-backup-targeting-2026-06) with real mitigation_ref targets from the opsec checklist. Every recommendation must trace to a research lane. VERIFIED source_status only for indexed claims. No endpoint swarm; local-first.",
+      "source": "Matt intel roll 2026-06-30"
+    },
+    {
+      "id": "mmi-wire-mitigation-refs",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 70,
+      "score_reason": "Wire MITRE technique refs to OPSEC mitigation refs — evidence architecture only; unblocks traceability chain to war-room review.",
+      "instruction": "PROJECT: MMI Security Intel. Wire MITRE ATT&CK technique references to OPSEC mitigation references across intel template, index, first brief (INTEL_ransomware-backup-targeting_2026-06), and opsec backup artifact. Documentation/schema only — ADVISORY_ONLY, HUMAN_REVIEW_ONLY. No runtime enforcement. Required: T1486, T1490; opsec/BACKUP_PROTECTED_PATHS.md; update INTEL_INDEX row.",
+      "source": "Matt authorization 2026-06-30"
+    },
+    {
+      "id": "mmi-war-room-backup-allowlist-patch",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 69,
+      "score_reason": "Close documented backup coverage gap before restore-drill proof test.",
+      "instruction": "PROJECT: MMI. Add mmi/war_room.py to scripts/mmi_cold_backup.py BACKUP_ALLOWLIST; run --manifest and confirm inclusion. Update BACKUP_PROTECTED_PATHS.md gap note. No restore drill; no runtime changes.",
+      "source": "Matt authorization 2026-06-30"
+    },
+    {
+      "id": "mmi-restore-check-war-room-proof",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 68,
+      "score_reason": "Prove war_room.py cold-backup recoverability after allowlist patch — manifest, push, isolated restore-check.",
+      "instruction": "PROJECT: MMI. Refresh INTEL_ransomware-backup-targeting brief §8 limitation; verify --manifest includes mmi/war_room.py; run --backup-and-push only if Matt authorizes; then isolated --restore-check on scratch. Record MMI_RESTORE_CHECK_WAR_ROOM_PROOF closeout. No OPSEC status changes.",
+      "source": "Matt authorization 2026-06-30"
+    },
+    {
+      "id": "mmi-restore-check-war-room-proof-complete",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 67,
+      "score_reason": "Matt-authorized B2 push + isolated restore-check closes war_room recoverability gap.",
+      "instruction": "PROJECT: MMI. Matt authorized --backup-and-push and finish war_room restore-check proof. Run push (WSL if needed), isolated extract, --restore-check, update MMI_RESTORE_CHECK_WAR_ROOM_PROOF closeout to COMPLETE.",
+      "source": "Matt authorization 2026-06-30"
+    },
+    {
+      "id": "mmi-opsec-8-quarterly-operator-drill",
+      "assignee": "Matt",
+      "tier": "Operator",
+      "score": 66,
+      "score_reason": "Next proof layer after file-level restore-check — human/operator readiness under timed local drill (OPSEC-8).",
+      "instruction": "PROJECT: MMI. Quarterly OPSEC-8 operator drill (15\u201330 min). Simulated ransomware/backup-targeting only \u2014 use intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md + intel/drills/DRILL_2026-06-30_phase6_sim/ pattern. Read intel/WAR_ROOM_SCORING_MATRIX_v2.md, opsec/OPERATOR_OPSEC_CHECKLIST.md (OPSEC-8), status/MMI_RESTORE_CHECK_WAR_ROOM_PROOF_2026-06.md (supporting evidence \u2014 no new backup push unless Matt authorizes). PASS: OPSEC-8 last_done filled; new drill worksheet under intel/drills/; Axis A/B tiers recorded; two independent simulated signals; restore-check proof referenced; PIR stub; boundaries preserved (no destructive commands, no live overwrite, no auto-containment, no endpoint swarm, no live telemetry). Do not mark other OPSEC items implemented.",
+      "source": "Matt authorization 2026-06-30 \u2014 post restore-check PASS"
+    },
+    {
+      "id": "mmi-opsec-3-backup-restore-discipline",
+      "assignee": "Matt",
+      "tier": "Operator",
+      "score": 65,
+      "score_reason": "Narrow hardening lane #1 — OPSEC-3 MFA on backup/recovery accounts compounds existing backup proof chain.",
+      "instruction": "PROJECT: MMI. Narrow OPSEC hardening — OPSEC-3 only. Read opsec/OPERATOR_OPSEC_CHECKLIST.md (OPSEC-3), opsec/BACKUP_PROTECTED_PATHS.md, intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md, status/MMI_RESTORE_CHECK_WAR_ROOM_PROOF_2026-06.md. Verify MFA is active on B2/cold-backup provider login(s). Update OPSEC-3 state/last_done/verify_method with real evidence (method description only — no secrets, no credentials in repo). PASS: OPSEC-3 marked DONE with honest verify_method. Do NOT mark OPSEC-1/2/4/5/6/7/9/10 DONE. Do not rerun backup push unless Matt separately authorizes. Human-only; no automation.",
+      "source": "Matt authorization 2026-06-30 \u2014 post OPSEC-8 drill PASS"
+    },
+    {
+      "id": "mmi-opsec-6-backup-cadence-evidence",
+      "assignee": "Matt",
+      "tier": "Operator",
+      "score": 64,
+      "score_reason": "Narrow hardening lane #2 — OPSEC-6 backup cadence evidence; compounds tonight's B2 push.",
+      "instruction": "PROJECT: MMI. Narrow OPSEC hardening — OPSEC-6 only. Read opsec/OPERATOR_OPSEC_CHECKLIST.md (OPSEC-6), status/MMI_BACKUP_PUSH_LOG.json (latest PASS entry). Confirm cold backup push cadence is met; update OPSEC-6 state/last_done/verify_method with push log reference (archive name + timestamp — no secrets). PASS: OPSEC-6 marked DONE with honest verify_method. Do NOT mark OPSEC-1/2/4/5/7/9/10 DONE. No new push required if latest PASS already on log.",
+      "source": "Matt pipe reload 2026-06-30 — post end-of-night backup"
+    },
+    {
+      "id": "mmi-opsec-7-backup-integrity-check",
+      "assignee": "Matt",
+      "tier": "Operator",
+      "score": 63,
+      "score_reason": "Narrow hardening lane #3 — OPSEC-7 integrity spot-check on latest cold archive.",
+      "instruction": "PROJECT: MMI. Narrow OPSEC hardening — OPSEC-7 only. Read opsec/OPERATOR_OPSEC_CHECKLIST.md (OPSEC-7), status/MMI_BACKUP_PUSH_LOG.json. Spot-check latest PASS archive is readable (tar list + sample path verify); update OPSEC-7 state/last_done/verify_method. PASS: OPSEC-7 DONE. Do NOT mark other OPSEC items DONE.",
+      "source": "Matt end-of-night close 2026-06-30"
+    },
+    {
+      "id": "mmi-research-ca-localization-pass",
+      "assignee": "ChatGPT",
+      "tier": "Deep / secondary research",
+      "score": 62,
+      "score_reason": "Option A — Canada-first cross-ref on RESEARCH_VERIFICATION §7 claims before more intel briefs.",
+      "instruction": "PROJECT: MMI Security Intel — Canadian localization pass. Read lanes/MMI_RESEARCH_RIGOR_PROTOCOL.md, lanes/RESEARCH_VERIFICATION_2026-06.md (§7–§8), lanes/CHATGPT_TASK_CA_LOCALIZATION_2026-07.md. For each §7 claim search StatCan/CCCS/OPC/CIRA/ISED first; label Confirms|Diverges|Insufficient Data. Output lanes/RESEARCH_VERIFICATION_CA_LOCALIZATION_2026-07.md with sign-off. No new product scope.",
+      "source": "Matt ChatGPT session 2026-07 — Option A"
+    },
+    {
+      "id": "mmi-intel-brief-polymorphic-delivery",
+      "assignee": "Claude",
+      "tier": "Design",
+      "score": 61,
+      "score_reason": "Option B — second intel brief after CA localization; polymorphic delivery lane.",
+      "instruction": "PROJECT: MMI Security Intel. File second operator intel brief on polymorphic ransomware delivery. Read lanes/RESEARCH_polymorphic_ransomware_delivery_2026-06.md, lanes/RESEARCH_VERIFICATION_2026-06.md, lanes/RESEARCH_VERIFICATION_CA_LOCALIZATION_2026-07.md, intel/templates/INTEL_BRIEF_TEMPLATE.md, opsec/OPERATOR_OPSEC_CHECKLIST.md (OPSEC-4/5 for mitigation_ref). Output intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md. VERIFIED claims only in headline findings; Canadian-localized context where available (StatCan/CCCS/CIRA per CA localization); MITRE IDs as Global Framework — technique ID only; label global vendor stats [Global Data — Requires Localization]; no purged stats; no Verizon/Microsoft/CrowdStrike/Veeam/Sophos % as Canadian facts. Add INTEL_INDEX.md row. control_plane_status ADVISORY_ONLY; human review only — no SOAR/EDR/endpoint swarm/auto-containment. Sign-off in brief: PASS | PASS WITH REVISIONS | FAIL.",
+      "source": "Matt seed Option B 2026-07 — post CA localization"
+    },
+    {
+      "id": "mmi-pipeline-refresh-2026-06-30",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 60,
+      "score_reason": "Queue tail is consumed; record idle state or append the next Matt-approved bounded task instead of leaving the pipe silently DRY.",
+      "instruction": "PROJECT: MMI. Pipeline refresh. Read tasks.json, mmi/task_pipeline.json, mmi/project_brain/status/MMI_ACTIVE_SCOPE.md, and current war room output. Produce mmi/project_brain/status/MMI_PIPELINE_REFRESH_2026-06-30.md with: consumed tail summary, current DRY/LOADED status, approved next-task options, and explicit recommendation to either stay idle or append one Matt-approved bounded task. Do not invent product scope. Do not touch Social Architect, DAX, Trades, web/, npm, ops/run.py, NorthStar, or cloud runtime.",
+      "source": "Matt pipe DRY fix 2026-06-30"
+    },
+    {
+      "id": "mmi-opsec-human-gate-tightening",
+      "assignee": "Matt",
+      "tier": "Operator",
+      "score": 70,
+      "score_reason": "Highest live-risk gap — phish/decision-log human gate with no SEG/EDR on Mini PC; polymorphic brief drivers.",
+      "instruction": "PROJECT: MMI / Architectapp_clean. Close the highest-risk remaining human-gate OPSEC items without adding automation, endpoint agents, SOAR, EDR, or new product code. Scope: OPSEC-4 (phish link-hover discipline), OPSEC-5 (out-of-band confirm habit), OPSEC-9 (decision log habit). Required: update opsec/OPERATOR_OPSEC_CHECKLIST.md with evidence-ready completion criteria; add or update worksheet/log entries proving the operator routine; preserve advisory-only doctrine; reference intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md and intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md where applicable. Do not claim controls are enforced. Do not introduce automation. Output: updated OPSEC checklist and/or intel/drills/ worksheet files only. Closeout: PASS | PASS WITH REVISIONS | FAIL.",
+      "source": "Matt pipeline refresh 2026-06-30 — OPSEC human gate priority"
+    },
+    {
+      "id": "mmi-chaos-tabletop-v1",
+      "assignee": "Cursor PM",
+      "tier": "Resilience / Verification",
+      "score": 80,
+      "score_reason": "First local-only chaos tabletop — tests operator stack under confusion/stale state without destructive fault injection.",
+      "instruction": "PROJECT: MMI. Create the first chaos tabletop drill. Scope: local-only, advisory-only, no destructive testing, no malware, no endpoint agent, no SOAR/EDR, no automation beyond existing read-only/project scripts. Scenarios: war room shows stale active task; task pipeline DRY but operator thinks work is pending; intel brief accidentally promotes global/vendor stat into Canadian headline; B2 archive manifest misses required intel or OPSEC files; restore path unclear under pressure; OPSEC-4/5/9 remain NOT_STARTED but someone assumes DONE; decision log missing during suspicious vendor-email scenario. Output: mmi/project_brain/chaos/MMI_CHAOS_TABLETOP_V1_2026-07.md with findings table, pass/fail criteria, remediation list, sign-off PASS | PASS WITH REVISIONS | FAIL. Hard stops: no destructive tests, no backup mutation, no live malware simulation, no product architecture, do not close OPSEC-4/5/9.",
+      "source": "Matt authorization 2026-06-30 — post human-gate honest closeout"
+    },
+    {
+      "id": "mmi-chaos-sandbox-v2",
+      "assignee": "Cursor PM",
+      "tier": "Resilience / Verification",
+      "score": 85,
+      "score_reason": "Level 2 non-destructive sandbox chaos — detect breaks in fixture copies per Level 1 doctrine; interpretation-layer focus.",
+      "instruction": "PROJECT: MMI. Execute Level 2 non-destructive sandbox chaos tests only. Use Level 1 doctrine: mmi/project_brain/chaos/MMI_CHAOS_TABLETOP_V1_2026-07.md. Scope: fixture/sandbox copies only; do not mutate live authority files or B2 backups; no malware/ransomware sim/endpoint agents/SOAR/EDR/auto-containment; do not close OPSEC-4/5/9. Required tests (10): stale active-task mismatch; DRY pipeline confusion; global stat in Canadian headline (copied brief); manifest missing required file; restore-path ambiguity; OPSEC falsely DONE; missing decision-log vendor-email; non-MMI scope contamination; backup hash mismatch; duplicate closeout/false PASS. Per test record: fixture path, injected fault, expected/actual detection, recovery path, evidence, hardening action, PASS/PASS WITH REVISIONS/FAIL. Output: mmi/project_brain/chaos/MMI_CHAOS_SANDBOX_V2_2026-07.md + fixture manifest + findings/remediation. Expected sign-off: PASS WITH REVISIONS unless all faults detected cleanly and recovery unambiguous.",
+      "source": "Matt authorization 2026-07-01 — post Level 1 B2 mirror"
+    },
+    {
+      "id": "mmi-chaos-hardening-h1-h3",
+      "assignee": "Cursor PM",
+      "tier": "Resilience / Verification",
+      "score": 90,
+      "score_reason": "Level 2 interpretation-layer hardening before Level 3 — closeout verify, brief headline grep, latest-good archive stub.",
+      "instruction": "PROJECT: MMI / Architectapp_clean. Implement Level 2 chaos hardening H1-H3 only per mmi/project_brain/chaos/MMI_CHAOS_SANDBOX_V2_2026-07.md. H1: closeout output_files must exist before PASS. H2: grep/check for global/vendor stats in intel brief §1/headline/smb_relevance. H3: create mmi/project_brain/status/MMI_LATEST_GOOD_ARCHIVE.md stub with latest archive name, SHA256, date, remote path, restore-check ref, manifest notes. Read-only verification script OK. No Level 3, no live fault injection, no OPSEC-4/5/9 changes, no SOAR/EDR/swarm/malware. Output: hardening report + changed files + verification output + PASS/PASS WITH REVISIONS/FAIL.",
+      "source": "Matt authorization 2026-07-01 — post Level 2 B2 mirror"
+    },
+    {
+      "id": "mmi-chaos-level3-planning",
+      "assignee": "Cursor PM",
+      "tier": "Resilience / Verification",
+      "score": 88,
+      "score_reason": "Level 3 reversible fault injection planning only — rollback, abort rules, evidence requirements before any execution.",
+      "instruction": "PROJECT: MMI / Architectapp_clean. Create Level 3 reversible fault injection planning only. Do not execute Level 3 tests. Inputs: chaos tabletop v1, sandbox v2, hardening H1-H3, latest-good validation, H3 stub. Output: mmi/project_brain/chaos/MMI_CHAOS_LEVEL3_PLAN_2026-07.md. Define candidate reversible faults with live/copy target, path, pre-check, rollback, detection, evidence, abort, operator approval. Level 3 execution NOT authorized. Level 4 PROHIBITED. Preserve OPSEC-4/5/9 NOT_STARTED. Sign-off PASS | PASS WITH REVISIONS | FAIL.",
+      "source": "Matt authorization 2026-07-01 — post restore validation PASS on 163709"
+    },
+    {
+      "id": "mmi-chaos-l3-06-opsec-false-done",
+      "assignee": "Cursor PM",
+      "tier": "Resilience / Verification",
+      "score": 86,
+      "score_reason": "Level 3 L3-06 only — staged OPSEC false-DONE detection; live checklist unchanged.",
+      "instruction": "Execute L3-06 staged OPSEC false-DONE test per MMI_CHAOS_LEVEL3_PLAN_2026-07.md. Staged copy only. Output MMI_CHAOS_L3-06_OPSEC_FALSE_DONE_2026-07.md + fixtures/v3/L3-06 evidence.",
+      "source": "Matt authorization 2026-07-01 — L3-06 only"
+    },
+    {
+      "id": "mmi-chaos-l3-04-intel-headline-laundering",
+      "assignee": "Cursor PM",
+      "tier": "Resilience / Verification",
+      "score": 86,
+      "score_reason": "Level 3 L3-04 only — staged intel headline laundering detection; live briefs unchanged.",
+      "instruction": "Execute L3-04 staged intel headline laundering per MMI_CHAOS_LEVEL3_PLAN_2026-07.md. Staged brief copy only. Output MMI_CHAOS_L3-04_INTEL_HEADLINE_LAUNDERING_2026-07.md + fixtures/v3/L3-04 evidence.",
+      "source": "Matt authorization 2026-07-01 — L3-04 only"
+    },
+    {
+      "id": "mmi-quality-elevation-redesign",
+      "assignee": "Cursor PM",
+      "tier": "Architecture / Verification",
+      "score": 92,
+      "score_reason": "Pause L3-05+ to redesign detect-only checks into mandatory gates — good to great maturity jump.",
+      "instruction": "PROJECT: MMI / Architectapp_clean. Quality elevation redesign review only — no implementation. Pause forward chaos execution. Output: mmi/project_brain/architecture/MMI_QUALITY_ELEVATION_REDESIGN_2026-07.md with 12 required sections (current controls, gaps, redesign, mandatory gates, war room truth surface, closeout contract, OPSEC evidence-lock, intel claim integrity, latest-good promotion rules, chaos detect-to-block roadmap, priority rebuild list, prohibitions). Hard stops: no implementation, no L3 execution, no OPSEC/intel/B2 changes. Sign-off PASS WITH REVISIONS.",
+      "source": "Matt authorization 2026-07-01 — post L3-04 mirror; pause before L3-05"
+    },
+    {
+      "id": "mmi-quality-slice-p1-closeout-gate",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 88,
+      "score_reason": "P1 from quality redesign — require H1 closeout verification as mandatory gate for artifact task completions.",
+      "instruction": "PROJECT: MMI. Implement Slice P1 only per MMI_QUALITY_ELEVATION_REDESIGN_2026-07.md §13 Slice 1 / G-CLOSEOUT-1/2: extend complete_task.py to require --output for Resilience/Verification and Architecture tiers; optional --verify-json; block closeout on H1 fail. Do not implement P2/P3/L3-05. HARD STOP: Matt explicit build authorization required before code changes — seeded/pending is NOT build authorization. Assignee Codex — Cursor PM routes only.",
+      "source": "Matt authorization — post quality redesign + R2 mirror; P1 only"
+    },
+    {
+      "id": "mmi-p1-closeout-gate-tests",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 85,
+      "score_reason": "Outstanding proves the blocker — tests for P1 closeout gate (H1, tier outputs, verify-json).",
+      "build_authorization": "AUTHORIZED_BY_MATT_2026-06-28",
+      "routing_note": "Codex only — BUILD AUTHORIZED. Cursor PM routes/monitors/closeout only; do not implement.",
+      "instruction": "PROJECT: MMI. Add tests for scripts/complete_task.py P1 closeout gate only. Cover: H1 output required for Architecture/Verification/Resilience tiers; missing output blocks closeout; valid output allows closeout; --verify-json failure blocks closeout; --verify-json PASS/ok allows closeout; task state not written when gate fails. Matt explicit build authorization required before implementation. No P2/P3/L3-05. No OPSEC changes.",
+      "source": "Matt authorization 2026-07-01 — post P1 mirror; quality standard outstanding"
+    },
+    {
+      "id": "mmi-quality-slice-p2-intel-closeout-gate",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 84,
+      "score_reason": "G-INTEL-1 — move H2 intel headline laundering from detect-only to required intel closeout gate (blocks T03 / L3-04 class).",
+      "build_authorization": "AUTHORIZED_BY_MATT_2026-07-01",
+      "routing_note": "Codex only — BUILD AUTHORIZED. Cursor PM routes/monitors/closeout only; do not implement.",
+      "instruction": "PROJECT: MMI. P2 / G-INTEL-1: H2 intel brief headline/source-status check becomes required closeout gate for intel-brief tasks when outputs include mmi/project_brain/intel/briefs/INTEL_*.md. Block closeout on §1/headline laundering; pass live briefs; fail L3-04 FAULT; allow quarantined claims-table stats. Record H2 in closeout_verification. May update complete_task.py, mmi_verify.py if needed, add tests/test_intel_closeout_gate.py. No P3/L3-05/new briefs/live brief edits/OPSEC/B2 during build.",
+      "source": "Matt authorization 2026-07-01 — P2 build authorized"
+    },
+    {
+      "id": "mmi-quality-slice-p3-war-room-truth",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 82,
+      "score_reason": "P3 — war room truth surface v1.2: read-only parsers for active task, DRY reason, latest-good archive, restore-check, OPSEC known-risk, intel gate, chaos gate status.",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Codex only. Cursor PM routes/monitors. Seeded pending is not build authorization.",
+      "instruction": "PROJECT: MMI. P3 war room truth surface only: strengthen war_room.py read-only display for active task, explicit DRY reason, latest-good archive, restore-check status, OPSEC-4/5/9 known-risk, intel gate status, chaos gate status. Display only — no enforcement changes. Matt explicit build authorization required. No P4/L3-05/OPSEC state mutation/live intel brief changes.",
+      "source": "Matt authorization 2026-06-30 — post P2+B2 mirror; seed pending only"
+    },
+    {
+      "id": "mmi-quality-slice-p4-push-integrity",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 80,
+      "score_reason": "P4 / G-BACKUP-1 — post-push byte+sha self-check; honest latest-good vs restore-proven promotion rules.",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Codex only. Cursor PM routes/monitors. Seeded pending is not build authorization.",
+      "instruction": "PROJECT: MMI. P4 push integrity only: strengthen mmi_cold_backup.py post-push local/remote byte+sha match, backup manifest capture, honest restore-check status, and latest-good promotion rules — distinguish latest B2 mirror from restore-proven archive; never promote without required evidence. Matt explicit build authorization required. No P5/L3-05/OPSEC mutation/B2 delete-overwrite/live intel changes.",
+      "source": "Matt authorization 2026-07-01 — post P3+B2 mirror; seed pending only"
+    },
+    {
+      "id": "mmi-quality-slice-p5-h3-promotion-helper",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 78,
+      "score_reason": "P5 — H3 promotion helper: read-only validate archive evidence; human-gated stub update for latest-good vs restore-proven.",
+      "build_authorization": "AUTHORIZED_BY_MATT_2026-07-01",
+      "routing_note": "Codex only — BUILD AUTHORIZED. Cursor PM routes/monitors/closeout only; do not implement.",
+      "instruction": "PROJECT: MMI. P5 H3 promotion helper only: read-only script to validate restore-check/manifest evidence before Matt manually updates MMI_LATEST_GOOD_ARCHIVE.md; never auto-promote without PASS restore-check. Matt explicit build authorization required. No P6/L3-05/OPSEC mutation/B2 delete-overwrite/live intel changes.",
+      "source": "Matt authorization 2026-07-01 — P5 build authorized"
+    },
+    {
+      "id": "mmi-quality-slice-p6-opsec-amend-helper",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 76,
+      "score_reason": "P6 / G-OPSEC-1 — opsec-checklist helper before Matt manual checklist amend; blocks L3-06 false-DONE class.",
+      "build_authorization": "AUTHORIZED_BY_MATT_2026-07-01",
+      "routing_note": "Codex only — BUILD AUTHORIZED. Cursor PM routes/monitors/closeout only; do not implement.",
+      "instruction": "PROJECT: MMI. P6 OPSEC amend helper only: documented SOP + helper to run mmi_verify.py opsec-checklist before Matt manual OPERATOR_OPSEC_CHECKLIST.md edits; human-gated — no auto-promotion of OPSEC rows to DONE. Matt explicit build authorization required. No P7/L3-05/worksheet auto-promotion/B2 delete-overwrite/live intel changes.",
+      "source": "Matt authorization 2026-07-01 — P6 build authorized"
+    },
+    {
+      "id": "mmi-quality-slice-p8-closeout-evidence-contract",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 74,
+      "score_reason": "P8 — closeout evidence contract fields in tasks.json for explain/recover (builds on P1 closeout_verification).",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Codex only. Cursor PM routes/monitors. Seeded pending is not build authorization.",
+      "instruction": "PROJECT: MMI. P8 closeout evidence contract only: standardize required closeout evidence fields in tasks.json/complete_task.py for explain/recover under pressure. Matt explicit build authorization required. No P9/L3-05/OPSEC mutation/B2 delete-overwrite/live intel changes.",
+      "source": "Matt authorization 2026-07-01 — post P6+B2 mirror; seed pending only"
+    },
+    {
+      "id": "mmi-pipeline-refresh-2026-07-01",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 90,
+      "score_reason": "P1–P8 quality tail consumed; record refresh, HOLD P9, seed Matt queue decision.",
+      "instruction": "PROJECT: MMI. Pipeline refresh post P8. Produce mmi/project_brain/status/MMI_PIPELINE_REFRESH_2026-07-01.md: consumed P1–P8 summary, P9 HOLD rationale, ranked next options, seed Matt decision task. Do not seed P9 build. Do not resume L3 without Matt.",
+      "source": "Matt post-P8 B2 mirror 2026-07-01"
+    },
+    {
+      "id": "mmi-await-matt-post-p8-queue-decision",
+      "assignee": "Matt",
+      "tier": "Super",
+      "score": 95,
+      "score_reason": "Quality slices P1–P8 complete; Matt chooses next lane (restore-check, OPSEC habits, P9/L3, or hold).",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Matt Super decision task. Cursor PM routes only. Not Codex execution.",
+      "instruction": "PROJECT: MMI. Matt queue decision after P1–P8 complete. Choose one: (A) authorize restore-check on mmi_backup_20260701_110548 + promotion path, (B) OPSEC-4/5/9 habit evidence work, (C) intel citation pass, (D) authorize single L3 flight test (P9/L3-05+) — one at a time only, (E) intentional hold. P9 batch and Level 4 forbidden. Reply with directive; Cursor PM seeds next bounded task.",
+      "source": "Matt pipeline refresh 2026-07-01 — P9 held"
+    },
+    {
+      "id": "mmi-promote-latest-good-stub-110548",
+      "assignee": "Matt",
+      "tier": "Super",
+      "score": 94,
+      "score_reason": "Human-gated latest-good stub update after restore-check PASS on 110548.",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Matt manual edit only. validate-promotion ALLOWED.",
+      "instruction": "PROJECT: MMI. Matt manually updates MMI_LATEST_GOOD_ARCHIVE.md for mmi_backup_20260701_110548.tar.gz after reviewing restore-check PASS evidence. P5 human-gated — no auto-promote.",
+      "source": "Matt Option A 2026-07-01"
+    },
+    {
+      "id": "mmi-weapon-phase1-stability-harness",
+      "assignee": "Codex",
+      "tier": "Backbone / runtime support",
+      "score": 91,
+      "score_reason": "AGI Phase 1 pass line — 3 consecutive Tier-4 lab runs with critic-hash honesty.",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Codex only — BUILD requires Matt explicit authorize. Cursor PM routes only.",
+      "instruction": "PROJECT: MMI. Implement Phase 1 stability harness only per architecture/MMI_AGI_EVOLUTION_PATHWAY.md Phase 1 and architecture/MMI_WEAPON_BATTLEFIELD_SCORING_MATRIX_v1.md §7.4. Add scripts/phase1_stability_harness.py (or chaos_lab_provisioner.py phase1-stability subcommand) that runs smash-all, mesh-smash, purple-evasion, action-integrity 3× on --lab-id; records tier, axis A/B, critic hash, evidence paths; PASS only if 3/3 Tier 4 and no >1-tier variance. Add tests. Output: harness script + tests + mmi/project_brain/status/MMI_PHASE1_STABILITY_HARNESS_SPEC.md. Matt build auth required. No Phase 2/3/L3.",
+      "source": "Matt Option A 2026-07-01 — post promotion stub closeout"
+    },
+    {
+      "id": "mmi-phase1-harness-hash-rule-fix",
+      "assignee": "Cursor PM",
+      "tier": "Project Manager",
+      "score": 89,
+      "score_reason": "§7.4 penalty scope — independent run lab IDs vs same-lab re-run.",
+      "build_authorization": "AUTHORIZED_BY_MATT_2026-07-01",
+      "instruction": "PROJECT: MMI. Fix Phase 1 harness §7.4 critic-hash penalty: independent run lab IDs must not fail on unchanged authority critic; same lab_id re-runs still penalized.",
+      "source": "Matt directive 2026-07-01 — option 1"
+    },
+    {
+      "id": "mmi-iceberg-l4-behavioral-fingerprint-spec",
+      "assignee": "Claude",
+      "tier": "Design",
+      "score": 87,
+      "score_reason": "Claude A — L4 behavioral fingerprint spec (short research).",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Claude Design — spec only. Codex build is separate task.",
+      "instruction": "PROJECT: MMI. Layer 4 behavioral fingerprint design spec only. Output: architecture/MMI_ICEBERG_L4_BEHAVIORAL_FINGERPRINT_SPEC_2026-07.md. Cold-start record-only; anomaly routes to Mirror Dimension not hard-drop.",
+      "source": "Matt directive 2026-07-02 — Claude A"
+    },
+    {
+      "id": "mmi-iceberg-l5-cross-packet-correlation-spec",
+      "assignee": "Claude",
+      "tier": "Design",
+      "score": 86,
+      "score_reason": "Claude A — L5 cross-packet correlation spec after L4 BUILT.",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Claude Design — spec only. Codex build is separate task.",
+      "instruction": "PROJECT: MMI. Layer 5 cross-packet correlation design spec only. Read architecture/MMI_METADATA_ICEBERG_2026-07.md §3 L5, §6 non-goals; pattern from chaos/behavioral_fingerprint_layer.py and chaos/graph_topology_layer.py. Output: architecture/MMI_ICEBERG_L5_CROSS_PACKET_CORRELATION_SPEC_2026-07.md. Stream-level signals (nonce velocity, arrival bursts, lane diversity); cold-start record-only; anomaly routes Mirror Dimension not hard-drop; API matches L4/L6.",
+      "source": "Matt directive 2026-07-02 — seed L5 post L4 build"
+    },
+    {
+      "id": "mmi-iceberg-l7-temporal-rhythm-spec",
+      "assignee": "Claude",
+      "tier": "Design",
+      "score": 84,
+      "score_reason": "Claude A - L7 temporal rhythm spec after L5 BUILT.",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Claude Design - spec only. Codex build is separate task.",
+      "instruction": "PROJECT: MMI. Layer 7 temporal rhythm design spec only. Output: architecture/MMI_ICEBERG_L7_TEMPORAL_RHYTHM_SPEC_2026-07.md. Inter-arrival cadence baseline per sender; cold-start record-only; anomaly routes Mirror Dimension not hard-drop. Boundary vs L5 window counts.",
+      "source": "Matt directive 2026-07-02 - seed L7"
+    },
+    {
+      "id": "mmi-iceberg-l9-provenance-chain-depth-spec",
+      "assignee": "Claude",
+      "tier": "Design",
+      "score": 85,
+      "score_reason": "Claude A — L9 provenance chain depth spec after L7 BUILT.",
+      "build_authorization": "NOT_AUTHORIZED",
+      "routing_note": "Claude Design — spec only. Codex build is separate task.",
+      "instruction": "PROJECT: MMI. Layer 9 provenance chain depth design spec only. Output: architecture/MMI_ICEBERG_L9_PROVENANCE_CHAIN_DEPTH_SPEC_2026-07.md. Gate-derived hop-depth / origin-trust; not re-assertable from packet; boundary vs L6 single-hop graph; cold-start record-only; anomaly routes Mirror Dimension not hard-drop.",
+      "source": "Matt directive 2026-07-02 — seed L9 post L7 build"
     }
   ]
 }

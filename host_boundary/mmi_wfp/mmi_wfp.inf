@@ -1,0 +1,30 @@
+;
+; MMI WFP user-mode engine helper — Phase 4E
+;
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = System
+ClassGuid   = {4d36e97d-e325-11ce-bfc1-08002be10318}
+Provider    = %ManufacturerName%
+DriverVer   = 07/05/2026,1.0.0.0
+CatalogFile = mmi_wfp.cat
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[DefaultInstall.NTamd64]
+CopyFiles = MmiWfp.Files
+
+[MmiWfp.Files]
+mmi_wfp_helper.exe
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+[SourceDisksFiles]
+mmi_wfp_helper.exe = 1,,
+
+[Strings]
+ManufacturerName = "MMI Boundary"
+DiskName           = "MMI WFP Installation Disk"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Machine-local paths written by scripts/build_m4_minifilter.ps1 -->
+  <Import Project="mmi_build_env.props" Condition="Exists('mmi_build_env.props')" />
+  <PropertyGroup>
+    <VisualStudioVersion>17.0</VisualStudioVersion>
+    <WDKBuildFolder Condition="'$(WDKBuildFolder)' == ''">10.0.26100.0</WDKBuildFolder>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">$(WDKBuildFolder)</WindowsTargetPlatformVersion>
+    <TargetPlatformVersion Condition="'$(TargetPlatformVersion)' == ''">$(WDKBuildFolder)</TargetPlatformVersion>
+    <WDKContentRoot Condition="'$(WDKContentRoot)' == ''">C:\Program Files (x86)\Windows Kits\10\</WDKContentRoot>
+    <WdkContentRoot Condition="'$(WdkContentRoot)' == ''">$(WDKContentRoot)</WdkContentRoot>
+    <DDKPlatform Condition="'$(DDKPlatform)' == '' and '$(Platform)' == 'x64'">x64</DDKPlatform>
+    <DDKPlatform Condition="'$(DDKPlatform)' == '' and '$(Platform)' == 'Win32'">x86</DDKPlatform>
+  </PropertyGroup>
+  <!-- WDK VSIX normally imports this; required when using the repo toolset shim. -->
+  <Import Project="$(WDKContentRoot)DesignTime\CommonConfiguration\Neutral\WDK\$(WDKBuildFolder)\WDK.props"
+          Condition="Exists('$(WDKContentRoot)DesignTime\CommonConfiguration\Neutral\WDK\$(WDKBuildFolder)\WDK.props')" />
+</Project>

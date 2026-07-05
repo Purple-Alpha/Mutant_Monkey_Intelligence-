@@ -53,4 +53,36 @@ def test_dynamic_canary_metadata_layer_import_fails(tmp_path: Path, source: str)
 
     result = scan_m4_package(tmp_path)
     assert not result.passed
-    assert any(v.rule == "H-L8-001-canary_metadata_layer" for v in result.violations)
+    assert any(v.rule.startswith("H-L8-001-canary") for v in result.violations)
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        'LAYER = "chaos.canary_metadata_layer"\nimportlib.import_module(LAYER)\n',
+        'LAYER = "canary_metadata_layer"\nimport_module("chaos." + LAYER)\n',
+        'LAYER = "chaos.canary_metadata_layer"; importlib.import_module(LAYER)\n',
+    ],
+)
+def test_split_or_aliased_dynamic_import_fails(tmp_path: Path, source: str):
+    pkg = tmp_path / "mmi" / "m4"
+    pkg.mkdir(parents=True)
+    (pkg / "bad.py").write_text(source, encoding="utf-8")
+    (pkg / "__init__.py").write_text("", encoding="utf-8")
+
+    result = scan_m4_package(tmp_path)
+    assert not result.passed
+    assert any(v.rule.startswith("H-L8-001") for v in result.violations)
+
+
+def test_benign_dynamic_import_without_canary_passes(tmp_path: Path):
+    pkg = tmp_path / "mmi" / "m4"
+    pkg.mkdir(parents=True)
+    (pkg / "ok.py").write_text(
+        'MOD = "json"\nimport importlib\nimportlib.import_module(MOD)\n',
+        encoding="utf-8",
+    )
+    (pkg / "__init__.py").write_text("", encoding="utf-8")
+
+    result = scan_m4_package(tmp_path)
+    assert result.passed, result.violations

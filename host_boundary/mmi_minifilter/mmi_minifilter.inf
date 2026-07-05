@@ -1,0 +1,61 @@
+;
+; MMI boundary minifilter — Phase 4D-b
+;
+
+[Version]
+Signature   = "$Windows NT$"
+Class       = "ActivityMonitor"
+ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}
+Provider    = %ManufacturerName%
+DriverVer   = 07/04/2026,1.0.0.0
+CatalogFile = mmi_minifilter.cat
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir          = 13
+MmiMinifilter.DriverFiles = 13
+
+[DefaultInstall.NTamd64]
+OptionDesc = %ServiceDescription%
+CopyFiles = MmiMinifilter.DriverFiles
+
+[DefaultInstall.NTamd64.Services]
+AddService = %ServiceName%,,MmiMinifilter.Service
+
+[MmiMinifilter.Service]
+DisplayName    = %ServiceName%
+Description    = %ServiceDescription%
+ServiceBinary  = %13%\mmi_minifilter.sys
+Dependencies   = "FltMgr"
+ServiceType    = 2
+StartType      = 3
+ErrorControl   = 1
+LoadOrderGroup = "FSFilter Activity Monitor"
+AddReg         = MmiMinifilter.AddRegistry
+
+[MmiMinifilter.AddRegistry]
+HKR,"Parameters","SupportedFeatures",0x00010001,0x3
+HKR,"Parameters\Instances","DefaultInstance",0x00000000,%DefaultInstance%
+HKR,"Parameters\Instances\"%Instance1.Name%,"Altitude",0x00000000,%Instance1.Altitude%
+HKR,"Parameters\Instances\"%Instance1.Name%,"Flags",0x00010001,%Instance1.Flags%
+HKR,"Parameters","AuthorityRoot",0x00000000,%AuthorityRootDefault%
+
+[MmiMinifilter.DriverFiles]
+mmi_minifilter.sys
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+[SourceDisksFiles]
+mmi_minifilter.sys = 1,,
+
+[Strings]
+ManufacturerName      = "MMI Boundary"
+ServiceName           = "mmi_boundary"
+ServiceDescription    = "MMI authority boundary minifilter (Phase 4D-b)"
+DiskName              = "MMI Minifilter Installation Disk"
+DefaultInstance       = "MmiBoundary Instance"
+Instance1.Name        = "MmiBoundary Instance"
+Instance1.Altitude    = "385200"
+Instance1.Flags       = "0"
+AuthorityRootDefault  = "\Architectapp_clean"
