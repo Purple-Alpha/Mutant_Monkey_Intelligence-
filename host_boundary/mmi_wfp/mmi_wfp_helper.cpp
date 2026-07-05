@@ -386,7 +386,7 @@ static bool ProbeConnect(const char* host, UINT16 port, int timeoutMs, int* win3
 }
 
 static bool IsAccessDenied(int err) {
-    return err == WSAEACCES || err == ERROR_ACCESS_DENIED;
+    return err == WSAEACCES || err == WSAETIMEDOUT || err == ERROR_ACCESS_DENIED;
 }
 
 static int CmdInstall(const char* configPath) {
@@ -487,7 +487,7 @@ static int CmdProbe(int argc, char** argv) {
     }
 
     HANDLE token = NULL;
-    if (!LogonUserA(probeUser.c_str(), ".", probePass.c_str(), LOGON32_LOGON_NETWORK,
+    if (!LogonUserA(probeUser.c_str(), ".", probePass.c_str(), LOGON32_LOGON_INTERACTIVE,
             LOGON32_PROVIDER_DEFAULT, &token)) {
         printf("{\"ok\":false,\"reason\":\"logon_failed\",\"win32_error\":%lu}\n", GetLastError());
         return 1;

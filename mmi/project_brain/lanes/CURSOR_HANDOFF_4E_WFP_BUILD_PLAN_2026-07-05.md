@@ -1,6 +1,6 @@
 # Cursor Handoff — Phase 4E WFP Build Plan (Codex Plan Review)
 
-**Date:** 2026-07-05 (rev b — P4E-B4/B5/B6)  
+**Date:** 2026-07-05 (rev c — ALE-only live-proof correction)  
 **Lane:** Cursor build plan → **Codex BUILDABLE gate** (hard stop before implementation)  
 **Checkout:** `C:\Architectapp_clean` (build lane — **this file must exist here for Codex review**)  
 **Prerequisites:** `4D_b_kernel_minifilter_live_verify_pc1` PASS filed; PM pipe extend  
@@ -36,7 +36,7 @@ Claim supported only within explicitly tested scope; no cross-layer closure infe
 
 Implement **live WFP default-deny egress (T7)** on PC1:
 
-- Intercept at `FWPM_LAYER_ALE_AUTH_CONNECT_V4/V6` + `FWPM_LAYER_STREAM_V4` (per spec §8)
+- Intercept at `FWPM_LAYER_ALE_AUTH_CONNECT_V4/V6` only: four filters total (`allow/block` for V4 and V6). `FWPM_LAYER_STREAM_V4` is explicitly excluded from 4E Rev C because live install proved simple `BLOCK/PERMIT` filters at STREAM fail with `0x8032002C` (`FWP_E_ACTION_INCOMPATIBLE_WITH_SUBLAYER`).
 - Default-deny from clone/AppContainer identity except **telemetry allowlist** from signed policy manifest
 - Unlisted connect → **DENY** → append `boundary/wfp_denies.jsonl` → map to CANARY-018 path in 4G
 - **Fail-closed** if WFP callout unavailable (P4-Q9 — no monitor-only mode)
@@ -62,8 +62,8 @@ python scripts/m4_wfp_suite.py --live --json
 
 | Path | Role |
 |------|------|
-| `host_boundary/mmi_wfp/` | WFP callout driver + user-mode helper |
-| `host_boundary/mmi_wfp/mmi_wfp.inf` | Install package |
+| `host_boundary/mmi_wfp/` | User-mode WFP helper source/project and filter definitions (no kernel callout driver in Rev C) |
+| `host_boundary/mmi_wfp/mmi_wfp_helper.cpp` / `.vcxproj` | User-mode helper build inputs |
 | `scripts/build_m4_wfp.ps1` | Build (-TestSign); `FileDigestAlgorithm=sha256` |
 | `scripts/install_m4_wfp.ps1` | Admin install (mirror 4D CAT staging + attach) |
 | `scripts/uninstall_m4_wfp.ps1` | Remove driver + filters |
@@ -112,7 +112,7 @@ def source_context_matches_policy(observed: dict, policy_manifest) -> bool:
     """True iff observed identity matches manifest clone/AppContainer target."""
 
 def wfp_loaded(engine_name: str = "mmi_wfp") -> bool:
-    """True iff WFP filter/driver registered AND at least one active WFP filter id."""
+    """True iff user-mode WFP helper reports four active ALE_AUTH_CONNECT filters for engine_name."""
 
 def attempt_live_connect(
     host: str,
@@ -165,7 +165,7 @@ Standard fields: `harness`, `phase`, `spec_section`, `passed`, `perfect_claim: f
 |-----|---------------|-----------|
 | `schema_v` | `"2026-07-05b"` | same |
 | `mode` | `"contract"` | `"live"` |
-| `wfp_loaded` | `false` (or query if cheap) | **must be `true` for PASS** |
+| `wfp_loaded` | `false` (or query if cheap) | **must be `true` for PASS; helper status must report `filter_count >= 4`** |
 | `contract_pass` | allow + deny fixtures pass | must stay `true` |
 | `source_context_ok` | `null` | **must be `true` for PASS** |
 | `live_t7_blocked` | `null` | **must be `true` for PASS** |
@@ -208,8 +208,8 @@ No `verify_fingerprint` in 4E v1 (egress probes must not mutate authority tree).
 
 | fixture_id | probe | expected live |
 |------------|-------|---------------|
-| T7-L1 | TCP connect non-allowlist public IPv4 from **matched clone context** | blocked → `live_t7_blocked: true` |
-| T7-L2 | TCP connect allowlisted telemetry from **matched clone context** | succeeds → `live_telemetry_ok: true` |
+| T7-L1 | TCP connect to controlled local non-allowlist listener (`127.0.0.1:19999`) from **matched clone context** | blocked/timeout under local listener control → `live_t7_blocked: true` |
+| T7-L2 | TCP connect to controlled local allowlisted telemetry listener (`127.0.0.1:9443`) from **matched clone context** | succeeds → `live_telemetry_ok: true` |
 
 ### 4.7 Deny log line schema (`wfp_denies.jsonl`) — P4E-B6
 
@@ -267,8 +267,8 @@ T7-N1..N7 unchanged (default-deny, IPv4/IPv6, DNS, loopback, proxy, WFP unload f
 
 1. `wfp_policy.py` + contract tests  
 2. `m4_wfp_suite.py` contract mode  
-3. WFP callout + install scripts  
-4. Clone-context probe runner + live gate  
+3. User-mode WFP helper + install scripts (`ALE_AUTH_CONNECT_V4/V6`, four-filter expectation)  
+4. Clone-context probe runner + controlled local live gate (`127.0.0.1:19999` deny, `127.0.0.1:9443` allow)  
 5. **STOP** — no 4F/4G in same pass  
 
 ---
@@ -302,3 +302,24 @@ Unchanged — R-001/R-002 scoped REDUCED only; R-008/R-030/R-031 OPEN constraint
 NOT CLAIMED: file-boundary containment, host containment, M4_MET, GATED, PERFECT,
 containment-proven, PC2 isolation, R-031 CLOSED, build authorized from this document alone.
 ```
+
+
+---
+
+## 11. Rev C Codex PM Note
+
+Codex prior verdict: `NOT BUILDABLE as written`.
+
+Rev C resolves the build-plan blockers by narrowing 4E to the live-proven shape:
+
+- `ALE_AUTH_CONNECT_V4/V6` only.
+- Four filters expected: V4 allow, V4 block, V6 allow, V6 block.
+- User-mode WFP helper scope; no kernel callout driver claim.
+- Controlled local live probes for T7-L1/T7-L2.
+- `BUILD_AUTHORIZED: NO` remains unchanged.
+
+Rev C is still plan/spec preparation only. It does not authorize implementation, does not close M4, and does not claim host containment.
+
+Codex Rev C verdict: `BUILDABLE AS PLAN`.
+
+Build remains blocked until Matt explicitly says `authorize build 4E`.

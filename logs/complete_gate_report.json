@@ -1,0 +1,56 @@
+{
+  "gate": "complete_gate",
+  "scope": "pre-build contract",
+  "timestamp": "2026-07-05T20:38:54.773176+00:00",
+  "blocking_count": 0,
+  "warning_count": 2,
+  "pass_count": 8,
+  "status": "PASS",
+  "blocking": [],
+  "warnings": [
+    {
+      "check": "BUILD_QUEUE.json has active work",
+      "status": "WARNING",
+      "detail": "Queue is empty; this is non-blocking for a pre-build gate."
+    },
+    {
+      "check": "worktree clean",
+      "status": "WARNING",
+      "detail": "113 changed paths detected; not blocking this contract gate."
+    }
+  ],
+  "passed": [
+    {
+      "check": "AGENTS.md exists",
+      "status": "PASS"
+    },
+    {
+      "check": "BUILD_QUEUE.json exists",
+      "status": "PASS"
+    },
+    {
+      "check": "BUILD_RESULT.json exists",
+      "status": "PASS"
+    },
+    {
+      "check": "CURRENT_BUILD_STATE.md exists",
+      "status": "PASS"
+    },
+    {
+      "check": "AGENTS.md contract markers",
+      "status": "PASS"
+    },
+    {
+      "check": "BUILD_QUEUE.json parses",
+      "status": "PASS"
+    },
+    {
+      "check": "BUILD_RESULT.json parses",
+      "status": "PASS"
+    },
+    {
+      "check": "CURRENT_BUILD_STATE.md latest build section",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1555,19 +1555,19 @@
     },
     {
         "id": "mmi-phase1-harness-hash-rule-fix",
-        "instruction": "PROJECT: MMI. Fix Phase 1 harness §7.4 critic-hash penalty scope: independent run lab IDs (m2_001__phase1_run_01..03) must not trigger penalty when authority critic hash is unchanged; penalty applies only to same lab_id re-runs. Update scripts/phase1_stability_harness.py, tests, MMI_PHASE1_STABILITY_HARNESS_SPEC.md.",
+        "instruction": "PROJECT: MMI. Fix Phase 1 harness \u00a77.4 critic-hash penalty scope: independent run lab IDs (m2_001__phase1_run_01..03) must not trigger penalty when authority critic hash is unchanged; penalty applies only to same lab_id re-runs. Update scripts/phase1_stability_harness.py, tests, MMI_PHASE1_STABILITY_HARNESS_SPEC.md.",
         "status": "completed",
         "assignee": "Cursor PM",
         "tier": "Project Manager",
         "score": 89,
-        "score_reason": "Matt directive — close measurement contract gap blocking honest Phase 1 PASS on independent runs.",
-        "source": "Matt directive 2026-07-01 — hash rule fix option 1",
+        "score_reason": "Matt directive \u2014 close measurement contract gap blocking honest Phase 1 PASS on independent runs.",
+        "source": "Matt directive 2026-07-01 \u2014 hash rule fix option 1",
         "created_at": "2026-07-01T15:30:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "AUTHORIZED_BY_MATT_2026-07-01",
         "completed_at": "2026-07-01T15:35:00-07:00",
         "completed_by": "Cursor PM",
-        "result_summary": "PASS: §7.4 penalty scoped to same_lab_id_rerun_only. 6/6 pytest pass. Independent lab IDs with shared critic hash now PASS decision logic. Spec + closeout updated.",
+        "result_summary": "PASS: \u00a77.4 penalty scoped to same_lab_id_rerun_only. 6/6 pytest pass. Independent lab IDs with shared critic hash now PASS decision logic. Spec + closeout updated.",
         "sign_off": "PASS",
         "output_files": [
             "scripts/phase1_stability_harness.py",
@@ -1578,17 +1578,17 @@
     },
     {
         "id": "mmi-iceberg-l4-behavioral-fingerprint-spec",
-        "instruction": "PROJECT: MMI Security Intel / Metadata Iceberg. Design Layer 4 behavioral fingerprint only — short spec, no implementation. Read architecture/MMI_METADATA_ICEBERG_2026-07.md §3 L4, §6 non-goals; pattern from chaos/canary_metadata_layer.py and chaos/graph_topology_layer.py. Required output: mmi/project_brain/architecture/MMI_ICEBERG_L4_BEHAVIORAL_FINGERPRINT_SPEC_2026-07.md covering: per-sender rolling store (nonce-state persistence pattern), derived signals (payload size, key-shape, capability mix), cold-start record-only mode, anomaly → Mirror Dimension route (not hard-drop), API shape matching (ok, {error, detail}), integration point in metadata_ingress_gate.admit(). Use Claude XML prompt framework. No L5/L7/L9. No Codex build.",
+        "instruction": "PROJECT: MMI Security Intel / Metadata Iceberg. Design Layer 4 behavioral fingerprint only \u2014 short spec, no implementation. Read architecture/MMI_METADATA_ICEBERG_2026-07.md \u00a73 L4, \u00a76 non-goals; pattern from chaos/canary_metadata_layer.py and chaos/graph_topology_layer.py. Required output: mmi/project_brain/architecture/MMI_ICEBERG_L4_BEHAVIORAL_FINGERPRINT_SPEC_2026-07.md covering: per-sender rolling store (nonce-state persistence pattern), derived signals (payload size, key-shape, capability mix), cold-start record-only mode, anomaly \u2192 Mirror Dimension route (not hard-drop), API shape matching (ok, {error, detail}), integration point in metadata_ingress_gate.admit(). Use Claude XML prompt framework. No L5/L7/L9. No Codex build.",
         "status": "completed",
         "assignee": "Claude",
         "tier": "Design",
         "score": 87,
-        "score_reason": "Matt Claude-A — short research lane; L4 spec before Codex build.",
-        "source": "Matt directive 2026-07-02 — Claude A after Phase 1 PASS",
+        "score_reason": "Matt Claude-A \u2014 short research lane; L4 spec before Codex build.",
+        "source": "Matt directive 2026-07-02 \u2014 Claude A after Phase 1 PASS",
         "created_at": "2026-07-02T05:00:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "NOT_AUTHORIZED",
-        "routing_note": "Claude Design only — spec file output. Cursor PM routes. Codex implements only after separate authorize build.",
+        "routing_note": "Claude Design only \u2014 spec file output. Cursor PM routes. Codex implements only after separate authorize build.",
         "completed_at": "2026-07-02T05:30:00-07:00",
         "completed_by": "Claude",
         "result_summary": "PASS: L4 behavioral fingerprint spec filed. Derived-only signals, cold-start N=20, Welch moments persistence, ANOMALY routes MIRROR_DIMENSION with ok=True, integration post-L6, T1-T3 falsifiable.",
@@ -1604,12 +1604,12 @@
         "assignee": "Codex",
         "tier": "Backbone / runtime support",
         "score": 86,
-        "score_reason": "L4 spec PASS — next Codex build after Matt authorize build.",
-        "source": "Matt directive 2026-07-02 — post Claude L4 spec",
+        "score_reason": "L4 spec PASS \u2014 next Codex build after Matt authorize build.",
+        "source": "Matt directive 2026-07-02 \u2014 post Claude L4 spec",
         "created_at": "2026-07-02T05:30:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "AUTHORIZED_BY_MATT_2026-07-02",
-        "routing_note": "Codex only. Spec is PASS — do not implement until Matt authorize build.",
+        "routing_note": "Codex only. Spec is PASS \u2014 do not implement until Matt authorize build.",
         "completed_at": "2026-07-02T06:00:00-07:00",
         "completed_by": "Cursor PM",
         "result_summary": "PASS: behavioral_fingerprint_layer.py + gate wire (MirrorDimensionDivert). T1-T3 tests pass. 25/25 ingress+fingerprint pytest.",
@@ -1623,17 +1623,17 @@
     },
     {
         "id": "mmi-iceberg-l5-cross-packet-correlation-spec",
-        "instruction": "PROJECT: MMI Security Intel / Metadata Iceberg. Design Layer 5 cross-packet correlation only — short spec, no implementation. Read architecture/MMI_METADATA_ICEBERG_2026-07.md §3 L5, §6 non-goals; pattern from chaos/behavioral_fingerprint_layer.py, chaos/graph_topology_layer.py, chaos/metadata_ingress_gate.py. Required output: mmi/project_brain/architecture/MMI_ICEBERG_L5_CROSS_PACKET_CORRELATION_SPEC_2026-07.md covering: per-sender rolling stream window (nonce-state persistence pattern), derived signals (nonce velocity, inter-arrival burst rate, origin_lane diversity), cold-start record-only mode, anomaly → Mirror Dimension route (not hard-drop), API shape matching L4 (ok, {error, detail}), integration point in metadata_ingress_gate.admit() after L4. Use Claude XML prompt framework. No L7 rhythm, no L9 chain depth. No Codex build.",
+        "instruction": "PROJECT: MMI Security Intel / Metadata Iceberg. Design Layer 5 cross-packet correlation only \u2014 short spec, no implementation. Read architecture/MMI_METADATA_ICEBERG_2026-07.md \u00a73 L5, \u00a76 non-goals; pattern from chaos/behavioral_fingerprint_layer.py, chaos/graph_topology_layer.py, chaos/metadata_ingress_gate.py. Required output: mmi/project_brain/architecture/MMI_ICEBERG_L5_CROSS_PACKET_CORRELATION_SPEC_2026-07.md covering: per-sender rolling stream window (nonce-state persistence pattern), derived signals (nonce velocity, inter-arrival burst rate, origin_lane diversity), cold-start record-only mode, anomaly \u2192 Mirror Dimension route (not hard-drop), API shape matching L4 (ok, {error, detail}), integration point in metadata_ingress_gate.admit() after L4. Use Claude XML prompt framework. No L7 rhythm, no L9 chain depth. No Codex build.",
         "status": "completed",
         "assignee": "Claude",
         "tier": "Design",
         "score": 86,
-        "score_reason": "Matt seed L5 — Claude spec lane after L4 BUILT.",
-        "source": "Matt directive 2026-07-02 — seed L5",
+        "score_reason": "Matt seed L5 \u2014 Claude spec lane after L4 BUILT.",
+        "source": "Matt directive 2026-07-02 \u2014 seed L5",
         "created_at": "2026-07-02T06:15:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "NOT_AUTHORIZED",
-        "routing_note": "Claude Design only — spec file output. Codex implements only after separate authorize build.",
+        "routing_note": "Claude Design only \u2014 spec file output. Codex implements only after separate authorize build.",
         "completed_at": "2026-07-02T07:00:00-07:00",
         "completed_by": "Cursor PM",
         "result_summary": "PASS: Claude L5 cross-packet correlation spec filed. 60s window, packet+nonce velocity 120, lane diversity 3, warm-up 10, persisted stream state, gate-supplied arrival_ts_ms, T1-T3 falsifiable.",
@@ -1649,8 +1649,8 @@
         "assignee": "Codex",
         "tier": "Backbone / runtime support",
         "score": 85,
-        "score_reason": "L5 spec PASS — Matt authorize build 2026-07-02.",
-        "source": "Matt directive 2026-07-02 — seed L5 post L4 build",
+        "score_reason": "L5 spec PASS \u2014 Matt authorize build 2026-07-02.",
+        "source": "Matt directive 2026-07-02 \u2014 seed L5 post L4 build",
         "created_at": "2026-07-02T06:15:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "AUTHORIZED_BY_MATT_2026-07-02",
@@ -1696,7 +1696,7 @@
         "assignee": "Codex",
         "tier": "Backbone / runtime support",
         "score": 83,
-        "score_reason": "L7 spec REV A PASS — Matt authorize build 2026-07-02.",
+        "score_reason": "L7 spec REV A PASS \u2014 Matt authorize build 2026-07-02.",
         "source": "Matt directive 2026-07-02 - seed L7 post L5 build",
         "created_at": "2026-07-02T09:00:00-07:00",
         "created_by": "Cursor PM",
@@ -1715,20 +1715,20 @@
     },
     {
         "id": "mmi-iceberg-l9-provenance-chain-depth-spec",
-        "instruction": "PROJECT: MMI Security Intel / Metadata Iceberg. Design Layer 9 provenance chain depth only — short spec, no implementation. Read architecture/MMI_METADATA_ICEBERG_2026-07.md section 3 L9, section 6 non-goals; pattern from chaos/graph_topology_layer.py, chaos/temporal_rhythm_layer.py, chaos/metadata_ingress_gate.py. Required output: mmi/project_brain/architecture/MMI_ICEBERG_L9_PROVENANCE_CHAIN_DEPTH_SPEC_2026-07.md covering: gate-derived hop-depth / origin-trust tracking (not re-assertable from packet), boundary vs L6 single-hop graph, cold-start record-only mode, anomaly routes Mirror Dimension not hard-drop, API shape matching L4/L5/L7 (ok, detail), integration in metadata_ingress_gate.admit() after L7 before nonce commit. Use Claude XML prompt framework. No implementation. No Codex build.",
+        "instruction": "PROJECT: MMI Security Intel / Metadata Iceberg. Design Layer 9 provenance chain depth only \u2014 short spec, no implementation. Read architecture/MMI_METADATA_ICEBERG_2026-07.md section 3 L9, section 6 non-goals; pattern from chaos/graph_topology_layer.py, chaos/temporal_rhythm_layer.py, chaos/metadata_ingress_gate.py. Required output: mmi/project_brain/architecture/MMI_ICEBERG_L9_PROVENANCE_CHAIN_DEPTH_SPEC_2026-07.md covering: gate-derived hop-depth / origin-trust tracking (not re-assertable from packet), boundary vs L6 single-hop graph, cold-start record-only mode, anomaly routes Mirror Dimension not hard-drop, API shape matching L4/L5/L7 (ok, detail), integration in metadata_ingress_gate.admit() after L7 before nonce commit. Use Claude XML prompt framework. No implementation. No Codex build.",
         "status": "completed",
         "assignee": "Claude",
         "tier": "Design",
         "score": 85,
-        "score_reason": "Matt seed L9 — Claude spec after L7 BUILT.",
-        "source": "Matt directive 2026-07-02 — seed L9 post L7 build",
+        "score_reason": "Matt seed L9 \u2014 Claude spec after L7 BUILT.",
+        "source": "Matt directive 2026-07-02 \u2014 seed L9 post L7 build",
         "created_at": "2026-07-02T16:00:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "NOT_AUTHORIZED",
-        "routing_note": "Claude Design only — spec file output. Codex implements only after separate authorize build.",
+        "routing_note": "Claude Design only \u2014 spec file output. Codex implements only after separate authorize build.",
         "completed_at": "2026-07-02T18:00:00-07:00",
         "completed_by": "Cursor PM",
-        "result_summary": "PASS WITH REVISIONS (REV A): obs-1 untrusted→privileged mirror, monotonic lane-derived trust, gate-supplied routing params, content-hash severance residual. Code aligned in repo.",
+        "result_summary": "PASS WITH REVISIONS (REV A): obs-1 untrusted\u2192privileged mirror, monotonic lane-derived trust, gate-supplied routing params, content-hash severance residual. Code aligned in repo.",
         "sign_off": "PASS WITH REVISIONS",
         "output_files": [
             "mmi/project_brain/architecture/MMI_ICEBERG_L9_PROVENANCE_CHAIN_DEPTH_SPEC_2026-07.md",
@@ -1742,8 +1742,8 @@
         "assignee": "Codex",
         "tier": "Backbone / runtime support",
         "score": 84,
-        "score_reason": "L9 spec REV A PASS WITH REVISIONS — build aligned to spec.",
-        "source": "Matt directive 2026-07-02 — seed L9 post L7 build",
+        "score_reason": "L9 spec REV A PASS WITH REVISIONS \u2014 build aligned to spec.",
+        "source": "Matt directive 2026-07-02 \u2014 seed L9 post L7 build",
         "created_at": "2026-07-02T16:00:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "AUTHORIZED_BY_MATT_2026-07-02",
@@ -1765,12 +1765,12 @@
         "assignee": "Codex",
         "tier": "Backbone / runtime support",
         "score": 82,
-        "score_reason": "Matt authorize build 2026-07-02 — cryptolalia lab wire.",
-        "source": "Matt directive 2026-07-02 — authorize build on cryptolalia lab",
+        "score_reason": "Matt authorize build 2026-07-02 \u2014 cryptolalia lab wire.",
+        "source": "Matt directive 2026-07-02 \u2014 authorize build on cryptolalia lab",
         "created_at": "2026-07-02T20:30:00-07:00",
         "created_by": "Cursor PM",
         "build_authorization": "AUTHORIZED_BY_MATT_2026-07-02",
-        "routing_note": "Chaos lab only — never enable mirror_lab_root in production authority paths.",
+        "routing_note": "Chaos lab only \u2014 never enable mirror_lab_root in production authority paths.",
         "completed_at": "2026-07-02T20:45:00-07:00",
         "completed_by": "Cursor PM",
         "result_summary": "PASS: iceberg mirror diverts emit cryptolalia in lab cells. iceberg-mirror-smash provisioner + 4 pytest. 33/33 gate+bridge suite.",
@@ -1782,5 +1782,155 @@
             "scripts/chaos_lab_provisioner.py",
             "tests/test_cryptolalia_lab_bridge.py"
         ]
+    },
+    {
+        "id": "mmi-4e-wfp-plan-rev-c",
+        "instruction": "PROJECT: MMI. Revise the Phase 4E WFP build plan only. Source: Codex NOT BUILDABLE verdict on CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md. Update the plan to ALE_AUTH_CONNECT_V4/V6 only, 4 filters expected, user-mode WFP helper scope, controlled local live deny/allow probes, and preserve BUILD_AUTHORIZED: NO. Do not implement 4E. Required output: mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md Rev C.",
+        "status": "completed",
+        "source": "Codex plan review verdict 2026-07-05",
+        "created_at": "2026-07-05T12:16:39",
+        "created_by": "Codex PM relay",
+        "assignee": "Codex",
+        "tier": "Backbone / runtime support",
+        "score": 88,
+        "score_reason": "Unblocks 4E plan review without authorizing build; fixes known STREAM_V4 and live-proof blockers.",
+        "build_authorization": "NOT_AUTHORIZED",
+        "routing_note": "Plan revision only. No implementation unless Matt explicitly says authorize build 4E.",
+        "completed_at": "2026-07-05T12:17:29-07:00",
+        "completed_by": "Codex",
+        "result_summary": "PASS - Revised Phase 4E WFP build plan to Rev C: ALE_AUTH_CONNECT_V4/V6 only, four-filter expectation, user-mode WFP helper scope, controlled local live deny/allow probes, BUILD_AUTHORIZED remains NO.",
+        "sign_off": "PASS",
+        "sign_off_tier": "Codex",
+        "output_files": [
+            "mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md"
+        ],
+        "verification_commands": [
+            {
+                "label": "H1 closeout outputs",
+                "command": "python scripts/mmi_verify.py closeout mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md",
+                "exit_code": 0,
+                "ok": true
+            }
+        ],
+        "verification_artifact": null,
+        "closeout_verification": {
+            "h1": {
+                "check": "H1_closeout_output_files",
+                "ok": true,
+                "missing": [],
+                "present": [
+                    "mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md"
+                ],
+                "count": 1
+            },
+            "h2": {
+                "check": "H2_intel_closeout_gate",
+                "ok": true,
+                "intel_outputs": [],
+                "results": [],
+                "failed": []
+            },
+            "verify_json": {
+                "check": "verify_json_files",
+                "ok": true,
+                "results": [],
+                "failed": []
+            },
+            "verification_artifact": {
+                "path": null,
+                "ok": true,
+                "required": false
+            }
+        },
+        "closeout_evidence_contract": {
+            "version": "P8_CLOSEOUT_EVIDENCE_CONTRACT_v1",
+            "ok": true,
+            "required_fields": [
+                "output_files",
+                "verification_commands",
+                "verification_artifact",
+                "result_summary",
+                "sign_off",
+                "sign_off_tier",
+                "closeout_verification"
+            ],
+            "recover_under_pressure": "Use output_files plus closeout_verification to re-run gates; use verification_commands and verification_artifact to explain what was checked."
+        }
+    },
+    {
+        "id": "mmi-4e-wfp-build-authorized",
+        "instruction": "PROJECT: MMI. BUILD AUTHORIZED BY MATT: authorize build 4E. Implement Phase 4E WFP Rev C only: ALE_AUTH_CONNECT_V4/V6 filters only, 4 filters expected, user-mode WFP helper scope, controlled local live deny/allow probes, live PASS requires live_t7_blocked, live_telemetry_ok, source_context_ok, and wfp_loaded. Do not add STREAM_V4. Do not expand beyond 4E. Claude remains design/spec lane; Gemini paid API is audit lane.",
+        "status": "completed",
+        "source": "Matt explicit authorization: authorize build 4E, 2026-07-05",
+        "created_at": "2026-07-05T12:30:07",
+        "created_by": "Codex PM relay",
+        "assignee": "Codex",
+        "tier": "Backbone / runtime support",
+        "score": 96,
+        "score_reason": "Matt explicitly authorized 4E build; Rev C plan is BUILDABLE AS PLAN and live-proof blockers are known.",
+        "build_authorization": "AUTHORIZED_BY_MATT",
+        "routing_note": "Build 4E only. Use Claude for design/spec questions and Gemini paid API for audit.",
+        "completed_at": "2026-07-05T13:29:21-07:00",
+        "completed_by": "Codex",
+        "result_summary": "PASS - Phase 4E WFP Rev C built and live-verified. User-mode WFP helper installs 4 ALE_AUTH_CONNECT_V4/V6 filters only; no STREAM_V4. Live admin proof passed with wfp_loaded=true, source_context_ok=true, live_t7_blocked=true, live_telemetry_ok=true, min_viable_live_t7=true, top-level passed=true. Helper probe now uses interactive probe logon and treats controlled local deny timeout 10060 as WFP deny proof per Rev C.",
+        "sign_off": "PASS",
+        "sign_off_tier": "Codex",
+        "output_files": [
+            "host_boundary/mmi_wfp/mmi_wfp_helper.cpp",
+            "mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md"
+        ],
+        "verification_commands": [
+            {
+                "label": "H1 closeout outputs",
+                "command": "python scripts/mmi_verify.py closeout host_boundary/mmi_wfp/mmi_wfp_helper.cpp mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md",
+                "exit_code": 0,
+                "ok": true
+            }
+        ],
+        "verification_artifact": null,
+        "closeout_verification": {
+            "h1": {
+                "check": "H1_closeout_output_files",
+                "ok": true,
+                "missing": [],
+                "present": [
+                    "host_boundary/mmi_wfp/mmi_wfp_helper.cpp",
+                    "mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md"
+                ],
+                "count": 2
+            },
+            "h2": {
+                "check": "H2_intel_closeout_gate",
+                "ok": true,
+                "intel_outputs": [],
+                "results": [],
+                "failed": []
+            },
+            "verify_json": {
+                "check": "verify_json_files",
+                "ok": true,
+                "results": [],
+                "failed": []
+            },
+            "verification_artifact": {
+                "path": null,
+                "ok": true,
+                "required": false
+            }
+        },
+        "closeout_evidence_contract": {
+            "version": "P8_CLOSEOUT_EVIDENCE_CONTRACT_v1",
+            "ok": true,
+            "required_fields": [
+                "output_files",
+                "verification_commands",
+                "verification_artifact",
+                "result_summary",
+                "sign_off",
+                "sign_off_tier",
+                "closeout_verification"
+            ],
+            "recover_under_pressure": "Use output_files plus closeout_verification to re-run gates; use verification_commands and verification_artifact to explain what was checked."
+        }
     }
 ]
