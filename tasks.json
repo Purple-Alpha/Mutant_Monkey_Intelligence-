@@ -1932,5 +1932,79 @@
             ],
             "recover_under_pressure": "Use output_files plus closeout_verification to re-run gates; use verification_commands and verification_artifact to explain what was checked."
         }
+    },
+    {
+        "id": "mmi-4e-wfp-5157-evidence",
+        "instruction": "PROJECT: MMI. Upgrade Phase 4E WFP live evidence only. Capture matching Windows Security Event ID 5157 after the deny probe and include OS-native WFP block evidence in live JSON: event_id, event_time, application_name, direction, destination_address, destination_port, protocol, layer_name, filter_run_time_id, is_loopback. Do not change WFP enforcement semantics. Do not add STREAM_V4. Keep ALE_AUTH_CONNECT_V4/V6 scope.",
+        "status": "completed",
+        "source": "Matt/Codex evidence upgrade after 5157 proof 2026-07-05",
+        "created_at": "2026-07-05T21:23:14",
+        "created_by": "Codex PM relay",
+        "assignee": "Codex",
+        "tier": "Backbone / runtime support",
+        "score": 94,
+        "score_reason": "Converts live deny proof from helper interpretation into OS-native Windows Security Auditing evidence without changing enforcement.",
+        "build_authorization": "AUTHORIZED_BY_MATT",
+        "routing_note": "Evidence capture only. No WFP filter scope expansion.",
+        "completed_at": "2026-07-05T21:30:09-07:00",
+        "completed_by": "Codex",
+        "result_summary": "PASS - Upgraded Phase 4E WFP live evidence with OS-native Windows Security Event 5157 capture. Live deny probe now records windows_security_5157 details including event_id, event_time, application_name, direction, destination_address, destination_port, protocol, layer_name, filter_run_time_id, and is_loopback. Enforcement semantics unchanged; ALE_AUTH_CONNECT_V4/V6 scope preserved; no STREAM_V4 added.",
+        "sign_off": "PASS",
+        "sign_off_tier": "Codex",
+        "output_files": [
+            "mmi/m4/wfp_policy.py"
+        ],
+        "verification_commands": [
+            {
+                "label": "H1 closeout outputs",
+                "command": "python scripts/mmi_verify.py closeout mmi/m4/wfp_policy.py",
+                "exit_code": 0,
+                "ok": true
+            }
+        ],
+        "verification_artifact": null,
+        "closeout_verification": {
+            "h1": {
+                "check": "H1_closeout_output_files",
+                "ok": true,
+                "missing": [],
+                "present": [
+                    "mmi/m4/wfp_policy.py"
+                ],
+                "count": 1
+            },
+            "h2": {
+                "check": "H2_intel_closeout_gate",
+                "ok": true,
+                "intel_outputs": [],
+                "results": [],
+                "failed": []
+            },
+            "verify_json": {
+                "check": "verify_json_files",
+                "ok": true,
+                "results": [],
+                "failed": []
+            },
+            "verification_artifact": {
+                "path": null,
+                "ok": true,
+                "required": false
+            }
+        },
+        "closeout_evidence_contract": {
+            "version": "P8_CLOSEOUT_EVIDENCE_CONTRACT_v1",
+            "ok": true,
+            "required_fields": [
+                "output_files",
+                "verification_commands",
+                "verification_artifact",
+                "result_summary",
+                "sign_off",
+                "sign_off_tier",
+                "closeout_verification"
+            ],
+            "recover_under_pressure": "Use output_files plus closeout_verification to re-run gates; use verification_commands and verification_artifact to explain what was checked."
+        }
     }
 ]

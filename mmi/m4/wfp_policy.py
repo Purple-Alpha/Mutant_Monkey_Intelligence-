@@ -1,6 +1,7 @@
 """WFP egress policy engine — default-deny T7 (§8, §17 Phase 4E)."""
 
 from __future__ import annotations
+import re
 
 import json
 import os
@@ -439,6 +440,99 @@ def _stop_telemetry_listener(sock: socket.socket, stop_event: threading.Event) -
     sock.close()
 
 
+
+def _wfp_5157_message_field(message: str, label: str) -> str | None:
+    match = re.search(rf"(?im)^\s*{re.escape(label)}:\s*(.+?)\s*$", message)
+    if not match:
+        return None
+    return match.group(1).strip()
+
+
+def _find_security_5157_event(
+    *,
+    start_time: datetime,
+    destination_address: str,
+    destination_port: int,
+    application_hint: str = "mmi_wfp_helper.exe",
+) -> dict[str, object] | None:
+    """Return matching Windows Security 5157 evidence for the deny probe, if available."""
+    if os.name != "nt":
+        return None
+
+    start_literal = start_time.strftime("%Y-%m-%dT%H:%M:%S")
+    ps = f"""
+$start = [datetime]::Parse('{start_literal}')
+Get-WinEvent -FilterHashtable @{{LogName='Security'; Id=5157; StartTime=$start}} -MaxEvents 200 |
+  ForEach-Object {{
+    [pscustomobject]@{{
+      TimeCreated = $_.TimeCreated.ToString('o')
+      Id = $_.Id
+      ProviderName = $_.ProviderName
+      Message = $_.Message
+    }}
+  }} |
+  ConvertTo-Json -Depth 4
+"""
+
+    try:
+        result = subprocess.run(
+            ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", ps],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+
+    payload = result.stdout.strip()
+    if result.returncode != 0 or not payload:
+        return None
+
+    try:
+        events = json.loads(payload)
+    except json.JSONDecodeError:
+        return None
+    if isinstance(events, dict):
+        events = [events]
+    if not isinstance(events, list):
+        return None
+
+    for event in events:
+        if not isinstance(event, dict):
+            continue
+        message = str(event.get("Message", ""))
+        app_name = _wfp_5157_message_field(message, "Application Name") or ""
+        direction = _wfp_5157_message_field(message, "Direction")
+        dest_addr = _wfp_5157_message_field(message, "Destination Address")
+        dest_port = _wfp_5157_message_field(message, "Destination Port")
+        if application_hint.lower() not in app_name.lower():
+            continue
+        if direction != "Outbound":
+            continue
+        if dest_addr != destination_address:
+            continue
+        if dest_port != str(destination_port):
+            continue
+
+        return {
+            "event_id": event.get("Id"),
+            "event_time": event.get("TimeCreated"),
+            "provider_name": event.get("ProviderName"),
+            "application_name": app_name,
+            "direction": direction,
+            "source_address": _wfp_5157_message_field(message, "Source Address"),
+            "source_port": _wfp_5157_message_field(message, "Source Port"),
+            "destination_address": dest_addr,
+            "destination_port": int(dest_port),
+            "protocol": _wfp_5157_message_field(message, "Protocol"),
+            "layer_name": _wfp_5157_message_field(message, "Layer Name"),
+            "filter_run_time_id": _wfp_5157_message_field(message, "Filter Run-Time ID"),
+            "is_loopback": (_wfp_5157_message_field(message, "Is Loopback") == "True"),
+        }
+
+    return None
+
 def run_wfp_selftest(
     evidence_dir: Path,
     policy_manifest_path: Path,
@@ -484,6 +578,7 @@ def run_wfp_selftest(
                     deny_host,
                     deny_port,
                 )
+                deny_probe_started_at = datetime.now().astimezone()
                 deny_probe = run_clone_probe(
                     deny_host,
                     deny_port,
@@ -491,6 +586,13 @@ def run_wfp_selftest(
                     evidence_dir=evidence_dir,
                     policy=engine.policy,
                 )
+                deny_security_event_5157 = _find_security_5157_event(
+                    start_time=deny_probe_started_at,
+                    destination_address=deny_host,
+                    destination_port=deny_port,
+                )
+                deny_probe["windows_security_5157"] = deny_security_event_5157
+                deny_probe["os_native_wfp_block_proven"] = deny_security_event_5157 is not None
                 allow_probe = run_clone_probe(
                     allow.host,
                     allow.port,
