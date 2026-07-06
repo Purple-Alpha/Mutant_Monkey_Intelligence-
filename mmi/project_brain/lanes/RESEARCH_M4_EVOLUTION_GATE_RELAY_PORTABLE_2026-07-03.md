@@ -12,8 +12,8 @@
 | Path | Valid here? | Notes |
 |------|-------------|-------|
 | `/home/socialarchitect/northstar` | **NO** in ChatGPT/Gemini runtime | Legacy/alternate MMI authority path — **not mounted** in your session |
-| `C:\Architectapp_clean` | **YES** — Matt's Windows authority repo | Cursor lane has full tree |
-| `/mnt/c/Architectapp_clean` | **YES** — WSL view of same repo | Use if Matt gives you WSL file access |
+| `C:\MMI` | **YES** — Matt's Windows authority repo | Cursor lane has full tree |
+| `/mnt/c/MMI` | **YES** — WSL view of same repo | Use if Matt gives you WSL file access |
 | `mmi/project_brain/...` | **YES** — relative paths below | All paths relative to authority repo root |
 
 **Do not guess file contents.** If you cannot read the repo, use **§ Embedded doctrine** below + deliver **`RESEARCH_M4_EVOLUTION_GATE_FINDINGS_2026-07.md`** as a complete markdown artifact Matt will paste into:
@@ -134,7 +134,7 @@ TASK: mmi-m4-evolution-gate-research
 LANE: Research only — NOT build
 
 PATH NOTE: /home/socialarchitect/northstar is NOT available in your runtime.
-Authority repo on Matt's machine: C:\Architectapp_clean (WSL: /mnt/c/Architectapp_clean).
+Authority repo on Matt's machine: C:\MMI (WSL: /mnt/c/MMI).
 Use the portable relay below — do NOT invent repo file contents.
 
 READ: (embedded in relay) M4 = 48h PERFECT proof in chaos clone; canary alert rules NOT FILED;
@@ -155,7 +155,7 @@ Matt pastes findings → Cursor files at `mmi/project_brain/lanes/` → Claude s
 
 ## File index (for Matt / connectors with repo access)
 
-If your connector CAN reach `C:\Architectapp_clean` or `/mnt/c/Architectapp_clean`, read in order:
+If your connector CAN reach `C:\MMI` or `/mnt/c/MMI`, read in order:
 
 1. `mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_2026-07.md`
 2. `mmi/project_brain/chaos/MMI_DESTRUCTIVE_EVOLUTION_MATRIX_2026-07.md`

@@ -15,7 +15,7 @@ PROJECT: MMI
 TASK ID: mmi-m4-evolution-gate
 REVIEW TYPE: POST-BUILD DIFF REVIEW (Phase 1)
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC PHASE: §17 Phase 1 — m4_invariant_check.py + INV-1..7 static (§5)
 
@@ -66,7 +66,7 @@ pytest tests/test_m4_invariant_check.py — 3 passed
 ## Cursor fix (2026-07-04, round 2)
 
 **INV-1:** Replaced line-regex with AST taint analysis (`_ast_inv1_violations`):
-- Tracks authority path expressions (`Path("...Architectapp_clean")`, `AUTHORITY_ROOT` name markers).
+- Tracks authority path expressions (`Path("...MMI")`, `AUTHORITY_ROOT` name markers).
 - Propagates taint through assignments across lines and scopes.
 - Seeds module-level taint into function bodies (`_seed_module_taint`).
 - Flags mutating calls (`.write_text`, `.write_bytes`, `open(...,"w")`, `shutil.copy`, etc.) on tainted handles.

@@ -9,7 +9,7 @@ import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
 
-REPO = Path(r"C:\Architectapp_clean")
+REPO = Path(r"C:\MMI")
 OUT = Path(r"C:\Users\mattn\AppData\Local\Temp\m4_research_packet_v2")
 ZIP = Path(r"C:\Users\mattn\AppData\Local\Temp\m4_research_packet_v2_2026-07-03.zip")
 ZIP_REPO = REPO / "mmi/project_brain/lanes/m4_research_packet_v2_2026-07-03.zip"
@@ -139,7 +139,7 @@ def main() -> None:
                 "# M4 Research Packet v2 Manifest",
                 "",
                 f"**Built:** {datetime.now(timezone.utc).isoformat()}",
-                "**Authority repo:** C:\\Architectapp_clean",
+                "**Authority repo:** C:\\MMI",
                 "**Task:** mmi-m4-evolution-gate-research-v2",
                 "**Authorization:** RESEARCH PACKET V2 ONLY",
                 "",

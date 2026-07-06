@@ -27,7 +27,7 @@ Options:
 - `--lab-id <id>`: base lab id. Default: `m2_001`.
 - `--runs <n>`: number of independent runs. Default: `3`.
 - `--provisioner`: execute the canonical lab stack through `scripts/chaos_lab_provisioner.py`.
-- `--authority <path>`: authority repo root. Default: `/mnt/c/Architectapp_clean`.
+- `--authority <path>`: authority repo root. Default: `/mnt/c/MMI`.
 - `--lab-root <path>`: lab root. Default: `/tmp/mmi_chaos_lab`.
 
 For `--runs 3`, per-run lab IDs are:

@@ -6,8 +6,8 @@ The active project is MMI only.
 
 Repo root:
 
-- Windows: `C:\Architectapp_clean`
-- WSL: `/mnt/c/Architectapp_clean`
+- Windows: `C:\MMI`
+- WSL: `/mnt/c/MMI`
 
 Do not infer active scope from legacy repo-root files. This repository still contains old Social Architect material, but current work is controlled by the MMI project brain.
 
@@ -28,7 +28,7 @@ If those files conflict with `AGENTS.md`, `CLAUDE.md`, `CURRENT_PROJECT_HANDOFF.
 After finishing any MMI task, **always** run one of these from repo root:
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python3 scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/output
 ```
 
@@ -47,7 +47,7 @@ Pipeline source of truth for what comes next: `mmi/task_pipeline.json`
 After meaningful changes to brain or `tasks.json`:
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python scripts/mmi_cold_backup.py --backup-and-push
 ```
 
@@ -58,7 +58,7 @@ See `mmi/project_brain/status/MMI_FIRST_B2_PUSH.md`.
 Before doing MMI work, run:
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python3 scripts/reload_mmi_pipes.py
 python3 scripts/next_task.py
 ```

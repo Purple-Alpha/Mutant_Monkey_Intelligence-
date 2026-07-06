@@ -15,7 +15,7 @@ TASK ID: mmi-control-envelope-budget-deadman-build
 REVIEW TYPE: PRE-BUILD PLAN REVIEW (not diff review)
 ASSIGNEE: Codex
 BUILD AUTHORIZATION: NOT_AUTHORIZED
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC (authoritative):
   mmi/project_brain/architecture/MMI_CONTROL_ENVELOPE_BUDGET_DEADMAN_SPEC_2026-07.md

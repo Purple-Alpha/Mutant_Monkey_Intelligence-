@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
-$repo = "C:\Architectapp_clean"
+$repo = "C:\MMI"
 $out = Join-Path $env:TEMP "m4_research_packet_targeted"
 $zip = Join-Path $env:TEMP "m4_research_packet_targeted_2026-07-03.zip"
 
@@ -55,7 +55,7 @@ $fileCount = (Get-ChildItem $out -Recurse -File).Count
 $manifest = @(
     "# M4 Research Packet Manifest",
     "",
-    "**Authority repo:** C:\Architectapp_clean",
+    "**Authority repo:** C:\MMI",
     "**NOT:** /home/socialarchitect/northstar",
     "**Task:** mmi-m4-evolution-gate-research",
     "**Deliver back:** RESEARCH_M4_EVOLUTION_GATE_FINDINGS_2026-07.md",

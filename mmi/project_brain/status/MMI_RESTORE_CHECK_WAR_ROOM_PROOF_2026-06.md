@@ -56,7 +56,7 @@
 **Command (WSL):**
 
 ```bash
-cd /mnt/c/Architectapp_clean && python3 scripts/mmi_cold_backup.py --backup-and-push
+cd /mnt/c/MMI && python3 scripts/mmi_cold_backup.py --backup-and-push
 ```
 
 **Result:** PASS — `push_status: PASS`, remote bytes match local (128,494).
@@ -67,25 +67,25 @@ cd /mnt/c/Architectapp_clean && python3 scripts/mmi_cold_backup.py --backup-and-
 
 **Procedure:**
 
-1. Created `C:\Architectapp_clean\_restore_drill_scratch\` (outside git tracking)
+1. Created `C:\MMI\_restore_drill_scratch\` (outside git tracking)
 2. Extracted archive (no live tree mutation):
 
 ```bash
-tar -xzf /tmp/mmi_backup_20260629_203555.tar.gz -C /mnt/c/Architectapp_clean/_restore_drill_scratch
+tar -xzf /tmp/mmi_backup_20260629_203555.tar.gz -C /mnt/c/MMI/_restore_drill_scratch
 ```
 
 3. Archive listing confirms `mmi/war_room.py` member present
 4. Restore validation:
 
 ```bash
-python scripts/mmi_cold_backup.py --restore-check C:\Architectapp_clean\_restore_drill_scratch
+python scripts/mmi_cold_backup.py --restore-check C:\MMI\_restore_drill_scratch
 ```
 
 **Output:**
 
 ```json
 {
-  "restore_root": "C:/Architectapp_clean/_restore_drill_scratch",
+  "restore_root": "C:/MMI/_restore_drill_scratch",
   "status": "PASS",
   "errors": []
 }

@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-DEFAULT_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+DEFAULT_AUTHORITY = Path("/mnt/c/MMI")
 HARNESS_EVIDENCE = Path("/tmp/mmi_genomic_loop/harness")
 
 

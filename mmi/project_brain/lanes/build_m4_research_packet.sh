@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-REPO="/mnt/c/Architectapp_clean"
+REPO="/mnt/c/MMI"
 OUT="/tmp/m4_research_packet_targeted"
 ZIP="/tmp/m4_research_packet_targeted_2026-07-03.zip"
 DATE_TAG="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -82,7 +82,7 @@ cat > "$OUT/M4_RESEARCH_PACKET_MANIFEST.md" <<EOF
 # M4 Research Packet Manifest
 
 **Built:** $DATE_TAG  
-**Authority repo:** C:\\Architectapp_clean (WSL: /mnt/c/Architectapp_clean)  
+**Authority repo:** C:\\MMI (WSL: /mnt/c/MMI)  
 **NOT northstar:** /home/socialarchitect/northstar is a different/legacy path  
 **Purpose:** ChatGPT/Gemini research lane — \`mmi-m4-evolution-gate-research\`  
 **Deliver back:** \`RESEARCH_M4_EVOLUTION_GATE_FINDINGS_2026-07.md\`

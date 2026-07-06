@@ -106,7 +106,7 @@ class MMIControlEnvelope:
             r"chmod\s+\+x",
         ]
         self.state_root = Path(state_root or DEFAULT_STATE_ROOT)
-        self.authority_root = Path(authority_root or "/mnt/c/Architectapp_clean")
+        self.authority_root = Path(authority_root or "/mnt/c/MMI")
         self.run_id = run_id or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ-") + uuid.uuid4().hex[:4]
         self.per_hour_cap = per_hour_cap if per_hour_cap is not None else DEFAULT_PER_HOUR_CAP
         self.per_day_cap = per_day_cap if per_day_cap is not None else DEFAULT_PER_DAY_CAP

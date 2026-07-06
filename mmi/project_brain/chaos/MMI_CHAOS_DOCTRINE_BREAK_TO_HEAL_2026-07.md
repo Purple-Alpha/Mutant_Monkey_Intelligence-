@@ -44,7 +44,7 @@ No healing without a real snap. No snap without permission to break the clone.
 
 | Zone | Break allowed? |
 |------|----------------|
-| **Authority repo** (`/mnt/c/Architectapp_clean` live) | **NO** — brain |
+| **Authority repo** (`/mnt/c/MMI` live) | **NO** — brain |
 | **Chaos lab clone** (Provisioner) | **YES** — battlefield |
 | **B2 / latest-good** | **NO** — DNA (read for rebuild proof) |
 

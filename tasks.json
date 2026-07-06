@@ -842,7 +842,7 @@
     },
     {
         "id": "mmi-opsec-human-gate-tightening",
-        "instruction": "PROJECT: MMI / Architectapp_clean. Close the highest-risk remaining human-gate OPSEC items without adding automation, endpoint agents, SOAR, EDR, or new product code. Scope: OPSEC-4 (phish link-hover discipline), OPSEC-5 (out-of-band confirm habit), OPSEC-9 (decision log habit). Required: update opsec/OPERATOR_OPSEC_CHECKLIST.md with evidence-ready completion criteria; add or update worksheet/log entries proving the operator routine; preserve advisory-only doctrine; reference intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md and intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md where applicable. Do not claim controls are enforced. Do not introduce automation. Output: updated OPSEC checklist and/or intel/drills/ worksheet files only. Closeout: PASS | PASS WITH REVISIONS | FAIL.",
+        "instruction": "PROJECT: MMI. Close the highest-risk remaining human-gate OPSEC items without adding automation, endpoint agents, SOAR, EDR, or new product code. Scope: OPSEC-4 (phish link-hover discipline), OPSEC-5 (out-of-band confirm habit), OPSEC-9 (decision log habit). Required: update opsec/OPERATOR_OPSEC_CHECKLIST.md with evidence-ready completion criteria; add or update worksheet/log entries proving the operator routine; preserve advisory-only doctrine; reference intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md and intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md where applicable. Do not claim controls are enforced. Do not introduce automation. Output: updated OPSEC checklist and/or intel/drills/ worksheet files only. Closeout: PASS | PASS WITH REVISIONS | FAIL.",
         "status": "completed",
         "assignee": "Matt",
         "tier": "Operator",
@@ -900,7 +900,7 @@
     },
     {
         "id": "mmi-chaos-hardening-h1-h3",
-        "instruction": "PROJECT: MMI / Architectapp_clean. Implement Level 2 chaos hardening H1-H3 only per mmi/project_brain/chaos/MMI_CHAOS_SANDBOX_V2_2026-07.md. H1: closeout output_files must exist before PASS. H2: grep/check for global/vendor stats in intel brief \u00a71/headline/smb_relevance. H3: create mmi/project_brain/status/MMI_LATEST_GOOD_ARCHIVE.md stub with latest archive name, SHA256, date, remote path, restore-check ref, manifest notes. Read-only verification script OK. No Level 3, no live fault injection, no OPSEC-4/5/9 changes, no SOAR/EDR/swarm/malware. Output: hardening report + changed files + verification output + PASS/PASS WITH REVISIONS/FAIL.",
+        "instruction": "PROJECT: MMI. Implement Level 2 chaos hardening H1-H3 only per mmi/project_brain/chaos/MMI_CHAOS_SANDBOX_V2_2026-07.md. H1: closeout output_files must exist before PASS. H2: grep/check for global/vendor stats in intel brief \u00a71/headline/smb_relevance. H3: create mmi/project_brain/status/MMI_LATEST_GOOD_ARCHIVE.md stub with latest archive name, SHA256, date, remote path, restore-check ref, manifest notes. Read-only verification script OK. No Level 3, no live fault injection, no OPSEC-4/5/9 changes, no SOAR/EDR/swarm/malware. Output: hardening report + changed files + verification output + PASS/PASS WITH REVISIONS/FAIL.",
         "status": "completed",
         "assignee": "Cursor PM",
         "tier": "Resilience / Verification",
@@ -921,7 +921,7 @@
     },
     {
         "id": "mmi-chaos-level3-planning",
-        "instruction": "PROJECT: MMI / Architectapp_clean. Create Level 3 reversible fault injection planning only. Do not execute Level 3 tests. Inputs: MMI_CHAOS_TABLETOP_V1, MMI_CHAOS_SANDBOX_V2, MMI_CHAOS_HARDENING_H1-H3, MMI_LATEST_GOOD_ARCHIVE_VALIDATION, MMI_LATEST_GOOD_ARCHIVE stub. Output: mmi/project_brain/chaos/MMI_CHAOS_LEVEL3_PLAN_2026-07.md. Level 3 execution NOT authorized. Level 4 PROHIBITED. Preserve OPSEC-4/5/9 NOT_STARTED.",
+        "instruction": "PROJECT: MMI. Create Level 3 reversible fault injection planning only. Do not execute Level 3 tests. Inputs: MMI_CHAOS_TABLETOP_V1, MMI_CHAOS_SANDBOX_V2, MMI_CHAOS_HARDENING_H1-H3, MMI_LATEST_GOOD_ARCHIVE_VALIDATION, MMI_LATEST_GOOD_ARCHIVE stub. Output: mmi/project_brain/chaos/MMI_CHAOS_LEVEL3_PLAN_2026-07.md. Level 3 execution NOT authorized. Level 4 PROHIBITED. Preserve OPSEC-4/5/9 NOT_STARTED.",
         "status": "completed",
         "assignee": "Cursor PM",
         "tier": "Resilience / Verification",

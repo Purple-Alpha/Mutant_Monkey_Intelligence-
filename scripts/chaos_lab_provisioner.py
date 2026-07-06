@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Any
 
 # WSL canonical; override with MMI_ROOT env on Windows-native python if needed
-DEFAULT_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+DEFAULT_AUTHORITY = Path("/mnt/c/MMI")
 DEFAULT_LAB_ROOT = Path("/tmp/mmi_chaos_lab")
 
 # Import verification primitives (read-only on clone paths)

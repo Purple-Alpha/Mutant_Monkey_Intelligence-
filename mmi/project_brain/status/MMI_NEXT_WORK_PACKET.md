@@ -14,7 +14,7 @@ Bootstrap phase complete:
 | `mmi-queue-deployer-check` | completed | `MMI_DEPLOYER_QUEUE_CHECK.md` |
 | `mmi-next-work-packet` | completed | this file |
 
-Local MMI project brain currently contains only `project_brain/status/` with scope and deployer check docs. No mission, architecture, lane, or routing files exist yet under `/mnt/c/Architectapp_clean/mmi`.
+Local MMI project brain currently contains only `project_brain/status/` with scope and deployer check docs. No mission, architecture, lane, or routing files exist yet under `/mnt/c/MMI/mmi`.
 
 Deployer queue is MMI-only. Fixed backlog in `keep_task_queue_warm.py` is exhausted.
 
@@ -101,7 +101,7 @@ Seed these in order. Cursor PM owns queue insertion; do not bundle into one gian
 
 ## What Matt Should Decide (optional, not blocking #1)
 
-- Whether `/mnt/c/Architectapp_clean/mmi` stays a thin local mirror or syncs from northstar `mmi/`.
+- Whether `/mnt/c/MMI/mmi` stays a thin local mirror or syncs from northstar `mmi/`.
 - First substantive MMI build target after PM bootstrap (not inferred by Cursor).
 - Whether `task_runner.py` auto-run stays off for PM tasks (recommended: manual PM completion only).
 

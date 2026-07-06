@@ -1,7 +1,7 @@
 # M4 Research Packet Manifest
 
 **Built:** 2026-07-03  
-**Authority repo:** `C:\Architectapp_clean` (WSL: `/mnt/c/Architectapp_clean`)  
+**Authority repo:** `C:\MMI` (WSL: `/mnt/c/MMI`)  
 **NOT:** `/home/socialarchitect/northstar` — different path, not this tree  
 
 **Task:** `mmi-m4-evolution-gate-research`  
@@ -28,7 +28,7 @@
 ## Rebuild ZIP
 
 ```powershell
-powershell -NoProfile -File C:\Architectapp_clean\mmi\project_brain\lanes\build_m4_research_packet.ps1
+powershell -NoProfile -File C:\MMI\mmi\project_brain\lanes\build_m4_research_packet.ps1
 ```
 
 Output: `%TEMP%\m4_research_packet_targeted_2026-07-03.zip`

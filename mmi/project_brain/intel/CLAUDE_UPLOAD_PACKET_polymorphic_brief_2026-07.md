@@ -2,7 +2,7 @@
 
 **Task id:** `mmi-intel-brief-polymorphic-delivery`  
 **Matt:** Upload **this entire file** to Claude if folder connect fails.  
-**Repo path (for folder connect):** `C:\Architectapp_clean` or WSL `/mnt/c/Architectapp_clean`
+**Repo path (for folder connect):** `C:\MMI` or WSL `/mnt/c/MMI`
 
 ---
 

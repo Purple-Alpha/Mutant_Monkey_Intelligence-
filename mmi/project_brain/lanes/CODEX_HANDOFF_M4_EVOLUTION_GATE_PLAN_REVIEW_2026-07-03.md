@@ -15,7 +15,7 @@ PROJECT: MMI
 TASK ID: mmi-m4-evolution-gate
 REVIEW TYPE: PRE-BUILD PLAN REVIEW
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC:
   mmi/project_brain/architecture/MMI_M4_EVOLUTION_GATE_SPEC_2026-07.md

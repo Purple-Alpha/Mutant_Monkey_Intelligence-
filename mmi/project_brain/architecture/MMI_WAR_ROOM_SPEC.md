@@ -3,7 +3,7 @@
 Last updated: 2026-06-30  
 Authority: Matt (Super) — Canadian operator  
 Status: **PROTOTYPE** — v1 shipped; v1.1 defines integration with Security Intel + Canadian IR  
-Repo: `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`
+Repo: `C:\MMI` / `/mnt/c/MMI`
 
 ---
 

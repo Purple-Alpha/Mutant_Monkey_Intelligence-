@@ -1,7 +1,7 @@
 # Codex Handoff — 4E WFP Build Plan Review
 
 **Timestamp:** 2026-07-04T20:44:31-07:00  
-**Repo:** `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`  
+**Repo:** `C:\MMI` / `/mnt/c/MMI`  
 **Reviewed plan:** `mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md`  
 **Authority class:** `SPEC_PREP_AND_BUILD_PLAN`  
 **Build authorized:** NO  

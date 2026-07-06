@@ -6,7 +6,7 @@
 **Date:** 2026-07-03  
 **Supersedes:** ad-hoc handoff prose; legacy `AGENTS.md` swarm chart for active MMI work
 
-**Authority repo:** `C:\Architectapp_clean` (WSL: `/mnt/c/Architectapp_clean`)  
+**Authority repo:** `C:\MMI` (WSL: `/mnt/c/MMI`)  
 **Forbidden default path:** `/home/socialarchitect/northstar` — different tree unless actually mounted
 
 If this file conflicts with `MMI_ACTIVE_SCOPE.md`, follow `MMI_ACTIVE_SCOPE.md` and ask Matt.
@@ -24,7 +24,7 @@ If this file conflicts with `MMI_ACTIVE_SCOPE.md`, follow `MMI_ACTIVE_SCOPE.md` 
 | 5 | **This file** | Lane boundaries |
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python3 scripts/reload_mmi_pipes.py
 python3 scripts/next_task.py
 ```
@@ -157,7 +157,7 @@ Matt auth (research/spec)
 
 ```text
 PROJECT: MMI
-REPO: C:\Architectapp_clean
+REPO: C:\MMI
 READ: mmi/project_brain/lanes/MMI_AI_LANE_SCOPE_2026-07-03.md
       mmi/project_brain/status/MMI_PIPE_STAGING.json
 LANE: <Design|Research|Codex review|Cursor implement> — ONE ONLY

@@ -9,7 +9,7 @@ Phase: **PM bootstrap — COMPLETE**
 
 ## Verdict
 
-**PM bootstrap phase is complete.** Local MMI operating context, deployer queue discipline, lane routing, project-brain skeleton, mission brief, and task registry are in place under `/mnt/c/Architectapp_clean/mmi`.
+**PM bootstrap phase is complete.** Local MMI operating context, deployer queue discipline, lane routing, project-brain skeleton, mission brief, and task registry are in place under `/mnt/c/MMI/mmi`.
 
 **Next phase is blocked on Matt (Super)** for product mission and first build target. Cursor PM will not invent product scope or queue substantive build work until Matt directs.
 

@@ -2,7 +2,7 @@
 
 Last updated: 2026-06-28  
 Authority: Matt (Super)  
-Status: **LOCKED** — governs all MMI work in `C:\Architectapp_clean`
+Status: **LOCKED** — governs all MMI work in `C:\MMI`
 
 ---
 
@@ -28,7 +28,7 @@ Treat the cloud strictly as **cold storage** — a mirror, **not** a live partic
 
 ### Isolation
 
-Keep this workspace (`Architectapp_clean`) **strictly isolated** from the NorthStar platform.
+Keep this workspace (`MMI`) **strictly isolated** from the NorthStar platform.
 
 **Do not:**
 

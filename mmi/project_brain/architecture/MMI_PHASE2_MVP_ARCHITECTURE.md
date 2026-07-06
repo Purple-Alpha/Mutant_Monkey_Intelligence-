@@ -31,7 +31,7 @@ Success for Phase-2 MVP:
 
 ### In scope
 
-- Local repo: `C:\Architectapp_clean` (`/mnt/c/Architectapp_clean` in WSL)
+- Local repo: `C:\MMI` (`/mnt/c/MMI` in WSL)
 - `tasks.json` and deployer scripts in `scripts/`
 - Project brain under `mmi/project_brain/`
 - Command-center **spec** then skeleton (Codex backbone lane)
@@ -174,10 +174,10 @@ Unless Matt explicitly reactivates the lane:
 
 ## Terminal Commands (Matt)
 
-Run from repo root `C:\Architectapp_clean`:
+Run from repo root `C:\MMI`:
 
 ```powershell
-cd C:\Architectapp_clean
+cd C:\MMI
 python scripts/reload_mmi_pipes.py
 python scripts/next_task.py
 ```
@@ -185,7 +185,7 @@ python scripts/next_task.py
 WSL equivalent:
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python3 scripts/reload_mmi_pipes.py
 python3 scripts/next_task.py
 ```

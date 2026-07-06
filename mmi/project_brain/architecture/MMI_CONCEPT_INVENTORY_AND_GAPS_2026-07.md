@@ -68,7 +68,7 @@ These were discussed, sometimes promised for filing, but **never landed in proje
 | Promised path | Content |
 |---------------|---------|
 | `lanes/RESEARCH_control_plane_ed25519_2026-06.md` | Ed25519 signed envelopes, PyNaCl verify, 5s skew, nonce cache |
-| `lanes/RESEARCH_host_boundary_wsl_windows_2026-06.md` | WFP, ETW/Sysmon, WDAC, Windows ACL on `C:\Architectapp_clean`, DrvFs reality |
+| `lanes/RESEARCH_host_boundary_wsl_windows_2026-06.md` | WFP, ETW/Sysmon, WDAC, Windows ACL on `C:\MMI`, DrvFs reality |
 | `architecture/MMI_CONTROL_PLANE_HARDENING_v0.md` | Claude distillation — never created |
 
 **Preserved ideas:**

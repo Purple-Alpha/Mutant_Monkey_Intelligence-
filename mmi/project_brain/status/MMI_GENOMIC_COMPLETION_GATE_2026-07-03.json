@@ -15,7 +15,7 @@
       "exit_code": 0
     },
     "harness": {
-      "command": "python scripts/genomic_realignment_loop_harness.py --authority C:/Architectapp_clean",
+      "command": "python scripts/genomic_realignment_loop_harness.py --authority C:/MMI",
       "suite": "genomic_loop_v1",
       "overall_gate_status": "CLEAN",
       "scenarios": {

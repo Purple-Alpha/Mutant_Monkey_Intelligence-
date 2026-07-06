@@ -3,7 +3,7 @@
 Last updated: 2026-07-01  
 Authority: Matt (Super)  
 Status: **LOCKED** — agent behavior and operator scope for MMI local-first stack  
-Repo: `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`
+Repo: `C:\MMI` / `/mnt/c/MMI`
 
 ---
 
@@ -144,7 +144,7 @@ Four patterns were reviewed. **None are global system prompts.** Each applies to
 **MMI operator aliases (WSL):**
 
 ```bash
-export MMI_ROOT=/mnt/c/Architectapp_clean
+export MMI_ROOT=/mnt/c/MMI
 alias mmi='cd "$MMI_ROOT"'
 alias mmi-pipe='cd "$MMI_ROOT" && python3 scripts/reload_mmi_pipes.py'
 alias mmi-next='cd "$MMI_ROOT" && python3 scripts/next_task.py'

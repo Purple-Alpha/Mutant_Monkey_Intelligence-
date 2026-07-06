@@ -10,7 +10,7 @@
 
 | Path | Size |
 |------|------|
-| `C:\Architectapp_clean\mmi\project_brain\lanes\m4_research_packet_v2_2026-07-03.zip` | ~790 KB |
+| `C:\MMI\mmi\project_brain\lanes\m4_research_packet_v2_2026-07-03.zip` | ~790 KB |
 | `%TEMP%\m4_research_packet_v2_2026-07-03.zip` | same copy |
 
 **212 files** — includes full `mmi/project_brain/status/`, `tasks.json`, Evolution Matrix M4, Weapon Matrix §6, M4/canary/host-boundary/48h/genomic corpus, harnesses + tests.
@@ -22,7 +22,7 @@
 ## Rebuild command
 
 ```bash
-python C:\Architectapp_clean\mmi\project_brain\lanes\build_m4_research_packet_v2.py
+python C:\MMI\mmi\project_brain\lanes\build_m4_research_packet_v2.py
 ```
 
 ---
@@ -35,7 +35,7 @@ TASK: mmi-m4-evolution-gate-research-v2
 LANE: Research revision only
 
 Attached: m4_research_packet_v2_2026-07-03.zip (ACTUAL ZIP FILE — not a terminal listing)
-Authority repo: C:\Architectapp_clean
+Authority repo: C:\MMI
 
 Read directly from ZIP:
 1. mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_2026-07.md

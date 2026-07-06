@@ -14,7 +14,7 @@ PROJECT: MMI
 TASK ID: mmi-console-server-step4-package
 REVIEW TYPE: POST-BUILD DIFF REVIEW
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPECS:
   mmi/project_brain/architecture/MMI_PROOF_GATE_CONSOLE_BINDINGS_SPEC_2026-07.md (r1)

@@ -23,7 +23,7 @@ Seeded tasks default to `build_authorization: NOT_AUTHORIZED` — seeding is not
 ## Commands
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 
 # After any task completion — auto-seeds next pipeline task
 python scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/output

@@ -1,6 +1,6 @@
 """
 HANDSHAKE TEST - Step 1 of Immediate Directives
-Run this from Architectapp_clean:
+Run this from MMI:
     python tests/test_handshake.py
 """
 

@@ -64,7 +64,7 @@
 
 ## Cursor r2.1 grounding pass (2026-07-03)
 
-Repo read on `C:\Architectapp_clean`:
+Repo read on `C:\MMI`:
 
 - **`M3_MIN_SLOTS`:** 5 named slots + `M3_MIN_STACK` (`mesh-smash`, `purple-evasion`, `action-integrity`) from implemented provisioner mesh model (70 baseline + 40 air-lock wakes; not full 700-slot mesh).
 - **Research §6:** §14.1 traceability table added; **T13** + `M4_BUDGET_DEPLETION_REQUIRED` closes research T4 (budget not depleted at 48h).

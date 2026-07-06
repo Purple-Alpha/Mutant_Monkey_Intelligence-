@@ -10,9 +10,9 @@ Status: **LOCKED** — all agents must read this before repo file lookups
 
 | Environment | Path |
 |-------------|------|
-| **Windows** | `C:\Architectapp_clean` |
-| **WSL** | `/mnt/c/Architectapp_clean` |
-| **Windows (UNC)** | `\\wsl.localhost\Ubuntu\mnt\c\Architectapp_clean` |
+| **Windows** | `C:\MMI` |
+| **WSL** | `/mnt/c/MMI` |
+| **Windows (UNC)** | `\\wsl.localhost\Ubuntu\mnt\c\MMI` |
 
 ---
 
@@ -24,7 +24,7 @@ Status: **LOCKED** — all agents must read this before repo file lookups
 | `3. Mutant_Monkey_Intelligence_Engine\...` | **Not the repo** — product nickname only; not a filesystem root |
 | `\\wsl.localhost\Ubuntu\home\socialarchitect\northstar` | NorthStar — wrong |
 
-**"Mutant Monkey"** is legacy branding in one doc header — it is **not** a folder you open. MMI code and project brain live under **`Architectapp_clean/mmi/`**.
+**"Mutant Monkey"** is legacy branding in one doc header — it is **not** a folder you open. MMI code and project brain live under **`MMI/mmi/`**.
 
 ---
 
@@ -43,7 +43,7 @@ mmi/command_center.py
 
 ## If MCP / Claude cannot see files
 
-1. Open **`C:\Architectapp_clean`** as the connected workspace folder in Cursor/Claude — not Mutant Monkey, not NorthStar.
+1. Open **`C:\MMI`** as the connected workspace folder in Cursor/Claude — not Mutant Monkey, not NorthStar.
 2. Or: Matt pastes file contents into the chat — PM lane provides paste blocks.
 3. Do **not** invent alternate directory trees.
 

@@ -36,7 +36,7 @@ A successful purple test **may produce failure**. That is valid.
 | Rule | Meaning |
 |------|---------|
 | **Chaos lab only** | Isolated clone of authority repo — max damage allowed here |
-| **Authority repo read-only** | Live `/mnt/c/Architectapp_clean` brain not the primary attack surface |
+| **Authority repo read-only** | Live `/mnt/c/MMI` brain not the primary attack surface |
 | **No B2 mutation** | Cold mirror not corrupted during purple runs |
 | **Evidence preserved** | Attack artifacts logged for mirror sandbox / human-reviewed patches |
 | **Matt owns go/no-go** | Purple run authorization separate from build auth |

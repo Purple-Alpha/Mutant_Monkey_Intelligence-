@@ -16,7 +16,7 @@ Deliver one bounded design spec. No implementation. No scope expansion.
 </system_role>
 
 <production_inventory>
-Repo: /mnt/c/Architectapp_clean
+Repo: /mnt/c/MMI
 Phase 1 weapon stack: PASS (tiers [4,4,4] — do not re-litigate).
 
 Existing depth layers (match these patterns):

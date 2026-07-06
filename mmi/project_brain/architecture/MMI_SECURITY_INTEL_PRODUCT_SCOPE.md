@@ -73,7 +73,7 @@ Core MMI **continues** on current pipeline. Security intel **extends** via separ
 
 ## Hard stops
 
-- MMI repo only (`Architectapp_clean`)  
+- MMI repo only (`MMI`)  
 - No NorthStar sync without Matt auth  
 - No npm / `web/` / `ops/run.py`  
 - Unsourced stats marked **NEEDS VERIFY** until Evaluator clears  

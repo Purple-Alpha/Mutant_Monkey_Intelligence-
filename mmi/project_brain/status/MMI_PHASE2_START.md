@@ -61,7 +61,7 @@ SCORE: 88
 GOES TO: Codex (Backbone / runtime support)
 ```
 
-Commands run from `C:\Architectapp_clean`:
+Commands run from `C:\MMI`:
 
 ```powershell
 python scripts/reload_mmi_pipes.py
@@ -84,4 +84,4 @@ python scripts/next_task.py
 
 ## Repo Note
 
-MMI Phase-2 queue and project brain live in **`C:\Architectapp_clean`**, not in `/home/socialarchitect/northstar`. Open this repo in Cursor for MMI PM work.
+MMI Phase-2 queue and project brain live in **`C:\MMI`**, not in `/home/socialarchitect/northstar`. Open this repo in Cursor for MMI PM work.

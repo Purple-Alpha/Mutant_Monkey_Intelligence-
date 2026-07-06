@@ -36,7 +36,7 @@ Result: `41519` bytes transferred, file visible on B2.
 One command — local archive + checksum push + verify + log:
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python scripts/mmi_cold_backup.py --backup-and-push
 ```
 

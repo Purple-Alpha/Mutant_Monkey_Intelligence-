@@ -14,7 +14,7 @@ PROJECT: MMI
 TASK ID: mmi-client-email-lanes
 REVIEW TYPE: PRE-BUILD PLAN REVIEW (R2 — post spec r2)
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC:
   mmi/project_brain/architecture/MMI_CLIENT_EMAIL_LANES_SPEC_2026-07.md (r2)

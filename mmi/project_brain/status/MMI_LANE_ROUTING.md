@@ -37,7 +37,7 @@ Cursor PM **always**:
 - Completes PM-owned tasks (scope, queue, routing docs)
 - Updates `tasks.json` on completion with `completed_at`, `completed_by`, `result_summary`, `output_files`
 - Seeds the next bounded MMI pending task or runs `keep_task_queue_warm.py`
-- Keeps work inside `/mnt/c/Architectapp_clean/mmi` unless a task explicitly requires deployer files
+- Keeps work inside `/mnt/c/MMI/mmi` unless a task explicitly requires deployer files
 
 Cursor PM **does not** (unless Matt explicitly assigns that lane for a specific task):
 

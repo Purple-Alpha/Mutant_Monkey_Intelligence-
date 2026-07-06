@@ -16,7 +16,7 @@
       "exit_code": 0
     },
     "harness": {
-      "command": "python scripts/email_lanes_harness.py --authority C:/Architectapp_clean",
+      "command": "python scripts/email_lanes_harness.py --authority C:/MMI",
       "suite": "email_lanes_v1",
       "overall_gate_status": "CLEAN",
       "scenarios": {

@@ -2,7 +2,7 @@
 
 Date: 2026-06-29  
 Authority: Matt (Super)  
-Repo: `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`
+Repo: `C:\MMI` / `/mnt/c/MMI`
 
 ---
 
@@ -21,8 +21,8 @@ No cloud war room. No NorthStar. Local state only.
 
 ### Monitor 1 — Editor
 
-- Open folder: `C:\Architectapp_clean`
-- Terminal (WSL): `/mnt/c/Architectapp_clean`
+- Open folder: `C:\MMI`
+- Terminal (WSL): `/mnt/c/MMI`
 - This is where you edit, run scripts, commit
 
 ### Monitor 2 — Agents war room
@@ -38,7 +38,7 @@ No cloud war room. No NorthStar. Local state only.
 On monitor 2 terminal (or a split pane):
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python mmi/war_room.py --watch --seconds 30
 ```
 
@@ -59,7 +59,7 @@ Paste once per new tab:
 **Cursor PM tab**
 
 ```text
-MMI PM lane only. Repo: /mnt/c/Architectapp_clean.
+MMI PM lane only. Repo: /mnt/c/MMI.
 Read mmi/project_brain/status/MMI_ACTIVE_SCOPE.md and war room output.
 Queue/routing only. No Social Architect, DAX, Trades, NorthStar.
 ```
@@ -67,7 +67,7 @@ Queue/routing only. No Social Architect, DAX, Trades, NorthStar.
 **Codex tab**
 
 ```text
-MMI Backbone only. Repo: /mnt/c/Architectapp_clean.
+MMI Backbone only. Repo: /mnt/c/MMI.
 Read CODEX.md first. Run complete_task.py after every task.
 No npm, web/, ops/run.py.
 ```

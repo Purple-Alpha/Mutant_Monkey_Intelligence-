@@ -1,6 +1,6 @@
 # Install/load MMI WFP default-deny engine (Phase 4E) — Administrator required.
 param(
-    [string]$AuthorityRoot = "C:\Architectapp_clean",
+    [string]$AuthorityRoot = "C:\MMI",
     [string]$EvidenceRoot = "C:\mmi_m4_evidence\boundary",
     [string]$ProbeAccount = "MmiWfpProbe",
     [string]$ProbePassword = $env:MMI_WFP_PROBE_PASSWORD,

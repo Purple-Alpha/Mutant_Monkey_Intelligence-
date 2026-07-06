@@ -47,7 +47,7 @@ def test_inv1_fails_multiline_indirect_authority_write(tmp_path: Path):
         "\n".join(
             [
                 "from pathlib import Path",
-                'AUTHORITY_ROOT = Path("C:/Architectapp_clean")',
+                'AUTHORITY_ROOT = Path("C:/MMI")',
                 "target = AUTHORITY_ROOT",
                 'target.write_text("x")',
             ]
@@ -69,7 +69,7 @@ def test_inv1_fails_module_scope_indirect_write_via_alias(tmp_path: Path):
         "\n".join(
             [
                 "from pathlib import Path",
-                'ROOT = Path("C:/Architectapp_clean")',
+                'ROOT = Path("C:/MMI")',
                 "",
                 "def touch_authority():",
                 "    handle = ROOT",

@@ -35,7 +35,7 @@ Design lane only — deliver one bounded markdown spec. No implementation. No sc
 </system_role>
 
 <current_state_inventory>
-Repo root: /mnt/c/Architectapp_clean
+Repo root: /mnt/c/MMI
 
 MASTER HANDOFF (authoritative architecture direction — implement as spec, do not dilute):
   mmi/project_brain/lanes/MMI_EMAIL_DRAFTING_RESPONSE_CONTAINMENT_HANDOFF_2026-07-03.md

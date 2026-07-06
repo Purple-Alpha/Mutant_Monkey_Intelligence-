@@ -2,7 +2,7 @@
 
 **Project:** MMI / Architectapp  
 **Lane:** Phase 4 evidence plan — binds 4D minifilter + 4G integration (not 4A)  
-**Authority repo:** `C:\Architectapp_clean`  
+**Authority repo:** `C:\MMI`  
 **Related phase:** M4 §17 Phase 4 — host boundary / TCB  
 **Related risk:** R-031  
 **Current posture:** Phase 4 BUILD AUTHORIZED — fixtures execute at **4D/4G**  
@@ -58,7 +58,7 @@ Phase 4 R-031 must account for:
 
 | Surface | Required treatment |
 | --- | --- |
-| Authority root | Deny mutation of `C:\Architectapp_clean` and protected descendants |
+| Authority root | Deny mutation of `C:\MMI` and protected descendants |
 | `.git` internals | Deny config, refs, objects, hooks, index mutation |
 | Alternate paths | Deny short-name, case-variant, symlink, junction, mount-point, and resolved-target aliases |
 | ADS / streams | Deny or fingerprint alternate data streams and behavior-relevant metadata |
@@ -111,7 +111,7 @@ BYPASSIO_SUPPORTED_BUT_PROVEN_NOT_APPLICABLE_TO_WRITE_DENY_CLAIM
 Required query:
 
 ```text
-fsutil bypassIo state /v C:\Architectapp_clean
+fsutil bypassIo state /v C:\MMI
 ```
 
 If the minifilter is present, Phase 4 should also record whether the filter advertises BypassIO support/veto behavior through the relevant filter-driver metadata and `fltmc` visibility, where available.
@@ -125,7 +125,7 @@ If the minifilter is present, Phase 4 should also record whether the filter adve
 Attempt from chaos/clone side:
 
 ```text
-clone → /mnt/c/Architectapp_clean/P4_R031_probe.txt
+clone → /mnt/c/MMI/P4_R031_probe.txt
 ```
 
 Expected:
@@ -143,7 +143,7 @@ residual risk updated
 Attempt:
 
 ```text
-clone → /mnt/c/Architectapp_clean/.git/config
+clone → /mnt/c/MMI/.git/config
 ```
 
 Expected: DENY; `.git/config` unchanged; H0 == H1; event recorded.
@@ -153,7 +153,7 @@ Expected: DENY; `.git/config` unchanged; H0 == H1; event recorded.
 Attempt:
 
 ```text
-clone → /mnt/c/Architectapp_clean/.git/hooks/pre-commit
+clone → /mnt/c/MMI/.git/hooks/pre-commit
 ```
 
 Expected: DENY; hook absent or unchanged; H0 == H1; event recorded.
@@ -180,7 +180,7 @@ Expected: DENY; resolved target recognized as protected; H0 == H1; event recorde
 
 ### P4-R031-F7 — Alternate data stream attempt
 
-Attempt: `C:\Architectapp_clean\README.md:evil`, `C:\Architectapp_clean\.git\config:evil`
+Attempt: `C:\MMI\README.md:evil`, `C:\MMI\.git\config:evil`
 
 Expected: DENY or detected as protected stream mutation; H0 == H1 under stream-aware fingerprint policy; event recorded.
 
@@ -194,7 +194,7 @@ Expected: DENY; H0 == H1; event recorded.
 
 ### P4-R031-F9 — BypassIO query/veto/non-applicability evidence
 
-Run: `fsutil bypassIo state /v C:\Architectapp_clean`
+Run: `fsutil bypassIo state /v C:\MMI`
 
 Expected evidence must record one of the allowed BypassIO states (§4). Event evidence must record `BYPASSIO_STATE_AT_DECISION` where applicable. `UNKNOWN` is residual only, not closure.
 

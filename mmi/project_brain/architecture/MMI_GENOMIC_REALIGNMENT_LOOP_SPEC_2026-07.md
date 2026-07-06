@@ -40,7 +40,7 @@ The genomic realignment loop is the **governed self-healing orchestrator** for A
 | `PROOF_GATE_TIMEOUT_MS` | `1800000` | Max wait on proof_gate harness (30 min). |
 | `PROOF_SUMMARY_MAX_AGE_MS` | `900000` | Max age (15 min) of the proof_gate summary at bundle-build time (freshness — V14 class). |
 | `ALLOWED_CONSTRAINT_TYPES` | `{"rate_limit","action_deny","schema_tighten","route_isolate","param_clamp"}` | Closed enum of behavioral-constraint kinds. No other type validates. |
-| `AUTHORITY_REPO` | `/mnt/c/Architectapp_clean` | Read-only to the loop, always. |
+| `AUTHORITY_REPO` | `/mnt/c/MMI` | Read-only to the loop, always. |
 
 All timestamps are integer epoch milliseconds. All thresholds are named constants — there are no learned or probabilistic decision points anywhere in the loop.
 
@@ -58,7 +58,7 @@ All timestamps are integer epoch milliseconds. All thresholds are named constant
 | `scripts/console_server.py` + `chaos/console_evidence_gate.py` (step 4) | **Sign-off authority.** Loop calls `POST /validate`; a VALID verdict is the loop's success terminal. | Loop terminates at VALID (bundle staged) OR at the operator ACCEPTED record. Loop holds no operator key, performs no sign, cannot self-approve. Staging a bundle is NOT authorization to promote (H16). |
 | `chaos/mmi_control_envelope.py` (step 3) | **Per-tick governor.** Loop calls `pre_iteration_gate()` before every state transition that consumes budget. | Ordering latch → heartbeat/halt → budget honored. Loop CANNOT advance `ack_seq`, clear HALT/SUSPEND, raise caps, or write the ledger. On HALT/SUSPEND the episode goes terminal `HALTED` immediately (H11). |
 | `chaos/console_ack_adapter.py` (step 4) | **Human presence source.** | Resume/ack come only from signed `SIGN_ACK`/`SIGN_RESUME` records via the adapter. Loop never synthesizes presence. |
-| Authority repo (`/mnt/c/Architectapp_clean`) | Read-only. | Loop opens repo paths read-only; all writes path-prefix-checked against `EPISODE_ROOT`/`PATCH_CONTEXT_ROOT` (H9). No apply, no promote, ever (§9). |
+| Authority repo (`/mnt/c/MMI`) | Read-only. | Loop opens repo paths read-only; all writes path-prefix-checked against `EPISODE_ROOT`/`PATCH_CONTEXT_ROOT` (H9). No apply, no promote, ever (§9). |
 
 **Why `ops/` not `scripts/`:** `scripts/` in this repo holds operator-invoked, single-purpose tools (harnesses, clients, provisioners). The realignment loop is an *orchestration surface* that composes multiple governed subsystems and carries episode lifecycle state — it belongs with operational orchestrators, not one-shot scripts. Placing it in `ops/` also creates a bright line for future review policy: everything under `ops/` composes authority-bearing gates and gets stricter change control than `scripts/`.² The AGI pathway names the `ops/` path; this justifies it rather than re-litigating.
 

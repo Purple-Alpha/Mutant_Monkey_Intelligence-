@@ -2,7 +2,7 @@
 
 **Date:** 2026-07-05 (rev c — ALE-only live-proof correction)  
 **Lane:** Cursor build plan → **Codex BUILDABLE gate** (hard stop before implementation)  
-**Checkout:** `C:\Architectapp_clean` (build lane — **this file must exist here for Codex review**)  
+**Checkout:** `C:\MMI` (build lane — **this file must exist here for Codex review**)  
 **Prerequisites:** `4D_b_kernel_minifilter_live_verify_pc1` PASS filed; PM pipe extend  
 **Parent plan BUILDABLE:** `CODEX_HANDOFF_M4_EVOLUTION_GATE_PLAN_REVIEW_PHASE4_2026-07-04.md` (2026-07-04) — does **not** auto-validate this 4E sub-plan  
 **Spec anchors:** `MMI_M4_EVOLUTION_GATE_SPEC_2026-07.md` §8, §14 T7, lines ~323, ~613  
@@ -283,7 +283,7 @@ Unchanged — R-001/R-002 scoped REDUCED only; R-008/R-030/R-031 OPEN constraint
 
 | Blocker | Resolution |
 |---------|------------|
-| P4E-B1 | Handoff present in Architectapp_clean checkout |
+| P4E-B1 | Handoff present in MMI checkout |
 | P4E-B2 | §4 defines `m4_wfp_suite` contract |
 | P4E-B3 | Cross-repo filing note + audit mirror |
 | **P4E-B4** | §4.4: `min_viable_live_t7` requires `live_telemetry_ok`; PASS logic explicit |

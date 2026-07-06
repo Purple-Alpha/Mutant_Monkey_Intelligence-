@@ -63,7 +63,7 @@ Tar spot-check and full isolated `--restore-check` both passed for `163709`. Arc
 SCRATCH=/tmp/mmi_restore_validate_163709
 rm -rf "$SCRATCH" && mkdir -p "$SCRATCH"
 tar -xzf /tmp/mmi_backup_20260630_163709.tar.gz -C "$SCRATCH"
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python3 scripts/mmi_cold_backup.py --restore-check "$SCRATCH"
 rm -rf "$SCRATCH"
 ```

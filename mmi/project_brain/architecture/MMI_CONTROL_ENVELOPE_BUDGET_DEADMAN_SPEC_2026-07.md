@@ -265,7 +265,7 @@ Halt/suspend evidence bundle under `EVIDENCE_ROOT`:
 ```
 
 All four paths are canonicalized and asserted **outside the authority repo** before any write;
-a target resolving inside `/mnt/c/Architectapp_clean`, or reachable via symlink into it, is a
+a target resolving inside `/mnt/c/MMI`, or reachable via symlink into it, is a
 fail-closed abort, not a warning. [^4]
 
 ---
@@ -381,7 +381,7 @@ promotion to PASS: (1) a root-level attacker who rewrites *all* state files cons
 the seal — this is explicitly delegated to the host-boundary daemon (non-goal) and the ack
 file-permission prerequisite [^2]; the layer detects naive tampering, not a full consistent
 forge. (2) Backward-compatibility of `enforce_boundary` and `metadata_ingress_gate.py` call
-sites is asserted from the inventory snapshot — `/mnt/c/Architectapp_clean` is not mounted this
+sites is asserted from the inventory snapshot — `/mnt/c/MMI` is not mounted this
 session, so it is unverified against source. Cap figures remain proposals pending Matt's
 economic sign-off. Promote to PASS after source-verifying v0 and confirming the
 permission/host-boundary prerequisites are deployed.
@@ -390,7 +390,7 @@ permission/host-boundary prerequisites are deployed.
 
 ## Cursor PM source verification (2026-07-03)
 
-**Residual (2) — v0 backward-compat:** VERIFIED against `C:\Architectapp_clean`.
+**Residual (2) — v0 backward-compat:** VERIFIED against `C:\MMI`.
 
 | Check | Result |
 |-------|--------|

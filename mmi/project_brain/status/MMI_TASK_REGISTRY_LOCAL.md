@@ -9,7 +9,7 @@ References: `tasks.json`, `scripts/keep_task_queue_warm.py`, `scripts/next_task.
 
 ## Purpose
 
-This document defines how local MMI tasks are created, prioritized, assigned, completed, and seeded in the deployer queue at `/mnt/c/Architectapp_clean/tasks.json`.
+This document defines how local MMI tasks are created, prioritized, assigned, completed, and seeded in the deployer queue at `/mnt/c/MMI/tasks.json`.
 
 ---
 

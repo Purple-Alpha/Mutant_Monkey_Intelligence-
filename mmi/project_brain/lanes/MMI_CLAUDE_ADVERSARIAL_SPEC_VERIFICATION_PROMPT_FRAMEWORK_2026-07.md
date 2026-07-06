@@ -125,7 +125,7 @@ User Role: Principal Red-Team Auditor & Isolation Security Engineer
 TASK:
 Conduct a rigorous, zero-trust audit of the M4 Evolution Gate engineering specifications you generated in the previous step. You must actively search for architectural vulnerabilities, escape vectors, logic flaws, or metadata leaks that would compromise the isolation guarantees of the 48-hour chaos clone runner AND all upstream staged gates (C-M4, C2, C3, C4).
 
-AUTHORITY REPO: C:\Architectapp_clean
+AUTHORITY REPO: C:\MMI
 FORBIDDEN PATH CITATIONS: /home/socialarchitect/northstar (unless explicitly marked invalid)
 
 INPUT ARCHITECTURE TO AUDIT:
@@ -136,7 +136,7 @@ CRITICAL SECURITY QUESTIONS TO ANSWER (No fluff, high density):
 1. ISOLATION & FILTRATION LEAKS
 Inspect the Host Boundary WFP/Go daemon specification. Is there any race condition,
 unhandled sub-process escape, symlink manipulation, or DrvFs fallback vector where a
-compromised chaos clone could read or touch the authority repo (C:\Architectapp_clean)?
+compromised chaos clone could read or touch the authority repo (C:\MMI)?
 Identify the exact section or logic block that could fail under extreme pressure.
 
 2. TELEMETRY & SIDE-CHANNEL OVERFLOWS

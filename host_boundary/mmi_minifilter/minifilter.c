@@ -6,7 +6,7 @@
 
 #define MMI_TAG 'miMM'
 #define MMI_FILTER_PORT_NAME L"\\MmiBoundaryFilterPort"
-#define MMI_DEFAULT_AUTHORITY L"\\Architectapp_clean"
+#define MMI_DEFAULT_AUTHORITY L"\\MMI"
 
 PFLT_FILTER gFilterHandle = NULL;
 UNICODE_STRING gAuthorityRoot = {0};

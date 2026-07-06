@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-DEFAULT_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+DEFAULT_AUTHORITY = Path("/mnt/c/MMI")
 DEFAULT_STATE_ROOT = Path("/tmp/mmi_control_envelope")
 
 

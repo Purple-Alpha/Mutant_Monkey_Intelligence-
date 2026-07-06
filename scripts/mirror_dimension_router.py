@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 
 DEFAULT_LAB_ROOT = Path("/tmp/mmi_chaos_lab")
-DEFAULT_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+DEFAULT_AUTHORITY = Path("/mnt/c/MMI")
 CHAOS_DIR = DEFAULT_AUTHORITY / "mmi/project_brain/chaos"
 
 if CHAOS_DIR.exists() and str(CHAOS_DIR) not in sys.path:

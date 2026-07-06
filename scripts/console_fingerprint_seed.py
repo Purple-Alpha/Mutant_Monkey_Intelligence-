@@ -9,7 +9,7 @@ import json
 import sys
 from pathlib import Path
 
-DEFAULT_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+DEFAULT_AUTHORITY = Path("/mnt/c/MMI")
 
 
 def _ensure_imports(authority: Path) -> None:

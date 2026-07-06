@@ -9,7 +9,7 @@ Sources: local `mmi/project_brain/` status files and Matt directives only
 
 ## What MMI Is (locally known)
 
-**MMI is the sole active project.** All current work, task queue entries, and agent routing are scoped to MMI only inside `/mnt/c/Architectapp_clean/mmi`.
+**MMI is the sole active project.** All current work, task queue entries, and agent routing are scoped to MMI only inside `/mnt/c/MMI/mmi`.
 
 **NEEDS MATT:** Product definition — what MMI builds, for whom, and the long-term outcome. This brief does not infer product scope from NorthStar or other repos.
 
@@ -62,7 +62,7 @@ Keep MMI work **bounded, routed, and queue-driven**:
 
 ## In Scope (current)
 
-- MMI project-brain docs under `/mnt/c/Architectapp_clean/mmi`
+- MMI project-brain docs under `/mnt/c/MMI/mmi`
 - Deployer queue files (`tasks.json`, `scripts/next_task.py`, `keep_task_queue_warm.py`) when a task requires it
 - Bounded PM tasks: scope, routing, registry, status reports
 - Routing backbone/design/research/audit work to the correct lane via Matt

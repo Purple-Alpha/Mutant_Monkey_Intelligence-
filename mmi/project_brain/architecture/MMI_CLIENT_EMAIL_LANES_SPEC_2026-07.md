@@ -64,7 +64,7 @@ Promotion is **one-directional and provenance-gated**: nothing rises a tier with
 | `GLOBAL_HALT_TENANT_COUNT` | `2` | ≥ this many tenants at CRITICAL within global window → GLOBAL_EMERGENCY_HALT (§6.3). |
 | `GLOBAL_HALT_WINDOW_MS` | `900000` | 15-min window for `GLOBAL_HALT_TENANT_COUNT` (§6.3). |
 | `CONTROL_PLANE_COMPROMISE_SIGNALS` | `{signing_key_verify_fail, gate_state_unsigned_mutation, manifest_forgery_detected, audit_chain_break}` | Closed enum; ANY one → immediate GLOBAL_EMERGENCY_HALT (§6.3). |
-| `AUTHORITY_REPO` | `/mnt/c/Architectapp_clean` | Read-only to the lanes. |
+| `AUTHORITY_REPO` | `/mnt/c/MMI` | Read-only to the lanes. |
 
 All timestamps are integer epoch milliseconds. Every decision threshold is a named code constant — no learned, probabilistic, or fuzzy-match gate exists anywhere (H7).
 

@@ -1,9 +1,9 @@
 # MMI Security Intel — MVP Architecture
 
-Project: MMI (Architectapp_clean)  
+Project: MMI  
 Lane: Design  
 Status: Draft — design spec, not runtime  
-Repo root: `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`  
+Repo root: `C:\MMI` / `/mnt/c/MMI`  
 Deliverable path: `mmi/project_brain/architecture/MMI_SECURITY_INTEL_MVP_ARCHITECTURE.md`
 
 ## Purpose

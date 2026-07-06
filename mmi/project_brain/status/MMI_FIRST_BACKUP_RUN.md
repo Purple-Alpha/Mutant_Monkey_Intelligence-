@@ -10,7 +10,7 @@ Task: `mmi-first-backup-run`
 ## Command
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python scripts/mmi_cold_backup.py --manifest
 ```
 
@@ -23,7 +23,7 @@ Manifest saved to: `mmi/project_brain/status/MMI_BACKUP_MANIFEST.json`
 | Field | Value |
 |-------|-------|
 | Mode | `manifest` |
-| Source root | `C:/Architectapp_clean` |
+| Source root | `C:/MMI` |
 | Files in backup set | **31** |
 | Cloud upload | **None** |
 | `tasks.json` mutated | **No** |

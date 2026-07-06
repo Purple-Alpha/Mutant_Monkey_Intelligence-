@@ -14,7 +14,7 @@ PROJECT: MMI
 TASK ID: mmi-genomic-realignment-loop
 REVIEW TYPE: PRE-BUILD PLAN REVIEW (R2 — post prereqs)
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC:
   mmi/project_brain/architecture/MMI_GENOMIC_REALIGNMENT_LOOP_SPEC_2026-07.md (r2)

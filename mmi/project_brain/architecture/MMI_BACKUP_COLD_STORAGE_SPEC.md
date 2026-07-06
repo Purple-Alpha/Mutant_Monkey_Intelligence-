@@ -23,7 +23,7 @@ Source: `mmi/project_brain/architecture/MMI_LOCAL_CLOUD_POLICY.md`
 
 | Decision | Rule |
 |---|---|
-| Source of truth | Local files in `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean` |
+| Source of truth | Local files in `C:\MMI` / `/mnt/c/MMI` |
 | Queue state | Local `tasks.json` only |
 | Project brain | Local `mmi/project_brain/` only |
 | Cloud role | Cold mirror only |
@@ -126,7 +126,7 @@ Suggested shape:
 ```json
 {
   "created_at": "2026-06-28T18:32:59-07:00",
-  "source_root": "/mnt/c/Architectapp_clean",
+  "source_root": "/mnt/c/MMI",
   "mode": "dry-run",
   "files": [
     {
@@ -193,7 +193,7 @@ The first implementation should be local and conservative.
 python3 scripts/mmi_cold_backup.py --dry-run
 python3 scripts/mmi_cold_backup.py --manifest
 python3 scripts/mmi_cold_backup.py --archive /tmp/mmi_backup.tar.gz
-python3 scripts/mmi_cold_backup.py --restore-check /path/to/restored/Architectapp_clean
+python3 scripts/mmi_cold_backup.py --restore-check /path/to/restored/MMI
 ```
 
 ### Responsibilities
@@ -230,7 +230,7 @@ Cloud push/sync, if ever added, must be a separate Matt-authorized task.
 Run from repo root:
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python3 mmi/command_center.py
 python3 -m json.tool tasks.json >/tmp/tasks_json_check.out
 ```

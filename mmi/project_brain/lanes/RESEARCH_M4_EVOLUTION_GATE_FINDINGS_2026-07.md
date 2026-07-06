@@ -3,7 +3,7 @@
 **Status:** RESEARCH FINDINGS v2.1 — grounded + adversarial revision  
 **Task:** `mmi-m4-evolution-gate-research-v2`  
 **Lane:** Research revision only — **NOT spec, NOT build, NOT gate closure**  
-**Authority repo:** `C:\Architectapp_clean`  
+**Authority repo:** `C:\MMI`  
 **Grounding method:** Direct source read in Cursor (authority repo). Adversarial read incorporated 2026-07-03 (Matt).  
 **Output path:** `mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_FINDINGS_2026-07.md`
 
@@ -231,7 +231,7 @@ PATH shadowing; symlink/junction substitution; ADS; timestamp manipulation
 submodule URL poisoning; credential-helper tampering
 ```
 
-Attacker need not write `C:\Architectapp_clean` directly — poison tools/paths/credentials around it.
+Attacker need not write `C:\MMI` directly — poison tools/paths/credentials around it.
 
 **Evidence tampering (M4-CANARY-006 missing-only is too narrow):**
 
@@ -265,7 +265,7 @@ benign-looking evidence artifacts; model-output steganography
 
 **Source:** `lanes/RESEARCH_host_boundary_wsl_windows_2026-06.md`; macro decision M4 blocker.
 
-**Finding:** Windows host + WSL DrvFs — Python-only orchestration **cannot** enforce kernel boundary. M4 PERFECT proof requires **Windows-native** subsystems (WFP, ACLs/minifilter on `C:\Architectapp_clean`).
+**Finding:** Windows host + WSL DrvFs — Python-only orchestration **cannot** enforce kernel boundary. M4 PERFECT proof requires **Windows-native** subsystems (WFP, ACLs/minifilter on `C:\MMI`).
 
 **v2.1 emphasis:** Running 48h assault **before** host boundary is built tests an **imaginary perimeter**. Host boundary daemon remains **OUTSTANDING** — must precede M4 endurance gates (C3/C4/M4), not follow them.
 

@@ -32,7 +32,7 @@ Design lane only — deliver one bounded markdown spec. No implementation. No sc
 </system_role>
 
 <current_state_inventory>
-Repo root: /mnt/c/Architectapp_clean
+Repo root: /mnt/c/MMI
 Phase 1 weapon stack: PASS (tiers [4,4,4] — do not re-litigate)
 Evolution gate: OUTSTANDING — 48h proof NOT built; cannot claim PERFECT or Phase 3
 
@@ -225,7 +225,7 @@ You just wrote MMI_GENOMIC_REALIGNMENT_LOOP_SPEC_2026-07.md.
 Adversarial self-review — assume a compromised loop OR hostile operator trying to:
 - Skip proof_gate_harness and present a patch directly to console validate
 - Self-report proof-of-fix / proof-of-no-regression without invoking purple_evasion_suite
-- Write patch_context or evidence inside /mnt/c/Architectapp_clean authority repo
+- Write patch_context or evidence inside /mnt/c/MMI authority repo
 - Append to console_fingerprint_ledger or forge rollback lineage (V15 class attack)
 - Auto-apply a patch without a consumed Ed25519 signoff record (H5 bypass)
 - Advance ack_seq, clear HALT/SUSPEND, or raise budget caps from loop code

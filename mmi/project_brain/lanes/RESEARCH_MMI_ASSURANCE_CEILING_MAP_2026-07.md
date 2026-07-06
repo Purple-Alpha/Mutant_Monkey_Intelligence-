@@ -3,7 +3,7 @@
 **Project:** MMI / Architectapp  
 **Lane:** Research only — no spec, no build, no gate closure  
 **Status:** RESEARCH-DRAFT CLEAN (2026-07-04)  
-**Authority repo:** `C:\Architectapp_clean`  
+**Authority repo:** `C:\MMI`  
 **Output path:** `mmi/project_brain/lanes/RESEARCH_MMI_ASSURANCE_CEILING_MAP_2026-07.md`  
 **Related active task:** `mmi-m4-evolution-gate`  
 **Related spec:** M4 r2.5  

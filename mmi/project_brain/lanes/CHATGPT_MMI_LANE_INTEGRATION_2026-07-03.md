@@ -57,7 +57,7 @@ Codex diff review → CLEAN → completion gate → Matt GATED
 # C:\Users\mattn\AppData\Local\Temp\m4_research_packet_targeted_2026-07-03.zip
 
 # Rebuild anytime:
-powershell -NoProfile -File C:\Architectapp_clean\mmi\project_brain\lanes\build_m4_research_packet.ps1
+powershell -NoProfile -File C:\MMI\mmi\project_brain\lanes\build_m4_research_packet.ps1
 ```
 
 Upload ZIP into ChatGPT chat → prompt with task id `mmi-m4-evolution-gate-research`.
@@ -68,7 +68,7 @@ Upload ZIP into ChatGPT chat → prompt with task id `mmi-m4-evolution-gate-rese
 
 Requirements:
 - Repo pushed to GitHub (private OK if ChatGPT authorized)
-- ChatGPT **Settings → Connectors → GitHub** enabled for `Architectapp_clean` (or org repo name)
+- ChatGPT **Settings → Connectors → GitHub** enabled for `MMI` (or org repo name)
 - Repo name must match what connector indexes — **not** `northstar` unless that is the actual GitHub repo name
 
 If connector cannot find repo: wrong name, wrong org, or token scope.
@@ -83,11 +83,11 @@ Use `RESEARCH_M4_EVOLUTION_GATE_RELAY_PORTABLE_2026-07-03.md` when ZIP upload fa
 
 | Path | Use |
 |------|-----|
-| `C:\Architectapp_clean` | Windows authority repo (Cursor) |
-| `/mnt/c/Architectapp_clean` | WSL view of same repo |
+| `C:\MMI` | Windows authority repo (Cursor) |
+| `/mnt/c/MMI` | WSL view of same repo |
 | `/home/socialarchitect/northstar` | **Different machine/path** — do not cite unless that tree is actually mounted |
 
-Always tell ChatGPT: **authority repo is Architectapp_clean**.
+Always tell ChatGPT: **authority repo is MMI**.
 
 ---
 
@@ -101,7 +101,7 @@ TASK: mmi-m4-evolution-gate-research-v2
 LANE: Research only — NOT spec, NOT build, NOT GATED
 
 Attached: mmi_m4_research_packet_v2_2026-07-03.zip (~791 KB, 212 files)
-Authority repo: C:\Architectapp_clean
+Authority repo: C:\MMI
 
 Read RESEARCH_M4_EVOLUTION_GATE_2026-07.md first.
 Deliver complete markdown: RESEARCH_M4_EVOLUTION_GATE_FINDINGS_2026-07.md

@@ -137,7 +137,7 @@ PROJECT: MMI
 TASK: mmi-m4-evolution-gate-research
 LANE: Research (ChatGPT + Gemini) — NOT build
 AUTHORITY: Matt authorized research 2026-07-03
-REPO: /mnt/c/Architectapp_clean
+REPO: /mnt/c/MMI
 
 READ FIRST:
   mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_2026-07.md

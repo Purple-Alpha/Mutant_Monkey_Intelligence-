@@ -1,6 +1,6 @@
 # Build M4 research packet v2 — attach actual ZIP to ChatGPT (not terminal listing).
 $ErrorActionPreference = "Stop"
-$repo = "C:\Architectapp_clean"
+$repo = "C:\MMI"
 $out = Join-Path $env:TEMP "m4_research_packet_v2"
 $zip = Join-Path $env:TEMP "m4_research_packet_v2_2026-07-03.zip"
 $zipRepo = Join-Path $repo "mmi\project_brain\lanes\m4_research_packet_v2_2026-07-03.zip"
@@ -97,7 +97,7 @@ $manifest = @(
     "# M4 Research Packet v2 Manifest",
     "",
     "**Built:** $(Get-Date -Format o)",
-    "**Authority repo:** C:\Architectapp_clean",
+    "**Authority repo:** C:\MMI",
     "**Task:** mmi-m4-evolution-gate-research-v2",
     "**Authorization:** RESEARCH PACKET V2 ONLY — no spec, no build, no gate closure",
     "",

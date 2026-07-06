@@ -16,7 +16,7 @@ PROJECT: MMI
 TASK ID: mmi-m4-evolution-gate
 REVIEW TYPE: POST-BUILD DIFF REVIEW (Phase 3)
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC PHASE: §17 Phase 3 — m4_sandbox_escape_suite.py (§7)
 

@@ -47,7 +47,7 @@
 python -m pytest tests/test_client_email_lanes.py -q
 # 13 passed (incl. other-fact unsigned injection falsifier)
 
-python scripts/email_lanes_harness.py --authority C:/Architectapp_clean
+python scripts/email_lanes_harness.py --authority C:/MMI
 # overall_gate_status: CLEAN
 # CONFIRMATION_CHAIN includes matching-forgery + other-fact-forgery rejects
 ```

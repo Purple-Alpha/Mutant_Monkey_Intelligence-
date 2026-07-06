@@ -90,7 +90,7 @@ An unrestored backup is an assumption, not a control (`MMI_SECURITY_INTEL_MVP_AR
 
 ## 5. B2 / rclone considerations
 
-- **Local-first:** source of truth remains `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`; B2 is cold mirror only.
+- **Local-first:** source of truth remains `C:\MMI` / `/mnt/c/MMI`; B2 is cold mirror only.
 - **Credentials:** `rclone.conf` is denylisted from backup archives — never expect credentials inside a restore bundle.
 - **Verification:** compare `archive_sha256` in push log to local archive before trusting remote copy.
 - **Destructive remote actions** (delete remote archive, reconfigure remote): Matt-only; log decision if done during incident response.

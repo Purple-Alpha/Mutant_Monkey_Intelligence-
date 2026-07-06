@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-DEFAULT_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+DEFAULT_AUTHORITY = Path("/mnt/c/MMI")
 DEFAULT_LAB_ROOT = Path("/tmp/mmi_chaos_lab")
 
 SMASH_FAULT_IDS = frozenset(

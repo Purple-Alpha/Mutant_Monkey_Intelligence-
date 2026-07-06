@@ -35,7 +35,7 @@ Implemented AGI §5 step 5 — CLI incident genomic loop (`LOOP_MODE=cli_inciden
 python -m pytest tests/test_genomic_realignment_loop.py tests/test_genomic_constraint_validator.py -q
 # 12 passed
 
-python scripts/genomic_realignment_loop_harness.py --authority C:/Architectapp_clean
+python scripts/genomic_realignment_loop_harness.py --authority C:/MMI
 # overall_gate_status: CLEAN — T1–T7 + H2,H4,H5,H6,H9,H11,H12,H13,H14,H15,H17,H18 all PASS
 # evidence: /tmp/mmi_genomic_loop/harness/genomic_loop_summary.json
 ```

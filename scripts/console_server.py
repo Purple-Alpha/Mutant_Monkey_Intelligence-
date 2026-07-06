@@ -14,7 +14,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-_WSL_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+_WSL_AUTHORITY = Path("/mnt/c/MMI")
 
 
 def _repo_root() -> Path:

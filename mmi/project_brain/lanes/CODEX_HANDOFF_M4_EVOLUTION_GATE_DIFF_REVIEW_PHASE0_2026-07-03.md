@@ -15,7 +15,7 @@ PROJECT: MMI
 TASK ID: mmi-m4-evolution-gate
 REVIEW TYPE: POST-BUILD DIFF REVIEW (Phase 0)
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC PHASE: §17 Phase 0 — m4_import_ban_test.py (H-L8-001), mmi/m4/ scaffold
 
@@ -75,7 +75,7 @@ PROJECT: MMI
 TASK ID: mmi-m4-evolution-gate
 REVIEW TYPE: POST-BUILD DIFF REVIEW (Phase 0) — RE-REVIEW
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 CONTEXT: Prior review NOT CLEAN (2 findings). Cursor fixed both. This is re-review only — not a new build phase.
 
@@ -125,7 +125,7 @@ OPTIONAL NOTE (out of Phase 0 scope): split-line indirection (MOD="..." then imp
 
 ```
 REVIEW TYPE: POST-BUILD DIFF REVIEW (Phase 0) — RE-REVIEW ROUND 2
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 FILES: mmi/m4/import_ban.py, mmi/m4/__init__.py, tests/test_m4_import_ban.py
 VERIFY: python scripts/m4_import_ban_test.py --json && pytest tests/test_m4_import_ban.py -q
 Must fail: LAYER="chaos.canary_metadata_layer"; importlib.import_module(LAYER)

@@ -242,7 +242,7 @@
       "tier": "Operator",
       "score": 70,
       "score_reason": "Highest live-risk gap — phish/decision-log human gate with no SEG/EDR on Mini PC; polymorphic brief drivers.",
-      "instruction": "PROJECT: MMI / Architectapp_clean. Close the highest-risk remaining human-gate OPSEC items without adding automation, endpoint agents, SOAR, EDR, or new product code. Scope: OPSEC-4 (phish link-hover discipline), OPSEC-5 (out-of-band confirm habit), OPSEC-9 (decision log habit). Required: update opsec/OPERATOR_OPSEC_CHECKLIST.md with evidence-ready completion criteria; add or update worksheet/log entries proving the operator routine; preserve advisory-only doctrine; reference intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md and intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md where applicable. Do not claim controls are enforced. Do not introduce automation. Output: updated OPSEC checklist and/or intel/drills/ worksheet files only. Closeout: PASS | PASS WITH REVISIONS | FAIL.",
+      "instruction": "PROJECT: MMI. Close the highest-risk remaining human-gate OPSEC items without adding automation, endpoint agents, SOAR, EDR, or new product code. Scope: OPSEC-4 (phish link-hover discipline), OPSEC-5 (out-of-band confirm habit), OPSEC-9 (decision log habit). Required: update opsec/OPERATOR_OPSEC_CHECKLIST.md with evidence-ready completion criteria; add or update worksheet/log entries proving the operator routine; preserve advisory-only doctrine; reference intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md and intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md where applicable. Do not claim controls are enforced. Do not introduce automation. Output: updated OPSEC checklist and/or intel/drills/ worksheet files only. Closeout: PASS | PASS WITH REVISIONS | FAIL.",
       "source": "Matt pipeline refresh 2026-06-30 — OPSEC human gate priority"
     },
     {
@@ -269,7 +269,7 @@
       "tier": "Resilience / Verification",
       "score": 90,
       "score_reason": "Level 2 interpretation-layer hardening before Level 3 — closeout verify, brief headline grep, latest-good archive stub.",
-      "instruction": "PROJECT: MMI / Architectapp_clean. Implement Level 2 chaos hardening H1-H3 only per mmi/project_brain/chaos/MMI_CHAOS_SANDBOX_V2_2026-07.md. H1: closeout output_files must exist before PASS. H2: grep/check for global/vendor stats in intel brief §1/headline/smb_relevance. H3: create mmi/project_brain/status/MMI_LATEST_GOOD_ARCHIVE.md stub with latest archive name, SHA256, date, remote path, restore-check ref, manifest notes. Read-only verification script OK. No Level 3, no live fault injection, no OPSEC-4/5/9 changes, no SOAR/EDR/swarm/malware. Output: hardening report + changed files + verification output + PASS/PASS WITH REVISIONS/FAIL.",
+      "instruction": "PROJECT: MMI. Implement Level 2 chaos hardening H1-H3 only per mmi/project_brain/chaos/MMI_CHAOS_SANDBOX_V2_2026-07.md. H1: closeout output_files must exist before PASS. H2: grep/check for global/vendor stats in intel brief §1/headline/smb_relevance. H3: create mmi/project_brain/status/MMI_LATEST_GOOD_ARCHIVE.md stub with latest archive name, SHA256, date, remote path, restore-check ref, manifest notes. Read-only verification script OK. No Level 3, no live fault injection, no OPSEC-4/5/9 changes, no SOAR/EDR/swarm/malware. Output: hardening report + changed files + verification output + PASS/PASS WITH REVISIONS/FAIL.",
       "source": "Matt authorization 2026-07-01 — post Level 2 B2 mirror"
     },
     {
@@ -278,7 +278,7 @@
       "tier": "Resilience / Verification",
       "score": 88,
       "score_reason": "Level 3 reversible fault injection planning only — rollback, abort rules, evidence requirements before any execution.",
-      "instruction": "PROJECT: MMI / Architectapp_clean. Create Level 3 reversible fault injection planning only. Do not execute Level 3 tests. Inputs: chaos tabletop v1, sandbox v2, hardening H1-H3, latest-good validation, H3 stub. Output: mmi/project_brain/chaos/MMI_CHAOS_LEVEL3_PLAN_2026-07.md. Define candidate reversible faults with live/copy target, path, pre-check, rollback, detection, evidence, abort, operator approval. Level 3 execution NOT authorized. Level 4 PROHIBITED. Preserve OPSEC-4/5/9 NOT_STARTED. Sign-off PASS | PASS WITH REVISIONS | FAIL.",
+      "instruction": "PROJECT: MMI. Create Level 3 reversible fault injection planning only. Do not execute Level 3 tests. Inputs: chaos tabletop v1, sandbox v2, hardening H1-H3, latest-good validation, H3 stub. Output: mmi/project_brain/chaos/MMI_CHAOS_LEVEL3_PLAN_2026-07.md. Define candidate reversible faults with live/copy target, path, pre-check, rollback, detection, evidence, abort, operator approval. Level 3 execution NOT authorized. Level 4 PROHIBITED. Preserve OPSEC-4/5/9 NOT_STARTED. Sign-off PASS | PASS WITH REVISIONS | FAIL.",
       "source": "Matt authorization 2026-07-01 — post restore validation PASS on 163709"
     },
     {
@@ -305,7 +305,7 @@
       "tier": "Architecture / Verification",
       "score": 92,
       "score_reason": "Pause L3-05+ to redesign detect-only checks into mandatory gates — good to great maturity jump.",
-      "instruction": "PROJECT: MMI / Architectapp_clean. Quality elevation redesign review only — no implementation. Pause forward chaos execution. Output: mmi/project_brain/architecture/MMI_QUALITY_ELEVATION_REDESIGN_2026-07.md with 12 required sections (current controls, gaps, redesign, mandatory gates, war room truth surface, closeout contract, OPSEC evidence-lock, intel claim integrity, latest-good promotion rules, chaos detect-to-block roadmap, priority rebuild list, prohibitions). Hard stops: no implementation, no L3 execution, no OPSEC/intel/B2 changes. Sign-off PASS WITH REVISIONS.",
+      "instruction": "PROJECT: MMI. Quality elevation redesign review only — no implementation. Pause forward chaos execution. Output: mmi/project_brain/architecture/MMI_QUALITY_ELEVATION_REDESIGN_2026-07.md with 12 required sections (current controls, gaps, redesign, mandatory gates, war room truth surface, closeout contract, OPSEC evidence-lock, intel claim integrity, latest-good promotion rules, chaos detect-to-block roadmap, priority rebuild list, prohibitions). Hard stops: no implementation, no L3 execution, no OPSEC/intel/B2 changes. Sign-off PASS WITH REVISIONS.",
       "source": "Matt authorization 2026-07-01 — post L3-04 mirror; pause before L3-05"
     },
     {

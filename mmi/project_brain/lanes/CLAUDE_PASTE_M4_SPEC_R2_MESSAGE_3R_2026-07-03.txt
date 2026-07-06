@@ -13,7 +13,7 @@ TASK:
 Zero-trust audit of the R2 superset MMI_M4_EVOLUTION_GATE_SPEC (MESSAGE 2R output).
 Scope: M4 final 48h runner AND upstream staged gates C-M4, C2, C3, C4 AND new §5/§6/§7 pre-endurance layers.
 
-AUTHORITY REPO: C:\Architectapp_clean
+AUTHORITY REPO: C:\MMI
 FORBIDDEN: /home/socialarchitect/northstar
 
 INPUT ARCHITECTURE TO AUDIT:

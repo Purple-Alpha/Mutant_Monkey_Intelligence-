@@ -30,7 +30,7 @@ Design lane only — deliver one bounded markdown spec. No implementation. No sc
 </system_role>
 
 <current_state_inventory>
-Repo root: /mnt/c/Architectapp_clean
+Repo root: /mnt/c/MMI
 Phase 1 weapon stack: PASS (tiers [4,4,4] — do not re-litigate)
 
 Built depth layers:

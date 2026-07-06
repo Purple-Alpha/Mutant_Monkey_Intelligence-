@@ -19,7 +19,7 @@
 
 # MMI Swarm Blueprint: Dynamic Instruction Set Randomization & Elastic Scaling
 
-This architectural blueprint integrates our **Custom Tokenized Language Engine** with the **Dynamic Elastic Scaling (70 $\rightarrow$ 700 Clones)** framework. This setup forms a closed-loop, self-defending orchestration environment within `/mnt/c/Architectapp_clean`.
+This architectural blueprint integrates our **Custom Tokenized Language Engine** with the **Dynamic Elastic Scaling (70 $\rightarrow$ 700 Clones)** framework. This setup forms a closed-loop, self-defending orchestration environment within `/mnt/c/MMI`.
 
 ---
 
@@ -120,7 +120,7 @@ Every MMI listener node processes incoming payloads strictly through this deseri
 The instant the `verify_and_route` step encounters an unaligned, plain-text injection command or an expired token window, it registers a **Respiration Fault**. The baseline architecture instantly clones itself via memory-fork operations to saturate the operating space:
 
 * **200 Telemetry Spies:** Automatically map to user-space APIs, tracking every attempt to call `NtWriteVirtualMemory` or run system manipulation tools.
-* **300 Containment Wrappers:** Inject inline blocks around the native Windows file handlers and WSL folder junctions (`/mnt/c/Architectapp_clean`), locking active configurations behind temporary immutable walls.
+* **300 Containment Wrappers:** Inject inline blocks around the native Windows file handlers and WSL folder junctions (`/mnt/c/MMI`), locking active configurations behind temporary immutable walls.
 * **200 Honeytoken Generators:** Create thousands of high-entropy directories in memory paths ahead of the rogue script, forcing any malicious file traversal to spin and consume execution resources.
 
 ---
@@ -139,7 +139,7 @@ $ python3 scripts/test_purple_respiration.py --inject-malformed
 [10:19:35] [CRIT]  Respiration Fault: Deserialization failed. Unknown language structure.
 [10:19:35] [ALERT] TRIGGERING HIGH-PRESSURE EXHALE CYCLE.
 [10:19:36] [INFO]  Forking processes... Swarm cloning operational. Count: 70 -> 700.
-[10:19:36] [INFO]  [Clone-014] Memory containment wrappers deployed around /Architectapp_clean.
+[10:19:36] [INFO]  [Clone-014] Memory containment wrappers deployed around /MMI.
 [10:19:37] [INFO]  [Clone-254] Outbound network interfaces isolated via local firewall rules.
 [10:19:38] [INFO]  [Clone-512] Generated 5,000 decoy system directories; injection thread exhausted.
 [10:19:42] [INFO]  Threat footprint completely contained. Neutralization verified.

@@ -39,7 +39,7 @@ Replace `{TASK_ID}`, `{FINDINGS_FILENAME}`, and paste the full findings body at 
 PROJECT: MMI
 TASK: {TASK_ID}-adversarial-review
 LANE: Research critique only — NOT spec, NOT build, NOT GATED
-AUTHORITY REPO: C:\Architectapp_clean
+AUTHORITY REPO: C:\MMI
 
 ROLE:
 Act as a cynical, top-tier Distributed Systems Architect and Red Team Auditor.
@@ -103,7 +103,7 @@ Use when reviewing `RESEARCH_M4_EVOLUTION_GATE_FINDINGS_2026-07.md` without rety
 PROJECT: MMI
 TASK: mmi-m4-evolution-gate-research-v2-adversarial-review
 LANE: Research critique only — NOT spec, NOT build, NOT GATED
-AUTHORITY REPO: C:\Architectapp_clean
+AUTHORITY REPO: C:\MMI
 
 ROLE:
 Act as a cynical, top-tier Distributed Systems Architect and Red Team Auditor.

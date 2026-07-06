@@ -49,7 +49,7 @@ Matt does **not** need to design architecture. Pick provider when ready; Cursor 
 ## Operator commands
 
 ```bash
-cd /mnt/c/Architectapp_clean
+cd /mnt/c/MMI
 python mmi/command_center.py          # auto-seeds if dry
 python scripts/reload_mmi_pipes.py    # same seed logic
 python scripts/keep_task_queue_warm.py --peek

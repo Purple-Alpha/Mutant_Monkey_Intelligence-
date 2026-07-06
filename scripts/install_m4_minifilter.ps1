@@ -1,6 +1,6 @@
 # Install/load MMI boundary minifilter (Phase 4D-b) — Administrator + test signing.
 param(
-    [string]$AuthorityRoot = "C:\Architectapp_clean",
+    [string]$AuthorityRoot = "C:\MMI",
     [switch]$SkipBuild
 )
 
@@ -54,10 +54,10 @@ if (-not (Test-Path $packageCatSource)) {
     }
 }
 
-# Volume-relative NTFS path for minifilter registry (e.g. \Architectapp_clean).
+# Volume-relative NTFS path for minifilter registry (e.g. \MMI).
 $full = (Resolve-Path $AuthorityRoot).Path
 if ($full.Length -lt 3 -or $full[1] -ne ':') {
-    throw "AuthorityRoot must be a drive path like C:\Architectapp_clean"
+    throw "AuthorityRoot must be a drive path like C:\MMI"
 }
 function Get-MinifilterInstanceCount {
     param(

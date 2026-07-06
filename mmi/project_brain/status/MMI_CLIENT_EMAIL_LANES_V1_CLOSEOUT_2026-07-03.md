@@ -28,7 +28,7 @@
 python -m pytest tests/test_client_email_lanes.py -q
 → 13 passed
 
-python scripts/email_lanes_harness.py --authority C:/Architectapp_clean
+python scripts/email_lanes_harness.py --authority C:/MMI
 → overall_gate_status: CLEAN (T1–T7, T3a, T7b, H1,H4,H6,H7,H11,H13,H14,H15,H16,H19,H20, CONFIRMATION_CHAIN, NORMALIZER_VERSION)
 → evidence: %TEMP%/mmi_email_lanes/harness/email_lanes_summary.json
 ```

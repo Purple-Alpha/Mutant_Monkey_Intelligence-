@@ -15,7 +15,7 @@ TASK ID: mmi-console-server-ed25519-evidence-gate-build
 REVIEW TYPE: PRE-BUILD PLAN REVIEW (not diff review)
 ASSIGNEE: Codex
 BUILD AUTHORIZATION: NOT_AUTHORIZED
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC (authoritative):
   mmi/project_brain/architecture/MMI_CONSOLE_SERVER_ED25519_EVIDENCE_GATE_SPEC_2026-07.md

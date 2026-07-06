@@ -14,7 +14,7 @@
 
 ## Section 1 — Purpose & Scope
 
-The M4 Evolution Gate is the endurance-tier containment proof for MMI: a **48-hour continuous, un-throttled adversarial assault inside an isolated chaos clone** whose sole pass condition is that the authority repository (`AUTHORITY_ROOT = C:\Architectapp_clean`) and all invariants (§5) survive intact, with tamper-evident evidence. The 48h run is the **final ceremony**, not the first deliverable.
+The M4 Evolution Gate is the endurance-tier containment proof for MMI: a **48-hour continuous, un-throttled adversarial assault inside an isolated chaos clone** whose sole pass condition is that the authority repository (`AUTHORITY_ROOT = C:\MMI`) and all invariants (§5) survive intact, with tamper-evident evidence. The 48h run is the **final ceremony**, not the first deliverable.
 
 **In scope:** the staged proof ladder (§3), the invariant + fuzz + sandbox-escape pre-proofs (§5–§7), the Windows-native host boundary (§8), the canary taxonomy (§9), the AFE ledger (§10), the evidence chain and correlated-failure rules (§11), the M3 minimum diagnostic slice (§12), harness contracts (§13), falsifiers (§14), observability (§15), and build phasing (§17).
 
@@ -56,7 +56,7 @@ All four conjuncts are required; any missing conjunct → not a proof.
 
 | Constant | Value | Meaning |
 |---|---|---|
-| `AUTHORITY_ROOT` | `C:\Architectapp_clean` | Repo whose fingerprint MUST NOT mutate during any assault. |
+| `AUTHORITY_ROOT` | `C:\MMI` | Repo whose fingerprint MUST NOT mutate during any assault. |
 | `EVIDENCE_ROOT` | host-side, daemon-write-only volume (e.g. `C:\mmi_m4_evidence\` or a dedicated VHD); **NOT** under `/tmp` | Append-only evidence sink, outside `AUTHORITY_ROOT` **and** outside clone reach. TCB-write-only. |
 | `LAB_ROOT` | `/tmp/mmi_chaos_lab/<lab-id>/` | Isolated clone venue; filesystem cannot traverse to `EVIDENCE_ROOT`. |
 | `RUN_NONCE` | 128-bit CSPRNG per invocation | Binds evidence chain + summary + exit artifact; anti cross-stage replay. |

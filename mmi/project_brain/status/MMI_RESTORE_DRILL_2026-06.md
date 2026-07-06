@@ -28,21 +28,21 @@ Validate that the latest known-good B2 cold archive restores into a repo-shaped 
 
 ## Isolated Restore Procedure
 
-1. Created scratch directory (outside git tracking): `C:\Architectapp_clean\_restore_drill_scratch\`
+1. Created scratch directory (outside git tracking): `C:\MMI\_restore_drill_scratch\`
 2. Extracted archive into scratch (WSL tar, no live tree touched):
    ```bash
-   tar -xzf /tmp/mmi_backup_20260629_190227.tar.gz -C /mnt/c/Architectapp_clean/_restore_drill_scratch
+   tar -xzf /tmp/mmi_backup_20260629_190227.tar.gz -C /mnt/c/MMI/_restore_drill_scratch
    ```
 3. Ran restore validation:
    ```bash
-   python scripts/mmi_cold_backup.py --restore-check C:\Architectapp_clean\_restore_drill_scratch
+   python scripts/mmi_cold_backup.py --restore-check C:\MMI\_restore_drill_scratch
    ```
 
 ### Terminal output (`--restore-check`)
 
 ```json
 {
-  "restore_root": "C:/Architectapp_clean/_restore_drill_scratch",
+  "restore_root": "C:/MMI/_restore_drill_scratch",
   "status": "PASS",
   "errors": []
 }

@@ -15,7 +15,7 @@ TASK ID: mmi-console-server-step4-package
 REVIEW TYPE: PRE-BUILD PLAN REVIEW (re-review after NOT BUILDABLE)
 ASSIGNEE: Codex
 BUILD AUTHORIZATION: NOT_AUTHORIZED
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPECS (authoritative — both required):
   1. mmi/project_brain/architecture/MMI_PROOF_GATE_CONSOLE_BINDINGS_SPEC_2026-07.md (r1)

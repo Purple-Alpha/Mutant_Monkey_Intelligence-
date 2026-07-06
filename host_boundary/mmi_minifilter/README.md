@@ -10,7 +10,7 @@
 
 
 
-- Pre-operation callbacks on authority paths under `Parameters\AuthorityRoot` (default `\Architectapp_clean`)
+- Pre-operation callbacks on authority paths under `Parameters\AuthorityRoot` (default `\MMI`)
 
 - Deny `CREATE` (mutating), `WRITE`, `SET_INFORMATION`, `SET_SECURITY` under that prefix
 
@@ -28,7 +28,7 @@ Use **VS 2022** MSBuild (WDK VSIX + `WindowsKernelModeDriver10.0` toolset). Buil
 
 # Developer PowerShell for VS 2022 (PC1)
 
-cd C:\Architectapp_clean
+cd C:\MMI
 
 .\scripts\build_m4_minifilter.ps1
 
@@ -64,9 +64,9 @@ After reboot:
 
 # PowerShell (PC1) — Administrator
 
-cd C:\Architectapp_clean
+cd C:\MMI
 
-.\scripts\install_m4_minifilter.ps1 -AuthorityRoot C:\Architectapp_clean
+.\scripts\install_m4_minifilter.ps1 -AuthorityRoot C:\MMI
 
 fltmc filters
 
@@ -82,7 +82,7 @@ fltmc filters
 
 # PowerShell (PC1) — Administrator, filter loaded
 
-cd C:\Architectapp_clean
+cd C:\MMI
 
 python scripts/m4_minifilter_suite.py --live --json
 

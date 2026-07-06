@@ -135,7 +135,7 @@ Doctrine: Bounded autonomy, deterministic rules over soft prompts, un-fakeable m
 </system_role>
 
 <current_state_inventory>
-Repo root: /mnt/c/Architectapp_clean
+Repo root: /mnt/c/MMI
 Active task id: [from scripts/next_task.py]
 Relevant files:
   - [path]

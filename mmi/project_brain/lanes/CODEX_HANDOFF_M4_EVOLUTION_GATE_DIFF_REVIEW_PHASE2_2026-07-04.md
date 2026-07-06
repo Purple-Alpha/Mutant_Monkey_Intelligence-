@@ -16,7 +16,7 @@ PROJECT: MMI
 TASK ID: mmi-m4-evolution-gate
 REVIEW TYPE: POST-BUILD DIFF REVIEW (Phase 2)
 ASSIGNEE: Codex
-AUTHORITY REPO: /mnt/c/Architectapp_clean
+AUTHORITY REPO: /mnt/c/MMI
 
 SPEC PHASE: §17 Phase 2 — m4_fuzz_harness.py (§6)
 

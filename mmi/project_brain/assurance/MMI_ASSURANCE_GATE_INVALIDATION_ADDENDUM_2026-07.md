@@ -4,7 +4,7 @@
 **Artifact role:** Assurance hardening — gate-level invalidation (authoritative for closure/promotion)  
 **Lane:** Documentation/control only — no spec, no build, no gate closure  
 **Status:** r2 HARDENING (2026-07-04)  
-**Authority repo:** `C:\Architectapp_clean`  
+**Authority repo:** `C:\MMI`  
 **Applies to:** All `mmi/project_brain/assurance/MMI_*_2026-07.md`  
 **Supersedes for gate closure:** ambiguous outcomes in `MMI_ASSURANCE_INVALIDATION_RULES_2026-07.md` §Downgrade where this addendum defines a default  
 **Research-control ceiling:** RESEARCH-DRAFT CLEAN — machine enforcement is a **future spec/build path**, not this lane

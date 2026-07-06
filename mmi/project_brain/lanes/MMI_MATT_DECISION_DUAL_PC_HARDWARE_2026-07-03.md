@@ -16,7 +16,7 @@ MMI will operate on **two physically separated machines** once PC2 arrives:
 
 | Machine | Codename | Role |
 |---------|----------|------|
-| **PC1** | **Authority / TCB** | Live brain: `C:\Architectapp_clean`, evidence root, signing/`KEY_CUSTODY`, Windows-native boundary daemon (WFP + minifilter), orchestrator, operator seat, Codex/Cursor build lane |
+| **PC1** | **Authority / TCB** | Live brain: `C:\MMI`, evidence root, signing/`KEY_CUSTODY`, Windows-native boundary daemon (WFP + minifilter), orchestrator, operator seat, Codex/Cursor build lane |
 | **PC2** | **Chaos / Forge** | Battlefield + local inference: chaos clone, purple assault, mirror/tarpit workloads, **local LLM shards** (critic ring + assault pressure), draft-patch replay sandbox — **never** authority writes |
 
 **Principle (unchanged):** *Destroy the clone, not the brain.*

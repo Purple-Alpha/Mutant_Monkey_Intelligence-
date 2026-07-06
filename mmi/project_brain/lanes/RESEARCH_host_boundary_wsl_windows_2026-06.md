@@ -11,7 +11,7 @@
 
 ## Kernel Realities: WSL vs. Host Windows
 
-**A Python wrapper running in user space cannot hooks syscalls like `NtWriteVirtualMemory` or enforce Windows Filtering Platform (WFP) rules natively.** Furthermore, `/mnt/c/Architectapp_clean` is managed by the **DrvFs kernel plugin** inside WSL. You cannot enforce Linux-native file locking or immutable file attributes (`chattr +i`) across a DrvFs mount and expect it to stop a native Windows process from wiping that directory from the Windows host side.
+**A Python wrapper running in user space cannot hooks syscalls like `NtWriteVirtualMemory` or enforce Windows Filtering Platform (WFP) rules natively.** Furthermore, `/mnt/c/MMI` is managed by the **DrvFs kernel plugin** inside WSL. You cannot enforce Linux-native file locking or immutable file attributes (`chattr +i`) across a DrvFs mount and expect it to stop a native Windows process from wiping that directory from the Windows host side.
 
 ### Grounding the Architecture in Reality:
 
@@ -33,7 +33,7 @@ To make this real, our Python orchestration engine cannot do the heavy lifting i
 ```
 
 1. **Network Containment:** For network isolation, we interface with the native **Windows Filtering Platform (WFP)** via a compiled C-extension or structured admin utilities (like utilizing Windows `netsh` or native `PyWFP` library calls running with elevated `NT AUTHORITY\SYSTEM` permissions on the host side).
-2. **File System Security:** To protect `/mnt/c/Architectapp_clean`, the security model must exist on the **Windows host level** (using Windows Access Control Lists - ACLs, or a miniature Windows File System Minifilter Driver) to block unauthorized write handles to `C:\Architectapp_clean` originating from any binary other than our validated process identities.
+2. **File System Security:** To protect `/mnt/c/MMI`, the security model must exist on the **Windows host level** (using Windows Access Control Lists - ACLs, or a miniature Windows File System Minifilter Driver) to block unauthorized write handles to `C:\MMI` originating from any binary other than our validated process identities.
 
 ### Delivery vector (control plane vs host)
 

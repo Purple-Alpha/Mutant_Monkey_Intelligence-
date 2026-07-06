@@ -1,7 +1,7 @@
 # Codex Build Status — 4E WFP Rev C Cleanup
 
 **Timestamp:** 2026-07-04T20:46:54-07:00  
-**Repo:** `C:\Architectapp_clean` / `/mnt/c/Architectapp_clean`  
+**Repo:** `C:\MMI` / `/mnt/c/MMI`  
 **Authority:** Matt build direction in Codex desktop, 2026-07-04  
 **Scope:** 4E WFP cleanup/build only  
 
@@ -35,7 +35,7 @@ python3 -m pytest tests/test_m4_wfp_policy.py -q
 Warning observed:
 
 ```text
-PytestCacheWarning: could not create cache path /mnt/c/Architectapp_clean/.pytest_cache/v/cache/nodeids: [Errno 13] Permission denied
+PytestCacheWarning: could not create cache path /mnt/c/MMI/.pytest_cache/v/cache/nodeids: [Errno 13] Permission denied
 ```
 
 This warning does not affect the 4E test result.
@@ -94,7 +94,7 @@ T7-C3 DENY  127.0.0.1:19999
 Run from Administrator PowerShell:
 
 ```powershell
-cd C:\Architectapp_clean
+cd C:\MMI
 .\scripts\build_m4_wfp.ps1
 .\scripts\install_m4_wfp.ps1
 python scripts\m4_wfp_suite.py --live --json
@@ -109,7 +109,7 @@ $env:MMI_WFP_PROBE_PASSWORD = '<operator-held-password>'
 Uninstall:
 
 ```powershell
-cd C:\Architectapp_clean
+cd C:\MMI
 .\scripts\uninstall_m4_wfp.ps1
 ```
 

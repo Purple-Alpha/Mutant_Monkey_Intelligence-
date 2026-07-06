@@ -23,7 +23,7 @@
 
 ## Before you paste MESSAGE 1R
 
-**If Claude has repo access** (`/mnt/c/Architectapp_clean`): paste MESSAGE 1R only.
+**If Claude has repo access** (`/mnt/c/MMI`): paste MESSAGE 1R only.
 
 **If Claude has NO repo access:** also paste at the bottom of MESSAGE 1R:
 - Full current spec: `architecture/MMI_M4_EVOLUTION_GATE_SPEC_2026-07.md`
@@ -49,7 +49,7 @@ Design lane only — deliver ONE complete markdown spec file. No Python. No buil
 </system_role>
 
 <current_state_inventory>
-Repo root: /mnt/c/Architectapp_clean
+Repo root: /mnt/c/MMI
 
 PRIOR SPEC (narrow R1 — PRESERVE all MESSAGE 2/3 remediations; expand, do not regress):
   architecture/MMI_M4_EVOLUTION_GATE_SPEC_2026-07.md
@@ -282,7 +282,7 @@ TASK:
 Zero-trust audit of the R2 superset MMI_M4_EVOLUTION_GATE_SPEC (MESSAGE 2R output).
 Scope: M4 final 48h runner AND upstream staged gates C-M4, C2, C3, C4 AND new §5/§6/§7 pre-endurance layers.
 
-AUTHORITY REPO: C:\Architectapp_clean
+AUTHORITY REPO: C:\MMI
 FORBIDDEN: /home/socialarchitect/northstar
 
 INPUT ARCHITECTURE TO AUDIT:
@@ -329,7 +329,7 @@ No filler outside ledger + spec.
 ## Quick open (Win+R)
 
 ```text
-notepad "C:\Architectapp_clean\mmi\project_brain\lanes\CLAUDE_HANDOFF_M4_EVOLUTION_GATE_SPEC_R2_EXPANSION_2026-07-03.md"
+notepad "C:\MMI\mmi\project_brain\lanes\CLAUDE_HANDOFF_M4_EVOLUTION_GATE_SPEC_R2_EXPANSION_2026-07-03.md"
 ```
 
 Also attach or paste before MESSAGE 1R if no repo mount:

@@ -10,7 +10,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-DEFAULT_AUTHORITY = Path("/mnt/c/Architectapp_clean")
+DEFAULT_AUTHORITY = Path("/mnt/c/MMI")
 
 
 def _ensure_chaos(authority: Path) -> None:
@@ -20,7 +20,7 @@ def _ensure_chaos(authority: Path) -> None:
 
 
 def build_bundle_from_summary(summary_path: Path, operator_action: str) -> dict[str, Any]:
-    _ensure_chaos(Path("/mnt/c/Architectapp_clean"))
+    _ensure_chaos(Path("/mnt/c/MMI"))
     from console_evidence_gate import BUNDLE_VERSION, compute_bundle_id  # type: ignore
     from mmi_canonical_digest import file_sha256_hex  # type: ignore
 
