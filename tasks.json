@@ -2006,5 +2006,79 @@
             ],
             "recover_under_pressure": "Use output_files plus closeout_verification to re-run gates; use verification_commands and verification_artifact to explain what was checked."
         }
+    },
+    {
+        "id": "mmi-post-push-hygiene-audit-203b010",
+        "instruction": "PROJECT: MMI. Post-push hygiene audit of commit 203b010 only. Confirm branch sync/clean status, rerun allowed task-state checks, verify no stale legacy workspace path tokens outside web/, and write mmi/project_brain/status/MMI_POST_PUSH_HYGIENE_AUDIT_203B010_2026-07-05.md with results and next-task recommendation. No build work. Do not edit web/. Do not run npm. Do not run ops/run.py.",
+        "status": "completed",
+        "assignee": "Codex",
+        "tier": "Project Manager / repo hygiene",
+        "score": 96,
+        "score_reason": "Post-push safety check for 203b010 before any new build work; confirms clean sync, dry pipe, and no stale path-token regression.",
+        "source": "Matt/Codex PM relay 2026-07-05 \u2014 no active task after path-normalization push",
+        "created_at": "2026-07-05T22:05:51",
+        "created_by": "scripts/keep_task_queue_warm.py",
+        "build_authorization": "NOT_AUTHORIZED",
+        "routing_note": "Audit only. Do not edit web/. Do not run npm. Do not run ops/run.py. Do not start build work.",
+        "completed_at": "2026-07-05T22:06:53-07:00",
+        "completed_by": "Codex PM",
+        "result_summary": "PASS - Post-push hygiene audit confirmed 203b010 is latest, branch was synced with origin before audit edits, task-state checks are healthy, and no stale legacy workspace path tokens remain outside web/. No build work performed.",
+        "sign_off": "PASS",
+        "sign_off_tier": "Codex PM",
+        "output_files": [
+            "mmi/project_brain/status/MMI_POST_PUSH_HYGIENE_AUDIT_203B010_2026-07-05.md"
+        ],
+        "verification_commands": [
+            {
+                "label": "H1 closeout outputs",
+                "command": "python scripts/mmi_verify.py closeout mmi/project_brain/status/MMI_POST_PUSH_HYGIENE_AUDIT_203B010_2026-07-05.md",
+                "exit_code": 0,
+                "ok": true
+            }
+        ],
+        "verification_artifact": null,
+        "closeout_verification": {
+            "h1": {
+                "check": "H1_closeout_output_files",
+                "ok": true,
+                "missing": [],
+                "present": [
+                    "mmi/project_brain/status/MMI_POST_PUSH_HYGIENE_AUDIT_203B010_2026-07-05.md"
+                ],
+                "count": 1
+            },
+            "h2": {
+                "check": "H2_intel_closeout_gate",
+                "ok": true,
+                "intel_outputs": [],
+                "results": [],
+                "failed": []
+            },
+            "verify_json": {
+                "check": "verify_json_files",
+                "ok": true,
+                "results": [],
+                "failed": []
+            },
+            "verification_artifact": {
+                "path": null,
+                "ok": true,
+                "required": false
+            }
+        },
+        "closeout_evidence_contract": {
+            "version": "P8_CLOSEOUT_EVIDENCE_CONTRACT_v1",
+            "ok": true,
+            "required_fields": [
+                "output_files",
+                "verification_commands",
+                "verification_artifact",
+                "result_summary",
+                "sign_off",
+                "sign_off_tier",
+                "closeout_verification"
+            ],
+            "recover_under_pressure": "Use output_files plus closeout_verification to re-run gates; use verification_commands and verification_artifact to explain what was checked."
+        }
     }
 ]
