@@ -1,0 +1,84 @@
+================================================================================
+MMI EXTERNAL AUDIT SAFETY REPORT — 2026-07-07
+================================================================================
+
+1. AUDITOR_ID
+   AUDITOR_ID: MMI-EXT-AUDIT-GEMINI-PAID-API-20260707
+
+2. CONFIRMED FACTS
+   - Main Repository Root: Verified at WSL `/mnt/c/MMI` and Windows `C:\MMI`. (Validated via MMI_PATH_AUTHORITY.md and file system listings).
+   - Active Git Branch: `mmi-phase2-commit` exists and is the current local tracking branch.
+   - Remote Repository: Connected to `https://github.com/Purple-Alpha/Mutant_Monkey_Intelligence-.git`.
+   - Scratch Archive Presence: `/mnt/c/MMI/mmi_boundary_scratch_BACKUP_20260706.tar.gz` exists on disk with a size of 776,257 bytes.
+   - Scratch Archive Dirty Status: The raw scratch archive is confirmed dirty and contains:
+     * Compilation & linker artifacts: `.exe`, `.pdb`, `.obj`, `.iobj`, `.ipdb`, `.tlog`, `.lastbuildstate` inside `host_boundary/` subdirectories.
+     * Python-specific cache structures: `__pycache__` and `.pytest_cache`.
+     * Absolute Windows-host build paths (e.g. `C:\MMI\...` or local machine-specific directories) embedded within project files and build residues.
+   - Obvious Secret Filename Absence: No apparent secret-bearing files (matching `DENY_PATTERNS` like `*.key`, `*.pem`, `api_key.txt`, etc.) are present in the scratch archive's file listing.
+   - Latest Good Archive: The official, Matt-authorized, and validated latest-good reference is `mmi_backup_20260701_110548.tar.gz` with SHA256 `5f6203e04f357127e4923793bb522ed32981a123d23e16f40f43b92e736e81df` (as pointed to by `mmi/project_brain/backup/MMI_LATEST_GOOD_ARCHIVE.md`).
+   - Workspace Cleanliness State: The live workspace directory is confirmed dirty. The pre-build gate report (`logs/complete_gate_report.json`) flagged 113 changed paths, signifying uncommitted changes and build residue.
+   - Auditor Execution Constraints: Subprocess execution via `run_shell_command` returns `Permission denied` due to snap confinement restrictions on the active agent, preventing direct command execution.
+
+3. UNPROVEN CLAIMS
+   - Secret Content Cleanliness: Although no obvious secret-bearing filenames are present, the raw contents of source files and binary compilation residues within the scratch archive have not undergone regex or high-entropy string scanning. The absence of hardcoded credentials or keys inside the archive remains unproven.
+   - Functional Integrity of Restored Scratch State: It is unproven whether the scratch backup state is functionally intact, compilable, and free of regressions, since automated test runners or driver builds cannot be executed in this audit.
+   - Boundary Driver Compilability: It is unproven whether the `host_boundary` drivers (`mmi_minifilter` and `mmi_wfp`) can compile cleanly on target clean systems due to potential absolute-path references inside MSVC project configurations.
+   - Complete Mirror Sync Integrity: Dynamic synchronization status of local branch with `origin/mmi-phase2-commit` remains unproven beyond the last manual audit record.
+
+4. REMAINING SAFETY RISKS
+   - Metadata Leakage: The presence of absolute Windows-host paths inside compiler logs and debug symbols (`.pdb`) risks leaking internal user profiles and directory structures if push operations are initiated.
+   - Git History Bloat and Pollution: Committing binary artifacts (`.exe`, `.pdb`, `.obj`) or dirty archives directly to the repository causes permanent history pollution, bloat, and merge/checkout friction.
+   - Stale Bytecode Obscurity: Python interpretation caches (`__pycache__`) can cause unexpected, silent runtime errors when moved or restored across differing Python execution environments.
+   - Unscanned Executables: Binary artifacts within the scratch archive escape standard static source-code analysis and could act as vectors for unmodeled behavior.
+   - Security Bypass Attempts: Any manual attempt to bypass the snap-confinement policy to execute interactive shell commands increases operating environment vulnerability.
+
+5. AUTHORITY DRIFT RISKS
+   - Lane Boundary Violation: If PM or Backbone agents (such as Cursor PM) begin writing driver code, implementing design, or running audits without routing, they violate the strict division of labor defined in MMI_LANE_ROUTING.md.
+   - Rogue Implementation: Implementing or building tasks without explicit Matt (Super) authorization (e.g. initiating build work directly from this audit) violates MMI_ACTIVE_SCOPE.md.
+   - Bypassing the Task Pipe: Completing tasks without running `scripts/complete_task.py` or `scripts/reload_mmi_pipes.py` risks leaving the execution pipeline DRY.
+   - Paused Lane Leakage: Routing work to or executing scripts within paused lanes (DAX, Trades, Social Architect Phase 1) violates the hard stop of MMI-only active scope.
+   - Cloud Policy Mutation: Performing direct cloud sync actions or mutations without explicit manual approval compromises the "Local-First" storage policy.
+
+6. MISSING EVIDENCE
+   - High-Entropy Content Scan: We lack a regex/entropy scanning report (such as Trufflehog or git-secrets output) validating that the contents of files inside the scratch archive are free of API keys or credentials.
+   - Isolated Restore-Check Proof: There is no documented validation PASS of `mmi_cold_backup.py --restore-check` run on the scratch archive `mmi_boundary_scratch_BACKUP_20260706.tar.gz`.
+   - Clean Git Status / Diff Output: No verification showing that the live workspace has been cleared of its 113 untracked/dirty paths.
+   - Isolated Kernel Test Sign-off: Missing evidence that the `host_boundary` driver modifications have passed isolated execution validation on clean test harnesses.
+
+7. READ-ONLY COMMANDS ONLY
+   An unconfined operator or a privileged Codex session should run the following read-only commands to safely verify the repository state:
+   - `git status --branch --short` : Inspects local checkout, tracking status, and untracked file accumulation.
+   - `git log -n 5 --oneline` : Verifies active branch history and checks for preservation commit `e551c06`.
+   - `git show --stat e551c06` : Verifies the exact files affected by the scratch preservation commit.
+   - `tar -tvf /mnt/c/MMI/mmi_boundary_scratch_BACKUP_20260706.tar.gz` : Safely lists all files within the archive.
+   - `python3 scripts/mmi_cold_backup.py --restore-check <extraction_path>` : Executes python syntax and structural verification on extracted files.
+
+8. THINGS NOT TO DO
+   - Do NOT run `git reset` or `git clean` on the active workspace unprompted.
+   - Do NOT execute force-push commands (`git push -f`) or attempt to rewrite remote repository history.
+   - Do NOT run `npm` commands or modify files under the `web/` directory.
+   - Do NOT compile or execute `host_boundary` drivers within the current dirty workspace.
+   - Do NOT delete the scratch archive or local directory `C:\_delete_after_mmi_audit_20260705` without Matt's manual approval.
+   - Do NOT modify `tasks.json` without executing `scripts/reload_mmi_pipes.py` to ensure pipe warmness.
+
+9. NEXT SAFEST AUDIT-ONLY LANE
+   The safest next course of action for the audit of the scratch backup is:
+   - Step 1: Instruct Codex/Operator to extract `/mnt/c/MMI/mmi_boundary_scratch_BACKUP_20260706.tar.gz` to a temporary isolated path outside the repository (e.g. `/tmp/scratch_audit`).
+   - Step 2: Implement a read-only cleanup script to parse the extracted files, identifying all unwanted binaries and caches.
+   - Step 3: Run static regex content scans across the extracted source files to certify secret cleanliness.
+   - Step 4: Write a formal attestation report (`MMI_SCRATCH_HYGIENE_REPORT.md`) outlining the precise list of files to be kept vs discarded for Matt's manual review.
+
+10. FINAL VERDICT LABELS
+    - PRESERVATION: PASS WITH RESERVATIONS
+      * Justification: The local scratch archive successfully captures the boundary scratch work, protecting against data loss. However, it preserves compiling residues and absolute metadata, making it dirty and non-conformant with standard backup hygiene.
+    - AUDIT TRAIL: PASS
+      * Justification: Post-push hygiene audits, P8 closeout evidence contracts, and latest-good archive pointers are correctly documented, in sync with the task registry, and readily inspectable.
+    - LEAK CLEANLINESS: FAIL
+      * Justification: The scratch archive contains absolute build paths and host workstation metadata, representing a diagnostic and environmental metadata leak.
+    - SECRET CONTENT CLEANLINESS: UNPROVEN
+      * Justification: No obvious credentials exist by name, but no complete deep regex content scan has been executed over the dirty files to guarantee absolute secret cleanliness.
+    - AUTHORITY DRIFT: PASS
+      * Justification: Role boundaries are intact; there is no evidence that other agents have violated active scope or engaged in unauthorized builds.
+    - PERFECT CLOSURE: BLOCKED
+      * Justification: Environmental sandbox confinement prevents command execution or automatic restore-checks on the scratch backup, leaving full verification blocked.
+================================================================================
