@@ -86,3 +86,25 @@ Every AUDIT output shall comply with `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
 - Passable audits are failed audits for this project.
 
 This law is documentation/control only and grants no authority.
+## Law A8 - Audit Lane Attack Contract
+
+All audit-lane work shall use `LLM_AUDIT_LANE_ATTACK_CONTRACT_2026-07.md`.
+
+This applies to Gemini, Perplexity, Codex-as-reviewer, any other LLM, and any person/model performing audit work.
+
+The audit prompt contract is:
+
+```text
+REVIEW THIS: NO
+ATTACK THIS: YES
+```
+
+Every audit must attack the artifact for gaps, drift, overclaims, missing evidence, weak authority boundaries, residual-risk misalignment, false closure, evasion paths, denial-of-service exposure, leakage paths, malformed input bypasses, stale evidence, and any language that implies authority beyond the accepted lane.
+
+Every audit must cite the active remote head commit at review time.
+
+Audit-phase code generation is forbidden. Audit outputs may define required patches or diagnostic requirements, but must not write implementation code, generate build steps, or provide execution templates.
+
+Self-grading is required but not trusted. No model may pass itself. A separate reviewer grade is required, and Matt's decision remains final.
+
+This law does not authorize build, scan execution, archive extraction, output generation, cleanup, deployment, residual-risk closure, falsifier closure, M4 closure, PERFECT closure, or GATED status.

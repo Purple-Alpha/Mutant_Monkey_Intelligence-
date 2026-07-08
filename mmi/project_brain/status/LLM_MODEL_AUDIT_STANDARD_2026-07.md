@@ -269,3 +269,28 @@ CLEANUP AUTHORITY: NO
 PERFECT CLOSURE: NO
 GATED STATUS: NO
 ```
+## Audit Lane Attack Contract Binding
+
+For audit-lane work, `LLM_AUDIT_LANE_ATTACK_CONTRACT_2026-07.md` is binding.
+
+Audit posture:
+
+```text
+REVIEW THIS: NO
+ATTACK THIS: YES
+```
+
+The model must assume the artifact is wrong, incomplete, overclaiming, stale, or authority-drifting until evidence proves otherwise within the accepted lane.
+
+When auditing codebase specifications, command plans, scan plans, or safety/control artifacts, the audit must include adversarial checks where applicable:
+
+- denial-of-service exposure.
+- malformed input handling.
+- evasion or bypass vectors.
+- leakage paths.
+- stale evidence or stale commit references.
+- missing blocker states.
+- silent skip paths.
+- false-closure paths.
+
+Self-grading is required but is not trusted as acceptance evidence. No model may pass itself.

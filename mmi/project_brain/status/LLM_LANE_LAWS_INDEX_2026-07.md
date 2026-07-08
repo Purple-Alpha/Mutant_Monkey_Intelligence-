@@ -90,3 +90,8 @@ CLEANUP AUTHORITY: NO
 PERFECT CLOSURE: NO
 GATED STATUS: NO
 ```
+## Audit Lane Attack Contract
+
+`LLM_AUDIT_LANE_ATTACK_CONTRACT_2026-07.md` is the required audit-lane contract for Gemini, Perplexity, Codex-as-reviewer, any other LLM, and any person/model performing audits.
+
+It is audit-lane specific. It does not replace `LLM_UNIVERSAL_PROJECT_RUBRIC_2026-07.md` for general multi-lane formatting.
