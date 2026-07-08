@@ -1,0 +1,186 @@
+# MMI External Audit Report: SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC
+
+================================================================================
+PART I: LAW COMPLIANCE & AUTHORITY REVIEW
+================================================================================
+
+## 1. AUDIT VERDICT
+
+PASS WITH OPEN BLOCKERS
+
+*Justification:* The patched `SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC` document (dated 2026-07-07) is highly detailed, rigorous, and incorporates exceptionally strong specification-level controls. However, it remains a documentation/control artifact only. Because no content-level secret scan has been executed, and the physical scan report and its verification logs do not yet exist, the clean closure of the dirty scratch archive is blocked.
+
+---
+
+## 2. ACCEPTED FACTS
+
+- **Main Repository Root:** WSL `/mnt/c/MMI` and Windows `C:\MMI` are the authoritative workspace paths (per `MMI_PATH_AUTHORITY.md`).
+- **Active Git Branch:** `mmi-phase2-commit` exists and is the current local tracking branch.
+- **Remote Repository:** Connected to `https://github.com/Purple-Alpha/Mutant_Monkey_Intelligence-.git` synced through commit `19edda6`.
+- **Scratch Archive:** `/mnt/c/MMI/mmi_boundary_scratch_BACKUP_20260706.tar.gz` exists on disk with a size of 776,257 bytes.
+- **Scratch Archive Manifest:** `/mnt/c/MMI/mmi_boundary_scratch_BACKUP_20260706_MANIFEST.txt` is present and committed.
+- **Scratch Archive Hash:** `/mnt/c/MMI/mmi_boundary_scratch_BACKUP_20260706.tar.gz.sha256` is present and committed.
+- **Preservation Status:** **PROVEN.** The scratch archive, its manifest, its hash, and the initial Gemini audit trial logs are successfully committed and synced with the remote head.
+- **Archive Cleanliness Status:** **DIRTY.** The archive is confirmed dirty and contains binary compilation outputs (`.exe`, `.pdb`, `.obj`), Python interpreter caches (`__pycache__`), and absolute Windows build path metadata.
+- **Filename Secret Scan:** Confirmed **NO HITS** on the manifest listing, meaning no blatantly named secret files exist.
+- **Active Lane:** `SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC` is the current authorized control lane.
+- **Current Model Roles:** Primary Model is `Codex`, Secondary Review Model is `Gemini Paid API`, and Execution Operator is `Matt / WSL terminal after boundary acceptance`.
+- **Standing Scores:** Preservation Score = 8.5/10; Clean Closure Score = 5/10; Build Readiness Score = 0/10.
+
+---
+
+## 3. NOT_PROVEN ITEMS
+
+- **Secret Content Cleanliness:** Unproven. No deep regex or high-entropy scans have been run over the actual textual contents and binary streams of the archive to confirm the absence of hardcoded keys or credentials.
+- **Driver Portability / Compilability:** Unproven. The absolute Windows paths embedded inside compilation residues and project files indicate that compiling these drivers on a target clean system without localized dependency errors is unproven.
+- **Functional Integrity & Regression Status:** Unproven. It is unproven whether the boundary driver code inside the scratch archive is functionally stable and free of regressions, as no compilation or test execution has occurred.
+- **Scanner Tooling Feasibility:** Unproven. The availability or development of a scanner tool that satisfies 100% of the newly patched, highly complex requirements is unproven under the active WSL runtime environment.
+
+---
+
+## 4. OPEN BLOCKERS
+
+- **Missing Content Scan Report:** The absence of `MMI_SCRATCH_CONTENT_SCAN_REPORT.json` containing the results of the content-level scan blocks clean-closure.
+- **Binary and Cache Contamination:** The presence of compiler output, debug databases, and python bytecode caches inside the archive blocks clean closure.
+- **Absolute Host Path Leakage:** Internal host profile and folder layout metadata are embedded in the archive, creating metadata leakage and compilability blockers.
+- **Lack of Clean Replacement Archive Plan:** A formal, approved plan to generate a clean, normalized replacement archive from the scratch data is missing.
+- **Zero Build Readiness (0/10):** The absence of clean, audited, and certified source code blocks any transition to driver build or kernel compilation work.
+
+---
+
+## 5. AUTHORITY DRIFT CHECK
+
+- **Role Boundaries:** Intact. Codex is correctly assigned as the Primary Model, and Gemini Paid API is the Secondary Review Model. No model has usurped another's role.
+- **Execution Containment:** Compliant. No interactive driver compilation, kernel execution, or automated cleanup script has been run in this workspace.
+- **Model Ownership Allocation:** Compliant. No unauthorized delegation of the active lane to other models (e.g., Claude, Cursor, Aider) has occurred.
+- **OPTIONAL_RECOMMENDATION_NOT_AUTHORITY:** While Claude is traditionally the design-lane model under older routing docs, under the current `MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md`, Codex is the primary model for documentation/control artifacts in this lane. It is recommended that Codex drafts the specification, with Claude optionally acting as an advisory design reviewer, provided this does not override Codex's active primary ownership.
+
+---
+
+## 6. FINDINGS TABLE
+
+| Finding | Severity | Status | Evidence | Why It Matters | Required Next Evidence |
+|---|---:|---|---|---|---|
+| Missing Content Scan Report | High | OPEN_BLOCKER | No `MMI_SCRATCH_CONTENT_SCAN_REPORT` exists on disk. | The actual contents of the dirty scratch archive remain unscanned and unverified. | Raw `.json` and redacted `.md` content scan output files. |
+| Dirty Archive Contamination | Medium | OPEN_BLOCKER | Known fact: archive contains `.exe`, `.pdb`, `__pycache__` files. | Permanent history pollution, repository bloat, and execution of stale code. | Clean replacement archive plan. |
+| Host Path Metadata Leakage | Medium | OPEN_BLOCKER | Known fact: absolute Windows paths reside in compiler residues. | Leaks internal workstation profiles and blocks clean multi-host driver compilation. | Normalized project files and clean manifest. |
+| Unproven Content Cleanliness | High | NOT_PROVEN | Known fact: Secret content cleanliness is NOT PROVEN. | Filename checks miss hardcoded API keys, certificates, and passwords inside code. | Comprehensive content secret scan report. |
+| Execution Constraints | Medium | PROVEN | Tool execution of `run_shell_command` returns `Permission denied`. | Confinement is maintained; prevents accidental execution of dirty scripts. | Safe manual operator execution logs. |
+
+---
+
+## 7. NEXT LANE RECOMMENDATION USING CURRENT AUTHORITY
+
+- **NEXT LANE:** `SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC`
+- **PRIMARY MODEL:** `Codex`
+- **SECONDARY REVIEW MODEL:** `Gemini Paid API`
+- **EXECUTION OPERATOR:** `Matt / WSL terminal after boundary acceptance`
+- **FORBIDDEN ACTIONS:** Build, driver execution, cleanup execution, deletion, git reset, git clean, force-push, history rewrite, kernel/minifilter testing.
+- **OWNERSHIP REASON:** In strict compliance with the established `MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md`, Codex remains the primary model responsible for documentation/control artifacts and git evidence, with Gemini Paid API serving as the independent external audit model. The execution operator remains strictly limited to Matt's manual WSL terminal to guarantee sandboxed safety.
+
+---
+
+## 8. EXPLICIT NON-AUTHORIZATIONS
+
+This audit report **strictly forbids** and **does not authorize**:
+- Any driver, binary, or script build or compilation.
+- Any execution of live code, test suites, or driver loaders.
+- Any interactive cleanup, deletion, file removal, or archive replacement execution.
+- Any use of destructive commands (including `git reset` or `git clean`).
+- Any force-push operations (`git push -f`) or remote history rewrites.
+- Any kernel testing, minifilter testing, or WFP live capture.
+- Any IOCTL fuzzing or deployment.
+- Any residual-risk, falsifier, M4, or PERFECT closure claims.
+- Any transition to GATED status.
+
+================================================================================
+PART II: ELITE SECURITY ARCHITECT DEEP-DIVE TECHNICAL AUDIT
+================================================================================
+
+## 1. Executive Risk Summary
+
+The patched `MMI Scratch Archive Content Secret Scan Specification` represents an outstanding, defense-in-depth specification with mature, deterministic control gates. It enforces extensive archive safety, unicode handling, and least-privilege constraints. However, under adversarial scrutiny, several critical architectural and regex-level flaws persist that could allow a determined threat actor or standard build compiler to bypass content scans, or trigger Denial of Service (DoS) states on the execution host:
+
+- **ReDoS Vulnerability in Wildcard Configurations:** Multiple regexes utilize loose alternations and unanchored wildcards that invite catastrophic backtracking when evaluating long source code strings.
+- **HMAC Salt Entropy Leakage:** The specification lacks a secure lifecycle for the HMAC secret salt, which risks exposing the true identities of redacted keys via dictionary attacks.
+- **Unicode Zero-Width Bypass Vectors:** The normalizer's Unicode translation layer is vulnerable to character-insertion bypasses where compiler engines parse keys that the regex engine fails to match.
+- **Archive Extraction & Symlink Cycles:** There is a logical gap in defining link-traversal bounds during the extraction phase, leaving the host vulnerable to file-system escape.
+
+---
+
+## 2. Critical Blindspots & Flaws
+
+### 1. Static Salt Lifecycle & HMAC Dictionary Reversibility
+- **Location/Context:** Section 29 (Redaction HMAC Policy).
+- **The Exploit/Failure Scenario:** If the HMAC salt is static, written to disk, or hardcoded in the scan tool, any developer or adversary with access to the redacted reports can generate offline lookup tables of common token formats (such as 40-character OpenAI keys or 32-character hex keys) and run high-speed dictionary attacks to fully reverse the redacted `hmac_prefix_12` fingerprints, revealing the active production secrets.
+- **The Precise Remediation:** Replace the first paragraph of Section 29 with:
+  > Secret fingerprinting must use HMAC-SHA256 with an ephemeral, runtime-only secret salt. The salt MUST be generated using a cryptographically secure pseudo-random number generator (CSPRNG) at scanner startup, held strictly in-memory, and destroyed immediately upon execution completion. All public artifacts must use this run-unique HMAC to prevent offline cross-report key correlation and dictionary lookup attacks.
+
+### 2. Catastrophic ReDoS in Private Key Wildcard Pattern
+- **Location/Context:** Section 20 (Private Key Block Pattern).
+- **The Exploit/Failure Scenario:** The pattern `BEGIN .* PRIVATE KEY` uses an unbounded wildcard `.*`. If evaluated against a massive log file, non-ascii binary data, or a carefully crafted C++ source file containing 50,000 characters of repeating hyphens on a single line, the regex engine will experience catastrophic backtracking, pinning the CPU at 100% and triggering a thread hang (Denial of Service).
+- **The Precise Remediation:** Replace the "Private key block" pattern in Section 20 with:
+  > `BEGIN (RSA|EC|DSA|OPENSSH)? PRIVATE KEY`
+
+### 3. Unicode Zero-Width character Bypass (Anti-Regex Obfuscation)
+- **Location/Context:** Section 28 (Unicode and Control Character Handling).
+- **The Exploit/Failure Scenario:** An adversary can embed a Zero-Width Space (`\u200B`), a Zero-Width Non-Joiner (`\u200C`), or a soft hyphen in the middle of a hardcoded API key (e.g., `sk-ant\u200B-...`). Standard regex patterns will fail to match this key. However, when the driver compilation chain or Go build tool processes the file, the compiler's pre-processor may silently strip control characters, resulting in a fully functional, compiled, but completely unscanned credential bypass.
+- **The Precise Remediation:** Replace the text of Section 28 with:
+  > **Unicode Normalization and Sanitization Pipeline:**
+  > Prior to any regex execution, the scanner's input normalizer MUST:
+  > 1. Detect UTF-8, UTF-16LE, and UTF-16BE encoding formats.
+  > 2. Normalize text to Unicode Normalization Form C (NFC).
+  > 3. Strips all zero-width characters (`\u200B`, `\u200C`, `\u200D`, `\uFEFF`) and control characters (`\u0000` to `\u0008`, `\u000B`, `\u000C`, `\u000E` to `\u001F`) from the textual copy *before* rules are evaluated.
+  > 4. If any zero-width space or control character is stripped within 10 characters of an alphanumeric string, record: `UNICODE_CREDENTIAL_CONTEXT_REVIEW` with blocker status.
+
+### 4. Recursive Extraction and Symlink Traversal Loophole
+- **Location/Context:** Section 24 and Section 25 (Archive Safety / Safe Extraction).
+- **The Exploit/Failure Scenario:** The scratch archive contains absolute Windows paths and may support symlinks. If a malicious or corrupted archive defines a directory symlink that references `/etc` or `/mnt/c/Windows/System32`, and the scanner extracts entries using standard library routines, it will write files outside the temporary isolated scan root, causing host file system overwrite or metadata leakage.
+- **The Precise Remediation:** Replace the "Reject or block" list in Section 24 with:
+  > **Absolute Disallowance List (Hard Fail on Ingestion):**
+  > The scanner must immediately abort execution with `ARCHIVE_SAFETY_BLOCKER` status if any of the following are detected:
+  > 1. Any path containing `..` or leading slashes.
+  > 2. Any symlink or hardlink whose resolved target escapes the designated ephemeral isolated scan root.
+  > 3. Any device files, named pipes, or socket files.
+  > 4. Any compression ratio exceeding 100:1.
+  > 5. Any archive containing Unicode-normalized path collisions (representing directory spoofing attempts).
+
+---
+
+## 3. Edge-Case Matrix
+
+| Edge Case Input | System Failure Mode | Risk Level | Specification Control Gap | Mitigation Required |
+|---|---|:---:|---|---|
+| Password-protected nested zip file | Scanner skips entry silently; passes audit. | High | Section 24 detects but does not mandate a hard fail. | Classify `ENCRYPTED_UNSCANNED_BLOCKER` as an absolute fail condition. |
+| Key split across lines with adjacent string literal concatenation in C/C++ | Scanner's single-line regex matches nothing. | High | Section 23 specifies multiline check but lacks adjacent string normalization. | Pre-process C/C++ files to concatenate adjacent literal string tokens before regex run. |
+| UTF-16LE file without Byte Order Mark (BOM) | Scanner processes file as raw binary; regex fails. | High | Section 28 relies on standard extension-based text matching. | Enforce byte-frequency and null-distribution content-sniffing for encoding detection. |
+| Highly-compressed sparse file (10GB of zeros compressed to 100KB) | Ephemeral scan disk space exhausted; DoS. | Medium | Section 24 specifies decompression limits but lacks disk-quota check. | Mandate OS least-privilege disk quota write limits on the scan extraction directory. |
+| Host Path encoded in hex-string within raw compiled Go binary | Scanner skips as non-textual binary content. | Medium | Section 7 binary strings ignores custom hex encoding. | Mandate basic hexadecimal and base64 string decoding passes on extracted binary strings. |
+
+---
+
+## 4. Next Actions
+
+For Codex to implement in the next specification patch:
+
+1.  [ ] **Adopt In-Memory CSPRNG Salt Rule:** Rewrite Section 29 to mandate runtime, ephemeral salts to prevent redaction offline brute-forcing.
+2.  [ ] **Replace Unbounded Regex Wildcards:** Replace `.*` and unbounded repetitions in Section 20 with explicit length qualifiers.
+3.  [ ] **Add Mandatory Stripping of Zero-Width Spaces:** Embed the normalization sanitization rules directly into Section 28 to close compilation-strip bypasses.
+4.  [ ] **Strengthen Symlink Jail Constraints:** Enforce strict root-jailing validation inside Section 25 to protect the host filesystem during extraction.
+5.  [ ] **Incorporate SLSA Level 3 & SBOM Requirements:** Map tool ingestion to verified software supply chain provenance.
+
+================================================================================
+FINAL VERDICT SUMMARY
+================================================================================
+AUDIT VERDICT: PASS WITH OPEN BLOCKERS
+PRESERVATION: PROVEN
+ARCHIVE CLEANLINESS: NOT PROVEN
+SECRET CONTENT CLEANLINESS: NOT PROVEN
+CLEAN CLOSURE: BLOCKED
+BUILD READINESS: 0 / 10
+BUILD AUTHORITY: NO
+EXECUTION AUTHORITY: NO
+SCAN EXECUTION AUTHORITY: NO
+CLEANUP AUTHORITY: NO
+PERFECT CLOSURE: NO
+================================================================================
