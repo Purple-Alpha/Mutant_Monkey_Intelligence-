@@ -2,7 +2,7 @@
 
 ## 1. Specification Verdict
 
-SCRATCH ARCHIVE CONTENT SECRET SCAN SPEC PATCHED - READY FOR RE-REVIEW - DOC/CONTROL ONLY
+SCRATCH ARCHIVE CONTENT SECRET SCAN SPEC PATCHED AGAIN - READY FOR RE-REVIEW - DOC/CONTROL ONLY
 
 Authority class:
 
@@ -990,7 +990,7 @@ TRIGGER_SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_EXECUTION_REQUIREMENTS
 ## Final State
 
 ```text
-SCRATCH ARCHIVE CONTENT SECRET SCAN SPEC: PATCHED - READY FOR RE-REVIEW
+SCRATCH ARCHIVE CONTENT SECRET SCAN SPEC: PATCHED AGAIN - READY FOR RE-REVIEW
 DOC/CONTROL ONLY
 PRESERVATION: PROVEN
 ARCHIVE CLEANLINESS: NOT PROVEN
@@ -1003,3 +1003,485 @@ SCAN EXECUTION AUTHORITY: NO
 CLEANUP AUTHORITY: NO
 PERFECT CLOSURE: NO
 ```
+## R2 Ceiling-Completeness Addendum
+
+Patch reason:
+
+```text
+REOPEN_SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC_FOR_PATCH
+PATCH_SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC_GAPS_ONLY
+```
+
+This addendum supersedes any weaker wording in earlier sections where behavior was left to a later scan to define. The controls below are binding minimum requirements for any later scan execution requirements artifact. This addendum remains DOC/CONTROL ONLY and does not authorize scan execution.
+
+### R2.1 Exact Textual Inclusion Rules
+
+Coverage is not deferred. The scan execution requirements must include the following file families by default:
+
+```text
+SOURCE: .py, .c, .cc, .cpp, .h, .hpp, .cs, .rs, .go, .java, .js, .ts
+SCRIPTS: .ps1, .psm1, .bat, .cmd, .sh, .bash, .zsh
+CONFIGS: .json, .xml, .yml, .yaml, .ini, .cfg, .env, .props, .targets, .vcxproj, .sln, .inf
+DOCUMENTATION_TEXT: .md, .txt, .rst, .log
+BUILD_STATE_LOGS: .tlog, .lastbuildstate, .recipe
+CACHE_TEXT: readable files under cache directories
+UNKNOWN_TEXT: include when content sniffing classifies as text
+```
+
+Unknown textual files, extensionless text files, and content-sniffed text files must be scanned unless explicitly classified as:
+
+```text
+BLOCKER_UNSUPPORTED_FILE_TYPE
+```
+
+Any file detected as text by content sniffing must be scanned even if the extension is unknown.
+
+### R2.2 Exact Binary String Extraction Rules
+
+Binary string extraction must include:
+
+- ASCII strings with minimum length 4.
+- UTF-16LE strings with minimum length 4.
+- UTF-16BE strings with minimum length 4.
+- null-separated string recovery.
+- bounded extraction from `.pdb`, `.obj`, `.iobj`, `.ipdb`, `.exe`, and `.pyc`.
+- extraction offset for every string where available.
+
+Binary string extraction must scan extracted strings through:
+
+- credential pattern rules.
+- entropy rules.
+- path metadata rules.
+- decoded-content rules where applicable.
+
+ASCII-only binary extraction is insufficient and prevents PASS.
+
+### R2.3 Entropy Implementation Definition
+
+Entropy calculation must use Shannon entropy over the candidate character sequence after preserving matched token characters and before redaction.
+
+The scan configuration must record:
+
+- entropy formula.
+- alphabet normalization policy.
+- whether quotes/delimiters are excluded.
+- candidate extraction regex.
+- token class used for thresholding.
+- entropy value to two decimal places.
+
+Entropy-only findings must include the computed entropy value in redacted output.
+
+### R2.4 Regex Engine And Timeout Requirements
+
+Credential scanning should use a non-backtracking regex engine where available.
+
+If a backtracking regex engine is used:
+
+- every rule must have a per-rule timeout or bounded execution wrapper.
+- every rule must be tested against adversarial long-line inputs.
+- lack of per-regex timeout support must be recorded as `BLOCKER_REGEX_TIMEOUT_UNSUPPORTED`.
+
+Regex timeout support is not optional for PASS.
+
+### R2.5 Provider Ruleset Versioning And Boundary Template
+
+Provider token rules must be versioned separately from this document as:
+
+```text
+SECRET_RULESET_VERSION
+```
+
+Each provider rule must define:
+
+- accepted prefixes.
+- allowed character set.
+- minimum and maximum length.
+- boundary regex.
+- confidence level.
+- source reference or rationale.
+- last review date.
+- positive, negative, boundary, escaped, encoded, and concatenated test vectors.
+
+Prefix-only provider rules are insufficient unless paired with length, charset, boundary, and context rules.
+
+Default token boundary template:
+
+```text
+LEFT_BOUNDARY = (^|[^A-Za-z0-9_/\-])
+RIGHT_BOUNDARY = ($|[^A-Za-z0-9_/\-])
+```
+
+Rules must capture only the secret value, not the boundary characters.
+
+Any rule that intentionally permits embedded matching must justify why embedded matching is required.
+
+### R2.6 Malformed Decoding And Recursive Decode Safety
+
+Malformed decoding attempts must be recorded when content appears decoder-relevant.
+
+Required classifications:
+
+```text
+MALFORMED_BASE64_REVIEW
+MALFORMED_HEX_REVIEW
+MALFORMED_PERCENT_ENCODING_REVIEW
+MALFORMED_JSON_ESCAPE_REVIEW
+MALFORMED_UTF16_REVIEW
+```
+
+Decoder errors in credential context prevent PASS unless reviewed.
+
+Recursive decoding must track decoded-buffer fingerprints per source location. If a decoded buffer repeats a prior buffer fingerprint, decoding must stop and record:
+
+```text
+DECODING_CYCLE_DETECTED
+```
+
+Recursive decoding fan-out limits:
+
+```text
+MAX_DECODED_BUFFERS_PER_FILE: 10,000
+MAX_DECODED_BYTES_PER_FILE: 256 MiB
+```
+
+### R2.7 Parser-Specific Multiline And Partial Secret Rules
+
+Multiline reconstruction must define parser-specific logic for:
+
+- PEM/OpenSSH block start/end markers.
+- YAML block scalar indentation.
+- JSON escaped newline decoding.
+- PowerShell here-strings.
+- shell backslash continuations.
+- C/C++ adjacent quoted string literals.
+- Python triple-quoted strings where present.
+
+Line-only multiline approximation is insufficient for PASS.
+
+Partial secret detection must assign a `PARTIAL_SECRET_SCORE`.
+
+Minimum scoring inputs:
+
+- provider prefix present.
+- entropy of each fragment.
+- combined reconstructed length.
+- delimiter pattern.
+- distance between fragments.
+- credential context keyword.
+- file type.
+
+`PARTIAL_SECRET_SCORE` greater than or equal to the configured threshold must be reported as:
+
+```text
+PARTIAL_SECRET_CANDIDATE
+```
+
+and require manual review.
+
+### R2.8 Concrete Archive Safety Caps
+
+All remaining configured caps are now fixed defaults:
+
+```text
+MAX_PATH_LENGTH: 4096 bytes raw path length and 512 path segments
+MAX_SYMLINK_COUNT: 0 followed links by default; symlinks recorded only
+MAX_EXTRACTION_TIME: 30 minutes unless separately authorized
+MAX_MEMORY_USE: 1 GiB unless separately authorized
+MAX_DECODED_BUFFERS_PER_FILE: 10,000
+MAX_DECODED_BYTES_PER_FILE: 256 MiB
+```
+
+Exceeding any archive safety limit prevents PASS.
+
+A separate Matt decision may authorize a follow-up scan with revised limits, but the current scan remains FAIL or INCONCLUSIVE. Limit breaches cannot be downgraded inside the same report.
+
+### R2.9 Temporary Scan Workspace Cleanup Boundary
+
+Temporary scan workspace cleanup is limited to removal of scanner-created temporary extraction copies after evidence capture.
+
+This does not authorize cleanup, deletion, pruning, git clean, archive replacement, repository modification, or history rewrite.
+
+Temporary workspace cleanup must be logged with:
+
+- temp root path.
+- files created count.
+- cleanup timestamp.
+- cleanup result.
+- failures retained under quarantine.
+
+### R2.10 Concrete Timeout Defaults
+
+Default timeout values:
+
+```text
+PER_REGEX_EVALUATION: 100 ms per rule/window
+PER_DECODER_OPERATION: 1 second per candidate
+PER_FILE_SCAN_SMALL: 30 seconds for files <= 16 MiB
+PER_FILE_SCAN_LARGE: 5 minutes for larger streamed files
+BINARY_STRING_EXTRACTION: 5 minutes per binary file
+PER_ARCHIVE_SCAN: 2 hours
+WHOLE_SCAN_RUNTIME: 4 hours unless separately authorized
+```
+
+Timeout configuration must be recorded.
+
+### R2.11 Mandatory File Classification
+
+File classification must use extension, magic bytes, and text/binary sniffing.
+
+If magic/text sniffing cannot be performed, the file must be classified:
+
+```text
+BLOCKER_FILE_CLASSIFICATION_UNSUPPORTED
+```
+
+Extension-only classification prevents PASS.
+
+Unicode normalization collisions in paths or evidence locations must be reported as:
+
+```text
+UNICODE_NORMALIZATION_COLLISION
+```
+
+The report must preserve raw bytes, displayed path, normalized path, and archive entry index.
+
+### R2.12 HMAC Salt Lifecycle And Redaction Exposure
+
+HMAC scan salt rules:
+
+- unique per scan run.
+- generated by cryptographically secure RNG.
+- stored only in restricted local evidence vault.
+- never committed to repo.
+- never sent to external review model.
+- salt identifier recorded in public report, not salt value.
+- salt reuse across scans is prohibited unless explicitly justified.
+
+Prefix/suffix display policy:
+
+```text
+CRITICAL: 0 prefix / 0 suffix by default
+HIGH: max 1 prefix / 1 suffix
+MEDIUM_LOW: max 2 prefix / 2 suffix
+TOKEN_LENGTH_LE_24: 0 prefix / 0 suffix
+```
+
+Reviewer may reduce exposure but may not increase it without separate approval.
+
+### R2.13 Named Access Roles And Artifact Permissions
+
+Access roles:
+
+```text
+OWNER_OPERATOR: Matt only
+SECURITY_REVIEWER: explicitly named reviewer only
+EXTERNAL_MODEL_REVIEW: redacted/minimized packet only
+PUBLIC_OR_REPO: prohibited by default
+```
+
+Every artifact must include:
+
+- sensitivity label.
+- allowed roles.
+- storage location.
+- share status.
+- commit status.
+- reviewer approval status.
+
+No raw scan output, redacted findings report, command log, salt, or review packet may be committed to the repository.
+
+Only a sanitized executive summary may be considered for commit after a separate Matt decision.
+
+### R2.14 Environment, Host, Hash, And Reproducibility Controls
+
+Environment capture policy:
+
+- environment variable names may be listed.
+- environment variable values are prohibited.
+- PATH may be captured only after private path redaction.
+- credential-like environment variable names must be flagged without values.
+
+Host identifier in shareable reports must be pseudonymized.
+
+Raw host identifiers are restricted to owner-operator evidence only.
+
+All artifact, tool, ruleset, and dependency hashes must use SHA-256 or stronger.
+
+Hash algorithm must be recorded with every digest.
+
+If any scanner component uses randomness, sampling, parallel scheduling, or nondeterministic ordering, the scan must record:
+
+- deterministic seed where applicable.
+- stable sort order.
+- worker count.
+- concurrency model.
+- nondeterminism notes.
+
+Uncontrolled nondeterminism prevents PASS.
+
+### R2.15 Exclusion And Allowlist Hardening
+
+Exclusions of credential-bearing file families are prohibited from PASS.
+
+Excluded files in source, config, scripts, logs, binaries, archives, or cache text force INCONCLUSIVE or FAIL unless the file is duplicated and scanned elsewhere with identical hash.
+
+Expired allowlist entries are invalid.
+
+Any hit suppressed by an expired allowlist must be reported as:
+
+```text
+ALLOWLIST_EXPIRED_HIT_REINSTATED
+```
+
+Broad allowlists must not suppress findings.
+
+If a broad allowlist is present, findings must still be emitted and the broad allowlist reported separately as:
+
+```text
+REVIEW_BLOCKER
+```
+
+### R2.16 Severity, Confidence, And Critical Secret Containment
+
+Every finding must include both severity and confidence.
+
+Confidence values:
+
+```text
+HIGH_CONFIDENCE
+MEDIUM_CONFIDENCE
+LOW_CONFIDENCE
+NEEDS_MANUAL_REVIEW
+```
+
+Severity does not replace confidence.
+
+If a CRITICAL SECRET_HIT is found:
+
+- stop external sharing.
+- classify all outputs as OWNER_OPERATOR_ONLY.
+- require SECRET_TRIAGE_AND_ROTATION_PLAN before any external model review.
+- mark lane CLEAN CLOSURE BLOCKED.
+
+### R2.17 Gemini Redaction Boundary And External Review Block
+
+Complete usernames, machine names, full private paths, raw archive contents, raw binary strings, raw secrets, raw hashes, and HMAC salts are prohibited in Gemini input.
+
+No exception is allowed inside this lane.
+
+If Gemini review cannot be performed without violating the redaction boundary, the lane must be marked:
+
+```text
+EXTERNAL_REVIEW_BLOCKED_BY_DATA_MINIMIZATION
+```
+
+This does not permit unsafe sharing and does not authorize acceptance.
+
+### R2.18 Compliance Evidence Fields
+
+Each compliance mapping entry must include:
+
+- control reference.
+- evidence artifact.
+- evidence limitation.
+- non-claim statement.
+- reviewer.
+- status: `MAPPED_FOR_REFERENCE_ONLY` or `NOT_PROVEN`.
+
+Compliance mapping remains informational only and does not claim compliance or certification.
+
+### R2.19 Default Retention State
+
+Until a retention policy is accepted, all generated scan-related artifacts default to:
+
+```text
+QUARANTINED_LOCAL_EVIDENCE_ONLY
+OWNER_OPERATOR_ONLY
+NO_COMMIT
+NO_EXTERNAL_SHARE
+```
+
+### R2.20 Offline Scan / External Review Phase Separation
+
+The scan execution environment and external review environment must be separate phases:
+
+```text
+PHASE_1: offline local scan
+PHASE_2: redaction validation
+PHASE_3: minimized external review packet preparation
+PHASE_4: external review only if separately authorized
+```
+
+No external model tool may access raw scan workspace.
+
+### R2.21 Blocker-Aware Zero-Hit Headline
+
+If any blocker exists, the summary headline must not say ZERO HITS.
+
+Required blocker-aware headline:
+
+```text
+NO CONFIRMED SECRET HITS IN SCANNED CONTENT; COVERAGE BLOCKERS REMAIN.
+```
+
+### R2.22 Evidence-Only Footer
+
+Every scan artifact must include this footer:
+
+```text
+This artifact is evidence only. It does not prove content cleanliness, authorize build, authorize cleanup, close residual risks, clear falsifiers, grant M4 closure, grant PERFECT closure, or grant GATED status.
+```
+
+### R2.23 Post-Scan Disposition Authority
+
+Post-scan disposition options now include:
+
+```text
+ACCEPT_QUARANTINED_DIRTY_PRESERVATION_BACKUP
+PREPARE_CLEAN_REPLACEMENT_ARCHIVE_PLAN
+REOPEN_SCAN_FOR_MISSING_COVERAGE
+TRIGGER_SECRET_TRIAGE_PLAN
+HOLD_DIRTY_PRESERVATION_BACKUP_PENDING_DECISION
+```
+
+Post-scan disposition is recommendation only until explicitly accepted by Matt.
+
+No disposition authorizes deletion, cleanup, archive replacement, or history rewrite without a separate Matt decision.
+
+### R2.24 Gemini Adversarial Re-Review Requirements
+
+Gemini re-review must include these subsections:
+
+```text
+REGEX_REDOS_REVIEW:
+ARCHIVE_BOMB_REVIEW:
+ENCODING_EVASION_REVIEW:
+MULTILINE_SECRET_REVIEW:
+REDACTION_LEAKAGE_REVIEW:
+RBAC_AND_OUTPUT_STORAGE_REVIEW:
+FALSE_NEGATIVE_RISK_TABLE:
+```
+
+### R2.25 R2 Next Decision Supersession
+
+This addendum supersedes the earlier acceptance decision block.
+
+Next required Matt decision:
+
+```text
+ACCEPT_SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC_PATCHED_AGAIN_RE_REVIEW
+```
+
+or
+
+```text
+REOPEN_SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC_FOR_PATCH
+```
+
+Expected status after favorable re-review:
+
+```text
+SCRATCH ARCHIVE CONTENT SECRET SCAN SPEC PATCHED AGAIN - READY FOR ACCEPTANCE - DOC/CONTROL ONLY
+```
+
+No scan execution follows from acceptance.
