@@ -259,6 +259,25 @@ FORBIDDEN TOOLS/ACTIONS:
 OWNERSHIP REASON:
 ```
 
+## Active Audit Model Trial
+
+```text
+TRIAL WINDOW: 2026-07-07 through 2026-07-14
+AUDIT MODEL: Gemini Paid API
+PRIMARY REPO / LAW MODEL: Codex
+FALLBACK AUDIT MODEL: Grok, only if Gemini fails audit-trail quality, role separation, output capture, or reliability expectations
+BUILD AUTHORITY: NO
+```
+
+During this window, Gemini Paid API is the active external audit/challenge model. Codex remains responsible for repo-state verification, documentation/control updates, law enforcement, and git evidence. Gemini output must be captured to file or terminal log before acceptance.
+
+If Gemini cannot produce a reliable audit trail, the next allowed decision is:
+
+```text
+REOPEN_AUDIT_MODEL_SELECTION_FOR_PATCH
+```
+
+This trial does not authorize build, execution, cleanup, deletion, kernel testing, minifilter testing, IOCTL fuzzing, deployment, residual-risk closure, falsifier closure, M4 closure, PERFECT closure, or GATED status.
 ## Current Evidence-Determined Next Lane
 
 ```text
