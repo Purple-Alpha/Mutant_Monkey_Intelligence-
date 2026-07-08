@@ -301,6 +301,22 @@ MINIFILTER TESTING: BLOCKED
 RESTORE-CHECK SCRIPT EXECUTION: BLOCKED UNTIL CLASSIFIED
 ```
 
+
+## Project-Wide LLM Research And Review Laws
+
+All research, audit, review, judge, synthesis, design, and build-design LLM calls must read and obey:
+
+```text
+LLM_LANE_LAWS_INDEX_2026-07.md
+LLM_PROJECT_LAWS_2026-07.md
+LLM_UNIVERSAL_PROJECT_RUBRIC_2026-07.md
+LLM_AUDIT_LAWS_2026-07.md when LANE = AUDIT
+LLM_BUILD_LAWS_2026-07.md when LANE = BUILD
+LLM_DESIGN_LAWS_2026-07.md when LANE = DESIGN
+LLM_RESEARCH_LAWS_2026-07.md when LANE = RESEARCH
+```
+
+These laws are documentation/control only. They do not grant build, execution, cleanup, scan execution, closure, or authority. Any LLM output that violates them is invalid until reworked.
 ## Final State
 
 ```text
