@@ -74,3 +74,15 @@ This document is documentation/control only.
 - It does not by itself justify perfect closure, gated status, or M4 closure.
 
 ***
+
+## Law A7 - Model-Specific Audit Grading
+
+Every AUDIT output shall comply with `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
+
+- Every audit must include a model self-grade.
+- Every audit must identify model name, prompt/rubric version, lane, reviewed artifact, and output capture path where available.
+- Any B-grade audit is invalid for acceptance and must be reworked.
+- Any audit that omits model-specific grading is invalid.
+- Passable audits are failed audits for this project.
+
+This law is documentation/control only and grants no authority.

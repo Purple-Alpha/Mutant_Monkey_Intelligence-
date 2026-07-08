@@ -115,3 +115,14 @@ This document (`LLM_PROJECT_LAWS_2026-07.md`) is documentation/control only.
 ***
 
 If you want, the next step can be a very short companion artifact like `LLM_LAW_ENFORCEMENT_PROTOCOL.md` that defines how agents and humans must react when a violation of these laws is detected.
+## Law 10 — Universal Model Task Grading
+
+Every model shall grade its own completed task output.
+
+- The grade shall be included for every task, not only audits.
+- The grade shall use `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
+- A missing grade makes the model output invalid.
+- A grade below A- requires rework before the output can be treated as accepted.
+- A high grade is evidence about output quality only; it does not grant authority, prove system behavior, close residual risks, or authorize build, execution, cleanup, or deployment.
+
+This law is documentation/control only.

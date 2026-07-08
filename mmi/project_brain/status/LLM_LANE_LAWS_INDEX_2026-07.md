@@ -19,9 +19,10 @@ All research, audit, review, judge, synthesis, design, or build-design LLM calls
 2. MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md
 3. LLM_PROJECT_LAWS_2026-07.md
 4. LLM_UNIVERSAL_PROJECT_RUBRIC_2026-07.md
-5. Lane-specific LLM law file
-6. Current lane packet
-7. Older routing docs and prior model outputs
+5. LLM_MODEL_AUDIT_STANDARD_2026-07.md
+6. Lane-specific LLM law file
+7. Current lane packet
+8. Older routing docs and prior model outputs
 ```
 
 If these documents conflict, the higher item in the stack wins.
