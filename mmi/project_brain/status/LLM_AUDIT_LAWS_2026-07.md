@@ -79,7 +79,9 @@ This document is documentation/control only.
 
 Every AUDIT output shall comply with `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
 
-- Every audit must include an independent grade for the artifact under audit, or mark the audit artifact itself as `INDEPENDENT_GRADE_PENDING` for separate review.
+- Every audit may include an independent grade for the target artifact under audit only when the auditor did not create or materially edit that target artifact.
+- Every audit artifact produced by the auditor must mark itself `REVIEW_ARTIFACT_ACCEPTANCE_STATUS: INDEPENDENT_REVIEW_REQUIRED`.
+- No audit may assign an acceptance grade to itself.
 - Every audit must identify model name, prompt/rubric version, lane, reviewed artifact, and output capture path where available.
 - Any audit grade below the active lane threshold is invalid for acceptance and must be reworked or escalated to Matt.
 - Any audit that omits model-specific grading is invalid.
@@ -131,6 +133,8 @@ The AUDIT lane prompt must instruct the auditor to:
 - hunt unexamined scenarios, edge cases, and failure modes.
 - surface overclaims that imply safety, correctness, readiness, authority, or closure without hard evidence.
 - grade with 0-3 criterion scores and derive the letter grade by the lowest-score rule.
+- grade only the target artifact under audit, not the audit output currently being produced.
+- mark the audit output itself as requiring independent review.
 - treat hard-gate violations as `F / Blocked`.
 
 The AUDIT lane prompt must forbid:
@@ -141,5 +145,6 @@ The AUDIT lane prompt must forbid:
 - build, cleanup, reset, delete, force-push, kernel/minifilter/IOCTL testing, or execution authorization.
 - softened risk language that hides severity.
 - treating any upstream grade as proof.
+- self-grading the audit output currently being produced.
 
-Any AUDIT prompt that omits the XML law wrapper, lane block, scope block, evidence requirements, required output sections, independent grading rule, or build-authorization boundary is invalid until reworked.
+Any AUDIT prompt that omits the XML law wrapper, lane block, scope block, evidence requirements, required output sections, independent grading rule, target-vs-review-artifact separation, or build-authorization boundary is invalid until reworked.

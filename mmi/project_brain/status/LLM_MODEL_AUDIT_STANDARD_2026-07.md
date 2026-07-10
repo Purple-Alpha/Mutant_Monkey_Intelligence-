@@ -44,7 +44,7 @@ Every model audit must include:
 4. Non-claims and falsifiers.
 5. Residual-risk ledger.
 6. Authority drift check.
-7. Independent grade block, or `INDEPENDENT_GRADE_PENDING` if the audit output itself is the produced artifact awaiting separate review.
+7. Independent grade block for the target artifact, plus `REVIEW_ARTIFACT_ACCEPTANCE_STATUS: INDEPENDENT_REVIEW_REQUIRED` for the audit output currently being produced.
 8. Binary decision.
 
 Any response that omits one of these sections is classified as:
@@ -113,12 +113,32 @@ NO SELF-PASS
 
 The artifact producer may prepare a `GRADE_REQUEST` evidence bundle, but may not assign its own score, letter grade, acceptance verdict, or audit pass. The grading/audit producer must be a separate model, reviewer, or Matt-approved operator from the producer that created or materially edited the artifact.
 
+Three-object separation is mandatory:
+
+```text
+TARGET_ARTIFACT: the artifact being reviewed or graded.
+REVIEW_ARTIFACT: the audit/review/grade output produced by the reviewer.
+REVIEW_ARTIFACT_GRADE: a later independent grade of the REVIEW_ARTIFACT by a different reviewer.
+```
+
+An auditor may grade a `TARGET_ARTIFACT` only when the auditor did not create or materially edit that target artifact. The auditor must not grade the `REVIEW_ARTIFACT` it is currently producing. Every `REVIEW_ARTIFACT` must end with:
+
+```text
+REVIEW_ARTIFACT_ACCEPTANCE_STATUS: INDEPENDENT_REVIEW_REQUIRED
+REVIEW_ARTIFACT_MAY_SELF_GRADE: NO
+```
+
+If a prompt asks a model to grade the artifact it is currently producing, the prompt is invalid. If an output assigns an acceptance grade to itself, the output is `law_conflict` and must be treated as `F / Blocked`.
+
 Required independent grade fields:
 
 ```text
-ARTIFACT_PRODUCER_ID:
+TARGET_ARTIFACT_PRODUCER_ID:
+TARGET_ARTIFACT_PRODUCER_EVIDENCE:
 GRADER_ID:
+GRADER_IDENTITY_EVIDENCE:
 GRADER_INDEPENDENCE_STATEMENT:
+GRADER_DID_NOT_CREATE_OR_EDIT_TARGET: YES / NO / UNKNOWN
 LANE:
 TASK:
 ARTIFACTS_GRADED:
@@ -134,7 +154,11 @@ KNOWN_LIMITATIONS:
 NEXT_DECISION_OR_LANE:
 FORBIDDEN_ACTIONS_RECONFIRMED:
 EVIDENCE_LIST:
+REVIEW_ARTIFACT_ACCEPTANCE_STATUS: INDEPENDENT_REVIEW_REQUIRED
+REVIEW_ARTIFACT_MAY_SELF_GRADE: NO
 ```
+
+Identity evidence must be concrete. Plaintext names alone are not sufficient. At minimum, the grade evidence must include the captured model/operator identity available in the tool transcript, output capture path, commit author/committer where applicable, local operator identity where available, and the evidence used to prove the grader did not create or materially edit the target artifact. If producer/grader separation is `UNKNOWN`, the grade is `F / Blocked`.
 
 Required criterion score scale:
 
@@ -155,6 +179,8 @@ Critical criteria must include, at minimum:
 - producer/grader independence.
 - output completeness.
 
+Every critical criterion must score `3` for the artifact to receive an accepted grade. Any critical criterion scored `0`, `1`, or `2` makes the artifact `F / Blocked`; weak critical compliance is not acceptable for this project.
+
 ### A.5 Non-Averaging Lowest-Common-Denominator Grade Law
 
 Overall letter grades must not be computed by averaging rubric scores.
@@ -167,7 +193,7 @@ Letter grades are determined strictly by the minimum criterion score:
 - `D`: at least one criterion is `1`, no criterion is `0`, and the pattern fails the lane's `C` threshold.
 - `F / Blocked`: any single criterion is `0`, or any hard-gate condition is triggered.
 
-If any critical criterion is `0`, the artifact is `F / Blocked` regardless of all other scores. This rule overrides any prior or implied averaging logic; averaging is forbidden.
+If any critical criterion is less than `3`, the artifact is `F / Blocked` regardless of all other scores. This rule overrides any prior or implied averaging logic; averaging is forbidden.
 
 ### A.6 Upstream Consumption Discipline Law
 
@@ -178,6 +204,7 @@ Every lane prompt must include these constraints:
 ```text
 You are forbidden from using an upstream quality grade (A-F or rubric scores) as proof of accuracy, safety, or correctness.
 Before executing your own work, you must independently ingest and verify the raw evidence_list and artifact content; you may not rely on the upstream grade label.
+Before consuming a grade, you must recompute the current artifact hash from disk or from the exact provided artifact bytes and compare it to the grade evidence_list.
 ```
 
 Grade records may be read for orientation only. They may not be cited as evidence of correctness, safety, system behavior, runtime readiness, or authority. Any prompt or output that says or implies "we trust this because it has an A grade" is `law_conflict` and must be treated as `F / Blocked`.
@@ -192,17 +219,40 @@ The `EVIDENCE_LIST` for every grade must include:
 - Corresponding artifact path(s).
 - Timestamp/date of hash capture.
 - Grader identity.
+- Hash recomputation command or method used by the grader.
+- Hash comparison result: `MATCH`, `MISMATCH`, or `NOT_RECOMPUTED`.
 
 A grade is valid only for that specific hash. If the artifact hash changes by even one character:
 
 - the previous grade record is dead and invalid for the new state.
 - any downstream lane that wishes to use the new state must treat it as a new artifact and obtain a new independent grade.
 
-Using a grade whose hash does not match the current artifact is `law_conflict` and must be treated as `F / Blocked`.
+Using a grade whose hash does not match the current artifact is `law_conflict` and must be treated as `F / Blocked`. A grade with `NOT_RECOMPUTED` hash status is invalid for acceptance.
 
 ### A.8 Three-Strikes Circuit Breaker Law
 
 Consecutive `F / Blocked` grades must be tracked per artifact, or per tightly related artifact series undergoing iterative fixes.
+
+The authoritative strike ledger path is:
+
+```text
+mmi/project_brain/status/MMI_GRADING_STRIKE_LEDGER.json
+```
+
+Every `F / Blocked` grade must append or update a ledger entry with:
+
+```text
+artifact_key:
+artifact_path:
+artifact_hash:
+artifact_series_id:
+block_reason_category:
+grader_id:
+grade_artifact_path:
+timestamp:
+consecutive_count:
+next_allowed_state:
+```
 
 If an artifact triggers `F / Blocked` three consecutive times for the same reason category, including but not limited to `overclaim`, `missing_evidence`, `dirty_or_unknown_state`, `lane_violation`, `hash_mismatch`, or `self_grading`, then:
 
@@ -211,7 +261,7 @@ If an artifact triggers `F / Blocked` three consecutive times for the same reaso
 - Matt intervention is mandatory to decide whether to continue, refactor, or abandon the artifact.
 - no further automated work on that topic may resume without explicit Matt authorization.
 
-Any pipeline that continues automated work after three consecutive Blocks for the same reason category is in `law_conflict`.
+Any pipeline that continues automated work after three consecutive Blocks for the same reason category is in `law_conflict`. If the strike ledger is missing, stale, unreadable, or not checked before routing, automated routing is blocked until the ledger is repaired or Matt explicitly authorizes a one-off manual lane.
 
 Project acceptance standard:
 
@@ -376,19 +426,20 @@ You operate strictly within the active lane and the project's grading, evidence,
 <grading_law>
 - Every model/operator step must be graded by an independent reviewer before acceptance.
 - No producer may grade, audit, pass, or accept its own work.
+- An auditor may grade only the target artifact produced by someone else; the audit artifact it produces remains INDEPENDENT_REVIEW_REQUIRED.
 - Grades are artifacts about quality within a lane, not permissions to build or safety verdicts.
 - A high grade does not prove system safety, runtime behavior, correctness, or readiness to build.
 - Letter grades A-F are determined by the lowest criterion score; averaging is forbidden.
-- A = all 3s; B = all >=2 with no 1s or 0s; C = all >=1 with no 0s and no downgrade trigger; D = at least one 1 and no 0s but not C; F / Blocked = any 0 or hard-gate violation.
+- A = all 3s; B = all non-critical criteria >=2 with no 1s or 0s and all critical criteria = 3; C = all non-critical criteria >=1 with no 0s, all critical criteria = 3, and no downgrade trigger; D = at least one non-critical 1 and no 0s but not C; F / Blocked = any 0, any critical criterion below 3, or any hard-gate violation.
 - Upstream grades are invisible to execution and may not be used as proof of accuracy, safety, or correctness.
 - Grades are cryptographically bound to artifact hashes; if a hash changes, the grade is dead.
-- Three consecutive Blocks for the same reason category sever automated work until Matt intervenes.
+- Three consecutive Blocks for the same reason category in MMI_GRADING_STRIKE_LEDGER.json sever automated work until Matt intervenes.
 </grading_law>
 
 <evidence_law>
 - Evidence or it did not happen.
 - All claims must be tied to paths, commands, hashes, dates, and identities where applicable.
-- Every grade evidence list must include the SHA-256 hash or equivalent cryptographic hash of the primary artifact(s), corresponding paths, timestamp/date, and grader identity.
+- Every grade evidence list must include the SHA-256 hash or equivalent cryptographic hash of the primary artifact(s), corresponding paths, timestamp/date, grader identity, identity evidence, hash recomputation method, and hash comparison result.
 </evidence_law>
 
 <shared_lane_rules>
@@ -396,6 +447,7 @@ You operate strictly within the active lane and the project's grading, evidence,
 - You must not claim safety, runtime correctness, system truth, build readiness, or closure unless the active lane, evidence, and laws explicitly allow it.
 - You must include required output sections: Identity, Evidence_list, Risks_and_unknowns or Residual_risks, Boundaries, and lane-specific work output.
 - Before using any upstream artifact, independently inspect the raw artifact content and evidence_list; do not rely on upstream grade labels.
+- Before using any grade, recompute artifact hashes and check MMI_GRADING_STRIKE_LEDGER.json for active three-strike blocks.
 - If you detect any law conflict, mark the work F / Blocked and explain the conflict.
 </shared_lane_rules>
 </project_laws>

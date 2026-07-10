@@ -34,10 +34,13 @@ Every project step, artifact, lane output, review, and build-design proposal req
 Binding rules:
 
 - no model, operator, or lane may grade, audit, pass, or accept its own work.
+- a reviewer may grade only a target artifact produced by another model/operator; the review artifact itself remains `INDEPENDENT_REVIEW_REQUIRED`.
 - every grade must use the non-averaging lowest-common-denominator rule in `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
+- every critical criterion must score `3`; any critical criterion below `3` is `F / Blocked`.
 - every grade must be cryptographically bound to the exact artifact hash reviewed.
+- every grade consumer must recompute artifact hashes before relying on the grade record for routing.
 - upstream grades are invisible to execution and may not be used as proof of accuracy, safety, correctness, readiness, or authority.
-- three consecutive `F / Blocked` grades for the same artifact/topic and same reason category halt automated routing until Matt intervenes.
+- three consecutive `F / Blocked` grades for the same artifact/topic and same reason category, tracked in `MMI_GRADING_STRIKE_LEDGER.json`, halt automated routing until Matt intervenes.
 
 Any violation is `law_conflict` and must be treated as `F / Blocked`.
 
