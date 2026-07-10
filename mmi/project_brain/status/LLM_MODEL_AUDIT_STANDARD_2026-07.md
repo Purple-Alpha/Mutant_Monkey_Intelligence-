@@ -228,6 +228,14 @@ Letter grades are determined strictly by the minimum criterion score:
 
 If any critical criterion is less than `3`, the artifact is `F / Blocked` regardless of all other scores. This rule overrides any prior or implied averaging logic; averaging is forbidden.
 
+Grade consistency is mandatory:
+
+- If `critical_criteria_results` lists any critical criterion below `3`, `LETTER_GRADE` must be `F_BLOCKED`.
+- If `LOWEST_CRITERION_SCORE` is `0`, `LETTER_GRADE` must be `F_BLOCKED`.
+- If `LETTER_GRADE`, `LETTER_GRADE_MARK`, `CRITERION_SCORES`, `CRITICAL_CRITERIA`, and `critical_criteria_results` contradict each other, the report card is invalid and must be treated as `F / Blocked`.
+- A report card that says `lowest_score_rule_applied: YES` but assigns a non-blocking grade despite a critical criterion below `3` is `law_conflict`.
+- Contradictory grade math must be classified as `GRADE_MATH_CONFLICT`.
+
 ### A.6 Upstream Consumption Discipline Law
 
 Upstream grades are invisible to execution.

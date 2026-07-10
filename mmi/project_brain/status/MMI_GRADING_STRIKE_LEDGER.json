@@ -44,6 +44,18 @@
       "timestamp": "2026-07-09T21:30:00-07:00",
       "consecutive_count": 1,
       "next_allowed_state": "PATCH_REQUIRED"
+    },
+    {
+      "artifact_key": "audit-artifact:MMI_REPORT_CARD_GATE_AUDIT_CD09F56_2026-07.md",
+      "artifact_path": "mmi/project_brain/status/MMI_REPORT_CARD_GATE_AUDIT_CD09F56_2026-07.md",
+      "artifact_hash": "b196127edca91d66e0d1898c659678b42dc4ab3efc760eda695d63c0411a1ffa",
+      "artifact_series_id": "report-card-audit-artifact-series",
+      "block_reason_category": "grade_math_conflict",
+      "grader_id": "Codex",
+      "grade_artifact_path": "conversation-response:codex-review-2026-07-09",
+      "timestamp": "2026-07-09T21:40:00-07:00",
+      "consecutive_count": 1,
+      "next_allowed_state": "REPORT_CARD_REWORK_REQUIRED"
     }
   ]
 }

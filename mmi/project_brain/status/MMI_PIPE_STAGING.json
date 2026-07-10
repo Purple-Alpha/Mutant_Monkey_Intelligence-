@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-07-09T21:35:29-07:00",
-  "pipe": "LOADED",
-  "reason": "Queued independent report-card gate audit for latest law/control commit",
-  "active_task_id": "mmi-report-card-gate-audit-cd09f56",
-  "assignee": "Gemini Paid API",
+  "updated_at": "2026-07-09T21:40:00-07:00",
+  "pipe": "DRY",
+  "reason": "Gemini report-card audit captured but blocked by grade math conflict",
+  "last_completed_task_id": "mmi-report-card-gate-audit-cd09f56",
+  "last_target_grade": "INVALID_GRADE_MATH_CONFLICT",
   "build_authorization": "NOT_AUTHORIZED"
 }
