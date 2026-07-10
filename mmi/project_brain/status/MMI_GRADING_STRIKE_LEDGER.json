@@ -20,6 +20,18 @@
       "timestamp": "2026-07-09T20:00:00-07:00",
       "consecutive_count": 1,
       "next_allowed_state": "PATCH_REQUIRED"
+    },
+    {
+      "artifact_key": "audit-artifact:MMI_INDEPENDENT_GRADING_LAW_AUDIT_F8B4934_2026-07.md",
+      "artifact_path": "mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_F8B4934_2026-07.md",
+      "artifact_hash": "d26a3e5418d30ea0193a1d5ca6a515cd98852dc2dd42493cf04fae6b76d0f054",
+      "artifact_series_id": "grading-law-audit-artifact-series",
+      "block_reason_category": "missing_evidence",
+      "grader_id": "Codex",
+      "grade_artifact_path": "conversation-response:codex-grade-2026-07-09",
+      "timestamp": "2026-07-09T20:00:00-07:00",
+      "consecutive_count": 1,
+      "next_allowed_state": "PATCH_REQUIRED"
     }
   ]
 }

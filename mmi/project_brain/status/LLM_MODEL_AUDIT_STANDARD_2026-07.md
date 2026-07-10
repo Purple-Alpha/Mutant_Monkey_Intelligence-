@@ -145,9 +145,17 @@ ARTIFACTS_GRADED:
 AUTHORITY_CLASS:
 TASK_RESULT: COMPLETE / PARTIAL / BLOCKED / INVALID
 CRITERION_SCORES:
+CRITERION_FEEDBACK:
 CRITICAL_CRITERIA:
 LOWEST_CRITERION_SCORE:
 LETTER_GRADE: A / B / C / D / F_BLOCKED
+LETTER_GRADE_MARK:
+TEACHING_SUMMARY:
+WHAT_WAS_PERFECT:
+WHAT_WAS_GOOD:
+WHAT_WAS_WEAK:
+WHAT_FAILED:
+IMPROVEMENT_TARGETS:
 BLOCK_REASON_CATEGORIES:
 LAW_CONFLICTS:
 KNOWN_LIMITATIONS:
@@ -163,11 +171,32 @@ Identity evidence must be concrete. Plaintext names alone are not sufficient. At
 Required criterion score scale:
 
 ```text
-3 = clean within lane and evidence scope.
-2 = adequate but materially weak or bounded by non-blocking limitations.
-1 = poor, ambiguous, or materially incomplete but not zeroed.
-0 = absent, contradicted, law-conflicting, or hard-gate blocked.
+3 = PERFECT / CLEAN: fully satisfies the criterion within lane and evidence scope.
+2 = GOOD / ADEQUATE: useful and mostly correct, but materially weak, incomplete, or bounded.
+1 = WEAK / POOR: present but ambiguous, unreliable, or materially incomplete.
+0 = FAILED / BLOCKED: absent, contradicted, law-conflicting, self-grading, or hard-gate blocked.
 ```
+
+Every criterion must include teaching feedback:
+
+```text
+criterion:
+score: 0 / 1 / 2 / 3
+quality_mark: PERFECT / GOOD / WEAK / FAILED
+what_worked:
+what_failed_or_was_missing:
+improvement_target:
+```
+
+The letter grade must be visible as both a machine field and a human teaching mark. A blocked artifact must still receive a clear letter mark, for example:
+
+```text
+LETTER_GRADE: F_BLOCKED
+LETTER_GRADE_MARK: F / Blocked
+TEACHING_SUMMARY: Strong structure, but failed acceptance because evidence discipline and line-reference accuracy were below critical threshold.
+```
+
+The grade output must explicitly separate positive performance from failure causes. A grade that only says `F_BLOCKED` without explaining what was done well and what failed is incomplete.
 
 Critical criteria must include, at minimum:
 
