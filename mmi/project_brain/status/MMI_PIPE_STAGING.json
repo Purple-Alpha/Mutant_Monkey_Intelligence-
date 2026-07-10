@@ -1,5 +1,8 @@
 {
-  "updated_at": "2026-07-05T22:07:01-07:00",
-  "pipe": "DRY",
-  "reason": "PIPELINE_EXHAUSTED_AWAITING_PM_EXTEND"
+  "updated_at": "2026-07-09T19:59:57-07:00",
+  "pipe": "LOADED",
+  "reason": "Matt directive queued independent grading-law audit",
+  "active_task_id": "mmi-independent-grading-law-audit-db678eb",
+  "assignee": "Gemini Paid API",
+  "build_authorization": "NOT_AUTHORIZED"
 }
