@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-07-09T20:00:00-07:00",
-  "pipe": "DRY",
-  "reason": "Gemini audit completed; target commit db678eb blocked and patch lane handled manually by Matt directive",
-  "last_completed_task_id": "mmi-independent-grading-law-audit-db678eb",
-  "last_target_grade": "F_BLOCKED",
+  "updated_at": "2026-07-09T21:19:52-07:00",
+  "pipe": "LOADED",
+  "reason": "Matt directive queued host-attested evidence audit with stop-on-blocker rule",
+  "active_task_id": "mmi-host-attested-evidence-audit-6fe3558",
+  "assignee": "Gemini Paid API",
   "build_authorization": "NOT_AUTHORIZED"
 }

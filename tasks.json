@@ -2103,5 +2103,29 @@
         "result_summary": "AUDIT_RESULT: target commit db678eb graded F / Blocked. Findings: plaintext identity loophole, critical criteria weakness, missing persistent strike ledger, and missing required hash recomputation. Audit artifact itself remains INDEPENDENT_REVIEW_REQUIRED and does not self-grade.",
         "sign_off": "FAIL_TARGET_PATCH_REQUIRED",
         "sign_off_tier": "Audit target verdict only; audit artifact requires separate review"
+    },
+    {
+        "id": "mmi-host-attested-evidence-audit-6fe3558",
+        "instruction": "PROJECT: MMI. AUDIT lane only. Independently audit and grade target commit 6fe3558 (Support host-attested grading evidence) against the active law stack. Use the mandatory high-intensity XML audit prompt shape. Target files: LLM_MODEL_AUDIT_STANDARD_2026-07.md, LLM_LANE_LAWS_INDEX_2026-07.md, MMI_HOST_EVIDENCE_BUNDLE_GRADING_TOOL_LOCKOUT_2026-07.md, and MMI_INDEPENDENT_GRADING_LAW_AUDIT_4918d4d_2026-07.md. Verify whether HOST_ATTESTED mode correctly resolves Gemini shell/tool lockout without allowing hallucinated git/hash/identity claims. STOP_AND_REPORT_BLOCKER if shell permission denial, missing file access, missing host evidence, hash verification impossibility, identity uncertainty, or evidence drift prevents honest grading. Required output: mmi/project_brain/status/MMI_HOST_ATTESTED_EVIDENCE_AUDIT_6FE3558_2026-07.md. No build work, no runtime execution, no cleanup, no deletion, no reset, no force-push.",
+        "status": "pending",
+        "assignee": "Gemini Paid API",
+        "tier": "Audit",
+        "score": 98,
+        "score_reason": "Gemini reported hard walls around shell lockout, native hashing, and identity evidence; the next safe lane is to audit the host-attested evidence patch that addresses those blockers.",
+        "source": "Matt directive 2026-07-09: Gemini must stop on blockers and report walls so they can be fixed",
+        "created_at": "2026-07-09T21:19:52-07:00",
+        "created_by": "Codex",
+        "build_authorization": "NOT_AUTHORIZED",
+        "routing_note": "AUDIT only. Primary model: Gemini Paid API. Secondary review model: Codex or Matt-approved non-Gemini reviewer after Gemini output is captured. Execution operator: Matt/Gemini session for audit output capture. Gemini must stop and report blockers instead of inventing shell, git, hash, file, or identity evidence.",
+        "artifact_commit": "6fe3558",
+        "host_attested_hashes": {
+            "mmi/project_brain/status/LLM_MODEL_AUDIT_STANDARD_2026-07.md": "ed74ee77bb9b0c3bd46821abf0aab6c41b5df7e3eba1af1dfdd0ef1fa4fc5ef8",
+            "mmi/project_brain/status/LLM_LANE_LAWS_INDEX_2026-07.md": "8c5c443ad32db845ec1d71856635e392a839c2c250047a470e9eb22a7de8b1f0",
+            "mmi/project_brain/status/MMI_HOST_EVIDENCE_BUNDLE_GRADING_TOOL_LOCKOUT_2026-07.md": "12dc8436bfe8576de13c31872b013c57d24250df9f924b8459908cb2c1ae9310",
+            "mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_4918d4d_2026-07.md": "b233fc89fd2f1f383c342c0609b73e2496e576ddb5fdabca3734910bbb1c1e6e"
+        },
+        "output_files": [
+            "mmi/project_brain/status/MMI_HOST_ATTESTED_EVIDENCE_AUDIT_6FE3558_2026-07.md"
+        ]
     }
 ]
