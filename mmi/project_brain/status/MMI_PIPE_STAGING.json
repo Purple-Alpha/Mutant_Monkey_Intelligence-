@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-07-09T21:19:52-07:00",
-  "pipe": "LOADED",
-  "reason": "Matt directive queued host-attested evidence audit with stop-on-blocker rule",
-  "active_task_id": "mmi-host-attested-evidence-audit-6fe3558",
-  "assignee": "Gemini Paid API",
+  "updated_at": "2026-07-09T21:30:00-07:00",
+  "pipe": "DRY",
+  "reason": "Gemini audit completed; target commit 6fe3558 blocked and host-attestation sealing patch applied",
+  "last_completed_task_id": "mmi-host-attested-evidence-audit-6fe3558",
+  "last_target_grade": "F_BLOCKED",
   "build_authorization": "NOT_AUTHORIZED"
 }

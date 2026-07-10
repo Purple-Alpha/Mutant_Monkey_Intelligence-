@@ -39,6 +39,7 @@ Binding rules:
 - every critical criterion must score `3`; any critical criterion below `3` is `F / Blocked`.
 - every grade must be cryptographically bound to the exact artifact hash reviewed.
 - every grade consumer must verify artifact hashes before relying on the grade record for routing, using `TOOL_RECOMPUTED` when tools are available or `HOST_ATTESTED` evidence bundles when tools are unavailable.
+- unsealed host attestation is fallback evidence only; it cannot fully close critical hash-binding, evidence-discipline, or identity criteria unless upgraded to `HOST_ATTESTED_SEALED`.
 - upstream grades are invisible to execution and may not be used as proof of accuracy, safety, correctness, readiness, or authority.
 - three consecutive `F / Blocked` grades for the same artifact/topic and same reason category, tracked in `MMI_GRADING_STRIKE_LEDGER.json`, halt automated routing until Matt intervenes.
 

@@ -79,6 +79,9 @@ b233fc89fd2f1f383c342c0609b73e2496e576ddb5fdabca3734910bbb1c1e6e  mmi/project_br
 
 ## Consumer Rules
 
+- This bundle is `HOST_ATTESTED_UNSEALED`.
+- It is fallback evidence for tool-restricted reviewers, not a full substitute for direct tool recomputation.
+- It cannot by itself fully close critical hash-binding, evidence-discipline, or producer/grader identity criteria.
 - Tool-restricted reviewers must mark hash verification mode as `HOST_ATTESTED`, not `TOOL_RECOMPUTED`.
 - Tool-restricted reviewers must not claim they ran `git`, `sha256sum`, or shell commands.
 - If this bundle is missing required artifact paths or hashes, the reviewer must mark verification as `NOT_VERIFIED`.

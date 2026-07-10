@@ -32,6 +32,18 @@
       "timestamp": "2026-07-09T20:00:00-07:00",
       "consecutive_count": 1,
       "next_allowed_state": "PATCH_REQUIRED"
+    },
+    {
+      "artifact_key": "commit:6fe3558",
+      "artifact_path": "mmi/project_brain/status/LLM_MODEL_AUDIT_STANDARD_2026-07.md; mmi/project_brain/status/LLM_LANE_LAWS_INDEX_2026-07.md; mmi/project_brain/status/MMI_HOST_EVIDENCE_BUNDLE_GRADING_TOOL_LOCKOUT_2026-07.md; mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_4918d4d_2026-07.md",
+      "artifact_hash": "commit:6fe3558",
+      "artifact_series_id": "grading-law-amendment-series",
+      "block_reason_category": "host_attestation_collusion",
+      "grader_id": "Gemini",
+      "grade_artifact_path": "mmi/project_brain/status/MMI_HOST_ATTESTED_EVIDENCE_AUDIT_6FE3558_2026-07.md",
+      "timestamp": "2026-07-09T21:30:00-07:00",
+      "consecutive_count": 1,
+      "next_allowed_state": "PATCH_REQUIRED"
     }
   ]
 }

@@ -265,7 +265,24 @@ A grade is valid only for that specific hash. If the artifact hash changes by ev
 - the previous grade record is dead and invalid for the new state.
 - any downstream lane that wishes to use the new state must treat it as a new artifact and obtain a new independent grade.
 
-Using a grade whose hash does not match the current artifact is `law_conflict` and must be treated as `F / Blocked`. A grade with `NOT_VERIFIED` hash status is invalid for acceptance. `HOST_ATTESTED` is acceptable only when the host evidence bundle includes concrete command output and artifact identity; it is weaker than `TOOL_RECOMPUTED` and must be marked as a limitation.
+Using a grade whose hash does not match the current artifact is `law_conflict` and must be treated as `F / Blocked`. A grade with `NOT_VERIFIED` hash status is invalid for acceptance.
+
+`HOST_ATTESTED` is a fallback evidence mode, not an equivalent replacement for `TOOL_RECOMPUTED`.
+
+Host attestation levels:
+
+```text
+HOST_ATTESTED_UNSEALED: single-host/operator markdown evidence; useful for orientation but cannot fully close critical hash-binding or identity criteria.
+HOST_ATTESTED_SEALED: host evidence bundle is bound to immutable commit state, includes its own bundle hash, records clean/dirty repo status, names target hashes, includes freshness timestamp, and is either signed by a Matt-approved operator or independently cross-attested by a second non-producing host/operator.
+TOOL_RECOMPUTED: reviewer directly recomputed with available tools.
+```
+
+Acceptance rules:
+
+- `HOST_ATTESTED_UNSEALED` must be marked as a limitation and cannot score `artifact hash binding`, `producer/grader independence`, or `evidence discipline` above `2`.
+- `HOST_ATTESTED_SEALED` may score critical criteria as `3` only if the seal, freshness, target artifact hashes, bundle hash, producer identity evidence, and independent attestation are present.
+- A stale host evidence bundle, missing bundle hash, dirty unclassified repo state, missing freshness timestamp, or single-operator unsealed identity claim is `F / Blocked` for acceptance.
+- Any output that treats host-attested evidence as absolute truth, rather than fallback evidence with explicit limitations, is `law_conflict`.
 
 ### A.8 Three-Strikes Circuit Breaker Law
 
