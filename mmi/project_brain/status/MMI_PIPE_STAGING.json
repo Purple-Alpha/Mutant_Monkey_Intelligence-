@@ -1,8 +1,8 @@
 {
-  "updated_at": "2026-07-09T21:30:00-07:00",
-  "pipe": "DRY",
-  "reason": "Gemini audit completed; target commit 6fe3558 blocked and host-attestation sealing patch applied",
-  "last_completed_task_id": "mmi-host-attested-evidence-audit-6fe3558",
-  "last_target_grade": "F_BLOCKED",
+  "updated_at": "2026-07-09T21:35:29-07:00",
+  "pipe": "LOADED",
+  "reason": "Queued independent report-card gate audit for latest law/control commit",
+  "active_task_id": "mmi-report-card-gate-audit-cd09f56",
+  "assignee": "Gemini Paid API",
   "build_authorization": "NOT_AUTHORIZED"
 }

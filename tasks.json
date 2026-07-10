@@ -2132,5 +2132,29 @@
         "result_summary": "AUDIT_RESULT: target commit 6fe3558 graded F / Blocked. Findings: HOST_ATTESTED mode prevents hallucinated hash operations but remains vulnerable to host collusion, stale bundle state, plaintext identity forgery, and missing sealed evidence semantics. Audit artifact itself remains INDEPENDENT_REVIEW_REQUIRED and does not self-grade.",
         "sign_off": "FAIL_TARGET_PATCH_REQUIRED",
         "sign_off_tier": "Audit target verdict only; audit artifact requires separate review"
+    },
+    {
+        "id": "mmi-report-card-gate-audit-cd09f56",
+        "instruction": "PROJECT: MMI. AUDIT lane only. Independently audit and issue a report card for target commit cd09f56 (Require report cards for task completion) against the active law stack. Use the mandatory high-intensity XML audit prompt shape. Target files: LLM_MODEL_AUDIT_STANDARD_2026-07.md, LLM_PROJECT_LAWS_2026-07.md, LLM_LANE_LAWS_INDEX_2026-07.md, and MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md. Verify whether the report-card gate blocks task completion and completion/closeout commits without a separate report card, while preserving quarantine commits for failed/blocked evidence. Include visible letter grade mark, rubric scores, criterion feedback, strengths, failures, and improvement targets. STOP_AND_REPORT_BLOCKER if shell permission denial, missing file access, missing host evidence, hash verification impossibility, identity uncertainty, or evidence drift prevents honest grading. Required output: mmi/project_brain/status/MMI_REPORT_CARD_GATE_AUDIT_CD09F56_2026-07.md. No build work, no runtime execution, no cleanup, no deletion, no reset, no force-push.",
+        "status": "pending",
+        "assignee": "Gemini Paid API",
+        "tier": "Audit",
+        "score": 99,
+        "score_reason": "The latest law/control commit installed a mandatory report-card gate; by its own rule it needs an independent report card before acceptance.",
+        "source": "Matt directive 2026-07-09: every lane/task must receive a report card before completion or completion commit",
+        "created_at": "2026-07-09T21:35:29-07:00",
+        "created_by": "Codex",
+        "build_authorization": "NOT_AUTHORIZED",
+        "routing_note": "AUDIT only. Primary model: Gemini Paid API. Secondary review model: non-Gemini independent reviewer or Matt-approved operator after Gemini output is captured. Gemini must stop and report blockers instead of inventing shell, git, hash, file, or identity evidence.",
+        "artifact_commit": "cd09f56",
+        "host_attested_hashes": {
+            "mmi/project_brain/status/LLM_MODEL_AUDIT_STANDARD_2026-07.md": "3b79b60d5d2f8405d792b8ba48ad0cc4dc28c4193507f20ce0abe61ead533c30",
+            "mmi/project_brain/status/LLM_PROJECT_LAWS_2026-07.md": "09058a0334b609fafce316d59f67ededae7219cb0198d6f3dd03f17b93de487e",
+            "mmi/project_brain/status/LLM_LANE_LAWS_INDEX_2026-07.md": "24d5d518183ce09c08c4f91512752358fb36d08c3617bb79282cc2d341f5ab35",
+            "mmi/project_brain/status/MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md": "2b9485a9946af7585f0723edc121204974d1edd225fd3ef8e6ec70d49ea84869"
+        },
+        "output_files": [
+            "mmi/project_brain/status/MMI_REPORT_CARD_GATE_AUDIT_CD09F56_2026-07.md"
+        ]
     }
 ]
