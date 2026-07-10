@@ -79,11 +79,12 @@ This document is documentation/control only.
 
 Every AUDIT output shall comply with `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
 
-- Every audit must include a model self-grade.
+- Every audit must include an independent grade for the artifact under audit, or mark the audit artifact itself as `INDEPENDENT_GRADE_PENDING` for separate review.
 - Every audit must identify model name, prompt/rubric version, lane, reviewed artifact, and output capture path where available.
-- Any B-grade audit is invalid for acceptance and must be reworked.
+- Any audit grade below the active lane threshold is invalid for acceptance and must be reworked or escalated to Matt.
 - Any audit that omits model-specific grading is invalid.
 - Passable audits are failed audits for this project.
+- No model, operator, or lane may audit, grade, pass, or accept its own work.
 
 This law is documentation/control only and grants no authority.
 ## Law A8 - Audit Lane Attack Contract
@@ -105,6 +106,6 @@ Every audit must cite the active remote head commit at review time.
 
 Audit-phase code generation is forbidden. Audit outputs may define required patches or diagnostic requirements, but must not write implementation code, generate build steps, or provide execution templates.
 
-Self-grading is required but not trusted. No model may pass itself. A separate reviewer grade is required, and Matt's decision remains final.
+Self-grading is forbidden. No model may pass itself. A separate reviewer grade is required, and Matt's decision remains final.
 
 This law does not authorize build, scan execution, archive extraction, output generation, cleanup, deployment, residual-risk closure, falsifier closure, M4 closure, PERFECT closure, or GATED status.

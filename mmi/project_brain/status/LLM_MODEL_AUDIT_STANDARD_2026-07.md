@@ -44,7 +44,7 @@ Every model audit must include:
 4. Non-claims and falsifiers.
 5. Residual-risk ledger.
 6. Authority drift check.
-7. Model self-grade.
+7. Independent grade block, or `INDEPENDENT_GRADE_PENDING` if the audit output itself is the produced artifact awaiting separate review.
 8. Binary decision.
 
 Any response that omits one of these sections is classified as:
@@ -99,35 +99,125 @@ When in doubt:
 AUDIT_RESULT = FAIL_PATCH_REQUIRED
 ```
 
-## Model Self-Grade
+## Independent Grading Law
 
-Every model audit must grade itself:
+Every model/operator artifact must receive an independent grade before it can be accepted.
 
-| Self-Grade Field | Score |
-|---|---:|
-| Law compliance | 0-100 |
-| Authority discipline | 0-100 |
-| Evidence discipline | 0-100 |
-| Residual-risk discipline | 0-100 |
-| Overclaim discipline | 0-100 |
-| Output completeness | 0-100 |
-| Usefulness | 0-100 |
-
-Grade bands:
+Producer boundary:
 
 ```text
-A: 95-100
-A-: 90-94
-B: 80-89
-C: 70-79
-FAIL: <70
+NO SELF-GRADING
+NO SELF-AUDIT
+NO SELF-PASS
 ```
+
+The artifact producer may prepare a `GRADE_REQUEST` evidence bundle, but may not assign its own score, letter grade, acceptance verdict, or audit pass. The grading/audit producer must be a separate model, reviewer, or Matt-approved operator from the producer that created or materially edited the artifact.
+
+Required independent grade fields:
+
+```text
+ARTIFACT_PRODUCER_ID:
+GRADER_ID:
+GRADER_INDEPENDENCE_STATEMENT:
+LANE:
+TASK:
+ARTIFACTS_GRADED:
+AUTHORITY_CLASS:
+TASK_RESULT: COMPLETE / PARTIAL / BLOCKED / INVALID
+CRITERION_SCORES:
+CRITICAL_CRITERIA:
+LOWEST_CRITERION_SCORE:
+LETTER_GRADE: A / B / C / D / F_BLOCKED
+BLOCK_REASON_CATEGORIES:
+LAW_CONFLICTS:
+KNOWN_LIMITATIONS:
+NEXT_DECISION_OR_LANE:
+FORBIDDEN_ACTIONS_RECONFIRMED:
+EVIDENCE_LIST:
+```
+
+Required criterion score scale:
+
+```text
+3 = clean within lane and evidence scope.
+2 = adequate but materially weak or bounded by non-blocking limitations.
+1 = poor, ambiguous, or materially incomplete but not zeroed.
+0 = absent, contradicted, law-conflicting, or hard-gate blocked.
+```
+
+Critical criteria must include, at minimum:
+
+- law compliance.
+- authority discipline.
+- evidence discipline.
+- lane obedience.
+- artifact hash binding.
+- producer/grader independence.
+- output completeness.
+
+### A.5 Non-Averaging Lowest-Common-Denominator Grade Law
+
+Overall letter grades must not be computed by averaging rubric scores.
+
+Letter grades are determined strictly by the minimum criterion score:
+
+- `A`: every criterion score is `3`.
+- `B`: every criterion score is at least `2`, with no `1`s or `0`s.
+- `C`: every criterion score is at least `1`, with no `0`s, and the pattern does not trigger a lane-specific downgrade.
+- `D`: at least one criterion is `1`, no criterion is `0`, and the pattern fails the lane's `C` threshold.
+- `F / Blocked`: any single criterion is `0`, or any hard-gate condition is triggered.
+
+If any critical criterion is `0`, the artifact is `F / Blocked` regardless of all other scores. This rule overrides any prior or implied averaging logic; averaging is forbidden.
+
+### A.6 Upstream Consumption Discipline Law
+
+Upstream grades are invisible to execution.
+
+Every lane prompt must include these constraints:
+
+```text
+You are forbidden from using an upstream quality grade (A-F or rubric scores) as proof of accuracy, safety, or correctness.
+Before executing your own work, you must independently ingest and verify the raw evidence_list and artifact content; you may not rely on the upstream grade label.
+```
+
+Grade records may be read for orientation only. They may not be cited as evidence of correctness, safety, system behavior, runtime readiness, or authority. Any prompt or output that says or implies "we trust this because it has an A grade" is `law_conflict` and must be treated as `F / Blocked`.
+
+### A.7 Cryptographic State Binding Law
+
+Every grade is a snapshot bound to the exact state of the artifact at grading time.
+
+The `EVIDENCE_LIST` for every grade must include:
+
+- SHA-256 hash, or equivalent cryptographic hash, of the primary artifact file(s) being graded.
+- Corresponding artifact path(s).
+- Timestamp/date of hash capture.
+- Grader identity.
+
+A grade is valid only for that specific hash. If the artifact hash changes by even one character:
+
+- the previous grade record is dead and invalid for the new state.
+- any downstream lane that wishes to use the new state must treat it as a new artifact and obtain a new independent grade.
+
+Using a grade whose hash does not match the current artifact is `law_conflict` and must be treated as `F / Blocked`.
+
+### A.8 Three-Strikes Circuit Breaker Law
+
+Consecutive `F / Blocked` grades must be tracked per artifact, or per tightly related artifact series undergoing iterative fixes.
+
+If an artifact triggers `F / Blocked` three consecutive times for the same reason category, including but not limited to `overclaim`, `missing_evidence`, `dirty_or_unknown_state`, `lane_violation`, `hash_mismatch`, or `self_grading`, then:
+
+- the automated MMI loop is severed for that artifact/topic.
+- all automated transitions, including auto-routing to RESEARCH, AUDIT, DESIGN, or BUILD, halt.
+- Matt intervention is mandatory to decide whether to continue, refactor, or abandon the artifact.
+- no further automated work on that topic may resume without explicit Matt authorization.
+
+Any pipeline that continues automated work after three consecutive Blocks for the same reason category is in `law_conflict`.
 
 Project acceptance standard:
 
 ```text
-MINIMUM ACCEPTABLE AUDIT GRADE: A-
-ANY B-GRADE AUDIT: REWORK REQUIRED
+MINIMUM ACCEPTABLE INDEPENDENT GRADE: A unless the active lane packet explicitly defines a stricter or different Matt-approved threshold.
+B / C / D / F_BLOCKED: REWORK OR MATT DECISION REQUIRED
 ```
 
 ## Model-Specific Trial Discipline
@@ -194,7 +284,8 @@ AUDIT_RESULT:
 ISSUE_COUNT:
 ISSUE_CLASSES:
 MISSED_ISSUES_LATER_FOUND:
-SELF_GRADE:
+INDEPENDENT_GRADE:
+GRADER_ID:
 OUTPUT_CAPTURE_PATH:
 ```
 
@@ -203,7 +294,7 @@ Missed issues must be fed back into the model-specific prompt discipline.
 
 ## Universal Model Task Completion Grade
 
-Every model task must end with a graded mark, regardless of lane.
+Every model task must be followed by an independent graded mark, regardless of lane.
 
 This applies to:
 
@@ -216,7 +307,7 @@ This applies to:
 - law/rubric updates.
 - future build-design work if separately authorized.
 
-Required task-completion grade:
+Required task-completion grade request from the artifact producer:
 
 ```text
 MODEL:
@@ -225,38 +316,68 @@ TASK:
 ARTIFACTS TOUCHED:
 AUTHORITY CLASS:
 TASK_RESULT: COMPLETE / PARTIAL / BLOCKED / INVALID
-SELF_GRADE: A / A- / B / C / FAIL
-NUMERIC_SCORE: 0-100
-LAW_COMPLIANCE_SCORE: 0-100
-AUTHORITY_DISCIPLINE_SCORE: 0-100
-EVIDENCE_DISCIPLINE_SCORE: 0-100
-OVERCLAIM_DISCIPLINE_SCORE: 0-100
-RESIDUAL_RISK_DISCIPLINE_SCORE: 0-100
-OUTPUT_COMPLETENESS_SCORE: 0-100
+GRADE_STATUS: INDEPENDENT_GRADE_REQUIRED
+PRODUCER_MUST_NOT_GRADE: YES
+PRIMARY_ARTIFACT_HASHES:
+EVIDENCE_LIST:
 KNOWN_LIMITATIONS:
 NEXT_DECISION_OR_LANE:
 FORBIDDEN_ACTIONS_RECONFIRMED:
 ```
 
-Minimum accepted task grade:
+Minimum accepted independent task grade:
 
 ```text
-A- / 90
+A
 ```
 
-Any completed model task graded below A- must be treated as:
+Any completed model task with no independent grade must be treated as:
 
 ```text
-MODEL_TASK_REQUIRES_REWORK
+MODEL_TASK_INVALID_MISSING_INDEPENDENT_GRADE
 ```
 
-Any completed model task that omits the grade block must be treated as:
+Any completed model task graded below the active lane's threshold must be treated as:
 
 ```text
-MODEL_TASK_INVALID_MISSING_GRADE
+MODEL_TASK_REQUIRES_REWORK_OR_MATT_DECISION
 ```
 
 This grading requirement does not grant authority. A high grade does not prove system behavior, close risk, authorize build, authorize execution, authorize cleanup, or grant trust.
+
+## Mandatory Master Prompt Law Block
+
+Every lane prompt should include this invariant block, followed by exactly one lane-specific block for the active task.
+
+```xml
+<project_laws>
+<grading_law>
+- Every model/operator step must be graded by an independent reviewer before acceptance.
+- No producer may grade, audit, pass, or accept its own work.
+- Grades are artifacts about quality within a lane, not permissions to build or safety verdicts.
+- A high grade does not prove system safety, runtime behavior, correctness, or readiness to build.
+- Letter grades A-F are determined by the lowest criterion score; averaging is forbidden.
+- A = all 3s; B = all >=2 with no 1s or 0s; C = all >=1 with no 0s and no downgrade trigger; D = at least one 1 and no 0s but not C; F / Blocked = any 0 or hard-gate violation.
+- Upstream grades are invisible to execution and may not be used as proof of accuracy, safety, or correctness.
+- Grades are cryptographically bound to artifact hashes; if a hash changes, the grade is dead.
+- Three consecutive Blocks for the same reason category sever automated work until Matt intervenes.
+</grading_law>
+
+<evidence_law>
+- Evidence or it did not happen.
+- All claims must be tied to paths, commands, hashes, dates, and identities where applicable.
+- Every grade evidence list must include the SHA-256 hash or equivalent cryptographic hash of the primary artifact(s), corresponding paths, timestamp/date, and grader identity.
+</evidence_law>
+
+<shared_lane_rules>
+- You must stay in your declared lane.
+- You must not claim safety, runtime correctness, system truth, build readiness, or closure unless the active lane, evidence, and laws explicitly allow it.
+- You must include required output sections: Identity, Evidence_list, Risks_and_unknowns or Residual_risks, Boundaries, and lane-specific work output.
+- Before using any upstream artifact, independently inspect the raw artifact content and evidence_list; do not rely on upstream grade labels.
+- If you detect any law conflict, mark the work F / Blocked and explain the conflict.
+</shared_lane_rules>
+</project_laws>
+```
 ## Final State
 
 ```text
@@ -293,4 +414,4 @@ When auditing codebase specifications, command plans, scan plans, or safety/cont
 - silent skip paths.
 - false-closure paths.
 
-Self-grading is required but is not trusted as acceptance evidence. No model may pass itself.
+Self-grading is forbidden. No model may pass itself.

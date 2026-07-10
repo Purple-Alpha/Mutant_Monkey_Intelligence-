@@ -90,6 +90,10 @@ For each dimension, every LLM must assign one of these ratings: [teaching.uic](h
 Rules:
 - Each dimension must have a rating and a one-sentence rationale. [galtea](https://galtea.ai/blog/llm-as-a-judge-prompts-templates-rubrics-and-best-practices)
 - Every `WEAK` or `MISSING` rating must include at least one concrete example (quote or section reference) and a short explanation of the risk or impact. [confident-ai](https://www.confident-ai.com/blog/llm-evaluation-metrics-everything-you-need-for-llm-evaluation)
+- Letter grades must use the non-averaging lowest-common-denominator rule in `LLM_MODEL_AUDIT_STANDARD_2026-07.md`; averaging rubric scores is forbidden.
+- No producer may grade or audit its own artifact. Missing independent grade means the artifact is not accepted.
+- Grades are valid only for the exact cryptographic artifact hash recorded in the grade evidence list.
+- Upstream grade labels may orient reviewers, but may not be used as proof of correctness, safety, runtime behavior, or authority.
 
 ***
 

@@ -114,15 +114,17 @@ This document (`LLM_PROJECT_LAWS_2026-07.md`) is documentation/control only.
 
 ***
 
-If you want, the next step can be a very short companion artifact like `LLM_LAW_ENFORCEMENT_PROTOCOL.md` that defines how agents and humans must react when a violation of these laws is detected.
 ## Law 10 — Universal Model Task Grading
 
-Every model shall grade its own completed task output.
+Every model/operator step shall be graded, but no producer may grade or audit its own work.
 
-- The grade shall be included for every task, not only audits.
+- A grade shall exist for every task, not only audits.
 - The grade shall use `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
-- A missing grade makes the model output invalid.
-- A grade below A- requires rework before the output can be treated as accepted.
+- The grading/audit producer must be independent from the artifact producer.
+- A producer may prepare an evidence bundle for grading, but may not assign its own score, letter grade, acceptance verdict, or audit pass.
+- A missing independent grade makes the model output invalid for acceptance.
+- A grade below the lane minimum requires rework before the output can be treated as accepted.
 - A high grade is evidence about output quality only; it does not grant authority, prove system behavior, close residual risks, or authorize build, execution, cleanup, or deployment.
+- Any self-grade, self-audit, or prompt/output that treats an upstream grade as proof of accuracy, safety, or correctness is `law_conflict` and must be treated as `F / Blocked`.
 
 This law is documentation/control only.

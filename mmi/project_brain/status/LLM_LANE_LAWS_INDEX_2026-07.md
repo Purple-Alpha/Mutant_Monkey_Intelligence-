@@ -27,6 +27,20 @@ All research, audit, review, judge, synthesis, design, or build-design LLM calls
 
 If these documents conflict, the higher item in the stack wins.
 
+## Universal Grading And Audit Discipline
+
+Every project step, artifact, lane output, review, and build-design proposal requires independent grading before acceptance.
+
+Binding rules:
+
+- no model, operator, or lane may grade, audit, pass, or accept its own work.
+- every grade must use the non-averaging lowest-common-denominator rule in `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
+- every grade must be cryptographically bound to the exact artifact hash reviewed.
+- upstream grades are invisible to execution and may not be used as proof of accuracy, safety, correctness, readiness, or authority.
+- three consecutive `F / Blocked` grades for the same artifact/topic and same reason category halt automated routing until Matt intervenes.
+
+Any violation is `law_conflict` and must be treated as `F / Blocked`.
+
 ## Artifact Set
 
 | Artifact | Purpose | Required When |
