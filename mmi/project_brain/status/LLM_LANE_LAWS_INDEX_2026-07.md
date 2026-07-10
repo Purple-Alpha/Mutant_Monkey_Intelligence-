@@ -38,7 +38,7 @@ Binding rules:
 - every grade must use the non-averaging lowest-common-denominator rule in `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
 - every critical criterion must score `3`; any critical criterion below `3` is `F / Blocked`.
 - every grade must be cryptographically bound to the exact artifact hash reviewed.
-- every grade consumer must recompute artifact hashes before relying on the grade record for routing.
+- every grade consumer must verify artifact hashes before relying on the grade record for routing, using `TOOL_RECOMPUTED` when tools are available or `HOST_ATTESTED` evidence bundles when tools are unavailable.
 - upstream grades are invisible to execution and may not be used as proof of accuracy, safety, correctness, readiness, or authority.
 - three consecutive `F / Blocked` grades for the same artifact/topic and same reason category, tracked in `MMI_GRADING_STRIKE_LEDGER.json`, halt automated routing until Matt intervenes.
 

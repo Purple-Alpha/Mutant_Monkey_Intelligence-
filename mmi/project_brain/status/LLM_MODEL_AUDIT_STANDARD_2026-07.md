@@ -162,11 +162,15 @@ KNOWN_LIMITATIONS:
 NEXT_DECISION_OR_LANE:
 FORBIDDEN_ACTIONS_RECONFIRMED:
 EVIDENCE_LIST:
+HOST_EVIDENCE_BUNDLE:
+VERIFICATION_MODE: TOOL_RECOMPUTED / HOST_ATTESTED / NOT_VERIFIED
 REVIEW_ARTIFACT_ACCEPTANCE_STATUS: INDEPENDENT_REVIEW_REQUIRED
 REVIEW_ARTIFACT_MAY_SELF_GRADE: NO
 ```
 
-Identity evidence must be concrete. Plaintext names alone are not sufficient. At minimum, the grade evidence must include the captured model/operator identity available in the tool transcript, output capture path, commit author/committer where applicable, local operator identity where available, and the evidence used to prove the grader did not create or materially edit the target artifact. If producer/grader separation is `UNKNOWN`, the grade is `F / Blocked`.
+Identity evidence must be concrete and must come from outside the model's free-text claim wherever possible. Plaintext names alone are not sufficient. At minimum, the grade evidence must include the captured model/operator identity available in the tool transcript, output capture path, commit author/committer where applicable, local operator identity where available, and the evidence used to prove the grader did not create or materially edit the target artifact. If producer/grader separation is `UNKNOWN`, the grade is `F / Blocked`.
+
+When the reviewer has no shell/tool access, the prompt must provide a host evidence bundle produced by Codex, Matt, or another authorized host operator. The model must not pretend it generated that evidence itself.
 
 Required criterion score scale:
 
@@ -233,7 +237,10 @@ Every lane prompt must include these constraints:
 ```text
 You are forbidden from using an upstream quality grade (A-F or rubric scores) as proof of accuracy, safety, or correctness.
 Before executing your own work, you must independently ingest and verify the raw evidence_list and artifact content; you may not rely on the upstream grade label.
-Before consuming a grade, you must recompute the current artifact hash from disk or from the exact provided artifact bytes and compare it to the grade evidence_list.
+Before consuming a grade, you must verify artifact state by one of these modes:
+1. TOOL_RECOMPUTED: recompute the current artifact hash using an available shell/tool and compare it to the grade evidence_list.
+2. HOST_ATTESTED: if shell/tool access is unavailable, inspect a host evidence bundle containing the host-generated command, output, timestamp, artifact path, and operator identity.
+3. NOT_VERIFIED: if neither tool recomputation nor host attestation is available, the grade is invalid for acceptance.
 ```
 
 Grade records may be read for orientation only. They may not be cited as evidence of correctness, safety, system behavior, runtime readiness, or authority. Any prompt or output that says or implies "we trust this because it has an A grade" is `law_conflict` and must be treated as `F / Blocked`.
@@ -248,15 +255,17 @@ The `EVIDENCE_LIST` for every grade must include:
 - Corresponding artifact path(s).
 - Timestamp/date of hash capture.
 - Grader identity.
-- Hash recomputation command or method used by the grader.
-- Hash comparison result: `MATCH`, `MISMATCH`, or `NOT_RECOMPUTED`.
+- Hash verification mode: `TOOL_RECOMPUTED`, `HOST_ATTESTED`, or `NOT_VERIFIED`.
+- Hash recomputation command or host-attestation command.
+- Hash comparison result: `MATCH`, `MISMATCH`, or `NOT_VERIFIED`.
+- Host evidence bundle path when `HOST_ATTESTED` is used.
 
 A grade is valid only for that specific hash. If the artifact hash changes by even one character:
 
 - the previous grade record is dead and invalid for the new state.
 - any downstream lane that wishes to use the new state must treat it as a new artifact and obtain a new independent grade.
 
-Using a grade whose hash does not match the current artifact is `law_conflict` and must be treated as `F / Blocked`. A grade with `NOT_RECOMPUTED` hash status is invalid for acceptance.
+Using a grade whose hash does not match the current artifact is `law_conflict` and must be treated as `F / Blocked`. A grade with `NOT_VERIFIED` hash status is invalid for acceptance. `HOST_ATTESTED` is acceptable only when the host evidence bundle includes concrete command output and artifact identity; it is weaker than `TOOL_RECOMPUTED` and must be marked as a limitation.
 
 ### A.8 Three-Strikes Circuit Breaker Law
 
@@ -462,13 +471,14 @@ You operate strictly within the active lane and the project's grading, evidence,
 - A = all 3s; B = all non-critical criteria >=2 with no 1s or 0s and all critical criteria = 3; C = all non-critical criteria >=1 with no 0s, all critical criteria = 3, and no downgrade trigger; D = at least one non-critical 1 and no 0s but not C; F / Blocked = any 0, any critical criterion below 3, or any hard-gate violation.
 - Upstream grades are invisible to execution and may not be used as proof of accuracy, safety, or correctness.
 - Grades are cryptographically bound to artifact hashes; if a hash changes, the grade is dead.
+- Tool-restricted reviewers must use HOST_ATTESTED evidence bundles instead of hallucinating shell, git, or hash operations.
 - Three consecutive Blocks for the same reason category in MMI_GRADING_STRIKE_LEDGER.json sever automated work until Matt intervenes.
 </grading_law>
 
 <evidence_law>
 - Evidence or it did not happen.
 - All claims must be tied to paths, commands, hashes, dates, and identities where applicable.
-- Every grade evidence list must include the SHA-256 hash or equivalent cryptographic hash of the primary artifact(s), corresponding paths, timestamp/date, grader identity, identity evidence, hash recomputation method, and hash comparison result.
+- Every grade evidence list must include the SHA-256 hash or equivalent cryptographic hash of the primary artifact(s), corresponding paths, timestamp/date, grader identity, identity evidence, verification mode, hash verification method, and hash comparison result.
 </evidence_law>
 
 <shared_lane_rules>
@@ -476,7 +486,7 @@ You operate strictly within the active lane and the project's grading, evidence,
 - You must not claim safety, runtime correctness, system truth, build readiness, or closure unless the active lane, evidence, and laws explicitly allow it.
 - You must include required output sections: Identity, Evidence_list, Risks_and_unknowns or Residual_risks, Boundaries, and lane-specific work output.
 - Before using any upstream artifact, independently inspect the raw artifact content and evidence_list; do not rely on upstream grade labels.
-- Before using any grade, recompute artifact hashes and check MMI_GRADING_STRIKE_LEDGER.json for active three-strike blocks.
+- Before using any grade, verify artifact hashes by TOOL_RECOMPUTED or HOST_ATTESTED mode and check MMI_GRADING_STRIKE_LEDGER.json for active three-strike blocks.
 - If you detect any law conflict, mark the work F / Blocked and explain the conflict.
 </shared_lane_rules>
 </project_laws>
