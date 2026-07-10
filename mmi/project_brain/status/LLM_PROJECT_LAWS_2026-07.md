@@ -120,10 +120,12 @@ Every model/operator step shall be graded, but no producer may grade or audit it
 
 - A grade shall exist for every task, not only audits.
 - The grade shall use `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
+- Every task must receive a separate human-readable report card before it may be marked complete, accepted, or committed as completed work.
 - The grading/audit producer must be independent from the artifact producer.
 - A producer may prepare an evidence bundle for grading, but may not assign its own score, letter grade, acceptance verdict, or audit pass.
 - A reviewer may grade only a target artifact produced by another model/operator; the review artifact produced by that reviewer remains unaccepted until a different reviewer grades it.
 - A missing independent grade makes the model output invalid for acceptance.
+- A missing report card blocks task completion and commit/push closure, except quarantine commits that preserve failed or blocked evidence.
 - A grade below the lane minimum requires rework before the output can be treated as accepted.
 - A high grade is evidence about output quality only; it does not grant authority, prove system behavior, close residual risks, or authorize build, execution, cleanup, or deployment.
 - Any self-grade, self-audit, or prompt/output that treats an upstream grade as proof of accuracy, safety, or correctness is `law_conflict` and must be treated as `F / Blocked`.

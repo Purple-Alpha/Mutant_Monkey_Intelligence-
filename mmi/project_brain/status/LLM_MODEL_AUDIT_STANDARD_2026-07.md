@@ -401,6 +401,8 @@ Missed issues must be fed back into the model-specific prompt discipline.
 
 Every model task must be followed by an independent graded mark, regardless of lane.
 
+Every model/operator task must also receive a human-readable report card before the task may be marked completed, accepted, committed as completed work, or used to route the next lane.
+
 This applies to:
 
 - audits.
@@ -412,6 +414,23 @@ This applies to:
 - law/rubric updates.
 - future build-design work if separately authorized.
 
+Required completion gate:
+
+```text
+REPORT_CARD_REQUIRED: YES
+REPORT_CARD_STATUS: PRESENT / MISSING / INDEPENDENT_REVIEW_REQUIRED
+TASK_COMPLETION_ALLOWED: YES / NO
+COMMIT_ALLOWED: YES / NO
+```
+
+Rules:
+
+- `REPORT_CARD_STATUS: MISSING` means `TASK_COMPLETION_ALLOWED: NO` and `COMMIT_ALLOWED: NO`, except for quarantine commits whose only purpose is preserving failed or blocked evidence.
+- The report card must be produced by a separate reviewer from the artifact producer.
+- The report card must include a visible letter grade mark, rubric scores, criterion feedback, what was done well, what failed, and improvement targets.
+- A task cannot be marked `completed` in `tasks.json` unless its output artifact or closeout record names the report card path, reviewer identity, grade mark, and acceptance status.
+- A commit that closes or completes work must include the report card artifact or explicitly classify the work as `QUARANTINE / BLOCKED_EVIDENCE_ONLY`.
+
 Required task-completion grade request from the artifact producer:
 
 ```text
@@ -422,6 +441,7 @@ ARTIFACTS TOUCHED:
 AUTHORITY CLASS:
 TASK_RESULT: COMPLETE / PARTIAL / BLOCKED / INVALID
 GRADE_STATUS: INDEPENDENT_GRADE_REQUIRED
+REPORT_CARD_REQUIRED: YES
 PRODUCER_MUST_NOT_GRADE: YES
 PRIMARY_ARTIFACT_HASHES:
 EVIDENCE_LIST:

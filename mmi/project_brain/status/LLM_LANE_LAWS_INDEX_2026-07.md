@@ -35,6 +35,8 @@ Binding rules:
 
 - no model, operator, or lane may grade, audit, pass, or accept its own work.
 - a reviewer may grade only a target artifact produced by another model/operator; the review artifact itself remains `INDEPENDENT_REVIEW_REQUIRED`.
+- every completed task must have a report card with letter grade mark, rubric scores, criterion feedback, strengths, failures, and improvement targets.
+- missing report card blocks task completion and commit/push closure, except quarantine commits that preserve failed or blocked evidence.
 - every grade must use the non-averaging lowest-common-denominator rule in `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
 - every critical criterion must score `3`; any critical criterion below `3` is `F / Blocked`.
 - every grade must be cryptographically bound to the exact artifact hash reviewed.

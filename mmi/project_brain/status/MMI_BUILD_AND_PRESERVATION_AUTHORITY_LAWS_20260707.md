@@ -150,6 +150,20 @@ committed and pushed, or explicitly listed as intentionally untracked/quarantine
 
 No silent loose files.
 
+Every completed task or accepted artifact must have a report card before completion or closeout commit.
+
+Required report card evidence:
+
+```text
+report card path, reviewer identity, target artifact, letter grade mark, rubric scores, criterion feedback, acceptance status, and hash/verification mode
+```
+
+If missing:
+
+```text
+CLOSEOUT BLOCKED - REPORT CARD REQUIRED
+```
+
 If unexplained untracked files exist:
 
 ```text
