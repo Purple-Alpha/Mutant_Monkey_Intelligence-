@@ -2083,7 +2083,7 @@
     },
     {
         "id": "mmi-independent-grading-law-audit-db678eb",
-        "instruction": "PROJECT: MMI. AUDIT lane only. Independently audit and grade commit db678eb (Codify independent grading laws) against the active law stack. Review the five changed law files: LLM_PROJECT_LAWS_2026-07.md, LLM_MODEL_AUDIT_STANDARD_2026-07.md, LLM_AUDIT_LAWS_2026-07.md, LLM_UNIVERSAL_PROJECT_RUBRIC_2026-07.md, and LLM_LANE_LAWS_INDEX_2026-07.md. Verify no self-grading contradiction remains, verify A.5-A.8 are enforceable, verify hash-binding and upstream-grade invisibility language, and produce an independent grade using the non-averaging lowest-common-denominator rule. Required output: mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_DB678EB_2026-07.md. No build work, no runtime execution, no cleanup, no deletion, no reset, no force-push.",
+        "instruction": "PROJECT: MMI. AUDIT lane only. Independently audit and grade commit db678eb (Codify independent grading laws) against the active law stack. Use the mandatory high-intensity XML audit prompt shape: system_role, project_laws, lane, context, instructions, output_format, and response_start; required Markdown sections are Identity, Attack_summary, Findings, Residual_risks, Evidence_list, Grade, and Boundaries. Review the five changed law files: LLM_PROJECT_LAWS_2026-07.md, LLM_MODEL_AUDIT_STANDARD_2026-07.md, LLM_AUDIT_LAWS_2026-07.md, LLM_UNIVERSAL_PROJECT_RUBRIC_2026-07.md, and LLM_LANE_LAWS_INDEX_2026-07.md. Verify no self-grading contradiction remains, verify A.5-A.8 are enforceable, verify hash-binding and upstream-grade invisibility language, and produce an independent grade using the non-averaging lowest-common-denominator rule. Required output: mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_DB678EB_2026-07.md. No build work, no runtime execution, no cleanup, no deletion, no reset, no force-push.",
         "status": "pending",
         "assignee": "Gemini Paid API",
         "tier": "Audit",
@@ -2093,7 +2093,7 @@
         "created_at": "2026-07-09T19:59:57-07:00",
         "created_by": "Codex",
         "build_authorization": "NOT_AUTHORIZED",
-        "routing_note": "AUDIT only. Primary model: Gemini Paid API. Secondary review model: Codex law/repo-state check after Gemini output is captured. Execution operator: Matt/Gemini session for audit output capture. Forbidden: build, execution, cleanup, deletion, reset, force-push, kernel/minifilter/IOCTL testing, deployment, or treating any upstream grade as proof.",
+        "routing_note": "AUDIT only. Primary model: Gemini Paid API. Required prompt style: high-intensity XML audit wrapper per LLM_AUDIT_LAWS_2026-07.md Law A9. Secondary review model: Codex law/repo-state check after Gemini output is captured. Execution operator: Matt/Gemini session for audit output capture. Forbidden: build, execution, cleanup, deletion, reset, force-push, kernel/minifilter/IOCTL testing, deployment, or treating any upstream grade as proof.",
         "artifact_commit": "db678eb",
         "output_files": [
             "mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_DB678EB_2026-07.md"

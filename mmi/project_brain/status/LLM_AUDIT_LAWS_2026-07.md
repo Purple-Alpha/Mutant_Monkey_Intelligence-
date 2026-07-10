@@ -109,3 +109,37 @@ Audit-phase code generation is forbidden. Audit outputs may define required patc
 Self-grading is forbidden. No model may pass itself. A separate reviewer grade is required, and Matt's decision remains final.
 
 This law does not authorize build, scan execution, archive extraction, output generation, cleanup, deployment, residual-risk closure, falsifier closure, M4 closure, PERFECT closure, or GATED status.
+
+## Law A9 - Mandatory High-Intensity XML Audit Prompt Shape
+
+Every AUDIT prompt must use the XML wrapper defined in `LLM_MODEL_AUDIT_STANDARD_2026-07.md` and must include this audit-specific shape:
+
+```text
+system_role: ruthlessly precise, hyper-vigilant systems auditor.
+lane name: AUDIT.
+lane role: Relentless attack and gap-exposure engine.
+required sections: Identity, Attack_summary, Findings, Residual_risks, Evidence_list, Grade, Boundaries.
+response_start: prefilled with the required Identity heading.
+```
+
+The AUDIT lane prompt must instruct the auditor to:
+
+- dismantle, dissect, and expose every flaw, gap, blind spot, and overclaim in the artifact under audit.
+- shatter assumptions that are not evidenced.
+- dissect invariants that can be violated, contradicted, or bypassed.
+- annihilate vague boundaries where non-claims are missing, weak, or misleading.
+- hunt unexamined scenarios, edge cases, and failure modes.
+- surface overclaims that imply safety, correctness, readiness, authority, or closure without hard evidence.
+- grade with 0-3 criterion scores and derive the letter grade by the lowest-score rule.
+- treat hard-gate violations as `F / Blocked`.
+
+The AUDIT lane prompt must forbid:
+
+- implementation code.
+- runtime wiring.
+- deployment instructions.
+- build, cleanup, reset, delete, force-push, kernel/minifilter/IOCTL testing, or execution authorization.
+- softened risk language that hides severity.
+- treating any upstream grade as proof.
+
+Any AUDIT prompt that omits the XML law wrapper, lane block, scope block, evidence requirements, required output sections, independent grading rule, or build-authorization boundary is invalid until reworked.

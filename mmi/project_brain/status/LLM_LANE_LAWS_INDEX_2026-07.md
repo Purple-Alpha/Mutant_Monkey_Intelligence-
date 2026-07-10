@@ -41,6 +41,24 @@ Binding rules:
 
 Any violation is `law_conflict` and must be treated as `F / Blocked`.
 
+## Universal Prompt Construction Discipline
+
+Every future MMI lane prompt must use the structured XML prompt shape in `LLM_MODEL_AUDIT_STANDARD_2026-07.md`.
+
+Required invariant pattern:
+
+- one `<system_role>` block.
+- one invariant `<project_laws>` block.
+- exactly one lane-specific `<lane>` block.
+- one `<context>` block containing artifact text, paths, hashes, diffs, or evidence.
+- one `<instructions>` block that keeps work inside the declared lane.
+- one `<output_format>` block with exact Markdown sections.
+- one `<response_start>` block that preloads the correct first heading.
+
+AUDIT prompts must use the high-intensity attack posture in `LLM_AUDIT_LAWS_2026-07.md`: ruthless, precise, evidence-bound gap exposure with mandatory `Identity`, `Attack_summary`, `Findings`, `Residual_risks`, `Evidence_list`, `Grade`, and `Boundaries` sections.
+
+Prompts that drift into generic freeform prose, omit the lane boundary, omit build authorization state, omit evidence/hash requirements, omit the no-self-grade rule, or fail to state forbidden actions are invalid for accepted lane work.
+
 ## Artifact Set
 
 | Artifact | Purpose | Required When |
