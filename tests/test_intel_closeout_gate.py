@@ -52,7 +52,7 @@ class IntelCloseoutGateTest(unittest.TestCase):
         (self.root / "mmi" / "task_pipeline.json").parent.mkdir(parents=True)
         (self.root / "mmi" / "task_pipeline.json").write_text("[]\n", encoding="utf-8")
 
-        for name in ("complete_task.py", "keep_task_queue_warm.py", "mmi_verify.py"):
+        for name in ("complete_task.py", "keep_task_queue_warm.py", "mmi_verify.py", "validate_report_card.py"):
             shutil.copy2(REPO_ROOT / "scripts" / name, self.scripts / name)
 
     def tearDown(self):
@@ -86,7 +86,39 @@ class IntelCloseoutGateTest(unittest.TestCase):
     def read_task(self):
         return json.loads(self.tasks_path.read_text(encoding="utf-8"))[0]
 
+    def write_report_card(self):
+        path = self.root / "report_card.md"
+        path.write_text(
+            """## Identity
+- target_artifact: intel fixture
+- grader_id: independent-test-reviewer
+- hash_verification_mode: TOOL_RECOMPUTED
+
+## Target_artifact_report_card
+- target_artifact_grade_label: A
+- letter_grade_mark: A
+- rubric_scores: [law compliance: 3, evidence discipline: 3, lane obedience: 3]
+- criterion_feedback:
+    - criterion: law compliance
+      score: 3
+      quality_mark: PERFECT
+      what_worked: Complete.
+      what_failed_or_was_missing: None.
+      improvement_target: Maintain.
+- improvement_targets: Maintain current fixture discipline.
+- critical_criteria_results: law compliance = 3, evidence discipline = 3
+- lowest_score_rule_applied: YES
+- averaging_used: NO
+
+## Review_artifact_status
+- review_artifact_acceptance_status: INDEPENDENT_REVIEW_REQUIRED
+""",
+            encoding="utf-8",
+        )
+        return path
+
     def run_complete(self):
+        report_card = self.write_report_card()
         return subprocess.run(
             [
                 sys.executable,
@@ -98,6 +130,8 @@ class IntelCloseoutGateTest(unittest.TestCase):
                 "test summary",
                 "--output",
                 INTEL_OUTPUT,
+                "--report-card",
+                str(report_card.relative_to(self.root)),
                 "--no-seed",
             ],
             cwd=self.root,

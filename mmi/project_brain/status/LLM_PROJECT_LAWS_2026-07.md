@@ -126,6 +126,7 @@ Every model/operator step shall be graded, but no producer may grade or audit it
 - A reviewer may grade only a target artifact produced by another model/operator; the review artifact produced by that reviewer remains unaccepted until a different reviewer grades it.
 - A missing independent grade makes the model output invalid for acceptance.
 - A missing report card blocks task completion and commit/push closure, except quarantine commits that preserve failed or blocked evidence.
+- Task completion must run the deterministic report-card validator before writing `completed` state. Any `GRADE_MATH_CONFLICT`, missing report-card field, missing critical-criteria result, or invalid lowest-score calculation blocks completion.
 - A grade below the lane minimum requires rework before the output can be treated as accepted.
 - A high grade is evidence about output quality only; it does not grant authority, prove system behavior, close residual risks, or authorize build, execution, cleanup, or deployment.
 - Any self-grade, self-audit, or prompt/output that treats an upstream grade as proof of accuracy, safety, or correctness is `law_conflict` and must be treated as `F / Blocked`.

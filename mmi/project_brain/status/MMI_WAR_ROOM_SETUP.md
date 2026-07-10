@@ -87,7 +87,7 @@ Do not implement code unless tasked.
 |------|------------------|
 | 1 | `python mmi/command_center.py` (or war_room when built) |
 | 2 | Execute active task on monitor 1 |
-| 3 | `python scripts/complete_task.py TASK_ID --by ...` |
+| 3 | `python scripts/complete_task.py TASK_ID --by ... --report-card path/to/report_card.md` |
 | 4 | After meaningful changes: `python scripts/mmi_cold_backup.py --backup-and-push` |
 
 ---

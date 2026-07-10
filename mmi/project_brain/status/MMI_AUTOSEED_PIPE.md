@@ -26,7 +26,7 @@ Seeded tasks default to `build_authorization: NOT_AUTHORIZED` — seeding is not
 cd /mnt/c/MMI
 
 # After any task completion — auto-seeds next pipeline task
-python scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/output
+python scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/output --report-card path/to/report_card.md
 
 # Or reload only
 python scripts/reload_mmi_pipes.py

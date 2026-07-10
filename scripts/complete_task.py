@@ -11,6 +11,7 @@ from typing import Any
 
 from keep_task_queue_warm import seed_if_dry
 from mmi_verify import verify_closeout_outputs, verify_intel_brief
+from validate_report_card import validate_report_card_file
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,6 +101,27 @@ def verify_artifact_file(root: Path, raw: str | None) -> dict[str, Any]:
     return {"path": raw, "ok": True, "data": data}
 
 
+def verify_report_card(root: Path, raw: str | None) -> dict[str, Any]:
+    if not raw:
+        return {
+            "check": "MMI_REPORT_CARD_GRADE_MATH",
+            "path": None,
+            "ok": False,
+            "errors": [
+                {
+                    "code": "REPORT_CARD_REQUIRED",
+                    "message": "A valid independent report card is required before task completion.",
+                }
+            ],
+            "warnings": [],
+        }
+    path = Path(raw)
+    target = path if path.is_absolute() else root / raw.replace("\\", "/")
+    result = validate_report_card_file(target)
+    result["recorded_path"] = raw
+    return result
+
+
 def _normalized_output_path(raw: str) -> str:
     return raw.replace("\\", "/").lstrip("./")
 
@@ -141,6 +163,7 @@ def build_verification_commands(
     verify_json_paths: list[str],
     intel_paths: list[str],
     artifact_path: str | None,
+    report_card_path: str | None,
 ) -> list[dict[str, Any]]:
     commands: list[dict[str, Any]] = []
     if outputs:
@@ -181,6 +204,15 @@ def build_verification_commands(
                 True,
             )
         )
+    if report_card_path:
+        commands.append(
+            _command_record(
+                "report-card grade math",
+                f"python scripts/validate_report_card.py {report_card_path}",
+                0,
+                True,
+            )
+        )
     return commands
 
 
@@ -215,6 +247,11 @@ def main() -> int:
     parser.add_argument(
         "--verification-artifact",
         help="optional closeout evidence JSON artifact path to validate and record",
+    )
+    parser.add_argument(
+        "--report-card",
+        required=True,
+        help="independent report-card Markdown path to validate and record",
     )
     parser.add_argument(
         "--sign-off",
@@ -277,6 +314,12 @@ def main() -> int:
         print(json.dumps(verification_artifact_result, indent=2))
         return 1
 
+    report_card_result = verify_report_card(ROOT, args.report_card)
+    if not report_card_result["ok"]:
+        print("G-REPORT-CARD closeout verification FAILED:")
+        print(json.dumps(report_card_result, indent=2))
+        return 1
+
     now = datetime.now().astimezone().isoformat(timespec="seconds")
     sign_off_tier = args.sign_off_tier or args.by
     verification_commands = build_verification_commands(
@@ -284,6 +327,7 @@ def main() -> int:
         args.verify_json,
         h2["intel_outputs"],
         args.verification_artifact,
+        args.report_card,
     )
     task["status"] = "completed"
     task["completed_at"] = now
@@ -294,11 +338,13 @@ def main() -> int:
     task["output_files"] = args.outputs
     task["verification_commands"] = verification_commands
     task["verification_artifact"] = args.verification_artifact
+    task["report_card"] = args.report_card
     task["closeout_verification"] = {
         "h1": h1,
         "h2": h2,
         "verify_json": verify_json_result,
         "verification_artifact": verification_artifact_result,
+        "report_card": report_card_result,
     }
     task["closeout_evidence_contract"] = {
         "version": CLOSEOUT_CONTRACT_VERSION,
@@ -307,6 +353,7 @@ def main() -> int:
             "output_files",
             "verification_commands",
             "verification_artifact",
+            "report_card",
             "result_summary",
             "sign_off",
             "sign_off_tier",

@@ -24,10 +24,11 @@ not just prose; it must carry enough machine-readable evidence to answer:
 | `output_files` | Claimed outputs; H1 verifies each path exists. |
 | `verification_commands` | Structured list of verification steps represented as command records with exit codes. |
 | `verification_artifact` | Optional JSON evidence artifact path; if supplied, it must exist and parse before closeout. |
+| `report_card` | Required independent report-card path; grade math is validated before closeout. |
 | `result_summary` | Human summary prefixed with `PASS`, `PASS WITH REVISIONS`, or `FAIL`. |
 | `sign_off` | Closeout enum: `PASS`, `PASS WITH REVISIONS`, or `FAIL`. |
 | `sign_off_tier` | Person/lane accepting revision caveats; defaults to `--by`. |
-| `closeout_verification` | H1/H2/verify-json/artifact gate results. |
+| `closeout_verification` | H1/H2/verify-json/artifact/report-card gate results. |
 | `closeout_evidence_contract` | Contract marker and recovery instructions. |
 
 ## Operator Use
@@ -38,7 +39,8 @@ Default closeout still works:
 python scripts/complete_task.py TASK_ID \
   --by Codex \
   --summary "Implemented scoped fix." \
-  --output path/to/output
+  --output path/to/output \
+  --report-card path/to/report_card.md
 ```
 
 For closeouts with a separate evidence JSON:
@@ -50,6 +52,7 @@ python scripts/complete_task.py TASK_ID \
   --sign-off "PASS WITH REVISIONS" \
   --sign-off-tier Matt \
   --output path/to/output \
+  --report-card path/to/report_card.md \
   --verification-artifact mmi/project_brain/status/verify/TASK_ID.json
 ```
 

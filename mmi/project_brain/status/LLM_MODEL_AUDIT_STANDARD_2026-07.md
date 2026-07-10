@@ -437,6 +437,8 @@ Rules:
 - The report card must be produced by a separate reviewer from the artifact producer.
 - The report card must include a visible letter grade mark, rubric scores, criterion feedback, what was done well, what failed, and improvement targets.
 - A task cannot be marked `completed` in `tasks.json` unless its output artifact or closeout record names the report card path, reviewer identity, grade mark, and acceptance status.
+- `scripts/complete_task.py` must validate the report card with `scripts/validate_report_card.py` before writing `completed` state.
+- `scripts/validate_report_card.py` is the deterministic grade-math enforcer. If the validator reports `GRADE_MATH_CONFLICT`, `REPORT_CARD_REQUIRED`, missing critical criteria, missing rubric scores, or missing required report-card fields, task completion is blocked.
 - A commit that closes or completes work must include the report card artifact or explicitly classify the work as `QUARANTINE / BLOCKED_EVIDENCE_ONLY`.
 
 Required task-completion grade request from the artifact producer:

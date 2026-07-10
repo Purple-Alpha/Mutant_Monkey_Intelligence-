@@ -29,7 +29,7 @@ After finishing any MMI task, **always** run one of these from repo root:
 
 ```bash
 cd /mnt/c/MMI
-python3 scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/output
+python3 scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/output --report-card path/to/report_card.md
 ```
 
 Or if you already edited `tasks.json` manually:

@@ -57,7 +57,7 @@ CHEATSHEET = [
     ("War room watch", "python mmi/war_room.py --watch --seconds 30"),
     (
         "Complete task",
-        'python scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/file',
+        'python scripts/complete_task.py TASK_ID --by "Codex" --summary "..." --output path/to/file --report-card path/to/report_card.md',
     ),
     ("Cold backup push", "python scripts/mmi_cold_backup.py --backup-and-push"),
     ("Command center fallback", "python mmi/command_center.py --watch --seconds 30"),
