@@ -10,7 +10,9 @@ SPEC_PREP_ONLY / AUDIT_ONLY
 
 These laws bind build, preservation, backup, model ownership, next-lane selection, and closeout behavior. They do not authorize build, execution, cleanup, deletion, reset, force-push, kernel testing, minifilter testing, IOCTL fuzzing, deployment, or perfect closure.
 
-## Current Standing Snapshot
+## Historical Standing Snapshot — 2026-07-07
+
+This snapshot is preserved as point-in-time evidence and is not current worktree, remote, model-routing, or maintenance status. Current status is controlled by `MMI_ACTIVE_SCOPE.md` and `MMI_MMS_CUSTODY_MAINTENANCE_2026-07.md`.
 
 ```text
 PROJECT STANDING: GOOD
@@ -27,17 +29,17 @@ PERFECT CLOSURE: BLOCKED
 BUILD AUTHORITY: NO
 ```
 
-## Scoreboard
+## Historical Scoreboard — 2026-07-07
 
 ```text
 PRESERVATION SCORE: 8.5 / 10
-OWNER: Codex ledger, Matt WSL evidence, Gemini review
+OWNER AT THE TIME: Codex ledger, Matt WSL evidence, Gemini review
 EVIDENCE: repo synced; audit log committed; dirty archive committed; manifest committed; hash committed; filename scan no hits
 BLOCKERS: content scan not done; dirty path metadata remains
 NEXT IMPROVEMENT: content secret scan spec + external review
 
 CLEAN CLOSURE SCORE: 5 / 10
-OWNER: Codex spec, Gemini challenge review, Matt acceptance
+OWNER AT THE TIME: Codex spec, Gemini challenge review, Matt acceptance
 EVIDENCE: evidence trail is strong; path leak confirmed
 BLOCKERS: secret content not proven; clean replacement not planned
 NEXT IMPROVEMENT: clean replacement plan after content scan
@@ -251,8 +253,11 @@ STATE THE MISSING EVIDENCE AND OPEN A REQUIREMENTS/AUDIT LANE
 
 ```text
 CODEX: repo state, documentation/control artifacts, git evidence, local verification, law enforcement
-GEMINI PAID API: external audit/challenge review where separately invoked and output-captured
-CURSOR: editor/operator only unless explicitly assigned a lane
+QWEN: bounded local read-only precheck, drift detection, classification, extraction, and short target comparison only
+CLAUDE: read-only design or independent review only for an exact Matt-authorized task
+CURSOR: bounded independent review only when explicitly assigned; no PM or repository-control authority
+GROK: parked; no invocation, spend, or current role until Matt explicitly reactivates it
+GEMINI: parked; historical outputs remain evidence but no current invocation, credit use, or current role is authorized
 AIDER: read-only assistant by default; no edit authority unless separately authorized
 MATT: final authority gate and explicit authorization source
 ```
@@ -273,31 +278,34 @@ FORBIDDEN TOOLS/ACTIONS:
 OWNERSHIP REASON:
 ```
 
-## Active Audit Model Trial
+## Audit Model Routing Decision — 2026-07-13
 
 ```text
-TRIAL WINDOW: 2026-07-07 through 2026-07-14
-AUDIT MODEL: Gemini Paid API
+PRIOR TRIAL: Gemini Paid API — ENDED / PARKED
+CURRENT NO-SPEND REVIEW TEAM: Claude or Cursor, selected per exact bounded task
+LOCAL PRECHECK MODEL: Qwen, bounded specialist role only
 PRIMARY REPO / LAW MODEL: Codex
-FALLBACK AUDIT MODEL: Grok, only if Gemini fails audit-trail quality, role separation, output capture, or reliability expectations
+GROK INVOCATION AUTHORITY: NO — parked until explicit Matt reactivation
+GEMINI INVOCATION AUTHORITY: NO
 BUILD AUTHORITY: NO
 ```
 
-During this window, Gemini Paid API is the active external audit/challenge model. Codex remains responsible for repo-state verification, documentation/control updates, law enforcement, and git evidence. Gemini output must be captured to file or terminal log before acceptance.
+Matt ended current Gemini use after the first maintenance audit failed project-law grading and further credit expenditure was not justified. Historical Gemini artifacts remain preserved and must not be rewritten as if they were produced by another model.
 
-If Gemini cannot produce a reliable audit trail, the next allowed decision is:
+Qwen may be used locally only as a bounded, role-specific assistant after deterministic identity/hash/scope prechecks. Qwen does not replace the repository controller, may not grade its own output, and may not serve as the sole reviewer for a large authority-heavy packet.
 
-```text
-REOPEN_AUDIT_MODEL_SELECTION_FOR_PATCH
-```
+Claude and Cursor may perform independent review only when the exact task preserves producer/reviewer separation, identity evidence, prompt capture, target hashes, output capture, and the no-self-grade rule. Neither receives standing audit authority. Gemini and Grok are not required by current maintenance routing and remain parked until a later explicit Matt reactivation.
 
-This trial does not authorize build, execution, cleanup, deletion, kernel testing, minifilter testing, IOCTL fuzzing, deployment, residual-risk closure, falsifier closure, M4 closure, PERFECT closure, or GATED status.
-## Current Evidence-Determined Next Lane
+This routing decision does not authorize model invocation, spend, build, execution, cleanup, deletion, kernel testing, minifilter testing, IOCTL fuzzing, deployment, residual-risk closure, falsifier closure, M4 closure, PERFECT closure, or GATED status.
+
+## Superseded Evidence-Determined Lane Snapshot — 2026-07-07
+
+The following lane was current on 2026-07-07 and is retained as historical evidence only. The custody-maintenance ledger and active scope now control.
 
 ```text
 NEXT LANE: SCRATCH_ARCHIVE_CONTENT_SECRET_SCAN_SPEC
 PRIMARY MODEL: Codex
-SECONDARY REVIEW MODEL: Gemini Paid API
+SECONDARY REVIEW MODEL AT THAT TIME: Gemini Paid API
 EXECUTION OPERATOR: Matt / WSL terminal after boundary acceptance
 CURSOR ROLE: None unless explicitly reopened
 AIDER ROLE: None

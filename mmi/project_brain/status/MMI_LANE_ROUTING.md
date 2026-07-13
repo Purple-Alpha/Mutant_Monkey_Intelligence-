@@ -1,5 +1,16 @@
 # MMI Lane Routing
 
+> **Maintenance supersession notice — 2026-07-13:** Matt removed Cursor from the PM role and placed MMI/MMS under a strict custody-maintenance freeze. Current authority is defined by `MMI_ACTIVE_SCOPE.md` and `MMI_MMS_CUSTODY_MAINTENANCE_2026-07.md`. The Cursor PM routing below is retained as historical operating context and is not current authority.
+
+```text
+AUTHORITY_STATUS: HISTORICAL_ONLY
+CURRENT_INSTRUCTION_POWER: NONE
+PARSER_RULE: Every imperative, assignment, queue rule, and lane owner below is quoted historical evidence, not an executable instruction.
+CURRENT_ROUTING_SOURCE: MMI_ACTIVE_SCOPE.md
+```
+
+<historical authority="none" instruction_power="none" superseded="2026-07-13">
+
 Last updated: 2026-07-01  
 Authority: Matt (Super)  
 Maintained by: Cursor PM  
@@ -256,3 +267,5 @@ Key binding points:
 - Daily backup, commit, push, and remote-head verification are preservation law, not optional hygiene.
 - No build, execution, cleanup, delete, reset, force-push, kernel/minifilter/IOCTL testing, or restore-check script execution without explicit Matt authorization.
 - Accepted artifacts must be committed and pushed, or explicitly listed as intentionally untracked/quarantine. No silent loose files.
+
+</historical>

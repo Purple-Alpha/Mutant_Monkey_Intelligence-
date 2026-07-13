@@ -1,7 +1,7 @@
 {
   "version": "MMI_GRADING_STRIKE_LEDGER_v1",
   "authority_class": "DOC_CONTROL_ONLY",
-  "updated_at": "2026-07-09T20:00:00-07:00",
+  "updated_at": "2026-07-13T10:03:09-07:00",
   "purpose": "Persistent ledger for consecutive F / Blocked grades by artifact or tightly related artifact series.",
   "rules": {
     "source_law": "mmi/project_brain/status/LLM_MODEL_AUDIT_STANDARD_2026-07.md A.8",
@@ -56,6 +56,18 @@
       "timestamp": "2026-07-09T21:40:00-07:00",
       "consecutive_count": 1,
       "next_allowed_state": "REPORT_CARD_REWORK_REQUIRED"
+    },
+    {
+      "artifact_key": "audit-artifact:MMI_MMS_MAINTENANCE_GEMINI_AUDIT_2026-07-13.md",
+      "artifact_path": "mmi/project_brain/status/MMI_MMS_MAINTENANCE_GEMINI_AUDIT_2026-07-13.md",
+      "artifact_hash": "f25b78c3dcd0135b28bd60de55c2a40bf5bbd3b4b1b66cc0fe0cdc6b13b137d2",
+      "artifact_series_id": "mmi-mms-maintenance-gemini-audit-series",
+      "block_reason_category": "grade_math_conflict",
+      "grader_id": "Codex",
+      "grade_artifact_path": "mmi/project_brain/status/MMI_MMS_MAINTENANCE_GEMINI_AUDIT_REPORT_CARD_2026-07-13.md",
+      "timestamp": "2026-07-13T10:03:09-07:00",
+      "consecutive_count": 1,
+      "next_allowed_state": "AUDIT_REWORK_REQUIRED"
     }
   ]
 }

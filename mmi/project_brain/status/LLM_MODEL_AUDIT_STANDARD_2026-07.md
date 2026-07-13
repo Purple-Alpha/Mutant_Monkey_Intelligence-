@@ -346,10 +346,11 @@ Every audit must identify:
 - forbidden actions.
 - output artifact path if captured.
 
-Gemini-specific current state:
+Gemini-specific historical trial state, superseded 2026-07-13:
 
 ```text
-GEMINI STATUS: ACTIVE TRIAL AUDIT MODEL
+GEMINI STATUS AT THE TIME: ACTIVE TRIAL AUDIT MODEL
+CURRENT STATUS: PARKED / HISTORICAL_ONLY
 TRUST LEVEL: CONDITIONAL
 ROLE: EXTERNAL CHALLENGE REVIEW
 AUTHORITY: NONE
@@ -357,9 +358,10 @@ ACCEPTANCE POWER: NO
 BUILD POWER: NO
 CLEANUP POWER: NO
 LANE OWNERSHIP POWER: NO
+CURRENT INVOCATION POWER: NO
 ```
 
-Other models may be used for calibration, but not as a crutch for individual audit acceptance unless separately authorized.
+This block has no current model-routing power. Current routing comes from `MMI_ACTIVE_SCOPE.md` and `MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md`. Other models may be used only for an exact bounded task with Matt authorization and may not become a crutch for audit acceptance.
 
 ## Anti-Praise Rule
 

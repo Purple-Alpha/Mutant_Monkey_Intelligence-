@@ -151,3 +151,51 @@ python3 scripts/mmi_cold_backup.py --restore-check "$SCRATCH"
 
 Promotion helper: run `python3 scripts/mmi_cold_backup.py --validate-promotion mmi_backup_20260701_110548.tar.gz` after this section is saved — expect **ALLOWED**. Matt manually updates `MMI_LATEST_GOOD_ARCHIVE.md` (human-gated; P5).
 
+---
+
+## Appendix — `mmi_backup_20260713_092718.tar.gz` (custody maintenance)
+
+**Authorized by:** Matt — MMI/MMS maintenance program MNT-005 and MNT-008
+**Executor:** Codex
+**Date:** 2026-07-13
+**SHA256:** `470b23f58343ae54d225b36c948d725c54110bead0e08be9afbb37a31ca3ec0c`
+**Bytes:** 8,247,595
+
+### Sign-off
+
+**PASS — BOUNDED ALLOWLIST RESTORE CHECK**
+
+The archive extracted into a new isolated temporary directory and the repository-defined `--restore-check` returned `PASS` with an empty error list. The live tree was not overwritten. The scratch directory remains present because cleanup was not authorized.
+
+| Check | Result |
+|---|---|
+| Local archive SHA-256 | **PASS** |
+| Backblaze bytes and SHA-256 | **PASS** |
+| Sidecar SHA-256 | **PASS** |
+| Isolated extraction | **PASS** |
+| Required restore files | **PASS** |
+| `tasks.json` JSON-list validation | **PASS** |
+| Restore-critical Python syntax compilation | **PASS** |
+| `--restore-check` errors | `[]` |
+| Live tree overwritten | **No** |
+| Scratch cleanup performed | **No** |
+| Quarantined `evidence/` proven recoverable | **No — excluded from archive** |
+| Loose MMS candidate data proven recoverable | **No — outside archive boundary** |
+
+```bash
+tar -xzf mmi/project_brain/backup/mmi_backup_20260713_092718.tar.gz \
+  -C /tmp/mmi_restore_check_20260713_F8uWW7
+python3 scripts/mmi_cold_backup.py \
+  --restore-check /tmp/mmi_restore_check_20260713_F8uWW7
+```
+
+```json
+{
+  "restore_root": "/tmp/mmi_restore_check_20260713_F8uWW7",
+  "status": "PASS",
+  "errors": []
+}
+```
+
+This PASS supports recovery of the standard allowlisted MMI control package only. It does not authorize latest-good promotion, account deletion, data deletion, cleanup, or product-work resumption.
+

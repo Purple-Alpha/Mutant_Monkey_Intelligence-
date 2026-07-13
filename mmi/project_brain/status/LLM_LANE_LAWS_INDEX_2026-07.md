@@ -91,12 +91,13 @@ OPTIONAL_RECOMMENDATION_NOT_AUTHORITY
 
 Research may inform later decisions. It does not prove system correctness, safety, production readiness, implementation readiness, clean closure, residual-risk closure, falsifier closure, M4 closure, PERFECT closure, or GATED status.
 
-## Model Trial Boundary
+## Historical Model Trial Boundary — Superseded 2026-07-13
 
-Gemini Paid API remains an active trial audit model, not an authority source.
+The following Gemini trial record is historical evidence only. Its instruction power and current routing authority are zero. Current model routing is controlled by `MMI_ACTIVE_SCOPE.md` and `MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md`.
 
 ```text
-GEMINI STATUS: ACTIVE TRIAL AUDIT MODEL
+GEMINI STATUS AT THE TIME: ACTIVE TRIAL AUDIT MODEL
+CURRENT STATUS: PARKED / HISTORICAL_ONLY
 TRUST LEVEL: CONDITIONAL
 ROLE: EXTERNAL CHALLENGE REVIEW
 AUTHORITY: NONE
@@ -104,6 +105,7 @@ LANE OWNERSHIP POWER: NO
 BUILD POWER: NO
 CLEANUP POWER: NO
 ACCEPTANCE POWER: NO
+CURRENT INVOCATION POWER: NO
 ```
 
 ## Failure Handling

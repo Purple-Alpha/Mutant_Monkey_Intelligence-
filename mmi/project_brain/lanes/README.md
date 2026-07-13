@@ -1,5 +1,7 @@
 # MMI Lanes
 
+> **Maintenance authority notice — 2026-07-13:** The role summary below is historical and cannot override `status/MMI_ACTIVE_SCOPE.md`. Cursor no longer holds PM authority. Current prompt custody is defined by `MMI_MODEL_PROMPT_CUSTODY_INDEX_2026-07.md`; Gemini and Grok are parked, Qwen is a bounded local specialist, and Claude or Cursor may review only under an exact Matt-authorized task.
+
 This folder is for ownership and routing rules.
 
 Current lanes: Matt is Super, Cursor is PM, Codex is backbone/runtime support, Claude is design, Gemini Paid API is audit, Gemini is main research, and ChatGPT is deep or secondary research.
@@ -7,6 +9,12 @@ Current lanes: Matt is Super, Cursor is PM, Codex is backbone/runtime support, C
 **Product lane (2026-06-29):** MMI Security Intel — see `MMI_SECURITY_INTEL_LANE.md` and `architecture/MMI_SECURITY_INTEL_PRODUCT_SCOPE.md`.
 
 **Research rigor (LOCKED):** `MMI_RESEARCH_RIGOR_PROTOCOL.md` — mandatory for Gemini, ChatGPT, and Evaluator prompts.
+
+**Model prompt custody:**
+
+- `MMI_MODEL_PROMPT_CUSTODY_INDEX_2026-07.md`
+- `MMI_GEMINI_AUDIT_PROMPT_FRAMEWORK_2026-07.md` — parked historical draft; no current use
+- `MMI_QWEN_READ_ONLY_CROSS_CHECK_PROMPT_FRAMEWORK_2026-07.md` — bounded-specialist draft; review required
 
 ## Mandatory Authority Laws - 2026-07-07
 

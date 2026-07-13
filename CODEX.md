@@ -15,11 +15,13 @@ Do not infer active scope from legacy repo-root files. This repository still con
 
 For MMI work, follow these files before any root-level handoff, role, or swarm document:
 
-1. `mmi/project_brain/status/MMI_ACTIVE_SCOPE.md`
-2. `mmi/project_brain/status/MMI_PHASE2_START.md`
-3. `mmi/project_brain/architecture/MMI_PHASE2_MVP_ARCHITECTURE.md`
-4. `mmi/project_brain/status/MMI_LANE_ROUTING.md`
-5. `tasks.json`
+1. `mmi/project_brain/status/MMI_MMS_CUSTODY_MAINTENANCE_2026-07.md`
+2. `mmi/project_brain/status/MMI_ACTIVE_SCOPE.md`
+3. `mmi/project_brain/status/MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md`
+4. `mmi/project_brain/status/MMI_PHASE2_START.md`
+5. `mmi/project_brain/architecture/MMI_PHASE2_MVP_ARCHITECTURE.md`
+6. `mmi/project_brain/status/MMI_LANE_ROUTING.md`
+7. `tasks.json`
 
 If those files conflict with `AGENTS.md`, `CLAUDE.md`, `CURRENT_PROJECT_HANDOFF.md`, `PROGRESS.md`, `HANDSHAKE_LEDGER.md`, `ops/run.py`, or `web/`, the MMI project-brain files win.
 
@@ -68,6 +70,8 @@ If the task is not MMI-prefixed or does not start with `PROJECT: MMI.`, stop and
 ## Current Hard Stops
 
 - MMI only.
+- Maintenance freeze is active: no product feature work until the custody-maintenance ledger closes and Matt explicitly lifts the freeze.
+- Cursor has no current PM or repository-control authority. Historical Cursor records remain evidence of prior work only.
 - Do not run `npm`.
 - Do not run `ops/run.py`.
 - Do not edit `web/`.

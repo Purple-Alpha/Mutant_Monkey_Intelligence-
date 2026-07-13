@@ -1,0 +1,258 @@
+# MMI Protected Loose-Data Backup Manifest — 2026-07-13
+
+## Status and authority
+
+```text
+MANIFEST_STATUS: PREPARED_FOR_OPERATOR_REVIEW
+BACKUP_CLASS: QUARANTINE_BACKUP_PROPOSAL
+BACKUP_CREATED: NO
+ARCHIVE_CREATED: NO
+ENCRYPTION_PERFORMED: NO
+UPLOAD_PERFORMED: NO
+RESTORE_CHECK_PERFORMED: NO
+SOURCE_DELETION_AUTHORIZED: NO
+```
+
+- Operator authority: Matt
+- Prepared by: Codex, disk-aware documentation custodian
+- Prepared at: `2026-07-13T12:27:04-07:00`
+- Repository: `/mnt/c/MMI`
+- Branch: `mmi-phase2-commit`
+- HEAD at preparation: `bd25c5c7d9244686db31621b2ed17a8c0735ddcd`
+- Purpose: define a protected preservation boundary for unique loose MMI and Mutant Monkey data before any further cleanup
+
+This manifest is documentation only. It does not authorize archive creation, encryption, upload, source movement, source deletion, credential handling, or restoration.
+
+## Controlling boundaries
+
+- `status/MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md`
+- `architecture/MMI_BACKUP_COLD_STORAGE_SPEC.md`
+- `architecture/MMI_LOCAL_CLOUD_POLICY.md`
+- `opsec/BACKUP_PROTECTED_PATHS.md`
+- `status/MMI_MMS_CUSTODY_MAINTENANCE_2026-07.md`
+- `status/MMI_MMS_DATA_LOCATION_INVENTORY_2026-07-13.md`
+
+The normal MMI cold-storage allowlist excludes API keys, tokens, secrets, caches, and unrelated loose data. This proposed package is therefore a separate quarantine-preservation lane and may not be sent through the normal plaintext `matt:` backup route.
+
+## Current source snapshot
+
+All counts and fingerprints below were recomputed read-only on 2026-07-13. Every regular file was readable. No symlink was found in any directory source.
+
+| ID | Exact source | Files | Bytes | Portable payload fingerprint | Custody class | Current disposition |
+|---|---|---:|---:|---|---|---|
+| PLD-001 | `/mnt/c/mmi_m4_evidence` | 32 | 18,240,594 | `D6BC40BDFE77818A42DBAA59A7A86B59BF29ABCDE37BFD3783B9FD682E71A697` | `RESTRICTED_TEST_EVIDENCE` | Hold intact; secret/key triage required before packaging |
+| PLD-002 | `/home/socialarchitect/mutant-monkey-radar` | 29 | 82,470 | `068F6FE88D1FFCD5710D983A48616EDFEE47A0561EF15808F4C722502F3E74A0` | `PRIVATE_MMI_CORE_SOURCE_AND_STATE` | Proposed protected preservation |
+| PLD-003 | `/home/socialarchitect/mutant_monkey_intel` | 11 | 3,859,463 | `3A63D564783CA956D4B4A7ADA349BD5CBC669267D1AF63D2BFE983E29B513B8A` | `RESTRICTED_COLLECTED_INTELLIGENCE` | Hold intact; content boundary review required before packaging |
+| PLD-004 | `/home/socialarchitect/mutant_monkey_intel_tests` | 2 | 56,095 | `DE320B6AAAAB928D129F3FE32D84CC5AFF992E508511F93676BC8313EE1A3987` | `PRIVATE_UNASSIGNED_TEST_SOURCE` | Proposed protected preservation with PLD-003 |
+| PLD-005 | `/home/socialarchitect/mutant_monkey_intel.json` | 1 | 1,285 | `185B05530BEBE0953AADBB80831518062B7ACBC4DAB59ADA5795B4F81A8DBCA9` | `PRIVATE_UNASSIGNED_INTELLIGENCE_RECORD` | Proposed protected preservation with PLD-003 |
+| PLD-006 | `/home/socialarchitect/mmi_holding` | 1 | 12,905 | `EBDFC04E37DEE5B8F8D7B9952724F9AC415A4A332B16E6F2DC11BB30EE89265D` | `PRIVATE_UNASSIGNED_PRODUCT_CONTRACT` | Proposed protected preservation |
+
+Aggregate proposed source boundary:
+
+```text
+ROOTS: 6
+REGULAR_FILES: 76
+PAYLOAD_BYTES: 22252812
+PACKAGE_FINGERPRINT: 0822EEC339DC73587ED246439C4D29621EA78EFE1ED52489911353BBF3406404
+```
+
+## Fingerprint method
+
+For each directory, the portable payload fingerprint is SHA-256 over the exact byte stream produced by:
+
+```text
+1. change directory to the source root;
+2. enumerate regular files as `./relative/path` using NUL boundaries;
+3. sort those paths bytewise with NUL boundaries;
+4. calculate SHA-256 for every file in that order;
+5. calculate SHA-256 over the resulting `sha256sum` stream.
+```
+
+For the single-file source, the portable fingerprint is the file's direct SHA-256.
+
+The package fingerprint is SHA-256 over six LF-terminated records in PLD-001 through PLD-006 order, each containing the stable source label, one ASCII space, and its lowercase portable fingerprint. This metadata fingerprint verifies the inventoried source boundary; it is not an archive hash.
+
+## Sensitivity observations
+
+### PLD-001 — M4 evidence
+
+- Contains two different 32-byte files named `.mmi_dev_custody_stub.key`.
+- Contains credential-shaped text in `boundary/tampered_policy.json`.
+- Contains Windows absolute-path and IPv4-like evidence.
+- The credential-shaped content may be an adversarial fixture, but authenticity is not proven.
+- Do not print, publish, or place this root in public Git or the normal plaintext cold archive.
+
+### PLD-002 — Radar
+
+- Contains source, SQLite state, logs, reports, and generated Python bytecode.
+- A local heuristic scan found no known secret prefix, private-key marker, or key-file name.
+- Heuristic scanning is not secret-cleanliness certification.
+
+### PLD-003 through PLD-005 — Threat Intelligence Daemon package
+
+- Contains source, configuration, daemon logs, collected watch/discard stores, tests, generated bytecode, and one adjacent intelligence record.
+- Collected data contains secret-related language and an email-like value.
+- No known secret prefix or private-key marker was found by the local heuristic scan.
+- Ownership remains unassigned; preservation does not assign the daemon to MMI or MMS.
+
+### PLD-006 — Inbox Shield contract
+
+- Contains one Mutant Monkey Inbox Shield Blast Radius Controller adversarial-test contract.
+- No known secret prefix or private-key marker was found by the local heuristic scan.
+- Preservation does not assign Inbox Shield to MMI or MMS.
+
+## Exact preservation policy
+
+1. Source directories remain the local source of truth.
+2. No source is moved, normalized, reformatted, pruned, or deleted during preservation.
+3. A future exact snapshot must account for every current regular file, including generated bytecode, logs, databases, collected data, test fixtures, and key-named artifacts, unless Matt separately approves an explicit exclusion list after review.
+4. Any excluded item must remain locally preserved until its disposition and recovery impact are separately decided.
+5. A per-file relative-path, byte-count, and SHA-256 manifest must be generated at backup time and stored inside the encrypted container, not published in the repository.
+6. The outer public-safe record may contain only archive metadata, ciphertext hash, byte count, destination identity, and restore result.
+7. No plaintext archive may be stored in the repository, public Git, or Backblaze.
+8. No credential or encryption key may be stored inside the archive it protects.
+9. The Recycle Bin is not a backup destination.
+10. Source deletion remains prohibited until a separately authorized restore verification succeeds.
+
+## Encryption and destination precheck
+
+Observed capability at manifest preparation:
+
+| Control | Observed state |
+|---|---|
+| Plain rclone remote | `matt:` exists |
+| Encrypted rclone remote | `matt-crypt:` not configured |
+| `gpg` | Available at `/usr/bin/gpg` |
+| `age` / `age-keygen` | Not installed |
+| `7z` | Not installed |
+| `openssl` | Available, but no archive format or key-custody design is approved |
+| Existing WSL GPG identity | None found; default/configured home does not exist and no alternate WSL keyring was found |
+| Existing Windows GPG identity | None found; Windows GPG home and `gpg.exe` were not found |
+| Encryption recipient/key | No existing recipient; not selected or proven |
+| Protected remote destination | Not selected or approved |
+
+The existence of `gpg` does not authorize its use and does not prove that a suitable encryption recipient or recoverable private key exists.
+
+## Read-only GPG key-custody inventory
+
+Inventory time: `2026-07-13T12:32:18-07:00`
+
+```text
+WSL_GNUPGHOME_ENV_SET: NO
+WSL_DEFAULT_GNUPG_HOME_EXISTS: NO
+WSL_ALTERNATE_KEYRING_FILE_COUNT: 0
+WINDOWS_GNUPG_HOME_EXISTS: NO
+WINDOWS_GPG_EXECUTABLE_FOUND: NO
+PRIMARY_KEY_COUNT: 0
+ENCRYPTION_SUBKEY_COUNT: 0
+LOCAL_PRIVATE_MATERIAL_FILE_COUNT: 0
+REVOCATION_CERTIFICATE_COUNT: 0
+FINGERPRINTS: NONE
+EXPIRY_STATUS: NOT_APPLICABLE
+EXISTING_RECOVERABLE_ENCRYPTION_IDENTITY: NO
+```
+
+No key listing was attempted after the absence of every WSL and Windows GPG home was established. No identity, user ID, email address, keygrip, fingerprint, or secret material exists in the inspected GPG locations to report.
+
+Static usability decision:
+
+```text
+USABLE_EXISTING_GPG_RECIPIENT: NO
+REASON: NO KEYRING OR KEY MATERIAL EXISTS
+PASSPHRASE_ACCESS: NOT_TESTED
+OFF_HOST_PRIVATE_KEY_RECOVERY: NOT_ESTABLISHED
+REVOCATION_RECOVERY: NOT_ESTABLISHED
+```
+
+Creating a new GPG identity, configuring `matt-crypt:`, or selecting a different encryption mechanism requires a separate operator-approved key-generation and recovery-custody plan.
+
+Prepared GPG plan:
+
+`status/MMI_GPG_BACKUP_KEY_AND_RECOVERY_CUSTODY_PLAN_2026-07-13.md`
+
+Status: `DRAFT_FOR_OPERATOR_REVIEW / NO_KEY_OR_RECOVERY_ACTION_AUTHORIZED`
+
+## Required permit before backup execution
+
+A future execution permit must state all of the following exactly:
+
+- approved source IDs from this manifest;
+- exact inclusion and exclusion decision for the M4 key-named files and credential-shaped fixture;
+- encryption tool and mode;
+- encryption recipient or key fingerprint without exposing secret key material;
+- independent key-recovery location;
+- local staging path and plaintext cleanup rule;
+- protected remote provider, remote alias, bucket, and object prefix;
+- archive filename and retention classification;
+- maximum expected source and ciphertext bytes;
+- per-file manifest location inside the encrypted container;
+- local ciphertext SHA-256 verification;
+- remote byte and SHA-256 verification;
+- isolated restore destination;
+- restore verification method;
+- source deletion status, which defaults to `NOT_AUTHORIZED`;
+- execution operator and independent reviewer.
+
+If any required field is missing:
+
+```text
+PROTECTED_BACKUP_EXECUTION: BLOCKED
+```
+
+## Proposed future archive layout
+
+This is a logical layout only; no directory or archive was created.
+
+```text
+protected-loose-data-20260713/
+  MANIFEST.json
+  mmi_m4_evidence/
+  mutant-monkey-radar/
+  mutant_monkey_intel/
+  mutant_monkey_intel_tests/
+  mutant_monkey_intel.json
+  mmi_holding/
+```
+
+The final archive layout may change only through an updated manifest and explicit operator approval.
+
+## Restore acceptance gates
+
+A protected backup is not trusted until an authorized isolated restore proves:
+
+1. ciphertext hash and byte count match the pushed object;
+2. decryption succeeds with the independently held recovery key;
+3. the internal per-file manifest is readable;
+4. all 76 expected files, or the later explicitly approved set, are present;
+5. every restored file byte count and SHA-256 matches;
+6. the portable root and package fingerprints recompute exactly;
+7. no restored file is executed, imported, built, tested, or opened as active configuration during verification;
+8. the live source locations are not overwritten;
+9. the restore evidence records commands, timestamps, operator, destination, and result;
+10. the restore scratch remains until cleanup receives separate authorization.
+
+## Current decision
+
+```text
+MANIFEST: PREPARED
+SOURCE_BOUNDARY: INVENTORIED
+PROTECTED_BACKUP: NOT_CREATED
+NORMAL_PLAINTEXT_BACKUP_ROUTE: PROHIBITED
+ENCRYPTION_POSTURE: NOT_SELECTED
+EXISTING_GPG_IDENTITY: NONE
+DESTINATION: NOT_SELECTED
+RESTORE PROOF: NOT_PERFORMED
+SOURCE DELETION: NOT_AUTHORIZED
+NEXT LANE: INDEPENDENT READ-ONLY REVIEW OF THE GPG KEY AND RECOVERY-CUSTODY PLAN
+```
+
+## Non-claims
+
+- No archive, copy, encrypted payload, per-file private manifest, or remote object was created.
+- No source file was changed, moved, deleted, normalized, or executed.
+- No secret or credential-shaped value was printed or classified as genuine.
+- No encryption key was generated, read, selected, exported, or stored.
+- No rclone remote was added, modified, queried for upload, or used.
+- No restore, build, compilation, test, daemon execution, commit, or push was performed.
+- This manifest does not assign the Threat Intelligence Daemon or Inbox Shield to MMI or MMS.
+- This manifest does not claim secret cleanliness, backup completion, recoverability, correctness, acceptance, or maintenance closure.
