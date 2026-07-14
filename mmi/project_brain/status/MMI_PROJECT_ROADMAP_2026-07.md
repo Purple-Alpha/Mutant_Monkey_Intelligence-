@@ -31,6 +31,7 @@
 | **Last completed** | `mmi-iceberg-l7-temporal-rhythm-build` — PASS (28/28 pytest) |
 | **Phase 1 stability** | **PASS** (3× Tier 4, recorded) |
 | **Iceberg** | Tip + L8 + L6 + L4 + L5 + L7 **BUILT** · L9 spec **seeded** |
+| **Maintenance freeze** | **ACTIVE** — GPG-P0 custody plan accepted at `faae3ae4…`; GPG-P1 and remaining MNT closure gates are still blocked |
 
 **Spec:** `architecture/MMI_ICEBERG_L7_TEMPORAL_RHYTHM_SPEC_2026-07.md`  
 **Moat doc:** `architecture/MMI_DIFFERENTIATOR_2026-07.md`
@@ -90,6 +91,8 @@ L9 chain depth     ← NEXT
 | Item | Why later |
 |------|-----------|
 | Polyglot / dual-LLM critic ring | Needs `MMI_CRITIC_RING_RULES_v1` spec; runtime asynchrony blocker open |
+| Governed agent-improvement / evolution loop | Future design investigation: bind task, prompt, output, independent grade, accepted correction, comparable before/after evaluation, regression evidence, Matt promotion, and rollback; agents may propose changes but may not approve their own evolution |
+| Protected loose-data encryption execution | GPG-P0 documentation plan accepted; GPG-P1 still requires the real nominee/custody packet and Matt's separate explicit permit |
 | `central_brain.py` bounded synthesis | Phase 2 AGI — after proof gate |
 | `genomic_realignment_loop.py` | Phase 3 — after console + proof gate |
 | Mirror sandbox full isolation | Router exists; sandbox v1 spec still needed |
@@ -180,4 +183,6 @@ Track B does **not** replace Track A. Today's iceberg work is **weapon ingress d
 
 | Version | Date | Change |
 |---------|------|--------|
+| 1.2 | 2026-07-13 | Recorded documentation-only GPG-P0 plan acceptance; maintenance freeze and GPG-P1 block remain |
+| 1.1 | 2026-07-13 | Parked a future governed agent-improvement/evolution-loop investigation with independent review, regression, Matt-promotion, and rollback boundaries |
 | 1.0 | 2026-07-02 | Initial operator roadmap; Matt rule §0 (concepts never discarded as fantasy); synced post L4 build + L5 seed |

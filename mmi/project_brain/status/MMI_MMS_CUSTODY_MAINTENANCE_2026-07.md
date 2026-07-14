@@ -156,7 +156,7 @@ Post-push isolated recovery check:
 | MNT-001 | Create custody ledger | CREATED / REVIEW_PENDING | Independent review before acceptance |
 | MNT-002 | Classify and preserve `.gitignore` and `evidence/` | CLASSIFIED / REVIEW_PENDING | `.gitignore` precisely repaired and review pending; evidence is private quarantine with a heuristic scan only and is ineligible for Git/cloud upload |
 | MNT-003 | Identify exactly what constitutes MMS | IDENTITY_BOUNDARY_DEFINED / REVIEW_PENDING | MMI is the self-healing organism with Radar as MMI-Core; MMS is the distinct purple-team defense/assault cost-maximizer; daemon ownership remains unresolved |
-| MNT-004 | Complete repository/data-location inventory | PROTECTED_MANIFEST_PREPARED / REVIEW_PENDING | Six unique loose-data roots are inventoried in `MMI_PROTECTED_LOOSE_DATA_BACKUP_MANIFEST_2026-07-13.md`; encryption, destination, M4 sensitive inclusion, and product custody remain unresolved |
+| MNT-004 | Complete repository/data-location inventory | GPG_P0_PLAN_ACCEPTED / PROTECTED_MANIFEST_REVIEW_PENDING | Six unique loose-data roots are inventoried in `MMI_PROTECTED_LOOSE_DATA_BACKUP_MANIFEST_2026-07-13.md`; the GPG custody plan is accepted for documentation phase GPG-P0, while GPG-P1, encryption, destination, M4 sensitive inclusion, and product custody remain unresolved |
 | MNT-005 | Create and verify current cold backup | COMPLETE_PUSH_VERIFIED | Archive, sidecar, Backblaze bytes, remote hash, and push log agree; restore proof is MNT-008 |
 | MNT-006 | Reconcile GitHub ownership and authentication | CANONICAL_IDENTITY_PROVEN | Purple-Alpha authenticated with ADMIN on the exact public origin; redundant-account disposition remains deferred |
 | MNT-007 | Update stale agent-governance documents | CUSTODY_DEFECTS_PATCHED / INDEPENDENT_REVIEW_REQUIRED | Gemini and Grok are parked; Qwen is advisory drift-check only with deterministic packet limits; the revised custody index and Qwen framework require fresh review, and Claude/ChatGPT reconciliation remains open |
@@ -456,6 +456,18 @@ OWNERSHIP REASON: Codex has current disk access; Qwen provides local bounded pre
 **Verified result:** Current role documents no longer require Gemini or Grok. The Cursor review remains immutable advisory evidence at its recorded hash and is not represented as accepted.
 
 **Non-claims:** No model was invoked, no spend occurred, and no build, test, product execution, install, cleanup, delete, commit, push, remote query, or maintenance closure was authorized or performed by this patch.
+
+### 2026-07-13 — GPG-P0 custody-plan acceptance
+
+**Observed fact:** The exact GPG custody plan at SHA-256 `faae3ae49857508cb1dd7b7237103a2e336e5dfbce067d0f66d4ce60f6d53247` received `A / PASS_NO_PATCH_REQUIRED` from the final Cursor review at SHA-256 `209ab7b79ce428cd1ff0a1a820447c74badf121ced376b632ebf5e49d88b1561`. Codex independently graded that review artifact A with lowest criterion score 3 and no law conflict.
+
+**Operator authorization:** Matt explicitly accepted the exact plan hash for GPG-P0 and authorized Codex to create a documentation-only acceptance record and update the maintenance ledger and roadmap references.
+
+**Action performed:** Created `status/MMI_GPG_P0_PLAN_ACCEPTANCE_2026-07-13.md` and recorded the exact plan, review, independent grade, Matt decision, and remaining phase gates.
+
+**Verified result:** GPG-P0 is accepted for the exact plan hash only. MNT-004 now records that plan-design gate as satisfied while protected backup execution remains blocked.
+
+**Non-claims:** No GPG-P1 permit, nominee arrangement, key operation, archive, encryption, upload, build, test, execution, cleanup, deletion, commit, push, or maintenance closure is authorized or performed.
 
 ## Closure rule
 

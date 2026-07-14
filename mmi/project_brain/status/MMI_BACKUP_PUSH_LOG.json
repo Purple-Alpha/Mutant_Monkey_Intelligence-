@@ -31232,5 +31232,2214 @@
     "rclone_sidecar_copy_exit": 0,
     "rclone_hashsum_exit": 0,
     "rclone_sidecar_cat_exit": 0
+  },
+  {
+    "created_at": "2026-07-14T03:09:42.523877+00:00",
+    "source_root": "/mnt/c/MMI",
+    "mode": "archive-and-push",
+    "files": [
+      {
+        "path": "CODEX.md",
+        "sha256": "e593790cf2913f0817eaf25f7b3a35232b68d4029382dd82065a2b0569c9a321",
+        "bytes": 3518
+      },
+      {
+        "path": "host_boundary/mmi_boundary_daemon/README.md",
+        "sha256": "ae72b88ed9c36903b584afcb564299443351bc78b2549e67cda3a0d539a9be22",
+        "bytes": 870
+      },
+      {
+        "path": "host_boundary/mmi_boundary_daemon/go.mod",
+        "sha256": "7ee98ad350f67667ffab20ffa7af1fada5d19eaac3f99f6a99bf56f5b6e6576a",
+        "bytes": 68
+      },
+      {
+        "path": "host_boundary/mmi_boundary_daemon/main.go",
+        "sha256": "938b68b21c8cd7570f1f6349efc667f8dcff437d9dded9b32e7a0dfd77f432ac",
+        "bytes": 3897
+      },
+      {
+        "path": "host_boundary/mmi_minifilter/README.md",
+        "sha256": "637d60718d1d978f764d19aa2ad1e6fe1f110f137eb6d087e744080ad41210ee",
+        "bytes": 1857
+      },
+      {
+        "path": "host_boundary/mmi_minifilter/minifilter.c",
+        "sha256": "81e6b787ce63f9a667fc61770302d53a7e77b00dffa95bc085362dfdfb173b82",
+        "bytes": 9701
+      },
+      {
+        "path": "host_boundary/mmi_minifilter/mmi_minifilter.inf",
+        "sha256": "4b8e119afdcdf689d0c36b6eb37cf4c62dab82026ee6d2e4d82760f90a371aa6",
+        "bytes": 1842
+      },
+      {
+        "path": "host_boundary/mmi_minifilter/mmi_minifilter.vcxproj",
+        "sha256": "4a8894740d48f05d48745069b0ca6c47cbcbbf66c9e5ad6a0b8e3cf6928eb468",
+        "bytes": 4304
+      },
+      {
+        "path": "host_boundary/mmi_minifilter/mmi_wdk_paths.props",
+        "sha256": "6d2f74f2d2cdd7119b42fab4fe18217df6b5bea0de15e54aeac4a39d85eebd11",
+        "bytes": 1444
+      },
+      {
+        "path": "host_boundary/mmi_wfp/README.md",
+        "sha256": "486dd1ffa077d2ee1dc62121d6e7656a1e6f7e07f893b1ff0e5a1fb26d02f694",
+        "bytes": 1894
+      },
+      {
+        "path": "host_boundary/mmi_wfp/mmi_wfp.inf",
+        "sha256": "a4df462504532906e2846d2262044cf205e4dc4385b09cca103568db52753034",
+        "bytes": 559
+      },
+      {
+        "path": "host_boundary/mmi_wfp/mmi_wfp_helper.cpp",
+        "sha256": "db97744a9f8944c550b0ddf956d943325c24e19a670baa4cb0c3376602fde14f",
+        "bytes": 20150
+      },
+      {
+        "path": "host_boundary/mmi_wfp/mmi_wfp_helper.vcxproj",
+        "sha256": "2da546bfc147301c061eac8398dbd63d658b4ce26ba6ec21a4b77e549c1d0cee",
+        "bytes": 2773
+      },
+      {
+        "path": "mmi/__init__.py",
+        "sha256": "30715c3f57fa90a39af10b15162683aabdcdda213d47170f61cdb05b474d211f",
+        "bytes": 42
+      },
+      {
+        "path": "mmi/command_center.py",
+        "sha256": "bba2e42c3526295f2fbeafcc3b9eb94eaf35425febdb3b3892c359cdef562742",
+        "bytes": 7690
+      },
+      {
+        "path": "mmi/m4/__init__.py",
+        "sha256": "ef7e3bf2f5d8fee2e4292187d37d77e52aa0508464abed385518a8a6f17ea444",
+        "bytes": 222
+      },
+      {
+        "path": "mmi/m4/__pycache__/__init__.cpython-312.pyc",
+        "sha256": "9aaa9443a4c83371c92cf28b18bd9fba6c884ce9eef37830d74239a1a136032d",
+        "bytes": 368
+      },
+      {
+        "path": "mmi/m4/__pycache__/__init__.cpython-314.pyc",
+        "sha256": "966e4f76ebc4b0cc62f82fadbe03c4d7e7c42fa8f8426b61d7959cfa349716b7",
+        "bytes": 366
+      },
+      {
+        "path": "mmi/m4/__pycache__/authority_seal.cpython-312.pyc",
+        "sha256": "66964d138a8310a78be9cd7b5740a59828e1fc4270a2ee3eec4e13980e52ba44",
+        "bytes": 24795
+      },
+      {
+        "path": "mmi/m4/__pycache__/authority_seal.cpython-314.pyc",
+        "sha256": "97b052abc47243d44fe815bdc07551fc0f1563ae94499b861cef747168f2ccee",
+        "bytes": 30005
+      },
+      {
+        "path": "mmi/m4/__pycache__/boundary_daemon.cpython-312.pyc",
+        "sha256": "c0c0bb2c18ebf6a9166a26ba84f39b3f61de7a13befc5dcfb552df011e07f091",
+        "bytes": 6700
+      },
+      {
+        "path": "mmi/m4/__pycache__/boundary_daemon.cpython-314.pyc",
+        "sha256": "f164933ac138dc734e70b351647a5113084aee64f3555bfc8f945a6709c49300",
+        "bytes": 8012
+      },
+      {
+        "path": "mmi/m4/__pycache__/evidence_paths.cpython-314.pyc",
+        "sha256": "559d7f21b4660c658d0b98f77a71a4bd4fe2c425c83e33f72680c761618a48a9",
+        "bytes": 9033
+      },
+      {
+        "path": "mmi/m4/__pycache__/key_custody.cpython-312.pyc",
+        "sha256": "3ba8068512f37988b95845feda0e11997dd6e3cb72717fe70ae9a484a836169e",
+        "bytes": 10257
+      },
+      {
+        "path": "mmi/m4/__pycache__/key_custody.cpython-314.pyc",
+        "sha256": "21da77e9bf464a07e1dca0c05c21bc4eabb73bc28c15d9274f967c5d193a54cb",
+        "bytes": 13732
+      },
+      {
+        "path": "mmi/m4/__pycache__/stage_attestation.cpython-312.pyc",
+        "sha256": "43f37855d7355c94a656dc8c19c7a183ed955d99906bdd94123145ea7372ac5a",
+        "bytes": 12583
+      },
+      {
+        "path": "mmi/m4/__pycache__/stage_attestation.cpython-314.pyc",
+        "sha256": "9ed199dfb96685555f788feada357c86667a50295fbc5ac7c9b07cc81caca834",
+        "bytes": 15184
+      },
+      {
+        "path": "mmi/m4/__pycache__/wfp_policy.cpython-312.pyc",
+        "sha256": "c7f04dee568c7143a4b1e3be1c7bd45abe03f84ddfa40bbbd7bfb9bf5f6fdb26",
+        "bytes": 28972
+      },
+      {
+        "path": "mmi/m4/__pycache__/wfp_policy.cpython-314.pyc",
+        "sha256": "2b3e0dfe67efe69357deb00047f22da5492cf9f0c6ad8291095f9271f111bfc4",
+        "bytes": 34549
+      },
+      {
+        "path": "mmi/m4/afe_ledger.py",
+        "sha256": "f858ab69c7e67eaf67e53815eeb43433fdb2f47a32aa05c1e9a3acb0874ec988",
+        "bytes": 2174
+      },
+      {
+        "path": "mmi/m4/authority_seal.py",
+        "sha256": "5bb7a4768539635b90ebc3a6f98a65daef9218c52c48d70c3fe10b6079106da8",
+        "bytes": 19425
+      },
+      {
+        "path": "mmi/m4/boundary_daemon.py",
+        "sha256": "4560167f78d6b8301cc8146d8e0b511386a444820b8dfd51a816b8c6ba1a416b",
+        "bytes": 5155
+      },
+      {
+        "path": "mmi/m4/canary_classifier.py",
+        "sha256": "780cd639bae7e6fa142569d4d96a27443088bce056babc3da100620ad10099d5",
+        "bytes": 1116
+      },
+      {
+        "path": "mmi/m4/evidence_chain.py",
+        "sha256": "4f3f85f46407c457a14a0f024b29ef5c51300abb8ae2188a8354c3cb71b847a3",
+        "bytes": 2522
+      },
+      {
+        "path": "mmi/m4/evidence_paths.py",
+        "sha256": "d24f4decb79af68b4a62ac21c5855ceea2f07859ee85725e5fac023357a67151",
+        "bytes": 4812
+      },
+      {
+        "path": "mmi/m4/fuzz_runner.py",
+        "sha256": "3cec9b96b71d98905fdd9cd7143dafa92f4839b50ed8e6c032942f1a74d9c125",
+        "bytes": 10602
+      },
+      {
+        "path": "mmi/m4/import_ban.py",
+        "sha256": "4fb26e529388770bca03ed2c7086e4ac4f2e4c941dfc62e0f6ea13c55bce3eb1",
+        "bytes": 5040
+      },
+      {
+        "path": "mmi/m4/invariants.py",
+        "sha256": "98e0892ad25dfe89a614eab949a2d9a1fce81331c7e3cbc47154f7a6bd91d517",
+        "bytes": 17696
+      },
+      {
+        "path": "mmi/m4/key_custody.py",
+        "sha256": "5a2ca890ee2b72959dc575595bc0a049288ed55a14fbcd4005a1e845ade724c5",
+        "bytes": 6365
+      },
+      {
+        "path": "mmi/m4/minifilter_policy.py",
+        "sha256": "590f679a6352e7509d43298fee5bf757400ec93658439353a525be27b848c0c8",
+        "bytes": 12778
+      },
+      {
+        "path": "mmi/m4/parser_surface.py",
+        "sha256": "ae9a3824cf4bf3b1b6c5cdf5664863457760ff003dcd25997564ead700891793",
+        "bytes": 3108
+      },
+      {
+        "path": "mmi/m4/restart_latch.py",
+        "sha256": "de619ea2557066c98c656f8c54e9897a9f959f35fde0a86e44ac6d243779aa8f",
+        "bytes": 2793
+      },
+      {
+        "path": "mmi/m4/sandbox_escape.py",
+        "sha256": "b002d6a01e4d727b31ffa9841cbeb47fa032dd35317a10c0176ba2b53f171943",
+        "bytes": 7471
+      },
+      {
+        "path": "mmi/m4/stage_attestation.py",
+        "sha256": "14cfa8e5d7f28bfa64a62d0f8a82d37bddd9cb12c705728d1f08cfccfb6c8ce5",
+        "bytes": 11536
+      },
+      {
+        "path": "mmi/m4/stage_fsm.py",
+        "sha256": "1b94824649ad332eeee69c6406b225530fc0270223cd39a7be9ca015f459d6a9",
+        "bytes": 2437
+      },
+      {
+        "path": "mmi/m4/wfp_policy.py",
+        "sha256": "0af5c1c37127bd76b588f658b867ce702ddb61bd96942b29b8ce87efbb769fad",
+        "bytes": 25076
+      },
+      {
+        "path": "mmi/project_brain/README.md",
+        "sha256": "f9e3460507cfcae5218eff26b2c25c8834a9f255dd30fbd061dac4412f628393",
+        "bytes": 1659
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_AGI_EVOLUTION_PATHWAY.md",
+        "sha256": "10c504d7a0c568a90002e13d9858f0ba95bc2d717560500116efaa88b6b4bf8c",
+        "bytes": 15248
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_BACKUP_COLD_STORAGE_SPEC.md",
+        "sha256": "d09c4f25f38c330966e724387935ed65fc7f00f7a5dc29ec0c33454c0cc5be86",
+        "bytes": 7552
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_BUILD_RULE_01_OUTSIDE_THE_BOX_2026-07.md",
+        "sha256": "385173cc4288fd75a852a3570ebf8b5da1046ecb06e13b0bf9b73c5c84a94c65",
+        "bytes": 3084
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_CLIENT_EMAIL_LANES_SPEC_2026-07.md",
+        "sha256": "53ccd781b41c3cdb17eb7cd66b3ee117c5c21083090e85cb8df82b1d7e2b8608",
+        "bytes": 37057
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_COMMAND_CENTER_SPEC.md",
+        "sha256": "1a9222310c8d82813aafff7470569011f629295f49c84e4faea3f3f078c5cf22",
+        "bytes": 8407
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_CONCEPT_INVENTORY_AND_GAPS_2026-07.md",
+        "sha256": "c62c66525dbf2b05b6ff76d17a724d5516222c7812d7e557e0a68950a8019ade",
+        "bytes": 16303
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_CONSOLE_SERVER_ED25519_EVIDENCE_GATE_SPEC_2026-07.md",
+        "sha256": "547288b42fee94f8e27896d99e5f6e38e154c8996d2f812e26aa7a04a2fea468",
+        "bytes": 34927
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_CONTROLLED_CHAOS_DEFENSIVE_WEAPON_CONCEPT_2026-07.md",
+        "sha256": "4c47ff59f7762c6786acd2a9a9fed3fc64c99495a5179648416a229be8ac452b",
+        "bytes": 15531
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_CONTROL_ENVELOPE_BUDGET_DEADMAN_SPEC_2026-07.md",
+        "sha256": "854414db77e8c139b96ceeccf2a5f80c3641886ca451ba9c076f96d878aeefe5",
+        "bytes": 24102
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_DIFFERENTIATOR_2026-07.md",
+        "sha256": "86505bcee3abd7176070347f9f3757a8b786647da60958c307b7bbab32942864",
+        "bytes": 4698
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_GENOMIC_REALIGNMENT_LOOP_SPEC_2026-07.md",
+        "sha256": "862dc846220d1fafa1a6a992f61fe825ddef64248f2d4ce02176c436cee81c6d",
+        "bytes": 35334
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_ICEBERG_L4_BEHAVIORAL_FINGERPRINT_SPEC_2026-07.md",
+        "sha256": "ccda336f7e1488b4ec4342095adfc2acfcabbe2e68e144e3a1cad4a3ac7371d4",
+        "bytes": 6932
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_ICEBERG_L5_CROSS_PACKET_CORRELATION_SPEC_2026-07.md",
+        "sha256": "a06406fb1e6a695fe2d1e191e4cf079c20cc4cb5f3d849336e1574dca2c4a5fa",
+        "bytes": 7648
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_ICEBERG_L7_TEMPORAL_RHYTHM_SPEC_2026-07.md",
+        "sha256": "53160e3a26e8a2ffd0c2b485d0f9da63914cb59ae8a491b6d69a82d9ae98cfdb",
+        "bytes": 14226
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_ICEBERG_L9_PROVENANCE_CHAIN_DEPTH_SPEC_2026-07.md",
+        "sha256": "30c89e1fdd507d33c3e6f9c7c79ee7fda6036b7243cb1bb3566e66bd0ffe5a5e",
+        "bytes": 10857
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_KINETIC_WARFARE_DASHBOARD_SPEC_2026-07.md",
+        "sha256": "3eb23b5a2bdf847f524f52e8534a54e7300c1759adb4f9d42f7be68fd2b20ee0",
+        "bytes": 3422
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_LOCAL_CLOUD_POLICY.md",
+        "sha256": "23b5dfc07786df8c7c77b330c4e2c583806e2bdfb9011565612071062d25e891",
+        "bytes": 2817
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_M4_EVOLUTION_GATE_SPEC_2026-07.md",
+        "sha256": "f0c50504d35cb3638b5b5e1cbe2b0063e45ac963c936d9c6e71eba0f82446f24",
+        "bytes": 66410
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_METADATA_ICEBERG_2026-07.md",
+        "sha256": "2aa6983991fe57a028551d55303a1ce96c6a5d846641e1c53a0b42fa95d76240",
+        "bytes": 7072
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_ORCHESTRATOR_SCOPE.md",
+        "sha256": "12445811280a03bea2e3d9365d36da493af607b06050c97b40c74501d8e81396",
+        "bytes": 12211
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_PHASE2_MVP_ARCHITECTURE.md",
+        "sha256": "f75fc941221968663165941910f2dc551ca2845942878561a665b5278bf95390",
+        "bytes": 7818
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_PROOF_GATE_CONSOLE_BINDINGS_SPEC_2026-07.md",
+        "sha256": "7e312b8685bc88d87d13d4f6d761ae383f6d54b8940f2cd61d92946f23ba0f9e",
+        "bytes": 9655
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_PURPLE_TEAM_ATTACK_SCOPE_2026-07.md",
+        "sha256": "09f027a82670745cde3e024689e118a8d990909a9d6daeb1b3be68b54a40dd11",
+        "bytes": 5788
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_QUALITY_ELEVATION_REDESIGN_2026-07.md",
+        "sha256": "b580462178148b8300704724efd58117374da55e33b189ea52c2aba4e3a29368",
+        "bytes": 19961
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_SECURITY_INTEL_MVP_ARCHITECTURE.md",
+        "sha256": "054a451ba7851b75b5ad1b684bae9f1e3497daa2dfafb48ee829acbe6f307197",
+        "bytes": 9490
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_SECURITY_INTEL_PRODUCT_SCOPE.md",
+        "sha256": "f193eab07d120e9ad3969edad1ac4395b496d4c7c813761e7881e16a9f838aae",
+        "bytes": 2818
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_WAR_ROOM_SPEC.md",
+        "sha256": "8999580055973e8b7463d960e32b51c41927e59f00a080e0411807bba7d61da4",
+        "bytes": 10049
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_WEAPON_BATTLEFIELD_SCORING_MATRIX_v1.md",
+        "sha256": "7f58bac644f68b11a2130d58136e4ab7f8306e818410fb691110bcf6653d71e0",
+        "bytes": 13638
+      },
+      {
+        "path": "mmi/project_brain/architecture/MMI_WEAPON_RUNTIME_BLOCKERS_2026-07.md",
+        "sha256": "df28f88f8e33e7d32085c2f7a6aeb6d73256f9f8772b6cd0edc5ac7699922314",
+        "bytes": 5222
+      },
+      {
+        "path": "mmi/project_brain/architecture/README.md",
+        "sha256": "d0effe81031e1fde7b7415c608d5bc951f205ba65b9d004bf0e31e72717355d8",
+        "bytes": 250
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_ASSURANCE_CASE_2026-07.md",
+        "sha256": "abe089822645e600630af0f9494310aacccc92ec71ab27f3e9e8843313321e93",
+        "bytes": 18962
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_ASSURANCE_GATE_INVALIDATION_ADDENDUM_2026-07.md",
+        "sha256": "82eb246e8ecd9510bd42099c18722a38e454278e1175f87d717ecc6115e9a0c7",
+        "bytes": 14374
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_ASSURANCE_INVALIDATION_RULES_2026-07.md",
+        "sha256": "768869d1116fa5b1c395bd14d0bf66b1f94449626823eb9ad8a564fd841bf620",
+        "bytes": 3326
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_CANARY_BYPASS_ACCEPTANCE_STANDARD_2026-07.md",
+        "sha256": "94e56082bab3a041581028f371f454889e5750357ded3205cd184e05abac3bff",
+        "bytes": 1721
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_EVIDENCE_SUMMARY_BINDING_2026-07.md",
+        "sha256": "b42f76c238d6f0b02b7d60a39d82427db4eb933a23dc830ebd01083a0583d9c6",
+        "bytes": 1556
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_OPERATOR_SIGNING_THREAT_MODEL_2026-07.md",
+        "sha256": "9583309128ca0356eb873246163d7a56a6ab1f9611e7571d54a31bd22a768db6",
+        "bytes": 1741
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_RECOVERY_PROOF_REQUIREMENTS_2026-07.md",
+        "sha256": "fa2839b32c5645d68f10cda430188b519ea57b935b286a1fff0683e3d48ce6c4",
+        "bytes": 1651
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_RESIDUAL_RISK_LEDGER_2026-07.md",
+        "sha256": "5942e3fc7b5f01bf0fddfb9838ad4a78f7cfb6b9f0c130c8f9ec2761fff4c21a",
+        "bytes": 9105
+      },
+      {
+        "path": "mmi/project_brain/assurance/MMI_REVIEWER_FAILURE_MODEL_2026-07.md",
+        "sha256": "c2cde884ea7ecb74de19da73a3ede41830cf920e6ae9c1f6a31fecd562987256",
+        "bytes": 2393
+      },
+      {
+        "path": "mmi/project_brain/backup/MMI_LATEST_GOOD_ARCHIVE.md",
+        "sha256": "6cee7dc9f085458fd71e0b323e2d876cdd7e9cddc8a4a761739978f80836a0bb",
+        "bytes": 3586
+      },
+      {
+        "path": "mmi/project_brain/backup/mmi_backup_20260703_221342.tar.gz",
+        "sha256": "d284a1ef419803bfa94dc3b8ec2a9ac19397121e0b837f791fc260af371bbbdf",
+        "bytes": 3098384
+      },
+      {
+        "path": "mmi/project_brain/backup/mmi_backup_20260703_221342.tar.gz.sha256",
+        "sha256": "df528c6037d19f82b9c61458fd26df7861845565f41e9bbd51cd3f9f99500708",
+        "bytes": 100
+      },
+      {
+        "path": "mmi/project_brain/backup/mmi_backup_20260705_221254.tar.gz",
+        "sha256": "45bfe08b24ca8e1076cd8ee78b64b73887a2db79fa370fe26f502b90012c7de7",
+        "bytes": 4080576
+      },
+      {
+        "path": "mmi/project_brain/backup/mmi_backup_20260705_221254.tar.gz.sha256",
+        "sha256": "15bce029a732c4f3b5b430dfaeb818b2ac3562628144226e6d2d93c0acec640f",
+        "bytes": 100
+      },
+      {
+        "path": "mmi/project_brain/backup/mmi_backup_20260713_092718.tar.gz",
+        "sha256": "470b23f58343ae54d225b36c948d725c54110bead0e08be9afbb37a31ca3ec0c",
+        "bytes": 8247595
+      },
+      {
+        "path": "mmi/project_brain/backup/mmi_backup_20260713_092718.tar.gz.sha256",
+        "sha256": "815e98a93fdad2d5d7aa5dff8c9b856eb8e542a7173f42ff3a0d0cf489823aa4",
+        "bytes": 100
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_DOCTRINE_BREAK_TO_HEAL_2026-07.md",
+        "sha256": "eed626bcafdfdf680b0caf919abe2d860e2054372364d64c432953b94b77ada1",
+        "bytes": 2631
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_HARDENING_H1-H3_2026-07.md",
+        "sha256": "f09cf3f34db2778b45e730b128a930a9f71d310d4911fa41fa9a577af772e9bf",
+        "bytes": 5377
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_L3-04_INTEL_HEADLINE_LAUNDERING_2026-07.md",
+        "sha256": "5a751c3dbb6f1eb930111cab6e42ef20e1f6a8f5cf0caf877591d5c0a5be10e5",
+        "bytes": 4080
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_L3-06_OPSEC_FALSE_DONE_2026-07.md",
+        "sha256": "3535b25eecc0920c9b441e0081400b56a95d8073fa8580c15fbd9d4abcf682f4",
+        "bytes": 4005
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_LAB_PROVISIONER_SPEC_2026-07.md",
+        "sha256": "376421501cdda81a904b561dfc65808529a44a43fee1fd8d6b3626c793aec174",
+        "bytes": 3353
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_LEVEL3_PLAN_2026-07.md",
+        "sha256": "b64bdd99eeb778dccaf5795c1763a25aa7205aa6939478966db8f0cbabbf172f",
+        "bytes": 13670
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_SANDBOX_V2_2026-07.md",
+        "sha256": "763e458297531d87376ca1f5b2807ba9acc65dcda8fb48a4175c4770189971f8",
+        "bytes": 10633
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CHAOS_TABLETOP_V1_2026-07.md",
+        "sha256": "7d2a69ee0c00bc00a227bbd7e4cbe2fe84abd79bf822b9782d8a72934be76bb9",
+        "bytes": 19481
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_CRYPTOLALIA_TARPIT_2026-07.md",
+        "sha256": "05c5672f33af64a92c5ed46054e7cf964e0992add29ca71f54a29bbb760ba802",
+        "bytes": 3742
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_DESTRUCTIVE_EVOLUTION_MATRIX_2026-07.md",
+        "sha256": "d4ed95d1a1fc561a4c8fd2ff3779d4f8de85d28ecf5af91836f0fbb1fc51d3d9",
+        "bytes": 6367
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_MIRROR_DIMENSION_ROUTER_SPEC_2026-07.md",
+        "sha256": "2e9a706ad6394219595be331e42da16c97593a467f97ba3dc8100df40c95f560",
+        "bytes": 3702
+      },
+      {
+        "path": "mmi/project_brain/chaos/MMI_SWARM_BLUEPRINT_LUNG_V1_2026-06.md",
+        "sha256": "da62d844400a01cfed82cf37ff4d0c16b44af679909d0e3bb85d04462e5503a7",
+        "bytes": 7941
+      },
+      {
+        "path": "mmi/project_brain/chaos/RESEARCH_MOVING_TARGET_DEFENSE_2026-07.md",
+        "sha256": "18de16db132a0550cb533ac165528a531d0154eb450e4f443085d2ae724111ce",
+        "bytes": 5747
+      },
+      {
+        "path": "mmi/project_brain/chaos/action_integrity_gate.py",
+        "sha256": "88b39deabb05a6d36f48fae3746a7b744191681d7a27a4b6398c782af4c8ba26",
+        "bytes": 6195
+      },
+      {
+        "path": "mmi/project_brain/chaos/adversarial_cryptolalia_tarpit.py",
+        "sha256": "30b66eb1af7b336542ff15ba310938db867af3f1e6f67f0b00d26f32e0d90aaf",
+        "bytes": 2563
+      },
+      {
+        "path": "mmi/project_brain/chaos/behavioral_fingerprint_layer.py",
+        "sha256": "a21ef35f57d700189c24e4365f5bb064c7f53c1a7f78b7717b302bc0cfcac942",
+        "bytes": 8046
+      },
+      {
+        "path": "mmi/project_brain/chaos/canary_metadata_layer.py",
+        "sha256": "95cda3a5e85b7676aad2cadaa8b011695fb8710156c2751d49db1e8f8b190c4d",
+        "bytes": 2693
+      },
+      {
+        "path": "mmi/project_brain/chaos/console_ack_adapter.py",
+        "sha256": "26e7545333b4a6d2954da61705192dd88b30867ef864e586a02a55cb49001c80",
+        "bytes": 2458
+      },
+      {
+        "path": "mmi/project_brain/chaos/console_evidence_gate.py",
+        "sha256": "fd3bbea6946084d31115db59efd6c4bd0bb2dc0ebe0c2b06d2809243c099c91d",
+        "bytes": 18615
+      },
+      {
+        "path": "mmi/project_brain/chaos/console_fingerprint_ledger.py",
+        "sha256": "3f0fc373473a2722f437d8917bdd6947c81e3e1622e8f1171d6c14e9fcecad9d",
+        "bytes": 3471
+      },
+      {
+        "path": "mmi/project_brain/chaos/cross_packet_correlation_layer.py",
+        "sha256": "e4c6143591be25c0a8da0ae80ec6ad278335aa690771ccfc00d2026ba9b5b964",
+        "bytes": 9961
+      },
+      {
+        "path": "mmi/project_brain/chaos/cryptolalia_lab_bridge.py",
+        "sha256": "75bf99e57684843d1d2bf238b38fd4d460aa91b7ff2f64a726cec5de5aa29dd4",
+        "bytes": 1900
+      },
+      {
+        "path": "mmi/project_brain/chaos/deterministic_sanitizer.py",
+        "sha256": "51ff0b518217641527f47a6a201cff514f1fb1a8a98dcfdd1062476b0744e8d8",
+        "bytes": 1895
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/breach_descriptor_v1_harness.json",
+        "sha256": "ea93c435452c1bd6578d3e36ce730e2ea363151d1ec9c96573b2222d6af0a3bd",
+        "bytes": 295
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/FIXTURE_MANIFEST.json",
+        "sha256": "cddb0b114c240f7f7346f231a7ec87b38f58493212783858ed4e6cc5fd819019",
+        "bytes": 6972
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/_run_detections.py",
+        "sha256": "4dfd06f57972e68f5f18cd1b02560539e4be2c9f9f574343643d1aa54e0c42a6",
+        "bytes": 12001
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/_run_output.json",
+        "sha256": "03f4443281ed0f09a170407135341b5549cae82590d2509b2b700799cab2ec1a",
+        "bytes": 6989
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test01_stale_war_room/tasks_truth.json",
+        "sha256": "046ce7165626e2efba4848c9f5a0d12163e1b4816f264e7ef8e4f23b893ad5fe",
+        "bytes": 74
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test01_stale_war_room/war_room_stale.txt",
+        "sha256": "235428d3e25d33bd0113633429c25ea0262bc4da47202e09ca03451c93e126e9",
+        "bytes": 61
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test02_dry_confusion/operator_assumption.md",
+        "sha256": "737ef5901117085460dcee60f5bd6c7d462ac402173fd167270df01d797aab30",
+        "bytes": 61
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test02_dry_confusion/tasks_truth.json",
+        "sha256": "3552f5b8b7804e7f2264c774c7002ba3511206c5b1bd43358e9b318acfd9541c",
+        "bytes": 158
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test03_headline_launder/INTEL_brief_INJECTED.md",
+        "sha256": "e4d176d26be54f4ed4191dde15a0f9fabb22f229cce08ca355f676b91706d1c2",
+        "bytes": 14736
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test04_manifest_gap/manifest_gap.json",
+        "sha256": "6b215413155af18a29eac0a2ec18967359734df13a9bd475e655f1742e3eb8b5",
+        "bytes": 5140
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test05_restore_ambiguity/restore_ambiguity.json",
+        "sha256": "ea6042a89f8d9186d80a76ecf615b99de1b395607235aa45226f699548e552f1",
+        "bytes": 279
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test06_opsec_false_done/opsec_false_done.md",
+        "sha256": "eac0eeed98d16df5ae845643566f550f187359da05b00df99c96eb637f65f7ab",
+        "bytes": 198
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test07_no_decision_log/vendor_email_scenario.txt",
+        "sha256": "c583ceb83857949c3e71e5c88549ba1cad1937e0094a95d074760f8381d060b6",
+        "bytes": 65
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test08_non_mmi_scope/tasks_non_mmi.json",
+        "sha256": "882d03910d8562bf5c404ba2e45b3775d40ded5a5bd68c7d363e63b255306435",
+        "bytes": 134
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test09_hash_mismatch/push_log_mismatch.json",
+        "sha256": "62aa3b54b833e49d51e9ad0b338bd6992171b69fe41935e662aed7df015adb22",
+        "bytes": 144
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v2/test10_false_pass_closeout/task_false_pass.json",
+        "sha256": "9fc4b82d6975b058a73c1c3135e75e90847abacc2aee5f35cf6b9b40aa7a2b31",
+        "bytes": 203
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/BEFORE/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md",
+        "sha256": "112d282b30bcac6d18b383178f0a2ffa32fff3b02b30b2daeccc43627c6c1898",
+        "bytes": 14671
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/EVIDENCE/detection_output.json",
+        "sha256": "29c60655093c94334fd2e6d39ded3f29fb4ee5e093e16aafef9901a84eb96133",
+        "bytes": 385
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/EVIDENCE/post_check_live_unchanged.json",
+        "sha256": "62bd8646da748fa4246da56f437c76ce502ba36132c8cf0c9c3ebcd026989bed",
+        "bytes": 1033
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/EVIDENCE/pre_check.json",
+        "sha256": "686e97b1c3962849ae95111f7945366b45d84531037f650e7ee0c37ea21143e8",
+        "bytes": 672
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/EVIDENCE/signoff.txt",
+        "sha256": "bc8cdd55d61f868dc7a7b51e5f290740b894b9ff9aac60e77b9dbc537fa2b774",
+        "bytes": 144
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/FAULT/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md",
+        "sha256": "f63e003e15f51a11a96bbefedb2d61696da89ca9c7638102bf53d36b68a88d4a",
+        "bytes": 14535
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/ROLLBACK.md",
+        "sha256": "9c574f3f5f0b9c0024a3282e5ea6f16d7deb3c5db31ea5b7a0ab2e9d03389a12",
+        "bytes": 385
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/_post_check.py",
+        "sha256": "bfab53e53e26ab7c88ab1d0a941853f76f098855b658f6e6da0f3323a317b00a",
+        "bytes": 1269
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-04/_setup_fixture.py",
+        "sha256": "8cd2c6cf08ff2a0e72139f822058ae67555ec2364042b9c4e46efba8d65b60ea",
+        "bytes": 2141
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/BEFORE/opsec/OPERATOR_OPSEC_CHECKLIST.md",
+        "sha256": "fbdab2d504acef91d2578b4468dcb3f489c7920269f58cc985c060ba9d68aab2",
+        "bytes": 11731
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/EVIDENCE/detection_output.json",
+        "sha256": "21136a6b6f642c6ef39f17a9456064e812ecd7a68077811e49dfd76100680fd0",
+        "bytes": 1535
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/EVIDENCE/post_check_live_unchanged.json",
+        "sha256": "ce72ebee504e9cdf074ada36703f3210e1fcb29a08f7d44b8a20938894faa864",
+        "bytes": 322
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/EVIDENCE/pre_check.json",
+        "sha256": "689c42c747e962c3dd0527e5477816baebad2ab946c793953dc3081b1cf9c2a1",
+        "bytes": 495
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/EVIDENCE/signoff.txt",
+        "sha256": "e6e4214af1ddd6869390e78db5cc56f57fc26a0e8454ca147c063b20f7678fa5",
+        "bytes": 117
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/FAULT/opsec/OPERATOR_OPSEC_CHECKLIST.md",
+        "sha256": "4a9c1dc65f3d306e2728f21f974bf07f7966af89d3988597c847a1cb2d36a0ca",
+        "bytes": 11768
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/ROLLBACK.md",
+        "sha256": "5c0c6c1d2eeb18e80ad56bf32b801250de78bf6cb7b130a3a7d60ad84df3939a",
+        "bytes": 589
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/_post_check.py",
+        "sha256": "ef4941bfaf86192faf5b1c7a2d76ac592ac7912fec376c4745049bcd3eebb529",
+        "bytes": 800
+      },
+      {
+        "path": "mmi/project_brain/chaos/fixtures/v3/L3-06/_setup_fixture.py",
+        "sha256": "14c3506b4d29ed9042af0c39cd3508e3b192a90fb43d61d285c7de050748a79c",
+        "bytes": 2555
+      },
+      {
+        "path": "mmi/project_brain/chaos/genomic_constraint_synth.py",
+        "sha256": "94713db76f6d0b25cb9dcab3e22ccb88fafb6217da7514ba7672222db7230c87",
+        "bytes": 3938
+      },
+      {
+        "path": "mmi/project_brain/chaos/genomic_constraint_validator.py",
+        "sha256": "8c51ddb4fe1938dd2aec519a7efb6c50c2d94d77019329d03df89a29b6746df4",
+        "bytes": 2929
+      },
+      {
+        "path": "mmi/project_brain/chaos/graph_topology_layer.py",
+        "sha256": "3870051efa1d1ac09d7ce057daf03b766b4bb80148741403013da45c0c7366ea",
+        "bytes": 2244
+      },
+      {
+        "path": "mmi/project_brain/chaos/kinetic_telemetry.py",
+        "sha256": "a711b915cae199ff605a1372db818f30481cbe8a17d86dbfe0fbd78fb4198b8e",
+        "bytes": 10527
+      },
+      {
+        "path": "mmi/project_brain/chaos/metadata_ingress_gate.py",
+        "sha256": "cdc1dbc7a7b348f98e344bb07e748d6d84a992ee2fec5b65849effb3aadbf04a",
+        "bytes": 24531
+      },
+      {
+        "path": "mmi/project_brain/chaos/mirror_dimension_router.py",
+        "sha256": "27d347a67a4f9da940bad97685d635891060799c9cf47103d6252332f8ebe30b",
+        "bytes": 10105
+      },
+      {
+        "path": "mmi/project_brain/chaos/mmi_canonical_digest.py",
+        "sha256": "56886489da3cfd86a4444c287029f63df831a3526d6c51ff6c751d81fe4552e7",
+        "bytes": 1176
+      },
+      {
+        "path": "mmi/project_brain/chaos/mmi_control_envelope.py",
+        "sha256": "51b3a2f985f1902969e92e10e53000492b325d7d2e5c7898d5003fca0e4c182f",
+        "bytes": 22789
+      },
+      {
+        "path": "mmi/project_brain/chaos/provenance_chain_depth_layer.py",
+        "sha256": "72266dde6be9712d3341b712fd754e2441afb217dfc3e4caf2e9a3bd0df0f229",
+        "bytes": 11226
+      },
+      {
+        "path": "mmi/project_brain/chaos/purple_evasion_suite.py",
+        "sha256": "8c6f24be4e16a9e8965343077aa4ac02865165b261c58704edf917174a12a56f",
+        "bytes": 15495
+      },
+      {
+        "path": "mmi/project_brain/chaos/temporal_rhythm_layer.py",
+        "sha256": "bec0f89612f1182c3a7e53810215c579c407e9c9075ce68f0330e4beee3a540d",
+        "bytes": 10159
+      },
+      {
+        "path": "mmi/project_brain/chaos/war_room_dashboard_api.py",
+        "sha256": "157a46e8039190c8cfd5f055e21b371b3a0027c22d8925199a596d5e580cfede",
+        "bytes": 3563
+      },
+      {
+        "path": "mmi/project_brain/chaos/weapon_battlefield_scoring.py",
+        "sha256": "f5b06f4883fbd3c965cb8bfe691e34837bed08c835fdd843b5c6f0505984fbe8",
+        "bytes": 8665
+      },
+      {
+        "path": "mmi/project_brain/intel/CLAUDE_UPLOAD_PACKET_polymorphic_brief_2026-07.md",
+        "sha256": "aa475f1cc9d4474c3c83bac241074f286e27e7e8a1790ea2fbc83a9925bf8175",
+        "bytes": 7049
+      },
+      {
+        "path": "mmi/project_brain/intel/INTEL_INDEX.md",
+        "sha256": "56a867fe39c3bf44ea8b5b7260afae051504d33458e606688c1a0b3c6642c9ac",
+        "bytes": 6078
+      },
+      {
+        "path": "mmi/project_brain/intel/WAR_ROOM_SCORING_MATRIX.md",
+        "sha256": "96c58a17c00bfdc1f113fa49fc2fac04200dcba2a6ea3180b83403be24f98398",
+        "bytes": 9885
+      },
+      {
+        "path": "mmi/project_brain/intel/WAR_ROOM_SCORING_MATRIX_v2.md",
+        "sha256": "c3cc8fab4b0112d23005d62a72c1ac8639755fcb2647cbf14224c2c978b4c4ed",
+        "bytes": 30201
+      },
+      {
+        "path": "mmi/project_brain/intel/briefs/INTEL_polymorphic-ransomware-delivery_2026-07.md",
+        "sha256": "7d0564a137e29609b13449e6bb7192f610bd38a7ff49b17e5968bd9f8c7ce070",
+        "bytes": 18976
+      },
+      {
+        "path": "mmi/project_brain/intel/briefs/INTEL_ransomware-backup-targeting_2026-06.md",
+        "sha256": "112d282b30bcac6d18b383178f0a2ffa32fff3b02b30b2daeccc43627c6c1898",
+        "bytes": 14671
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_opsec8_quarterly/DRILL_WORKSHEET_2026-06-30.md",
+        "sha256": "09046600d04caccd910a8d788deda5bb262195440a8dd13358c7ddf60b958947",
+        "bytes": 6351
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_opsec8_quarterly/PIR_STUB_2026-06-30.md",
+        "sha256": "4d2b016d58f5860bff30613d0562e2a6c99b3d027b2caf6c09f3a8c4e876bcdb",
+        "bytes": 1208
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_opsec8_quarterly/README_SIMULATION.txt",
+        "sha256": "d7c1b598d0b8735ef2b84c650dcb3f4eb77ff38ce3ac833d381027bafd0ea4cd",
+        "bytes": 341
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_opsec8_quarterly/SIMULATED_BACKUP_RESTORE_ALERT.txt",
+        "sha256": "58e014afce2427c76d95acfbc43fe36a06438dcaed3bd4392ab9e4abb5ef5b36",
+        "bytes": 460
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_opsec8_quarterly/SIMULATED_HOST_RANSOMWARE.txt",
+        "sha256": "602709f7f76bfb72f6fc1fe981c71d19a370e52d83c5eccbcc708811b7967894",
+        "bytes": 344
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_opsec8_quarterly/sample_config.yaml.locked-simulated",
+        "sha256": "cd9a88873812dcb3dd2ac99ebdd5b966803ec4c6eb3666950e8d744c9bb34c75",
+        "bytes": 37
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_phase6_sim/DRILL_WORKSHEET_2026-06-30.md",
+        "sha256": "c4c85816aa6593b91c0274be42eae709fef1178a2a94c0a70d7b0529d1190d3f",
+        "bytes": 6254
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_phase6_sim/README_RECOVER_SIMULATION.txt",
+        "sha256": "aed01ec3c73c62af0720e89287c44d7f4ab6f0884933ee03374c4d99d7daebc2",
+        "bytes": 222
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_phase6_sim/SIMULATED_BACKUP_ANOMALY.txt",
+        "sha256": "2e338fdde9cbbb7faa9e225422b4652b6ac0bc89d0fa9afe10d05ce6d8498eb5",
+        "bytes": 138
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_phase6_sim/SIMULATED_IDENTITY_ALERT.txt",
+        "sha256": "15b778f2c18b43ca20f219c48f24b7a712ede0d14331174dc8b0c439884d5a49",
+        "bytes": 103
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_phase6_sim/sample_budget.xlsx.locked-simulated",
+        "sha256": "23fdc941eb70ccf9b8f89c97c01a12d54059679246c9c8b137254afc9e2f7b5f",
+        "bytes": 33
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/DRILL_2026-06-30_phase6_sim/sample_notes.doc.locked-simulated",
+        "sha256": "6b6f015ecb7d183184cb7a21a7d1d2351cf8f281e273402cf769465be2c6e2cb",
+        "bytes": 17
+      },
+      {
+        "path": "mmi/project_brain/intel/drills/OPSEC_HUMAN_GATE_DRILL_2026-06-30.md",
+        "sha256": "d86d8215b7db2b612a7ba75884f88afb269dd98e7a7c071f1368b936c8d9c90b",
+        "bytes": 15340
+      },
+      {
+        "path": "mmi/project_brain/intel/templates/INTEL_BRIEF_TEMPLATE.md",
+        "sha256": "634551c1f1e93cd574739feecd56d000cfca72bcd75d77110e869029ffb62540",
+        "bytes": 15798
+      },
+      {
+        "path": "mmi/project_brain/lanes/CHATGPT_MMI_LANE_INTEGRATION_2026-07-03.md",
+        "sha256": "c8793667d37cbb2f5eae2cbf1fa9ac56d6a18ae6c409d9642738d20c1ffc5f51",
+        "bytes": 5594
+      },
+      {
+        "path": "mmi/project_brain/lanes/CHATGPT_TASK_CA_LOCALIZATION_2026-07.md",
+        "sha256": "8e73fc870b4f8acb17261ad941b6e17b530037ae5a4fb65eb4f5e3a0998e99e3",
+        "bytes": 2272
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_CLIENT_EMAIL_LANES_2026-07-03.md",
+        "sha256": "6e93ac71d9a76ae95989c5704b5e7e400e814756fcc90dd74738a07f3f91193e",
+        "bytes": 19519
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_CLIENT_EMAIL_LANES_SPEC_R2_2026-07-03.md",
+        "sha256": "7798d2ede94895b194877338f346b92b94445754cf169d7dc7ac22fa45548aee",
+        "bytes": 4762
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_CONSOLE_SERVER_ED25519_EVIDENCE_GATE_2026-07-03.md",
+        "sha256": "8119d43c28b7283753b89c103173c3d6595572271996cc1b79950bc2bd08e263",
+        "bytes": 11402
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_CONTROL_ENVELOPE_BUDGET_DEADMAN_2026-07-03.md",
+        "sha256": "b7c1db4bbf87fb0c5d8e1059c59f720760b16ed98225ba079428e9357887a512",
+        "bytes": 8596
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_GENOMIC_REALIGNMENT_LOOP_2026-07-03.md",
+        "sha256": "a78c6f1a2a0fd566ddf62939688b8d1d61c03dcfedaf2670125742eae662ab0b",
+        "bytes": 14852
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_L4_BEHAVIORAL_FINGERPRINT_2026-07-02.md",
+        "sha256": "ca2a703633b5058cfd15644631b788ef7f3d1c4ae8b33b1268f3851145d7694e",
+        "bytes": 3150
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_L5_CROSS_PACKET_CORRELATION_2026-07-02.md",
+        "sha256": "c0f016d4532246faad5ec9c3c3ca748a1f4dcde63998968059d637937b35afd9",
+        "bytes": 3568
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_L7_TEMPORAL_RHYTHM_2026-07-02.md",
+        "sha256": "d03ba160472916d73182d46e6ab0254994d5aac8942787a8ac361283b74d72e5",
+        "bytes": 8257
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_L9_PROVENANCE_CHAIN_DEPTH_2026-07-02.md",
+        "sha256": "00ef61867466d564aa78d811ff875775b422667aaf9e7dee7cb2416e615b77a2",
+        "bytes": 6977
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_M4_EVOLUTION_GATE_2026-07-03.md",
+        "sha256": "b91ada68a44c45be83d361b9077e433ae4ea3927fb7c973126d1f35d7ea3e6af",
+        "bytes": 18472
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_HANDOFF_M4_EVOLUTION_GATE_SPEC_R2_EXPANSION_2026-07-03.md",
+        "sha256": "44d86c43ec327afe9d76a875b3cfc786b0f2a51f7f8f3adff6cb1290c20b35c5",
+        "bytes": 16470
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_PASTE_M4_SPEC_R2_MESSAGE_1R_2026-07-03.txt",
+        "sha256": "5c4de61292306129d1dca0cc8acb37405a56a361ab2bd03d0187fc058348a3ef",
+        "bytes": 40912
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_PASTE_M4_SPEC_R2_MESSAGE_2R_2026-07-03.txt",
+        "sha256": "2b4ff8a2aeedc2255c213c9a3a8284d38b4d18358fdcef0352c339888afdd961",
+        "bytes": 2038
+      },
+      {
+        "path": "mmi/project_brain/lanes/CLAUDE_PASTE_M4_SPEC_R2_MESSAGE_3R_2026-07-03.txt",
+        "sha256": "92c6313e7336816f13be9e10108c495968a07b9d56eb666dd8123b296dd79d0f",
+        "bytes": 1944
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_BUILD_STATUS_4E_WFP_REV_C_2026-07-04.md",
+        "sha256": "faa65aeea73a9d88fbd3ddab44a64f03c3d04ac982bd93fd6fe29971c00d757b",
+        "bytes": 2919
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_4E_WFP_BUILD_PLAN_REVIEW_2026-07-04.md",
+        "sha256": "d9de13336156278a1bd00668a40c09e53b91fa7064b1068315f50753062f350a",
+        "bytes": 2308
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CLIENT_EMAIL_LANES_DIFF_REVIEW_2026-07-03.md",
+        "sha256": "0dadcc7f2912c2f92e0f2605013e0ed905fba2010303170fb879aafb6b241808",
+        "bytes": 3583
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CLIENT_EMAIL_LANES_PLAN_REVIEW_2026-07-03.md",
+        "sha256": "497ef03e53c43a717739880abb94bd9deb3206ece857c8acc543ce40d0636aef",
+        "bytes": 3082
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CLIENT_EMAIL_LANES_PLAN_REVIEW_R2_2026-07-03.md",
+        "sha256": "8bdac1608c9f090aedc3aac52ee048bd7f2dba86f0809a7f16c5bf0da22d2dbe",
+        "bytes": 2514
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CONSOLE_SERVER_ED25519_EVIDENCE_GATE_PLAN_REVIEW_2026-07-03.md",
+        "sha256": "3650e89f9a382fe87cbec1e6472561e070539d224e8f7cc1737f52ce689e36b2",
+        "bytes": 3929
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CONSOLE_SERVER_STEP4_PACKAGE_DIFF_REVIEW_2026-07-03.md",
+        "sha256": "6ff3896e72aa2f60da1b73931dd3bd8631d60e819e5f67a9be84f43e60536f94",
+        "bytes": 3345
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CONSOLE_SERVER_STEP4_PACKAGE_PLAN_REVIEW_2026-07-03.md",
+        "sha256": "8f76d7cf2b701982469240a09346cbf345eafffb1f4da6ce5e41af1e8e777215",
+        "bytes": 2406
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CONTROL_ENVELOPE_BUDGET_DEADMAN_DIFF_REVIEW_2026-07-03.md",
+        "sha256": "552492edf22c32d1c8d09223178ffd585f12af9ad09e356706ca0db68b60b91f",
+        "bytes": 2590
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_CONTROL_ENVELOPE_BUDGET_DEADMAN_PLAN_REVIEW_2026-07-03.md",
+        "sha256": "f8a9929637f6410f4a6119eee34dae2fbc23486a588aa1e43785caecd6ff182f",
+        "bytes": 2405
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_GENOMIC_REALIGNMENT_LOOP_DIFF_REVIEW_2026-07-03.md",
+        "sha256": "fc31a0f731d0345283f9d2957298afbcefadaac838960efce991e84913b3c63d",
+        "bytes": 3689
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_GENOMIC_REALIGNMENT_LOOP_PLAN_REVIEW_2026-07-03.md",
+        "sha256": "5a3db948e96632fb67e058e8d890fcf6c0740d260daf3645e655fdb2ce8b67ef",
+        "bytes": 3894
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_GENOMIC_REALIGNMENT_LOOP_PLAN_REVIEW_R2_2026-07-03.md",
+        "sha256": "2cb1dd9b0fedcd182c96cbf1ebbbfc0ebb7e0fc3e96b5373d6d266ff90ff1755",
+        "bytes": 3196
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_L4_BEHAVIORAL_FINGERPRINT_2026-07-02.md",
+        "sha256": "09dfe5b514aa75cfc69243152e33d0957d5030be9472ea692325544170c5dd98",
+        "bytes": 2611
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_DIFF_REVIEW_PHASE0_2026-07-03.md",
+        "sha256": "a786618b9b56ffdfd420ed7df7cbbf6ff5c9ea2988e0511714eb93b3a8eb38a9",
+        "bytes": 5378
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_DIFF_REVIEW_PHASE1_2026-07-04.md",
+        "sha256": "51a1b072908691ce3195215e114fa30e98009edc78e5bdeda213c642f5918bd0",
+        "bytes": 3555
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_DIFF_REVIEW_PHASE2_2026-07-04.md",
+        "sha256": "0c18d21bb6445fbee0cd591d3cca28d6b7070c838979bbc3f58f7183ed25e79f",
+        "bytes": 5501
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_DIFF_REVIEW_PHASE3_2026-07-04.md",
+        "sha256": "2cb0ea0d39e55bc1f429b67c60bd0fdda1546f3d2fd4f09088ff8374801665ae",
+        "bytes": 2593
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_PLAN_REVIEW_2026-07-03.md",
+        "sha256": "d623313e8e90f49ccb148364c8acc8449d3def868c8366a8d0adfb65c9d349b6",
+        "bytes": 3347
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_PLAN_REVIEW_PHASE4_2026-07-04.md",
+        "sha256": "e7f7bf07f957138fe0a4d5a001239ced240a6b899cb90604c700ce60d6b941ea",
+        "bytes": 5258
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_PLAN_REVIEW_R1_2026-07-03.md",
+        "sha256": "894855da5b6512e0170d02b0cdb5cc56384b09dfee7b5f41514a942439c64dc1",
+        "bytes": 3280
+      },
+      {
+        "path": "mmi/project_brain/lanes/CODEX_HANDOFF_M4_EVOLUTION_GATE_PLAN_REVIEW_R2_2026-07-03.md",
+        "sha256": "be984d8d302d0ca85b1cbe607a89dcb5ba03c80f5462d1e6e9288eeb6b8f62b0",
+        "bytes": 3352
+      },
+      {
+        "path": "mmi/project_brain/lanes/CURSOR_HANDOFF_4E_WFP_BUILD_PLAN_2026-07-05.md",
+        "sha256": "42ced2fa75dd6c237cc00e06016b385a6e91e0f67c6590f060219948ae9f1373",
+        "bytes": 12537
+      },
+      {
+        "path": "mmi/project_brain/lanes/M4_RESEARCH_PACKET_MANIFEST.md",
+        "sha256": "6b94ae00efb793b22f790493c3abab77d51a0ad95d1cc3fd815110ccb86e86ac",
+        "bytes": 1457
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_AI_LANE_SCOPE_2026-07-03.md",
+        "sha256": "54b5ac38735ee41dd40cc8af831b7452c364a5b31d65b6882ff3d173725e2812",
+        "bytes": 9174
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_CHATGPT_ADVERSARIAL_RESEARCH_PROMPT_FRAMEWORK_2026-07.md",
+        "sha256": "37ed9f26dd5dbc3b32cf024348bfbd75457f876ba85b7d74eac441b0d3bb7549",
+        "bytes": 9103
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_CLAUDE_ADVERSARIAL_SPEC_VERIFICATION_PROMPT_FRAMEWORK_2026-07.md",
+        "sha256": "6a34e468445d42d4a197357e89a13a4b10a961faa3b5b3fef95c56d3bd499201",
+        "bytes": 9982
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_CLAUDE_ENGINEERING_PROMPT_FRAMEWORK_2026-07.md",
+        "sha256": "c8f8a142d75a93dcf0da55541e479a03a900ac3f11d920b53964f961c6b91686",
+        "bytes": 9009
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_EMAIL_DRAFTING_RESPONSE_CONTAINMENT_HANDOFF_2026-07-03.md",
+        "sha256": "c580999afe9b11f5525e6e84460446e817dcc0673768b101241fb70895abf2f8",
+        "bytes": 22001
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_GEMINI_AUDIT_PROMPT_FRAMEWORK_2026-07.md",
+        "sha256": "24da350d072c2a2c7a7edd0d4ddda9f64807dc293f1d1d51323f67e7aa9925bc",
+        "bytes": 13360
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_M4_EVOLUTION_GATE_SPEC_CLOSEOUT_2026-07-03.md",
+        "sha256": "2774185e297b4b6f083e020978809f285b94dab3bd988007b78bea45570832a9",
+        "bytes": 3272
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_M4_EVOLUTION_GATE_SPEC_R2_3_CLOSEOUT_2026-07-03.md",
+        "sha256": "f80964903a674132acbcf7d475a97f4c82d747716e95454f1280175ae2cf4de7",
+        "bytes": 2649
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_M4_EVOLUTION_GATE_SPEC_R2_4_CLOSEOUT_2026-07-03.md",
+        "sha256": "91347caf22656c5a0274128b4697d8276f3b7bdd9def1924036ce6eac18f0298",
+        "bytes": 2277
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_M4_EVOLUTION_GATE_SPEC_R2_5_CLOSEOUT_2026-07-03.md",
+        "sha256": "9915900d938a1797d9f4cda828ca932c4827410e4842b2e4066a407b9b97f6e6",
+        "bytes": 1397
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_M4_EVOLUTION_GATE_SPEC_R2_CLOSEOUT_2026-07-03.md",
+        "sha256": "55134f28eb89a4fa3a12aec97abc2dcf462949063c98370a75c9a193c543ee7b",
+        "bytes": 4670
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_M4_PHASE4_TCB_HOST_BOUNDARY_PLAN_2026-07-04.md",
+        "sha256": "a8cdc9d6d12a72fd52a1b6f184bcb43529a0081e6689e6f4fd07b61a1d651553",
+        "bytes": 20207
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MATT_AUTH_M4_PHASE1_5_ASSURANCE_SCAFFOLD_2026-07-04.md",
+        "sha256": "2c93027e872a8d1e2b7b612ff84902855142db2bcfccdf46fff7465f509c3cf7",
+        "bytes": 1729
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MATT_AUTH_M4_PHASE1_BUILD_2026-07-04.md",
+        "sha256": "8d5391949c9dd351e68f99bb1cf571aa6aed32ec0798afc3918d269a077d459a",
+        "bytes": 1112
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MATT_AUTH_M4_PHASE2_BUILD_2026-07-04.md",
+        "sha256": "2e3d91aa953ec1e5a8e987760e57e89c1a23fef96bec87cc48df52375280fc2e",
+        "bytes": 1525
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MATT_AUTH_M4_PHASE3_BUILD_2026-07-04.md",
+        "sha256": "1c3e81df3d256498f3eaffff8d86eca3da84ae79d7fd7c0b384f46f066ded672",
+        "bytes": 1137
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MATT_AUTH_M4_PHASE4_BUILD_2026-07-04.md",
+        "sha256": "313d608b11ba1a2f40f9f332df2ad2c101ecd464bac02e11e9a0de1ca11e6422",
+        "bytes": 1849
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MATT_DECISION_DUAL_PC_HARDWARE_2026-07-03.md",
+        "sha256": "6663f2cd2bf91b722cffe02d29ea12ce05489f505566de6e0c9f5f63d5bb043b",
+        "bytes": 8079
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MATT_RULING_M4_NO_SHORTCUTS_2026-07-03.md",
+        "sha256": "ed504104c29af26a7e4fc0d713a7e2173505db73888555e90ddf711134b05036",
+        "bytes": 2107
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_MODEL_PROMPT_CUSTODY_INDEX_2026-07.md",
+        "sha256": "2354c23e262d5878d2311f1d227e3d59b3e359d72e00c757f6665f64f5c74b8e",
+        "bytes": 16898
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_QWEN_READ_ONLY_CROSS_CHECK_PROMPT_FRAMEWORK_2026-07.md",
+        "sha256": "0bb654f7f11150f27cb3039f81b30140e8bca74b159f0e53c467e39b5cd6512a",
+        "bytes": 14194
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_RESEARCH_RIGOR_PROTOCOL.md",
+        "sha256": "39ddc68715fa3755e49a147f0c8aaba623630dd9315ded524c849d174ea39dc6",
+        "bytes": 10560
+      },
+      {
+        "path": "mmi/project_brain/lanes/MMI_SECURITY_INTEL_LANE.md",
+        "sha256": "610b279d7ace3486e0ec00cb4f52ae2d458834f47bcad8ffd08b0eb15ab291b7",
+        "bytes": 2652
+      },
+      {
+        "path": "mmi/project_brain/lanes/P4_R031_LIVE_WSL_DRVFS_9P_RELAY_FIXTURE_TEST_PLAN_2026-07-04.md",
+        "sha256": "bad4fbd9da4493a1aaea39fd97ba4b517613052148c4c3d9a0768200c82376ae",
+        "bytes": 10288
+      },
+      {
+        "path": "mmi/project_brain/lanes/README.md",
+        "sha256": "4f34e6cf3bb373c445f566edb3d2b4255b986d6e4b6d0c37656465d1ac81e2aa",
+        "bytes": 2096
+      },
+      {
+        "path": "mmi/project_brain/lanes/REDDIT_VENDOR_EMAIL_ROUTINE_INTAKE_2026-07.md",
+        "sha256": "bb2a9cf9d335b9fc5c61fe1f1fc7012bd03ef474859e4a0007b5d242adbed95e",
+        "bytes": 46031
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_ASSURANCE_CONTROL_STACK_CLOSEOUT_2026-07-04.md",
+        "sha256": "7531ad55ce24a9c2d2115ce77af3c96327296daa026c941844c2256cdc3ae8c5",
+        "bytes": 2371
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_FEATURE_GATE_DRAFTING_RESPONSE_LANES_2026-07.md",
+        "sha256": "dc27c216cfe587ab13bfb8e2cdca59c866ca4822ee371911a6eb4b72b722fae2",
+        "bytes": 7761
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_FILING_CROSSREPO_4E_2026-07-05.md",
+        "sha256": "fea5c9c7e6796bcce1e53c0a483e5993287c925a68547f2124c7dc2bb3c4ac17",
+        "bytes": 550
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_LUNG_V2_REFACTOR_2026-06.md",
+        "sha256": "dcf223b58ef718fec5e8c27562990c650b5477e8cd284d1b28ac6ce7283eadae",
+        "bytes": 8199
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_M4_4D_B_TO_4E_PERFECTION_GAP_2026-07.md",
+        "sha256": "21602277b619f15c0b699ce564febc238b597bdcbc1ee32013ef98f5962a2ff7",
+        "bytes": 17404
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_2026-07.md",
+        "sha256": "123d9b43e07ad0e274cfddb8b80088faa4aaf4cdb27d14d887bf37e094b62521",
+        "bytes": 8534
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_FINDINGS_2026-07.md",
+        "sha256": "8f6d38a148e4ba909b5e6891cdaff0637d77a872d2e34e536b70d48f1d706cd0",
+        "bytes": 17645
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_RELAY_PORTABLE_2026-07-03.md",
+        "sha256": "94913daccd1f4254d380cd13686e112e0a9b4aabdb782777fd8b21c4e0735998",
+        "bytes": 7026
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_M4_EVOLUTION_GATE_V2_UPLOAD_RELAY_2026-07-03.md",
+        "sha256": "6d4a0bc7cfec93ce336e1550ff5170c08361f61053b5fefa935faf8fa57ec01f",
+        "bytes": 2247
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_MITRE_ATLAS_WEAPON_HEAL_TARGETS_2026-07.md",
+        "sha256": "9d12b25be7c88c1f4eb96b2ccae547431d820a7faabb9d50b39e682a4d2b87fd",
+        "bytes": 7342
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_MMI_ASSURANCE_CEILING_MAP_2026-07.md",
+        "sha256": "3b81732c624e5e06a3236d1c9cab7e30d513f10d99b55e5560b299dea225f7e6",
+        "bytes": 5889
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_MMI_ASSURANCE_MATURITY_2026-07.md",
+        "sha256": "3dd0cb7e5874f082285d19e1ac2803664c35606ade7a6e1acb0e4bc2d5394f5a",
+        "bytes": 16959
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_SCORING_MATRIX_REVIEW_2026-06.md",
+        "sha256": "a29e6e207d8e4c8396529b25deb1487ecd087b042e145581b208291566085f89",
+        "bytes": 8537
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_SENDINTENT_OUTBOUND_CONTAINMENT_CRITIQUE_2026-07.md",
+        "sha256": "ef678c77d0d83ebb6b9eaccdeee893cd5b3a70112a58402866858d5401bcf31b",
+        "bytes": 21398
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_VERIFICATION_2026-06.md",
+        "sha256": "f0b204729d138afc9da80f669dea37aeca82af4377c3890951cd380b04804f8b",
+        "bytes": 13674
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_VERIFICATION_CA_LOCALIZATION_2026-07.md",
+        "sha256": "92e68c154e4f3dc40c42f168e69de4994a52b3895f79898417baac80314ca8c4",
+        "bytes": 8238
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_host_boundary_wsl_windows_2026-06.md",
+        "sha256": "9f3648c582539c25fc74e03115cd637b2fc1038424d7dc0049a5b8c40b2872bc",
+        "bytes": 3419
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_polymorphic_ransomware_delivery_2026-06.md",
+        "sha256": "79ae32d411c0bb3ef20ba9d774261bf7fd33fc0f526fa4d0a7f209c6fa1335a1",
+        "bytes": 4274
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_purple_team_war_room_matrix_2026-06.md",
+        "sha256": "b753edfb1826cf94316a127f09c4c9fb29cf049b1d302f976c30260d42bed981",
+        "bytes": 8205
+      },
+      {
+        "path": "mmi/project_brain/lanes/RESEARCH_smb_threat_landscape_2026-06.md",
+        "sha256": "ac2eefc3939b23846ba4f631cf5113b6e79f36afed72a7bdd7570cddf28895d1",
+        "bytes": 3579
+      },
+      {
+        "path": "mmi/project_brain/lanes/build_m4_research_packet.ps1",
+        "sha256": "7e714efdc6018e1f101118e8b9b9304fac39619513d126058be19add2ae75f53",
+        "bytes": 3244
+      },
+      {
+        "path": "mmi/project_brain/lanes/build_m4_research_packet.sh",
+        "sha256": "3fdd94dfddff4de223301f7a4af2a526f05cb3e063ce19c18181ea5ea69ce0e9",
+        "bytes": 4168
+      },
+      {
+        "path": "mmi/project_brain/lanes/build_m4_research_packet_v2.ps1",
+        "sha256": "111f06108e23c1004b51912d180d132e3444c638ae2c6a3831f652b9d365b101",
+        "bytes": 5630
+      },
+      {
+        "path": "mmi/project_brain/lanes/build_m4_research_packet_v2.py",
+        "sha256": "bd1fda79ea61ebc21d621dc42d0fc4cd7537fbdc63ce6fde9a99100ba2a10bab",
+        "bytes": 6653
+      },
+      {
+        "path": "mmi/project_brain/mission/MMI_MISSION_BRIEF.md",
+        "sha256": "148ed335fe7465770036fbae2370c764dbc6f6e94c86bb196c5839a649f66e7e",
+        "bytes": 4091
+      },
+      {
+        "path": "mmi/project_brain/mission/README.md",
+        "sha256": "6a80d5dd7eb310cb5936d39221bbe1d5076a5605516c50b6fbb0c0382ce2e63e",
+        "bytes": 206
+      },
+      {
+        "path": "mmi/project_brain/opsec/BACKUP_PROTECTED_PATHS.md",
+        "sha256": "f04b4e8dbaa69c7847fd7c187733174feafb28391869a0667c403296b4e9bbbb",
+        "bytes": 6964
+      },
+      {
+        "path": "mmi/project_brain/opsec/OPERATOR_OPSEC_CHECKLIST.md",
+        "sha256": "fbdab2d504acef91d2578b4468dcb3f489c7920269f58cc985c060ba9d68aab2",
+        "bytes": 11731
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_AUDIT_LANE_ATTACK_CONTRACT_2026-07.md",
+        "sha256": "25b36d078749c6570cfd76852e1967220d4ce5f4fb9f4894443ce18ee700d6f6",
+        "bytes": 12439
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_AUDIT_LAWS_2026-07.md",
+        "sha256": "808edbe0a147eb606540b7cf5b8ec158431f182554a13206a2a5563260dae66b",
+        "bytes": 7426
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_BUILD_LAWS_2026-07.md",
+        "sha256": "b2f8c1a77a19609012809b6db94713bc79f80acfd6136e8f0533350a38183160",
+        "bytes": 3026
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_DESIGN_LAWS_2026-07.md",
+        "sha256": "8ed8961c77741a43be86e4c79c61f72320d91d0cb8794eb1eb890d0739b63ef8",
+        "bytes": 3075
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_LANE_LAWS_INDEX_2026-07.md",
+        "sha256": "c6f8cf539a74c646b8abdf03768399da1026422c1eed9fcf948ad22cce9dfb2b",
+        "bytes": 6336
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_MODEL_AUDIT_STANDARD_2026-07.md",
+        "sha256": "267106cfc68f8c75c12f9e92c3817ae084d6608ce9ed130428696512f130625d",
+        "bytes": 24951
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_PROJECT_LAWS_2026-07.md",
+        "sha256": "637120f97621526afa6fdd5e2aab39d35d2aad39b48bec29dc171ef3c850f741",
+        "bytes": 7079
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_RESEARCH_LAWS_2026-07.md",
+        "sha256": "6f6829bba4b90fe35d417cc98261c70cc5f5067ded6026f6e7846aacdc16b1c4",
+        "bytes": 3183
+      },
+      {
+        "path": "mmi/project_brain/status/LLM_UNIVERSAL_PROJECT_RUBRIC_2026-07.md",
+        "sha256": "054c4661df34f7f0d741a5e9ccf370f047902e31d8c2a7c5c30ec7cd675a35e4",
+        "bytes": 11678
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_SCOPE.md",
+        "sha256": "83a89bc1d9f6e444b0f21c412813c614b884a270c69f18bfc55674586f60ee50",
+        "bytes": 5722
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P1_2026-07.md",
+        "sha256": "093811f0b5a53c92617768195072262c03ed7f1254d577ecd6183e20ac8bd17b",
+        "bytes": 2330
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P1_TESTS_2026-06.md",
+        "sha256": "11aa1cd7baf764dbb48efe43b9cfaadfedffe5cd4be864ab00c56a5672961fd9",
+        "bytes": 1342
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P2_2026-06.md",
+        "sha256": "b0a60cfe6fd725fa9be9c372c597f5c6f3ea46ad837bcb17b63dbc719ae4c28f",
+        "bytes": 2991
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P3_2026-06.md",
+        "sha256": "93851cfbbe64a4aaf55c3d82bc7ca1c7e64fabcd768d04d16b4196e631aac128",
+        "bytes": 722
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P4_2026-07.md",
+        "sha256": "f81ed0527e6c36fec578f0d6dfaedfd44c25d68d065a1cac0a62e0dd9b321760",
+        "bytes": 622
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P5_2026-07.md",
+        "sha256": "d97f9033679c9d2f20915da03e61e89200d54afb83ecdc44ceaf4560478b843e",
+        "bytes": 581
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P6_2026-07.md",
+        "sha256": "ba644b3e8dd30d7426508e300ae60f4441a116fdc07269abe530aafe466f5303",
+        "bytes": 752
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_ACTIVE_TASK_ROUTING_P8_2026-07.md",
+        "sha256": "90a85249a9a6c3105830645a734f94ccee6c146809d98c165a5a9920ff823939",
+        "bytes": 703
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_AUDIT_LANE_ATTACK_CONTRACT_PATCH_STATUS_20260708.md",
+        "sha256": "5179cecda99e36eecbf20b47e37c0bdeb40ed36e4264b6edcd74272760eb18ff",
+        "bytes": 1167
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_AUTOSEED_PIPE.md",
+        "sha256": "485b1408e9c0fd2e5e8cba74700b740d8833f629cec923ef9a1a743939b26879",
+        "bytes": 2015
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_B2_MIRROR_P1_TESTS_2026-06.md",
+        "sha256": "bf0d7a1a90da1a8ae07d61a93bd371881b5a38a0aa7f48a7dcae1eb2bcf78200",
+        "bytes": 1516
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_B2_MIRROR_P2_2026-07.md",
+        "sha256": "e9ab782cb24744205cf3a67cc11a018938992342444c81376eb62d563b5ada93",
+        "bytes": 1770
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_B2_MIRROR_P3_2026-07.md",
+        "sha256": "f53e0c7fd98280b4bad58746016731eb8322be6e2995a35fa76e02673166506f",
+        "bytes": 1956
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_B2_MIRROR_P4_2026-07.md",
+        "sha256": "a087a36acd64db1400842dc863e3c47bbeba525437899a7045887c46a95ff209",
+        "bytes": 1977
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_B2_MIRROR_P5_2026-07.md",
+        "sha256": "2282693823a0c0942c250580b70d6fa49f232f16ec6372a217bb7423f96752d8",
+        "bytes": 2230
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_B2_MIRROR_P6_2026-07.md",
+        "sha256": "c7c06bd28291f82e89ad12249d2d5c02ce48d3c715f522354cbec9a7cfc52cda",
+        "bytes": 1592
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_B2_MIRROR_P8_2026-07.md",
+        "sha256": "0125b63eefb98c956a13adcd82bf52ce1c3384b6b371fcb15d13bf7f277c4d02",
+        "bytes": 1594
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BACKUP_MANIFEST.json",
+        "sha256": "cdb2d0cf754abdc74afc9c5e1a930d0e105afa4c46dbd6a61ac332c12cd67c90",
+        "bytes": 5484
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BACKUP_PUSH_LOG.json",
+        "sha256": "16862cdf49a1fb74a0ce329d47c55e7b1c9d3279c01b27296a9ef1eb797517a8",
+        "bytes": 1270171
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BOOTSTRAP_CLOSEOUT.md",
+        "sha256": "5022ebfe2f9edc055f971b13c15c0a5a9455ee73738459139b5356d247e1352d",
+        "bytes": 5510
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_BUILD_AND_PRESERVATION_AUTHORITY_LAWS_20260707.md",
+        "sha256": "0b2a53a2a5e924b4cec9285e5a954065b0175e1e3d4d084d6b5cee3ca0e38eeb",
+        "bytes": 11370
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CANADIAN_IR_FIT.md",
+        "sha256": "628bcaa6d3803c484375ee6bf8db280532787d5000f19e7d6e7b6e3176d866c9",
+        "bytes": 3459
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLIENT_EMAIL_LANES_COMPLETION_GATE_2026-07-03.json",
+        "sha256": "51738a3628b199201c5500ce7ab569c4ca8190373c4912680665968f5decbedb",
+        "bytes": 2046
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLIENT_EMAIL_LANES_V1_CLOSEOUT_2026-07-03.md",
+        "sha256": "de36e81a5673af52172289d42b0e1449b8c435e57bb296166dd9b7bdb4f3245d",
+        "bytes": 3324
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_EVIDENCE_CONTRACT_2026-07.md",
+        "sha256": "ea8d6d962978e4916f86e66ef1576d2373d656a57afd9db4c09f88ced0a5ec04",
+        "bytes": 2385
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_P1_TESTS_2026-06.md",
+        "sha256": "eee1acfd8c29e943fd0243cbf22906788745c15b9c946aaa1ce1e60be346de3a",
+        "bytes": 1805
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_P2_2026-07.md",
+        "sha256": "04cfa86545d28fd0340d0d682fd7185b796db6ad4da7dea081ccce6071e0fa72",
+        "bytes": 1864
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_P3_2026-07.md",
+        "sha256": "50827be09bb8641cdf7c14980958dab7b6b1e6a54481cbf28ed4c630abfafea4",
+        "bytes": 2316
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_P4_2026-07.md",
+        "sha256": "e76a90832231332138b6c3ef110806144728e0f1ca639e7e357c7c91d4c615fe",
+        "bytes": 2521
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_P5_2026-07.md",
+        "sha256": "68f223fdffc8f90f315dd3c4f2a43b1baced6d2acffd9efce4ea62a542ae6b2f",
+        "bytes": 2142
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_P6_2026-07.md",
+        "sha256": "970d5bf0dfb142a6083cced2db002da7e0cb8839daf56db647c15f1a5f9ce4d5",
+        "bytes": 2046
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CLOSEOUT_P8_2026-07.md",
+        "sha256": "c6380d63ab4c59d6c0d771241d108ca0bcf3060faae83a20308f6ea5b6f1e5a4",
+        "bytes": 1965
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CODEX_HANDOFF_P2_2026-07.md",
+        "sha256": "fabef40419708cacf315311ed3ce199a0edc2dfefb9f402ce3530f448f7a710f",
+        "bytes": 2482
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CODEX_HANDOFF_P5_2026-07.md",
+        "sha256": "a886897151bdde617df8c572e4488567aca79f9b93af4c297ff28da18bfd0ad5",
+        "bytes": 1690
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CODEX_HANDOFF_P6_2026-07.md",
+        "sha256": "21dd5adc26fe06aa4f37a01c0087278425a7fcf59271ccf9573043765b021685",
+        "bytes": 1881
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CONSOLE_SERVER_STEP4_CLOSEOUT_2026-07-03.md",
+        "sha256": "466817617e77f570b238be74656c05c05076b4ebb9e5083a0e92bd86b8c5c16c",
+        "bytes": 2600
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CONTROL_ENVELOPE_CAP_DECISION_2026-07-03.md",
+        "sha256": "b2a64f44008efddcea541c42f95ff294b10dab585de490f445ebc0c0183daba3",
+        "bytes": 5493
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CURSOR_BACKBLAZE_BACKUP_NOTE_2026-07-05.md",
+        "sha256": "2c42244c8a341b8f2b32e52a79716fb4cc2f6c3e03fab2624a29a6622e2aaa01",
+        "bytes": 551
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CURSOR_GPG_CUSTODY_PLAN_REVIEW_2026-07-13.md",
+        "sha256": "b1216add9ce74690990574d631bb74005cfcd4a1d8f7568b27523f6ec450d697",
+        "bytes": 24397
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CURSOR_GPG_P0_FINAL_REVIEW_2026-07-13.md",
+        "sha256": "209ab7b79ce428cd1ff0a1a820447c74badf121ced376b632ebf5e49d88b1561",
+        "bytes": 21206
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_CURSOR_QWEN_CUSTODY_REVIEW_2026-07-13.md",
+        "sha256": "e82edefba2318b75781022da15385c93db09694fda31ad0948ee31f99b4a82ae",
+        "bytes": 29902
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_DEPLOYER_QUEUE_CHECK.md",
+        "sha256": "5ae5560e1b20a0ec92b71b7b0aeb1f56f5930013b25087a5053c1f52e80a8225",
+        "bytes": 4778
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_B2_PUSH.md",
+        "sha256": "04547fc02107336c0c5c32ba6dede8b523664a25ccdab18a8bc67d84caae5457",
+        "bytes": 1719
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_FIRST_BACKUP_RUN.md",
+        "sha256": "e5fb6d2cdf010f47c32304d1dd34c8011be00922a3cea51c1e22c3caa1622934",
+        "bytes": 1657
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_GENOMIC_COMPLETION_GATE_2026-07-03.json",
+        "sha256": "d8ee5f959f4ab5ba67569023833cc430227467c33cc20b136ae56b9dbdb8998d",
+        "bytes": 2036
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_GENOMIC_LOOP_BUILD_UNBLOCK_PLAN_2026-07-03.md",
+        "sha256": "29aed2803a2bdaad502356d24374db498ed7ca61b2843ab45ce77edb89258084",
+        "bytes": 4760
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_GENOMIC_REALIGNMENT_LOOP_STEP5_CLOSEOUT_2026-07-03.md",
+        "sha256": "646de0d3a493c831c2b381d8abcabc84843580e28a328fbef171a229d826c0d0",
+        "bytes": 4148
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_GPG_BACKUP_KEY_AND_RECOVERY_CUSTODY_PLAN_2026-07-13.md",
+        "sha256": "faae3ae49857508cb1dd7b7237103a2e336e5dfbce067d0f66d4ce60f6d53247",
+        "bytes": 31489
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_GPG_P0_PLAN_ACCEPTANCE_2026-07-13.md",
+        "sha256": "5ce26ab58daf5eb39b92dfa058a8a6c007582de07ae5bd07a8c1db6c1b50dc42",
+        "bytes": 2626
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_GRADING_STRIKE_LEDGER.json",
+        "sha256": "984aefede29e6e1e4a4ed19aff8ea39cbdbf31becc8a23f3b974e4f98e83b044",
+        "bytes": 4176
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_HOST_ATTESTED_EVIDENCE_AUDIT_6FE3558_2026-07.md",
+        "sha256": "c593020936da9c91c3e0b0c3bec5d5174c43ae9130bdf7264cf2bde53f6c03e3",
+        "bytes": 9968
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_HOST_EVIDENCE_BUNDLE_GRADING_TOOL_LOCKOUT_2026-07.md",
+        "sha256": "6e637c7c97916d1e35ef9328f6fbce62941e256f62883299327887ed227bfba3",
+        "bytes": 3344
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_4918d4d_2026-07.md",
+        "sha256": "b233fc89fd2f1f383c342c0609b73e2496e576ddb5fdabca3734910bbb1c1e6e",
+        "bytes": 5575
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_DB678EB_2026-07.md",
+        "sha256": "5e639ab3c0b9f0983da697b91f25dca422ca1c792a67e8e17a1257694a1de26b",
+        "bytes": 4607
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_INDEPENDENT_GRADING_LAW_AUDIT_F8B4934_2026-07.md",
+        "sha256": "d26a3e5418d30ea0193a1d5ca6a515cd98852dc2dd42493cf04fae6b76d0f054",
+        "bytes": 5407
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_INTEL_BUILD_SEQUENCE.md",
+        "sha256": "77be23952ddba694d91c12a2d76c2cada0a5988aa71c428b57b5561bea381afa",
+        "bytes": 989
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_LANE_ROUTING.md",
+        "sha256": "8a01019c367e360f71871edecb043aa1960839e87f672e527a428e9a092473ca",
+        "bytes": 11445
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_LATEST_GOOD_ARCHIVE_VALIDATION_2026-07.md",
+        "sha256": "74de73b29ffb1e8b969a5d7b79a348dc2318bb2033f0e8d557ba83e4291c1e0c",
+        "bytes": 7234
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_MACRO_BUILD_DECISION_2026-07-03.md",
+        "sha256": "e12235dc439cb860adce709bb38b77a1363e71ca3b0d6b7ff815b8dbe6ca90bd",
+        "bytes": 4453
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_MMS_CUSTODY_MAINTENANCE_2026-07.md",
+        "sha256": "ccd2ef3a7559b4e929fac98047166301e9f4ae6d768b7b77a48bb5ad492cbf91",
+        "bytes": 43505
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_MMS_DATA_LOCATION_INVENTORY_2026-07-13.md",
+        "sha256": "9fe40aa93fc22ea6f24e7a49e1fd37f23fbb5aeca5b8809fcf8c6b5912f69d8b",
+        "bytes": 11496
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_MMS_MAINTENANCE_GEMINI_AUDIT_2026-07-13.md",
+        "sha256": "f25b78c3dcd0135b28bd60de55c2a40bf5bbd3b4b1b66cc0fe0cdc6b13b137d2",
+        "bytes": 8005
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_MMS_MAINTENANCE_GEMINI_AUDIT_REPORT_CARD_2026-07-13.md",
+        "sha256": "6ad46added196e1d3716400ffd9fa0d794dda11e7c121d54e402733de91d4d10",
+        "bytes": 12110
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_SAFE_TASK.md",
+        "sha256": "f592bcf54f7686f071192a7eaa60bf96c299c27bade1b393c265a4787fa3c298",
+        "bytes": 4667
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NEXT_WORK_PACKET.md",
+        "sha256": "acf069288b331bd5b454865792679bf9758f6b98aeb1943f0e59455a734b0739",
+        "bytes": 5045
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NIGHT_CLOSEOUT_2026-07-02.md",
+        "sha256": "29f06d4125171fbc5068b72bc197132108351d14f945e2ea27d40b6b062f398b",
+        "bytes": 2041
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_NIGHT_SIGNOFF_2026-07-03.md",
+        "sha256": "83c997ad52e561f518df100b800c938ea0373cc2dd6818907b43082e7beb0e0f",
+        "bytes": 1425
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_OPSEC_AMEND_SOP_2026-07.md",
+        "sha256": "36d22cbb022faec070531c7c4ba29f66c06ebac9e95fa60b96a1dda339ed88b0",
+        "bytes": 1233
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_P3_REVISION_PACKET_2026-07.md",
+        "sha256": "92ffb22f28a55961195968f3535db798bbcf1abb02b1f8f042fba7ce9c41457d",
+        "bytes": 3979
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PATH_AUTHORITY.md",
+        "sha256": "dedecda95edcf1d0f41563353476f7cb8031ce5fc4567102f0e2a4aa7d7f9820",
+        "bytes": 2602
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PHASE1_STABILITY_HARNESS_CLOSEOUT_2026-07.md",
+        "sha256": "323cd71258f4853118d12070fa2c53aa3fb85073d389b9d830be7ee72a6cf5a8",
+        "bytes": 2023
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PHASE1_STABILITY_HARNESS_SPEC.md",
+        "sha256": "40c672686e9ab4b1b4bda5ef9a8809b8f3fa135e8148f766f03ac445ff3662c7",
+        "bytes": 2912
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PHASE1_STABILITY_PASS_2026-07-02.md",
+        "sha256": "6bde46617ab04ddc60564f4b152af63a510a7ce3612a34b4eee52606606cd449",
+        "bytes": 2925
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PHASE2_START.md",
+        "sha256": "e5dae926773c57526d2c5f36f4b2999cfd947da00f2c1fe4b1e6e3a8996397c9",
+        "bytes": 2208
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_IDLE.md",
+        "sha256": "458720d41968231c9d9c9fb0d5f2e3a024e9791374835a621ce020fe465c2128",
+        "bytes": 1727
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_REFRESH_2026-06-30.md",
+        "sha256": "45aa0ec830c15d436fc6523116cd8ef5f879d8c996563ed938d8ea9995513f64",
+        "bytes": 2807
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_REFRESH_2026-07-01.md",
+        "sha256": "08e6bd06cf5253389f3276c39e4906a96ecfe41ca955368cc1f44064a33a4650",
+        "bytes": 2996
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_REFRESH_POST_PROMOTION_2026-07.md",
+        "sha256": "2197888c6646295516c53e22d70390a66e55586c695b8b7ba89125fd8133c0ff",
+        "bytes": 2360
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPELINE_WARM_RULE_2026-07.md",
+        "sha256": "19d85a9577bcaa974a171ca3ac56b25a4c23041e065052deb5ed5661f1e681e7",
+        "bytes": 4143
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PIPE_STAGING.json",
+        "sha256": "fea81c97186fe2df61b12586ba1ba7c4bd6270292fe3f7b01a22ef294799049a",
+        "bytes": 312
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_POST_PUSH_HYGIENE_AUDIT_203B010_2026-07-05.md",
+        "sha256": "69c9d9ab7e05e7f0f69cb2309d8d3d49d0b861a39d01430937781e21e393388b",
+        "bytes": 1603
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PROJECT_ROADMAP_2026-07.md",
+        "sha256": "e5ede16f92a264298f389af6b7b0cd73548fe376a22ff6fc2445cf352022c43e",
+        "bytes": 9442
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_PROTECTED_LOOSE_DATA_BACKUP_MANIFEST_2026-07-13.md",
+        "sha256": "a4671b8b352f8e6d85b4d7ccfc4f8a47294b6de0d3c3d6f45a43d5735b270544",
+        "bytes": 12213
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_QUEUE_HOLD.md",
+        "sha256": "54a395d84113158cafe44e6c13ac5c8a4d83e3e3753c071f68030553f8a50f6c",
+        "bytes": 1319
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_REPORT_CARD_GATE_AUDIT_CD09F56_2026-07.md",
+        "sha256": "7513c213a8d151d236e1c9bc0cc8357b8096a1243345a2c2acea4338a8c8c8f4",
+        "bytes": 9702
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_RESTORE_CHECK_110548_2026-07.md",
+        "sha256": "5128fd23e0dfd96dd64af58165dfdb7ecf5c46fcdad5804cdd565cb81a3957f8",
+        "bytes": 1028
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_RESTORE_CHECK_WAR_ROOM_PROOF_2026-06.md",
+        "sha256": "51d654faa541e5151360463eb9be274a4b182aac81deebe678b9c5cb33eef869",
+        "bytes": 5202
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_RESTORE_DRILL_2026-06.md",
+        "sha256": "a8545e2c82a24e08e12f2d5a3873d84913c650030ca35835584a96a72beff87f",
+        "bytes": 3322
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SCAN_OUTPUT_ARTIFACT_BOUNDARY_20260707.md",
+        "sha256": "3ee1016ee29909903a8e8cf38bf4e90920c6868ff42960b72fddbf6888df5e92",
+        "bytes": 12094
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SCAN_OUTPUT_ARTIFACT_BOUNDARY_STATUS_20260707.md",
+        "sha256": "172d648158b5c3b691b042fffc1bff5d151e2ee2c92f92567a1ee8da15659311",
+        "bytes": 3242
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SCORING_MATRIX_V2_ACTIVE.md",
+        "sha256": "5f0cd9d00c31b8b2e0276de3df6763502ceb45450db3195b12a596da71a4f70e",
+        "bytes": 797
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SCRATCH_ARCHIVE_CONTENT_SCAN_COMMAND_PLAN_20260707.md",
+        "sha256": "bbeb30216eafcf01321206bb76a9c8a4a0d08effe155708d4dd1909a9cb6d07c",
+        "bytes": 11912
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SCRATCH_ARCHIVE_CONTENT_SCAN_COMMAND_PLAN_STATUS_20260707.md",
+        "sha256": "00f4cf94dd3034432d4890ebbdba1dcfbfe5a43ce0f57e6b003db8c78f05c3ec",
+        "bytes": 3268
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SCRATCH_ARCHIVE_CONTENT_SCAN_EXECUTION_REQUIREMENTS_20260707.md",
+        "sha256": "7eacabb0457f896ea5cdc8e3119fd1030da5954673d77c5dd4faaf5bc83e2bea",
+        "bytes": 12231
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SCRATCH_ARCHIVE_CONTENT_SCAN_EXECUTION_REQUIREMENTS_ACCEPTANCE_STATUS_20260707.md",
+        "sha256": "b45636b156c637679ef817ede500e7c8894028ae45a28d179d3e7bec9be78b07",
+        "bytes": 4391
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_SECURITY_INTEL_START.md",
+        "sha256": "f6efaad1ebec687536a5d936099bea896c42d998f9255be16cf2b4e7aab0351e",
+        "bytes": 1305
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_TASK_REGISTRY_LOCAL.md",
+        "sha256": "c75dbec45dd884b869691522015b2275afcc91384f717ccb047a4272a8a01dfd",
+        "bytes": 9091
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_TRUSTED_SUCCESSOR_CUSTODY_SPEC_2026-07-13.md",
+        "sha256": "2971ba7563027e15ca5ca2639394da502776a785be1c17906365c4ac75d7e38a",
+        "bytes": 49016
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_TRUSTED_SUCCESSOR_CUSTODY_SPEC_ACCEPTANCE_2026-07-13.md",
+        "sha256": "710602a9089d9539eee11bf013306c35efe183f429618877c6b2c1a51e36ca99",
+        "bytes": 3813
+      },
+      {
+        "path": "mmi/project_brain/status/MMI_WAR_ROOM_SETUP.md",
+        "sha256": "88d68fa619075d7a284dba6e0729db1753caf1323669921b570e9e18b03869d6",
+        "bytes": 2368
+      },
+      {
+        "path": "mmi/project_brain/status/README.md",
+        "sha256": "a5cd1e6c45b89977a8b628e2a04267c6e9f995c0d9e0d381fe79e94f3f1354ea",
+        "bytes": 214
+      },
+      {
+        "path": "mmi/project_brain/status/verify/MMI_P8_CLOSEOUT_VERIFY.json",
+        "sha256": "5bc6abac6c056184f858918ac5d6ea31c06e2cb1ed0a130b65b3cd7da66083e5",
+        "bytes": 927
+      },
+      {
+        "path": "mmi/task_pipeline.json",
+        "sha256": "d0d14f98f27e158ddf7a7c52c90bfe6b322621d183a5ec00a5677c8d2e33c867",
+        "bytes": 43235
+      },
+      {
+        "path": "mmi/war_room.py",
+        "sha256": "e3a01ae55c1ba47250ed289c4bc5936fcc46e2d63d51f688b8aafdaf2b3e7cc1",
+        "bytes": 13876
+      },
+      {
+        "path": "scripts/build_m4_minifilter.ps1",
+        "sha256": "3205abd92dc2bc9c34373b344cdd03ecbe3de596748b0cac0840ce42fa1cbfe7",
+        "bytes": 7785
+      },
+      {
+        "path": "scripts/build_m4_wfp.ps1",
+        "sha256": "d663d1ade254b9e0b038ae8fa7fa5c720620de65a59f37746e029935ab9e1163",
+        "bytes": 5674
+      },
+      {
+        "path": "scripts/complete_task.py",
+        "sha256": "dea4b4a2ec87283c1f27a0e899901521c4396ae95692495019e6be514fcadd3b",
+        "bytes": 12736
+      },
+      {
+        "path": "scripts/console_bundle_builder.py",
+        "sha256": "0b8fd4c1b7256fd04780484f783b3911489556ed784c6a49c3d1f9337b01dca4",
+        "bytes": 3980
+      },
+      {
+        "path": "scripts/console_fingerprint_seed.py",
+        "sha256": "fb8b3c5efa44963202c0239af40043e7c43fa0267a81b08ec8e5cc9be35cd66f",
+        "bytes": 2359
+      },
+      {
+        "path": "scripts/console_server.py",
+        "sha256": "4c17c67dcbb2c8030a90f34838890fadcfe8effdc8a40a51f103b6b5823f5aa2",
+        "bytes": 5870
+      },
+      {
+        "path": "scripts/console_server_harness.py",
+        "sha256": "417a0e770d275017f0f1aa0b01c4b8f2b1477cbd4ab20cc73e65148f68fe812c",
+        "bytes": 16310
+      },
+      {
+        "path": "scripts/console_sign_client.py",
+        "sha256": "f1145e3c40c5d172b26efb35ddd9ace52a30b2033bfb3e8dbbd7f1bff1c9a6ce",
+        "bytes": 6288
+      },
+      {
+        "path": "scripts/install_m4_minifilter.ps1",
+        "sha256": "b35f96511e88ae00ffdc6fb3ef14bae14ef35c06df4f271fb9581ce480541d7b",
+        "bytes": 5988
+      },
+      {
+        "path": "scripts/install_m4_wdk_toolset.ps1",
+        "sha256": "17531e5cb44eb919bd836a5eade4d88eda5110737ba76d82fcfde86666d16fe2",
+        "bytes": 3957
+      },
+      {
+        "path": "scripts/install_m4_wfp.ps1",
+        "sha256": "7b79ea119cb43aa6eda9825ac2427091bb6340e8d9faae709af17012a9589e5a",
+        "bytes": 4288
+      },
+      {
+        "path": "scripts/keep_task_queue_warm.py",
+        "sha256": "6cd2362bb93cafdb558c9f4b007b21c4498518b23d060ca3768599bd55d86c8b",
+        "bytes": 9696
+      },
+      {
+        "path": "scripts/m4_authority_seal.py",
+        "sha256": "4bba030fdddf932b2480bfef3c36325aba6a86f852abb9702637e0d1581d61ca",
+        "bytes": 4171
+      },
+      {
+        "path": "scripts/m4_boundary_daemon.py",
+        "sha256": "a0093b57bc8400a03e3cc414caa767485be6ff94a1b910c711f152365cab9c22",
+        "bytes": 4613
+      },
+      {
+        "path": "scripts/m4_fuzz_harness.py",
+        "sha256": "ec6db6cc1b6471d5076b1e846b7e07e5a5a1ab6f28e10610680408dc70ce5cda",
+        "bytes": 4834
+      },
+      {
+        "path": "scripts/m4_import_ban_test.py",
+        "sha256": "cbca76a39e4058d328104f99934e3ffff1a514b2d9f86107be3eebe2fceed9fa",
+        "bytes": 1941
+      },
+      {
+        "path": "scripts/m4_invariant_check.py",
+        "sha256": "3acac9561fe3c98f3190f064b824c367039ab6cef45ed7d7e52fff8d3f8f87bc",
+        "bytes": 2539
+      },
+      {
+        "path": "scripts/m4_minifilter_suite.py",
+        "sha256": "30f056ea3e6e747a8cfe398eb085360855dfdac586623921e9bec726c91d5949",
+        "bytes": 3289
+      },
+      {
+        "path": "scripts/m4_sandbox_escape_suite.py",
+        "sha256": "f1c6a554552f4d4005febbfa2f8f98be873294989933a0db2ae3f618fe4ce7aa",
+        "bytes": 4259
+      },
+      {
+        "path": "scripts/m4_stage_attestation.py",
+        "sha256": "474a9e1da096f659746e04d2a445f0879be46b052f5f633bfa0bd277d5f67eed",
+        "bytes": 3011
+      },
+      {
+        "path": "scripts/m4_wfp_suite.py",
+        "sha256": "6af6e3bca5fb1d993515c421bf0c85bd21ede350bdb55135af4fc07162649e2f",
+        "bytes": 3153
+      },
+      {
+        "path": "scripts/mmi_cold_backup.py",
+        "sha256": "1f5bf03f06a08d9fd3973cf53e6b59b099b6e12042e38576e6b55922878adba7",
+        "bytes": 25016
+      },
+      {
+        "path": "scripts/mmi_verify.py",
+        "sha256": "05b3907823395ec8c27b24581f4914d0a3b5f795505727aa8718e58baf62ad3a",
+        "bytes": 13555
+      },
+      {
+        "path": "scripts/next_task.py",
+        "sha256": "16faa487e1a9801c8faa1b9ff2940afdbb9f71043f6d39dff4eef6e1bc4b96a8",
+        "bytes": 1398
+      },
+      {
+        "path": "scripts/proof_gate_harness.py",
+        "sha256": "8e0e1a43e1b2ca800018d2bf32561109c865d50c44d8970b33c4b016007dca74",
+        "bytes": 21446
+      },
+      {
+        "path": "scripts/reload_mmi_pipes.py",
+        "sha256": "697b308ce4101a3ccc4aa31bcfc6020c16f4f3c49fb5deafd14ead28ce9c0625",
+        "bytes": 3658
+      },
+      {
+        "path": "scripts/uninstall_m4_minifilter.ps1",
+        "sha256": "c8c3647470717abfa5b6c93de17637db6a88d7a2e46e2da41e66d625e721259a",
+        "bytes": 1021
+      },
+      {
+        "path": "scripts/uninstall_m4_wfp.ps1",
+        "sha256": "75c06cda026264db8b92f14c5ba265acce510eaff15b9455b9f6ec4f2474577c",
+        "bytes": 998
+      },
+      {
+        "path": "tasks.json",
+        "sha256": "43f94ec9d2ccd40d002452840f635df24e378d2603fd0222b33f0cc55f1bced3",
+        "bytes": 143155
+      },
+      {
+        "path": "tests/test_backup_push_integrity.py",
+        "sha256": "a765f4c88901ca452da81ddef4fe9834ef3d608165c912d0bf196eece57c6b1b",
+        "bytes": 7070
+      },
+      {
+        "path": "tests/test_console_server.py",
+        "sha256": "333109a42ae1dc25958028f7f66dd983d3a2b9bb46170da6fa620b6f9fb235bf",
+        "bytes": 13346
+      },
+      {
+        "path": "tests/test_genomic_constraint_validator.py",
+        "sha256": "a32d3c4e40d5652ceae2ac2480b47be6c2002ef10b03a2fe17f13825f9c0235a",
+        "bytes": 3107
+      },
+      {
+        "path": "tests/test_intel_closeout_gate.py",
+        "sha256": "3c27a559d42a0fa81d4c6397bac5c439b07d55a4dcdc5c724edb8f5fa5055879",
+        "bytes": 6165
+      },
+      {
+        "path": "tests/test_m4_authority_seal.py",
+        "sha256": "0d2797740ed114ee89bc969242902194a6029f2b57e4914d9a6699d4762000cc",
+        "bytes": 4355
+      },
+      {
+        "path": "tests/test_m4_boundary_daemon.py",
+        "sha256": "305ea6941c06253f3978837faf65ac97b719274c3891188512c549937d51087f",
+        "bytes": 2145
+      },
+      {
+        "path": "tests/test_m4_fuzz_harness.py",
+        "sha256": "804b5db47b0b2117817e7bea0ce586c2c329f0da5e3ab377c3bab86c8221e522",
+        "bytes": 5538
+      },
+      {
+        "path": "tests/test_m4_import_ban.py",
+        "sha256": "103a39de4396eb6e69f70aca102c7160488f0f0e675b31bfa9edc09237bd7614",
+        "bytes": 2964
+      },
+      {
+        "path": "tests/test_m4_invariant_check.py",
+        "sha256": "1e82bccf4b4b754ede1b95550c96a745de313ce3001ecc579f2315bbf9d2a679",
+        "bytes": 2614
+      },
+      {
+        "path": "tests/test_m4_minifilter_policy.py",
+        "sha256": "827b73b1d2c32b37c0351277d85ac8be7208534f7e36792fd96569d39ff43dea",
+        "bytes": 2201
+      },
+      {
+        "path": "tests/test_m4_sandbox_escape_suite.py",
+        "sha256": "83f4e39959a2010693c9c1cb8906425cc50afd6da3cf0a4e256b10eaef7db96f",
+        "bytes": 2444
+      },
+      {
+        "path": "tests/test_m4_stage_attestation.py",
+        "sha256": "8ddcae939543d9f22993f0554456aff0f14d3b7d0d30c119ff329bcfd1ad6242",
+        "bytes": 3613
+      },
+      {
+        "path": "tests/test_m4_wfp_policy.py",
+        "sha256": "bd8b7e26cd91be1938b67e23943e575909875e33bc7eab119594beb546e6391d",
+        "bytes": 4092
+      },
+      {
+        "path": "tests/test_opsec_amend_helper.py",
+        "sha256": "2c5b9434b4005185fcf3b26b7650fbac542f2730f50f5cbd0239d289c6b811ef",
+        "bytes": 2896
+      },
+      {
+        "path": "tests/test_proof_gate_console_bindings.py",
+        "sha256": "d0db4767e3fd5e9f25cf2ccd36a33d88da7397cd6677cd945d0bc20fef99cc76",
+        "bytes": 6274
+      }
+    ],
+    "archive": "/mnt/c/MMI/mmi/project_brain/backup/mmi_backup_20260713_200932.tar.gz",
+    "archive_bytes": 16616278,
+    "archive_sha256": "6fd787caa1f122e35efe4cd350c088bd536745a6c6d2716cf761d938457b8f59",
+    "push_status": "PASS",
+    "integrity_status": "PASS",
+    "push_remote": "matt:mmi-cold-storage/archives/",
+    "push_file": "mmi_backup_20260713_200932.tar.gz",
+    "local_bytes": 16616278,
+    "local_sha256": "6fd787caa1f122e35efe4cd350c088bd536745a6c6d2716cf761d938457b8f59",
+    "remote_bytes": 16616278,
+    "remote_sha256": "6fd787caa1f122e35efe4cd350c088bd536745a6c6d2716cf761d938457b8f59",
+    "remote_sha256_sidecar": "mmi_backup_20260713_200932.tar.gz.sha256",
+    "remote_sha256_sidecar_value": "6fd787caa1f122e35efe4cd350c088bd536745a6c6d2716cf761d938457b8f59",
+    "byte_match": true,
+    "sha256_match": true,
+    "sidecar_sha256_match": true,
+    "restore_check_status": "NOT_RUN",
+    "latest_b2_mirror": "mmi_backup_20260713_200932.tar.gz",
+    "restore_proven_archive": null,
+    "latest_good_promotion": "NOT_PROMOTED",
+    "safe_for_restore_reference": false,
+    "promotion_rule": "Latest B2 mirror is not restore-proven until --restore-check passes for this archive.",
+    "push_errors": [],
+    "rclone_copy_exit": 0,
+    "rclone_sidecar_copy_exit": 0,
+    "rclone_hashsum_exit": 0,
+    "rclone_sidecar_cat_exit": 0
   }
 ]
