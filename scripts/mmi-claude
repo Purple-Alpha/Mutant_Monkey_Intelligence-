@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly CLAUDE_BIN="/home/socialarchitect/.local/bin/claude"
+readonly CREDENTIAL_FILE="/home/socialarchitect/.config/mmi/anthropic.env"
+
+if [[ ! -x "$CLAUDE_BIN" ]]; then
+    printf 'MMI_CLAUDE_ERROR: native Claude Code binary is missing: %s\n' "$CLAUDE_BIN" >&2
+    exit 2
+fi
+
+if [[ ! -r "$CREDENTIAL_FILE" ]]; then
+    printf 'MMI_CLAUDE_ERROR: credential file is missing or unreadable: %s\n' "$CREDENTIAL_FILE" >&2
+    exit 3
+fi
+
+key="$(sed -n 's/^ANTHROPIC_API_KEY=//p' "$CREDENTIAL_FILE" | head -n1)"
+if [[ -z "$key" ]]; then
+    printf 'MMI_CLAUDE_ERROR: ANTHROPIC_API_KEY is absent from credential file\n' >&2
+    exit 4
+fi
+
+export ANTHROPIC_API_KEY="$key"
+unset key
+
+cd /mnt/c/MMI
+exec "$CLAUDE_BIN" --model opus --permission-mode plan "$@"
