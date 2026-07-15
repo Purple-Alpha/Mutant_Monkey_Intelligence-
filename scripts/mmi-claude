@@ -4,6 +4,13 @@ set -euo pipefail
 readonly CLAUDE_BIN="/home/socialarchitect/.local/bin/claude"
 readonly CREDENTIAL_FILE="/home/socialarchitect/.config/mmi/anthropic.env"
 
+printf '%s\n' \
+    '==================================================================' \
+    '  CLAUDE BUDGET EMERGENCY: APPROXIMATELY USD $7 REMAINING' \
+    '  Every invocation may consume scarce paid Anthropic credits.' \
+    '  Codex requires Matt authorization for each specific paid task.' \
+    '==================================================================' >&2
+
 if [[ ! -x "$CLAUDE_BIN" ]]; then
     printf 'MMI_CLAUDE_ERROR: native Claude Code binary is missing: %s\n' "$CLAUDE_BIN" >&2
     exit 2

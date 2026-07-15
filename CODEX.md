@@ -70,6 +70,7 @@ If the task is not MMI-prefixed or does not start with `PROJECT: MMI.`, stop and
 ## Current Hard Stops
 
 - MMI only.
+- **CLAUDE BUDGET EMERGENCY — approximately USD $7 remaining as reported by Matt on 2026-07-14.** Codex MUST NOT invoke Claude, the Anthropic API, `mmi-claude`, or any paid Anthropic model without Matt's explicit authorization for that specific task. Never spend Claude budget for discovery, experimentation, retries, self-review, or convenience. Prefer local inspection and already-preserved Claude outputs. A prior authorization does not carry forward to another task or session.
 - Maintenance freeze is active: no product feature work until the custody-maintenance ledger closes and Matt explicitly lifts the freeze.
 - Cursor has no current PM or repository-control authority. Historical Cursor records remain evidence of prior work only.
 - Do not run `npm`.
